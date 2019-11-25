@@ -13,30 +13,80 @@
 
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>User </h3>
+                    <h3><% title %></h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right">
-                          <a href="{{ route('user.create') }}" class='btn btn-success btn-sm'>Tambah</a>
-                      </div>                    
+                          
+                          <a href='{{ route("user.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
+                          <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger" ng-click='delete({{ $id }})'>Non-aktifkan</button>
+                          <button type="button" ng-if='formData.is_active == 0' class="btn btn-primary" ng-click='activate({{ $id }})'>Aktifkan</button>
+                      </div>
                   </div>
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>NIK</th>
-                          <th>Kode</th>
-                          <th>Nama</th>
-                          <th>Departemen</th>
-                          <th>Status</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
+                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
+
+                      <div>
+                        <img id='img-preview' class='img-responsive' style="margin:auto;height:50mm" alt="">
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">NIK
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.code %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Status
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="last-name">Nama
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.name %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="last-name">Nama lengkap
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.fullname %>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="last-name">Username
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.username %>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="last-name">Departemen
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.group_user.name %>
+                        </div>
+                      </div>
+
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                          <div class="btn-group pull-left">
+                            
+                            <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
                 </div>
 
                 <div class="clearfix"></div>
@@ -53,5 +103,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/user/userCtrl.js"></script>
+    <script src="{{ asset('') }}js/user/user/userShowCtrl.js"></script>
 

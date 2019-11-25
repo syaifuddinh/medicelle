@@ -73,10 +73,44 @@ app.directive('datepick', function() {
     restrict: 'A',
     require: 'ngModel',
     link: function(scope, el, attr, ngModel) {
-      // console.log(ngModel);
-      var pick = $(el).pickadate();
+
+      var pick = $(el).pickadate({
+        'selectYears' : true,
+        'selectMonths' : true
+      });
       var p = pick.pickadate('picker')
-     
+      var model = attr.ngModel
+      var second = model.replace(/.+\.([a-z_]+)$/, '$1')
+      var first = model.replace(/(.+)\.([a-z_]+)$/, '$1') || null
+
+      p.on('close', function(){
+          var dateElement = this.$node['0']
+          var nextInput = inputs.get(inputs.index(dateElement) + 1);
+           if (nextInput) {
+              nextInput.focus();
+           }
+      })
+      if(second == first) {
+        var datepick = scope[second]
+      } else {
+        var datepick = scope[first][second]
+      }
+
+      if(/(\d{4})-(\d{2})-(\d{2})/.test(datepick)) {
+          var d = datepick.split('-')
+          p.set('select', new Date(d[0], parseInt(d[1]) - 1, d[2]))
+          var actualValue = $(el).val()
+          if(second == first) {
+            scope[second] = datepick
+          } else {
+            scope[first][second] = datepick
+          }
+
+          setTimeout(function(){
+              $(el).val(actualValue)
+          }, 200)
+      }
+      
        ngModel.$parsers.push(function(value) {
         return p.get('select', 'yyyy-mm-dd');
       });
@@ -263,8 +297,15 @@ app.directive('onlyNum', function($browser) {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, element, attrs, modelCtrl) {
+            $(element).addClass('text-right')
             var keyCode = [8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
             element.bind("keydown", function(event) {
+                if (event.which == 13) {
+                   var nextInput = inputs.get(inputs.index(this) + 1);
+                   if (nextInput) {
+                      nextInput.focus();
+                   }
+                }
                 if (modelCtrl.$modelValue) {
                   // var hitungTitik=(modelCtrl.$modelValue.match(/./g)||[]).length;
                   var modelVal=modelCtrl.$modelValue;
@@ -290,6 +331,7 @@ app.directive('onlyNum', function($browser) {
                     event.preventDefault();
                 }
             });
+
         }
       }
   });

@@ -12,6 +12,34 @@
 
     <!-- jQuery -->
     <script src="{{ asset('') }}vendors/jquery/dist/jquery.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('button').on('focus', function(){
+                if( $(this).attr('type') == 'submit' ) {
+
+                    $(this).on('keypress', function(e){
+                        if (e.which == 13) {
+                           $(this).trigger('click')
+                        }
+
+                    });
+                }
+            })
+            inputs = $(':input,select').on('keypress', function(e){ 
+                if (e.which == 13) {
+                   e.preventDefault();
+                   var nextInput = inputs.get(inputs.index(this) + 1);
+                   if (nextInput) {
+                      nextInput.focus();
+                   }
+                }
+            });
+    </script>
     <!-- Bootstrap -->
     <script src="{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -28,18 +56,9 @@
     <script src="{{ asset('') }}vendors/iCheck/icheck.min.js"></script>
     <!-- Skycons -->
     <script src="{{ asset('') }}vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.time.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="{{ asset('') }}vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="{{ asset('') }}vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="{{ asset('') }}vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="{{ asset('') }}vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="{{ asset('') }}vendors/DateJS/build/date.js"></script>
+    <!-- PickADate -->
+    <script src="{{ asset('') }}js/picker.js"></script>
+    <script src="{{ asset('') }}js/picker.date.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('') }}vendors/moment/min/moment.min.js"></script>
 
@@ -58,6 +77,6 @@
     <script src="{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js"></script>
     <script src="{{ asset('') }}js/angular-init.js"></script>
     <script src="{{ asset('') }}js/custom_directive.js"></script>
-    
+        
   </body>
 </html>

@@ -11,17 +11,18 @@
 
     <!-- Bootstrap -->
     <link href="{{ asset('') }}vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="{{ asset('') }}css/classic.css" rel="stylesheet">
+    <link href="{{ asset('') }}css/classic.date.css" rel="stylesheet">
+
+
     <!-- Font Awesome -->
     <link href="{{ asset('') }}vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('') }}vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="{{ asset('') }}vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <link href="{{ asset('') }}css/toastr.css" rel="stylesheet">
     <link href="{{ asset('') }}css/bootstrap-chosen.css" rel="stylesheet">
     
-    <!-- bootstrap-progressbar -->
-    <link href="{{ asset('') }}vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('') }}build/css/custom.min.css" rel="stylesheet">
     <link href="{{ asset('') }}vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -31,13 +32,13 @@
     </script>
   </head>
 
-  <body class="nav-md" ng-app='klinikApp'>
+  <body class="nav-md" ng-app='klinikApp' ng-cloak>
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="{{ url('') }}" class="site_title"><i class="fa fa-paw"></i> <span>Klinik</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -48,8 +49,12 @@
                 <img src="{{ Auth::user()->avatar_url }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>{{ Auth::user()->name }}</h2>
+                <span>Selamat datang,</span>
+                <h2>
+                  <a href="{{ route('user.edit', ['id' => Auth::user()->id ]) }}" style="color:white;opacity:0.7">
+                      {{ Auth::user()->name }}
+                  </a>
+                </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -58,22 +63,7 @@
 
             @include('sidebar')
 
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ url('/logout') }}">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
+            
           </div>
         </div>
 
@@ -92,12 +82,12 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
+                    <li><a href="{{ route('user.edit', ['id' => Auth::user()->id ]) }}"> Profil</a></li>
                     <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
+                <li role="presentation" class="dropdown hidden">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>

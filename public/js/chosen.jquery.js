@@ -452,7 +452,7 @@
             if (this.options.width != null) {
                 return this.options.width;
             } else {
-                return "" + this.form_field.offsetWidth + "px";
+                return "100%";
             }
         };
 
@@ -564,6 +564,7 @@
             if (this.is_rtl) {
                 container_classes.push("chosen-rtl");
             }
+
             container_props = {
                 'class': container_classes.join(' '),
                 'style': "width: " + (this.container_width()) + ";",
@@ -578,7 +579,7 @@
             } else {
                 this.container.html('<a class="chosen-single chosen-default" tabindex="-1"><span>' + this.default_text + '</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off" /></div><ul class="chosen-results"></ul></div>');
             }
-            this.form_field_jq.hide().after(this.container);
+            this.form_field_jq.hide().before(this.container);
             this.dropdown = this.container.find('div.chosen-drop').first();
             this.search_field = this.container.find('input').first();
             this.search_results = this.container.find('ul.chosen-results').first();

@@ -14,6 +14,12 @@ Route::name('user.')->prefix('user')
     Route::get('/create', function (){
         return view('user/user/create');
     })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/user/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/user/show')->withId($id);
+    })->name('show');
 });
 
 Route::name('group_user.')->prefix('group_user')->group(function(){

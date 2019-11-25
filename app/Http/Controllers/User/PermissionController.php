@@ -6,6 +6,7 @@ use App\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
+use DB;
 
 class PermissionController extends Controller
 {
@@ -16,7 +17,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = Permission::select('id', 'name')->get();
+        $permission = Permission::select('id', 'name')->whereIsActive(1)->get();
         return Response::json($permission, 200);
     }
 
@@ -38,9 +39,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request, Permission $permission)
     {
+        DB::beginTransaction();
         $permission->fill($request->all());
         $permission->save();
-
+        DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
 
@@ -75,9 +77,11 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission, $id)
     {
+        DB::beginTransaction();
         $permission = $permission->findOrFail($id);
         $permission->fill($request->all());
         $permission->save();
+        DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }
@@ -90,16 +94,21 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission, $id)
     {
+        DB::beginTransaction();
         $permission = $permission->find($id);
         $permission->is_active = 0;
         $permission->save();
+        DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
     public function activate(Permission $permission)
     {
+        DB::beginTransaction();
         $permission->is_active = 1;
         $permission->save();
+        DB::commit();
+
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
     }
 }

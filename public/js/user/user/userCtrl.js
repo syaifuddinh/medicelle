@@ -1,10 +1,13 @@
+
 app.controller('user', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+  $scope.data = {}
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/user/user'
+      url : baseUrl+'/datatable/user/user',
+      data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
       {
@@ -34,7 +37,13 @@ app.controller('user', ['$scope', '$compile', '$http', function($scope, $compile
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => "<div class='btn-group'><button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button><a class='btn btn-xs btn-success' href='" + baseUrl + "/group_user/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a></div>"
+        render : resp => 
+        "<div class='btn-group'>" + 
+        ( 
+          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+        ) +
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/user/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/user/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -43,10 +52,29 @@ app.controller('user', ['$scope', '$compile', '$http', function($scope, $compile
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
+  $http.get(baseUrl + '/controller/user/group_user').then(function(data) {
+        $scope.data.group_user = data.data
+    }, function(error) {
+      $rootScope.disBtn=false;
+      if (error.status==422) {
+        var det="";
+        angular.forEach(error.data.errors,function(val,i) {
+          det+="- "+val+"<br>";
+        });
+        toastr.warning(det,error.data.message);
+      } else {
+        toastr.error(error.data.message,"Error Has Found !");
+      }
+    });
+
+  $scope.filter = function() {
+    oTable.ajax.reload()
+  }
+
   $scope.delete = function(id) {
-    is_delete = confirm('Apakah anda ingin menghapus data ini ?');
+    is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/user/user/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data Berhasil Dihapus !");
         }, function(error) {
@@ -61,4 +89,23 @@ app.controller('user', ['$scope', '$compile', '$http', function($scope, $compile
           }
         });
   }
+
+  $scope.activate = function(id) {
+    is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
+      if(is_activate)
+          $http.put(baseUrl + '/controller/user/user/activate/' + id).then(function(data) {
+              toastr.success("Data Berhasil diaktifkan !");
+              oTable.ajax.reload();
+          }, function(error) {
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+    }
 }]);

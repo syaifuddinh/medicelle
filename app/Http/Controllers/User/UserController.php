@@ -9,6 +9,8 @@ use Image;
 use App\User;
 use Str;
 use Response;
+use DB;
+use File;
 
 class UserController extends Controller
 {
@@ -43,14 +45,17 @@ class UserController extends Controller
     {
         $request->validate([
             'code' => 'unique:users,code',
+            'username' => 'unique:users,username',
             'email' => 'email',
         ], [
             'code.unique' => 'NIK sudah digunakan',
+            'username.unique' => 'Username sudah digunakan',
             'email.email' => 'Masukkan email dengan benar !',
         ]);
 
+        DB::beginTransaction();
         $filename = '';
-        if($request->filled('avatar')) {
+        if($request->hasFile('avatar')) {
             $filename = date('YmdHis') . Str::random(5) . '.png';
             Image::make( file_get_contents( $request->avatar))->save(public_path('files/' . $filename));
         }
@@ -58,7 +63,7 @@ class UserController extends Controller
         $insert['avatar'] = $filename;
         $user->fill($insert);
         $user->save();
-
+        DB::commit();
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
@@ -70,7 +75,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return Response::json($user->toJson(), 200);
+        return Response::json($user::with('group_user')->find($user->id), 200);
     }
 
     /**
@@ -93,8 +98,28 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->fill($request->all());
+        $request->validate([
+            'code' => 'unique:users,code,' . $user->id,
+            'username' => 'unique:users,username,' . $user->id,
+            'email' => 'email',
+        ], [
+            'code.unique' => 'NIK sudah digunakan',
+            'username.unique' => 'Username sudah digunakan',
+            'email.email' => 'Masukkan email dengan benar !',
+        ]);
+        DB::beginTransaction();
+        $filename = $user->avatar;
+        if($request->hasFile('avatar')) {
+            if($user->avatar == null)
+                File::delete(public_path('files/' . $user->avatar));
+            $filename = date('YmdHis') . Str::random(5) . '.png';
+            Image::make( $request->avatar)->save(public_path('files/' . $filename));
+        }
+        $insert = $request->except('avatar');
+        $insert['avatar'] = $filename;
+        $user->fill($insert);
         $user->save();
+        DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }
@@ -108,5 +133,22 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        DB::beginTransaction();
+        $user->is_active = 0;
+        $user->save();
+        DB::commit();
+
+        return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
+    }
+
+    public function activate(User $user)
+    {
+        //
+        DB::beginTransaction();
+        $user->is_active = 1;
+        $user->save();
+        DB::commit();
+
+        return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
     }
 }

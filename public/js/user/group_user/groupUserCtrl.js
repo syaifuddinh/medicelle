@@ -4,7 +4,8 @@ app.controller('groupUser', ['$scope', '$compile', '$http', function($scope, $co
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/user/group_user'
+      url : baseUrl+'/datatable/user/group_user',
+      data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
       {
@@ -46,6 +47,11 @@ app.controller('groupUser', ['$scope', '$compile', '$http', function($scope, $co
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+  $scope.filter = function() {
+    oTable.ajax.reload()
+  }
+
   oTable.buttons().container().appendTo( '.export_button' );
 
   $scope.delete = function(id) {

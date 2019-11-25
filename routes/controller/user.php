@@ -6,6 +6,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('group_user', 'PermissionController');
 
         Route::put('user/activate/{user}', 'UserController@activate');
+        Route::post('user/{user}', 'UserController@update');
         Route::resource('user', 'UserController');
     });
 });

@@ -6,20 +6,21 @@
                   <li><a><i class="fa fa-home"></i> User <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('user.index') }}">User</a></li>
-                      <li><a href="{{ route('group_user.index') }}">Jabatan</a></li>
+                      <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="form.html">Pasien</a></li>
-                      <li><a href="form_advanced.html">Advanced Components</a></li>
-                      <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li>
+                      <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
+                      <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
+                      <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
+                      <li><a href="{{ route('discount.index') }}">Promo</a></li>
+                      <li><a href="{{ route('piece.index') }}">Satuan</a></li>
+                      <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
+                      <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Registrasi pasien <span class="fa fa-chevron-down"></span></a>
+                  <li class='hidden'><a><i class="fa fa-desktop"></i> Registrasi pasien <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="general_elements.html">General Elements</a></li>
                       <li><a href="media_gallery.html">Media Gallery</a></li>
@@ -32,13 +33,13 @@
                       <li><a href="calendar.html">Calendar</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                  <li class='hidden'><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>
                       <li><a href="tables_dynamic.html">Table Dynamic</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                  <li class='hidden'><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="chartjs.html">Chart JS</a></li>
                       <li><a href="chartjs2.html">Chart JS2</a></li>
@@ -47,7 +48,7 @@
                       <li><a href="other_charts.html">Other Charts</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                  <li class='hidden'><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
                       <li><a href="fixed_footer.html">Fixed Footer</a></li>
@@ -55,7 +56,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="menu_section">
+              <div class="menu_section hidden">
                 <h3>Live On</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>

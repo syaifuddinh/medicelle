@@ -15,10 +15,16 @@ Route::group(
         'middleware' => ['web','auth']
     ], function(){
 		require(base_path('routes/view/common.php'));
+        require(base_path('routes/view/master.php'));
         require(base_path('routes/controller/user.php'));
+        require(base_path('routes/controller/master.php'));
 
-        Route::namespace('Datatable')->prefix('datatable')->group(function(){
+        Route::namespace('Datatable')
+        ->prefix('datatable')
+        ->middleware(['compareDate'])
+        ->group(function(){
             require(base_path('routes/datatable/user.php'));
+            require(base_path('routes/datatable/master.php'));
         });
 });
 Route::get('/logout', 'Auth\LoginController@logout');
