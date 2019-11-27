@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\City;
+use App\Village;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class CityController extends Controller
+class VillageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $x = City::with('province')->get();
+        $x = Village::select('id', 'name', 'district_id')->get();
         return Response::json($x, 200);
     }
 }

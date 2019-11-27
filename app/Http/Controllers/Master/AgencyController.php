@@ -15,9 +15,11 @@ class AgencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contact = Contact::agency()->whereIsActive(1)->select('id', 'code', 'name')->get();
+        $contact = Contact::agency()->whereIsActive(1)->select('id', 'code', 'name');
+        $contact = $request->filled('agency_type') ? $contact->whereAgencyType($request->agency_type) : $contact;
+        $contact = $contact->get();
         return Response::json($contact, 200);
     }
 

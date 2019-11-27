@@ -13,7 +13,7 @@ use Auth;
 class Contact extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['code', 'name', 'address', 'postal_code', 'city_id', 'group_user_id', 'province_id', 'fax', 'phone', 'is_agency', 'is_supplier', 'is_employee', 'is_doctor', 'is_nurse', 'is_nurse_helper', 'is_patient', 'agency_type', 'supplier_disc_percent', 'email', 'gender', 'pin', 'birth_place', 'marriage_status', 'contact_id', 'birth_date', 'start_date', 'pharmacy_disc_percent', 'lab_sender_fee_value', 'lab_sender_fee_value', 'lab_refer_sender_fee_value', 'xray_read_fee_value', 'xray_sender_fee_value', 'usg_read_fee_value', 'usg_sender_fee_value', 'ecg_read_fee_value', 'ecg_sender_fee_value', 'medical_action_fee_value', 'consultation_fee_value', 'specialization_id', 'polyclinic_id', 'age', 'civil_code', 'district_id', 'village_id', 'created_by'];
+    protected $fillable = ['code', 'name', 'address', 'postal_code', 'city_id', 'group_user_id', 'province_id', 'fax', 'phone', 'is_agency', 'is_supplier', 'is_employee', 'is_doctor', 'is_nurse', 'is_nurse_helper', 'is_patient', 'is_family', 'agency_type', 'supplier_disc_percent', 'email', 'gender', 'pin', 'birth_place', 'marriage_status', 'contact_id', 'birth_date', 'start_date', 'pharmacy_disc_percent', 'lab_sender_fee_value', 'lab_sender_fee_value', 'lab_refer_sender_fee_value', 'xray_read_fee_value', 'xray_sender_fee_value', 'usg_read_fee_value', 'usg_sender_fee_value', 'ecg_read_fee_value', 'ecg_sender_fee_value', 'medical_action_fee_value', 'consultation_fee_value', 'specialization_id', 'polyclinic_id', 'age', 'civil_code', 'district_id', 'village_id', 'created_by','updated_by', 'patient_type', 'religion', 'job', 'blood_type'];
 
     public static function boot() {
         parent::boot();
@@ -24,7 +24,6 @@ class Contact extends Model
                 $id = $id == null ? 1 : $id;
                 $id = str_pad($id, 4, '0', STR_PAD_LEFT);
                 $code = 'D-' . $id;
-                // dd($code);
 
                 $contact->code = $code; 
             } else if($contact->is_nurse == 1) {
@@ -58,6 +57,10 @@ class Contact extends Model
                 $user->save();
                 DB::commit();
             }        });
+
+        static::updating(function(Contact $contact) {
+            $contact->updated_by = Auth::user()->id;
+        });
 
         static::updated(function(Contact $contact) {
             if($contact->is_employee == 1 || $contact->is_doctor == 1 || $contact->is_nurse == 1 || $contact->is_nurse_helper == 1) {
@@ -110,6 +113,14 @@ class Contact extends Model
         return $this->belongsTo('App\City');
     }
 
+    public function district() {
+        return $this->belongsTo('App\District');
+    }
+
+    public function village() {
+        return $this->belongsTo('App\Village');
+    }
+
     public function specialization() {
         return $this->belongsTo('App\Specialization');
     }
@@ -130,6 +141,10 @@ class Contact extends Model
         return $this->belongsTo('App\Contact');
     }
 
+    public function family() {
+        return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereIsFamily(1);
+    }
+
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value == null ? '-' : $value;
     }
@@ -140,19 +155,21 @@ class Contact extends Model
                 'name' => $value,
                 'city_id' => $this->attributes['city_id'] 
             ]);
+            $this->attributes['district_id'] = $d->id;
         } else {
-            $this->attributes['name'] = $value == null ? '-' : $value;
+            $this->attributes['district_id'] = $value;
         }
     }
 
     public function setVillageIdAttribute($value) {
         if(!preg_match('/\d+/', $value)) {
-            $d = Village::create([
+            $v = Village::create([
                 'name' => $value,
                 'district_id' => $this->attributes['district_id'] 
             ]);
+            $this->attributes['village_id'] = $v->id;
         } else {
-            $this->attributes['name'] = $value == null ? '-' : $value;
+            $this->attributes['village_id'] = $value;
         }
     }
 

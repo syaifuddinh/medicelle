@@ -28,156 +28,218 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
-                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Nama<span class="required">*</span>
+
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Nama
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.name %>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                            <% formData.patient_type %> <% formData.name %>
+                                        </div>    
 
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.address %>
+                                      <% formData.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
+                                    </div>
+                                  </div>
 
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12">Jenis kelamin
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <% formData.gender %>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Telepon
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.phone %>
-
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.phone %>
                                     </div>
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">No KTP/SIM
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.civil_code %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.address %>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kota
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.city_id %>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.city.name %>
 
-                                        
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Spesialisasi
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kecamatan
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.specialization_id %>
-
-                                            
-                                        
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.district_id %>
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Poliklinik
+                                    <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Desa
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.polyclinic_id %>
-
-                                            
-                                        
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.village.name %>
                                     </div>
                                 </div>
-
+                                
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12">Tanggal lahir
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.birth_date %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12">Umur
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.age %>
+                                    </div>
+                                </div>
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-7">
 
                                 <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Diskon farmasi(%)
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Golongan darah
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.pharmacy_disc_percent %>%
+                                        <% formData.blood_type %>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Agama
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <% formData.religion %>
+                                        
+
+
+
+
+
+
+
+
 
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee pengirim LAB(%)
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Status perkawinan
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.lab_sender_fee_value %>%
+                                        <% formData.marriage_status %>
+                                        
 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee pengirim LAB rujukan(%)
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.lab_refer_sender_fee_value %>%
 
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee pengirim X-Ray(%)
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.xray_sender_fee_value %>%
 
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee baca X-Ray(%)
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.xray_read_fee_value %>%
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee pengirim ECG(%)
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.ecg_sender_fee_value %>%
 
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee baca ECG(%)
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Pekerjaan
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.ecg_read_fee_value %>%
+                                        <% formData.job %>
+
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <h2>Data Keluarga</h2>
+                                <div class="form-group">
+
+                                    <label class="col-md-5 col-sm-3 col-xs-12" for="first-name">Nama Ayah/Ibu/Suami/Istri
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                            <% formData.family.name %>
+                                        </div>    
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Alamat
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <% formData.family.address %>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-5 col-sm-3 col-xs-12" for="first-name">Kota
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <% formData.family.city_id %>
 
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee tindakan medis(%)
+                                    <label class="col-md-5 col-sm-3 col-xs-12" for="first-name">Telepon
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.medical_action_fee_value %>%
-
+                                        <% formData.family.phone %>
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label class="col-md-5 col-sm-5 col-xs-12">Fee visite/konsul(%)
+                                    <label class="col-md-5 col-sm-3 col-xs-12">Pekerjaan
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.consultation_fee_value %>%
+                                        <% formData.family.job %>
+                                        
+
+
+
+
+
+
+
+
+
 
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="ln_solid"></div>

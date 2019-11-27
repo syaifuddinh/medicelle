@@ -187,3 +187,20 @@ Route::name('employee.')->prefix('employee')
         return view('master/employee/show')->withId($id);
     })->name('show');
 });
+
+Route::name('patient.')->prefix('patient')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/patient/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/patient/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/patient/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/patient/show')->withId($id);
+    })->name('show');
+});

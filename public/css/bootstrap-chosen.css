@@ -10,6 +10,9 @@
     margin-bottom:1.2mm;
     position: relative;
     vertical-align: middle; }
+.input-group .chosen-container {
+    margin-bottom:0;    
+}
 .chosen-container .chosen-drop {
     background: #fff;
     border: 1px solid #e5e6e7;

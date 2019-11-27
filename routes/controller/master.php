@@ -2,7 +2,9 @@
 
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('master')->namespace('Master')->group(function(){
-        Route::get('city/', 'CityController@index');
+        Route::get('city', 'CityController@index');
+        Route::get('district', 'DistrictController@index');
+        Route::get('village', 'VillageController@index');
 
         Route::put('specialization/activate/{specialization}', 'SpecializationController@activate');
         Route::resource('specialization', 'SpecializationController');
@@ -33,6 +35,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('employee/activate/{id}', 'EmployeeController@activate');
         Route::resource('employee', 'EmployeeController');
+
+        Route::put('patient/activate/{id}', 'PatientController@activate');
+        Route::resource('patient', 'PatientController');
     });
 });
 

@@ -29,33 +29,6 @@
 
 
                           </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Spesialisasi
-                </label>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                  <select class="form-control" data-placeholder-text-single="'Pilih Spesialisasi'" required='required' chosen allow-single-deselect="false" ng-model="formData.specialization_id" ng-options="c.id as c.name for c in data.specialization" ng-change="filter()">
-                      <option value=""></option>
-                  </select>
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Poliklinik
-                </label>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                  <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'" required='required' chosen allow-single-deselect="false" ng-model="formData.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic" ng-change="filter()">
-                      <option value=""></option>
-                  </select>
-
-                  <div class="form-group">
-                      <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
-                  </div>
-                </div>
-              </div>
-
-                        
                     </form>
                 </div>
                 <div class="row x_title">
@@ -74,12 +47,12 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>ID</th>
+                          <th>No KTP/SIM</th>
                           <th>Nama</th>
                           <th>Telepon</th>
-                          <th>Spesialisasi</th>
-                          <th>Poli</th>
-                          <th>Kota</th>
+                          <th>Tanggal lahir</th>
+                          <th>Umur</th>
+                          <th>Jenis kelamin</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

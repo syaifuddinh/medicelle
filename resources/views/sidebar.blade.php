@@ -11,6 +11,7 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <li><a href="{{ route('patient.index') }}">Pasien</a></li>
                       <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
                       <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
                       <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
@@ -20,18 +21,8 @@
                       <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                     </ul>
                   </li>
-                  <li class='hidden'><a><i class="fa fa-desktop"></i> Registrasi pasien <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
-                      <li><a href="icons.html">Icons</a></li>
-                      <li><a href="glyphicons.html">Glyphicons</a></li>
-                      <li><a href="widgets.html">Widgets</a></li>
-                      <li><a href="invoice.html">Invoice</a></li>
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="calendar.html">Calendar</a></li>
-                    </ul>
+                  <li><a href='{{ route("registration.index") }}'><i class="fa fa-desktop"></i> Registrasi pasien</a>
+                    
                   </li>
                   <li class='hidden'><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">

@@ -71,8 +71,8 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                  <img src="{{ asset('images/medicelle.png') }}" class="img-responsive" alt="">
+                  <p style='margin-top:2mm'>©2016 All Rights Reserved, Medicelle Clinic. Privacy and Terms</p>
                 </div>
               </div>
             </form>

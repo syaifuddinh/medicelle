@@ -1,4 +1,4 @@
-app.controller('patient', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   $scope.data = {}
   oTable = $('#listview').DataTable({
     processing: true,
@@ -21,12 +21,17 @@ app.controller('patient', ['$scope', '$compile', '$http', function($scope, $comp
     ],
 
     columns:[
-      {data:"code", name:"code"},
+      {data:"civil_code", name:"civil_code"},
       {data:"name", name:"name"},
       {data:"phone", name:"phone"},
-      {data:"specialization.name", name:"specialization.name"},
-      {data:"polyclinic.name", name:"polyclinic.name"},
-      {data:"city.name", name:"city.name"},
+      {
+        data:null, 
+        searchable:false,
+        orderable:false,
+        render : resp => $filter('fullDate')(resp.birth_date)
+      },
+      {data:"age", name:"age", className:"text-right"},
+      {data:"gender", name:"gender"},
       {
         data: null, 
         orderable : false,

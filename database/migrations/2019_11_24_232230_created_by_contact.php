@@ -15,7 +15,11 @@ class CreatedByContact extends Migration
     {
         Schema::table('contacts', function (Blueprint $table) {
             $table->unsignedInteger('created_by')->nullable(true)->index();
+            $table->unsignedInteger('updated_by')->nullable(true)->index();
             $table->unsignedInteger('registration_id')->nullable(true)->index();
+            $table->foreign('updated_by')
+              ->references('id')->on('users')
+              ->onDelete('restrict');
             $table->foreign('created_by')
               ->references('id')->on('users')
               ->onDelete('restrict');
@@ -30,8 +34,8 @@ class CreatedByContact extends Migration
     public function down()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->dropForeign(['created_by']);
-            $table->dropColumn(['created_by']);
+            $table->dropForeign(['created_by', 'registration', 'updated_by']);
+            $table->dropColumn(['created_by', 'updated_by', 'registration',]);
         });
     }
 }

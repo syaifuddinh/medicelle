@@ -17,7 +17,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $contact = Contact::doctor()->whereIsActive(1)->select('id', 'code', 'name')->get();
+        $contact = Contact::doctor()->whereIsActive(1)->select('id', 'code', 'name', 'polyclinic_id')->get();
         return Response::json($contact, 200);
     }
 

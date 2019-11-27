@@ -92,8 +92,7 @@ class MasterApiController extends Controller
     public function discount(Request $request) {
         $x = Discount::select('id', 'name', 'is_active', 'code', 'date_start', 'date_end' ,'type')
         ->whereBetween('date_start', [$request->date_start, $request->date_end])
-        ->WhereBetween('date_end', [$request->date_start, $request->date_end])
-        ;
+        ->WhereBetween('date_end', [$request->date_start, $request->date_end]);
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
@@ -119,6 +118,7 @@ class MasterApiController extends Controller
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        $x = $request->filled('agency_type') ? $x->whereAgencyType($request->agency_type) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
 
@@ -127,6 +127,23 @@ class MasterApiController extends Controller
 
     public function employee(Request $request) {
         $x = Contact::employee()->with('city', 'group_user:id,name')->select('id', 'code', 'name', 'city_id', 'pin', 'phone', 'group_user_id', 'is_active');
+
+        // die($request->is_active);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function patient(Request $request) {
+        if($request->filled('is_display_all')) {
+            if($request->is_display_all == 1) {
+                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job')->limit(6)->offset($request->start);
+            }
+        } else {
+            $x = Contact::patient()->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
+        }
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;

@@ -40,20 +40,23 @@ class PatientController extends Controller
     public function store(Request $request, Contact $contact)
     {
         $request->validate([
-            'code' => 'required',
             'name' => 'required',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
         ]);
 
         DB::beginTransaction();
-        $cp = $contact->create([
-            'name' => $request->contact_name,
-            'is_contact' => 1
-        ]);
-        $contact->fill($request->all());
-        $contact->contact_id = $cp->id;
+        $family = new Contact();
+        $family->fill($request->family);
+        $family->is_contact = 1;
+        $family->is_family = 1;
+        $family->save();
+        $insert = collect($request->all())->except('district_id', 'village_id')->toArray();
+        $contact->fill($insert);
+        $contact->district_id = $request->district_id;
+        $contact->village_id = $request->village_id;
+        $contact->contact_id = $family->id;
+        $contact->family_id = $family->id;
         $contact->is_patient = 1;
         $contact->save();
         DB::commit();
@@ -68,7 +71,7 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $contact = Contact::with('city.province', 'contact:id,name')->find($id);
+        $contact = Contact::with('city.province', 'district', 'village', 'family:id,name,address,city_id,phone,job')->find($id);
         return Response::json($contact, 200);
     }
 
@@ -94,10 +97,8 @@ class PatientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'code' => 'required',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
         ]);
 
         DB::beginTransaction();
@@ -106,14 +107,25 @@ class PatientController extends Controller
         $cp = Contact::firstOrCreate([
             'id' => $contact->contact_id
         ], [
-            'name' => $request->contact_name,
-            'is_contact' => 1
+            'name' => $request->family['name'],
+            'address' => $request->family['address'],
+            'city_id' => $request->family['city_id'],
+            'phone' => $request->family['phone'],
+            'job' => $request->family['job'],
+            'is_contact' => 1,
+            'is_family' => 1
         ]);
-        Contact::whereId($cp->id)->update(['name' => $request->contact_name]);
+        Contact::whereId($cp->id)->update([
+           'name' => $request->family['name'],
+            'address' => $request->family['address'],
+            'city_id' => $request->family['city_id'],
+            'phone' => $request->family['phone'],
+            'job' => $request->family['job'],
+            'is_contact' => 1,
+            'is_family' => 1
+        ]);
         $contact->fill($request->all());
         $contact->contact_id = $cp->id;
-        $contact->save();
-        $contact->fill($request->all());
         $contact->save();
         DB::commit();
 
