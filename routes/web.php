@@ -17,6 +17,7 @@ Route::group(
 		require(base_path('routes/view/common.php'));
         require(base_path('routes/view/master.php'));
         require(base_path('routes/view/registration.php'));
+        require(base_path('routes/view/polyclinic.php'));
 
         require(base_path('routes/controller/user.php'));
         require(base_path('routes/controller/master.php'));

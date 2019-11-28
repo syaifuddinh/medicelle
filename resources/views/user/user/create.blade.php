@@ -106,7 +106,7 @@
                             
                             <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
                             <button class="btn btn-warning btn-sm" type="button" ng-click='formData = {}'>Reset</button>
-                            <button type="submit" class="btn btn-success btn-sm submitButton" ng-disabled="disBtn">Submit</button>
+                            <button type="submit" class="btn btn-success btn-sm submitButton" ng-disabled="disBtn">Simpan</button>
                           </div>
                         </div>
                       </div>

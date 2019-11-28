@@ -39,6 +39,22 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status registrasi
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.status_name %>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal registrasi
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.date | fullDate %>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Jenis pasien
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -105,7 +121,7 @@
                                     <label class="col-md-12 col-xs-12" for="first-name">Nama instansi / asuransi
                                     </label>
                                     <div class="col-md-10 col-xs-12">
-                                        <% formData.agency_id %>
+                                        <% formData.pic.name %>
 
 
 

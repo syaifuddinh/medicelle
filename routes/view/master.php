@@ -204,3 +204,37 @@ Route::name('patient.')->prefix('patient')
         return view('master/patient/show')->withId($id);
     })->name('show');
 });
+
+Route::name('disease.')->prefix('disease')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/disease/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/disease/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/disease/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/disease/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('disease_category.')->prefix('disease_category')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/disease_category/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/disease_category/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/disease_category/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/disease_category/show')->withId($id);
+    })->name('show');
+});

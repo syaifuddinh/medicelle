@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="agencyCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="disease_categoryCreate" ng-cloak>
   <!-- top tiles -->
 
 
@@ -35,21 +35,6 @@
                 <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12">
               </div>
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Jenis<span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <label class="radio-inline">
-                  <input type="radio" ng-model="formData.agency_type" name='type' ng-value='"INSTANSI"'>
-                  <h5>Instansi</h5>
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" ng-model="formData.agency_type" name='type' ng-value='"ASURANSI"' required='required'>
-                  <h5>Asuransi</h5>
-                </label>
-                </div>
-              </div>
 
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
@@ -113,7 +98,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Diskon(%)
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.agency_disc_percent' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
+                  <input type="text"  ng-model='formData.disease_category_disc_percent' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
                 </div>
               </div>
 
@@ -146,5 +131,5 @@
   <!-- ============================================================== -->
 
   @include('footer')
-  <script src="{{ asset('') }}js/master/agency/agencyCreateCtrl.js"></script>
+  <script src="{{ asset('') }}js/master/disease_category/disease_categoryCreateCtrl.js"></script>
 

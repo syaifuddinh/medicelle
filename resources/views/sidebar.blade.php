@@ -17,6 +17,7 @@
                       <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
                       <li><a href="{{ route('discount.index') }}">Promo</a></li>
                       <li><a href="{{ route('piece.index') }}">Satuan</a></li>
+                      <li><a href="{{ route('disease_category.index') }}">Penyakit(ICD-10)</a></li>
                       <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
                       <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                     </ul>
@@ -24,6 +25,13 @@
                   <li><a href='{{ route("registration.index") }}'><i class="fa fa-desktop"></i> Registrasi pasien</a>
                     
                   </li>
+
+                  <li><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ route('assesment.index') }}">Assesment</a></li>
+                    </ul>
+                  </li>
+
                   <li class='hidden'><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>

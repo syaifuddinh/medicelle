@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="doctorCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="assesmentCreate" ng-cloak>
     <!-- top tiles -->
 
 
@@ -190,5 +190,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/master/doctor/doctorCreateCtrl.js"></script>
+<script src="{{ asset('') }}js/master/assesment/assesmentCreateCtrl.js"></script>
 

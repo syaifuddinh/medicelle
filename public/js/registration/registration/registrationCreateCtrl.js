@@ -1,14 +1,8 @@
 app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
   $scope.title = 'Tambah Registrasi';
-  $scope.formData = {
-    'patient' : {
-      'family' : {}
-    },
-    'detail' : {}
-  }
   $scope.data = {}
   $scope.doctor = []
-  $scope.formData.patient_type = 'UMUM'
+  
   var hours = [];
   for(i = 1;i <= 24;i++) {
     hours.push(
@@ -104,6 +98,21 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+  $scope.reset = function() {
+    $scope.formData = {
+      'patient' : {
+        'family' : {}
+      },
+      'detail' : {}
+    }
+    $scope.detail = {}
+    $scope.formData.patient_type = 'UMUM'
+    registration_detail_datatable.clear().draw()
+    window.scrollTo(0, 0)
+  }
+
+  $scope.reset()
 
   $scope.fillPatient = function() {
     $scope.is_new_patient = !$scope.is_new_patient
@@ -204,7 +213,6 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
 
   $scope.showPatients = function() {
     if(!$scope.is_new_patient) {
-      patient_datatable.ajax.reload()
       $('#patientModal').modal()
     }
   }
@@ -234,9 +242,18 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     $http[method](url, $scope.formData).then(function(data) {
       $rootScope.disBtn = false
       toastr.success("Data Berhasil Disimpan !");
-      setTimeout(function () {
-        window.location = baseUrl + '/registration'          
-      }, 1000)
+      if($scope.repeat == 0) {
+
+          setTimeout(function () {
+            window.location = baseUrl + '/registration'          
+          }, 1000)
+        } else {
+            if($scope.formData.id) {
+                window.location = baseUrl + '/registration/create'          
+            } else {
+                $scope.reset()
+            }
+        }
     }, function(error) {
       $rootScope.disBtn=false;
       if (error.status==422) {

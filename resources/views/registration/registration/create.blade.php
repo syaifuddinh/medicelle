@@ -16,6 +16,11 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-6">
+                        <span class='pull-right' ng-show='formData.id'>
+                            
+                            <label class='label label-primary'><i class='fa fa-thumb-tack'></i> <% formData.status_name %></label>
+                            <label class='label label-default'><i class='fa fa-calendar'></i> <% formData.date | fullDate %></label>
+                        </span>
                     </div>
                 </div>
 
@@ -269,9 +274,9 @@
                         <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-1">
                             <div class="btn-group">
 
-                                <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
-                                <button class="btn btn-warning btn-sm" type="button" ng-click='formData = {}'>Reset</button>
-                                <button type="button" ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Submit</button>
+                                <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
+                                <button type="button" ng-click='repeat = 1;submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan dan lanjutkan</button>
+                                <button type="button" ng-click='repeat = 0;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan dan keluar</button>
                             </div>
                         </div>
                     </div>

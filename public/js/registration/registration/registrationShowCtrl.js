@@ -1,6 +1,7 @@
 app.controller('registrationShow', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope,  $compile) {
   $scope.title = 'Detail Registrasi';
   $scope.formData = {}
+  $scope.data = {}
   var path = window.location.pathname
   id = path.replace(/.+\/(\d+)/, '$1');
   $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {

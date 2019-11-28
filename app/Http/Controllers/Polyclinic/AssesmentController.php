@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Registration;
+namespace App\Http\Controllers\Assesment;
 
-use App\Registration;
-use App\RegistrationDetail;
+use App\Assesment;
 use App\Contact;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class RegistrationController extends Controller
+class AssesmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +18,7 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        $registration = Registration::whereRaw('1=1')->select('id', 'code')->get();
+        $registration = Assesment::whereRaw('1=1')->select('id', 'code')->get();
         return Response::json($registration, 200);
     }
 
@@ -39,15 +38,13 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Registration $registration)
+    public function store(Request $request, Assesment $registration)
     {
         $request->validate([
             'patient.name' => 'required',
-            'patient.gender' => 'required',
             'detail' => 'required',
         ], [
             'patient.name.required' => 'Pasien tidak boleh kosong',
-            'patient.gender.required' => 'Jenis kelamin tidak boleh kosong',
             'detail.required' => 'Detail tidak boleh kosong'
         ]);
         DB::beginTransaction();
@@ -88,7 +85,7 @@ class RegistrationController extends Controller
         $detail = collect($request->detail);
         $detail = $detail->each(function($val) use($registration){
             $val['registration_id'] = $registration->id;
-            $registrationDetail = new RegistrationDetail();
+            $registrationDetail = new AssesmentDetail();
             $registrationDetail->fill($val);
             $registrationDetail->save();
         });
@@ -106,7 +103,7 @@ class RegistrationController extends Controller
      */
     public function show($id)
     {
-        $registration = Registration::with('patient.family', 'patient.city', 'pic:id,name', 'detail')->find($id);
+        $registration = Assesment::with('patient.family', 'patient.city', 'pic:id,name', 'detail')->find($id);
         return Response::json($registration, 200);
     }
 
@@ -116,7 +113,7 @@ class RegistrationController extends Controller
      * @param  \App\piece  $registration
      * @return \Illuminate\Http\Response
      */
-    public function edit(Registration $registration)
+    public function edit(Assesment $registration)
     {
         //
     }
@@ -138,7 +135,7 @@ class RegistrationController extends Controller
             'detail.required' => 'Detail tidak boleh kosong'
         ]);
         DB::beginTransaction();
-        $registration = Registration::find($id);
+        $registration = Assesment::find($id);
         // Validasi pasien
         if(!array_key_exists('id', $request->patient)) {
             $patient = new Contact();
@@ -173,11 +170,11 @@ class RegistrationController extends Controller
         $registration->pic_id = $request->patient_type == 'UMUM'? $request->family['id'] : $request->agency_id;
         $registration->save();
         // Update detail
-        RegistrationDetail::whereRegistrationId($id)->delete();
+        AssesmentDetail::whereAssesmentId($id)->delete();
         $detail = collect($request->detail);
         $detail = $detail->each(function($val) use($registration){
             $val['registration_id'] = $registration->id;
-            $registrationDetail = new RegistrationDetail();
+            $registrationDetail = new AssesmentDetail();
             $registrationDetail->fill($val);
             $registrationDetail->save();
         });
@@ -196,7 +193,7 @@ class RegistrationController extends Controller
     public function destroy($id)
     {
         DB::beginTransaction();
-        $registration = Registration::find($id);
+        $registration = Assesment::find($id);
         $registration->status = 3;
         $registration->save();
         DB::commit();
@@ -207,7 +204,7 @@ class RegistrationController extends Controller
     public function attend($id)
     {
         DB::beginTransaction();
-        $registration = Registration::find($id);
+        $registration = Assesment::find($id);
         $registration->status = 2;
         $registration->save();
         DB::commit();

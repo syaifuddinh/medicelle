@@ -77,6 +77,17 @@
     <script src="{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js"></script>
     <script src="{{ asset('') }}js/angular-init.js"></script>
     <script src="{{ asset('') }}js/custom_directive.js"></script>
-        
+    <script>
+        datatableError = 200
+        $.extend( $.fn.dataTable.defaults, {
+            ajax : {
+                'statusCode' : {
+                      500 : function(s, r, t, u) {
+                          $.ajax(this)
+                      }
+                  }
+            },
+        } );
+    </script>
   </body>
 </html>
