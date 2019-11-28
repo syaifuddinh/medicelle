@@ -10,7 +10,7 @@ use App\MedicalRecord;
 class Registration extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['assesment_id', 'medical_record_id', 'patient_id', 'patient_type'];
+    protected $fillable = ['assesment_id', 'medical_record_id', 'patient_id', 'patient_type', 'insurance_code', 'insurance_owner_name', 'plafon', 'family_type'];
     protected $appends = ['status_name'];
 
     public static function boot() {
@@ -53,6 +53,9 @@ class Registration extends Model
         }
     }
 
+    public function detail() {
+        return $this->hasMany('App\RegistrationDetail');
+    }
     public function medical_record() {
         return $this->belongsTo('App\MedicalRecord');
     }

@@ -150,26 +150,30 @@ class Contact extends Model
     }
 
     public function setDistrictIdAttribute($value) {
-        if(!preg_match('/\d+/', $value)) {
-            $d = District::create([
-                'name' => $value,
-                'city_id' => $this->attributes['city_id'] 
-            ]);
-            $this->attributes['district_id'] = $d->id;
-        } else {
-            $this->attributes['district_id'] = $value;
+        if($value != null) {
+            if(!preg_match('/\d+/', $value)) {
+                $d = District::create([
+                    'name' => $value,
+                    'city_id' => $this->attributes['city_id'] 
+                ]);
+                $this->attributes['district_id'] = $d->id;
+            } else {
+                $this->attributes['district_id'] = $value;
+            }
         }
     }
 
     public function setVillageIdAttribute($value) {
-        if(!preg_match('/\d+/', $value)) {
-            $v = Village::create([
-                'name' => $value,
-                'district_id' => $this->attributes['district_id'] 
-            ]);
-            $this->attributes['village_id'] = $v->id;
-        } else {
-            $this->attributes['village_id'] = $value;
+        if($value != null) {
+            if(!preg_match('/\d+/', $value)) {
+                $v = Village::create([
+                    'name' => $value,
+                    'district_id' => $this->attributes['district_id'] 
+                ]);
+                $this->attributes['village_id'] = $v->id;
+            } else {
+                $this->attributes['village_id'] = $value;
+            }
         }
     }
 

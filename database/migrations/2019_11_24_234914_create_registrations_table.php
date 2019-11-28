@@ -44,7 +44,7 @@ class CreateRegistrationsTable extends Migration
             $table->enum('family_type', ['ORANG TUA', 'DIRI SENDIRI', 'SUAMI/ISTRI', 'KELUARGA'])->nullable(true)->index();
             $table->string('code', 30)->nullable(false)->index();
             $table->string('insurance_code', 30)->nullable(true);
-            $table->string('insurance_owner_name', 130)->nullable(false);
+            $table->string('insurance_owner_name', 130)->nullable(true);
             $table->index('insurance_code', 'insurance_owner_name');
             $table->double('plafon')->nullable(false)->default(0)->index();
             $table->date('date')->nullable(false)->index();
