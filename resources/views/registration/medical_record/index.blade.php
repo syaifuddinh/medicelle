@@ -21,7 +21,7 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('medicalRecord.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          
                       </div>                    
                   </div>
                 </div>

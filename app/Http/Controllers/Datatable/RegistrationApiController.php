@@ -25,15 +25,11 @@ class RegistrationApiController extends Controller
     }
 
     public function medical_record(Request $request) {
-        $x = MedicalRecord::with('patient:id,name')->select('id', 'patient_id', 'date', 'main_complaint')
-        ->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
-
-        if($request->filled('status')) {
-            $x = $x->where('registrations.status', $request->status);
-        }
+        $x = MedicalRecord::with('patient:id,name')->select('id', 'patient_id', 'code', 'date', 'main_complaint')
+        ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
 
         if($request->draw == 1)
-            $x->orderBy('registrations.id', 'DESC');
+            $x->orderBy('medical_records.id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }

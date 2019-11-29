@@ -1,10 +1,10 @@
-app.controller('medicalRecord', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('medicalRecord', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/medical_record'
+      url : baseUrl+'/datatable/registration/medical_record'
     },
     buttons: [
       {
@@ -19,14 +19,15 @@ app.controller('medicalRecord', ['$scope', '$compile', '$http', function($scope,
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {data:"code", name:"code"},
+      {data:"patient.name", name:"patient.name"},
       {
-        data: null, 
-        orderable : false,
-        searchable : false,
-        className : 'text-center',
-        render : resp => resp.is_active == 1 ? '<label class="label label-success">Aktif</label>' : '<label class="label label-danger">Tidak Aktif</label>'
+        data:null, 
+        orderable:false,
+        searchable:false,
+        render:resp => $filter('fullDate')(resp.date)
       },
+      {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,
@@ -34,11 +35,7 @@ app.controller('medicalRecord', ['$scope', '$compile', '$http', function($scope,
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
-        ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/medical_record/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

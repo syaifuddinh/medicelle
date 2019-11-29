@@ -24,12 +24,15 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/create')->withId($id);
     })->name('edit');
     Route::get('/step/2/edit/{id}', function ($id){
-        return view('registration/medical_record/create')->withId($id);
+        return view('registration/medical_record/create-2')->withId($id);
     })->name('edit.2');
     Route::get('/step/3/edit/{id}', function ($id){
-        return view('registration/medical_record/create')->withId($id);
+        return view('registration/medical_record/create-3')->withId($id);
     })->name('edit.3');
     Route::get('/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);
     })->name('show');
+    Route::get('/', function (){
+        return view('registration/medical_record/index');
+    })->name('index');
 });

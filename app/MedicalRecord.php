@@ -28,4 +28,24 @@ class MedicalRecord extends Model
             $medicalRecord->updated_by = Auth::user()->id;
         });
     }
+
+    public function patient() {
+        return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);
+    }
+
+    public function disease_history() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsDiseaseHistory(1);
+    }
+
+    public function family_disease_history() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsFamilyDiseaseHistory(1);
+    }
+
+    public function pain_history() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsPainHistory(1);
+    }
+
+    public function pain_cure_history() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsPainCureHistory(1);
+    }
 }

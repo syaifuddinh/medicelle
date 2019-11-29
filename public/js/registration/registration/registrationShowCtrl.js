@@ -52,6 +52,7 @@ app.controller('registrationShow', ['$scope', '$http', '$rootScope', '$compile',
 
 
   registration_detail_datatable = $('#registration_detail_datatable').DataTable({
+    dom: 'rt',
     'columns' : [
     {
       data : null,
