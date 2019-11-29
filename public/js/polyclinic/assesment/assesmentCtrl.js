@@ -1,11 +1,10 @@
-app.controller('disease_category', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/disease_category',
-      data : x => Object.assign(x, $scope.formData)
+      url : baseUrl+'/datatable/master/assesment'
     },
     buttons: [
       {
@@ -13,19 +12,21 @@ app.controller('disease_category', ['$scope', '$compile', '$http', function($sco
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Kategori Penyakit - '+new Date(),
+        'filename' : 'Assesment - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Kategori Penyakit'
+        'title' : 'Assesment'
       },
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
+      {data:"registration.code", name:"registration.code"},
+      {data:"registration.medical_record,code", name:"registration.medical_record,code"},
+      {data:"patient.name", name:"patient.name"},
       {
-        data:"description", 
-        searchable :false,
-        orderable :false,
+        data:null, 
+        searchable:false,
+        orderable:false,
+        render:resp => $filter('fullDate')(resp.date)
       },
       {
         data: null, 
@@ -45,7 +46,7 @@ app.controller('disease_category', ['$scope', '$compile', '$http', function($sco
           resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
           : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/disease_category/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/disease_category/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/assesment/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -54,14 +55,10 @@ app.controller('disease_category', ['$scope', '$compile', '$http', function($sco
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
-  $scope.filter = function() {
-    oTable.ajax.reload()
-  }
-
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/master/disease_category/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/master/assesment/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data Berhasil dinon-aktifkan !");
         }, function(error) {
@@ -80,7 +77,7 @@ app.controller('disease_category', ['$scope', '$compile', '$http', function($sco
   $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/disease_category/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/assesment/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
               oTable.ajax.reload();
           }, function(error) {

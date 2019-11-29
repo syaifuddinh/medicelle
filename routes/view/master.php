@@ -203,6 +203,9 @@ Route::name('patient.')->prefix('patient')
     Route::get('/{id}', function ($id){
         return view('master/patient/show')->withId($id);
     })->name('show');
+    Route::get('/{id}/medical_record', function ($id){
+        return view('registration/medical_record/index')->withId($id);
+    })->name('show');
 });
 
 Route::name('disease.')->prefix('disease')

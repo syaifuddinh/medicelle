@@ -9,7 +9,7 @@ use DB;
 class MedicalRecord extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['code', 'medical_record_id', 'patient_id'];
+    protected $fillable = ['code', 'medical_record_id', 'patient_id', 'step', 'main_complaint'];
     public static function boot() {
         parent::boot();
         static::creating(function(MedicalRecord $medicalRecord) {

@@ -9,6 +9,7 @@ use App\Polyclinic;
 use App\Piece;
 use App\Discount;
 use App\Contact;
+use App\Item;
 use DataTables;
 
 class MasterApiController extends Controller
@@ -103,7 +104,7 @@ class MasterApiController extends Controller
     }
 
     public function supplier(Request $request) {
-        $x = Contact::supplier()->with('city', 'contact:id,name')->select('id', 'code', 'name', 'city_id', 'phone', 'contact_id', 'fax', 'is_active');
+        $x = Contact::supplier()->with('city', 'contact:id,name')->select('contacts.id', 'contacts.code', 'contacts.name', 'contacts.city_id', 'contacts.phone', 'contacts.contact_id', 'contacts.fax', 'contacts.is_active');
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
@@ -114,7 +115,7 @@ class MasterApiController extends Controller
     }
 
     public function agency(Request $request) {
-        $x = Contact::agency()->with('city', 'contact:id,name')->select('id', 'code', 'name', 'city_id', 'phone', 'contact_id', 'agency_type', 'is_active');
+        $x = Contact::agency()->with('city', 'contact:id,name')->select('contacts.id', 'contacts.code', 'contacts.name', 'contacts.city_id', 'contacts.phone', 'contacts.contact_id', 'contacts.agency_type', 'contacts.is_active');
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
@@ -139,12 +140,32 @@ class MasterApiController extends Controller
     public function patient(Request $request) {
         if($request->filled('is_display_all')) {
             if($request->is_display_all == 1) {
-                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job')->limit(6)->offset($request->start);
+                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job');
             }
         } else {
             $x = Contact::patient()->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
         }
 
+        // die($request->is_active);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function disease_category(Request $request) {
+        $x = Item::disease_category()->select('id', 'code', 'name', 'description', 'is_active');
+        // die($request->is_active);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function disease(Request $request) {
+        $x = Item::disease()->with('category:id,code,name')->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)

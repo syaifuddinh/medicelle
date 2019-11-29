@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="disease_categoryCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="diseaseCreate" ng-cloak>
   <!-- top tiles -->
 
 
@@ -22,10 +22,20 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
             <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori penyakit<span class="required">*</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select class="form-control" data-placeholder-text-single="'Pilih Kategori Penyakit'" required='required' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.disease_category">
+                          <option value=""></option>
+                      </select>
+                  </div>
+              </div>
+            
+            <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <input type="text"  ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" autofocus>
+                <input type="text" id="first-name" ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12">
               </div>
             </div>
             <div class="form-group">
@@ -71,5 +81,5 @@
   <!-- ============================================================== -->
 
   @include('footer')
-  <script src="{{ asset('') }}js/master/disease_category/diseaseCategoryCreateCtrl.js"></script>
+  <script src="{{ asset('') }}js/master/disease/diseaseCreateCtrl.js"></script>
 

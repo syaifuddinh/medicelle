@@ -1,15 +1,10 @@
-app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-    $scope.title = 'Detail Pasien';
+app.controller('diseaseShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+    $scope.title = 'Detail Penyakit';
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
-    $http.get(baseUrl + '/controller/master/patient/' + id).then(function(data) {
+    $http.get(baseUrl + '/controller/master/disease/' + id).then(function(data) {
             $scope.formData = data.data
-            if(data.data.medical_record_id) {
-                var medical_record_button = $('#medicalRecordButton')
-                var medical_record_link = medical_record_button.attr('href')
-                medical_record_button.attr('href', medical_record_link + '/' + data.data.medical_record_id);
-            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -26,7 +21,7 @@ app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope,
     $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
       if(is_delete)
-          $http.delete(baseUrl + '/controller/master/patient/' + id).then(function(data) {
+          $http.delete(baseUrl + '/controller/master/disease/' + id).then(function(data) {
               toastr.success("Data Berhasil dinon-aktifkan !");
               setTimeout(function () {
                   location.reload();
@@ -47,7 +42,7 @@ app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope,
     $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/patient/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/disease/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
               setTimeout(function () {
                   location.reload();

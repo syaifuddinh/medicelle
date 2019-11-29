@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Assesment;
+namespace App\Http\Controllers\Master;
 
-use App\Assesment;
-use App\Contact;
+use App\MedicalRecord;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class AssesmentController extends Controller
+class DiseaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class AssesmentController extends Controller
      */
     public function index()
     {
-        $assesment = Assesment::whereRaw('1=1')->select('id', 'code')->get();
-        return Response::json($assesment, 200);
+        $item = MedicalRecord::with('patient:id,name')->get();
+        return Response::json($item, 200);
     }
 
     /**
@@ -38,29 +37,29 @@ class AssesmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Assesment $assesment)
+    public function store(Request $request, MedicalRecord $item)
     {
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\piece  $assesment
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $assesment = Assesment::with('registration:id,code', 'registration.medical_record:id,code', 'patient.id:name')->find($id);
-        return Response::json($assesment, 200);
+        $x = MedicalRecord::with('category:id,name,code')->find($id);
+        return Response::json($x, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\piece  $assesment
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Assesment $assesment)
+    public function edit(MedicalRecord $item)
     {
         //
     }
@@ -69,45 +68,50 @@ class AssesmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\piece  $assesment
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        DB::beginTransaction();
-        $assesment = Assesment::find($id);
+        $request->validate([
+            'name' => 'required',
+        ], [
+            'name.required' => 'Nama tidak boleh kosong',
+        ]);
 
-        $assesment->fill($request->all());
-        $assesment->save();
-        
+        DB::beginTransaction();
+        $item = MedicalRecord::find($id);
+        $item->fill($request->all());
+        $item->save();
+        DB::commit();
+
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\piece  $assesment
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         DB::beginTransaction();
-        $assesment = Assesment::find($id);
-        $assesment->status = 3;
-        $assesment->save();
+        $item = MedicalRecord::find($id);
+        $item->is_active = 0;
+        $item->save();
         DB::commit();
 
-        return Response::json(['message' => 'Status pasien saat ini adalah dibatalkan'], 200);
+        return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
 
-    public function attend($id)
+    public function activate(MedicalRecord $item)
     {
         DB::beginTransaction();
-        $assesment = Assesment::find($id);
-        $assesment->status = 2;
-        $assesment->save();
+        $item->is_active = 1;
+        $item->save();
         DB::commit();
 
-        return Response::json(['message' => 'Status pasien saat ini adalah telah hadir'], 200);
+        return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
 use App\MedicalRecord;
+use App\Assesment;
+use App\Contact;
 
 class Registration extends Model
 {
@@ -16,6 +18,7 @@ class Registration extends Model
     public static function boot() {
         parent::boot();
         static::creating(function(Registration $registration) {
+            DB::beginTransaction();
             $registration->date = date('Y-m-d');
             $registration->created_by = Auth::user()->id;
             $id = DB::table('registrations')->count('id') + 1;
@@ -29,6 +32,21 @@ class Registration extends Model
             $medicalRecord->fill($registration->toArray());
             $medicalRecord->save();
             $registration->medical_record_id = $medicalRecord->id;
+
+            // Update medical record id to patient
+            $patient = Contact::find($registration->patient_id);
+            $patient->medical_record_id = $medicalRecord->id;
+            $patient->save();
+            
+            DB::commit();
+        });
+
+        static::created(function(Registration $registration) {
+            // Generate assesment
+            $assesment = new Assesment();
+            $assesment->patient_id = $registration->patient_id;
+            $assesment->registration_id = $registration->id;
+            $assesment->save();
         });
 
         static::updating(function(Registration $registration) {

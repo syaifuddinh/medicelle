@@ -1,12 +1,11 @@
-app.controller('disease_categoryCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-    $scope.title = 'Tambah Kategori Penyakit';
+app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+    $scope.title = 'Tambah Assesment';
     $scope.formData = {}
-    $scope.data = {}
     var path = window.location.pathname;
     if(/edit/.test(path)) {
-        $scope.title = 'Edit Kategori Penyakit';
+        $scope.title = 'Edit Assesment';
         id = path.replace(/.+\/(\d+)/, '$1');
-        $http.get(baseUrl + '/controller/master/disease_category/' + id).then(function(data) {
+        $http.get(baseUrl + '/controller/master/assesment/' + id).then(function(data) {
             $scope.formData = data.data
         }, function(error) {
           $rootScope.disBtn=false;
@@ -22,20 +21,19 @@ app.controller('disease_categoryCreate', ['$scope', '$http', '$rootScope', funct
         });
     }
 
-
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/master/disease_category';
+      var url = baseUrl + '/controller/master/assesment';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/master/disease_category/' + id;
+          var url = baseUrl + '/controller/master/assesment/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/disease_category'          
+          window.location = baseUrl + '/assesment'          
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

@@ -190,5 +190,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/master/assesment/assesmentCreateCtrl.js"></script>
+<script src="{{ asset('') }}js/polyclinic/assesment/assesmentCreateCtrl.js"></script>
 

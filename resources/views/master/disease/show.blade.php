@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="disease_categoryShow">
+        <div class="right_col" role="main" ng-controller="diseaseShow">
           <!-- top tiles -->
           
 
@@ -18,7 +18,7 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right">
                           
-                          <a href='{{ route("disease_category.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
+                          <a href='{{ route("disease.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
                           <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger" ng-click='delete({{ $id }})'>Non-aktifkan</button>
                           <button type="button" ng-if='formData.is_active == 0' class="btn btn-primary" ng-click='activate({{ $id }})'>Aktifkan</button>
                       </div>
@@ -29,10 +29,17 @@
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
 
                       <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kategori penyakit
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <% formData.category.name %>
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kode
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <% formData.code %>
+                          <% formData.category.code %>.<% formData.code %>
                         </div>
                       </div>
                       <div class="form-group">
@@ -84,5 +91,5 @@
     <!-- ============================================================== -->
   
     @include('footer')
-    <script src="{{ asset('') }}js/master/disease_category/diseaseCategoryShowCtrl.js"></script>
+    <script src="{{ asset('') }}js/master/disease/diseaseShowCtrl.js"></script>
 

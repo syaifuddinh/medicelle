@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="patientShow">
+<div class="right_col" role="main" ng-controller="medicalRecordShow">
     <!-- top tiles -->
 
 
@@ -18,8 +18,7 @@
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
 
-                            <a id='medicalRecordButton' ng-show='formData.medical_record_id' href='{{ route("medical_record.edit", ["id" => ""]) }}' class="btn btn-info" >Isi rekam medis</a>
-                            <a href='{{ route("patient.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
+                            <a href='{{ route("medicalRecord.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
                             <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger" ng-click='delete({{ $id }})'>Non-aktifkan</button>
                             <button type="button" ng-if='formData.is_active == 0' class="btn btn-primary" ng-click='activate({{ $id }})'>Aktifkan</button>
                         </div>
@@ -37,7 +36,7 @@
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="col-md-9 col-sm-9 col-xs-12">
 
-                                            <% formData.patient_type %> <% formData.name %>
+                                            <% formData.medicalRecord_type %> <% formData.name %>
                                         </div>    
 
                                     </div>
@@ -269,5 +268,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/master/patient/patientShowCtrl.js"></script>
+<script src="{{ asset('') }}js/registration/medical_record/medicalRecordShowCtrl.js"></script>
 

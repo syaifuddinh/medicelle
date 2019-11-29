@@ -3,8 +3,15 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="assesment">
+        <div class="right_col" role="main" ng-controller="disease">
           <!-- top tiles -->
+          <nav style='margin-bottom:2mm'>
+            
+             <ul class="nav nav-pills">
+                <li class="active"><a href="{{ route('disease.index') }}">Penyakit</a></li>
+                <li><a href="{{ route('disease_category.index') }}">Kategori penyakit</a></li>
+              </ul> 
+          </nav>
           
 
           <div class="row">
@@ -26,47 +33,23 @@
                               Tidak aktif  
                               </h5>
                             </label>
+
+                            <div class="form-group">
+                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
+                              </div>
                             </div>
-
-
                           </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Spesialisasi
-                </label>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                  <select class="form-control" data-placeholder-text-single="'Pilih Spesialisasi'" required='required' chosen allow-single-deselect="false" ng-model="formData.specialization_id" ng-options="c.id as c.name for c in data.specialization" ng-change="filter()">
-                      <option value=""></option>
-                  </select>
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Poliklinik
-                </label>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                  <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'" required='required' chosen allow-single-deselect="false" ng-model="formData.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic" ng-change="filter()">
-                      <option value=""></option>
-                  </select>
-
-                  <div class="form-group">
-                      <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
-                  </div>
-                </div>
-              </div>
-
                         
                     </form>
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Assesment</h3>
+                    <h3>Penyakit</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('assesment.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          <a href="{{ route('disease.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                       </div>                    
                   </div>
                 </div>
@@ -75,10 +58,10 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. Registrasi</th>
-                          <th>No. Rekam Medis</th>
-                          <th>Pasien</th>
-                          <th>Tanggal</th>
+                          <th>Kode</th>
+                          <th>Nama</th>
+                          <th>Keterangan</th>
+                          <th>Kategori penyakit</th>
                           <th>Status</th>
                           <th></th>
                         </tr>
@@ -103,5 +86,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/polyclinic/assesment/assesmentCtrl.js"></script>
+    <script src="{{ asset('') }}js/master/disease/diseaseCtrl.js"></script>
 

@@ -60,10 +60,7 @@
                         <tr>
                           <th>Kode</th>
                           <th>Nama</th>
-                          <th>Kota</th>
-                          <th>Telepon</th>
-                          <th>Fax</th>
-                          <th>Kontak</th>
+                          <th>Keterangan</th>
                           <th>Status</th>
                           <th></th>
                         </tr>
@@ -88,5 +85,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/master/disease_category/disease_categoryCtrl.js"></script>
+    <script src="{{ asset('') }}js/master/disease_category/diseaseCategoryCtrl.js"></script>
 

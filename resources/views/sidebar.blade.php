@@ -17,7 +17,7 @@
                       <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
                       <li><a href="{{ route('discount.index') }}">Promo</a></li>
                       <li><a href="{{ route('piece.index') }}">Satuan</a></li>
-                      <li><a href="{{ route('disease_category.index') }}">Penyakit(ICD-10)</a></li>
+                      <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
                       <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
                       <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                     </ul>

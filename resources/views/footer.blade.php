@@ -88,6 +88,35 @@
                   }
             },
         } );
+        $(document).ready(function(){
+            $(window).bind('keydown', function(e){
+                if(e.ctrlKey && e.which == 32) {
+                    createButton = $('[href*="create"]')
+                    if(createButton.length > 0) 
+                        window.location = createButton.attr('href')
+                } else if(e.ctrlKey && e.which == 191) {
+                    filterButton = $('[ng-click="isFilter = !isFilter"]')
+                    if(filterButton.length > 0) 
+                        filterButton.trigger('click')
+                } else if(e.ctrlKey && e.which == 69) {
+                    exportExcelButton = $('.buttons-excel')
+                    if(exportExcelButton.length > 0) 
+                        exportExcelButton.trigger('click')
+                } else if(e.ctrlKey && e.shiftKey) {
+                    var key = parseInt( String.fromCharCode(e.which) )
+                    var dt = window['oTable']
+                    if(dt && (key > -1 && key < 10)) {
+                        key -= 1;
+                        key = key == -1 ? 9 : key
+                        dt = $(dt.table().node()).find('tbody')
+                        var dt_row = dt.find('tr:eq(' + key + ')')
+                        var i = dt_row.find('.fa-file-text-o')
+                        var a = i.parents('a')
+                        window.location = a.attr('href')
+                    }
+                }
+            })
+        });
     </script>
   </body>
 </html>

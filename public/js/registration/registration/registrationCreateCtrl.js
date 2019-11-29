@@ -38,6 +38,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       url : baseUrl+'/datatable/master/patient',
       data : function(d) {
         d.is_display_all = 1
+        d.length = 6
 
         return d
       }

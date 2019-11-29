@@ -38,6 +38,12 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('patient/activate/{id}', 'PatientController@activate');
         Route::resource('patient', 'PatientController');
+
+        Route::put('disease/activate/{id}', 'DiseaseController@activate');
+        Route::resource('disease', 'DiseaseController');
+
+        Route::put('disease_category/activate/{id}', 'DiseaseCategoryController@activate');
+        Route::resource('disease_category', 'DiseaseCategoryController');
     });
 });
 

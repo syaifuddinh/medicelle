@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Piece;
+use App\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class PieceController extends Controller
+class DiseaseCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class PieceController extends Controller
      */
     public function index()
     {
-        $piece = Piece::whereIsActive(1)->select('id', 'code', 'name')->get();
-        return Response::json($piece, 200);
+        $item = Item::disease_category()->whereIsActive(1)->select('id', 'code', 'name')->get();
+        return Response::json($item, 200);
     }
 
     /**
@@ -37,18 +37,19 @@ class PieceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Piece $piece)
+    public function store(Request $request, Item $item)
     {
         $request->validate([
-            'name' => 'required|unique:pieces,name',
+            'name' => 'required|unique:items,name',
         ], [
-            'name.unique' => 'Nama sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 
         DB::beginTransaction();
-        $piece->fill($request->all());
-        $piece->save();
+        $item->fill($request->all());
+        $item->is_disease = 1;
+        $item->is_category = 1;
+        $item->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
@@ -56,21 +57,22 @@ class PieceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\piece  $piece
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Piece $piece)
+    public function show($id)
     {
-        return Response::json($piece, 200);
+        $x = Item::find($id);
+        return Response::json($x, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\piece  $piece
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Piece $piece)
+    public function edit(Item $item)
     {
         //
     }
@@ -79,21 +81,21 @@ class PieceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\piece  $piece
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, piece $piece)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:pieces,name,' . $piece->id,
+            'name' => 'required',
         ], [
-            'name.unique' => 'Nama sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 
         DB::beginTransaction();
-        $piece->fill($request->all());
-        $piece->save();
+        $item = Item::find($id);
+        $item->fill($request->all());
+        $item->save();
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -102,24 +104,26 @@ class PieceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\piece  $piece
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Piece $piece)
+    public function destroy($id)
     {
         DB::beginTransaction();
-        $piece->is_active = 0;
-        $piece->save();
+        $item = Item::findOrFail($id);
+        $item->is_active = 0;
+        $item->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
 
-    public function activate(Piece $piece)
+    public function activate($id)
     {
         DB::beginTransaction();
-        $piece->is_active = 1;
-        $piece->save();
+        $item = Item::findOrFail($id);
+        $item->is_active = 1;
+        $item->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
