@@ -27,6 +27,8 @@ class CreateMedicalRecordDetailsTable extends Migration
             $table->string('emergence_time', 70)->nullable(true)->index();
             $table->string('side_effect', 170)->nullable(true)->index();
 
+            $table->integer('is_unknown')->nullable(false)->default(0)->index();
+            $table->integer('is_allergy_history')->nullable(false)->default(0)->index();
             $table->integer('is_disease_history')->nullable(false)->default(0)->index();
             $table->integer('is_family_disease_history')->nullable(false)->default(0)->index();
             $table->integer('is_pain_history')->nullable(false)->default(0)->index();
@@ -40,7 +42,7 @@ class CreateMedicalRecordDetailsTable extends Migration
               ->references('id')->on('medical_records')
               ->onDelete('cascade');
         });
-        Schema::create('medical_records', function (Blueprint $table) {
+        Schema::table('medical_records', function (Blueprint $table) {
             $table->integer('is_disturb')->nullable(false)->default(0);
         });
     }
@@ -53,5 +55,8 @@ class CreateMedicalRecordDetailsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('medical_record_details');
+        Schema::table('medical_records', function (Blueprint $table) {
+            $table->dropColumn('is_disturb');
+        });
     }
 }

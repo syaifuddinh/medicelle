@@ -32,6 +32,7 @@
                          <ul class="nav nav-pills">
                             <li class="active"><a href="#">Langkah 1</a></li>
                             <li><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
+                            <li><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 3</a></li>
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>
@@ -148,19 +149,19 @@
                         <h2>Skrining nyeri</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     
                                     <label>Lokasi nyeri</label>
                                     
                                     <input type="text" class='form-control' ng-model='pain_history.pain_location'>
                                 </div>
-                                <div class="form-group col-md-4 mg-r2">
+                                <div class="form-group col-md-6">
                                     
                                     <label>Kualitas nyeri</label>
                                     <div class="input-group">
                                         <span ng-show='!is_other_pain_type'>
                                             
-                                            <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-model="pain_history.pain_type">
+                                            <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Kualitas Nyeri'"  chosen allow-single-deselect="false" ng-model="pain_history.pain_type">
                                                 <option value=""></option>
                                                 <option value="MENGIRIS">Mengiris</option>
                                                 <option value="MENUSUK">Menusuk</option>
@@ -175,12 +176,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
+                                
+                            </div>
+                            
+                            <div class="col-md-12" style='display:flex'>
+                                
+                                <div class="form-group col-md-6">
                                     
                                     <label>Lamanya nyeri</label>
                                     <input type="text" class='form-control' ng-model='pain_history.pain_duration'>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     
                                     <label>Kapan nyeri timbul ?</label>
                                     <div class="input-group">
@@ -202,6 +208,7 @@
                                             <td>Lokasi nyeri</td>
                                             <td>Kualitas nyeri</td>
                                             <td>Lamanya nyeri</td>
+                                            <td>Kapan nyeri timbul ?</td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -216,18 +223,18 @@
                         <h2>Obat nyeri yang pernah diminum</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3 mg-r2">
                                     
                                     <label>Nama obat</label>
                                     
                                     <input type="text" class='form-control' ng-model='pain_cure_history.cure'>
                                 </div>
                                 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-5">
                                     
                                     <label>Mulai kapan ?</label>
                                     <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='pain_cure_history.emergence_time' datepick>
+                                        <input type="text" class='form-control' ng-model='pain_cure_history.emergence_time'>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitPainCureHistory()' ng-disabled='!pain_cure_history.cure'>Tambah</button>
                                         </div>
@@ -253,21 +260,30 @@
                         </div>
                         <div class="ln_solid"></div>
                             
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Apakah nyeri menganggu aktivitas<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <label class="radio-inline">
-                                      <input type="radio" ng-model="formData.is_disturb" name='gender' ng-value='"1"'>
-                                      <h5>Ya</h5>
-                                    </label>
-                                     <label class="radio-inline">
-                                          <input type="radio" ng-model="formData.is_disturb" ng-value='"0"'>
-                                          <h5>Tidak</h5>
-                                     </label>
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12">Apakah nyeri menganggu aktivitas<span class="required">*</span>
+                                </label>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <label class="radio-inline">
+                                  <input type="radio" ng-model="formData.is_disturb" ng-value='1'>
+                                  <h5>Ya</h5>
+                                </label>
+                                 <label class="radio-inline">
+                                      <input type="radio" ng-model="formData.is_disturb" ng-value='0'>
+                                      <h5>Tidak</h5>
+                                 </label>
                                 </div>
+                            </div>
 
+                            <div class="form-group">
+                                <label>Skala nyeri</label>
+                                <a href="#" class='btn btn-xs btn-primary pull-right' id='pain_status'>
+                                    <%
+                                        formData.pain_score == 0 ? 'Tidak ada rasa nyeri' : (formData.pain_score == 1 ? 'Nyeri seperti gatal gigitan nyamuk' : (formData.pain_score == 2 ? 'Terasa nyeri seperti dicubit' : ''))
+                                    %>
+                                </a>
+                                <rzslider rz-slider-model="formData.pain_score" rz-slider-options="{floor:0, ceil:10}" ></rzslider>
+                            </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">

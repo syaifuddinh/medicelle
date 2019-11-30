@@ -31,54 +31,137 @@
             
                          <ul class="nav nav-pills">
                             <li><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Langkah 1</a></li>
-                            <li class="active"><a href="#">Langkah 2</a></li>
-                            <li><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 3</a></li>
+                            <li ><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 2</a></li>
+                            <li class="active"><a href="#">Langkah 3</a></li>
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>
-                        <h2>Alergi obat & reaksi efek samping</h2>
+                        <h2>Maternitas</h2>
+
                         <div class="row">
-                            <div class="col-md-12" style='display:flex'>
+                            <div class="col-md-6">
                                 
-                                <div class="form-group col-md-5 mg-r2">
-                                    
-                                    <label>Obat / makanan / lainnya</label>
-                                    <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='allergy_history.cure' ng-show='!allergy_history.is_unknown'>
-                                        <input readonly type="text" class='form-control' value='Tidak diketahui'  ng-show='allergy_history.is_unknown'>
-                                        <div class="input-group-addon" ng-click='allergy_history.is_unknown = !allergy_history.is_unknown'>
-                                            <i class="fa fa-close" ng-show='!allergy_history.is_unknown'></i>
-                                            <i class="fa fa-pencil" ng-show='allergy_history.is_unknown'></i>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Menarche usia
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-7 mg-r2">
-
-                                    <label>Reaksi</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
-                                        <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'>Tambah</button>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Siklus haid
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.siklus_haid' class="form-control col-md-7 col-xs-12">
                                     </div>
-
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Jumlah pemakaian pembalut/hr
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  only-num ng-model='formData.pads_qty' class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Lamanya
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" ng-model='formData.pads_duration' class="form-control col-md-7 col-xs-12">
+                                    </div>
                                 </div>
                             </div>
-                            
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Apakah teratur ?
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <label class="radio-inline">
+                                      <input type="radio" ng-model="formData.is_tidy" ng-value='1'>
+                                      <h5>Ya</h5>
+                                    </label>
+                                     <label class="radio-inline">
+                                          <input type="radio" ng-model="formData.is_tidy" ng-value='0'>
+                                          <h5>Tidak</h5>
+                                     </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">HPHT
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.hpht' class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Keluhan haid
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <textarea ng-model='formData.haid_complaint' class="form-control"></textarea>   
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
 
+                        <div class="ln_solid"></div>
+                        <h2>Riwayat perkawinan</h2>
+
                         <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id='allergy_history_datatable'>
-                                    <thead>
-                                        <tr>
-                                            <td>Obat</td>
-                                            <td>Reaksi</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Status
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.marriage_status' class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Lama menikah
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                        <h2>Riwayat KB</h2>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Pernah KB ?
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <label class="radio-inline">
+                                            <input type="radio" ng-model='formData.is_pernah_kb' ng-value='1'>
+                                            Ya
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" ng-model='formData.is_pernah_kb' ng-value='0'>
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Lama menikah
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

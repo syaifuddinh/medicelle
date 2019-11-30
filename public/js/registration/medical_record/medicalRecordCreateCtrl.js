@@ -1,7 +1,7 @@
 app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
     $scope.title = 'Form Rekam Medis';
     $scope.data = {}
-    
+    $scope.priceSlider = 209
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
@@ -12,10 +12,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
-        disease_history_datatable.rows.add(data.data.disease_history).draw()
-        family_disease_history_datatable.rows.add(data.data.family_disease_history).draw()
-        pain_history_datatable.rows.add(data.data.pain_history).draw()
-        pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
+        if(step == 1){
+
+          disease_history_datatable.rows.add(data.data.disease_history).draw()
+          family_disease_history_datatable.rows.add(data.data.family_disease_history).draw()
+          pain_history_datatable.rows.add(data.data.pain_history).draw()
+          pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
+        } else if(step == 2) {
+
+        }
     }, function(error) {
       $rootScope.disBtn=false;
       if (error.status==422) {
@@ -35,9 +40,49 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.disease_history = {}
   }
 
+  $scope.changePainStatus = function() {
+    $scope.formData.pain_score = parseInt($scope.formData.pain_score)
+    if($scope.formData.pain_score  == 0) {
+          $scope.pain_status = 'Tidak ada rasa nyeri'
+      } else if($scope.formData.pain_score  == 1) {
+          $scope.pain_status = 'Nyeri seperti gatal gigitan nyamuk'
+      } else if($scope.formData.pain_score == 2) {
+          $scope.pain_status = 'Terasa nyeri seperti dicubit'
+      } else if($scope.formData.pain_score == 3) {
+          $scope.pain_status = 'Nyeri sangat terasa seperti ditonjok di bagian wajah atau disuntik'
+      } else if($scope.formData.pain_score == 4) {
+          $scope.pain_status = 'Nyeri yang kuat seperti sakit gigi dan disengat tawon'
+      } else if($scope.formData.pain_score == 5) {
+          $scope.pain_status = 'Nyeri yang tertekan seperti terkilir, keseleo'
+      } else if($scope.formData.pain_score == 6) {
+          $scope.pain_status = 'Nyeri yang seperti tertusuk-tusuk menyebabkan tidak fokus dan komunikasi terganggu'
+      } else if($scope.formData.pain_score == 7) {
+          $scope.pain_status = 'Nyeri yang menusuk begitu kuat menyebabkan tidak bisa berkomunikasi dengan baik dan tidak mampu melakukan perawatan sendiri'
+      } else if($scope.formData.pain_score == 8) {
+          $scope.pain_status = 'Nyeri yang begitu kuat sehingga menyebabkan tidak bisa berfikir jernih'
+      } else if($scope.formData.pain_score == 9) {
+          $scope.pain_status = 'Nyeri yang menyiksa tak tertahankan sehingga ingin sehingga menghilangkan nyerinya'
+      } else if($scope.formData.pain_score == 10) {
+          $scope.pain_status = 'nyeri yang tidak terbayangkan dan tidak dapat diungkapkan sampai tidak sadarkan diri'
+      }
+      $compile(angular.element($('#pain_status')[0]).contents())($scope);
+  }
+
+  $scope.$on('slideEnded', function() {
+      // user finished sliding a handle
+      $scope.changePainStatus()
+  })
+
   $scope.submitFamilyDiseaseHistory = function() {
       family_disease_history_datatable.row.add($scope.family_disease_history).draw()
       $scope.family_disease_history = {}
+  }
+
+
+  $scope.submitAllergyHistory = function() {
+      $scope.allergy_history.is_unknown = $scope.allergy_history.is_unknown ? '1' : '0';
+      allergy_history_datatable.row.add($scope.allergy_history).draw()
+      $scope.allergy_history = {}
   }
 
 
@@ -69,6 +114,25 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
 
+  allergy_history_datatable = $('#allergy_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    {
+      data : null,
+      render : resp => resp.is_unknown == 1 ? 'Tidak diketahui' : resp.cure
+    },
+    {data : 'side_effect'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deletePainHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
 
   pain_history_datatable = $('#pain_history_datatable').DataTable({
     dom: 'rt',
@@ -76,6 +140,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {data : 'pain_location'},
     {data : 'pain_type'},
     {data : 'pain_duration'},
+    {data : 'emergence_time'},
     {
       data : null,
       className : 'text-center',
@@ -164,12 +229,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.reset = function() {
       $scope.formData = {
         code : $scope.code,
-        patient : $scope.patient
+        patient : $scope.patient,
+        pain_score : 0
       }
       $scope.disease_history = {}
       $scope.family_disease_history = {}
       $scope.pain_history = {}
       $scope.pain_cure_history = {}
+      $scope.allergy_history = {}
+      $scope.pain_status = 'Tidak ada rasa nyeri'
 
       disease_history_datatable.clear().draw();
       family_disease_history_datatable.clear().draw();
@@ -178,6 +246,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       window.scrollTo(0, 0)
   }
   $scope.reset()
+    
+  $scope.deleteAllergyHistory = function(e) {
+    var tr = $(e).parents('tr');
+    allergy_history_datatable.row(tr).remove().draw()
+  }
     
   $scope.deletePainHistory = function(e) {
     var tr = $(e).parents('tr');

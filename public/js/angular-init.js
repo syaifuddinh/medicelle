@@ -1,4 +1,4 @@
-var app = angular.module('klinikApp', ['localytics.directives'], function($interpolateProvider) {
+var app = angular.module('klinikApp', ['localytics.directives', 'rzSlider'], function($interpolateProvider) {
   $interpolateProvider.startSymbol('<%');
   $interpolateProvider.endSymbol('%>');
 });
