@@ -31,7 +31,7 @@
             
                          <ul class="nav nav-pills">
                             <li><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Langkah 1</a></li>
-                            <li ><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 2</a></li>
+                            <li ><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
                             <li class="active"><a href="#">Langkah 3</a></li>
                           </ul> 
                       </nav>
@@ -162,138 +162,6 @@
                                         <input type="text"  ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="ln_solid"></div>
-                        <div class="row">
-                            
-                            <div class="col-md-12" style='display:flex;align-items:center;justify-content:space-between;'>
-                                <h2>Skrining resiko jatuh</h2>
-                                <div>
-                                    
-                                    <a class='btn btn-dark pull-right btn-xs'>Tidak Beresiko</a>
-                                    <a class='btn btn-primary pull-right btn-xs'>Diperlukan operasi</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id='fallen'>
-                                    <thead>
-                                        <tr>
-                                            <td style='width:30mm'>Kondisi pasien</td>
-                                            <td style='width:70mm'>Skala</td>
-                                            <td>Nilai</td>
-                                            <td>Keterangan</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Riwayat jatuh</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.fallen" ng-value='1'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.fallen" ng-value='0'>
-                                                      <h5>Tidak</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.fallen == 1 ? 25 : 0 %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description'></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diagnosa sekunder</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='1'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.secondary_diagnose" ng-value='0'>
-                                                      <h5>Tidak</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.secondary_diagnose == 1 ? 15 : 0 %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.secondary_diagnose_description'></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alat bantu</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.helper" ng-value='1'>
-                                                  <h5>Peralatan khusus</h5>
-                                                </label>
-                                                <br>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='2'>
-                                                      <h5>Tongkat / walker</h5>
-                                                </label>
-                                                <br>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='3'>
-                                                      <h5>Kursi roda/tanpa alat bantu</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.helper == 1 ? 30 : (formData.helper == 2 ? 15 : 0) %></td>
-                                            <td>
-                                                <textarea class="form-control" ng-model='formData.helper_description'>
-                                                </textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pasien diinfus</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.infus" ng-value='1'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.infus" ng-value='0'>
-                                                      <h5>Tidak</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.infus == 1 ? 20 : 0 %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.infus_description'></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cara berjalan</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.walking" ng-value='1'>
-                                                  <h5>Terganggu</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='2'>
-                                                      <h5>Lemah</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='3'>
-                                                      <h5>Normal</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.walking == 1 ? 20 : (formData.walking == 2 ? 10 : 0) %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.walking_description'></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kondisi mental</td>
-                                            <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='1'>
-                                                  <h5>Keterbatasan daya ingat</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.mental" ng-value='2'>
-                                                      <h5>Tidak</h5>
-                                                </label>
-                                            </td>
-                                            <td class="text-right"><% formData.mental == 1 ? 15 : 0 %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description'></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
 

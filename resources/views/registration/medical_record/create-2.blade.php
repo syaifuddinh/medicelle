@@ -110,7 +110,7 @@
                                             <td>Riwayat jatuh</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.fallen" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.fallen" ng-value='25'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
@@ -118,14 +118,14 @@
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.fallen == 1 ? 25 : 0 %></td>
+                                            <td class="text-right"><% formData.fallen %></td>
                                             <td><input type="text" class="form-control" ng-model='formData.fallen_description'></td>
                                         </tr>
                                         <tr>
                                             <td>Diagnosa sekunder</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='15'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
@@ -133,28 +133,28 @@
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.secondary_diagnose == 1 ? 15 : 0 %></td>
+                                            <td class="text-right"><% formData.secondary_diagnose %></td>
                                             <td><input type="text" class="form-control" ng-model='formData.secondary_diagnose_description'></td>
                                         </tr>
                                         <tr>
                                             <td>Alat bantu</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.helper" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.helper" ng-value='30'>
                                                   <h5>Peralatan khusus</h5>
                                                 </label>
                                                 <br>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='2'>
+                                                      <input type="radio" ng-model="formData.helper" ng-value='15'>
                                                       <h5>Tongkat / walker</h5>
                                                 </label>
                                                 <br>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='3'>
+                                                      <input type="radio" ng-model="formData.helper" ng-value='0'>
                                                       <h5>Kursi roda/tanpa alat bantu</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.helper == 1 ? 30 : (formData.helper == 2 ? 15 : 0) %></td>
+                                            <td class="text-right"><% formData.helper %></td>
                                             <td>
                                                 <textarea class="form-control" ng-model='formData.helper_description'>
                                                 </textarea>
@@ -164,7 +164,7 @@
                                             <td>Pasien diinfus</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.infus" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.infus" ng-value='20'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
@@ -172,42 +172,42 @@
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.infus == 1 ? 20 : 0 %></td>
+                                            <td class="text-right"><% formData.infus %></td>
                                             <td><input type="text" class="form-control" ng-model='formData.infus_description'></td>
                                         </tr>
                                         <tr>
                                             <td>Cara berjalan</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.walking" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.walking" ng-value='20'>
                                                   <h5>Terganggu</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='2'>
+                                                      <input type="radio" ng-model="formData.walking" ng-value='10'>
                                                       <h5>Lemah</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='3'>
+                                                      <input type="radio" ng-model="formData.walking" ng-value='0'>
                                                       <h5>Normal</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.walking == 1 ? 20 : (formData.walking == 2 ? 10 : 0) %></td>
+                                            <td class="text-right"><% formData.walking %></td>
                                             <td><input type="text" class="form-control" ng-model='formData.walking_description'></td>
                                         </tr>
                                         <tr>
                                             <td>Kondisi mental</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='1'>
+                                                  <input type="radio" ng-model="formData.mental" ng-value='15'>
                                                   <h5>Keterbatasan daya ingat</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.mental" ng-value='2'>
-                                                      <h5>Tidak</h5>
+                                                  <input type="radio" ng-model="formData.mental" ng-value='0'>
+                                                  <h5>Normal</h5>
                                                 </label>
                                             </td>
-                                            <td class="text-right"><% formData.mental == 1 ? 15 : 0 %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description'></td>
+                                            <td class="text-right"><% formData.mental %></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.mental_description'></td>
                                         </tr>
                                     </tbody>
                                 </table>

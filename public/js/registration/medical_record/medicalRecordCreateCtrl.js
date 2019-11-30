@@ -19,7 +19,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           pain_history_datatable.rows.add(data.data.pain_history).draw()
           pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
         } else if(step == 2) {
-
+          allergy_history_datatable.rows.add(data.data.allergy_history).draw()
         }
     }, function(error) {
       $rootScope.disBtn=false;
@@ -125,7 +125,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {
       data : null,
       className : 'text-center',
-      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deletePainHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteAllergyHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
     },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -277,10 +277,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       var url = baseUrl + '/controller/registration/medical_record/' + id;
       var method = 'put';
       
-      $scope.formData.pain_history = pain_history_datatable.data().toArray()
-      $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
-      $scope.formData.disease_history = disease_history_datatable.data().toArray()
-      $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+      if(step == 1) {
+          $scope.formData.pain_history = pain_history_datatable.data().toArray()
+          $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
+          $scope.formData.disease_history = disease_history_datatable.data().toArray()
+          $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+      } else if(step == 2) {
+          $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
+
+      }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");

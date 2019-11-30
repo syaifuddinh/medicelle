@@ -44,6 +44,24 @@ class CreateMedicalRecordDetailsTable extends Migration
         });
         Schema::table('medical_records', function (Blueprint $table) {
             $table->integer('is_disturb')->nullable(false)->default(0);
+            $table->integer('pain_score')->nullable(false)->default(0);
+            $table->string('pain_description')->nullable(true);
+
+            $table->integer('fallen')->nullable(false)->default(0);
+            $table->text('fallen_description')->nullable(true);
+            $table->integer('secondary_diagnose')->nullable(false)->default(0);
+            $table->text('secondary_diagnose_description')->nullable(true);
+            $table->integer('helper')->nullable(false)->default(0);
+            $table->text('helper_description')->nullable(true);
+            $table->integer('infus')->nullable(false)->default(0);
+            $table->text('infus_description')->nullable(true);
+            $table->integer('walking')->nullable(false)->default(0);
+            $table->text('walking_description')->nullable(true);
+            $table->integer('mental')->nullable(false)->default(0);
+            $table->text('mental_description')->nullable(true);
+
+            $table->integer('risk_level')->nullable(false)->default(0);
+            $table->string('risk_level_description', 200)->nullable(true);
         });
     }
 
@@ -56,7 +74,7 @@ class CreateMedicalRecordDetailsTable extends Migration
     {
         Schema::dropIfExists('medical_record_details');
         Schema::table('medical_records', function (Blueprint $table) {
-            $table->dropColumn('is_disturb');
+            $table->dropColumn(['is_disturb', 'pain_score', 'pain_description', 'fallen', 'fallen_description', 'secondary_diagnose', 'secondary_diagnose_description', 'helper', 'helper_description', 'infus', 'infus_description', 'walking', 'walking_description', 'mental', 'mental_description', 'risk_level', 'risk_level_description']);
         });
     }
 }

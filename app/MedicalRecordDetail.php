@@ -17,6 +17,10 @@ class MedicalRecordDetail extends Model
         return $this->whereIsDiseaseHistory(1);
     }
 
+    public function allergy_history() {
+        return $this->whereIsAllergyHistory(1);
+    }
+
     public function family_disease_history() {
         return $this->whereIsFamilyDiseaseHistory(1);
     }

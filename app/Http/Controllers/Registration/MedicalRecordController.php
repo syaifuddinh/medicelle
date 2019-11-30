@@ -55,6 +55,8 @@ class MedicalRecordController extends Controller
             'disease_history:medical_record_id,disease_id,cure,last_checkup_date', 
             'family_disease_history:medical_record_id,disease_id,cure,last_checkup_date', 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
+            'allergy_history:medical_record_id,cure,side_effect', 
+            'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time'
         )->find($id);
         return Response::json($x, 200);
@@ -132,6 +134,18 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_family_disease_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        if(isset($request->allergy_history)) {
+            $medical_record_detail->allergy_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $allergy_history = collect($request->allergy_history);
+            $allergy_history = $allergy_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_allergy_history = 1;
                 $medical_record_detail->save();
             });
         }

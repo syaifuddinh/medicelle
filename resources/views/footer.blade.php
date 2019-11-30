@@ -20,7 +20,8 @@
         });
 
         $('button').on('focus', function(){
-                if( $(this).attr('type') == 'submit' ) {
+                var button_title = $(this).text().toLowerCase();
+                if( $(this).attr('type') == 'submit' || button_title == 'tambah') {
 
                     $(this).on('keypress', function(e){
                         if (e.which == 13) {
