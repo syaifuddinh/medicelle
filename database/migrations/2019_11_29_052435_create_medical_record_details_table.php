@@ -33,6 +33,22 @@ class CreateMedicalRecordDetailsTable extends Migration
             $table->integer('is_family_disease_history')->nullable(false)->default(0)->index();
             $table->integer('is_pain_history')->nullable(false)->default(0)->index();
             $table->integer('is_pain_cure_history')->nullable(false)->default(0)->index();
+
+            $table->integer('is_kid_history')->nullable(false)->default(0)->index();
+            $table->integer('is_pregnant_week_age')->nullable(false)->default(0)->index();
+            $table->integer('kid_order')->nullable(false)->default(0)->index();
+            $table->integer('partus_year')->nullable(false)->default(0)->index();
+            $table->string('partus_location', 100)->nullable(true);
+            $table->integer('pregnant_month_age')->nullable(false)->default(0)->index();
+            $table->integer('pregnant_week_age')->nullable(false)->default(0)->index();
+            $table->string('birth_type', 30)->nullable(true);
+            $table->string('birth_helper', 80)->nullable(true);
+            $table->string('birth_obstacle', 150)->nullable(true);
+            $table->enum('baby_gender', ['PRIA', 'WANITA'])->nullable(true);
+            $table->integer('weight')->nullable(false)->default(0)->index();
+            $table->integer('long')->nullable(false)->default(0)->index();
+            $table->string('komplikasi_nifas', 150)->nullable(true);
+
             $table->timestamps();
 
             $table->foreign('disease_id')

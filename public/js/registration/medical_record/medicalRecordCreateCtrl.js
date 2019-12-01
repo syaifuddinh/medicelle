@@ -24,6 +24,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           allergy_history_datatable.rows.add(data.data.allergy_history).draw()
           $scope.changeRiskLevel()
         } else if(step == 3) {
+          kid_history_datatable.rows.add(data.data.kid_history).draw()
           setTimeout(function () {                
               $('[ng-model="formData.hpht"]').val( $scope.formData.hpht != null ? $filter('fullDate')($scope.formData.hpht) : '')
           }, 300)
@@ -37,6 +38,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         });
         toastr.warning(det,error.data.message);
       } else {
+        $scope.show()
         toastr.error(error.data.message,"Error Has Found !");
       }
     });
@@ -111,11 +113,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.allergy_history = {}
   }
 
-
   $scope.submitPainHistory = function() {
       $scope.pain_history.is_other_pain_type = $scope.pain_history.is_other_pain_type ? '1' : '0';
       pain_history_datatable.row.add($scope.pain_history).draw()
       $scope.pain_history = {}
+  }
+
+
+  $scope.submitKidHistory = function() {
+      $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? '1' : '0';
+      kid_history_datatable.row.add($scope.kid_history).draw()
+      $scope.kid_history = {}
   }
 
   $scope.submitPainCureHistory = function() {
@@ -124,21 +132,26 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.pain_cure_history = {}
   }
 
-  $http.get(baseUrl + '/controller/master/disease').then(function(data) {
-    $scope.data.disease = data.data
-    $scope.show()
-  }, function(error) {
-    $rootScope.disBtn=false;
-    if (error.status==422) {
-      var det="";
-      angular.forEach(error.data.errors,function(val,i) {
-        det+="- "+val+"<br>";
+  $scope.disease = function() {
+
+      $http.get(baseUrl + '/controller/master/disease').then(function(data) {
+        $scope.data.disease = data.data
+        $scope.show()
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          $scope.disease()
+          toastr.error(error.data.message,"Error Has Found !");
+        }
       });
-      toastr.warning(det,error.data.message);
-    } else {
-      toastr.error(error.data.message,"Error Has Found !");
-    }
-  });
+  }
+  $scope.disease()
 
   allergy_history_datatable = $('#allergy_history_datatable').DataTable({
     dom: 'rt',
@@ -163,13 +176,29 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   kid_history_datatable = $('#kid_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
-    { data : 'kid_order', className : 'text-right'},
-    {data : 'side_effect'},
-    {
-      data : null,
-      className : 'text-center',
-      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteAllergyHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
-    },
+        { data : 'kid_order', className : 'text-right'},
+        { data : 'partus_year', className : 'text-right'},
+        { data : 'partus_location'},
+        { 
+          data : null,
+          render : function(resp) {
+              var outp = resp.pregnant_month_age + ' bulan ';
+              outp += resp.is_pregnant_week_age == 1 ? resp.pregnant_week_age + ' minggu' : ''
+              return outp
+          }
+        },
+        {data : 'birth_type'},
+        {data : 'birth_helper'},
+        {data : 'birth_obstacle'},
+        {data : 'baby_gender'},
+        {data : 'weight', className : 'text-right'},
+        {data : 'long', className : 'text-right'},
+        {data : 'komplikasi_nifas'},
+        {
+            data : null,
+            className : 'text-center',
+            render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteKidHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        },
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
@@ -280,11 +309,18 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.pain_history = {}
       $scope.pain_cure_history = {}
       $scope.allergy_history = {}
+      $scope.kid_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'
 
-      disease_history_datatable.clear().draw();
-      family_disease_history_datatable.clear().draw();
-      pain_history_datatable.clear().draw();
+      if(step == 1) {
+          disease_history_datatable.clear().draw();
+          family_disease_history_datatable.clear().draw();
+          pain_history_datatable.clear().draw();
+      } else if(step == 2) {
+          allergy_history_datatable.clear().draw();
+      } else if(step == 3) {
+          kid_history_datatable.clear().draw();
+      }
 
       window.scrollTo(0, 0)
   }
@@ -298,6 +334,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deletePainHistory = function(e) {
     var tr = $(e).parents('tr');
     pain_history_datatable.row(tr).remove().draw()
+  }
+    
+  $scope.deleteKidHistory = function(e) {
+    var tr = $(e).parents('tr');
+    kid_history_datatable.row(tr).remove().draw()
   }
     
   $scope.deletePainCureHistory = function(e) {
@@ -327,6 +368,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
       } else if(step == 2) {
           $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
+      } else if(step == 3) {
+          $scope.formData.kid_history = kid_history_datatable.data().toArray()
       }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false

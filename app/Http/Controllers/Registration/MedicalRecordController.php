@@ -57,7 +57,8 @@ class MedicalRecordController extends Controller
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'allergy_history:medical_record_id,cure,side_effect', 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
-            'pain_cure_history:medical_record_id,cure,emergence_time'
+            'pain_cure_history:medical_record_id,cure,emergence_time',
+            'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender'
         )->find($id);
         return Response::json($x, 200);
     }
@@ -86,6 +87,20 @@ class MedicalRecordController extends Controller
         $medical_record = MedicalRecord::find($id);
         $medical_record->fill($request->all());
         $medical_record->save();
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->kid_history)) {
+            $medical_record_detail->kid_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $kid_history = collect($request->kid_history);
+            $kid_history = $kid_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_kid_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
 
         $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->pain_history)) {

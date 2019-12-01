@@ -31,10 +31,11 @@
                     });
                 }
             })
-            inputs = $(':input,select').on('keypress', function(e){ 
+            inputs = $(':input').on('keypress', function(e){ 
                 if (e.which == 13) {
                    e.preventDefault();
                    var nextInput = inputs.get(inputs.index(this) + 1);
+                   console.log(nextInput);
                    if (nextInput) {
                       nextInput.focus();
                    }

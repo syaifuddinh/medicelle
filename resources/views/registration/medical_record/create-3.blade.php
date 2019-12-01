@@ -291,15 +291,15 @@
                                 </div>
                                 
                                 <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Umur hamil <i class="fa fa-moon-o" ng-show='!is_pregnant_week_age' ng-click='is_pregnant_week_age = !is_pregnant_week_age'></i><i class="fa fa-mail-reply" ng-show='is_pregnant_week_age' ng-click='is_pregnant_week_age = !is_pregnant_week_age'></i></label>
+                                    <label class='col-md-12'>Umur hamil <i class="fa fa-moon-o" ng-show='!kid_history.is_pregnant_week_age' ng-click='kid_history.is_pregnant_week_age = !kid_history.is_pregnant_week_age'></i><i class="fa fa-mail-reply" ng-show='kid_history.is_pregnant_week_age' ng-click='kid_history.is_pregnant_week_age = !kid_history.is_pregnant_week_age'></i></label>
                                     <div class="input-group">
                                         
                                         <input type="text" class='form-control' ng-model='kid_history.pregnant_month_age' only-num>
                                         <span class="input-group-addon">
                                             Bulan
                                         </span>
-                                        <input type="text" class='form-control' ng-model='kid_history.pregnant_week_age' ng-show='is_pregnant_week_age' only-num>
-                                        <span class="input-group-addon" ng-show='is_pregnant_week_age'>
+                                        <input type="text" class='form-control' ng-model='kid_history.pregnant_week_age' ng-show='kid_history.is_pregnant_week_age' only-num>
+                                        <span class="input-group-addon" ng-show='kid_history.is_pregnant_week_age'>
                                             Minggu
                                         </span>
                                     </div>
@@ -311,15 +311,15 @@
                                 
                                 <div class="form-group col-md-3 mg-r2">                                    
                                     <label class='col-md-12'>Jenis persalinan</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_type' only-num>
+                                    <input type="text" class='form-control' ng-model='kid_history.birth_type'>
                                 </div>
                                 <div class="form-group col-md-3 mg-r2">                                    
                                     <label class='col-md-12'>Penolong persalinan</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_helper' only-num>
+                                    <input type="text" class='form-control' ng-model='kid_history.birth_helper'>
                                 </div>
                                 <div class="form-group col-md-3 mg-r2">                                    
                                     <label class='col-md-12'>Penyulit</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_obstacle' only-num>
+                                    <input type="text" class='form-control' ng-model='kid_history.birth_obstacle'>
                                 </div>
 
                                 <div class="form-group col-md-3">                                    

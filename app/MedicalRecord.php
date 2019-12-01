@@ -106,4 +106,8 @@ class MedicalRecord extends Model
     public function allergy_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsAllergyHistory(1);
     }
+
+    public function kid_history() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsKidHistory(1);
+    }
 }
