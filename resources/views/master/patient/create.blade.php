@@ -73,7 +73,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No KTP/SIM
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" ng-model='formData.civil_code' required="required" class="form-control col-md-7 col-xs-10">
+                                        <input type="text" ng-model='formData.civil_code' class="form-control col-md-7 col-xs-10">
                                     </div>
                                 </div>
 
@@ -198,7 +198,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Status perkawinan
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih Status Perkawinan'" required='required' chosen allow-single-deselect="false" ng-model="formData.marriage_status" 
+                                        <select class="form-control" data-placeholder-text-single="'Pilih Status Perkawinan'" chosen allow-single-deselect="false" ng-model="formData.marriage_status" 
                                         >
                                             <option value=""></option>
                                             <option value="MENIKAH">Menikah</option>
@@ -214,7 +214,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Pekerjaan
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih Pekerjaan'" required='required' chosen allow-single-deselect="false" ng-model="formData.job" 
+                                        <select class="form-control" data-placeholder-text-single="'Pilih Pekerjaan'" chosen allow-single-deselect="false" ng-model="formData.job" 
                                         >
                                             <option value=""></option>
                                             <option value="PNS">PNS</option>

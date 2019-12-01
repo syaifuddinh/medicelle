@@ -6,6 +6,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
+
+
     
   $scope.show = function() {
       $http.get(baseUrl + '/controller/registration/medical_record/' + id).then(function(data) {
@@ -20,6 +22,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
         } else if(step == 2) {
           allergy_history_datatable.rows.add(data.data.allergy_history).draw()
+          $scope.changeRiskLevel()
+        } else if(step == 3) {
+          setTimeout(function () {                
+              $('[ng-model="formData.hpht"]').val( $scope.formData.hpht != null ? $filter('fullDate')($scope.formData.hpht) : '')
+          }, 300)
         }
     }, function(error) {
       $rootScope.disBtn=false;
@@ -66,6 +73,25 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.pain_status = 'nyeri yang tidak terbayangkan dan tidak dapat diungkapkan sampai tidak sadarkan diri'
       }
       $compile(angular.element($('#pain_status')[0]).contents())($scope);
+  }
+
+  $scope.changeRiskLevel = function() {
+    var f = $scope.formData
+     var risk_level_status, risk_level_action 
+     var risk_level = f.fallen + f.secondary_diagnose + f.helper + f.infus + f.walking + f.mental
+     if(risk_level >=0 && risk_level <= 24) {
+          risk_level_status = 'Tidak beresiko'
+          risk_level_action = 'Perawatan dasar'
+     } else if(risk_level >=25 && risk_level <= 50) {
+          risk_level_status = 'Resiko rendah'
+          risk_level_action = 'Pelaksanaan intervensi pencegahan jatuh standard'
+     } else if(risk_level > 50) {
+          risk_level_status = 'Resiko tinggi'
+          risk_level_action = 'Pelaksanaan intervensi pencegahan jatuh standard'
+     }
+    $scope.risk_level_status = risk_level_status
+    $scope.risk_level_action = risk_level_action
+
   }
 
   $scope.$on('slideEnded', function() {
@@ -134,6 +160,23 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   });
     
 
+  kid_history_datatable = $('#kid_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    { data : 'kid_order', className : 'text-right'},
+    {data : 'side_effect'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteAllergyHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
+
   pain_history_datatable = $('#pain_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
@@ -175,7 +218,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       data : null,
       render : function(resp) {
         var disease = $scope.data.disease.find(x => x.id == resp.disease_id);
-        return disease.name
+        return disease ? disease.name : '-'
       }
     },
     {data : 'cure'},
@@ -204,7 +247,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       data : null,
       render : function(resp) {
         var disease = $scope.data.disease.find(x => x.id == resp.disease_id);
-        return disease.name
+        return disease ? disease.name : '-'
       }
     },
     {data : 'cure'},
@@ -284,14 +327,21 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
       } else if(step == 2) {
           $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
-
       }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
-        setTimeout(function () {
-          window.location = baseUrl + '/medical_record/step/' + (step + 1) + '/edit/' + id          
-        }, 1000)
+        if($scope.back == 1) {
+
+            setTimeout(function () {
+              window.location = baseUrl + '/medical_record/step/' + (step - 1) + '/edit/' + id          
+            }, 1000)
+        } else {
+            setTimeout(function () {
+              window.location = baseUrl + '/medical_record/step/' + (step + 1) + '/edit/' + id          
+            }, 1000)
+
+        }
       }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {

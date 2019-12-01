@@ -12,14 +12,13 @@ use App\Contact;
 class Registration extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['assesment_id', 'medical_record_id', 'patient_id', 'patient_type', 'insurance_code', 'insurance_owner_name', 'plafon', 'family_type'];
+    protected $fillable = ['assesment_id', 'medical_record_id', 'patient_id', 'patient_type', 'insurance_code', 'insurance_owner_name', 'plafon', 'family_type', 'date'];
     protected $appends = ['status_name'];
 
     public static function boot() {
         parent::boot();
         static::creating(function(Registration $registration) {
             DB::beginTransaction();
-            $registration->date = date('Y-m-d');
             $registration->created_by = Auth::user()->id;
             $id = DB::table('registrations')->count('id') + 1;
             $id = $id == null ? 1 : $id;

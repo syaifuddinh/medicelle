@@ -29,6 +29,9 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/step/3/edit/{id}', function ($id){
         return view('registration/medical_record/create-3')->withId($id);
     })->name('edit.3');
+    Route::get('/step/4/edit/{id}', function ($id){
+        return view('registration/medical_record/create-4')->withId($id);
+    })->name('edit.4');
     Route::get('/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);
     })->name('show');

@@ -1,4 +1,4 @@
-app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
+app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile', '$filter', function($scope, $http, $rootScope, $compile, $filter) {
   $scope.title = 'Tambah Registrasi';
   $scope.data = {}
   $scope.doctor = []
@@ -13,7 +13,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
   var path = window.location.pathname;
   if(/edit/.test(path)) {
     $scope.title = 'Edit Registrasi';
-  }
+  } 
 
 
   $http.get(baseUrl + '/controller/master/city').then(function(data) {
@@ -110,6 +110,12 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     }
     $scope.detail = {}
     $scope.formData.patient_type = 'UMUM'
+    var currentDate = new Date()
+    var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ) + '-' + currentDate.getDate()
+    $scope.formData.date = date
+    setTimeout(function () {    
+          $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
+    }, 300)
     registration_detail_datatable.clear().draw()
     window.scrollTo(0, 0)
   }
@@ -137,6 +143,10 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
         id = path.replace(/.+\/(\d+)/, '$1');
         $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
           $scope.formData = data.data
+          setTimeout(function () {
+              
+                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
+            }, 300)
           if(data.data.patient_type == 'ASURANSI SWASTA') {
               $scope.formData.agency_id = data.data.pic_id
           }

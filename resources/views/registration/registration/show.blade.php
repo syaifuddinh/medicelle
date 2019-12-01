@@ -31,6 +31,14 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.date | fullDate %>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Pasien
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">

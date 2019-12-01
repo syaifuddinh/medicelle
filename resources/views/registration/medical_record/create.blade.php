@@ -33,6 +33,7 @@
                             <li class="active"><a href="#">Langkah 1</a></li>
                             <li><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
                             <li><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 3</a></li>
+                            <li><a href="{{ route('medical_record.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>

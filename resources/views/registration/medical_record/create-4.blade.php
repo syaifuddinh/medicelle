@@ -32,8 +32,8 @@
                          <ul class="nav nav-pills">
                             <li><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Langkah 1</a></li>
                             <li ><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
-                            <li class="active"><a href="#">Langkah 3</a></li>
-                            <li ><a href="{{ route('medical_record.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
+                            <li><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 3</a></li>
+                            <li class="active"><a href="#">Langkah 4</a></li>
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>
@@ -46,12 +46,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Menarche usia
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <div class="input-group">
-                                            <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12" only-num>
-                                            <div class="input-group-addon">
-                                                Tahun
-                                            </div>
-                                        </div>
+                                        <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -144,7 +139,7 @@
                             <div class="col-md-6">
                                 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-xs-12">Pernah KB ?
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Pernah KB ?
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <label class="radio-inline">
@@ -164,7 +159,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">KB yang digunakan
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <input type="text"  ng-model='formData.kb_item' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
@@ -174,7 +169,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Sejak kapan menggunakan KB ?
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <input type="text"  ng-model='formData.kb_start_time' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
@@ -184,7 +179,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Keluhan selama menggunakan KB
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <textarea  ng-model='formData.kb_complaint' class="form-control col-md-7 col-xs-12"></textarea>
                                     </div>
                                 </div>
@@ -228,7 +223,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Riwayat imunisasi TT
                                     </label>
-                                    <div class="col-md-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <input type="text"  ng-model='formData.imunisasi_tt' class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
@@ -238,7 +233,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Pada usia kehamilan
                                     </label>
-                                    <div class="col-md-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             <input type="text"  ng-model='formData.pada_usia_kehamilan' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
@@ -253,7 +248,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Riwayat pemakaian obat saat kehamilan
                                     </label>
-                                    <div class="col-md-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <textarea  ng-model='formData.pemakaian_obat_saat_kehamilan' class="form-control col-md-7 col-xs-12">
                                         </textarea>
                                     </div>
@@ -264,133 +259,11 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12">Keluhan saat kehamilan
                                     </label>
-                                    <div class="col-md-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
                                         <textarea  ng-model='formData.keluhan_saat_kehamilan' class="form-control col-md-7 col-xs-12">
                                         </textarea>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="ln_solid"></div>
-                        <div class="row">
-                            <div class="col-md-12" style='display:flex'>
-
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Anak ke</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.kid_order' only-num>
-                                </div>
-                                
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Thn partus</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.partus_year' only-num>
-                                </div>
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Tempat partus</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.partus_location'>
-                                </div>
-                                
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Umur hamil <i class="fa fa-moon-o" ng-show='!is_pregnant_week_age' ng-click='is_pregnant_week_age = !is_pregnant_week_age'></i><i class="fa fa-mail-reply" ng-show='is_pregnant_week_age' ng-click='is_pregnant_week_age = !is_pregnant_week_age'></i></label>
-                                    <div class="input-group">
-                                        
-                                        <input type="text" class='form-control' ng-model='kid_history.pregnant_month_age' only-num>
-                                        <span class="input-group-addon">
-                                            Bulan
-                                        </span>
-                                        <input type="text" class='form-control' ng-model='kid_history.pregnant_week_age' ng-show='is_pregnant_week_age' only-num>
-                                        <span class="input-group-addon" ng-show='is_pregnant_week_age'>
-                                            Minggu
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            
-                            <div class="col-md-12" style='display:flex'>
-                                
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Jenis persalinan</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_type' only-num>
-                                </div>
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Penolong persalinan</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_helper' only-num>
-                                </div>
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>Penyulit</label>
-                                    <input type="text" class='form-control' ng-model='kid_history.birth_obstacle' only-num>
-                                </div>
-
-                                <div class="form-group col-md-3">                                    
-                                    <label class='col-md-12'>Jenis kelamin</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" ng-model='kid_history.baby_gender' ng-value='"PRIA"'>Pria
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" ng-model='kid_history.baby_gender' ng-value='"WANITA"'>Wanita
-                                    </label>
-                                </div>
-
-                            </div>
-                            
-                            <div class="col-md-12" style='display:flex'>
-                                
-                                <div class="form-group col-md-3 mg-r2">                                    
-                                    <label class='col-md-12'>BB</label>
-                                    <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='kid_history.weight' only-num>
-                                        <div class="input-group-addon">
-                                            Kg
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-3">                                    
-                                    <label class='col-md-12'>PB</label>
-                                    <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='kid_history.long' only-num>
-                                        <div class="input-group-addon">
-                                            cm
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4">                                    
-                                    <label class='col-md-12'>Komplikasi nifas</label>
-                                    <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='kid_history.komplikasi_nifas'>
-                                        <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitKidHistory()' ng-disabled='!kid_history.kid_order'>Tambah</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id='kid_history_datatable'>
-                                    <thead>
-                                        <tr>
-                                            <td>Anak ke</td>
-                                            <td>Thn partus</td>
-                                            <td>Tempat partus</td>
-                                            <td>Umur hamil</td>
-                                            <td>Jenis persalinan</td>
-                                            <td>Penolong persalinan</td>
-                                            <td>Penyulit</td>
-                                            <td>Jenis kelamin</td>
-                                            <td>BB(cm)</td>
-                                            <td>PB(cm)</td>
-                                            <td>Komplikasi nifas</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
                             </div>
                         </div>
 
