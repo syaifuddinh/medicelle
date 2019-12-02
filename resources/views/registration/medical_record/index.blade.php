@@ -12,11 +12,33 @@
                 <div class="row x_title" ng-show='isFilter'>
                     <form action="" class='form-horizontal form-label-left'>
                         
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Periode
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <div class="input-daterange input-group" style="width:100%;">
+                                <input type="text" class="input-sm form-control" ng-model="formData.date_start" ng-change='filter()' datepick/>
+                                <span class="input-group-addon">s/d</span>
+                                <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='filter()' datepick />
+                              </div>
+                              <div class="form-group">
+                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
+                              </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Pasien</h3>
+                    <a href="#" class='btn btn-outline-dark' style='display:inline-block'>
+                        </i> <b>Riwayat rekam medis</b>
+                    </a>
+                    <a href="#" class='btn btn-sm btn-outline-primary'>
+                        <i class="fa fa-users"></i> <% patient.name %>
+                    </a>
+                    <a href="#" class='btn btn-sm btn-outline-success capitalize'>
+                        <i class="fa fa-male"></i> <% patient.gender.toLowerCase() %>
+                    </a>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
@@ -31,9 +53,9 @@
                       <thead>
                         <tr>
                           <th>No. Rekam Medis</th>
-                          <th>Pasien</th>
                           <th>Tanggal</th>
                           <th>Keluhan utama</th>
+                          <th>Dokter</th>
                           <th></th>
                         </tr>
                       </thead>

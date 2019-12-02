@@ -3,25 +3,29 @@ app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope,
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
-    $http.get(baseUrl + '/controller/master/patient/' + id).then(function(data) {
-            $scope.formData = data.data
-            if(data.data.medical_record_id) {
-                var medical_record_button = $('#medicalRecordButton')
-                var medical_record_link = medical_record_button.attr('href')
-                medical_record_button.attr('href', medical_record_link + '/' + data.data.medical_record_id);
-            }
-        }, function(error) {
-          $rootScope.disBtn=false;
-          if (error.status==422) {
-            var det="";
-            angular.forEach(error.data.errors,function(val,i) {
-              det+="- "+val+"<br>";
-            });
-            toastr.warning(det,error.data.message);
-          } else {
-            toastr.error(error.data.message,"Error Has Found !");
-          }
-    });
+    $scope.patient = function() {
+        $http.get(baseUrl + '/controller/master/patient/' + id).then(function(data) {
+                $scope.formData = data.data
+                if(data.data.medical_record_id) {
+                    var medical_record_button = $('#medicalRecordButton')
+                    var medical_record_link = medical_record_button.attr('href')
+                    medical_record_button.attr('href', medical_record_link + '/' + data.data.medical_record_id);
+                }
+            }, function(error) {
+              $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                $scope.patient()
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+        });
+    }
+    $scope.patient()
 
     $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');

@@ -1,34 +1,4 @@
-@include('header')
-
-<!-- /top navigation -->
-
-<!-- page content -->
-<div class="right_col" role="main" ng-controller="medicalRecordCreate" ng-cloak>
-    <!-- top tiles -->
-
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="dashboard_graph">
-
-                <div class="row x_title">
-                    <div class="col-md-6">
-                        <h3><% title %></h3>
-                    </div>
-                    <div class="col-md-6">
-                        <a href='#' class="btn btn-primary pull-right btn-xs">
-                            <i class="fa fa-user"></i> <% patient.name %>
-                        </a>
-                        <a href='#' class="btn btn-dark pull-right btn-xs mg-r2">
-                            <i class="fa fa-list-alt"></i> <% code %>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
-                        <nav style='margin-bottom:2mm'>
-            
+@include('registration/medical_record/create-header')
                          <ul class="nav nav-pills">
                             <li class="active"><a href="#">Langkah 1</a></li>
                             <li><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
@@ -301,20 +271,4 @@
 
                     </form>
                 </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-<!-- /page content -->
-
-<!-- ============================================================== -->
-<!-- All Jquery -->
-<!-- ============================================================== -->
-
-@include('footer')
-<script src="{{ asset('') }}js/registration/medical_record/medicalRecordCreateCtrl.js"></script>
-
+@include('registration/medical_record/create-footer')

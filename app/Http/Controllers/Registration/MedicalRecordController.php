@@ -59,7 +59,7 @@ class MedicalRecordController extends Controller
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
-            'imunisasi_history:medical_record_id,is_other_imunisasi,is_imunisasi_year_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
+            'imunisasi_history:medical_record_id,is_other_imunisasi,imunisasi_year_age,imunisasi_month_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
         )->find($id);
         return Response::json($x, 200);
     }
@@ -199,6 +199,30 @@ class MedicalRecordController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
+    }
+    public function clone($destination_id, $origin_id)
+    {
+        DB::beginTransaction();
+        $origin_medical_record = MedicalRecord::find($origin_id)->toArray();
+        $origin_medical_record = collect($origin_medical_record)
+        ->except('code', 'patient_id')
+        ->toArray();        
+
+        $destination_medical_record = MedicalRecord::find($destination_id);
+        $destination_medical_record->fill($origin_medical_record);
+        $destination_medical_record->save();
+        $origin_medical_record_detail = MedicalRecordDetail::whereMedicalRecordId($origin_id)->get()->toArray();
+        $origin_medical_record_detail = collect($origin_medical_record_detail)
+        ->each(function($val) use($destination_id){
+            $val['medical_record_id'] =$destination_id;
+            $destination_medical_record_detail = new MedicalRecordDetail();
+            $destination_medical_record_detail->fill($val);
+            $destination_medical_record_detail->save();
+        })
+        ->toArray();
+        DB::commit();
+
+        return Response::json(['message' => 'Rekam medis berhasil disalin'], 200);
     }
 
     public function activate(MedicalRecord $medical_record)

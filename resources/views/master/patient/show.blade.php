@@ -18,10 +18,10 @@
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
 
-                            <a id='medicalRecordButton' ng-show='formData.medical_record_id' href='{{ route("medical_record.edit", ["id" => ""]) }}' class="btn btn-info" >Isi rekam medis</a>
-                            <a href='{{ route("patient.edit", ["id" => $id]) }}' class="btn btn-default" >Edit</a>
-                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger" ng-click='delete({{ $id }})'>Non-aktifkan</button>
-                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-primary" ng-click='activate({{ $id }})'>Aktifkan</button>
+                            <a href='{{ route("medical_record.index", ["id" => $id]) }}' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
+                            <a href='{{ route("patient.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
+                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
                         </div>
                     </div>
                 </div>
@@ -245,10 +245,13 @@
                         </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 ">
+                            <div class="col-md-12 col-sm-12 col-xs-12 ">
                                 <div class="btn-group pull-left">
 
                                     <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
+                                </div>
+                                <div class="btn-group pull-right">
+                                        <a id='medicalRecordButton' ng-show='formData.medical_record_id' href='{{ route("medical_record.edit", ["id" => ""]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>                                
                                 </div>
                             </div>
                         </div>

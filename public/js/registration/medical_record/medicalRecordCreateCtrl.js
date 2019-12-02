@@ -7,13 +7,78 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
 
+  $scope.browse_medical_record = function() {
+      medical_record_datatable = $('#medical_record_datatable').DataTable({
+          processing: true,
+          serverSide: true,
+          dom: 'frtip',
+          ajax: {
+            url : baseUrl+'/datatable/registration/medical_record/' + $scope.patient.id,
+            data : d => Object.assign(d, {'current_id' : id})
+          },
 
+          columns:[
+            {
+              data: null, 
+              orderable : false,
+              searchable : false,
+              className : 'text-center',
+              render : resp => '<button class="btn btn-sm btn-primary" ng-disabled="disBtn" ng-click="cloneMedicalRecord($event.currentTarget)">Pilih</button>'
+            },
+            {data:"code", name:"code", width : '35mm' },
+            {
+              data:null, 
+              orderable:false,
+              searchable:false,
+              width : '45mm',
+              render:resp => $filter('fullDate')(resp.date)
+            },
+            {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
+            {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
+          ],
+          createdRow: function(row, data, dataIndex) {
+            $compile(angular.element(row).contents())($scope);
+          }
+        });
+  }
+
+  $scope.showMedicalRecord = function() {
+      $('#medicalRecordModal').modal()
+  }
+    
+  $scope.cloneMedicalRecord = function(e) {
+      $rootScope.disBtn = true
+      var tr = $(e).parents('tr')
+      var origin = medical_record_datatable.row(tr).data()
+      $http.put(baseUrl + '/controller/registration/medical_record/' + id + '/origin/' + origin.id).then(function(data) {
+          $scope.reset();
+          $scope.show();
+          toastr.success('Rekam medis berhasil disalin');
+          $rootScope.disBtn = false
+          setTimeout(function () {
+              $('#medicalRecordModal').modal('hide')
+          }, 500)
+      }, function(error) {
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+        $rootScope.disBtn = false
+    });
+  }
     
   $scope.show = function() {
       $http.get(baseUrl + '/controller/registration/medical_record/' + id).then(function(data) {
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
+
+        $scope.browse_medical_record()
         if(step == 1){
 
           disease_history_datatable.rows.add(data.data.disease_history).draw()
@@ -426,9 +491,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               window.location = baseUrl + '/medical_record/step/' + (step - 1) + '/edit/' + id          
             }, 1000)
         } else {
-            setTimeout(function () {
-              window.location = baseUrl + '/medical_record/step/' + (step + 1) + '/edit/' + id          
-            }, 1000)
+            if($scope.finished != 1) {
+              
+              setTimeout(function () {
+                window.location = baseUrl + '/medical_record/step/' + (step + 1) + '/edit/' + id          
+              }, 1000)
+            } else {
+              setTimeout(function () {
+                window.location = baseUrl + '/medical_record/' + $scope.patient.id + '/patient/'          
+              }, 1000)
+
+            }
 
         }
       }, function(error) {

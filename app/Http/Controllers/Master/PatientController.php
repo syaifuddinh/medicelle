@@ -103,24 +103,24 @@ class PatientController extends Controller
 
         DB::beginTransaction();
         $contact = Contact::find($id);
-
+        $family = (object) $request->family;
         $cp = Contact::firstOrCreate([
             'id' => $contact->contact_id
         ], [
-            'name' => $request->family['name'],
-            'address' => $request->family['address'],
-            'city_id' => $request->family['city_id'],
-            'phone' => $request->family['phone'],
-            'job' => $request->family['job'],
+            'name' => $family->name ?? null,
+            'address' => $family->address ?? null,
+            'city_id' => $family->city_id ?? null,
+            'phone' => $family->phone ?? null,
+            'job' => $family->job ?? null,
             'is_contact' => 1,
             'is_family' => 1
         ]);
         Contact::whereId($cp->id)->update([
-           'name' => $request->family['name'],
-            'address' => $request->family['address'],
-            'city_id' => $request->family['city_id'],
-            'phone' => $request->family['phone'],
-            'job' => $request->family['job'],
+           'name' => $family->name ?? null,
+            'address' => $family->address ?? null,
+            'city_id' => $family->city_id ?? null,
+            'phone' => $family->phone ?? null,
+            'job' => $family->job ?? null,
             'is_contact' => 1,
             'is_family' => 1
         ]);

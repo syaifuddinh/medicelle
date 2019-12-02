@@ -1,10 +1,15 @@
-app.controller('medicalRecord', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+  $scope.formData = {}
+  var path = window.location.pathname;
+  patient_id = path.replace(/.+\/(\d+)\/patient.*/, '$1');
+
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/registration/medical_record'
+      url : baseUrl+'/datatable/registration/medical_record/' + patient_id,
+      data : d => Object.assign(d, $scope.formData)
     },
     buttons: [
       {
@@ -19,15 +24,16 @@ app.controller('medicalRecord', ['$scope', '$compile', '$http', '$filter', funct
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"patient.name", name:"patient.name"},
+      {data:"code", name:"code", width : '35mm' },
       {
         data:null, 
         orderable:false,
         searchable:false,
+        width : '45mm',
         render:resp => $filter('fullDate')(resp.date)
       },
       {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
+      {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,
@@ -43,6 +49,30 @@ app.controller('medicalRecord', ['$scope', '$compile', '$http', '$filter', funct
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );
+
+  $scope.filter = function() {
+    oTable.ajax.reload();
+  }
+
+  $scope.patient = function() {
+        $http.get(baseUrl + '/controller/master/patient/' + patient_id).then(function(data) {
+                $scope.patient = data.data
+                
+            }, function(error) {
+              $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                $scope.patient()
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+        });
+    }
+    $scope.patient()
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
@@ -79,6 +109,6 @@ app.controller('medicalRecord', ['$scope', '$compile', '$http', '$filter', funct
             } else {
               toastr.error(error.data.message,"Error Has Found !");
             }
-          });
+        });
     }
 }]);

@@ -127,7 +127,7 @@
                                         <label class="col-md-12 col-xs-12" for="first-name">Nama instansi / asuransi
                                         </label>
                                         <div class="col-md-10 col-xs-12">
-                                            <select class="form-control" data-placeholder-text-single="'Pilih instansi / asuransi'" required='required' chosen allow-single-deselect="false" ng-model="formData.agency_id" ng-options="c.id as c.name for c in data.agency">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih instansi / asuransi'" chosen allow-single-deselect="false" ng-model="formData.agency_id" ng-options="c.id as c.name for c in data.agency">
                                                 <option value=""></option>
                                             </select>
                                         </div>
@@ -159,7 +159,7 @@
                                         <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                         </label>
                                         <div class="col-md-10 col-xs-12">
-                                            <select class="form-control" data-placeholder-text-single="'Pilih jenis'" required='required' chosen allow-single-deselect="false" ng-model="formData.family_type">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih jenis'" chosen allow-single-deselect="false" ng-model="formData.family_type">
                                                 <option value=""></option>
                                                 <option value="ORANG TUA">Orang tua</option>
                                                 <option value="DIRI SENDIRI">Diri sendiri</option>

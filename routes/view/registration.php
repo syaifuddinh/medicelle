@@ -32,10 +32,22 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/step/4/edit/{id}', function ($id){
         return view('registration/medical_record/create-4')->withId($id);
     })->name('edit.4');
-    Route::get('/{id}', function ($id){
+
+
+    Route::get('/step/1/show/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);
     })->name('show');
-    Route::get('/', function (){
+    Route::get('/step/2/show/{id}', function ($id){
+        return view('registration/medical_record/show-2')->withId($id);
+    })->name('show.2');
+    Route::get('/step/3/show/{id}', function ($id){
+        return view('registration/medical_record/show-3')->withId($id);
+    })->name('show.3');
+    Route::get('/step/4/show/{id}', function ($id){
+        return view('registration/medical_record/show-4')->withId($id);
+    })->name('show.4');
+    
+    Route::get('/{id}/patient', function (){
         return view('registration/medical_record/index');
     })->name('index');
 });
