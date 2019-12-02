@@ -15,7 +15,7 @@ class CustomUser extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('username')->unique()->after('id');
+            // $table->string('username')->unique()->after('id');
             $table->unsignedInteger('group_user_id')->nullable(true)->after('username');
             $table->string('code', 30)->unique()->after('id');
             $table->string('fullname')->nullable(true)->after('name');

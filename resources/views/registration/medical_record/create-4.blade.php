@@ -324,11 +324,16 @@
                                     <label>Imunisasi</label>
                                     <div class="input-group">
                                         <span ng-show='!imunisasi_history.is_other_imunisasi'>
-                                            <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-model="imunisasi_history.imunisasi">
+                                            <select class="form-control col-md-12" data-placeholder-text-single="'Pilih imunisasi'"  chosen allow-single-deselect="false" ng-model="imunisasi_history.imunisasi">
                                                 <option value=""></option>
+                                                <option value="BCG">BCG</option>
+                                                <option value="DPT I,II,III">DPT I,II,III</option>
+                                                <option value="POLIO I,II,III,IV">POLIO I,II,III,IV</option>
+                                                <option value="CAMPAK">CAMPAK</option>
+                                                <option value="HEPATITIS">HEPATITIS</option>
                                             </select>
                                         </span>
-                                        <input type="text" ng-model='imunisasi_history.imunisasi' class="form-control" ng-show='!imunisasi_history.is_other_imunisasi'>
+                                        <input type="text" ng-model='imunisasi_history.imunisasi' class="form-control" ng-show='imunisasi_history.is_other_imunisasi'>
                                         <div class="input-group-addon" ng-click='imunisasi_history.is_other_imunisasi = !imunisasi_history.is_other_imunisasi'>
                                             <i class="fa fa-pencil" ng-show='!imunisasi_history.is_other_imunisasi'></i>
                                             <i class="fa fa-close" ng-show='imunisasi_history.is_other_imunisasi'></i>
@@ -336,26 +341,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">                                    
-                                    <label class='col-md-12'>Umur hamil <i class="fa fa-moon-o" ng-show='!imunisasi_history.is_pregnant_week_age' ng-click='imunisasi_history.is_imunisasi_week_age = !imunisasi_history.is_imunisasi_week_age'></i><i class="fa fa-mail-reply" ng-show='imunisasi_history.is_imunisasi_week_age' ng-click='imunisasi_history.is_imunisasi_week_age = !imunisasi_history.is_imunisasi_week_age'></i></label>
+                                    <label class='col-md-12'>Usia <i class="fa fa-moon-o" ng-show='!imunisasi_history.is_imunisasi_month_age' ng-click='imunisasi_history.is_imunisasi_month_age = !imunisasi_history.is_imunisasi_month_age'></i><i class="fa fa-mail-reply" ng-show='imunisasi_history.is_imunisasi_month_age' ng-click='imunisasi_history.is_imunisasi_month_age = !imunisasi_history.is_imunisasi_month_age'></i></label>
                                     <div class="input-group">
                                         
-                                        <input type="text" class='form-control' ng-model='imunisasi_history.imunisasi_month_age' only-num>
+                                        <input type="text" class='form-control' ng-model='imunisasi_history.imunisasi_year_age' only-num>
                                         <span class="input-group-addon">
                                             Tahun
                                         </span>
-                                        <input type="text" class='form-control' ng-model='imunisasi_history.imunisasi_week_age' ng-show='imunisasi_history.is_imunisasi_week_age' only-num>
-                                        <span class="input-group-addon" ng-show='imunisasi_history.is_imunisasi_week_age'>
+                                        <input type="text" class='form-control' ng-model='imunisasi_history.imunisasi_month_age' ng-show='imunisasi_history.is_imunisasi_month_age' only-num>
+                                        <span class="input-group-addon" ng-show='imunisasi_history.is_imunisasi_month_age'>
                                             Bulan
                                         </span>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
 
-                                    <label>Kontrol terakhir</label>
+                                    <label>Reaksi</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='family_disease_history.last_checkup_date' datepick>
+                                        <input type="text" class="form-control" ng-model='imunisasi_history.reaksi_imunisasi'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitImunisasiHistory()' ng-disabled='!imunisasi_history.imunisasi'>Tambah</button>
                                         </div>
                                     </div>
 
@@ -366,12 +371,12 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <table class="table table-bordered" id='family_disease_history_datatable'>
+                                <table class="table table-bordered" id='imunisasi_history_datatable'>
                                     <thead>
                                         <tr>
-                                            <td>Penyakit</td>
-                                            <td>Obat yang pernah diminum</td>
-                                            <td>Terakhir control</td>
+                                            <td>Imunisasi</td>
+                                            <td>Usia</td>
+                                            <td>Reaksi</td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -385,7 +390,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="btn-group pull-right">
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Selanjutnya</button>
+                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
                                 </div>
                                 <div class="btn-group pull-left">
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='retry = 1'>Simpan</button>

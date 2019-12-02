@@ -28,6 +28,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           setTimeout(function () {                
               $('[ng-model="formData.hpht"]').val( $scope.formData.hpht != null ? $filter('fullDate')($scope.formData.hpht) : '')
           }, 300)
+        } else if(step == 4) {
+          imunisasi_history_datatable.rows.add(data.data.imunisasi_history).draw()
         }
     }, function(error) {
       $rootScope.disBtn=false;
@@ -117,6 +119,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.pain_history.is_other_pain_type = $scope.pain_history.is_other_pain_type ? '1' : '0';
       pain_history_datatable.row.add($scope.pain_history).draw()
       $scope.pain_history = {}
+  }
+
+  $scope.submitImunisasiHistory = function() {
+      $scope.imunisasi_history.is_other_imunisasi = $scope.imunisasi_history.is_other_imunisasi ? '1' : '0';
+      $scope.imunisasi_history.is_imunisasi_month_age = $scope.imunisasi_history.is_imunisasi_month_age ? '1' : '0';
+      imunisasi_history_datatable.row.add($scope.imunisasi_history).draw()
+      $scope.imunisasi_history = {}
   }
 
 
@@ -224,6 +233,35 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
     
+
+  imunisasi_history_datatable = $('#imunisasi_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    {data : 'imunisasi'},
+    {
+      data : null,
+      render : function(resp) {
+          var outp= resp.imunisasi_year_age + ' Tahun '
+          var imunisasi_month_age = resp.imunisasi_month_age || 0
+          if(resp.is_imunisasi_month_age == 1 && imunisasi_month_age != 0) {
+                outp += imunisasi_month_age + ' Bulan'
+          }
+
+          return outp
+      }
+    },
+    {data : 'reaksi_imunisasi'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteImunisasiHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
   pain_cure_history_datatable = $('#pain_cure_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
@@ -310,6 +348,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.pain_cure_history = {}
       $scope.allergy_history = {}
       $scope.kid_history = {}
+      $scope.imunisasi_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'
 
       if(step == 1) {
@@ -331,6 +370,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     allergy_history_datatable.row(tr).remove().draw()
   }
     
+  $scope.deleteImunisasiHistory = function(e) {
+    var tr = $(e).parents('tr');
+    imunisasi_history_datatable.row(tr).remove().draw()
+  }
+
   $scope.deletePainHistory = function(e) {
     var tr = $(e).parents('tr');
     pain_history_datatable.row(tr).remove().draw()
@@ -370,6 +414,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
       } else if(step == 3) {
           $scope.formData.kid_history = kid_history_datatable.data().toArray()
+      } else if(step == 4) {
+          $scope.formData.imunisasi_history = imunisasi_history_datatable.data().toArray()
       }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
