@@ -31,7 +31,7 @@ app.controller('assesment', ['$scope', '$rootScope', '$compile', '$http', '$filt
         width : '45mm',
         render:resp => $filter('fullDate')(resp.date)
       },
-      {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
+      {data:"main_complaint", name:"main_complaint", orderable:false},
       {data:"nurse.name", name:"nurse.name", orderable:false, searchable:false},
       {
         data: null, 

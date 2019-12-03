@@ -37,7 +37,7 @@
                         <i class="fa fa-users"></i> <% patient.name %>
                     </a>
                     <a href="#" class='btn btn-sm btn-outline-success capitalize'>
-                        <i class="fa fa-male"></i> <% patient.gender.toLowerCase() %>
+                        <i class="fa fa-male" ng-show='patient.gender == "PRIA"'></i><i class="fa fa-female" ng-show='patient.gender == "WANITA"'></i> <% patient.gender.toLowerCase() %>
                     </a>
                   </div>
                   <div class="col-md-6">
