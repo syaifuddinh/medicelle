@@ -22,4 +22,41 @@ class Assesment extends Model
             $assesment->updated_by = Auth::user()->id;
         });
     }
+
+
+    public function patient() {
+        return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);
+    }
+
+    public function nurse() {
+        return $this->belongsTo('App\User', 'updated_by', 'id')->whereIsNurse(1)->orWhere('is_nurse_helper', 1);
+    }
+
+    public function disease_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsDiseaseHistory(1);
+    }
+
+    public function family_disease_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsFamilyDiseaseHistory(1);
+    }
+
+    public function pain_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsPainHistory(1);
+    }
+
+    public function pain_cure_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsPainCureHistory(1);
+    }
+
+    public function allergy_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsAllergyHistory(1);
+    }
+
+    public function kid_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsKidHistory(1);
+    }
+
+    public function imunisasi_history() {
+        return $this->hasMany('App\AssesmentDetail')->whereIsImunisasiHistory(1);
+    }
 }
