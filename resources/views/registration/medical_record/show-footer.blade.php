@@ -37,5 +37,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/registration/medical_record/medicalRecordCreateCtrl.js"></script>
+<script src="{{ asset('') }}js/registration/medical_record/medicalRecordShowCtrl.js"></script>
 

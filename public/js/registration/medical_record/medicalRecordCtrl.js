@@ -41,7 +41,7 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/step/1/show/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

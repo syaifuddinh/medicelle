@@ -1,43 +1,15 @@
-@include('registration/medical_record/create-header')
+@include('registration/medical_record/show-header')
                          <ul class="nav nav-pills">
-                            <li><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Langkah 1</a></li>
+                            <li><a href="{{ route('medical_record.show', ['id' => $id]) }}">Langkah 1</a></li>
                             <li class="active"><a href="#">Langkah 2</a></li>
-                            <li><a href="{{ route('medical_record.edit.3', ['id' => $id]) }}">Langkah 3</a></li>                            
-                            <li><a href="{{ route('medical_record.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
+                            <li><a href="{{ route('medical_record.show.3', ['id' => $id]) }}">Langkah 3</a></li>                            
+                            <li><a href="{{ route('medical_record.show.4', ['id' => $id]) }}">Langkah 4</a></li>
                             
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>
                         <h2>Alergi obat & reaksi efek samping</h2>
-                        <div class="row">
-                            <div class="col-md-12" style='display:flex'>
-                                
-                                <div class="form-group col-md-5 mg-r2">
-                                    
-                                    <label>Obat / makanan / lainnya</label>
-                                    <div class="input-group">
-                                        <input type="text" class='form-control' ng-model='allergy_history.cure' ng-show='!allergy_history.is_unknown'>
-                                        <input readonly type="text" class='form-control' value='Tidak diketahui'  ng-show='allergy_history.is_unknown'>
-                                        <div class="input-group-addon" ng-click='allergy_history.is_unknown = !allergy_history.is_unknown'>
-                                            <i class="fa fa-close" ng-show='!allergy_history.is_unknown'></i>
-                                            <i class="fa fa-pencil" ng-show='allergy_history.is_unknown'></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-7 mg-r2">
-
-                                    <label>Reaksi</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
-                                        <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'>Tambah</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            
-                        </div>
+                        
 
                         <div class="row">
                             <div class="col-md-12">
@@ -46,7 +18,6 @@
                                         <tr>
                                             <td>Obat</td>
                                             <td>Reaksi</td>
-                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -81,105 +52,53 @@
                                         <tr>
                                             <td>Riwayat jatuh</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.fallen" ng-value='25' ng-change='changeRiskLevel()'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.fallen" ng-value='0' ng-change='changeRiskLevel()'>
-                                                      <h5>Tidak</h5>
-                                                </label>
+                                                <% formData.fallen == 0 ? 'Tidak' : 'Ya' %>
                                             </td>
                                             <td class="text-right"><% formData.fallen %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description' ></td>
+                                            <td><% formData.fallen_description %></td>
                                         </tr>
                                         <tr>
                                             <td>Diagnosa sekunder</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='15' ng-change='changeRiskLevel()'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.secondary_diagnose" ng-value='0' ng-change='changeRiskLevel()'>
-                                                      <h5>Tidak</h5>
-                                                </label>
+                                                <% formData.secondary_diagnose == 0 ? 'Tidak' : 'Ya' %>
                                             </td>
                                             <td class="text-right"><% formData.secondary_diagnose %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.secondary_diagnose_description'></td>
+                                            <td><% formData.secondary_diagnose_description %></td>
                                         </tr>
                                         <tr>
                                             <td>Alat bantu</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.helper" ng-value='30'>
-                                                  <h5>Peralatan khusus</h5>
-                                                </label>
-                                                <br>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='15' ng-change='changeRiskLevel()'>
-                                                      <h5>Tongkat / walker</h5>
-                                                </label>
-                                                <br>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='0' ng-change='changeRiskLevel()'>
-                                                      <h5>Kursi roda/tanpa alat bantu</h5>
-                                                </label>
+                                                <% formData.helper == 0 ? 'Kursi roda/tanpa alat bantu' : (formData.helper == 15 ? 'Tongkat / walker' : 'Peralatan khusus') %>
+                                                
                                             </td>
                                             <td class="text-right"><% formData.helper %></td>
                                             <td>
-                                                <textarea class="form-control" ng-model='formData.helper_description'>
-                                                </textarea>
+                                                <% formData.helper_description %>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Pasien diinfus</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.infus" ng-value='20' ng-change='changeRiskLevel()'>
-                                                  <h5>Ya</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.infus" ng-value='0' ng-change='changeRiskLevel()'>
-                                                      <h5>Tidak</h5>
-                                                </label>
+                                                <% formData.infus == 0 ? 'Tidak' : 'Ya' %>
                                             </td>
                                             <td class="text-right"><% formData.infus %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.infus_description'></td>
+                                            <td><% formData.infus_description %></td>
                                         </tr>
                                         <tr>
                                             <td>Cara berjalan</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.walking" ng-value='20' ng-change='changeRiskLevel()'>
-                                                  <h5>Terganggu</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='10' ng-change='changeRiskLevel()'>
-                                                      <h5>Lemah</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='0'>
-                                                      <h5>Normal</h5>
-                                                </label>
+                                                <% formData.walking == 0 ? 'Normal' : (formData.walking == 10 ? 'Lemah' : 'Terganggu') %>
                                             </td>
                                             <td class="text-right"><% formData.walking %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.walking_description' ng-change='changeRiskLevel()'></td>
+                                            <td><% formData.walking_description %></td>
                                         </tr>
                                         <tr>
                                             <td>Kondisi mental</td>
                                             <td>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='15'>
-                                                  <h5>Keterbatasan daya ingat</h5>
-                                                </label>
-                                                <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='0' ng-change='changeRiskLevel()'>
-                                                  <h5>Normal</h5>
-                                                </label>
+                                                <% formData.mental == 0 ? 'Normal' : 'Keterbatasan daya ingat' %>
                                             </td>
                                             <td class="text-right"><% formData.mental %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.mental_description'></td>
+                                            <td><% formData.mental_description %></td>
                                         </tr>
                                         <tfoot>
                                             <tr>
@@ -196,16 +115,16 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="btn-group pull-right">
+                                    <a class="btn btn-primary btn-sm" href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Edit</a>
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Selanjutnya</button>
                                 </div>
                                 <div class="btn-group pull-left">
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='back = 1'>Sebelumnya</button>
                                     <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
-                                    <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
                                 </div>
                             </div>
                         </div>
 
                     </form>
                 </div>
-@include('registration/medical_record/create-footer')
+@include('registration/medical_record/show-footer')

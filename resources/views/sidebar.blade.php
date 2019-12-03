@@ -26,7 +26,7 @@
                     
                   </li>
 
-                  <li><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>
+                  <li class='hidden'><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('assesment.index') }}">Assesment</a></li>
                     </ul>
