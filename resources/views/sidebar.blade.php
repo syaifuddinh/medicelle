@@ -3,13 +3,13 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> User <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-gear"></i> Setting & user <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('user.index') }}">User</a></li>
                       <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-gears"></i> Master <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('patient.index') }}">Pasien</a></li>
                       <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
@@ -28,7 +28,7 @@
 
                   <li class='hidden'><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('assesment.index') }}">Assesment</a></li>
+                      <li><a href="">Daftar pasien</a></li>
                     </ul>
                   </li>
 

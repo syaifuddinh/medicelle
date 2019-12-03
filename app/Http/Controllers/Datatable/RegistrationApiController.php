@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Datatable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Registration;
+use App\Assesment;
 use App\MedicalRecord;
 use DataTables;
 
@@ -38,14 +39,14 @@ class RegistrationApiController extends Controller
     }
 
     public function assesment(Request $request, $patient_id) {
-        $x = Assesment::with('nurse:id,name')->wherePatientId($patient_id)->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by')
-        ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
+        $x = Assesment::with('nurse:id,name')->wherePatientId($patient_id)->select('id', 'patient_id', 'date', 'main_complaint', 'updated_by')
+        ->whereBetween('assesments.date', [$request->date_start, $request->date_end]);
 
         if($request->filled('current_id'))
             $x->where('id', '!=', $request->current_id);
 
         if($request->draw == 1)
-            $x->orderBy('medical_records.id', 'DESC');
+            $x->orderBy('assesments.id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }

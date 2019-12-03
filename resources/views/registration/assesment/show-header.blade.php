@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="medicalRecordShow" ng-cloak>
+<div class="right_col" role="main" ng-controller="assesmentShow" ng-cloak>
     <!-- top tiles -->
 
 

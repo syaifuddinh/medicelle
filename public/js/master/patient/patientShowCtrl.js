@@ -11,6 +11,11 @@ app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope,
                     var medical_record_link = medical_record_button.attr('href')
                     medical_record_button.attr('href', medical_record_link + '/' + data.data.medical_record_id);
                 }
+                if(data.data.assesment_id) {
+                    var assesment_button = $('#assesmentButton')
+                    var assesment_link = assesment_button.attr('href')
+                    assesment_button.attr('href', assesment_link + '/' + data.data.assesment_id);
+                }
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {

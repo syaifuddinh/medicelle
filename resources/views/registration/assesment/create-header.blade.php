@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="medicalRecordCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="assesmentCreate" ng-cloak>
     <!-- top tiles -->
 
 
@@ -16,14 +16,11 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-9.1">
-                        <a href='#' class="text-primary pull-right" ng-click='showMedicalRecord()'>
+                        <a href='#' class="text-primary pull-right" ng-click='showAssesment()'>
                             Apakah anda ingin menyalin dari assesment sebelumnya ?
                         </a>
                         <a href='#' class="btn btn-primary pull-right btn-xs">
                             <i class="fa fa-user"></i> <% patient.name %>
-                        </a>
-                        <a href='#' class="btn btn-dark pull-right btn-xs mg-r2">
-                            <i class="fa fa-list-alt"></i> <% code %>
                         </a>
                     </div>
                 </div>

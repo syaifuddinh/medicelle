@@ -18,6 +18,7 @@
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
 
+                            <a href='{{ route("assesment.index", ["id" => $id]) }}' class="btn btn-info btn-sm" >Riwayat assesment</a>
                             <a href='{{ route("medical_record.index", ["id" => $id]) }}' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
                             <a href='{{ route("patient.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
                             <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
@@ -35,9 +36,9 @@
                                     <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Nama
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="col-md-9 col-sm-9 col-xs-12 capitalize">
 
-                                            <% formData.patient_type %> <% formData.name %>
+                                            <% formData.patient_type.toLowerCase() %> <% formData.name %>
                                         </div>    
 
                                     </div>
@@ -187,10 +188,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
 
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-
                                             <% formData.family.name %>
-                                        </div>    
 
                                     </div>
                                 </div>
@@ -228,16 +226,6 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <% formData.family.job %>
-                                        
-
-
-
-
-
-
-
-
-
 
                                     </div>
                                 </div>
@@ -251,6 +239,7 @@
                                     <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                                 </div>
                                 <div class="btn-group pull-right">
+                                        <a id='assesmentButton' ng-show='formData.assesment_id' href='{{ route("assesment.edit", ["id" => ""]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
                                         <a id='medicalRecordButton' ng-show='formData.medical_record_id' href='{{ route("medical_record.edit", ["id" => ""]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>                                
                                 </div>
                             </div>

@@ -51,7 +51,8 @@ class CreateAssesmentDetailsTable extends Migration
 
             $table->integer('is_imunisasi_history')->nullable(false)->default(0)->index();
             $table->integer('is_other_imunisasi')->nullable(false)->default(0)->index();
-            $table->integer('is_imunisasi_year_age')->nullable(false)->default(0)->index();
+            $table->integer('imunisasi_year_age')->nullable(false)->default(0)->index();
+            $table->integer('imunisasi_month_age')->nullable(false)->default(0)->index();
             $table->integer('is_imunisasi_month_age')->nullable(false)->default(0)->index();
             $table->string('imunisasi', 150)->nullable(true);
             $table->string('reaksi_imunisasi', 300)->nullable(true);

@@ -4,7 +4,7 @@
         </div>
 
     </div>
-    <div class="modal fade" id="medicalRecordModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal fade" id="AssesmentModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
     <div class="modal-dialog" style='width:80%'>
         <div class="modal-content">
             <div class="modal-header">
@@ -37,5 +37,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/registration/assesment/medicalRecordShowCtrl.js"></script>
+<script src="{{ asset('') }}js/registration/assesment/assesmentShowCtrl.js"></script>
 

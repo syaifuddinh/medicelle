@@ -205,7 +205,7 @@ class AssesmentController extends Controller
         DB::beginTransaction();
         $origin_assesment = Assesment::find($origin_id)->toArray();
         $origin_assesment = collect($origin_assesment)
-        ->except('code', 'patient_id')
+        ->except( 'patient_id')
         ->toArray();        
 
         $destination_assesment = Assesment::find($destination_id);

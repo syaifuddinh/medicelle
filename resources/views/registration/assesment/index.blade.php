@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="medicalRecord">
+        <div class="right_col" role="main" ng-controller="assesment">
           <!-- top tiles -->
 
           <div class="row">
@@ -52,10 +52,9 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. Assesment</th>
                           <th>Tanggal</th>
                           <th>Keluhan utama</th>
-                          <th>Dokter</th>
+                          <th>Perawat</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -79,5 +78,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/registration/assesment/medicalRecordCtrl.js"></script>
+    <script src="{{ asset('') }}js/registration/assesment/assesmentCtrl.js"></script>
 
