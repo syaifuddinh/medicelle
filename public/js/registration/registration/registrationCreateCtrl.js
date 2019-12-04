@@ -264,6 +264,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
                 window.location = baseUrl + '/registration/create'          
             } else {
                 $scope.reset()
+                patient_datatable.ajax.reload()
             }
         }
     }, function(error) {

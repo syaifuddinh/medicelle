@@ -6,12 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Permission;
 use App\User;
+use App\Item;
+use App\Price;
 use DataTables;
 
 class UserApiController extends Controller
 {
     public function group_user(Request $request) {
-        $x = Permission::select('id', 'name', 'is_active', 'description');
+        $x = Permission::select('id', 'name', 'is_active', 'description')->whereIsPermission(1);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function grup_nota(Request $request) {
+        $x = Permission::select('id', 'name', 'slug', 'is_active', 'description')->whereIsGrupNota(1);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
@@ -27,6 +38,15 @@ class UserApiController extends Controller
         }
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+    public function price(Request $request) {
+        $x = Price::with('service:id,name,price', 'grup_nota:id,slug', 'polyclinic:id,name')->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'item_id', 'grup_nota_id', 'prices.is_active');
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+
+        if($request->draw == 1)
+            $x->orderBy('prices.id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }

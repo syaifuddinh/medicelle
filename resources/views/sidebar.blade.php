@@ -7,6 +7,9 @@
                     <ul class="nav child_menu">
                       <li><a href="{{ route('user.index') }}">User</a></li>
                       <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
+                      <li><a href="{{ route('grup_nota.index') }}">Grup nota</a></li>
+                      <li><a href="{{ route('price.index') }}">Tarif</a></li>
+                      <li><a href="{{ route('discount.index') }}">Promo</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-gears"></i> Master <span class="fa fa-chevron-down"></span></a>
@@ -15,15 +18,18 @@
                       <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
                       <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
                       <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
-                      <li><a href="{{ route('discount.index') }}">Promo</a></li>
                       <li><a href="{{ route('piece.index') }}">Satuan</a></li>
                       <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
                       <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
                       <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                     </ul>
                   </li>
-                  <li><a href='{{ route("registration.index") }}'><i class="fa fa-desktop"></i> Registrasi pasien</a>
-                    
+                  <li>
+                    <a href='{{ route("registration.index") }}'><i class="fa fa-desktop"></i> Registrasi pasien</a>
+                  </li>
+
+                  <li>
+                    <a href='{{ route("cashier.index") }}'><i class="fa fa-bank"></i>Kasir</a>
                   </li>
 
                   <li class='hidden'><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>

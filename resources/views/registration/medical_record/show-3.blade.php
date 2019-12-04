@@ -253,7 +253,7 @@
                                 </div>
                                 <div class="btn-group pull-left">
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='back = 1'>Sebelumnya</button>
-                                    <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
+                                    <button class="btn btn-default btn-sm" ng-click="backtohome()" type="button">Batal</button>
                                 </div>
                             </div>
                         </div>

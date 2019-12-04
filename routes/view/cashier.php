@@ -1,0 +1,19 @@
+<?php
+
+Route::name('cashier.')->prefix('cashier')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('cashier/cashier/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('cashier/cashier/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('cashier/cashier/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('cashier/cashier/show')->withId($id);
+    })->name('show');
+});
+

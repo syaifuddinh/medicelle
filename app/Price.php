@@ -1,0 +1,33 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Auth;
+
+class Price extends Model
+{
+    //
+    protected $hidden = ['created_at', 'updated_at'];
+    protected $fillable = ['grup_nota_id', 'destination', 'polyclinic_id', 'is_registration', 'qty'];
+
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function(Price $price){
+            $price->created_by = Auth::user()->id;
+        });
+    }
+
+    public function service() {
+        return $this->belongsTo('App\Item', 'item_id', 'id')->whereIsAdministration(1);
+    }
+
+    public function polyclinic() {
+        return $this->belongsTo('App\Polyclinic', 'polyclinic_id', 'id');
+    }
+
+    public function grup_nota() {
+        return $this->belongsTo('App\Permission')->whereIsGrupNota(1);
+    }
+}

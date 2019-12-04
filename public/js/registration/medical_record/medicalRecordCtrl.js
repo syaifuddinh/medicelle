@@ -33,7 +33,7 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         render:resp => $filter('fullDate')(resp.date)
       },
       {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
-      {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
+      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,

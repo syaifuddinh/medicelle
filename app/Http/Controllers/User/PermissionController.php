@@ -17,7 +17,10 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permission = Permission::select('id', 'name')->whereIsActive(1)->get();
+        $permission = Permission::select('id', 'name')
+        ->whereIsActive(1)
+        ->whereIsPermission(1)
+        ->get();
         return Response::json($permission, 200);
     }
 
@@ -41,6 +44,7 @@ class PermissionController extends Controller
     {
         DB::beginTransaction();
         $permission->fill($request->all());
+        $permission->is_permission = 1;
         $permission->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);

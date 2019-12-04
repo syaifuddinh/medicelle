@@ -20,22 +20,16 @@ class Registration extends Model
         static::creating(function(Registration $registration) {
             DB::beginTransaction();
             $registration->created_by = Auth::user()->id;
-            $id = DB::table('registrations')->count('id') + 1;
+            $current_month = date('m');
+            $current_year = date('Y');
+            $id = DB::table('registrations')
+            ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+            ->count('id') + 1;
             $id = $id == null ? 1 : $id;
             $id = str_pad($id, 5, '0', STR_PAD_LEFT);
             $code = 'RJ-' . date('ym') . $id;
 
             $registration->code = $code;
-            // Generate medical record
-            $medicalRecord = new MedicalRecord();
-            $medicalRecord->fill($registration->toArray());
-            $medicalRecord->save();
-            $registration->medical_record_id = $medicalRecord->id;
-
-            // Update medical record id to patient
-            $patient = Contact::find($registration->patient_id);
-            $patient->medical_record_id = $medicalRecord->id;
-            $patient->save();
             
             DB::commit();
         });

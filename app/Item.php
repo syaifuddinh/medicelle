@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    protected $fillable = ['code', 'name', 'description', 'category_id', 'is_disease', 'is_category'];
+    protected $guarded = ['id'];
     protected $hidden = ['created_at', 'updated_at'];
 
     // public static function boot() {

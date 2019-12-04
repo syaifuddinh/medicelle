@@ -17,11 +17,13 @@ Route::group(
 		require(base_path('routes/view/common.php'));
         require(base_path('routes/view/master.php'));
         require(base_path('routes/view/registration.php'));
+        require(base_path('routes/view/cashier.php'));
         require(base_path('routes/view/polyclinic.php'));
 
         require(base_path('routes/controller/user.php'));
         require(base_path('routes/controller/master.php'));
         require(base_path('routes/controller/registration.php'));
+        require(base_path('routes/controller/cashier.php'));
 
         Route::namespace('Datatable')
         ->prefix('datatable')
@@ -30,6 +32,7 @@ Route::group(
             require(base_path('routes/datatable/user.php'));
             require(base_path('routes/datatable/master.php'));
             require(base_path('routes/datatable/registration.php'));
+            require(base_path('routes/datatable/cashier.php'));
         });
 });
 Route::get('/logout', 'Auth\LoginController@logout');

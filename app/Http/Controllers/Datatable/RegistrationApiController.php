@@ -26,7 +26,7 @@ class RegistrationApiController extends Controller
     }
 
     public function medical_record(Request $request, $patient_id) {
-        $x = MedicalRecord::with('doctor:id,name')->wherePatientId($patient_id)->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by')
+        $x = MedicalRecord::with('registration_detail:id,doctor_id', 'registration_detail.doctor:id,name')->wherePatientId($patient_id)->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by', 'registration_detail_id')
         ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
 
         if($request->filled('current_id'))

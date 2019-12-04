@@ -263,7 +263,7 @@
                                 </div>
                                 <div class="btn-group pull-left">
 
-                                    <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
+                                    <button class="btn btn-default btn-sm" ng-click="backtohome()" type="button">Batal</button>
                                     <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
                                 </div>
                             </div>

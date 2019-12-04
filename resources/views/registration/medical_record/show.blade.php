@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="btn-group pull-left">
 
-                                    <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
+                                    <button class="btn btn-default btn-sm" type="button" ng-click='backtohome()'>Batal</button>
                                 </div>
                             </div>
                         </div>

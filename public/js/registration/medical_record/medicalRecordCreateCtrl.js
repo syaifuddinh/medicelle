@@ -7,6 +7,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
 
+    $scope.backtohome = function() {
+        var home_url = baseUrl + '/medical_record/' + $scope.patient.id + '/patient';  
+        window.location = home_url
+    }
+
   $scope.browse_medical_record = function() {
       medical_record_datatable = $('#medical_record_datatable').DataTable({
           processing: true,

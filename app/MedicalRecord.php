@@ -9,17 +9,36 @@ use DB;
 class MedicalRecord extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['code', 'medical_record_id', 'patient_id', 'step', 'main_complaint', 'is_disturb', 'pain_score', 'fallen', 'fallen_description', 'secondary_diagnose', 'secondary_diagnose_description', 'helper', 'helper_description', 'infus', 'infus_description', 'walking', 'walking_description', 'mental', 'mental_description', 'menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan', 'general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia'];
+    protected $fillable = ['code', 'patient_id', 'step', 'main_complaint', 'is_disturb', 'pain_score', 'fallen', 'fallen_description', 'secondary_diagnose', 'secondary_diagnose_description', 'helper', 'helper_description', 'infus', 'infus_description', 'walking', 'walking_description', 'mental', 'mental_description', 'menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan', 'general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia'];
     public static function boot() {
         parent::boot();
         static::creating(function(MedicalRecord $medicalRecord) {
             $medicalRecord->date = date('Y-m-d');
             $medicalRecord->created_by = Auth::user()->id;
             // Generate medical record code
-            $id = DB::table('medical_records')->count('id') + 1;
-            $id = $id == null ? 1 : $id;
-            $id = str_pad($id, 4, '0', STR_PAD_LEFT);
-            $code = date('y.m.') . $id;
+            $current_month = date('m');
+            $current_year = date('Y');
+            $latest = DB::table('medical_records')
+            ->whereRegistrationId($medicalRecord->registration_id)
+            ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month'  AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+            ->selectRaw('COALESCE(COUNT(id), 0) + 1 AS new_id')
+            ->first();
+            $id = $latest->new_id;
+            if($id < 2) {
+                $newest = DB::table('medical_records')
+                ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+                ->selectRaw('COALESCE(COUNT(DISTINCT code), 0) + 1 AS new_id')
+                ->first();
+                $id = $newest->new_id;
+                $id = str_pad($id, 4, '0', STR_PAD_LEFT);
+                $code = date('y.m.') . $id;
+            } else {
+                $latest = DB::table('medical_records')
+                ->whereRegistrationId($medicalRecord->registration_id)
+                ->select('code')
+                ->first();
+                $code = $latest->code;
+            }
 
             $medicalRecord->code = $code; 
         });
@@ -87,8 +106,8 @@ class MedicalRecord extends Model
         return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);
     }
 
-    public function doctor() {
-        return $this->belongsTo('App\User', 'updated_by', 'id');
+    public function registration_detail() {
+        return $this->belongsTo('App\RegistrationDetail');
     }
 
     public function disease_history() {

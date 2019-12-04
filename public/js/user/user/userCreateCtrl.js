@@ -22,20 +22,25 @@ app.controller('userCreate', ['$scope', '$http', '$rootScope', '$compile', funct
         readURL(this)
     })
 
-    $http.get(baseUrl + '/controller/user/group_user/').then(function(data) {
-        $scope.data.group_user = data.data
-    }, function(error) {
-      $rootScope.disBtn=false;
-      if (error.status==422) {
-        var det="";
-        angular.forEach(error.data.errors,function(val,i) {
-          det+="- "+val+"<br>";
+    $scope.group_user = function() {
+        $http.get(baseUrl + '/controller/user/group_user/').then(function(data) {
+            $scope.data.group_user = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.group_user()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
         });
-        toastr.warning(det,error.data.message);
-      } else {
-        toastr.error(error.data.message,"Error Has Found !");
-      }
-    });
+    }
+    $scope.group_user()
 
     var path = window.location.pathname;
     if(/edit/.test(path)) {

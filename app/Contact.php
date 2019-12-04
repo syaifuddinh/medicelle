@@ -51,9 +51,10 @@ class Contact extends Model
                 $user = new User();
                 $user->fill($contact->toArray());
                 $user->contact_id = $contact->id;
-                $user->password = bcrypt('12345');
-                $user->username = strtolower($contact->name);
-                $user->email = strtolower($contact->name) . '@email.com';
+                $user->password = '12345';
+                $contact_name = preg_replace('/\s/', '_', strtolower($contact->name));
+                $user->username = $contact_name;
+                $user->email = $contact_name . '@email.com';
                 $user->save();
                 DB::commit();
             }        });

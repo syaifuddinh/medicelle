@@ -9,10 +9,14 @@ class Permission extends Model
 {
     //
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['name', 'description'];
+    protected $guarded = ['id'];
 
-    public function setNameAttribute($value) {
-        $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::snake($value);
-    }
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function(Permission $permission){
+            if($permission->is_permission == 1)
+            $permission->slug = Str::snake($permission->name);
+        });
+    } 
 }
