@@ -18,20 +18,15 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <label class="radio-inline">
                               <input type="radio" ng-model="formData.status" ng-value='"1"' ng-change="filter()">
-                              <h5>Terjadwal</h5>
+                              <h5>Belum terbayar</h5>
                             </label>
                             <label class="radio-inline">
                               <input type="radio" ng-model="formData.status" ng-value='"2"' ng-change="filter()">
                               <h5>
-                              Hadir  
+                              Terbayar  
                               </h5>
                             </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.status" ng-value='"3"' ng-change="filter()">
-                              <h5>
-                              Batal  
-                              </h5>
-                            </label>
+                            
                             </div>
                         </div>
                         <div class="form-group">
@@ -57,7 +52,6 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('cashier.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                       </div>                    
                   </div>
                 </div>

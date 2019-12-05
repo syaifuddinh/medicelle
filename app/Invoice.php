@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $hidden = ['updated_at'];
+    protected $guarded = ['id'];
     protected $appends = ['status_name'];
 
     public static function boot() {
@@ -14,7 +15,10 @@ class Invoice extends Model
 
         static::updating(function(Invoice $invoice) {
             if($invoice->status == 2) {
-                $invoice->paid_at = date('Y-m-d H:i:s');
+                if($invoice->paid_at == null && $invoice->paid_by == null) {
+                    $invoice->paid_at = date('Y-m-d H:i:s');
+                    $invoice->paid_by = Auth::user()->id;
+                }
             }
         });
 

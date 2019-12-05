@@ -60,6 +60,7 @@ class PriceController extends Controller
         $item->price = $request->price;
         $item->save();
         $price->item_id = $item->id;
+        $price->custom_price = $request->price;
         $price->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
@@ -97,9 +98,21 @@ class PriceController extends Controller
      */
     public function update(Request $request, Price $price, $id)
     {
+         $request->validate([
+            'name' => 'required',
+            'price' => 'required'
+        ], [
+            'name.required' => 'Nama tidak boleh kosong',
+            'price.required' => 'Harga tidak boleh kosong'
+        ]);
         DB::beginTransaction();
-        $price = $price->findOrFail($id);
+        $price = Price::find($id);
         $price->fill($request->all());
+        $item = Item::find($price->item_id);
+        $item->name = $request->name;
+        $item->price = $request->price;
+        $item->save();
+        $price->custom_price = $request->price;
         $price->save();
         DB::commit();
 

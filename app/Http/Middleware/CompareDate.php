@@ -29,8 +29,8 @@ class CompareDate
             $end = Carbon::parse($request->date_end);
 
             if($start->gt($end)) {
-                $request->date_start = $request->date_end;
-                $request->date_end = $request->date_end;
+                $request->date_start = $end->format('Y-m-d');
+                $request->date_end = $start->format('Y-m-d');
             }
             else {
                 return $next($request);

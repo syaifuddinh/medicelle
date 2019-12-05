@@ -21,7 +21,9 @@ class ItemService extends Migration
             $table->unsignedInteger('polyclinic_id')->nullable(true);
             $table->integer('is_registration')->nullable(false)->default(0);
             $table->integer('qty')->nullable(false)->default(1)->index();
+            $table->double('custom_price')->nullable(false)->default(0)->index();
             $table->integer('is_active')->nullable(false)->default(1);
+            $table->integer('is_default')->nullable(false)->default(1);
 
             $table->index(['item_id', 'grup_nota_id', 'polyclinic_id']);
             $table->index(['is_registration', 'is_active']);

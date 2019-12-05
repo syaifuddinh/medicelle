@@ -94,7 +94,7 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
     is_activate = confirm('Pasien sudah hadir ?');
       if(is_activate)
           $http.put(baseUrl + '/controller/registration/registration/attend/' + id).then(function(data) {
-              toastr.success("Data Berhasil diaktifkan !");
+              toastr.success("Kehadiran pasien berhasil disetujui !");
               oTable.ajax.reload();
           }, function(error) {
             if (error.status==422) {

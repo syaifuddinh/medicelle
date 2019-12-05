@@ -8,6 +8,10 @@ use DB;
 use App\MedicalRecord;
 use App\Assesment;
 use App\Contact;
+use App\Invoice;
+use App\InvoiceDetail;
+use App\Price;
+use App\RegistrationDetail;
 
 class Registration extends Model
 {
@@ -44,6 +48,52 @@ class Registration extends Model
 
         static::updating(function(Registration $registration) {
             $registration->updated_by = Auth::user()->id;
+            if($registration->status == 2) {
+                $invoice = Invoice::whereRegistrationId($registration->id)->first();
+                if($invoice == null) {
+                    DB::beginTransaction();
+
+                    $invoice = new Invoice();
+                    $invoice->is_nota_rawat_jalan = 1;
+                    $invoice->registration_id = $registration->id;
+                    $invoice->save();
+                    $invoice_id = $invoice->id;
+
+                    $registrationItem = Price::whereIsRegistration(1)->get()->toArray();
+                    collect($registrationItem)->each(function($val) use($invoice_id){
+                        $invoiceDetail = new InvoiceDetail();
+                        $invoiceDetail->invoice_id = $invoice_id; 
+                        $invoiceDetail->item_id = $val['item_id']; 
+                        $invoiceDetail->is_item = 1; 
+                        $invoiceDetail->qty = $val['qty']; 
+                        $invoiceDetail->debet = $val['custom_price']; 
+                        $invoiceDetail->save();
+                    });
+
+                    $registrationDetail = RegistrationDetail::whereRegistrationId($registration->id)->get()->toArray();
+                    collect($registrationDetail)->each(function($val) use($invoice_id){
+                        $price = Price::whereIsRegistration(0)
+                        ->whereDestination($val['destination'])
+                        ->wherePolyclinicId($val['polyclinic_id'])
+                        ->get()
+                        ->toArray();
+
+                        collect($price)->each(function($val) use($invoice_id){
+                            $invoiceDetail = new InvoiceDetail();
+                            $invoiceDetail->invoice_id = $invoice_id; 
+                            $invoiceDetail->item_id = $val['item_id']; 
+                            $invoiceDetail->is_item = 1; 
+                            $invoiceDetail->qty = $val['qty']; 
+                            $invoiceDetail->debet = $val['custom_price']; 
+                            $invoiceDetail->save();
+                        });
+                    });
+
+
+
+                    DB::commit();
+                }
+            }
         });
 
     }

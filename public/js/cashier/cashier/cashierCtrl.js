@@ -1,10 +1,12 @@
-app.controller('cashier', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+  $scope.formData = {}
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/cashier/cashier'
+      url : baseUrl+'/datatable/cashier/cashier',
+      data : d => Object.assign(d, $scope.formData)
     },
     buttons: [
       {
@@ -19,29 +21,28 @@ app.controller('cashier', ['$scope', '$compile', '$http', function($scope, $comp
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
-      {data:"index", name:"index"},
-      {data:"cost_center", name:"cost_center"},
+      {data:"registration.code", name:"registration.code"},
+      {data:"registration.medical_record.code", name:"registration.medical_record.code"},
+      {
+        data:null, 
+        orderable:false,
+        searchable:false,
+        render: resp => $filter('fullDate')(resp.registration.date)
+      },
+      {data:"registration.patient.name", name:"registration.patient.name"},
       {
         data: null, 
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => resp.is_active == 1 ? '<label class="label label-success">Aktif</label>' : '<label class="label label-danger">Tidak Aktif</label>'
+        render : resp => resp.status == 1 ? '<label class="label label-danger">' + resp.status_name + '</label>' : '<label class="label label-success">' + resp.status_name + '</label>'
       },
       {
         data: null, 
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => 
-        "<div class='btn-group'>" + 
-        ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
-        ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        render : resp => "<div class='btn-group'><a class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -49,6 +50,10 @@ app.controller('cashier', ['$scope', '$compile', '$http', function($scope, $comp
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );
+
+  $scope.filter = function() {
+      oTable.ajax.reload()
+  }
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
