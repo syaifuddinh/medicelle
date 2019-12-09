@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Invoice;
+namespace App\Http\Controllers\Cashier;
 
 use App\Invoice;
+use App\InvoiceDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
@@ -49,8 +50,20 @@ class CashierController extends Controller
      */
     public function show($id)
     {
-        $invoice = Invoice::find($id);
-        return Response::json($invoice, 200);
+        $invoice = Invoice::with('promo:invoice_id,total_credit', 'promo_info:id,code,name')->find($id);
+        $invoice_detail = InvoiceDetail::with(
+            'item:id,name', 
+            'grup_nota:permissions.id,name,slug'
+        )->select('id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent')
+        ->whereInvoiceId($id)
+        ->whereIsItem(1)
+        ->get();
+        $invoice_detail = $invoice_detail->groupBy('grup_nota.name');
+        $data = [
+            'invoice' => $invoice,
+            'invoice_detail' => $invoice_detail
+        ];
+        return Response::json($data, 200);
     }
 
     /**
@@ -71,18 +84,30 @@ class CashierController extends Controller
      * @param  \App\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|unique:Invoices,name,' . $invoice->id,
-        ], [
-            'name.unique' => 'Nama sudah digunakan',
-            'name.required' => 'Nama tidak boleh kosong',
-        ]);
 
         DB::beginTransaction();
+        $invoice = Invoice::find($id);
         $invoice->fill($request->all());
+        $invoice->gross = 0;
+        $invoice->netto = 0;
+        $invoice->qty = 0;
+        $invoice->discount = 0;
         $invoice->save();
+        InvoiceDetail::whereInvoiceId($invoice->id)->delete();
+        collect($request->invoice_detail)->each(function($val) use($invoice){
+            collect($val)->each(function($item) use ($invoice){
+                $invoiceDetail = new InvoiceDetail();
+                $invoiceDetail->invoice_id = $invoice->id;
+                $invoiceDetail->item_id = $item['item_id'];
+                $invoiceDetail->qty = $item['qty'];
+                $invoiceDetail->debet = $item['debet'];
+                $invoiceDetail->disc_percent = $item['disc_percent'];
+                $invoiceDetail->is_item = 1;
+                $invoiceDetail->save();
+            });
+        });
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -104,14 +129,33 @@ class CashierController extends Controller
         // return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
 
-    public function pay($id)
+    public function pay(Request $request, $id)
     {
+        
         DB::beginTransaction();
         $invoice = Invoice::find($id);
-        $invoice->is_active = 1;
+        $invoice->fill($request->all());
+        $invoice->status = 2;
+        $invoice->gross = 0;
+        $invoice->netto = 0;
+        $invoice->qty = 0;
+        $invoice->discount = 0;
         $invoice->save();
+        InvoiceDetail::whereInvoiceId($invoice->id)->delete();
+        collect($request->invoice_detail)->each(function($val) use($invoice){
+            collect($val)->each(function($item) use ($invoice){
+                $invoiceDetail = new InvoiceDetail();
+                $invoiceDetail->invoice_id = $invoice->id;
+                $invoiceDetail->item_id = $item['item_id'];
+                $invoiceDetail->qty = $item['qty'];
+                $invoiceDetail->debet = $item['debet'];
+                $invoiceDetail->disc_percent = $item['disc_percent'];
+                $invoiceDetail->is_item = 1;
+                $invoiceDetail->save();
+            });
+        });
         DB::commit();
 
-        return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+        return Response::json(['message' => 'Transaksi berhasil terbayar'], 200);
     }
 }

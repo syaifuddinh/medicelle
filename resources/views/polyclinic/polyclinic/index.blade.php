@@ -3,45 +3,21 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="cashier">
+        <div class="right_col" role="main" ng-controller="polyclinic">
           <!-- top tiles -->
-          
+          <nav style='margin-bottom:2mm'>
+            
+             <ul class="nav nav-pills">
+                <li class="active"><a href="#">Daftar Pasien</a></li>
+              </ul> 
+          </nav>
 
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
                 <div class="row x_title" ng-show='isFilter'>
                     <form action="" class='form-horizontal form-label-left'>
-                        <div class="form-group">
-                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Status
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <label class="radio-inline">
-                              <input type="radio" ng-model="formData.status" ng-value='"1"' ng-change="filter()">
-                              <h5>Belum terbayar</h5>
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.status" ng-value='"2"' ng-change="filter()">
-                              <h5>
-                              Belum lunas  
-                              </h5>
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.status" ng-value='"3"' ng-change="filter()">
-                              <h5>
-                              Lunas  
-                              </h5>
-                            </label>
-                            
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.status" ng-value='"4"' ng-change="filter()">
-                              <h5>
-                              Lebih bayar  
-                              </h5>
-                            </label>
-                            
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Periode
                             </label>
@@ -60,7 +36,7 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Kasir</h3>
+                    <h3>Daftar Pasien</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
@@ -73,11 +49,12 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. Registrasi</th>
-                          <th>No. Rekam Medis</th>
-                          <th>Tanggal bayar</th>
+                          <th  style='width:14%'>No. Registrasi</th>
+                          <th style='width:16%'>No. Rekam Medis</th>
+                          <th style='width:16%'>Tanggal</th>
                           <th>Pasien</th>
-                          <th>Status</th>
+                          <th>No. Telepon</th>
+                          <th>Jenis kelamin</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -101,5 +78,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/cashier/cashier/cashierCtrl.js"></script>
+    <script src="{{ asset('') }}js/polyclinic/polyclinic/polyclinicCtrl.js"></script>
 

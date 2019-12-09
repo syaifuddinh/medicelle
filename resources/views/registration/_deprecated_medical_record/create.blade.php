@@ -18,18 +18,6 @@
 
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                            
-                                    <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.current_disease'></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
                         <div class="ln_solid"></div>
                         <h2>Riwayat penyakit dahulu</h2>
@@ -38,7 +26,9 @@
                                 <div class="form-group col-md-3">
                                     
                                     <label>Penyakit</label>
-                                    <input type="text" class='form-control' ng-model="disease_history.disease_name">
+                                    <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.category.name for c in data.disease" ng-model="disease_history.disease_id">
+                                        <option value=""></option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
                                     
@@ -83,8 +73,9 @@
                                 <div class="form-group col-md-3">
                                     
                                     <label>Penyakit</label>
-                                    <input type="text" class='form-control' ng-model="family_disease_history.disease_name">
-                                        
+                                    <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.category.name for c in data.disease" ng-model="family_disease_history.disease_id">
+                                        <option value=""></option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
                                     
@@ -123,9 +114,9 @@
                         </div>
 
 
-                        <div class="ln_solid hidden"></div>
-                        <h2 class='hidden'>Skrining nyeri</h2>
-                        <div class="row hidden">
+                        <div class="ln_solid"></div>
+                        <h2>Skrining nyeri</h2>
+                        <div class="row">
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-6">
                                     
@@ -198,7 +189,7 @@
 
 
                         <div class="ln_solid"></div>
-                        <h2>Riwayat pengobatan</h2>
+                        <h2>Obat nyeri yang pernah diminum</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-3 mg-r2">
@@ -237,35 +228,8 @@
                             </div>
                         </div>
                         <div class="ln_solid"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                                
-                                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
-                                        </label>
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.operasi'></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
                             
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                                
-                                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
-                                        </label>
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.psiko_sosial'></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            
-                            <div class="form-group hidden">
+                            <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Apakah nyeri menganggu aktivitas<span class="required">*</span>
                                 </label>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -280,7 +244,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group hidden">
+                            <div class="form-group">
                                 <label>Skala nyeri</label>
                                 <a href="#" class='btn btn-xs btn-primary pull-right' id='pain_status'>
                                     <%
@@ -293,7 +257,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="btn-group pull-right">
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
+                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Selanjutnya</button>
                                 </div>
                                 <div class="btn-group pull-left">
 

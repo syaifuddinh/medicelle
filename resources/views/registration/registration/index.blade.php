@@ -66,9 +66,9 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. Registrasi</th>
-                          <th>No. Rekam Medis</th>
-                          <th>Tanggal</th>
+                          <th  style='width:14%'>No. Registrasi</th>
+                          <th style='width:16%'>No. Rekam Medis</th>
+                          <th style='width:16%'>Tanggal</th>
                           <th>Pasien</th>
                           <th>No. Telepon</th>
                           <th>Status</th>

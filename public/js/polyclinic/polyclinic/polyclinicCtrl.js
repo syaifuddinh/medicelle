@@ -1,10 +1,11 @@
-app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/assesment'
+      url : baseUrl+'/datatable/registration/polyclinic_registered',
+      data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
       {
@@ -12,28 +13,29 @@ app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function(
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Assesment - '+new Date(),
+        'filename' : 'Registrasi - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Assesment'
+        'title' : 'Registrasi'
       },
     ],
 
     columns:[
-      {data:"registration.code", name:"registration.code"},
-      {data:"registration.medical_record,code", name:"registration.medical_record,code"},
-      {data:"patient.name", name:"patient.name"},
+      {data:"code", name:"code"},
+      {data:"medical_record.code", name:"medical_record.code"},
       {
         data:null, 
         searchable:false,
         orderable:false,
-        render:resp => $filter('fullDate')(resp.date)
+        render:resp => $filter('fullDate')(resp.date),
       },
+      {data:"patient.name", name:"patient.name"},
+      {data:"patient.phone", name:"patient.phone"},
       {
         data: null, 
         orderable : false,
         searchable : false,
-        className : 'text-center',
-        render : resp => resp.is_active == 1 ? '<label class="label label-success">Aktif</label>' : '<label class="label label-danger">Tidak Aktif</label>'
+        className : 'capitalize',
+        render : resp => resp.patient.gender.toLowerCase()
       },
       {
         data: null, 
@@ -42,11 +44,7 @@ app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function(
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
-        ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/assesment/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/polyclinic/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -55,12 +53,16 @@ app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function(
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
+  $scope.filter = function() {
+    oTable.ajax.reload()
+  }
+
   $scope.delete = function(id) {
-    is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
+    is_delete = confirm('Apakah registrasi pasien ini dibatalkan ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/master/assesment/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/polyclinic/polyclinic/' + id).then(function(data) {
             oTable.ajax.reload();
-            toastr.success("Data Berhasil dinon-aktifkan !");
+            toastr.success("Pasien dibatalkan !");
         }, function(error) {
           if (error.status==422) {
             var det="";
@@ -74,11 +76,11 @@ app.controller('assesment', ['$scope', '$compile', '$http', '$filter', function(
         });
   }
 
-  $scope.activate = function(id) {
-    is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
+  $scope.attend = function(id) {
+    is_activate = confirm('Pasien sudah hadir ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/assesment/activate/' + id).then(function(data) {
-              toastr.success("Data Berhasil diaktifkan !");
+          $http.put(baseUrl + '/controller/polyclinic/polyclinic/attend/' + id).then(function(data) {
+              toastr.success("Kehadiran pasien berhasil disetujui !");
               oTable.ajax.reload();
           }, function(error) {
             if (error.status==422) {

@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="registrationShow">
+<div class="right_col" role="main" ng-controller="polyclinicShow">
     <!-- top tiles -->
 
 
@@ -17,10 +17,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-
-                            <a ng-if='formData.status == 1' href='{{ route("registration.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
-                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
-                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
+                            <a href='{{ route("assesment.index", ["id" => $patient_id]) }}' class="btn btn-info btn-sm" >Riwayat assesment</a>
+                            <a href='{{ route("medical_record.index", ["id" => $patient_id]) }}' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
                         </div>
                     </div>
                 </div>
@@ -45,15 +43,13 @@
                                         <% formData.patient.name %>
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status registrasi
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status pembayaran
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.status_name %>
+                                        <% formData.invoice.status_name %>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal registrasi
                                 </label>
@@ -213,31 +209,25 @@
                             </span>
                         </div>
                     </div>
-                    <div class="ln_solid"></div>
-                    <h2>Jadwal</h2>
                     
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-bordered" id='registration_detail_datatable'>
-                                <thead>
-                                    <tr>
-                                        <td>Tujuan</td>
-                                        <td>Waktu</td>
-                                        <td>Dokter</td>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        <div class="col-md-12 col-sm-12 col-xs-12 ">
                             <div class="btn-group pull-left">
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
+                            <div class="btn-group pull-right">
+                             @if(Auth::user()->allow_update_assesment())
+                                <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => $patient_id]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
+                                <a id='assesmentButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-info btn-sm" >Isi assesment</a>                                
+                            @endif
+
+                             @if(Auth::user()->allow_update_medical_record())
+                            <a id='medicalRecordButton' ng-show='formData.invoice.status > 2' href='{{ route("medical_record.edit", ["id" => $patient_id]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>     
+                            <a id='medicalRecordButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-success btn-sm" >Isi rekam medis</a>     
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -257,5 +247,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/registration/registration/registrationShowCtrl.js"></script>
+<script src="{{ asset('') }}js/polyclinic/polyclinic/polyclinicShowCtrl.js"></script>
 

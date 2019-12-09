@@ -106,7 +106,13 @@ class RegistrationController extends Controller
      */
     public function show($id)
     {
-        $registration = Registration::with('patient.family', 'patient.city', 'pic:id,name', 'detail')->find($id);
+        $registration = Registration::with(
+            'patient.family', 'patient.city', 
+            'pic:id,name', 
+            'detail', 
+            'medical_record:id,code',
+            'invoice:registration_id,status'
+        )->find($id);
         return Response::json($registration, 200);
     }
 

@@ -55,6 +55,13 @@ class Registration extends Model
 
                     $invoice = new Invoice();
                     $invoice->is_nota_rawat_jalan = 1;
+                    $invoice->payment_method = 'TUNAI';
+                    if($registration->patient_type == 'ASURANSI SWASTA') {
+                        $invoice->payment_type = 'ASURANSI SWASTA';                        
+                    } else {
+                        $invoice->payment_type = 'BAYAR SENDIRI';                        
+                    }
+                    $invoice->date = $registration->date;
                     $invoice->registration_id = $registration->id;
                     $invoice->save();
                     $invoice_id = $invoice->id;
@@ -117,6 +124,22 @@ class Registration extends Model
     public function detail() {
         return $this->hasMany('App\RegistrationDetail');
     }
+    public function registered_polyclinic() {
+        $outp = $this->hasOne('App\RegistrationDetail', 'registration_id', 'id')->whereDestination('POLIKLINIK');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $outp->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $outp;
+    }
+
+    public function invoice() {
+        return $this->hasOne('App\Invoice', 'registration_id', 'id');
+    }
+
     public function medical_record() {
         return $this->belongsTo('App\MedicalRecord');
     }

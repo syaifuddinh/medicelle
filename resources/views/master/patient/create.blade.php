@@ -90,6 +90,7 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <select class="form-control" data-placeholder-text-single="'Pilih Kota'" required chosen allow-single-deselect="false" ng-model="formData.city_id" ng-change="changeDistrict()" ng-options="c.id as c.name group by c.province.name for c in data.city">
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                 </div>

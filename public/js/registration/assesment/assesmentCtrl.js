@@ -40,7 +40,7 @@ app.controller('assesment', ['$scope', '$rootScope', '$compile', '$http', '$filt
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/assesment/step/1/show/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_update_assesment class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/assesment/step/1/show/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

@@ -50,4 +50,125 @@ class User extends Authenticatable
     {
           return $this->belongsTo('App\Permission','group_user_id','id');
     }
+
+    public function contact()
+    {
+          return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereId($this->contact_id);;
+    }
+
+    public function nurse()
+    {
+          return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereIsNurse(1)->orWhere('is_nurse_helper', 1)->whereId($this->contact_id);
+    }
+
+    public function doctor()
+    {
+          return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereIsDoctor(1)->whereId($this->contact_id);
+    }
+
+    public function allow_view_setting() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_view_cashier() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_view_master() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_view_registration() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_view_polyclinic() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse == 1 || $contact->is_nurse_helper == 1 || $contact->is_doctor == 1) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_update_assesment() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->nurse) {
+                return 1;
+            }
+        }
+
+        return 0;
+
+    }
+
+    public function allow_update_medical_record() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->doctor) {
+                return 1;
+            }
+        }
+
+        return 0;
+
+    }
 }

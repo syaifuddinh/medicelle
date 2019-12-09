@@ -92,6 +92,9 @@
             },
         } );
         $(document).ready(function(){
+            setTimeout(function(){
+                $('#listview').css('width', '100%')
+            }, 500);
             $(window).bind('keydown', function(e){
                 if(e.ctrlKey && e.which == 32) {
                     createButton = $('[href*="create"]')
@@ -120,6 +123,29 @@
                 }
             })
         });
+    </script>
+    <script>
+        $(document).ready(function(){
+            var roles = {
+                'allow_update_assesment' : {!! Auth::user()->allow_update_assesment() !!},
+                'allow_update_medical_record' : {!! Auth::user()->allow_update_medical_record() !!},
+            }
+
+            setInterval(function(){
+                for(key in roles) {
+                    console.log(key)
+                    value = roles[key]
+                    var el = $('[' + key + ']')
+                    if(el.length > 0) {
+                        el.each(function(){
+                            if(value == 0) {
+                                $(el).css('display', 'none')
+                            }
+                        })
+                    }
+                }
+            }, 1000)
+        })
     </script>
   </body>
 </html>

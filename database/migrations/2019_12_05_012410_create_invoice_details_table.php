@@ -18,14 +18,17 @@ class CreateInvoiceDetailsTable extends Migration
             $table->unsignedInteger('invoice_id')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->integer('qty')->nullable(false)->default(0)->index();
+            $table->integer('disc_percent')->nullable(false)->default(0)->index();
             $table->double('debet')->nullable(false)->default(0)->index();
             $table->double('credit')->nullable(false)->default(0)->index();
             $table->double('total_debet')->nullable(false)->default(0)->index();
             $table->double('total_credit')->nullable(false)->default(0)->index();
             $table->double('grandtotal')->nullable(false)->default(0)->index();
+            $table->unsignedInteger('invoice_detail_id')->nullable(true)->index();
 
             $table->integer('is_item')->nullable(false)->default(0)->index();
             $table->integer('is_discount')->nullable(false)->default(0)->index();
+            $table->integer('is_promo')->nullable(false)->default(0)->index();
             $table->timestamps();
         });
     }

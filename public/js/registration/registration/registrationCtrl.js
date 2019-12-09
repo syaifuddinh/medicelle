@@ -55,10 +55,10 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.status == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Batalkan'><i class='fa fa-trash-o'></i></button><button class='btn btn-xs btn-primary' ng-click='attend(" + resp.id + ")' title='Hadir'><i class='fa fa-check'></i></button>"
+          resp.status == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Batalkan'><i class='fa fa-trash-o'></i></button><button class='btn btn-xs btn-primary' ng-click='attend(" + resp.id + ")' title='Hadir'><i class='fa fa-check'></i></button><a class='btn btn-xs btn-success' href='" + baseUrl + "/registration/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a>"
           : ""
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/registration/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

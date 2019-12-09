@@ -47,4 +47,7 @@ class RegistrationDetail extends Model
     public function polyclinic() {
         return $this->belongsTo('App\Polyclinic');
     }
+    public function registration() {
+        return $this->belongsTo('App\Registration');
+    }
 }

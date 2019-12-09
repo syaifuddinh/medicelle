@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="cashierShow">
+<div class="right_col" role="main" ng-controller="cashierShow" ng-cloak>
     <!-- top tiles -->
 
 
@@ -16,238 +16,213 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-6">
-                        <div class="btn-group pull-right">
-
-                            <a href='{{ route("cashier.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
-                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
-                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
-                        </div>
+                        <span class='pull-right' ng-show='formData.registration_id'>
+                            
+                            <a href='#' ng-show='formData.status != 1' class='btn btn-sm btn-primary'><i class='fa fa-credit-card'></i> <% formData.status_name %></a>
+                            <a href='#' ng-show='formData.status == 1' class='btn btn-sm btn-danger'><i class='fa fa-credit-card'></i> <% formData.status_name %></a>
+                            <a href='#' class='btn btn-sm btn-info'><i class='fa fa-user'></i> <% registration.patient.name %></a>
+                            <a href='#' class='btn btn-sm btn-success'><i class='fa fa-file-text-o'></i> <% registration.code %></a>
+                            <a href='#' class='btn btn-sm btn-dark'><i class='fa fa-medkit'></i> <% registration.medical_record.code %></a>
+                        </span>
                     </div>
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                       <div class="row">
-                        <div class="col-md-6">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
+                        <div class="row">
+                            <div class="col-md-12">
 
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.date | fullDate %>
+                                <div class="form-group">
+                                    <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">Tanggal
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+<% formData.date | fullDate %>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Pasien
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.patient.name %>
+
+                                <div class="form-group">
+                                    <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">No. Nota
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">                                        
+<% formData.code %>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status Kasir
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.status_name %>
+
+                                <div class="form-group">
+                                    <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">Keterangan
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">                                        
+<% formData.description %>
+                                    </div>
                                 </div>
+
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Kasir
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.date | fullDate %>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12">Jenis pasien
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                    <% formData.patient_type %>
-
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12">Jenis kelamin
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-
-                                    <% formData.patient.gender %>
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <% formData.patient.address %>
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kota
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <% formData.patient.city_id %>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12">Umur
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <% formData.patient.age %>
-
-                                </div>
-                            </div>
-
 
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-12 col-sm-12 col-xs-12">No. telepon yang bisa dihubungi 
-                                </label>
-                                <div class="col-md-10 col-xs-12">
-                                    <% formData.patient.phone %>
-
-                                </div>
-                            </div>
-
+                        <div class="row">
                             <div class="ln_solid"></div>
-                            <h2>Penanggung jawab</h2>
-                            <span ng-show='formData.patient_type == "ASURANSI SWASTA"'>
+                            <h2>Detail pembayaran</h2>
+                            <div class="col-md-12">
+                                <table class='table' id='invoice_detail_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th style='width:10%'>Qty</th>
+                                            <th style='width:15%'>Harga</th>
+                                            <th style='width:10%'>Diskon(%)</th>
+                                            <th  style='width:20%'>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th colspan='2' class='text-right'>Total</th>
+                                            <th class='text-right' title='Total tagihan yang harus dibayar'><% grosstotal | number%></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th  colspan='2' class='text-right'>Total diskon</th>
+                                            <th class='text-right' title='Total tagihan yang harus dibayar'><% discount_total | number%></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>
+                                                <span>Promo</span>
+                                                <span ng-show='formData.discount_id'><br><% promo_name %></span>
+                                            </th>
+                                            <th class='text-right' title='Promo'>
+                                                <% promo | number %>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th  colspan='2' class='text-right'>Total tagihan</th>
+                                            <th class='text-right' title='Total tagihan yang harus dibayar'><% grandtotal | number%></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>Dibayar</th>
+                                            <th class='text-right' title='Nominal yang terbayar'>
+<% formData.paid | number %>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th  colspan='2' class='text-right'>Sisa</th>
+                                            <th class='text-right' title='Sisa'>
+                                                <%  (grandtotal - formData.paid) | number%>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th class='text-right' colspan='3'>
+                                                <label>
+                                                    <i class="fa fa-users"></i><span style='font-weight:100'> Penjamin dari pasien ini adalah</span> <% registration.patient_type == 'UMUM' ? registration.patient.family.name : registration.pic.name %>
+                                                </label >
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <div class="row" id='formFooter'>
+                            
+                            <div class="col-md-6">
 
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Nama instansi / asuransi
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.pic.name %>
-
-
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">ID Kartu / No. Polis
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.insurance_code %>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Atas nama
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.insurance_owner_name %>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Plafon hutang
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.plafon %>
-
-                                    </div>
-                                </div>
-                            </span>
-                            <span ng-show='formData.patient_type == "UMUM"'>
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                     </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.family_type %>
-
-
-
-
-
-
-
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+<% formData.payment_type %>
                                     </div>
                                 </div>
+
+
                                 <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Nama orang tua/suami/istri
+                                    <label class="col-md-12 col-xs-12" for="first-name">Cara bayar
                                     </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.patient.family.name %>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+<% formData.payment_method %>
 
+
+
+
+
+
+                                        
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Alamat
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.patient.family.address %>
 
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" ng-show='formData.discount_id'>
+                                    <label class="col-md-12 col-xs-12">Keterangan promo
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">                                        
+<% formData.promo_description %>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Pekerjaan
-                                    </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.patient.family.job %>
-
-
-
-
-
-
-
-
-
-
-
-
-                                    </div>
-                                </div>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <h2>Jadwal</h2>
-                    
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-bordered" id='cashier_detail_datatable'>
-                                <thead>
-                                    <tr>
-                                        <td>Tujuan</td>
-                                        <td>Waktu</td>
-                                        <td>Dokter</td>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 ">
-                            <div class="btn-group pull-left">
-
-                                <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
 
-            <div class="clearfix"></div>
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="btn-group">
+
+                                    <button class="btn btn-default btn-sm" id='backButton' type="button">Kembali</button> 
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
 
-</div>
+    <div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Daftar Pasien</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-bordered" id='discount_datatable' style='width:100%'>
+                        <thead>
+                            <tr>
+                                <th style='width:10%'></th>
+                                <th>Kode</th>
+                                <th>Promo</th>
+                                <th style='width:10%'>Disc(Rp)</th>
+                                <th style='width:5%'>Disc(%)</th>
+                                <th>Total potongan</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- /page content -->

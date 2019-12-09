@@ -9,9 +9,9 @@ Route::name('cashier.')->prefix('cashier')
     Route::get('/create', function (){
         return view('cashier/cashier/create');
     })->name('create');
-    Route::get('/edit/{id}', function ($id){
+    Route::get('/pay/{id}', function ($id){
         return view('cashier/cashier/create')->withId($id);
-    })->name('edit');
+    })->name('pay');
     Route::get('/{id}', function ($id){
         return view('cashier/cashier/show')->withId($id);
     })->name('show');

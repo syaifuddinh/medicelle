@@ -27,7 +27,7 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         data:null, 
         orderable:false,
         searchable:false,
-        render: resp => $filter('fullDate')(resp.registration.date)
+        render: resp => $filter('fullDate')(resp.date)
       },
       {data:"registration.patient.name", name:"registration.patient.name"},
       {
@@ -42,7 +42,8 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => "<div class='btn-group'><a class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        render : resp => (resp.status != 3 ? "<div class='btn-group'><a class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

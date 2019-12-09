@@ -11,10 +11,10 @@ use DataTables;
 class CashierApiController extends Controller
 {
     public function cashier(Request $request) {
-        $x = Invoice::with('registration:id,code,medical_record_id,date,patient_id', 'registration.medical_record:id,code', 'registration.patient:id,name')->select('invoices.id', 'registration_id', 'invoices.status')
+        $x = Invoice::with('registration:id,code,medical_record_id,date,patient_id', 'registration.medical_record:id,code', 'registration.patient:id,name')->select('invoices.id', 'registration_id', 'invoices.status', 'invoices.date')
             ->whereIsNotaRawatJalan(1)
             ->whereHas('registration', function(Builder $query) use($request){
-                $query->whereBetween('date', [$request->date_start, $request->date_end]);
+                $query->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
             });
 
         if($request->filled('status')) {

@@ -13,7 +13,7 @@ use Auth;
 class Contact extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['code', 'name', 'address', 'postal_code', 'city_id', 'group_user_id', 'province_id', 'fax', 'phone', 'is_agency', 'is_supplier', 'is_employee', 'is_doctor', 'is_nurse', 'is_nurse_helper', 'is_patient', 'is_family', 'agency_type', 'supplier_disc_percent', 'email', 'gender', 'pin', 'birth_place', 'marriage_status', 'contact_id', 'birth_date', 'start_date', 'pharmacy_disc_percent', 'lab_sender_fee_value', 'lab_sender_fee_value', 'lab_refer_sender_fee_value', 'xray_read_fee_value', 'xray_sender_fee_value', 'usg_read_fee_value', 'usg_sender_fee_value', 'ecg_read_fee_value', 'ecg_sender_fee_value', 'medical_action_fee_value', 'consultation_fee_value', 'specialization_id', 'polyclinic_id', 'age', 'civil_code', 'district_id', 'village_id', 'created_by','updated_by', 'patient_type', 'religion', 'job', 'blood_type'];
+    protected $fillable = ['id', 'code', 'name', 'address', 'postal_code', 'city_id', 'group_user_id', 'province_id', 'fax', 'phone', 'is_agency', 'is_supplier', 'is_employee', 'is_doctor', 'is_nurse', 'is_nurse_helper', 'is_patient', 'is_family', 'agency_type', 'supplier_disc_percent', 'email', 'gender', 'pin', 'birth_place', 'marriage_status', 'contact_id', 'birth_date', 'start_date', 'pharmacy_disc_percent', 'lab_sender_fee_value', 'lab_sender_fee_value', 'lab_refer_sender_fee_value', 'xray_read_fee_value', 'xray_sender_fee_value', 'usg_read_fee_value', 'usg_sender_fee_value', 'ecg_read_fee_value', 'ecg_sender_fee_value', 'medical_action_fee_value', 'consultation_fee_value', 'specialization_id', 'polyclinic_id', 'age', 'civil_code', 'district_id', 'village_id', 'created_by','updated_by', 'patient_type', 'religion', 'job', 'blood_type'];
 
     public static function boot() {
         parent::boot();
@@ -51,6 +51,7 @@ class Contact extends Model
                 $user = new User();
                 $user->fill($contact->toArray());
                 $user->contact_id = $contact->id;
+                $user->fullname = $contact->name;
                 $user->password = '12345';
                 $contact_name = preg_replace('/\s/', '_', strtolower($contact->name));
                 $user->username = $contact_name;

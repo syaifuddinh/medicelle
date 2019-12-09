@@ -90,6 +90,18 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function actived_discount(Request $request) {
+        $currentDate = date('Y-m-d');
+        $x = Discount::select('id', 'name', 'is_active', 'code', 'date_start', 'date_end' ,'type', 'disc_percent', 'disc_value')
+        ->whereRaw("'$currentDate' BETWEEN date_start AND date_end")
+        ->whereIsActive(1);
+        // die($request->is_active);
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function discount(Request $request) {
         $x = Discount::select('id', 'name', 'is_active', 'code', 'date_start', 'date_end' ,'type')
         ->whereBetween('date_start', [$request->date_start, $request->date_end])
