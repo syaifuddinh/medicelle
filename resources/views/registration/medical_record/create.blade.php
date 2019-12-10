@@ -51,7 +51,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_name'>Tambah</button>
                                         </div>
                                     </div>
 
@@ -75,6 +75,20 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="ln_solid"></div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                                
+                                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
+                                        </label>
+                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <textarea class="form-control" ng-model='formData.operasi'></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
 
                         <div class="ln_solid"></div>
                         <h2>Riwayat penyakit keluarga</h2>
@@ -97,7 +111,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='family_disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_name'>Tambah</button>
                                         </div>
                                     </div>
 
@@ -178,7 +192,7 @@
                             
                         </div>
 
-                        <div class="row">
+                        <div class="row hidden">
                             <div class="col-md-12">
                                 <table class="table table-bordered" id='pain_history_datatable'>
                                     <thead>
@@ -237,19 +251,7 @@
                             </div>
                         </div>
                         <div class="ln_solid"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                                
-                                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
-                                        </label>
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.operasi'></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            
                             
                             <div class="row">
                                 <div class="col-md-12">

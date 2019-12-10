@@ -121,6 +121,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.disease_history = {}
   }
 
+  $scope.submitObgynDiseaseHistory = function() {
+      obgyn_disease_history_datatable.row.add($scope.obgyn_disease_history).draw()
+      $scope.obgyn_disease_history = {}
+  }
+
   $scope.changePainStatus = function() {
     $scope.formData.pain_score = parseInt($scope.formData.pain_score)
     if($scope.formData.pain_score  == 0) {
@@ -176,6 +181,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitFamilyDiseaseHistory = function() {
       family_disease_history_datatable.row.add($scope.family_disease_history).draw()
       $scope.family_disease_history = {}
+  }
+
+
+  $scope.submitObgynFamilyDiseaseHistory = function() {
+      obgyn_family_disease_history_datatable.row.add($scope.obgyn_family_disease_history).draw()
+      $scope.obgyn_family_disease_history = {}
   }
 
 
@@ -393,6 +404,52 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+    
+  obgyn_disease_history_datatable = $('#obgyn_disease_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    { data : 'disease_name'},
+    {data : 'cure'},
+    {
+      data : null,
+      render : function(resp) {
+        return $filter('fullDate')(resp.last_checkup_date);
+      }
+    },
+
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteObgygnDiseaseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
+  obgyn_family_disease_history_datatable = $('#obgyn_family_disease_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    { data : 'disease_name' },
+    {data : 'cure'},
+    {
+      data : null,
+      render : function(resp) {
+        return $filter('fullDate')(resp.last_checkup_date);
+      }
+    },
+
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteObgynFamilyDiseaseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
 
   $scope.reset = function() {
       $scope.formData = {
@@ -400,6 +457,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         patient : $scope.patient,
         pain_score : 0
       }
+      $scope.disease_history = {}
+      $scope.family_disease_history = {}
       $scope.disease_history = {}
       $scope.family_disease_history = {}
       $scope.pain_history = {}
@@ -456,6 +515,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteFamilyDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
     family_disease_history_datatable.row(tr).remove().draw()
+  }
+
+  $scope.deleteObgynDiseaseHistory = function(e) {
+    var tr = $(e).parents('tr');
+    obgyn_disease_history_datatable.row(tr).remove().draw()
+  }
+
+  $scope.deleteObgynFamilyDiseaseHistory = function(e) {
+    var tr = $(e).parents('tr');
+    obgyn_family_disease_history_datatable.row(tr).remove().draw()
   }
 
     $scope.submitForm=function() {

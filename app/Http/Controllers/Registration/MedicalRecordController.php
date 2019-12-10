@@ -52,8 +52,8 @@ class MedicalRecordController extends Controller
     {
         $x = MedicalRecord::with(
             'patient:id,name', 
-            'disease_history:medical_record_id,disease_id,cure,last_checkup_date', 
-            'family_disease_history:medical_record_id,disease_id,cure,last_checkup_date', 
+            'disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+            'family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'allergy_history:medical_record_id,cure,side_effect', 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 

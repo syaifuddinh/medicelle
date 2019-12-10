@@ -6,12 +6,7 @@
 <div class="right_col" role="main" ng-controller="medicalRecordCreate" ng-cloak>
     <!-- top tiles -->
 
-    <ul class="nav nav-pills">
-        <li class="active"><a href="#">Anamnesa</a></li>
-        <li><a href="#">Pemeriksaan Fisik</a></li>
-        <li><a href="#">Terapi</a></li>
-        <li><a href="#">BHP</a></li>
-      </ul> 
+    
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="dashboard_graph">

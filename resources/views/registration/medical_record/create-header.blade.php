@@ -5,8 +5,22 @@
 <!-- page content -->
 <div class="right_col" role="main" ng-controller="medicalRecordCreate" ng-cloak>
     <!-- top tiles -->
-
-
+    <div class="row">
+        <div class="col-md-12">
+            
+                <ul class="nav nav-pills" style='margin-bottom:1mm'>
+                    <li class="active"><a href="#">Anamnesa</a></li>
+                    <li><a href="#">Pemeriksaan Fisik</a></li>
+                    <li><a href="#">Terapi</a></li>
+                    <li><a href="#">BHP - Sewa Alkes & Ruang</a></li>
+                    <li><a href="#">Radiologi</a></li>
+                    <li><a href="#">Laboratorium</a></li>
+                    <li><a href="#">Patologi anatomi</a></li>
+                    <li><a href="#">Jadwal kontrol</a></li>
+                </ul> 
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="dashboard_graph">

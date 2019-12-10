@@ -72,6 +72,7 @@
     <script src="{{ asset('') }}build/js/custom.min.js"></script>
 
     <script src="{{ asset('') }}js/toastr.min.js"></script>
+    <script src="{{ asset('') }}js/jquery.easy-autocomplete.min.js"></script>
     <script src="{{ asset('') }}js/chosen.jquery.js"></script>
 
     <!-- Angular -->
