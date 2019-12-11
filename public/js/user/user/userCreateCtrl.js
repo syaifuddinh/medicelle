@@ -23,7 +23,7 @@ app.controller('userCreate', ['$scope', '$http', '$rootScope', '$compile', funct
     })
 
     $scope.group_user = function() {
-        $http.get(baseUrl + '/controller/user/group_user/').then(function(data) {
+        $http.get(baseUrl + '/controller/user/group_user').then(function(data) {
             $scope.data.group_user = data.data
         }, function(error) {
           $rootScope.disBtn=false;

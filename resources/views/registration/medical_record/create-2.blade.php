@@ -57,7 +57,7 @@
                                         <div class="input-group">
                                             <input type="text" ng-model='formData.lama_pemakaian_pembalut' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
                                             <div class="input-group-addon">
-                                                Haru
+                                                Hari
                                             </div>
                                         </div>
                                     </div>
@@ -277,7 +277,7 @@
 
                         <div class="ln_solid"></div>
                         <h2>Riwayat penyakit dahulu</h2>
-                        <div class="row disease">
+                        <div class="row disease" allow_update_medical_record>
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-3">
                                     
@@ -336,7 +336,7 @@
 
                         <div class="ln_solid"></div>
                         <h2>Riwayat penyakit keluarga</h2>
-                        <div class="row disease">
+                        <div class="row disease" allow_update_medical_record>
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-3">
                                     
@@ -382,9 +382,9 @@
 
                         <div class="ln_solid"></div>
                         <h2>Riwayat ginekologi</h2>
-                        <div class="row ginekologi">
+                        <div class="row ginekologi" allow_update_medical_record>
                             <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     
                                     <label>Nama</label>
                                     <div class="input-group">
@@ -419,7 +419,7 @@
                         
                         <div class="ln_solid"></div>
                         <h2>Riwayat KB</h2>
-                        <div class="row">
+                        <div class="row" allow_update_medical_record>
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-3">
                                     
@@ -444,14 +444,47 @@
                             </div>
                             
                         </div>
-
-                        <div class="row">
+                        <div class="row disease">
                             <div class="col-md-12">
                                 <table class="table table-bordered" id='kb_history_datatable'>
                                     <thead>
                                         <tr>
-                                            <td>KB yang pernah digunakan</td>
-                                            <td>Lama(tahun)</td>
+                                            <td>Jenis KB</td>
+                                            <td>Lama( Tahun )</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="ln_solid"></div>
+                        <h2>Riwayat Komplikasi KB</h2>
+                        <div class="row disease" allow_update_medical_record >
+                            <div class="col-md-12" style='display:flex'>
+                                <div class="form-group col-md-6">
+                                    
+                                    <label>Jenis komplikasi</label>
+
+                                    <div class="input-group">
+                                        <input type="text" class='form-control' ng-model="komplikasi_kb_history.name">
+                                        <div class="input-group-btn">
+                                            <button type='button' class='btn btn-success' ng-click='submitKomplikasiKbHistory()' ng-disabled='!komplikasi_kb_history.name'>Tambah</button>
+                                        </div>        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+
+                        <div class="row disease">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id='komplikasi_kb_history_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <td>Jenis komplikasi</td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -464,13 +497,12 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="btn-group pull-right">
+                                <div class="btn-group pull-right" allow_update_medical_record >
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
                                 </div>
                                 <div class="btn-group pull-left">
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='back = 1'>Sebelumnya</button>
                                     <button class="btn btn-default btn-sm" ng-click="backtohome()" type="button">Batal</button>
-                                    <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
+                                    <button  allow_update_medical_record class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
                                 </div>
                             </div>
                         </div>

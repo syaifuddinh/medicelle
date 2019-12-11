@@ -241,3 +241,88 @@ Route::name('disease_category.')->prefix('disease_category')
         return view('master/disease_category/show')->withId($id);
     })->name('show');
 });
+
+Route::name('administration.')->prefix('administration')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/administration/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/administration/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/administration/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/administration/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('radiology.')->prefix('radiology')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/radiology/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/radiology/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/radiology/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/radiology/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('pathology.')->prefix('pathology')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/pathology/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/pathology/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/pathology/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/pathology/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('laboratory.')->prefix('laboratory')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/laboratory/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/laboratory/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/laboratory/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/laboratory/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('pharmacy.')->prefix('pharmacy')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/pharmacy/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/pharmacy/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/pharmacy/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/pharmacy/show')->withId($id);
+    })->name('show');
+});

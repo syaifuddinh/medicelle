@@ -9,14 +9,14 @@
         <div class="col-md-12">
             
                 <ul class="nav nav-pills" style='margin-bottom:1mm'>
-                    <li class="active"><a href="#">Anamnesa</a></li>
-                    <li><a href="#">Pemeriksaan Fisik</a></li>
-                    <li><a href="#">Terapi</a></li>
-                    <li><a href="#">BHP - Sewa Alkes & Ruang</a></li>
-                    <li><a href="#">Radiologi</a></li>
-                    <li><a href="#">Laboratorium</a></li>
-                    <li><a href="#">Patologi anatomi</a></li>
-                    <li><a href="#">Jadwal kontrol</a></li>
+                    <li class='{{ strpos(url()->current(), "step") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Anamnesa</a></li>
+                    <li class='{{ strpos(url()->current(), "physique") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit.physique.general', ['id' => $id]) }}">Pemeriksaan Fisik</a></li>
+                    <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'><a href="">Terapi</a></li>
+                    <li class='{{ strpos(url()->current(), "bhp") != null ? "active" : "" }}'><a href="#">BHP - Sewa Alkes & Ruang</a></li>
+                    <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'><a href="#">Radiologi</a></li>
+                    <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'><a href="#">Laboratorium</a></li>
+                    <li class='{{ strpos(url()->current(), "patologi") != null ? "active" : "" }}'><a href="#">Patologi anatomi</a></li>
+                    <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'><a href="#">Jadwal kontrol</a></li>
                 </ul> 
         </div>
     </div>

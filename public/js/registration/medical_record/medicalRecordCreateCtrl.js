@@ -2,7 +2,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.title = 'Form Rekam Medis';
     $scope.data = {}
     $scope.priceSlider = 209
-    var path = window.location.pathname;
+    path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
@@ -18,6 +18,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
     $("[ng-model='ginekologi_history.name']").easyAutocomplete({
         data : ['Interfilitas', 'Infeksi', 'PMS', 'Cervisitis Cronis', 'Endrometeriosis', 'Myoma', 'Polip Servix', 'Kanker Kandungan', 'Operasi Kandungan', 'Perkosaan', 'Flour albus', 'Post Coital Bleeding'],
+        list : { match: {
+            enabled: true
+          }
+        }
+    });
+
+
+    $("[ng-model='komplikasi_kb_history.name']").easyAutocomplete({
+        data : ['PID / Radang panggul', 'Pendarahan'],
         list : { match: {
             enabled: true
           }
@@ -104,20 +113,25 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.code = data.data.code
 
         $scope.browse_medical_record()
-        if(step == 1){
+        if(step) {
+            if(step == 1){
 
-          disease_history_datatable.rows.add(data.data.disease_history).draw()
-          family_disease_history_datatable.rows.add(data.data.family_disease_history).draw()
-          pain_history_datatable.rows.add(data.data.pain_history).draw()
-          pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
-        } else if(step == 2) {
-          kid_history_datatable.rows.add(data.data.kid_history).draw()
-        } else if(step == 3) {
-          setTimeout(function () {                
-              $('[ng-model="formData.hpht"]').val( $scope.formData.hpht != null ? $filter('fullDate')($scope.formData.hpht) : '')
-          }, 300)
-        } else if(step == 4) {
-          imunisasi_history_datatable.rows.add(data.data.imunisasi_history).draw()
+              disease_history_datatable.rows.add(data.data.disease_history).draw()
+              family_disease_history_datatable.rows.add(data.data.family_disease_history).draw()
+              pain_history_datatable.rows.add(data.data.pain_history).draw()
+              pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
+            } else if(step == 2) {
+              obgyn_disease_history_datatable.rows.add(data.data.obgyn_disease_history).draw()
+              obgyn_family_disease_history_datatable.rows.add(data.data.obgyn_family_disease_history).draw()
+              ginekologi_history_datatable.rows.add(data.data.ginekologi_history).draw()
+              kb_history_datatable.rows.add(data.data.kb_history).draw()
+              komplikasi_kb_history_datatable.rows.add(data.data.komplikasi_kb_history).draw()
+              kid_history_datatable.rows.add(data.data.kid_history).draw()
+            } 
+        }
+
+        if(path.indexOf('physique/general') > -1) {
+              diagnose_history_datatable.rows.add(data.data.diagnose_history).draw()
         }
     }, function(error) {
       $rootScope.disBtn=false;
@@ -139,15 +153,38 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.disease_history = {}
   }
 
+  $scope.submitDiagnoseHistory = function() {
+      $scope.diagnose_history.is_other = !$scope.diagnose_history.is_other ? 0 : 1 
+      if($scope.diagnose_history.disease_id && $scope.diagnose_history.type) {
+
+          diagnose_history_datatable.row.add($scope.diagnose_history).draw()
+          $scope.diagnose_history = {}
+      }
+  }
+
   $scope.submitKbHistory = function() {
-      kb_history_datatable.row.add($scope.kb_history).draw()
-      $scope.kb_history = {}
+      if($scope.kb_history.name) {
+
+          kb_history_datatable.row.add($scope.kb_history).draw()
+          $scope.kb_history = {}
+      }
+  }
+
+
+  $scope.submitKomplikasiKbHistory = function() {
+      if($scope.komplikasi_kb_history.name) {
+
+          komplikasi_kb_history_datatable.row.add($scope.komplikasi_kb_history).draw()
+          $scope.komplikasi_kb_history = {}
+      }
   }
 
 
   $scope.submitGinekologiHistory = function() {
-      ginekologi_history_datatable.row.add($scope.ginekologi_history).draw()
-      $scope.ginekologi_history = {}
+      if($scope.ginekologi_history.name) {
+          ginekologi_history_datatable.row.add($scope.ginekologi_history).draw()
+          $scope.ginekologi_history = {}
+      }
   }
 
   $scope.submitObgynDiseaseHistory = function() {
@@ -411,6 +448,35 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
     
+    
+  diagnose_history_datatable = $('#diagnose_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    { 
+        data : null,
+        render : resp => resp.is_other != 1 ? $scope.data.disease.find(x => x.id == resp.disease_id).code : ''
+    },
+    { 
+        data : null,
+        render : resp => resp.is_other != 1 ? $scope.data.disease.find(x => x.id == resp.disease_id).name : resp.disease_id
+    },
+    { 
+        data : null,
+        className : 'capitalize',
+        render : resp => resp.type.toLowerCase()
+    },
+    {data : 'description'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnoseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
   kb_history_datatable = $('#kb_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
@@ -420,6 +486,21 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       data : null,
       className : 'text-center',
       render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteKbHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
+  komplikasi_kb_history_datatable = $('#komplikasi_kb_history_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    { data : 'name'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteKomplikasiKbHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
     },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -496,6 +577,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {
       data : null,
       render : function(resp) {
+
         return $filter('fullDate')(resp.last_checkup_date);
       }
     },
@@ -503,7 +585,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {
       data : null,
       className : 'text-center',
-      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteObygnDiseaseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteObgynDiseaseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
     },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -512,17 +594,20 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   });
 
   $scope.reset = function() {
+      $scope.patient = {}
       $scope.formData = {
         code : $scope.code,
         patient : $scope.patient,
         pain_score : 0
       }
+      $scope.diagnose_history = {}
       $scope.disease_history = {}
       $scope.family_disease_history = {}
       $scope.obgyn_disease_history = {}
       $scope.obgyn_family_disease_history = {}
       $scope.pain_history = {}
       $scope.kb_history = {}
+      $scope.komplikasi_kb_history = {}
       $scope.ginekologi_history = {}
       $scope.pain_cure_history = {}
       $scope.allergy_history = {}
@@ -542,7 +627,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
       window.scrollTo(0, 0)
   }
-  $scope.reset()
     
   $scope.deleteAllergyHistory = function(e) {
     var tr = $(e).parents('tr');
@@ -575,9 +659,21 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
     
+  $scope.deleteDiagnoseHistory = function(e) {
+    var tr = $(e).parents('tr');
+    diagnose_history_datatable.row(tr).remove().draw()
+  }
+
+    
   $scope.deleteKbHistory = function(e) {
     var tr = $(e).parents('tr');
     kb_history_datatable.row(tr).remove().draw()
+  }
+
+    
+  $scope.deleteKomplikasiKbHistory = function(e) {
+    var tr = $(e).parents('tr');
+    komplikasi_kb_history_datatable.row(tr).remove().draw()
   }
 
   $scope.deleteGinekologiHistory = function(e) {
@@ -606,16 +702,24 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       var url = baseUrl + '/controller/registration/medical_record/' + id;
       var method = 'put';
       
-      if(step == 1) {
-          $scope.formData.pain_history = pain_history_datatable.data().toArray()
-          $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
-          $scope.formData.disease_history = disease_history_datatable.data().toArray()
-          $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
-      } else if(step == 2) {
-          $scope.formData.kid_history = kid_history_datatable.data().toArray()
-      } else if(step == 3) {
-      } else if(step == 4) {
-          $scope.formData.imunisasi_history = imunisasi_history_datatable.data().toArray()
+      if(step) {
+          if(step == 1) {
+              $scope.formData.pain_history = pain_history_datatable.data().toArray()
+              $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
+              $scope.formData.disease_history = disease_history_datatable.data().toArray()
+              $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+          } else if(step == 2) {
+              $scope.formData.kid_history = kid_history_datatable.data().toArray()
+              $scope.formData.kb_history = kb_history_datatable.data().toArray()
+              $scope.formData.komplikasi_kb_history = komplikasi_kb_history_datatable.data().toArray()
+              $scope.formData.ginekologi_history = ginekologi_history_datatable.data().toArray()
+              $scope.formData.obgyn_disease_history = obgyn_disease_history_datatable.data().toArray()
+              $scope.formData.obgyn_family_disease_history = obgyn_family_disease_history_datatable.data().toArray()
+          } 
+      }
+
+      if(path.indexOf('physique/general') > -1) {
+          $scope.formData.diagnose_history = diagnose_history_datatable.data().toArray()
       }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false

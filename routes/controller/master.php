@@ -44,6 +44,12 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('disease_category/activate/{id}', 'DiseaseCategoryController@activate');
         Route::resource('disease_category', 'DiseaseCategoryController');
+
+        Route::put('administration/activate/{id}', 'AdministrationController@activate');
+        Route::get('administration/category', 'AdministrationController@category');
+        Route::get('administration/category/actived', 'AdministrationController@actived_category');
+        Route::get('administration/actived', 'AdministrationController@actived');
+        Route::resource('administration', 'AdministrationController');
     });
 });
 

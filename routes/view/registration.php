@@ -33,6 +33,20 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/create-4')->withId($id);
     })->name('edit.4');
 
+    Route::get('/physique/general/{id}', function ($id){
+        return view('registration/medical_record/create-physique-general')->withId($id);
+    })->name('edit.physique.general');
+    Route::get('/physique/head/{id}', function ($id){
+        return view('registration/medical_record/create-physique-head')->withId($id);
+    })->name('edit.physique.head');
+
+    Route::get('/physique/breast/{id}', function ($id){
+        return view('registration/medical_record/create-physique-breast')->withId($id);
+    })->name('edit.physique.breast');
+    Route::get('/physique/rectum/{id}', function ($id){
+        return view('registration/medical_record/create-physique-rectum')->withId($id);
+    })->name('edit.physique.rectum');
+
 
     Route::get('/step/1/show/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);

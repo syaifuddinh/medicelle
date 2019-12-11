@@ -52,9 +52,22 @@ class MedicalRecordController extends Controller
     {
         $x = MedicalRecord::with(
             'patient:id,name', 
-            'disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+
+            'diagnose_history:medical_record_id,disease_id,type,description',
+
+            'disease_history:medical_record_id,disease_name,cure,last_checkup_date',
+            'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
+
             'family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+            'obgyn_family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+
+            'kb_history:medical_record_id,name,duration', 
+            'komplikasi_kb_history:medical_record_id,name', 
+
+            'ginekologi_history:medical_record_id,name', 
+
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
+            
             'allergy_history:medical_record_id,cure,side_effect', 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
@@ -90,6 +103,45 @@ class MedicalRecordController extends Controller
         $medical_record->save();
 
         $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->kb_history)) {
+            $medical_record_detail->kb_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $kb_history = collect($request->kb_history);
+            $kb_history = $kb_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_kb_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->komplikasi_kb_history)) {
+            $medical_record_detail->komplikasi_kb_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $komplikasi_kb_history = collect($request->komplikasi_kb_history);
+            $komplikasi_kb_history = $komplikasi_kb_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_komplikasi_kb_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->diagnose_history)) {
+            $medical_record_detail->diagnose_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $diagnose_history = collect($request->diagnose_history);
+            $diagnose_history = $diagnose_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_diagnose_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->kid_history)) {
             $medical_record_detail->kid_history()->whereMedicalRecordId($medical_record->id)->delete();
             $kid_history = collect($request->kid_history);
@@ -98,6 +150,20 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_kid_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->ginekologi_history)) {
+            $medical_record_detail->ginekologi_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $ginekologi_history = collect($request->ginekologi_history);
+            $ginekologi_history = $ginekologi_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_ginekologi_history = 1;
                 $medical_record_detail->save();
             });
         }
@@ -156,6 +222,18 @@ class MedicalRecordController extends Controller
             });
         }
 
+        if(isset($request->obgyn_disease_history)) {
+            $medical_record_detail->obgyn_disease_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $obgyn_disease_history = collect($request->obgyn_disease_history);
+            $obgyn_disease_history = $obgyn_disease_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_obgyn_disease_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
         if(isset($request->family_disease_history)) {
             $medical_record_detail->family_disease_history()->whereMedicalRecordId($medical_record->id)->delete();
             $family_disease_history = collect($request->family_disease_history);
@@ -164,6 +242,18 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_family_disease_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        if(isset($request->obgyn_family_disease_history)) {
+            $medical_record_detail->obgyn_family_disease_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $obgyn_family_disease_history = collect($request->obgyn_family_disease_history);
+            $obgyn_family_disease_history = $obgyn_family_disease_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_obgyn_family_disease_history = 1;
                 $medical_record_detail->save();
             });
         }

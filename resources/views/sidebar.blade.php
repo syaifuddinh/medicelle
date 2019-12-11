@@ -21,6 +21,7 @@
                         <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
                         <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
                         <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
+                        <li><a href="{{ route('administration.index') }}">Item medis</a></li>
                         <li><a href="{{ route('piece.index') }}">Satuan</a></li>
                         <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
                         <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>

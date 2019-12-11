@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Master;
 
-use App\Price;
 use App\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
-use Str;
 
-class PriceController extends Controller
+class AdministrationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +17,33 @@ class PriceController extends Controller
      */
     public function index()
     {
-        $price = Price::select('id', 'name')
-        ->whereIsActive(1)
-        ->whereIsGrupNota(1)
+        $item = Item::administration()->has('category')->with('category:id,name')->select('id', 'code', 'name', 'category_id')->get();
+        return Response::json($item, 200);
+    }
+
+    public function actived()
+    {
+        $item = Item::administration()->has('category')->with('category:id,name')->whereIsActive(1)->select('id', 'code', 'name', 'category_id')->get();
+        return Response::json($item, 200);
+    }
+
+    public function category()
+    {
+        $item = Item::administration()
+        ->whereNull('category_id')
+        ->select('id', 'code', 'name')
         ->get();
-        return Response::json($price, 200);
+        return Response::json($item, 200);
+    }
+
+    public function actived_category()
+    {
+        $item = Item::administration()
+        ->whereNull('category_id')
+        ->whereIsActive(1)
+        ->select('id', 'code', 'name')
+        ->get();
+        return Response::json($item, 200);
     }
 
     /**
@@ -33,7 +53,7 @@ class PriceController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -42,26 +62,19 @@ class PriceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Price $price)
+    public function store(Request $request, Item $item)
     {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required'
+            'name' => 'required|unique:items,name',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
-            'price.required' => 'Harga tidak boleh kosong'
         ]);
+
         DB::beginTransaction();
-        $price->fill($request->all());
-        $item = new Item();
+        $item->fill($request->all());
         $item->is_administration = 1;
-        $item->name = $request->name;
-        $item->code = date('ym') . rand(1, 999);
-        $item->price = $request->price;
+        $item->is_pharmacy = $request->grup_nota_id;
         $item->save();
-        $price->item_id = $item->id;
-        $price->custom_price = $request->price;
-        $price->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
@@ -69,22 +82,22 @@ class PriceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Price  $price
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
-        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price', 'polyclinic:id,name');
-        return Response::json($price->find($id), 200);
+    {
+        $x = Item::with('administration_category:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name')->find($id);
+        return Response::json($x, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Price  $price
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Price $price)
+    public function edit(Item $item)
     {
         //
     }
@@ -93,27 +106,25 @@ class PriceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Price  $price
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Price $price, $id)
+    public function update(Request $request, $id)
     {
-         $request->validate([
-            'name' => 'required',
-            'price' => 'required'
+       $request->validate([
+            'name' => 'required|unique:items,name',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
-            'price.required' => 'Harga tidak boleh kosong'
         ]);
+
         DB::beginTransaction();
-        $price = Price::find($id);
-        $price->fill($request->all());
-        $item = Item::find($price->item_id);
-        $item->name = $request->name;
-        $item->price = $request->price;
+        $item = Item::find($id);
+        $price = $item->price;
+        $item->fill($request->all());
+        $item->price = $price;
+        $item->is_administration = 1;
+        $item->is_pharmacy = $request->grup_nota_id;
         $item->save();
-        $price->custom_price = $request->price;
-        $price->save();
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -122,24 +133,26 @@ class PriceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Price  $price
+     * @param  \App\item  $item
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         DB::beginTransaction();
-        $price = Price::find($id);
-        $price->is_active = 0;
-        $price->save();
+        $item = Item::find($id);
+        $item->is_active = 0;
+        $item->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
-    public function activate(Price $price)
+
+    public function activate($id)
     {
         DB::beginTransaction();
-        $price->is_active = 1;
-        $price->save();
+        $item = Item::find($id);
+        $item->is_active = 1;
+        $item->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);

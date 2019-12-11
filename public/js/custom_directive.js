@@ -93,22 +93,27 @@ app.directive('datepick', function() {
       if(second == first) {
         var datepick = scope[second]
       } else {
-        var datepick = scope[first][second]
+        if(scope[first]) {
+            var datepick = scope[first][second]
+        }
       }
 
-      if(/(\d{4})-(\d{2})-(\d{2})/.test(datepick)) {
-          var d = datepick.split('-')
-          p.set('select', new Date(d[0], parseInt(d[1]) - 1, d[2]))
-          var actualValue = $(el).val()
-          if(second == first) {
-            scope[second] = datepick
-          } else {
-            scope[first][second] = datepick
-          }
+      if(datepick) {
+        
+          if(/(\d{4})-(\d{2})-(\d{2})/.test(datepick)) {
+              var d = datepick.split('-')
+              p.set('select', new Date(d[0], parseInt(d[1]) - 1, d[2]))
+              var actualValue = $(el).val()
+              if(second == first) {
+                scope[second] = datepick
+              } else {
+                scope[first][second] = datepick
+              }
 
-          setTimeout(function(){
-              $(el).val(actualValue)
-          }, 200)
+              setTimeout(function(){
+                  $(el).val(actualValue)
+              }, 200)
+          }
       }
       
        ngModel.$parsers.push(function(value) {

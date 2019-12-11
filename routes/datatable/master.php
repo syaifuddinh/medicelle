@@ -13,7 +13,10 @@ Route::prefix('master')->group(function(){
     Route::get('supplier', 'MasterApiController@supplier');
     Route::get('agency', 'MasterApiController@agency');
     Route::get('employee', 'MasterApiController@employee');
+
     Route::get('disease_category', 'MasterApiController@disease_category');
     Route::get('disease', 'MasterApiController@disease');
+
+    Route::get('administration', 'MasterApiController@administration');
 });
 
