@@ -155,6 +155,11 @@ class User extends Authenticatable
                     return 1;
                 }
             }
+
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->master ?? 0;
+            }
         }
 
         return 0;
@@ -174,9 +179,9 @@ class User extends Authenticatable
                 
             }
             if($this->group_user) {
-                    $roles = $this->group_user->roles;
-                    return $roles->registration ?? 0;
-                }
+                $roles = $this->group_user->roles;
+                return $roles->registration ?? 0;
+            }
         }
 
         return 0;
@@ -192,6 +197,11 @@ class User extends Authenticatable
                 if($contact->is_nurse == 1 || $contact->is_nurse_helper == 1 || $contact->is_doctor == 1) {
                     return 1;
                 }
+            }
+
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->polyclinic ?? 0;
             }
         }
 
