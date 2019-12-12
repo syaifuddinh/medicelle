@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Registration;
+use App\RegistrationDetail;
 use App\Assesment;
 use App\MedicalRecord;
 use DataTables;
@@ -26,19 +27,28 @@ class RegistrationApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
-    public function polyclinic_registered(Request $request) {
-        $x = Registration::has('registered_polyclinic')
-        ->with('medical_record', 'patient:id,name,phone,gender')
-        ->select('registrations.id', 'registrations.code', 'medical_record_id', 'registrations.patient_id', 'registrations.date', 'registrations.status')
-        ->whereBetween('registrations.date', [$request->date_start, $request->date_end])
-        ->where('registrations.status', '!=', 1);
+    public function polyclinic_registered(Request $request, $flag = null) {
+        $status = $flag == 'finish' ? 1 : 0;
+        $x = RegistrationDetail::registered_polyclinic()
+        ->with(
+            'registration:id,code,patient_id,date',
+            'medical_record:id,code,registration_id,registration_detail_id', 
+            'registration.patient:id,name,phone,gender',
+            'polyclinic:id,name',
+            'doctor:id,name'
+        )
+        ->where('registration_details.status', $status)
+        ->whereHas('registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+        ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
 
         if($request->filled('status')) {
-            $x = $x->where('registrations.status', $request->status);
+            $x = $x->where('registration_details.status', $request->status);
         }
 
         if($request->draw == 1)
-            $x->orderBy('registrations.id', 'DESC');
+            $x->orderBy('registration_details.id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }

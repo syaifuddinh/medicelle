@@ -18,5 +18,7 @@ Route::prefix('master')->group(function(){
     Route::get('disease', 'MasterApiController@disease');
 
     Route::get('administration', 'MasterApiController@administration');
+    Route::get('laboratory', 'MasterApiController@laboratory');
+    Route::get('radiology', 'MasterApiController@radiology');
 });
 

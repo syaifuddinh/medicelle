@@ -51,6 +51,9 @@
                       </div>
 
                       <div class="ln_solid"></div>
+                      @include('user/group_user/roles')
+
+                      <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 ">
                           <div class="btn-group pull-left">

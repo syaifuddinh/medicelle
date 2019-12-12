@@ -77,24 +77,24 @@ class Registration extends Model
                         $invoiceDetail->save();
                     });
 
-                    $registrationDetail = RegistrationDetail::whereRegistrationId($registration->id)->get()->toArray();
-                    collect($registrationDetail)->each(function($val) use($invoice_id){
-                        $price = Price::whereIsRegistration(0)
-                        ->whereDestination($val['destination'])
-                        ->wherePolyclinicId($val['polyclinic_id'])
-                        ->get()
-                        ->toArray();
+                    // $registrationDetail = RegistrationDetail::whereRegistrationId($registration->id)->get()->toArray();
+                    // collect($registrationDetail)->each(function($val) use($invoice_id){
+                    //     $price = Price::whereIsRegistration(0)
+                    //     ->whereDestination($val['destination'])
+                    //     ->wherePolyclinicId($val['polyclinic_id'])
+                    //     ->get()
+                    //     ->toArray();
 
-                        collect($price)->each(function($val) use($invoice_id){
-                            $invoiceDetail = new InvoiceDetail();
-                            $invoiceDetail->invoice_id = $invoice_id; 
-                            $invoiceDetail->item_id = $val['item_id']; 
-                            $invoiceDetail->is_item = 1; 
-                            $invoiceDetail->qty = $val['qty']; 
-                            $invoiceDetail->debet = $val['custom_price']; 
-                            $invoiceDetail->save();
-                        });
-                    });
+                    //     collect($price)->each(function($val) use($invoice_id){
+                    //         $invoiceDetail = new InvoiceDetail();
+                    //         $invoiceDetail->invoice_id = $invoice_id; 
+                    //         $invoiceDetail->item_id = $val['item_id']; 
+                    //         $invoiceDetail->is_item = 1; 
+                    //         $invoiceDetail->qty = $val['qty']; 
+                    //         $invoiceDetail->debet = $val['custom_price']; 
+                    //         $invoiceDetail->save();
+                    //     });
+                    // });
 
 
 
@@ -124,7 +124,7 @@ class Registration extends Model
     public function detail() {
         return $this->hasMany('App\RegistrationDetail');
     }
-    public function registered_polyclinic() {
+    public function polyclinic_registered() {
         $outp = $this->hasOne('App\RegistrationDetail', 'registration_id', 'id')->whereDestination('POLIKLINIK');
         $user = Auth::user();
         if($user->is_admin != 1) {

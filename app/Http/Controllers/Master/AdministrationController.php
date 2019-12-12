@@ -65,7 +65,7 @@ class AdministrationController extends Controller
     public function store(Request $request, Item $item)
     {
         $request->validate([
-            'name' => 'required|unique:items,name',
+            'name' => 'required',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
         ]);
@@ -73,7 +73,7 @@ class AdministrationController extends Controller
         DB::beginTransaction();
         $item->fill($request->all());
         $item->is_administration = 1;
-        $item->is_pharmacy = $request->grup_nota_id;
+        $item->is_pharmacy = $request->grup_nota_id ?? 0;
         $item->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
@@ -87,7 +87,7 @@ class AdministrationController extends Controller
      */
     public function show($id)
     {
-        $x = Item::with('administration_category:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name')->find($id);
+        $x = Item::with('administration_category:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name')->find($id);
         return Response::json($x, 200);
     }
 
@@ -112,7 +112,7 @@ class AdministrationController extends Controller
     public function update(Request $request, $id)
     {
        $request->validate([
-            'name' => 'required|unique:items,name',
+            'name' => 'required',
         ], [
             'name.required' => 'Nama tidak boleh kosong',
         ]);
@@ -123,7 +123,7 @@ class AdministrationController extends Controller
         $item->fill($request->all());
         $item->price = $price;
         $item->is_administration = 1;
-        $item->is_pharmacy = $request->grup_nota_id;
+        $item->is_pharmacy = $request->grup_nota_id ?? 0;
         $item->save();
         DB::commit();
 

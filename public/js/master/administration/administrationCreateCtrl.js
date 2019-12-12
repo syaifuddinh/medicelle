@@ -79,6 +79,26 @@ app.controller('administrationCreate', ['$scope', '$http', '$rootScope', functio
     }
     $scope.category()
 
+    $scope.piece = function() {
+        $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
+            $scope.data.piece = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.piece()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.piece()
+
     $scope.changeSampleCode = function() {
         var prefix = '';
         var code = '';

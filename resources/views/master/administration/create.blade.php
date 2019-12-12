@@ -66,15 +66,28 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
+
+            <div class="form-group" ng-show='formData.is_category != 1'>
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan<span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.grup_nota_id" ng-options="c.id as c.name for c in data.grup_nota">
+                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
                   <option value=""></option>
                 </select>
               </div>
             </div>
+
+            <div class="form-group"  ng-show='formData.is_category != 1'>
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <select  ng-required='formData.is_category != 1' class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.grup_nota_id" ng-options="c.id as c.name for c in data.grup_nota">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+
+
 
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Keterangan

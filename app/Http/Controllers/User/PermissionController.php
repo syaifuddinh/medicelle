@@ -45,6 +45,7 @@ class PermissionController extends Controller
         DB::beginTransaction();
         $permission->fill($request->all());
         $permission->is_permission = 1;
+        $permission->roles = json_encode($request->roles);
         $permission->save();
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
@@ -58,7 +59,8 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission, $id)
     {
-        return Response::json($permission->find($id), 200);
+        $permission = Permission::find($id);
+        return Response::json($permission, 200);
     }
 
     /**
@@ -84,6 +86,7 @@ class PermissionController extends Controller
         DB::beginTransaction();
         $permission = $permission->findOrFail($id);
         $permission->fill($request->all());
+        $permission->roles = json_encode($request->roles);
         $permission->save();
         DB::commit();
 

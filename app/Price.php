@@ -20,7 +20,7 @@ class Price extends Model
     }
 
     public function service() {
-        return $this->belongsTo('App\Item', 'item_id', 'id')->whereIsAdministration(1);
+        return $this->belongsTo('App\Item', 'item_id', 'id');
     }
 
     public function polyclinic() {

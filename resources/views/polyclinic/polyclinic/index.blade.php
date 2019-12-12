@@ -5,12 +5,7 @@
         <!-- page content -->
         <div class="right_col" role="main" ng-controller="polyclinic">
           <!-- top tiles -->
-          <nav style='margin-bottom:2mm'>
-            
-             <ul class="nav nav-pills">
-                <li class="active"><a href="#">Daftar Pasien</a></li>
-              </ul> 
-          </nav>
+          @include('polyclinic/polyclinic/index-navigation')
 
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -55,6 +50,8 @@
                           <th>Pasien</th>
                           <th>No. Telepon</th>
                           <th>Jenis kelamin</th>
+                          <th>Poliklinik</th>
+                          <th>Dokter</th>
                           <th></th>
                         </tr>
                       </thead>

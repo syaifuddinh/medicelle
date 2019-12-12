@@ -16,6 +16,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('discount', 'DiscountController');
 
         Route::put('piece/activate/{piece}', 'PieceController@activate');
+        Route::get('piece/actived', 'PieceController@actived');
         Route::resource('piece', 'PieceController');
 
         Route::put('supplier/activate/{id}', 'SupplierController@activate');
@@ -50,6 +51,18 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('administration/category/actived', 'AdministrationController@actived_category');
         Route::get('administration/actived', 'AdministrationController@actived');
         Route::resource('administration', 'AdministrationController');
+
+        Route::put('laboratory/activate/{id}', 'LaboratoryController@activate');
+        Route::get('laboratory/category', 'LaboratoryController@category');
+        Route::get('laboratory/category/actived', 'LaboratoryController@actived_category');
+        Route::get('laboratory/actived', 'LaboratoryController@actived');
+        Route::resource('laboratory', 'LaboratoryController');
+
+        Route::put('radiology/activate/{id}', 'RadiologyController@activate');
+        Route::get('radiology/category', 'RadiologyController@category');
+        Route::get('radiology/category/actived', 'RadiologyController@actived_category');
+        Route::get('radiology/actived', 'RadiologyController@actived');
+        Route::resource('radiology', 'RadiologyController');
     });
 });
 

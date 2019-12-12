@@ -17,7 +17,13 @@ class PieceController extends Controller
      */
     public function index()
     {
-        $piece = Piece::whereIsActive(1)->select('id', 'code', 'name')->get();
+        $piece = Piece::whereRaw('1=1')->select('id', 'name')->get();
+        return Response::json($piece, 200);
+    }
+
+    public function actived()
+    {
+        $piece = Piece::whereIsActive(1)->select('id', 'name')->get();
         return Response::json($piece, 200);
     }
 

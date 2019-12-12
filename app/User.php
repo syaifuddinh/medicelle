@@ -76,6 +76,10 @@ class User extends Authenticatable
                     return 1;
                 }
             }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->setting ?? 0;
+            }
         }
 
         return 0;
@@ -92,10 +96,53 @@ class User extends Authenticatable
                     return 1;
                 }
             }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->cashier ?? 0;
+            }
         }
 
         return 0;
 
+    }
+
+    public function allow_view_price() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'setting.price'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+
+    public function allow_view_discount() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'setting.discount'} ?? 0;
+            }
+        }
+
+        return 0;
     }
 
     public function allow_view_master() {
@@ -123,7 +170,13 @@ class User extends Authenticatable
                 if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
                     return 1;
                 }
+
+                
             }
+            if($this->group_user) {
+                    $roles = $this->group_user->roles;
+                    return $roles->registration ?? 0;
+                }
         }
 
         return 0;

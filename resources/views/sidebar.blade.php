@@ -9,8 +9,12 @@
                           <li><a href="{{ route('user.index') }}">User</a></li>
                           <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
                           <li><a href="{{ route('grup_nota.index') }}">Grup nota</a></li>
-                          <li><a href="{{ route('price.index') }}">Tarif</a></li>
-                          <li><a href="{{ route('discount.index') }}">Promo</a></li>
+                          @if(Auth::user()->allow_view_price())
+                              <li><a href="{{ route('price.index') }}">Tarif</a></li>
+                          @endif
+                          @if(Auth::user()->allow_view_discount())
+                              <li><a href="{{ route('discount.index') }}">Promo</a></li>
+                          @endif
                         </ul>
                       </li>
                   @endif

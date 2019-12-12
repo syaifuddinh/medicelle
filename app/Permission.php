@@ -9,6 +9,7 @@ class Permission extends Model
 {
     //
     protected $hidden = ['created_at', 'updated_at'];
+    protected $appends = ['roles'];
     protected $guarded = ['id'];
 
     public static function boot() {
@@ -19,4 +20,11 @@ class Permission extends Model
             $permission->slug = Str::snake($permission->name);
         });
     } 
+
+    public function getRolesAttribute(){ 
+        if(array_key_exists('roles', $this->attributes)) {
+            return json_decode($this->attributes['roles']);
+        }
+        return null;
+    }
 }

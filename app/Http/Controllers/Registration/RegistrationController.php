@@ -220,4 +220,15 @@ class RegistrationController extends Controller
 
         return Response::json(['message' => 'Status pasien saat ini adalah telah hadir'], 200);
     }
+
+    public function finish($registration_detail_id)
+    {
+        DB::beginTransaction();
+        $registration = RegistrationDetail::find($registration_detail_id);
+        $registration->status = 1;
+        $registration->save();
+        DB::commit();
+
+        return Response::json(['message' => 'Pemeriksaan sudah selesai'], 200);
+    }
 }

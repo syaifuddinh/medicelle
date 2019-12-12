@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group" ng-show='formData.is_category != 1'>
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori<span class="required">*</span>
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.administration_category.name %>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kode
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
                         <% sample_code %>
@@ -55,22 +55,33 @@
             </div>
 
             <div class="form-group">
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Nama<span class="required">*</span>
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Nama
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.name %>
+                  <% formData.name %>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.price.grup_nota.name %>
+                    <% formData.piece.name %>
 
 
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Grup nota
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <% formData.price.grup_nota.name %>
+
+
+              </div>
+            </div>
+
 
             <div class="form-group">
               <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Keterangan

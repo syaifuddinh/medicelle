@@ -5,6 +5,8 @@ app.controller('groupUserShow', ['$scope', '$http', '$rootScope', function($scop
     id = path.replace(/.+\/(\d+)/, '$1');
     $http.get(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
             $scope.formData = data.data
+            var lock = $('<div style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>')
+            $('#roles_container').append(lock)
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -17,6 +19,7 @@ app.controller('groupUserShow', ['$scope', '$http', '$rootScope', function($scop
             toastr.error(error.data.message,"Error Has Found !");
           }
     });
+
 
     $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');

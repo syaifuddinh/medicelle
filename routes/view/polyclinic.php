@@ -6,6 +6,9 @@ Route::name('polyclinic.')->prefix('polyclinic')
     Route::get('/', function (){
         return view('polyclinic/polyclinic/index');
     })->name('index');
+    Route::get('/history', function (){
+        return view('polyclinic/polyclinic/history');
+    })->name('history');
     Route::get('/create', function (){
         return view('polyclinic/polyclinic/create');
     })->name('create');

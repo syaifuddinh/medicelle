@@ -1,6 +1,10 @@
-app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Departemen';
-    $scope.formData = {}
+    $scope.formData = {
+      roles : null
+    }
+
+    $compile(angular.element($('.compile')).contents())($scope);
     var path = window.location.pathname;
     if(/edit/.test(path)) {
         $scope.title = 'Edit Departemen';
