@@ -6,9 +6,11 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
 
     $compile(angular.element($('.compile')).contents())($scope);
     var path = window.location.pathname;
-    if(/edit/.test(path)) {
-        $scope.title = 'Edit Departemen';
-        id = path.replace(/.+\/(\d+)/, '$1');
+    id = path.replace(/.+\/(\d+)/, '$1');
+    
+
+    $scope.show = function() {
+      $scope.title = 'Edit Departemen';
         $http.get(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
             $scope.formData = data.data
         }, function(error) {
@@ -22,7 +24,12 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
           } else {
             toastr.error(error.data.message,"Error Has Found !");
           }
+          $scope.show()
         });
+    }
+
+    if(/edit/.test(path)) {
+        $scope.show()
     }
 
     $scope.submitForm=function() {
