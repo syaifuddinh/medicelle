@@ -34,6 +34,14 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>Master</th>
+                                        <th class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                    <tr>
                                         <th>Registrasi pasien</th>
                                         <th class='text-right'>
                                             <label class="radio-inline">
@@ -46,6 +54,14 @@
                                         <th class='text-right'>
                                             <label class="radio-inline">
                                                 <input type="checkbox" name="_a" ng-model='formData.roles["cashier"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Poliklinik</th>
+                                        <th class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["polyclinic"]' ng-true-value='"1"' ng-false-value='"0"'>
                                             </label>
                                         </th>
                                     </tr>

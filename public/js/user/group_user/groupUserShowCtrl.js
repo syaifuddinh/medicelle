@@ -3,22 +3,27 @@ app.controller('groupUserShow', ['$scope', '$http', '$rootScope', function($scop
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
-    $http.get(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
-            $scope.formData = data.data
-            var lock = $('<div style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>')
-            $('#roles_container').append(lock)
-        }, function(error) {
-          $rootScope.disBtn=false;
-          if (error.status==422) {
-            var det="";
-            angular.forEach(error.data.errors,function(val,i) {
-              det+="- "+val+"<br>";
-            });
-            toastr.warning(det,error.data.message);
-          } else {
-            toastr.error(error.data.message,"Error Has Found !");
-          }
-    });
+
+    $scope.show = function() {
+        $http.get(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
+                $scope.formData = data.data
+                var lock = $('<div style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>')
+                $('#roles_container').append(lock)
+            }, function(error) {
+              $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+              $scope.show()
+        });
+    }
+    $scope.show()
 
 
     $scope.delete = function(id) {

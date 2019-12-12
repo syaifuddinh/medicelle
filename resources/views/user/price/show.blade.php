@@ -50,7 +50,7 @@
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-md-5 col-sm-3 col-xs-12" for="last-name">Apakah tarif registrasi
+                                  <label class="col-md-5 col-sm-3 col-xs-12" for="last-name">Apakah tarif administrasi
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.is_registration == 1 ? 'Ya' : 'Tidak' %>
