@@ -66,6 +66,8 @@ class MedicalRecordController extends Controller
 
             'ginekologi_history:medical_record_id,name', 
 
+            'treatment:medical_record_id,item_id,date,qty,reduksi', 
+
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
             'allergy_history:medical_record_id,cure,side_effect', 
@@ -164,6 +166,19 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_ginekologi_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->treatment)) {
+            $medical_record_detail->treatment()->whereMedicalRecordId($medical_record->id)->delete();
+            $treatment = collect($request->treatment);
+            $treatment = $treatment->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_treatment = 1;
                 $medical_record_detail->save();
             });
         }

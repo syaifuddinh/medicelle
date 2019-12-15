@@ -229,7 +229,17 @@ class MasterApiController extends Controller
         $x = Item::cure()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')
         ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
-        // die($request->is_active);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function bhp(Request $request) {
+        $x = Item::bhp()
+        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

@@ -28,7 +28,7 @@ class Item extends Model
         static::created(function(Item $item) {
 
             // Is Active a.k.a grup nota id
-            if($item->is_administration == 1 && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
+            if(($item->is_cure == 1 || $item->is_bhp == 1 ) && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
 
@@ -40,38 +40,23 @@ class Item extends Model
                         $price->item_id = $item->id;
                         $price->is_registration = 0;
                         $price->grup_nota_id = $item->is_pharmacy;
-                        $price->destination = 'RUANG TINDAKAN';
+                        if($item->is_cure == 1) {
+                            $price->destination = 'OBAT';
+                        } else if($item->is_bhp == 1) {
+                            $price->destination = 'BHP';
+                        }
                         $price->save();
 
                 }
                 $item->is_pharmacy = 0;
             }
 
-            // Laboratorium
-            if($item->is_laboratory == 1 && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
-                $price = Price::whereItemId($item->id)->first();
-                if($price != null) {
-
-                    $price = Price::find($price->id);
-                    $price->grup_nota_id = $item->is_pharmacy;
-                    $price->save();
-                } else {
-                        $price = new Price();
-                        $price->item_id = $item->id;
-                        $price->is_registration = 0;
-                        $price->grup_nota_id = $item->is_pharmacy;
-                        $price->destination = 'LABORATORIUM';
-                        $price->save();
-
-                }
-                $item->is_pharmacy = 0;
-            }
         });
 
         static::updating(function(Item $item) {
             // Is Active a.k.a grup nota id
 
-            if($item->is_administration == 1 && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
+            if(($item->is_cure == 1 || $item->is_bhp == 1 ) && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
                     $price = Price::find($price->id);
@@ -83,25 +68,11 @@ class Item extends Model
                     $price->item_id = $item->id;
                     $price->is_registration = 0;
                     $price->grup_nota_id = $item->is_pharmacy;
-                    $price->destination = 'RUANG TINDAKAN';
-                    $price->save();
-
-                }
-            }
-
-            if($item->is_laboratory == 1 && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
-                $price = Price::whereItemId($item->id)->first();
-                if($price != null) {
-                    $price = Price::find($price->id);
-                    $price->grup_nota_id = $item->is_pharmacy;
-                    $price->save();
-                    $item->is_pharmacy = 1;
-                } else {
-                     $price = new Price();
-                    $price->item_id = $item->id;
-                    $price->is_registration = 0;
-                    $price->grup_nota_id = $item->is_pharmacy;
-                    $price->destination = 'LABORATORIUM';
+                    if($item->is_cure == 1) {
+                        $price->destination = 'OBAT';
+                    } else if($item->is_bhp == 1) {
+                        $price->destination = 'BHP';
+                    }
                     $price->save();
 
                 }
@@ -158,6 +129,10 @@ class Item extends Model
         return self::whereIsCure(1);
     }
 
+    public static function bhp() {
+        return self::whereIsBhp(1);
+    }
+
     public static function disease_category() {
         return self::whereIsDisease(1)->whereIsCategory(1);
     }
@@ -183,6 +158,15 @@ class Item extends Model
 
     public function radiology_category() {
         return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsRadiology(1);
+    }
+
+
+    public function cure_category() {
+        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsCure(1);
+    }
+
+    public function bhp_category() {
+        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsBhp(1);
     }
 
     public function price() {

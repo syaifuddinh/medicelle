@@ -140,6 +140,10 @@ class MedicalRecord extends Model
         return $this->hasMany('App\MedicalRecordDetail')->whereIsKbHistory(1);
     }
 
+    public function treatment() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsTreatment(1);
+    }
+
     public function komplikasi_kb_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsKomplikasiKbHistory(1);
     }

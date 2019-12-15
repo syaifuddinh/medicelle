@@ -133,7 +133,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         if(path.indexOf('physique/general') > -1) {
               diagnose_history_datatable.rows.add(data.data.diagnose_history).draw()
         }
+
+        if(path.indexOf('therapy/treatment') > -1) {
+              treatment_datatable.rows.add(data.data.treatment).draw()
+        }
     }, function(error) {
+      $scope.show()
       $rootScope.disBtn=false;
       if (error.status==422) {
         var det="";
@@ -142,7 +147,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         });
         toastr.warning(det,error.data.message);
       } else {
-        $scope.show()
         toastr.error(error.data.message,"Error Has Found !");
       }
     });
@@ -151,6 +155,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitDiseaseHistory = function() {
       disease_history_datatable.row.add($scope.disease_history).draw()
       $scope.disease_history = {}
+  }
+
+
+  $scope.submitTreatment = function() {
+      console.log($scope.treatment)
+      treatment_datatable.row.add($scope.treatment).draw()
+      $scope.treatment = {}
   }
 
   $scope.submitDiagnoseHistory = function() {
@@ -289,7 +300,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.disease = function() {
-
       $http.get(baseUrl + '/controller/master/disease').then(function(data) {
         $scope.data.disease = data.data
         $scope.show()
@@ -307,7 +317,26 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         }
       });
   }
-  $scope.disease()
+
+  $scope.treatment_item = function() {
+      $http.get(baseUrl + '/controller/user/price/treatment').then(function(data) {
+        $scope.data.treatment = data.data
+        $scope.show()
+      }, function(error) {
+        $rootScope.disBtn=false;
+        $scope.treatment_item()
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  }
+  $scope.treatment_item()
 
   allergy_history_datatable = $('#allergy_history_datatable').DataTable({
     dom: 'rt',
@@ -425,6 +454,33 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
     
+
+
+  treatment_datatable = $('#treatment_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      { 
+        data : null,
+        render : resp => $scope.data.treatment.find(x => x.id == resp.item_id).name
+      },
+      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+
   disease_history_datatable = $('#disease_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
@@ -600,6 +656,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         patient : $scope.patient,
         pain_score : 0
       }
+      $scope.treatment = {}
       $scope.diagnose_history = {}
       $scope.disease_history = {}
       $scope.family_disease_history = {}
@@ -623,6 +680,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           allergy_history_datatable.clear().draw();
       } else if(step == 3) {
           kid_history_datatable.clear().draw();
+      }
+
+      if(path.indexOf('therapy/treatment') > -1) {
+          treatment_datatable.clear().draw();
       }
 
       window.scrollTo(0, 0)
@@ -656,6 +717,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
     disease_history_datatable.row(tr).remove().draw()
+  }
+
+    
+  $scope.deleteTreatment = function(e) {
+    var tr = $(e).parents('tr');
+    treatment_datatable.row(tr).remove().draw()
   }
 
     
@@ -720,6 +787,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
       if(path.indexOf('physique/general') > -1) {
           $scope.formData.diagnose_history = diagnose_history_datatable.data().toArray()
+      }
+
+      if(path.indexOf('therapy/treatment') > -1) {
+          $scope.formData.treatment = treatment_datatable.data().toArray()
       }
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false

@@ -1,11 +1,11 @@
-app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('bhp', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
   $scope.formData = {}
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/cure',
+      url : baseUrl+'/datatable/master/bhp',
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
@@ -14,9 +14,9 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Obat - '+new Date(),
+        'filename' : 'BHP - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Obat'
+        'title' : 'BHP'
       },
     ],
 
@@ -43,7 +43,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
           resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
           : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/cure/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cure/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/bhp/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/bhp/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -59,7 +59,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/master/bhp/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data Berhasil dinon-aktifkan !");
         }, function(error) {
@@ -78,7 +78,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
   $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/cure/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/bhp/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
               oTable.ajax.reload();
           }, function(error) {

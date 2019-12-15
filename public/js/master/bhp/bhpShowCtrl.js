@@ -1,12 +1,12 @@
-app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope) {
-    $scope.title = 'Detail Obat';
+app.controller('bhpShow', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope) {
+    $scope.title = 'Detail BHP';
     $scope.formData = {}
     $scope.data = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
     
     $scope.show = function() {
-      $http.get(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+      $http.get(baseUrl + '/controller/master/bhp/' + id).then(function(data) {
             $scope.formData = data.data
             $scope.formData = data.data
             $scope.changeSampleCode()
@@ -26,7 +26,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     }
 
     $scope.category = function() {
-        $http.get(baseUrl + '/controller/master/cure/category').then(function(data) {
+        $http.get(baseUrl + '/controller/master/bhp/category').then(function(data) {
             $scope.data.category = data.data
             $scope.show()
         }, function(error) {
@@ -65,7 +65,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
       if(is_delete)
-          $http.delete(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+          $http.delete(baseUrl + '/controller/master/bhp/' + id).then(function(data) {
               toastr.success("Data Berhasil dinon-aktifkan !");
               setTimeout(function () {
                   location.reload();
@@ -86,7 +86,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/cure/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/bhp/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
               setTimeout(function () {
                   location.reload();

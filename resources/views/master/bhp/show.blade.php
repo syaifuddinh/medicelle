@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="cureShow">
+<div class="right_col" role="main" ng-controller="bhpShow">
     <!-- top tiles -->
 
 
@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
 
-                            <a href='{{ route("cure.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                            <a href='{{ route("bhp.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
                             <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
                             <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
                         </div>
@@ -40,7 +40,7 @@
               <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.cure_category.name %>
+<% formData.bhp_category.name %>
 
 
               </div>
@@ -146,5 +146,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/master/cure/cureShowCtrl.js"></script>
+<script src="{{ asset('') }}js/master/bhp/bhpShowCtrl.js"></script>
 

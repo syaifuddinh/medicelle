@@ -121,6 +121,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.disease_history = {}
   }
 
+  $scope.submitTreatment = function() {
+      treatment_datatable.row.add($scope.treatment).draw()
+      $scope.treatment = {}
+  }
+
   $scope.submitObgynDiseaseHistory = function() {
       obgyn_disease_history_datatable.row.add($scope.obgyn_disease_history).draw()
       $scope.obgyn_disease_history = {}
@@ -381,6 +386,31 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+     
+  treatment_datatable = $('#treatment_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+    {
+        date : null,
+        render : resp => $filter('fullDate'){resp.date}
+    }
+    { 
+      data : null,
+      render : resp => $scope.data.treatment(x => x.id == $scope.treatment.item_id)
+    },
+    {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+    {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
     
   family_disease_history_datatable = $('#family_disease_history_datatable').DataTable({
     dom: 'rt',
@@ -485,6 +515,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteAllergyHistory = function(e) {
     var tr = $(e).parents('tr');
     allergy_history_datatable.row(tr).remove().draw()
+  }
+    
+    
+  $scope.deleteTreatment = function(e) {
+    var tr = $(e).parents('tr');
+    treatment_datatable.row(tr).remove().draw()
   }
     
   $scope.deleteImunisasiHistory = function(e) {

@@ -10,8 +10,13 @@
             
                 <ul class="nav nav-pills" style='margin-bottom:1mm'>
                     <li class='{{ strpos(url()->current(), "step") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Anamnesa</a></li>
-                    <li class='{{ strpos(url()->current(), "physique") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit.physique.general', ['id' => $id]) }}">Pemeriksaan Fisik</a></li>
-                    <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'><a href="">Terapi</a></li>
+                    <li class='{{ strpos(url()->current(), "physique") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.physique.general', ['id' => $id]) }}">Pemeriksaan Fisik</a>
+                    </li>
+
+                    <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
+                    </li>
                     <span class="hidden">
                         
                         <li class='{{ strpos(url()->current(), "bhp") != null ? "active" : "" }}'><a href="#">BHP - Sewa Alkes & Ruang</a></li>

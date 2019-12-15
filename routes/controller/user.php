@@ -9,6 +9,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('grup_nota', 'GrupNotaController');
 
         Route::put('price/activate/{permission}', 'PriceController@activate');
+        Route::get('price/treatment', 'PriceController@treatment');
         Route::resource('price', 'PriceController');
 
         Route::put('user/activate/{user}', 'UserController@activate');

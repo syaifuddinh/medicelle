@@ -17,8 +17,11 @@ Route::prefix('master')->group(function(){
     Route::get('disease_category', 'MasterApiController@disease_category');
     Route::get('disease', 'MasterApiController@disease');
 
-    Route::get('administration', 'MasterApiController@administration');
-    Route::get('laboratory', 'MasterApiController@laboratory');
-    Route::get('radiology', 'MasterApiController@radiology');
+    // Route::get('administration', 'MasterApiController@administration');
+    // Route::get('laboratory', 'MasterApiController@laboratory');
+    // Route::get('radiology', 'MasterApiController@radiology');
+
+    Route::get('cure', 'MasterApiController@cure');
+    Route::get('bhp', 'MasterApiController@bhp');
 });
 

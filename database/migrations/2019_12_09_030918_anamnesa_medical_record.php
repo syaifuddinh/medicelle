@@ -39,6 +39,14 @@ class AnamnesaMedicalRecord extends Migration
             $table->unsignedInteger('is_kb_history')->nullable(false)->default(0)->index();
             $table->unsignedInteger('is_komplikasi_kb_history')->nullable(false)->default(0)->index();
 
+            $table->unsignedInteger('is_diagnostic')->nullable(false)->default(0)->index();
+            $table->unsignedInteger('is_drug')->nullable(false)->default(0)->index();
+            $table->unsignedInteger('is_treatment')->nullable(false)->default(0)->index();
+            $table->unsignedInteger('item_id')->nullable(false)->default(0)->index();
+            $table->integer('qty')->nullable(false)->default(0)->index();
+            $table->integer('reduksi')->nullable(false)->default(0)->index();
+            $table->date('date')->nullable(true)->index();
+
             $table->unsignedInteger('is_other')->nullable(false)->default(1)->index();
             $table->text('description')->nullable(true)->index();
             $table->string('type', 50)->nullable(true)->index();
@@ -57,7 +65,7 @@ class AnamnesaMedicalRecord extends Migration
             $table->dropColumn(['current_disease', 'psiko_sosial', 'operasi', 'obgyn_main_complaint', 'obgyn_current_disease', 'obgyn_operasi', 'ekg', 'usg', 'physique', 'head_description', 'breast_description', 'rectum_description']);
         });
         Schema::table('medical_record_details', function (Blueprint $table) {
-            $table->dropColumn(['disease_name', 'is_ginekologi_history', 'is_other_ginekologi', 'is_obgyn_disease_history', 'is_obgyn_family_disease_history', 'is_kb_history', 'is_komplikasi_kb_history', 'name', 'duration', 'is_other', 'is_diagnose_history', 'description', 'type']);
+            $table->dropColumn(['disease_name', 'is_ginekologi_history', 'is_other_ginekologi', 'is_obgyn_disease_history', 'is_obgyn_family_disease_history', 'is_kb_history', 'is_komplikasi_kb_history', 'name', 'duration', 'is_other', 'is_diagnose_history', 'description', 'type', 'is_drug', 'is_diagnostic', 'is_treatment', 'item_id', 'date', 'qty', 'reduksi']);
         });
     }
 }

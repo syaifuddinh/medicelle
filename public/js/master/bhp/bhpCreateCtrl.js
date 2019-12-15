@@ -1,5 +1,5 @@
-app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-    $scope.title = 'Tambah Obat';
+app.controller('bhpCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+    $scope.title = 'Tambah BHP';
     $scope.formData = {
         is_category : 0
     }
@@ -8,9 +8,9 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
 
     $scope.show = function() {
         if(/edit/.test(path)) {
-            $scope.title = 'Edit Obat';
+            $scope.title = 'Edit BHP';
             id = path.replace(/.+\/(\d+)/, '$1');
-            $http.get(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+            $http.get(baseUrl + '/controller/master/bhp/' + id).then(function(data) {
                 $scope.formData = data.data
                 $scope.formData.grup_nota_id = data.data.price.grup_nota_id
                 $scope.formData.price = data.data.rate
@@ -58,7 +58,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
     }
 
     $scope.category = function() {
-        $http.get(baseUrl + '/controller/master/cure/category/actived').then(function(data) {
+        $http.get(baseUrl + '/controller/master/bhp/category/actived').then(function(data) {
             $scope.data.category = data.data
             if(/edit/.test(path)) {
                 $scope.show()
@@ -117,17 +117,17 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/master/cure';
+      var url = baseUrl + '/controller/master/bhp';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/master/cure/' + id;
+          var url = baseUrl + '/controller/master/bhp/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/cure'          
+          window.location = baseUrl + '/bhp'          
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

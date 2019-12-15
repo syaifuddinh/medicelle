@@ -47,6 +47,10 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/create-physique-rectum')->withId($id);
     })->name('edit.physique.rectum');
 
+    Route::get('/therapy/treatment/{id}', function ($id){
+        return view('registration/medical_record/create-therapy-treatment')->withId($id);
+    })->name('edit.therapy.treatment');
+
 
     Route::get('/step/1/show/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);

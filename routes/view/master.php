@@ -343,3 +343,20 @@ Route::name('cure.')->prefix('cure')
         return view('master/cure/show')->withId($id);
     })->name('show');
 });
+
+Route::name('bhp.')->prefix('bhp')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/bhp/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/bhp/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/bhp/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/bhp/show')->withId($id);
+    })->name('show');
+});
