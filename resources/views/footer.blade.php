@@ -128,9 +128,19 @@
     </script>
     <script>
         $(document).ready(function(){
-            var roles = {
+            roles = {
                 'allow_update_assesment' : {!! Auth::user()->allow_update_assesment() !!},
                 'allow_update_medical_record' : {!! Auth::user()->allow_update_medical_record() !!},
+
+                'allow_edit_price' : {!! Auth::user()->allow_access('setting.price.edit') !!},
+                'allow_show_price' : {!! Auth::user()->allow_access('setting.price.show') !!},
+                'allow_activate_price' : {!! Auth::user()->allow_access('setting.price.activate') !!},
+                'allow_destroy_price' : {!! Auth::user()->allow_access('setting.price.destroy') !!},
+
+                'allow_edit_discount' : {!! Auth::user()->allow_access('setting.discount.edit') !!},
+                'allow_show_discount' : {!! Auth::user()->allow_access('setting.discount.show') !!},
+                'allow_activate_discount' : {!! Auth::user()->allow_access('setting.discount.activate') !!},
+                'allow_destroy_discount' : {!! Auth::user()->allow_access('setting.discount.destroy') !!},
             }
 
             setInterval(function(){
@@ -140,7 +150,7 @@
                     if(el.length > 0) {
                         el.each(function(){
                             if(value == 0) {
-                                $(el).css('display', 'none')
+                                $(el).remove()
                             }
                         })
                     }

@@ -16,7 +16,11 @@
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Status
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                              <label class="radio-inline">
+                            <label class="radio-inline">
+                              <input type="radio" ng-model="formData.status" ng-value='null' ng-change="filter()">
+                              <h5>Semua</h5>
+                            </label>
+                            <label class="radio-inline">
                               <input type="radio" ng-model="formData.status" ng-value='"1"' ng-change="filter()">
                               <h5>Terjadwal</h5>
                             </label>

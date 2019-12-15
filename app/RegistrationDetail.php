@@ -69,6 +69,31 @@ class RegistrationDetail extends Model
         return $self;
     }
 
+    public static function registered_radiology() {
+        $self = self::whereDestination('RADIOLOGI');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $self->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $self;
+    }
+
+
+    public static function registered_chemoterapy() {
+        $self = self::whereDestination('KEMOTERAPI');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $self->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $self;
+    }
+
     public function doctor() {
         return $this->belongsTo('App\Contact', 'doctor_id', 'id')->whereIsDoctor(1);
     }

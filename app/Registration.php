@@ -52,30 +52,32 @@ class Registration extends Model
                 $invoice = Invoice::whereRegistrationId($registration->id)->first();
                 if($invoice == null) {
                     DB::beginTransaction();
+                    $latestInvoice = Invoice::whereRegistrationId($registration->id)->select('id')->first();
+                    if($latestInvoice == null) {
+                        $invoice = new Invoice();
+                        $invoice->is_nota_rawat_jalan = 1;
+                        $invoice->payment_method = 'TUNAI';
+                        if($registration->patient_type == 'ASURANSI SWASTA') {
+                            $invoice->payment_type = 'ASURANSI SWASTA';                        
+                        } else {
+                            $invoice->payment_type = 'BAYAR SENDIRI';                        
+                        }
+                        $invoice->date = $registration->date;
+                        $invoice->registration_id = $registration->id;
+                        $invoice->save();
+                        $invoice_id = $invoice->id;
 
-                    $invoice = new Invoice();
-                    $invoice->is_nota_rawat_jalan = 1;
-                    $invoice->payment_method = 'TUNAI';
-                    if($registration->patient_type == 'ASURANSI SWASTA') {
-                        $invoice->payment_type = 'ASURANSI SWASTA';                        
-                    } else {
-                        $invoice->payment_type = 'BAYAR SENDIRI';                        
+                        $registrationItem = Price::whereIsRegistration(1)->whereIsActive(1)->get()->toArray();
+                        collect($registrationItem)->each(function($val) use($invoice_id){
+                            $invoiceDetail = new InvoiceDetail();
+                            $invoiceDetail->invoice_id = $invoice_id; 
+                            $invoiceDetail->item_id = $val['item_id']; 
+                            $invoiceDetail->is_item = 1; 
+                            $invoiceDetail->qty = $val['qty']; 
+                            $invoiceDetail->debet = $val['custom_price']; 
+                            $invoiceDetail->save();
+                        });
                     }
-                    $invoice->date = $registration->date;
-                    $invoice->registration_id = $registration->id;
-                    $invoice->save();
-                    $invoice_id = $invoice->id;
-
-                    $registrationItem = Price::whereIsRegistration(1)->get()->toArray();
-                    collect($registrationItem)->each(function($val) use($invoice_id){
-                        $invoiceDetail = new InvoiceDetail();
-                        $invoiceDetail->invoice_id = $invoice_id; 
-                        $invoiceDetail->item_id = $val['item_id']; 
-                        $invoiceDetail->is_item = 1; 
-                        $invoiceDetail->qty = $val['qty']; 
-                        $invoiceDetail->debet = $val['custom_price']; 
-                        $invoiceDetail->save();
-                    });
 
                     // $registrationDetail = RegistrationDetail::whereRegistrationId($registration->id)->get()->toArray();
                     // collect($registrationDetail)->each(function($val) use($invoice_id){

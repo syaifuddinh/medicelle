@@ -66,6 +66,27 @@ class User extends Authenticatable
           return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereIsDoctor(1)->whereId($this->contact_id);
     }
 
+    public function allow_access($slug) {
+        $outp = 0;
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    $outp = 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                $outp = $roles->{$slug} ?? 0;
+            }
+        }
+
+        return $outp;
+
+    }
+
     public function allow_view_setting() {
         if( $this->is_admin == 1) {
             return 1;
@@ -119,6 +140,122 @@ class User extends Authenticatable
             if($this->group_user) {
                 $roles = $this->group_user->roles;
                 return $roles->{'setting.price'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+    public function allow_create_discount() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'setting.discount.create'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+
+    public function allow_edit_discount() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'setting.discount.edit'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+    public function allow_show_discount() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'setting.discount.show'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+    public function allow_view_patient() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'master.patient'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+    public function allow_view_medical_worker() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'master.medical_worker'} ?? 0;
+            }
+        }
+
+        return 0;
+    }
+
+
+    public function allow_view_employee() {
+        if( $this->is_admin == 1) {
+            return 1;
+        } else {
+            if($this->contact_id != null) {
+                $contact = $this->contact; 
+                if($contact->is_nurse != 1 && $contact->is_nurse_helper != 1 && $contact->is_doctor != 1) {
+                    return 1;
+                }
+            }
+            if($this->group_user) {
+                $roles = $this->group_user->roles;
+                return $roles->{'master.employee'} ?? 0;
             }
         }
 

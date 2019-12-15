@@ -43,7 +43,7 @@ class UserApiController extends Controller
     }
     public function price(Request $request) {
         $x = Price::with('service:id,name,price', 'grup_nota:id,slug', 'polyclinic:id,name')->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'item_id', 'grup_nota_id', 'prices.is_active');
-        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        $x = $request->filled('is_active') ? $x->where('prices.is_active', $request->is_active) : $x;
 
         if($request->draw == 1)
             $x->orderBy('prices.id', 'DESC');

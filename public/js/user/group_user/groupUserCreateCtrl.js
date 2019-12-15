@@ -1,18 +1,42 @@
 app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Departemen';
     $scope.formData = {
-      roles : null
+      roles : {}
     }
 
     $compile(angular.element($('.compile')).contents())($scope);
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
     
+    $scope.uncheckAll = function() {
+      $scope.formData.roles = {}
+    }
+
+    $scope.checkAll = function() {
+      var roles = $('[ng-model*="formData.roles"]');
+      var role, unit;
+      for(model = 0;model < roles.length;model++) {
+          console.log(roles[model])
+          unit = $(roles[model])
+          if(unit.length > 0) {
+            role = unit.attr('ng-model').replace(/formData\.roles(.+)/, '$1')
+            role = role.replace(/\.(\[.*\])/, '$1')
+            console.log(role)
+            role = role.replace(/\[["'](.+)["']\]/, '$1')
+            $scope.formData.roles[role] = '1'
+          }
+
+      }
+    }
 
     $scope.show = function() {
       $scope.title = 'Edit Departemen';
         $http.get(baseUrl + '/controller/user/group_user/' + id).then(function(data) {
             $scope.formData = data.data
+            var length = data.data.roles.length
+            if(typeof length == 'number') {
+              $scope.formData.roles = {}
+            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

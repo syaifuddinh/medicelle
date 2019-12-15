@@ -1,10 +1,23 @@
 app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+  var path = window.location.pathname
+  var patient_head =  baseUrl + '/datatable/registration/'
+  var patient_url;
+  if( path.indexOf('polyclinic') > -1) {
+      patient_url = patient_head + 'polyclinic_registered'
+  } else if( path.indexOf('radiology') > -1) {
+      patient_url = patient_head + 'radiology_registered'
+  } else if( path.indexOf('chemoterapy') > -1) {
+      patient_url = patient_head + 'chemoterapy_registered'
+  }
+
+  patient_url += '/finish'
+
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/registration/polyclinic_registered/finish',
+      url : patient_url,
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
@@ -37,7 +50,11 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         className : 'capitalize',
         render : resp => resp.registration.patient.gender.toLowerCase()
       },
-      {data:"polyclinic.name", name:"polyclinic.name"},
+      {
+        data:"polyclinic.name", 
+        name:"polyclinic.name",
+        className : path.indexOf('polyclinic') > -1 ? '' : 'hidden',
+      },
       {data:"doctor.name", name:"doctor.name"},
       {
         data: null, 

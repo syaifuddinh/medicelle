@@ -212,7 +212,7 @@
                                 <option value=""></option>
                                 <option value="POLIKLINIK">Poliklinik</option>
                                 <option value="MEDICAL CHECK-UP">Medical Check-up</option>
-                                <option value="LABORATORIUM">Laboratorium Check-up</option>
+                                <option value="LABORATORIUM">Laboratorium</option>
                                 <option value="RADIOLOGI">Radiologi</option>
                                 <option value="KEMOTERAPI">Kemoterapi</option>
                                 <option value="RUANG TINDAKAN">Ruang tindakan</option>

@@ -17,15 +17,19 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <label class="radio-inline">
-                              <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='"1"' ng-change="filter()">
-                              <h5>Aktif</h5>
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='"0"' ng-change="filter()">
-                              <h5>
-                              Tidak aktif  
-                              </h5>
-                            </label>
+                                    <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='null' ng-change="filter()">
+                                    <h5>Semua</h5>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='"1"' ng-change="filter()">
+                                    <h5>Aktif</h5>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='"0"' ng-change="filter()">
+                                    <h5>
+                                        Tidak aktif  
+                                    </h5>
+                                </label>
                             </div>
                           </div>
                         <div class="form-group">

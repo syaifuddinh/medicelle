@@ -1,10 +1,25 @@
 app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+  var path = window.location.pathname
+
+  var patient_head =  baseUrl + '/datatable/registration/'
+  var patient_url;
+  var flagl
+  if( path.indexOf('polyclinic') > -1) {
+      patient_url = patient_head + 'polyclinic_registered'
+      flag = 'polyclinic'
+  } else if( path.indexOf('radiology') > -1) {
+      patient_url = patient_head + 'radiology_registered'
+      flag = 'radiology'
+  } else if( path.indexOf('chemoterapy') > -1) {
+      patient_url = patient_head + 'chemoterapy_registered'
+      flag = 'chemoterapy'
+  } 
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/registration/polyclinic_registered',
+      url : patient_url,
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
@@ -37,7 +52,11 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         className : 'capitalize',
         render : resp => resp.registration.patient.gender.toLowerCase()
       },
-      {data:"polyclinic.name", name:"polyclinic.name"},
+      {
+        data:"polyclinic.name", 
+        name:"polyclinic.name",
+        className : path.indexOf('polyclinic') > -1 ? '' : 'hidden'
+      },
       {data:"doctor.name", name:"doctor.name"},
       {
         data: null, 
@@ -46,7 +65,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/polyclinic/" + resp.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

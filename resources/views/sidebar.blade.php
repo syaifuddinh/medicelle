@@ -21,11 +21,17 @@
                   @if(Auth::user()->allow_view_master())
                     <li><a><i class="fa fa-gears"></i> Master <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
-                        <li><a href="{{ route('patient.index') }}">Pasien</a></li>
-                        <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
-                        <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
+                        @if(Auth::user()->allow_view_patient())
+                            <li><a href="{{ route('patient.index') }}">Pasien</a></li>
+                        @endif
+                        @if(Auth::user()->allow_view_medical_worker())
+                            <li><a href="{{ route('doctor.index') }}">Tenaga medis</a></li>
+                        @endif
+                        @if(Auth::user()->allow_view_employee())
+                            <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
+                        @endif
                         <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
-                        <li><a href="{{ route('administration.index') }}">Item medis</a></li>
+                        <li><a href="{{ route('cure.index') }}">Item medis</a></li>
                         <li><a href="{{ route('piece.index') }}">Satuan</a></li>
                         <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
                         <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
@@ -47,7 +53,21 @@
 
                   @if(Auth::user()->allow_view_polyclinic())
                       <li>
-                        <a href='{{ route("polyclinic.index") }}'><i class="fa fa-user-md"></i>Poliklinik</a>
+                        <a href='{{ route("polyclinic.patient.index") }}'><i class="fa fa-user-md"></i>Poliklinik</a>
+                      </li>
+                  @endif
+
+
+                  @if(Auth::user()->allow_view_polyclinic())
+                      <li>
+                        <a href='{{ route("radiology.index") }}'><i class="fa fa-bullseye"></i>Radiologi</a>
+                      </li>
+                  @endif
+
+
+                  @if(Auth::user()->allow_view_polyclinic())
+                      <li>
+                        <a href='{{ route("chemoterapy.index") }}'><i class="fa fa-medkit"></i>Kemoterapi</a>
                       </li>
                   @endif
 

@@ -1,6 +1,7 @@
 app.controller('groupUserShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.title = 'Detail Group User';
     $scope.formData = {}
+    $scope.is_hidden = 1
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
 

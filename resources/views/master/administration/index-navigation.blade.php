@@ -1,7 +1,7 @@
 <nav style='margin-bottom:2mm'>
     
      <ul class="nav nav-pills">
-        <li class='{{ strpos(url()->current(), "administration") != null ? "active" : "" }}'>
+        <!-- <li class='{{ strpos(url()->current(), "administration") != null ? "active" : "" }}'>
             <a href="{{ route('administration.index') }}">Distributor Farmasi</a>
         </li>
         <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'>
@@ -15,6 +15,9 @@
         </li>
         <li class='{{ strpos(url()->current(), "pharmacy") != null ? "active" : "" }}'>
             <a href="{{ route('pharmacy.index') }}">Farmasi</a>
+        </li> -->
+        <li class='{{ strpos(url()->current(), "cure") != null ? "active" : "" }}'>
+            <a href="{{ route('cure.index') }}">Obat</a>
         </li>
       </ul> 
   </nav>

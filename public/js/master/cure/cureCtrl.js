@@ -1,10 +1,11 @@
-app.controller('price', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+  $scope.formData = {}
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/user/price',
+      url : baseUrl+'/datatable/master/cure',
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
@@ -13,38 +14,17 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Tarif - '+new Date(),
+        'filename' : 'Item Pemeriksaan Laboratorium - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Tarif'
+        'title' : 'Item Pemeriksaan Laboratorium'
       },
     ],
 
     columns:[
-      {data:"grup_nota.slug", name:"grup_nota.slug"},
-      {data:"service.name", name:"service.name"},
-      {
-        data:null, 
-        name:null,
-        className: 'text-right',
-        render : resp => $filter('number')(resp.service.price)
-      },
-      {
-        data: null, 
-        orderable : false,
-        searchable : false,
-        className : 'text-center capitalize',
-        render : function(resp) {
-            if(resp.is_registration == 1) {
-                return 'Registrasi';
-            } else {
-                if(resp.destination == 'POLIKLINIK') {
-                    return 'Poliklinik ' + resp.polyclinic.name
-                } else {
-                    return resp.destination ? resp.destination.toLowerCase() : ''
-                }
-            }
-        }
-      },
+      {data:"unique_code", searchable : false, orderable : false},
+      {data:"name", name:"items.name"},
+      {data:"cure_category.name", name:"cure_category.name"},
+      {data:"price.grup_nota.slug", name:"price.grup_nota.slug"},
       {
         data: null, 
         orderable : false,
@@ -60,27 +40,26 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.is_active == 1 ? "<button allow_destroy_price class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button allow_activate_price class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a allow_edit_price class='btn btn-xs btn-success' href='" + baseUrl + "/price/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a allow_show_price class='btn btn-xs btn-default' href='" + baseUrl + "/price/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/cure/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cure/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
     }
   });
+  oTable.buttons().container().appendTo( '.export_button' );
 
   $scope.filter = function() {
     oTable.ajax.reload()
   }
 
-  oTable.buttons().container().appendTo( '.export_button' );
-
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/user/price/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/master/cure/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data Berhasil dinon-aktifkan !");
         }, function(error) {
@@ -99,7 +78,7 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
   $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/user/price/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/cure/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
               oTable.ajax.reload();
           }, function(error) {

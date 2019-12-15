@@ -61,9 +61,12 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/show-4')->withId($id);
     })->name('show.4');
     
-    Route::get('/{id}/patient', function (){
+    Route::get('/polyclinic/{id}/patient', function (){
         return view('registration/medical_record/index');
-    })->name('index');
+    })->name('index.polyclinic');
+    Route::get('/radiology/{id}/patient', function (){
+        return view('registration/medical_record/index');
+    })->name('index.radiology');
 });
 
 Route::name('assesment.')->prefix('assesment')

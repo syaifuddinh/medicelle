@@ -154,6 +154,10 @@ class Item extends Model
         return self::whereIsRadiology(1);
     }
 
+    public static function cure() {
+        return self::whereIsCure(1);
+    }
+
     public static function disease_category() {
         return self::whereIsDisease(1)->whereIsCategory(1);
     }

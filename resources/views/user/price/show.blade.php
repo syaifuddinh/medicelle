@@ -17,10 +17,16 @@
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right">
-                          
-                          <a href='{{ route("price.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
-                          <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
-                          <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
+                          @if(Auth::user()->allow_access('setting.price.edit'))
+                              <a href='{{ route("price.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.price.destroy'))
+                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
+                          @endif
+                          @if(Auth::user()->allow_access('setting.price.activate'))
+                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
+                          @endif
                       </div>
                   </div>
                 </div>
@@ -56,6 +62,14 @@
 <% formData.is_registration == 1 ? 'Ya' : 'Tidak' %>
                                   </div>
                               </div>
+
+                              <div class="form-group">
+                                  <label class="col-md-5 col-sm-3 col-xs-12" for="last-name">Status
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+<% formData.is_active == 1 ? "Aktif" : 'Tidak aktif' %>
+                                  </div>
+                              </div>
                           </div>
                                               
 
@@ -86,6 +100,7 @@
                                   </div>
                               </div>
                             
+                              
                               <div class="form-group">
                                   <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Harga
                                   </label>

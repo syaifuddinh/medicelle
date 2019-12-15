@@ -53,6 +53,58 @@ class RegistrationApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function radiology_registered(Request $request, $flag = null) {
+        $status = $flag == 'finish' ? 1 : 0;
+        $x = RegistrationDetail::registered_radiology()
+        ->with(
+            'registration:id,code,patient_id,date',
+            'medical_record:id,code,registration_id,registration_detail_id', 
+            'registration.patient:id,name,phone,gender',
+            'polyclinic:id,name',
+            'doctor:id,name'
+        )
+        ->where('registration_details.status', $status)
+        ->whereHas('registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+        ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
+
+        if($request->filled('status')) {
+            $x = $x->where('registration_details.status', $request->status);
+        }
+
+        if($request->draw == 1)
+            $x->orderBy('registration_details.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function chemoterapy_registered(Request $request, $flag = null) {
+        $status = $flag == 'finish' ? 1 : 0;
+        $x = RegistrationDetail::registered_chemoterapy()
+        ->with(
+            'registration:id,code,patient_id,date',
+            'medical_record:id,code,registration_id,registration_detail_id', 
+            'registration.patient:id,name,phone,gender',
+            'polyclinic:id,name',
+            'doctor:id,name'
+        )
+        ->where('registration_details.status', $status)
+        ->whereHas('registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+        ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
+
+        if($request->filled('status')) {
+            $x = $x->where('registration_details.status', $request->status);
+        }
+
+        if($request->draw == 1)
+            $x->orderBy('registration_details.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function polyclinic_medical_record(Request $request, $patient_id) {
         $x = MedicalRecord::has('registration_detail.registration.invoice')
         ->with('registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'registration_detail.registration:id', 'registration_detail.registration.invoice:registration_id,status')
@@ -60,6 +112,44 @@ class RegistrationApiController extends Controller
         ->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by', 'registration_detail_id')
         ->whereHas('registration_detail', function(Builder $query) use($request){
             $query->whereDestination('POLIKLINIK');
+        })
+        ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
+
+        if($request->filled('current_id'))
+            $x->where('id', '!=', $request->current_id);
+
+        if($request->draw == 1)
+            $x->orderBy('medical_records.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function radiology_medical_record(Request $request, $patient_id) {
+        $x = MedicalRecord::has('registration_detail.registration.invoice')
+        ->with('registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'registration_detail.registration:id', 'registration_detail.registration.invoice:registration_id,status')
+        ->wherePatientId($patient_id)
+        ->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by', 'registration_detail_id')
+        ->whereHas('registration_detail', function(Builder $query) use($request){
+            $query->whereDestination('RADIOLOGI');
+        })
+        ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
+
+        if($request->filled('current_id'))
+            $x->where('id', '!=', $request->current_id);
+
+        if($request->draw == 1)
+            $x->orderBy('medical_records.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function chemoterapy_medical_record(Request $request, $patient_id) {
+        $x = MedicalRecord::has('registration_detail.registration.invoice')
+        ->with('registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'registration_detail.registration:id', 'registration_detail.registration.invoice:registration_id,status')
+        ->wherePatientId($patient_id)
+        ->select('id', 'patient_id', 'code', 'date', 'main_complaint', 'updated_by', 'registration_detail_id')
+        ->whereHas('registration_detail', function(Builder $query) use($request){
+            $query->whereDestination('KEMOTERAPI');
         })
         ->whereBetween('medical_records.date', [$request->date_start, $request->date_end]);
 

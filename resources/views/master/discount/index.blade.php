@@ -17,6 +17,10 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <label class="radio-inline">
+                              <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='null' ng-change="filter()">
+                              <h5>Semua</h5>
+                            </label>
+<label class="radio-inline">
                               <input type="radio" ng-model="formData.is_active" name='is_active' ng-value='"1"' ng-change="filter()">
                               <h5>Aktif</h5>
                             </label>
@@ -51,7 +55,9 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('discount.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @if(Auth::user()->allow_access('setting.discount.create'))
+                              <a href="{{ route('discount.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>

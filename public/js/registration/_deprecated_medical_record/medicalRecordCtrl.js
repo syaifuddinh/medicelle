@@ -2,13 +2,19 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
   $scope.formData = {}
   var path = window.location.pathname;
   patient_id = path.replace(/.+\/(\d+)\/patient.*/, '$1');
+  var medical_record_head=  baseUrl + '/datatable/registration/'
+  var medical_record_url
+  if( path.indexOf('polyclinic') > -1) {
+      medical_record_url = medical_record_head + 'polyclinic_medical_record/'
+  }
+
 
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/registration/polyclinic_medical_record/' + patient_id,
+      url : medical_record_url + patient_id,
       data : d => Object.assign(d, $scope.formData)
     },
     buttons: [
