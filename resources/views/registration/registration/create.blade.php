@@ -43,7 +43,7 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" id="first-name" ng-model='formData.patient.name' required="required" class="form-control col-md-7 col-xs-12" ng-click='showPatients()' ng-readonly='!is_new_patient'>
+                                            <input type="text" id="first-name" ng-model='formData.patient.name' required="required" class="form-control col-md-7 col-xs-12" ng-click='showPatients()' ng-readonly='!is_new_patient' ng-change="changeFamilyName()">
                                             <div class="input-group-addon" ng-click='fillPatient()'>
                                                 <i class="fa fa-pencil" ng-show='!is_new_patient'></i>
                                                 <i class="fa fa-close" ng-show='is_new_patient'></i>
@@ -86,7 +86,7 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Alamat
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class='form-control' ng-model="formData.patient.address" id="" cols="20" rows="10" ng-disabled='!is_new_patient'></textarea>
+                                        <textarea class='form-control' ng-model="formData.patient.address" id="" cols="20" rows="10" ng-disabled='!is_new_patient'  ng-change="changeFamilyName()"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -154,12 +154,13 @@
                                         </div>
                                     </div>
                                 </span>
-                                <span ng-show='formData.patient_type == "UMUM"'>
+                                <span >
+                                    <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                         </label>
                                         <div class="col-md-10 col-xs-12">
-                                            <select class="form-control" data-placeholder-text-single="'Pilih jenis'" chosen allow-single-deselect="false" ng-model="formData.family_type">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih jenis'" chosen allow-single-deselect="false" ng-model="formData.family_type"  ng-change="changeFamilyName()">
                                                 <option value=""></option>
                                                 <option value="ORANG TUA">Orang tua</option>
                                                 <option value="DIRI SENDIRI">Diri sendiri</option>
@@ -168,8 +169,9 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <label class="col-md-12 col-xs-12" for="first-name">Nama orang tua/suami/istri
+                                        <label class="col-md-12 col-xs-12">Nama orang tua/suami/istri
                                         </label>
                                         <div class="col-md-10 col-xs-12">
                                             <input type="text" class="form-control" ng-model="formData.patient.family.name">

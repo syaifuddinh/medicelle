@@ -8,8 +8,13 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('grup_nota/activate/{permission}', 'GrupNotaController@activate');
         Route::resource('grup_nota', 'GrupNotaController');
 
+        Route::put('signa/activate/{permission}', 'SignaController@activate');
+        Route::resource('signa', 'SignaController');
+        Route::get('signa/category/{flag?}', 'SignaController@index');
+
         Route::put('price/activate/{permission}', 'PriceController@activate');
         Route::get('price/treatment', 'PriceController@treatment');
+        Route::get('price/drug', 'PriceController@drug');
         Route::resource('price', 'PriceController');
 
         Route::put('user/activate/{user}', 'UserController@activate');

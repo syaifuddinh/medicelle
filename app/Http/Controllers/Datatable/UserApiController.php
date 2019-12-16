@@ -30,6 +30,15 @@ class UserApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function signa(Request $request) {
+        $x = Permission::select('id', 'name', 'description', 'is_active', 'description')->whereIsSigna(1);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function user(Request $request) {
         $x = User::with('group_user')->select('id', 'code', 'name', 'is_active', 'group_user_id');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
@@ -42,7 +51,10 @@ class UserApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
     public function price(Request $request) {
-        $x = Price::with('service:id,name,price', 'grup_nota:id,slug', 'polyclinic:id,name')->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'item_id', 'grup_nota_id', 'prices.is_active');
+        $x = Price::with('service:id,name,price', 'grup_nota:id,slug', 'polyclinic:id,name')
+        ->where('destination', '!=', 'OBAT')
+        ->where('destination', '!=', 'BHP')
+        ->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'item_id', 'grup_nota_id', 'prices.is_active');
         $x = $request->filled('is_active') ? $x->where('prices.is_active', $request->is_active) : $x;
 
         if($request->draw == 1)

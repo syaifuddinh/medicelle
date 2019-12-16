@@ -5,5 +5,6 @@ Route::prefix('user')->group(function(){
     Route::get('user', 'UserApiController@user');
     Route::get('grup_nota', 'UserApiController@grup_nota');
     Route::get('price', 'UserApiController@price');
+    Route::get('signa', 'UserApiController@signa');
 });
 

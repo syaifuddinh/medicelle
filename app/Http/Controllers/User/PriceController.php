@@ -6,6 +6,7 @@ use App\Price;
 use App\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Response;
 use DB;
 use Str;
@@ -28,9 +29,24 @@ class PriceController extends Controller
 
     public function treatment()
     {
-        $item = Item::select('id', 'name')
+        $item = Item::with('price:item_id,destination')->select('id', 'name', 'category_id')
+        ->whereIsCategory(0)
         ->whereIsActive(1)
         ->whereIsAdministration(1)
+        ->whereHas('price', function(Builder $query) {
+            $query->whereIsRegistration(0);
+        })
+        ->get();
+        return Response::json($item, 200);
+    }
+
+
+    public function drug()
+    {
+        $item = Item::with('piece:id,name', 'group:id,name')->select('id', 'name', 'piece_id', 'category_id')
+        ->whereIsCategory(0)
+        ->whereIsActive(1)
+        ->whereIsCure(1)
         ->get();
         return Response::json($item, 200);
     }
@@ -105,7 +121,7 @@ class PriceController extends Controller
      * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Price $price, $id)
+    public function update(Request $request, $id)
     {
          $request->validate([
             'name' => 'required',

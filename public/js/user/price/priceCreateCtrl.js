@@ -8,6 +8,8 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', function($scope,
         id = path.replace(/.+\/(\d+)/, '$1');
         $http.get(baseUrl + '/controller/user/price/' + id).then(function(data) {
             $scope.formData = data.data
+            $scope.formData.name = data.data.service.name
+            $scope.formData.price = data.data.service.rate
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

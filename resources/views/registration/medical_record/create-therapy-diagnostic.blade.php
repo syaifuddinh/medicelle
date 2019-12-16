@@ -3,31 +3,31 @@
                           
                       </nav>
                         <div class="ln_solid"></div>
-                        <h2>Daftar tindakan</h2>
+                        <h2>Daftar diagnostik</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-4">
                                     
                                     <label>Tanggal</label>
-                                    <input type="text" class='form-control' ng-model="treatment.date"  datepick>
+                                    <input type="text" class='form-control' ng-model="diagnostic.date"  datepick>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Tindakan / jenis pemeriksaan</label>
-                                    <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="treatment.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
                                         <option value=""></option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2 mg-r2">
+                                <div class="form-group col-md-2">
                                     <label>Qty</label>
-                                    <input type="text" class='form-control' ng-model="treatment.qty" jnumber2 only-num>
+                                    <input type="text" class='form-control' ng-model="diagnostic.qty" jnumber2 only-num>
                                 </div>
-                                <div class="form-group col-md-3 mg-r2">
+                                <div class="form-group col-md-3">
 
                                     <label>Reduksi(%)</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='treatment.reduksi'  maxlength='2' only-num>
+                                        <input type="text" class="form-control" ng-model='diagnostic.reduksi' maxlength='3' only-num>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitTreatment()' ng-disabled='!treatment.item_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiagnostic()' ng-disabled='!diagnostic.item_id'>Tambah</button>
                                         </div>
                                     </div>
 
@@ -38,7 +38,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <table class="table table-bordered" id='treatment_datatable'>
+                                <table class="table table-bordered" id='diagnostic_datatable'>
                                     <thead>
                                         <tr>
                                             <td>Tanggal</td>

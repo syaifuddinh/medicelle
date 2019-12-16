@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
-                <div class="row x_title" ng-show='isFilter'>
+                <div class="row x_title" ng-show='!isFilter'>
                     <form action="" class='form-horizontal form-label-left'>
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Status

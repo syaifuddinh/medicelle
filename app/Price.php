@@ -9,7 +9,7 @@ class Price extends Model
 {
     //
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['grup_nota_id', 'destination', 'polyclinic_id', 'is_registration', 'qty'];
+    protected $fillable = ['grup_nota_id', 'destination', 'polyclinic_id', 'is_registration', 'qty', 'percentage'];
 
     public static function boot() {
         parent::boot();

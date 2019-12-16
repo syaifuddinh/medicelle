@@ -15,6 +15,7 @@
                           @if(Auth::user()->allow_view_discount())
                               <li><a href="{{ route('discount.index') }}">Promo</a></li>
                           @endif
+                          <li><a href="{{ route('signa.index') }}">Signa</a></li>
                         </ul>
                       </li>
                   @endif

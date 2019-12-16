@@ -16,8 +16,13 @@ class Permission extends Model
         parent::boot();
 
         static::creating(function(Permission $permission){
-            if($permission->is_permission == 1)
-            $permission->slug = Str::snake($permission->name);
+            if($permission->is_permission == 1 || $permission->is_signa == 1)
+                $permission->slug = Str::random() . Str::snake($permission->name);
+        });
+
+        static::updating(function(Permission $permission){
+            if($permission->is_permission == 1 || $permission->is_signa == 1)
+                $permission->slug = Str::random(3) . Str::snake($permission->name);
         });
     } 
 

@@ -67,6 +67,8 @@ class MedicalRecordController extends Controller
             'ginekologi_history:medical_record_id,name', 
 
             'treatment:medical_record_id,item_id,date,qty,reduksi', 
+            'diagnostic:medical_record_id,item_id,date,qty,reduksi', 
+            'drug:medical_record_id,item_id,date,qty,reduksi', 
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
@@ -179,6 +181,32 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_treatment = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->diagnostic)) {
+            $medical_record_detail->diagnostic()->whereMedicalRecordId($medical_record->id)->delete();
+            $diagnostic = collect($request->diagnostic);
+            $diagnostic = $diagnostic->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_diagnostic = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->drug)) {
+            $medical_record_detail->drug()->whereMedicalRecordId($medical_record->id)->delete();
+            $drug = collect($request->drug);
+            $drug = $drug->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_drug = 1;
                 $medical_record_detail->save();
             });
         }

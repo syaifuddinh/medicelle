@@ -52,6 +52,22 @@ Route::name('grup_nota.')->prefix('grup_nota')->group(function(){
     })->name('show');
 });
 
+
+Route::name('signa.')->prefix('signa')->group(function(){
+    Route::get('/', function (){
+        return view('user/signa/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/signa/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/signa/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/signa/show')->withId($id);
+    })->name('show');
+});
+
 Route::name('price.')->prefix('price')->group(function(){
     Route::get('/', function (){
         return view('user/price/index');

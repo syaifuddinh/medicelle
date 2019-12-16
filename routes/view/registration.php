@@ -51,6 +51,13 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/create-therapy-treatment')->withId($id);
     })->name('edit.therapy.treatment');
 
+    Route::get('/therapy/diagnostic/{id}', function ($id){
+        return view('registration/medical_record/create-therapy-diagnostic')->withId($id);
+    })->name('edit.therapy.diagnostic');
+    Route::get('/therapy/drug/{id}', function ($id){
+        return view('registration/medical_record/create-therapy-drug')->withId($id);
+    })->name('edit.therapy.drug');
+
 
     Route::get('/step/1/show/{id}', function ($id){
         return view('registration/medical_record/show')->withId($id);

@@ -107,6 +107,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
     
   $scope.show = function() {
+      $scope.reset()
       $http.get(baseUrl + '/controller/registration/medical_record/' + id).then(function(data) {
         $scope.formData = data.data
         $scope.patient = data.data.patient
@@ -137,6 +138,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         if(path.indexOf('therapy/treatment') > -1) {
               treatment_datatable.rows.add(data.data.treatment).draw()
         }
+
+
+        if(path.indexOf('therapy/diagnostic') > -1) {
+              diagnostic_datatable.rows.add(data.data.diagnostic).draw()
+        }
+
+        if(path.indexOf('therapy/drug') > -1) {
+              console.log(data.data.drug)
+              drug_datatable.rows.add(data.data.drug).draw()
+        }
     }, function(error) {
       $scope.show()
       $rootScope.disBtn=false;
@@ -157,11 +168,21 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.disease_history = {}
   }
 
-
   $scope.submitTreatment = function() {
-      console.log($scope.treatment)
+      console.log($scope.data.treatment)
       treatment_datatable.row.add($scope.treatment).draw()
       $scope.treatment = {}
+  }
+
+  $scope.submitDiagnostic = function() {
+      diagnostic_datatable.row.add($scope.diagnostic).draw()
+      $scope.diagnostic = {}
+  }
+
+  $scope.submitDrug = function() {
+      console.log($scope.drug)
+      drug_datatable.row.add($scope.drug).draw()
+      $scope.drug = {}
   }
 
   $scope.submitDiagnoseHistory = function() {
@@ -201,6 +222,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitObgynDiseaseHistory = function() {
       obgyn_disease_history_datatable.row.add($scope.obgyn_disease_history).draw()
       $scope.obgyn_disease_history = {}
+  }
+
+  $scope.changeDrugPiece = function() {
+     $scope.piece_name = $scope.data.drug.find(x => x.id == $scope.drug.item_id).piece.name
   }
 
   $scope.changePainStatus = function() {
@@ -300,43 +325,73 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.disease = function() {
-      $http.get(baseUrl + '/controller/master/disease').then(function(data) {
-        $scope.data.disease = data.data
-        $scope.show()
-      }, function(error) {
-        $rootScope.disBtn=false;
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
+      if(path.indexOf('therapy') < 0) {
+
+          $http.get(baseUrl + '/controller/master/disease').then(function(data) {
+            $scope.data.disease = data.data
+            $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              $scope.disease()
+              toastr.error(error.data.message,"Error Has Found !");
+            }
           });
-          toastr.warning(det,error.data.message);
-        } else {
-          $scope.disease()
-          toastr.error(error.data.message,"Error Has Found !");
-        }
-      });
+      }
   }
+  $scope.disease()
 
   $scope.treatment_item = function() {
-      $http.get(baseUrl + '/controller/user/price/treatment').then(function(data) {
-        $scope.data.treatment = data.data
-        $scope.show()
-      }, function(error) {
-        $rootScope.disBtn=false;
-        $scope.treatment_item()
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
+      if(path.indexOf('treatment') > - 1 || path.indexOf('diagnostic') > -1) {
+
+          $http.get(baseUrl + '/controller/user/price/treatment').then(function(data) {
+            $scope.data.treatment = data.data
+            $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.treatment_item()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
           });
-          toastr.warning(det,error.data.message);
-        } else {
-          toastr.error(error.data.message,"Error Has Found !");
-        }
-      });
+      }
   }
   $scope.treatment_item()
+
+  $scope.drug_item = function() {
+      if( path.indexOf('drug') > -1 ) {
+
+          $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
+            $scope.data.drug = data.data
+                $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.drug_item()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.drug_item()
 
   allergy_history_datatable = $('#allergy_history_datatable').DataTable({
     dom: 'rt',
@@ -454,9 +509,36 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
     
-
-
   treatment_datatable = $('#treatment_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      { 
+        data : null,
+        render : function(resp) {
+
+          return $scope.data.treatment.find(x => x.id == resp.item_id).name
+          // return $scope.data.treatment.find(x => x.id == resp.item_id).name
+        }
+      },
+      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
+  diagnostic_datatable = $('#diagnostic_datatable').DataTable({
     dom: 'rt',
     'columns' : [
       {
@@ -473,7 +555,32 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+    
+  drug_datatable = $('#drug_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      { 
+        data : null,
+        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
+      },
+      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDrug($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -656,8 +763,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         patient : $scope.patient,
         pain_score : 0
       }
+      $scope.diagnostic = {}
       $scope.treatment = {}
-      $scope.diagnose_history = {}
+      $scope.drug = {}
+      $scope.diagnose_history = { is_other : 1 }
       $scope.disease_history = {}
       $scope.family_disease_history = {}
       $scope.obgyn_disease_history = {}
@@ -684,6 +793,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
       if(path.indexOf('therapy/treatment') > -1) {
           treatment_datatable.clear().draw();
+      }
+
+      if(path.indexOf('therapy/drug') > -1) {
+          drug_datatable.clear().draw();
       }
 
       window.scrollTo(0, 0)
@@ -723,6 +836,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteTreatment = function(e) {
     var tr = $(e).parents('tr');
     treatment_datatable.row(tr).remove().draw()
+  }
+    
+  $scope.deleteDiagnostic = function(e) {
+    var tr = $(e).parents('tr');
+    diagnostic_datatable.row(tr).remove().draw()
+  }
+
+    
+  $scope.deleteDrug = function(e) {
+    var tr = $(e).parents('tr');
+    drug_datatable.row(tr).remove().draw()
   }
 
     
@@ -792,6 +916,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       if(path.indexOf('therapy/treatment') > -1) {
           $scope.formData.treatment = treatment_datatable.data().toArray()
       }
+
+      if(path.indexOf('therapy/diagnostic') > -1) {
+          $scope.formData.diagnostic = diagnostic_datatable.data().toArray()
+      }
+
+      if(path.indexOf('therapy/drug') > -1) {
+          $scope.formData.drug = drug_datatable.data().toArray()
+      }
+
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");

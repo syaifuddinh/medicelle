@@ -164,7 +164,7 @@
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-3 mg-r2">
                                     
-                                    <label>Penyakit</label>
+                                    <label>Diagnosa</label>
                                     <div class="input-group">
                                         <span ng-show='!diagnose_history.is_other'>
                                             <select class="form-control" data-placeholder-text-single="'Pilih penyakit'" chosen allow-single-deselect="false" ng-model="diagnose_history.disease_id" ng-options="c.id as ( c.code ? c.code + ' - ' : '') + c.name for c in data.disease">
@@ -210,7 +210,7 @@
                                     <thead>
                                         <tr>
                                             <td>Kode</td>
-                                            <td>Penyakit</td>
+                                            <td>Diagnosa</td>
                                             <td>Jenis</td>
                                             <td>Keterangan</td>
                                             <td></td>

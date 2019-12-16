@@ -101,8 +101,17 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     }
   });
 
+  $scope.changeFamilyName = function() {
+    if($scope.formData.family_type == 'DIRI SENDIRI' && $scope.is_new_patient) {
+
+        $scope.formData.patient.family.name = $scope.formData.patient.name
+        $scope.formData.patient.family.address = $scope.formData.patient.address
+    }
+  }
+
   $scope.reset = function() {
     $scope.formData = {
+      'family_type' : 'DIRI SENDIRI',
       'patient' : {
         'family' : {}
       },
