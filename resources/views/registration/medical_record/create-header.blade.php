@@ -18,10 +18,13 @@
                         <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
                     </li>
                     
+                    <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.radiology', ['id' => $id]) }}">Radiologi</a>
+                    </li>
+
                     <span class="hidden">
                         
                         <li class='{{ strpos(url()->current(), "bhp") != null ? "active" : "" }}'><a href="#">BHP - Sewa Alkes & Ruang</a></li>
-                        <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'><a href="#">Radiologi</a></li>
                         <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'><a href="#">Laboratorium</a></li>
                         <li class='{{ strpos(url()->current(), "patologi") != null ? "active" : "" }}'><a href="#">Patologi anatomi</a></li>
                         <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'><a href="#">Jadwal kontrol</a></li>
@@ -54,7 +57,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                         <nav style='margin-bottom:2mm'>
-                            <li class="pull-right">
+                            <div class="pull-right">
                                 <div class="form-group">
                                     <label class='col-md-3' style="margin-top:1.5mm">Reduksi(%)</label>
 
@@ -63,5 +66,5 @@
                                         <input type="text" class="form-control" ng-model='formData.reduksi' maxlength="3"  jnumber2 only-num>
                                     </div>
                                 </div>
-                            </li>
+                            </div>
             

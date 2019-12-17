@@ -35,8 +35,8 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
     ],
 
     columns:[
-      {data:"registration.code", name:"registration.code"},
-      {data:"medical_record.code", name:"medical_record.code"},
+      {data:"registration.code", name:"registration.code", width:'13%',},
+      {data:"medical_record.code", name:"medical_record.code", width:'16%',},
       {
         data:null, 
         searchable:false,
@@ -59,7 +59,8 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       },
       {data:"doctor.name", name:"doctor.name"},
       {
-        data: null, 
+        data: null,
+        width:'10%', 
         orderable : false,
         searchable : false,
         className : 'text-center',

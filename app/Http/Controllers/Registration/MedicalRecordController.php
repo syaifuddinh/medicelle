@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Str;
 
 class MedicalRecordController extends Controller
 {
@@ -68,7 +69,7 @@ class MedicalRecordController extends Controller
 
             'treatment:medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic:medical_record_id,item_id,date,qty,reduksi', 
-            'drug:medical_record_id,item_id,date,qty,reduksi', 
+            'drug:medical_record_id,item_id,date,qty,signa1,signa2', 
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
@@ -315,6 +316,38 @@ class MedicalRecordController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
+    }
+
+    public function submit_research(Request $request, $id, $flag = '') {
+        $this->validate($request, [
+            'file' => 'required'
+        ], [
+            'file.required' => 'File tidak boleh kosong'
+        ]);
+        DB::beginTransaction();
+        $medicalRecordDetail = new MedicalRecordDetail();
+        $medicalRecordDetail->medical_record_id = $id;
+        switch ($flag) {
+            case 'radiology' :
+                $file = $request->file('file');
+                $ext = $file->getClientOriginalExtension();
+                $filename = date('ymdhis') . Str::random(6) . '.' . $ext;
+                $file->move(public_path('archive'), $filename);
+                $medicalRecordDetail->fill($request->all());
+                $medicalRecordDetail->description = $filename;
+                $medicalRecordDetail->is_radiology = 1;
+                $medicalRecordDetail->save();
+                break;
+
+            case 'laboratory' :
+
+                break;
+
+            case 'pathology' :
+
+                break;
+        }
+        DB::commit();
     }
 
     /**

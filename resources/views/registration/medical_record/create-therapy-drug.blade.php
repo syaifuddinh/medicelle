@@ -6,18 +6,18 @@
                         <h2>Daftar obat</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-4 mg-r2">
+                                <div class="form-group col-md-4">
                                     
                                     <label>Tanggal</label>
                                     <input type="text" class='form-control' ng-model="drug.date"  datepick>
                                 </div>
-                                <div class="form-group col-md-3 mg-r2">
+                                <div class="form-group col-md-4">
                                     <label>Obat</label>
                                     <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.name group by c.group.name  for c in data.drug" ng-change='changeDrugPiece()'>
                                         <option value=""></option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-4">
                                     <label>Qty</label>
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model="drug.qty" maxlength="4" jnumber2 only-num>
@@ -27,26 +27,29 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="col-md-12" style='display:flex'>
+                                
                                 <div class="form-group col-md-4">
-                                    <label>Signa1</label>
-                                    <select class="form-control" data-placeholder-text-single="'Pilih signa 1'" chosen allow-single-deselect="false" ng-model="drug.signa1">
+                                    <label>Signa 1</label>
+                                    <select class="form-control" data-placeholder-text-single="'Pilih signa 1'" chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.group.name  for c in data.signa1" ng-model="drug.signa1">
                                         <option value=""></option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-4">
-
-                                    <label>Reduksi</label>
+                                    <label>Signa 2</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='drug.reduksi'  maxlength='2' only-num>
+                                        
+                                        <select class="form-control" data-placeholder-text-single="'Pilih signa 2'" chosen allow-single-deselect="false" ng-options="c.id as c.name for c in data.signa2" ng-model="drug.signa2">
+                                            <option value=""></option>
+                                        </select>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitDrug()' ng-disabled='!drug.item_id'>Tambah</button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                            
                         </div>
 
                         <div class="row">
@@ -57,7 +60,9 @@
                                             <td>Tanggal</td>
                                             <td>Obat</td>
                                             <td>Qty</td>
-                                            <td>Reduksi</td>
+                                            <td>Satuan</td>
+                                            <td>Signa 1</td>
+                                            <td>Signa 2</td>
                                             <td></td>
                                         </tr>
                                     </thead>

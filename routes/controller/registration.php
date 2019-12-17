@@ -6,6 +6,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
         Route::resource('registration', 'RegistrationController');
 
+        Route::post('medical_record/submit_research/{id}/{flag?}', 'MedicalRecordController@submit_research');
         Route::put('medical_record/{destination_id}/origin/{origin_id}', 'MedicalRecordController@clone');
         Route::resource('medical_record', 'MedicalRecordController');
 

@@ -17,10 +17,9 @@ class SignaController extends Controller
      */
     public function index($flag = 'signa1')
     {
-        $permission = Permission::select('id', 'name', 'slug')
+        $permission = Permission::select('id', 'name', 'slug', 'description')
         ->whereIsActive(1)
         ->whereIsSigna(1)
-        ->whereDescription($flag)
         ->get();
         return Response::json($permission, 200);
     }

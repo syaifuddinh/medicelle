@@ -345,6 +345,30 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           });
       }
   }
+
+  $scope.signa = function() {
+      if(path.indexOf('drug') > -1) {
+
+          $http.get(baseUrl + '/controller/user/signa').then(function(data) {
+            var signa = data.data
+            $scope.data.signa1 = signa.filter(x => x.description == 'signa1')
+            $scope.data.signa2 = signa.filter(x => x.description == 'signa2')
+            $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              $scope.disease()
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
   $scope.disease()
 
   $scope.treatment_item = function() {
@@ -375,7 +399,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
             $scope.data.drug = data.data
-                $scope.show()
+            $scope.signa()
           }, function(error) {
             $rootScope.disBtn=false;
             $scope.drug_item()
@@ -575,7 +599,18 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
       },
       {data : 'qty', className : 'text-right', width:'10%', orderable:false},
-      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+      { 
+        data : null,
+        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).piece.name
+      },
+      { 
+        data : null,
+        render : resp => $scope.data.signa1.find(x => x.id == resp.signa1).name
+      },
+      { 
+        data : null,
+        render : resp => $scope.data.signa2.find(x => x.id == resp.signa2).name
+      },
 
       {
         data : null,
@@ -942,5 +977,45 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         }
       });
       
+    }
+
+    $scope.submitRadiology=function(flag) {
+      $rootScope.disBtn=true;
+      var url = baseUrl + '/controller/registration/medical_record/submit_research/' + id + '/' + flag;
+      var method = 'post';
+      
+      var fd = new FormData();
+      formData.append('date', $scope.formData.date);
+      formData.append('result_date', $scope.formData.result_date);
+      formData.append('name', $scope.formData.name);
+
+
+          $.ajax({
+            'url':url,
+            contentType : false,
+            processData : false,
+            'type' : method,
+            data : formData,
+            success:function(data) {
+              toastr.success("Data Berhasil Disimpan!");
+               $('.submitButton').removeAttr('disabled');
+               window.location.reload()
+            },
+            error : function(xhr) {
+              var resp = JSON.parse(xhr.responseText);
+                if (xhr.status==422) {
+                  var det="";
+                  angular.forEach(resp.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,resp.message);
+                } else {
+
+                   toastr.error(resp.message,"Error Has Found !");
+                }
+               $('.submitButton').removeAttr('disabled');
+            }
+          });
+          
     }
 }]);
