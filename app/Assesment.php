@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\Contact;
+use App\Registration;
 
 class Assesment extends Model
 {
@@ -27,6 +28,20 @@ class Assesment extends Model
 
         static::updating(function(Assesment $assesment){
             $assesment->updated_by = Auth::user()->id;
+            $registration = Registration::find($assesment->registration_id);
+            $registrationDetail = $registration->detail;
+            foreach($registrationDetail as $unit) {
+                $unit->medical_record()->update([
+                    'general_condition' => $assesment->general_condition,
+                    'long' => $assesment->long,
+                    'weight' => $assesment->weight,
+                    'blood_pressure' => $assesment->blood_pressure,
+                    'pulse' => $assesment->pulse,
+                    'temperature' => $assesment->temperature,
+                    'breath_frequency' => $assesment->breath_frequency,
+                    'postbirth_weight' => $assesment->postbirth_weight
+                ]);
+            }
         });
     }
 

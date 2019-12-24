@@ -5,6 +5,7 @@ Route::prefix('master')->group(function(){
     Route::get('specialization', 'MasterApiController@specialization');
     Route::get('polyclinic', 'MasterApiController@polyclinic');
     Route::get('piece', 'MasterApiController@piece');
+    Route::get('lokasi', 'MasterApiController@lokasi');
     Route::get('doctor', 'MasterApiController@doctor');
     Route::get('nurse', 'MasterApiController@nurse');
     Route::get('nurse_helper', 'MasterApiController@nurse_helper');
@@ -22,6 +23,8 @@ Route::prefix('master')->group(function(){
     // Route::get('radiology', 'MasterApiController@radiology');
 
     Route::get('cure', 'MasterApiController@cure');
-    Route::get('bhp', 'MasterApiController@bhp');
+    Route::get('bhp/{flag?}', 'MasterApiController@bhp');
+    Route::get('sewa_alkes/{flag?}', 'MasterApiController@sewa_alkes');
+    Route::get('sewa_ruangan/{flag?}', 'MasterApiController@sewa_ruangan');
 });
 

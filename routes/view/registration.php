@@ -57,10 +57,33 @@ Route::name('medical_record.')->prefix('medical_record')
         return view('registration/medical_record/create-therapy-drug')->withId($id);
     })->name('edit.therapy.drug');
 
+    Route::get('/utilization/bhp/{id}', function ($id){
+        return view('registration/medical_record/create-utilization-bhp')->withId($id);
+    })->name('edit.utilization.bhp');
+    Route::get('/utilization/sewa_alkes/{id}', function ($id){
+        return view('registration/medical_record/create-utilization-sewa_alkes')->withId($id);
+    })->name('edit.utilization.sewa_alkes');
+    Route::get('/utilization/sewa_ruangan/{id}', function ($id){
+        return view('registration/medical_record/create-utilization-sewa_ruangan')->withId($id);
+    })->name('edit.utilization.sewa_ruangan');
+
+    Route::get('/resume/{id}', function ($id){
+        return view('registration/medical_record/create-resume')->withId($id);
+    })->name('edit.resume');
+
 
     Route::get('/radiology/{id}', function ($id){
         return view('registration/medical_record/create-radiology')->withId($id);
     })->name('edit.radiology');
+    Route::get('/laboratory/{id}', function ($id){
+        return view('registration/medical_record/create-laboratory')->withId($id);
+    })->name('edit.laboratory');
+    Route::get('/pathology/{id}', function ($id){
+        return view('registration/medical_record/create-pathology')->withId($id);
+    })->name('edit.pathology');
+    Route::get('/schedule/{id}', function ($id){
+        return view('registration/medical_record/create-schedule')->withId($id);
+    })->name('edit.schedule');
 
 
     Route::get('/step/1/show/{id}', function ($id){

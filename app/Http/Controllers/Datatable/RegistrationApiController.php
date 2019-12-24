@@ -39,7 +39,8 @@ class RegistrationApiController extends Controller
         )
         ->where('registration_details.status', $status)
         ->whereHas('registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            $query->whereBetween('date', [$request->date_start, $request->date_end])
+            ->whereStatus(2);
         })
         ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
 
@@ -65,7 +66,8 @@ class RegistrationApiController extends Controller
         )
         ->where('registration_details.status', $status)
         ->whereHas('registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            $query->whereBetween('date', [$request->date_start, $request->date_end])
+            ->whereStatus(2);
         })
         ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
 
@@ -91,9 +93,10 @@ class RegistrationApiController extends Controller
         )
         ->where('registration_details.status', $status)
         ->whereHas('registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            $query->whereBetween('date', [$request->date_start, $request->date_end])
+            ->whereStatus(2);
         })
-        ->select('registration_details.id', 'registration_id', 'registration_details.status', 'doctor_id', 'polyclinic_id');
+        ->select('registration_details.id', 'registration_details.registration_id', 'registration_details.status', 'registration_details.doctor_id', 'registration_details.polyclinic_id');
 
         if($request->filled('status')) {
             $x = $x->where('registration_details.status', $request->status);

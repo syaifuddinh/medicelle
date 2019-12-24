@@ -33,7 +33,17 @@ app.filter('fullDate', function() {
     // var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nop','Des'];
     var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-    return ('0'+days.getDate()).slice(-2)+' '+months[days.getMonth()]+', '+days.getFullYear();
+    return ('0'+days.getDate()).slice(-2)+' '+months[days.getMonth()]+' '+days.getFullYear();
+  }
+});
+app.filter('day', function() {
+  return function(val) {
+    var date = new Date(val);
+    var day = date.getDay()
+    // var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nop','Des'];
+    var readableDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
+
+    return readableDays[day]
   }
 });
 app.filter('aTime', function() {

@@ -1,6 +1,8 @@
 app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
     $scope.title = 'Form Rekam Medis';
     $scope.data = {}
+    $scope.dot = '.............................................................................................................'
+    $scope.shortDot = '..........'
     $scope.priceSlider = 209
     path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
@@ -37,9 +39,26 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
 
     $scope.backtohome = function() {
-        var home_url = baseUrl + '/medical_record/' + $scope.patient.id + '/patient';  
+        var home_url = baseUrl + '/medical_record/polyclinic/' + $scope.patient.id + '/patient';  
         window.location = home_url
     }
+
+    $scope.printDocument = function(documentId) {
+        var doc = document.getElementById(documentId);
+
+        //Wait until PDF is ready to print    
+        if (typeof doc.print === 'undefined') {    
+            setTimeout(function(){$scope.printDocument(documentId);}, 1000);
+        } else {
+            doc.print();
+        }
+    }
+
+    $scope.printResume = function() {
+        $('#pdfDocument').attr('src', 'http://supplychainindonesia.com/new/wp-content/files/1._Pengantar_Manajemen_Logistik_2015.pdf')
+        $scope.printDocument('pdfDocument')
+    }
+    // $scope.printDocument('pdfDocument')
 
   $scope.browse_medical_record = function() {
       medical_record_datatable = $('#medical_record_datatable').DataTable({
@@ -145,8 +164,41 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         }
 
         if(path.indexOf('therapy/drug') > -1) {
-              console.log(data.data.drug)
               drug_datatable.rows.add(data.data.drug).draw()
+        }
+
+        if(path.indexOf('radiology') > -1) {
+              radiology_datatable.rows.add(data.data.radiology).draw()
+        }
+
+        if(path.indexOf('laboratory') > -1) {
+              laboratory_datatable.rows.add(data.data.laboratory).draw()
+        }
+
+        if(path.indexOf('pathology') > -1) {
+              pathology_datatable.rows.add(data.data.pathology).draw()
+        }
+
+        if(path.indexOf('bhp') > -1) {
+              bhp_datatable.rows.add(data.data.bhp).draw()
+        }
+
+        if(path.indexOf('sewa_alkes') > -1) {
+              sewa_alkes_datatable.rows.add(data.data.sewa_alkes).draw()
+        }
+
+        if(path.indexOf('sewa_ruangan') > -1) {
+              sewa_ruangan_datatable.rows.add(data.data.sewa_ruangan).draw()
+        }
+        if(path.indexOf('resume') > -1) {
+              var unit, disease_name, disease;
+              for(i in data.data.diagnose_history) {
+                  unit = data.data.diagnose_history[i]
+                  disease = $scope.data.disease.find(x => x.id == unit.disease_id)
+                  disease_name = disease != null ? disease.name : '' 
+                  $scope.formData.diagnose_history[i].disease_name = disease_name
+              }
+              $scope.next_schedule()
         }
     }, function(error) {
       $scope.show()
@@ -162,10 +214,104 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
     });
   }
+      
+  $scope.next_schedule = function() {
+      $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/next_schedule').then(function(data) {
+        $scope.next_schedule = data.data
+    }, function(error) {
+      $scope.next_schedule()
+      $rootScope.disBtn=false;
+      if (error.status==422) {
+        var det="";
+        angular.forEach(error.data.errors,function(val,i) {
+          det+="- "+val+"<br>";
+        });
+        toastr.warning(det,error.data.message);
+      } else {
+        toastr.error(error.data.message,"Error Has Found !");
+      }
+    });
+  }
+
+  $scope.doctor = function() {
+      $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/doctor').then(function(data) {
+        $scope.doctor = data.data
+    }, function(error) {
+      $scope.doctor()
+      $rootScope.disBtn=false;
+      if (error.status==422) {
+        var det="";
+        angular.forEach(error.data.errors,function(val,i) {
+          det+="- "+val+"<br>";
+        });
+        toastr.warning(det,error.data.message);
+      } else {
+        toastr.error(error.data.message,"Error Has Found !");
+      }
+    });
+  }
+  $scope.doctor()
+   
+  $scope.schedule_item = function() {
+    if(path.indexOf('schedule') > -1) {
+
+          $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/schedule').then(function(data) {
+                schedule_datatable.rows.add(data.data).draw()
+          }, function(error) {
+            $scope.schedule_item()
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+    }
+  }
+  $scope.schedule_item()
 
   $scope.submitDiseaseHistory = function() {
       disease_history_datatable.row.add($scope.disease_history).draw()
       $scope.disease_history = {}
+  }
+
+  $scope.submitBHP = function() {
+      $scope.bhp.item = {
+          'name' : $scope.bhp.name,
+          'piece' : $scope.bhp.piece
+      }
+      var lokasi = $scope.data.lokasi.find(x => x.id == $scope.bhp.lokasi_id)
+      $scope.bhp.lokasi = lokasi
+      bhp_datatable.row.add($scope.bhp).draw()
+      $scope.bhp = {}
+  }
+
+
+  $scope.submitSewaAlkes = function() {
+      $scope.sewa_alkes.item = {
+          'name' : $scope.sewa_alkes.name,
+          'piece' : $scope.sewa_alkes.piece
+      }
+      var lokasi = $scope.data.lokasi.find(x => x.id == $scope.sewa_alkes.lokasi_id)
+      $scope.sewa_alkes.lokasi = lokasi
+      sewa_alkes_datatable.row.add($scope.sewa_alkes).draw()
+      $scope.sewa_alkes = {}
+  }
+
+
+  $scope.submitSewaRuangan = function() {
+      $scope.sewa_ruangan.item = {
+          'name' : $scope.sewa_ruangan.name,
+          'piece' : $scope.sewa_ruangan.piece
+      }
+      var lokasi = $scope.data.lokasi.find(x => x.id == $scope.sewa_ruangan.lokasi_id)
+      $scope.sewa_ruangan.lokasi = lokasi
+      sewa_ruangan_datatable.row.add($scope.sewa_ruangan).draw()
+      $scope.sewa_ruangan = {}
   }
 
   $scope.submitTreatment = function() {
@@ -190,7 +336,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       if($scope.diagnose_history.disease_id && $scope.diagnose_history.type) {
 
           diagnose_history_datatable.row.add($scope.diagnose_history).draw()
-          $scope.diagnose_history = {}
+          $scope.diagnose_history = {is_other : 1}
       }
   }
 
@@ -325,7 +471,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.disease = function() {
-      if(path.indexOf('therapy') < 0) {
+      if(path.indexOf('therapy') < 0 && path.indexOf('utilization') < 0) {
 
           $http.get(baseUrl + '/controller/master/disease').then(function(data) {
             $scope.data.disease = data.data
@@ -417,24 +563,231 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
   $scope.drug_item()
 
-  allergy_history_datatable = $('#allergy_history_datatable').DataTable({
-    dom: 'rt',
-    'columns' : [
-    {
-      data : null,
-      render : resp => resp.is_unknown == 1 ? 'Tidak diketahui' : resp.cure
-    },
-    {data : 'side_effect'},
-    {
-      data : null,
-      className : 'text-center',
-      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteAllergyHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
-    },
-    ],
-    createdRow: function(row, data, dataIndex) {
-      $compile(angular.element(row).contents())($scope);
-    }
-  });
+
+  $scope.lokasi = function() {
+      if( path.indexOf('utilization') > -1 ) {
+
+          $http.get(baseUrl + '/controller/master/lokasi').then(function(data) {
+            $scope.data.lokasi = data.data
+            $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.lokasi()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.lokasi()
+
+  $scope.showBHP = function() {
+    browse_bhp_datatable.ajax.reload()
+    $('#BHPModal').modal()
+  }
+
+  $scope.showSewaAlkes = function() {
+    browse_sewa_alkes_datatable.ajax.reload()
+    $('#sewaAlkesModal').modal()
+  }
+
+  $scope.showSewaRuangan = function() {
+    browse_sewa_ruangan_datatable.ajax.reload()
+    $('#sewaRuanganModal').modal()
+  }
+
+  $scope.bhp_datatable = function() {
+      if( path.indexOf('bhp') > -1 ) {
+          bhp_datatable = $('#bhp_datatable').DataTable({
+            dom: 'rt',
+            'columns' : [
+            {
+              data : null,
+              render : resp => $filter('fullDate')(resp.date)
+            },
+            {data : 'lokasi.name'},
+            {data : 'item.piece.name'},
+            {data : 'qty'},
+            {data : 'item.piece.name'},
+            {
+              data : null,
+              className : 'text-center',
+              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteBHP($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+            },
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.bhp_datatable()
+
+  $scope.sewa_alkes_datatable = function() {
+      if( path.indexOf('sewa_alkes') > -1 ) {
+          sewa_alkes_datatable = $('#sewa_alkes_datatable').DataTable({
+            dom: 'rt',
+            'columns' : [
+            {
+              data : null,
+              render : resp => $filter('fullDate')(resp.date)
+            },
+            {data : 'lokasi.name'},
+            {data : 'item.name'},
+            {data : 'qty'},
+            {data : 'item.piece.name'},
+            {
+              data : null,
+              className : 'text-center',
+              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteSewaAlkes($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+            },
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.sewa_alkes_datatable()
+
+  $scope.sewa_ruangan_datatable = function() {
+      if( path.indexOf('sewa_ruangan') > -1 ) {
+          sewa_ruangan_datatable = $('#sewa_ruangan_datatable').DataTable({
+            dom: 'rt',
+            'columns' : [
+            {
+              data : null,
+              render : resp => $filter('fullDate')(resp.date)
+            },
+            {data : 'lokasi.name'},
+            {data : 'item.name'},
+            {data : 'qty'},
+            {data : 'item.piece.name'},
+            {
+              data : null,
+              className : 'text-center',
+              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteSewaRuangan($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+            },
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.sewa_ruangan_datatable()
+
+  $scope.browse_bhp = function() {
+      if( path.indexOf('bhp') > -1 ) {
+          browse_bhp_datatable = $('#browse_bhp_datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+              url : baseUrl+'/datatable/master/bhp/actived',
+            },
+            'columns' : [
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              className : 'text-center',
+              render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectBHP($event.currentTarget)'>Pilih</button>"
+            },
+            {data : 'name'},
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              render : resp => "<input type='text' class='form-control' ng-model='qty' id='qty' maxlength='3' jnumber2 only-num>"
+            },
+            {data : 'piece.name'},
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.browse_bhp()
+    
+  $scope.browse_sewa_alkes = function() {
+      if( path.indexOf('sewa_alkes') > -1 ) {
+          browse_sewa_alkes_datatable = $('#browse_sewa_alkes_datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+              url : baseUrl+'/datatable/master/sewa_alkes/actived',
+            },
+            'columns' : [
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              className : 'text-center',
+              render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaAlkes($event.currentTarget)'>Pilih</button>"
+            },
+            {data : 'name'},
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              render : resp => "<input type='number' class='form-control text-right' id='qty' maxlength='3'>"
+            },
+            {data : 'piece.name'},
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.browse_sewa_alkes()
+    
+  
+  $scope.browse_sewa_ruangan = function() {
+      if( path.indexOf('sewa_ruangan') > -1 ) {
+          browse_sewa_ruangan_datatable = $('#browse_sewa_ruangan_datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+              url : baseUrl+'/datatable/master/sewa_ruangan/actived',
+            },
+            'columns' : [
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              className : 'text-center',
+              render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaRuangan($event.currentTarget)'>Pilih</button>"
+            },
+            {data : 'name'},
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              render : resp => "<input type='number' class='form-control text-right' id='qty' maxlength='3'>"
+            },
+            {data : 'piece.name'},
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.browse_sewa_ruangan()
     
 
   kid_history_datatable = $('#kid_history_datatable').DataTable({
@@ -561,6 +914,114 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+        
+  schedule_datatable = $('#schedule_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'medical_record.registration.code'},
+      {data : 'medical_record.registration_detail.visiting_room'},
+      {data : 'medical_record.registration.patient_type'},
+      {data : 'medical_record.registration_detail.doctor.name'},
+      {data : 'medical_record.registration_detail.doctor.specialization.name'},
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button type="button" ng-disabled="disBtn" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteSchedule($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+      
+  radiology_datatable = $('#radiology_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'name'},
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.result_date)
+      },
+      {
+          data : null,
+          render : resp => '<a href="' + resp.filename + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
+      },
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteRadiology($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+      
+  laboratory_datatable = $('#laboratory_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'name'},
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.result_date)
+      },
+      {
+          data : null,
+          render : resp => '<a href="' + resp.filename + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
+      },
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteLaboratory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+        
+  pathology_datatable = $('#pathology_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'name'},
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.result_date)
+      },
+      {
+          data : null,
+          render : resp => '<a href="' + resp.filename + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
+      },
+
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deletePathology($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
     
   diagnostic_datatable = $('#diagnostic_datatable').DataTable({
     dom: 'rt',
@@ -605,11 +1066,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : resp => $scope.data.signa1.find(x => x.id == resp.signa1).name
+        render : resp => resp.signa1 ? $scope.data.signa1.find(x => x.id == resp.signa1).name : ''
       },
       { 
         data : null,
-        render : resp => $scope.data.signa2.find(x => x.id == resp.signa2).name
+        render : resp => resp.signa2 ?  $scope.data.signa2.find(x => x.id == resp.signa2).name : ''
       },
 
       {
@@ -798,6 +1259,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         patient : $scope.patient,
         pain_score : 0
       }
+      $scope.sewa_alkes = {}
+      $scope.sewa_ruangan = {}
+      $scope.bhp = {}
+      $scope.schedule = {}
+      $scope.research = {}
       $scope.diagnostic = {}
       $scope.treatment = {}
       $scope.drug = {}
@@ -834,6 +1300,19 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           drug_datatable.clear().draw();
       }
 
+      if(path.indexOf('pathology') > -1) {
+          pathology_datatable.clear().draw();
+      }
+
+      if(path.indexOf('laboratory') > -1) {
+          laboratory_datatable.clear().draw();
+      }
+
+
+      if(path.indexOf('radiology') > -1) {
+          radiology_datatable.clear().draw();
+      }
+
       window.scrollTo(0, 0)
   }
     
@@ -867,10 +1346,87 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     disease_history_datatable.row(tr).remove().draw()
   }
 
+  $scope.deleteBHP = function(e) {
+    var tr = $(e).parents('tr');
+    bhp_datatable.row(tr).remove().draw()
+  }
+
+
+  $scope.deleteSewaAlkes = function(e) {
+    var tr = $(e).parents('tr');
+    sewa_alkes_datatable.row(tr).remove().draw()
+  }
+
+
+  $scope.deleteSewaRuangan = function(e) {
+    var tr = $(e).parents('tr');
+    sewa_ruangan_datatable.row(tr).remove().draw()
+  }
+
     
   $scope.deleteTreatment = function(e) {
     var tr = $(e).parents('tr');
     treatment_datatable.row(tr).remove().draw()
+  }
+    
+  $scope.deleteRadiology = function(e) {
+    var tr = $(e).parents('tr');
+    var data = radiology_datatable.row(tr).data()
+    var url = baseUrl + '/controller/registration/medical_record/detail/' + data.id;
+    $scope.deleteResearch(url)
+  }
+
+  $scope.deleteLaboratory = function(e) {
+    var tr = $(e).parents('tr');
+    var data = laboratory_datatable.row(tr).data()
+    var url = baseUrl + '/controller/registration/medical_record/detail/' + data.id;
+    $scope.deleteResearch(url)
+  }
+
+
+  $scope.deletePathology = function(e) {
+    var tr = $(e).parents('tr');
+    var data = pathology_datatable.row(tr).data()
+    var url = baseUrl + '/controller/registration/medical_record/detail/' + data.id;
+    $scope.deleteResearch(url)
+  }
+
+  $scope.deleteResearch = function(url) {
+
+    $rootScope.disBtn = true;
+    $http.delete(url).then(function(data) {
+      $rootScope.disBtn = false
+      toastr.success("Data Berhasil dihapus !");
+      if(path.indexOf('radiology') > -1) {
+          radiology_datatable.clear().draw()
+      } else if(path.indexOf('laboratory') > -1) {
+          laboratory_datatable.clear().draw()
+      } else if(path.indexOf('pathology') > -1) {
+          pathology_datatable.clear().draw()
+      } else if(path.indexOf('schedule') > -1) {
+          schedule_datatable.clear().draw()
+          $scope.schedule_item()
+      }
+      $scope.show()
+    }, function(error) {
+      $rootScope.disBtn=false;
+      if (error.status==422) {
+        var det="";
+        angular.forEach(error.data.errors,function(val,i) {
+          det+="- "+val+"<br>";
+        });
+        toastr.warning(det,error.data.message);
+      } else {
+        toastr.error(error.data.message,"Error Has Found !");
+      }
+    });
+  }
+
+  $scope.deleteSchedule = function(e) {
+    var tr = $(e).parents('tr');
+    var data = schedule_datatable.row(tr).data()
+    var url = baseUrl + '/controller/registration/medical_record/detail/' + data.id;
+    $scope.deleteResearch(url)
   }
     
   $scope.deleteDiagnostic = function(e) {
@@ -923,6 +1479,62 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     obgyn_family_disease_history_datatable.row(tr).remove().draw()
   }
 
+    $scope.submitSchedule=function() {
+      $rootScope.disBtn=true;
+      var url = baseUrl + '/controller/registration/medical_record/submit_schedule/' + id;
+      var method = 'post'
+
+      $http[method](url, $scope.schedule).then(function(data) {
+        $rootScope.disBtn = false
+        toastr.success("Data Berhasil Disimpan !");
+        setTimeout(function(){
+          window.location.reload()
+        }, 1000)
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
+    }
+
+    $scope.selectBHP = function(e) {
+        var tr = $(e).parents('tr')
+        var bhp = browse_bhp_datatable.row(tr).data()
+        $scope.bhp.item_id = bhp.id
+        $scope.bhp.name = bhp.name
+        $scope.bhp.qty = tr.find('#qty').val()
+        $scope.bhp.piece = bhp.piece
+        $('#BHPModal').modal('hide')
+    }
+
+    $scope.selectSewaAlkes = function(e) {
+        var tr = $(e).parents('tr')
+        var sewa_alkes = browse_sewa_alkes_datatable.row(tr).data()
+        $scope.sewa_alkes.item_id = sewa_alkes.id
+        $scope.sewa_alkes.name = sewa_alkes.name
+        $scope.sewa_alkes.qty = tr.find('#qty').val()
+        $scope.sewa_alkes.piece = sewa_alkes.piece
+        $('#sewaAlkesModal').modal('hide')
+    }
+
+    $scope.selectSewaRuangan = function(e) {
+        var tr = $(e).parents('tr')
+        var sewa_ruangan = browse_sewa_ruangan_datatable.row(tr).data()
+        $scope.sewa_ruangan.item_id = sewa_ruangan.id
+        $scope.sewa_ruangan.name = sewa_ruangan.name
+        $scope.sewa_ruangan.qty = tr.find('#qty').val()
+        $scope.sewa_ruangan.piece = sewa_ruangan.piece
+        $('#sewaRuanganModal').modal('hide')
+    }
+
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/registration/medical_record/' + id;
@@ -960,6 +1572,18 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.formData.drug = drug_datatable.data().toArray()
       }
 
+      if(path.indexOf('utilization/bhp') > -1) {
+          $scope.formData.bhp = bhp_datatable.data().toArray()
+      }
+
+      if(path.indexOf('utilization/sewa_alkes') > -1) {
+          $scope.formData.sewa_alkes = sewa_alkes_datatable.data().toArray()
+      }
+
+      if(path.indexOf('utilization/sewa_ruangan') > -1) {
+          $scope.formData.sewa_ruangan = sewa_ruangan_datatable.data().toArray()
+      }
+
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
@@ -979,15 +1603,18 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       
     }
 
-    $scope.submitRadiology=function(flag) {
+    $scope.submitResearch=function(flag) {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/registration/medical_record/submit_research/' + id + '/' + flag;
       var method = 'post';
       
       var fd = new FormData();
-      formData.append('date', $scope.formData.date);
-      formData.append('result_date', $scope.formData.result_date);
-      formData.append('name', $scope.formData.name);
+      var attachment = $('#file')[0]
+      if(attachment.files.length > 0)  
+          fd.append('file', attachment.files[0])
+      fd.append('date', $scope.research.date);
+      fd.append('result_date', $scope.research.result_date);
+      fd.append('name', $scope.research.name);
 
 
           $.ajax({
@@ -995,7 +1622,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             contentType : false,
             processData : false,
             'type' : method,
-            data : formData,
+            data : fd,
             success:function(data) {
               toastr.success("Data Berhasil Disimpan!");
                $('.submitButton').removeAttr('disabled');
@@ -1014,7 +1641,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                    toastr.error(resp.message,"Error Has Found !");
                 }
                $('.submitButton').removeAttr('disabled');
-            }
+            },
+          }).done(function() {
+               $('.submitButton').removeAttr('disabled');
           });
           
     }

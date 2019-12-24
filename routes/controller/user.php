@@ -20,6 +20,10 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('user/activate/{user}', 'UserController@activate');
         Route::post('user/{user}', 'UserController@update');
         Route::resource('user', 'UserController');
+
+        Route::get('setting/company', 'SettingController@company');
+        Route::put('setting/store_company', 'SettingController@store_company');
+        Route::post('setting/store_logo', 'SettingController@store_logo');
     });
 });
 

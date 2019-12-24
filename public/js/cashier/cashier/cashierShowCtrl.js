@@ -86,6 +86,15 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         $rootScope.backward()
     })
 
+    $scope.pay = function() {
+        var url = baseUrl + '/cashier/pay/' + id
+        window.location = url
+    }
+
+    $('#payButton').click(function() {
+        $scope.pay()
+    })
+
     $scope.show = function() {
         $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
             $scope.formData = data.data.invoice

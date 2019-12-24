@@ -51,6 +51,23 @@ Route::name('piece.')->prefix('piece')
     })->name('show');
 });
 
+Route::name('lokasi.')->prefix('lokasi')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/lokasi/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/lokasi/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/lokasi/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/lokasi/show')->withId($id);
+    })->name('show');
+});
+
 Route::name('discount.')->prefix('discount')
 ->group(function(){
 
@@ -358,5 +375,22 @@ Route::name('bhp.')->prefix('bhp')
     })->name('edit');
     Route::get('/{id}', function ($id){
         return view('master/bhp/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('alkes.')->prefix('alkes')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/alkes/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/alkes/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/alkes/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/alkes/show')->withId($id);
     })->name('show');
 });

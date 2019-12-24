@@ -89,13 +89,33 @@
                                         <textarea class='form-control' ng-model="formData.patient.address" id="" cols="20" rows="10" ng-disabled='!is_new_patient'  ng-change="changeFamilyName()"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="form-group" ng-if='formData.is_new_city'>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Provinsi
+                                    </label> 
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <select class="form-control" data-placeholder-text-single="'Pilih Provinsi'" required='required' chosen allow-single-deselect="false" ng-model="formData.patient.province_id" ng-options="c.id as c.name for c in data.province">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Kota
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih Kota'" required='required' chosen allow-single-deselect="false" ng-model="formData.patient.city_id" ng-options="c.id as c.name group by c.province.name for c in data.city" ng-disabled='!is_new_patient'>
-                                            <option value=""></option>
-                                        </select>
+                                        <div class="input-group">   
+                                            <span ng-if='!formData.is_new_city'>  
+                                                <select class="form-control" data-placeholder-text-single="'Pilih Kota'" required='required' chosen allow-single-deselect="false" ng-model="formData.patient.city_id" ng-options="c.id as c.name group by c.province.name for c in data.city" ng-disabled='!is_new_patient'>
+                                                    <option value=""></option>
+                                                </select>
+                                            </span>
+                                            <input type="text" class="form-control" ng-model='formData.patient.city_id' required ng-if='formData.is_new_city'>
+                                            <div class="input-group-addon" ng-show='is_new_patient' ng-click='formData.is_new_city = !formData.is_new_city'>
+                                                <i class="fa fa-pencil" ng-show='!formData.is_new_city'></i>
+                                                <i class="fa fa-close" ng-show='formData.is_new_city'></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -103,7 +123,7 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">Umur
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text"  ng-model='formData.patient.age' class="form-control col-md-7 col-xs-12" ng-disabled='!is_new_patient'>
+                                        <input type="text"  ng-model='formData.patient.age' class="form-control col-md-7 col-xs-12" ng-disabled='!is_new_patient' only-num>
                                     </div>
                                 </div>
 

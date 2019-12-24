@@ -3,11 +3,11 @@ app.controller('bhp', ['$scope', '$compile', '$http', function($scope, $compile,
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
-    dom: 'Blfrtip',
     ajax: {
       url : baseUrl+'/datatable/master/bhp',
       data : x => Object.assign(x, $scope.formData)
     },
+    dom: 'Blfrtip',
     buttons: [
       {
         'extend' : 'excel',

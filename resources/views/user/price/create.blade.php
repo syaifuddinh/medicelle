@@ -43,14 +43,17 @@
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="control-label col-md-5 col-sm-3 col-xs-12" for="last-name">Apakah tarif administrasi
+                                  <label class="control-label col-md-5 col-sm-3 col-xs-12" for="last-name">Jenis
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label class="radio-inline">
-                                        <input type="radio" ng-model='formData.is_registration' ng-value='"1"'> Ya
-                                    </label>
+                                        <input type="checkbox" ng-model='formData.is_registration' ng-true-value='1' ng-false-value='0'> Administrasi
+                                    </label><br>
                                     <label class="radio-inline">
-                                        <input type="radio" ng-model='formData.is_registration' ng-value='"0"'> Tidak
+                                        <input type="checkbox" ng-model='formData.is_sewa_ruangan' ng-true-value='1' ng-false-value='0'> Sewa ruangan
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
                                     </label>
                                   </div>
                               </div>
@@ -58,7 +61,7 @@
                                               
 
                           <div class="col-md-6 col-sm-6">
-                              <div class="form-group" ng-hide='!formData.is_registration || formData.is_registration == "1"'>
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Tujuan
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
@@ -74,7 +77,7 @@
                                   </div>
                               </div>
                             
-                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (formData.is_registration && formData.is_registration == "0")'>
+                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes)'>
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
@@ -89,6 +92,15 @@
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                       <input type="text" ng-model='formData.price' class="form-control" jnumber2 only-num>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Satuan
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
+                                    </select>
                                   </div>
                               </div>
                             

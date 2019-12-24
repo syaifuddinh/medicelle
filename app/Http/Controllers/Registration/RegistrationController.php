@@ -6,6 +6,7 @@ use App\Registration;
 use App\RegistrationDetail;
 use App\Contact;
 use App\Http\Controllers\Controller;
+use App\City;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -33,6 +34,19 @@ class RegistrationController extends Controller
         //
     }
 
+    public function store_city($id, $province_id) {
+        if(!preg_match('/^(\d+)$/', $id)) {
+            $c = new City();
+            $c->name = $id;
+            $c->province_id = $province_id ;
+            $c->type = 'kabupaten';
+            $c->save();
+            return $c->id;
+        } else {
+            return $id;
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -55,7 +69,9 @@ class RegistrationController extends Controller
         // Validasi pasien
         if(!array_key_exists('id', $request->patient)) {
             $patient = new Contact();
-            $patient->fill($request->patient);
+            $city_id = $this->store_city($request->patient['city_id'], $request->patient['province_id'] ?? null);
+            $patient->city_id = $city_id;   
+            $patient->fill(collect($request->patient)->except('city_id')->toArray());
             $patient->is_patient = 1;
             $patient->save();
             $patient_id = $patient->id;
@@ -107,7 +123,7 @@ class RegistrationController extends Controller
     public function show($id)
     {
         $registration = Registration::with(
-            'patient.family', 'patient.city', 
+            'patient.family', 'patient.city', 'patient.city.province', 
             'pic:id,name', 
             'detail', 
             'medical_record:id,code',
@@ -148,7 +164,9 @@ class RegistrationController extends Controller
         // Validasi pasien
         if(!array_key_exists('id', $request->patient)) {
             $patient = new Contact();
-            $patient->fill($request->patient);
+            $city_id = $this->store_city($request->patient['city_id'], $request->patient['province_id'] ?? null);
+            $patient->city_id = $city_id;
+            $patient->fill(collect($request->patient)->except('city_id')->toArray());
             $patient->is_patient = 1;
             $patient->save();
             $patient_id = $patient->id;

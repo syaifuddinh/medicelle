@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Response;
 use DB;
 use Str;
+use File;
 
 class MedicalRecordController extends Controller
 {
@@ -49,11 +50,50 @@ class MedicalRecordController extends Controller
      * @param  \App\medical_record  $medical_record
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $x = MedicalRecord::with(
-            'patient:id,name', 
+    public function schedule($id) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $medicalRecordDetail = MedicalRecordDetail::with('medical_record:id,registration_id,registration_detail_id', 'medical_record.registration:id,code,patient_type', 'medical_record.registration_detail:id,doctor_id,polyclinic_id,destination', 'medical_record.registration_detail.doctor:id,name,specialization_id', 'medical_record.registration_detail.doctor.specialization:id,name')
+        ->whereMedicalRecordId($id)
+        ->whereIsSchedule(1)
+        ->select('id', 'medical_record_id', 'date')
+        ->get();
+        return Response::json($medicalRecordDetail, 200);
+    }
+    public function doctor($id) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $doctor = $medicalRecord->registration_detail->doctor;
+        $resp = [
+            'name' => $doctor->name
+        ];
+        return Response::json($resp, 200);
+    }
 
+    public function next_schedule($id) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $resp = [
+            'date' => $medicalRecord->next_schedule->date ?? null
+        ];
+        return Response::json($resp, 200);
+    }
+
+    public function fetch($id) {
+        $resp = MedicalRecord::with(
+            'patient:id,name', 
+            'bhp:medical_record_id,item_id,qty,date,lokasi_id',
+            'bhp.item:id,name,piece_id',
+            'bhp.item.piece:id,name',
+            'bhp.lokasi:id,name',
+            'sewa_alkes:medical_record_id,item_id,qty,date,lokasi_id',
+            'sewa_alkes.item:id,name,piece_id',
+            'sewa_alkes.item.piece:id,name',
+            'sewa_alkes.lokasi:id,name',
+            'sewa_ruangan:medical_record_id,item_id,qty,date,lokasi_id',
+            'sewa_ruangan.item:id,name,piece_id',
+            'sewa_ruangan.item.piece:id,name',
+            'sewa_ruangan.lokasi:id,name',
+            'radiology:id,medical_record_id,date,result_date,name,description,is_radiology',
+            'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory',
+            'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
             'diagnose_history:medical_record_id,disease_id,type,description',
 
             'disease_history:medical_record_id,disease_name,cure,last_checkup_date',
@@ -70,6 +110,8 @@ class MedicalRecordController extends Controller
             'treatment:medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic:medical_record_id,item_id,date,qty,reduksi', 
             'drug:medical_record_id,item_id,date,qty,signa1,signa2', 
+            'drug.item:id,name,piece_id',
+            'drug.item.piece:id,name',
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
@@ -79,6 +121,13 @@ class MedicalRecordController extends Controller
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
             'imunisasi_history:medical_record_id,is_other_imunisasi,imunisasi_year_age,imunisasi_month_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
         )->find($id);
+
+        return $resp;
+    }
+
+    public function show($id)
+    {
+        $x = $this->fetch($id);
         return Response::json($x, 200);
     }
 
@@ -266,6 +315,43 @@ class MedicalRecordController extends Controller
             });
         }
 
+        if(isset($request->bhp)) {
+            $medical_record_detail->bhp()->whereMedicalRecordId($medical_record->id)->delete();
+            $bhp = collect($request->bhp);
+            $bhp = $bhp->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_bhp = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+        if(isset($request->sewa_ruangan)) {
+            $medical_record_detail->sewa_ruangan()->whereMedicalRecordId($medical_record->id)->delete();
+            $sewa_ruangan = collect($request->sewa_ruangan);
+            $sewa_ruangan = $sewa_ruangan->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_sewa_ruangan = 1;
+                $medical_record_detail->save();
+            });
+        }
+
+
+        if(isset($request->sewa_alkes)) {
+            $medical_record_detail->sewa_alkes()->whereMedicalRecordId($medical_record->id)->delete();
+            $sewa_alkes = collect($request->sewa_alkes);
+            $sewa_alkes = $sewa_alkes->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_sewa_alkes = 1;
+                $medical_record_detail->save();
+            });
+        }
+
         if(isset($request->obgyn_disease_history)) {
             $medical_record_detail->obgyn_disease_history()->whereMedicalRecordId($medical_record->id)->delete();
             $obgyn_disease_history = collect($request->obgyn_disease_history);
@@ -340,14 +426,44 @@ class MedicalRecordController extends Controller
                 break;
 
             case 'laboratory' :
-
+                $file = $request->file('file');
+                $ext = $file->getClientOriginalExtension();
+                $filename = date('ymdhis') . Str::random(6) . '.' . $ext;
+                $file->move(public_path('archive'), $filename);
+                $medicalRecordDetail->fill($request->all());
+                $medicalRecordDetail->description = $filename;
+                $medicalRecordDetail->is_laboratory = 1;
+                $medicalRecordDetail->save();
                 break;
 
             case 'pathology' :
-
+                $file = $request->file('file');
+                $ext = $file->getClientOriginalExtension();
+                $filename = date('ymdhis') . Str::random(6) . '.' . $ext;
+                $file->move(public_path('archive'), $filename);
+                $medicalRecordDetail->fill($request->all());
+                $medicalRecordDetail->description = $filename;
+                $medicalRecordDetail->is_pathology = 1;
+                $medicalRecordDetail->save();
                 break;
         }
         DB::commit();
+    }
+
+    public function submit_schedule(Request $request, $id) {
+        $this->validate($request, [
+            'date' => 'required'
+        ], [
+            'date.required' => 'Tanggal tidak boleh kosong'
+        ]);
+        DB::beginTransaction();
+        $medicalRecordDetail = new MedicalRecordDetail();
+        $medicalRecordDetail->medical_record_id = $id;
+        $medicalRecordDetail->is_schedule = 1;
+        $medicalRecordDetail->date = $request->date;
+        $medicalRecordDetail->save();        
+        DB::commit();
+        return Response::json(['message' => 'Data jadwal berhasil dimasukkan'], 200);
     }
 
     /**
@@ -359,13 +475,28 @@ class MedicalRecordController extends Controller
     public function destroy($id)
     {
         DB::beginTransaction();
-        $medical_record = MedicalRecord::find($id);
+        $medical_record = MedicalRecord::findOrFail($id);
         $medical_record->is_active = 0;
         $medical_record->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
+
+    public function destroy_detail($id)
+    {
+        DB::beginTransaction();
+        $medical_record_detail = MedicalRecordDetail::findOrFail($id);
+        $filepath = public_path('archive') . '/' . $medical_record_detail->description;
+        if (File::exists($filepath)) {
+            File::delete($filepath);
+        }
+        $medical_record_detail->delete();
+        DB::commit();
+
+        return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
+    }
+    
     public function clone($destination_id, $origin_id)
     {
         DB::beginTransaction();

@@ -95,7 +95,7 @@
                                 <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kota
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <% formData.patient.city_id %>
+                                    <% formData.patient.city.name %>, <% formData.patient.city.province.name %>
                                 </div>
                             </div>
 

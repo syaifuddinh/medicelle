@@ -39,7 +39,7 @@
                           <div class="col-md-6 col-sm-12">
                             
                               <div class="form-group">
-                                  <label class="col-md-5 col-sm-3 col-xs-12" for="first-name">Grup nota
+                                  <label class="col-md-3 col-xs-12" for="first-name">Grup nota
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.grup_nota.slug %> - <% formData.grup_nota.name %>
@@ -49,22 +49,32 @@
                               </div>
 
                               <div class="form-group">
-                                  <label class="col-md-5 col-sm-3 col-xs-12" for="first-name">Nama tarif
+                                  <label class="col-md-3 col-xs-12" for="first-name">Nama tarif
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.service.name %>
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-md-5 col-sm-3 col-xs-12" for="last-name">Apakah tarif administrasi
+                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Jenis
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.is_registration == 1 ? 'Ya' : 'Tidak' %>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='position: relative'>
+                                    
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_registration' ng-true-value='1' ng-false-value='0'> Administrasi
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_sewa_ruangan' ng-true-value='1' ng-false-value='0'> Sewa ruangan
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
+                                    </label>
+                                    <div style='position:absolute;width:100%;height:100%;top:0;left:0'></div>
                                   </div>
                               </div>
 
                               <div class="form-group">
-                                  <label class="col-md-5 col-sm-3 col-xs-12" for="last-name">Status
+                                  <label class="col-md-3 col-xs-12" for="last-name">Status
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.is_active == 1 ? "Aktif" : 'Tidak aktif' %>
@@ -74,8 +84,8 @@
                                               
 
                           <div class="col-md-6 col-sm-6">
-                              <div class="form-group" ng-hide='formData.is_registration == 1'>
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Tujuan
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                                  <label class="col-md-3 col-xs-12" for="last-name">Tujuan
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
 <% formData.destination.toLowerCase() %>
@@ -91,7 +101,7 @@
                               </div>
                             
                               <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (formData.is_registration == 0)'>
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Poliklinik
+                                  <label class="col-md-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.polyclinic.name %>
@@ -102,15 +112,23 @@
                             
                               
                               <div class="form-group">
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Harga
+                                  <label class="col-md-3 col-xs-12" for="last-name">Harga
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.service.price | number %>
+                                      <% formData.service.price | number %>
+                                  </div>
+                              </div>
+                              
+                              <div class="form-group">
+                                  <label class="col-md-3 col-xs-12" for="last-name">Satuan
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <% formData.service.piece.name %>
                                   </div>
                               </div>
                             
                               <div class="form-group">
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Qty default
+                                  <label class="col-md-3 col-xs-12" for="last-name">Qty default
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.qty %>
@@ -118,7 +136,7 @@
                               </div>
                             
                               <div class="form-group">
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Persentasi dokter
+                                  <label class="col-md-3 col-xs-12" for="last-name">Persentasi dokter
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
 <% formData.percentage %>%

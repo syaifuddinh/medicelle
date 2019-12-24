@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Datatable;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\Specialization;
 use App\Polyclinic;
 use App\Piece;
 use App\Discount;
 use App\Contact;
 use App\Item;
+use App\Permission;
 use DataTables;
 
 class MasterApiController extends Controller
@@ -38,6 +40,14 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function lokasi(Request $request) {
+        $x = Permission::whereIsLokasi(1)
+        ->select('id', 'name', 'description', 'is_active');
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
 
     public function doctor(Request $request) {
         $x = Contact::doctor()->with('specialization', 'polyclinic', 'city')->select('id', 'code', 'name', 'specialization_id', 'city_id', 'polyclinic_id', 'phone', 'is_active');
@@ -236,13 +246,48 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
-    public function bhp(Request $request) {
+    public function bhp(Request $request, $flag = '') {
         $x = Item::bhp()
-        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')
-        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
+        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
+        if($flag == 'actived') {
+            $x->whereIsCategory(0)->whereIsActive(1);
+        }
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function sewa_alkes(Request $request, $flag = '') {
+        $x = Item::with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')
+        ->whereHas('price', function(Builder $query) use($request){
+            $query->whereIsSewaAlkes(1);
+        })
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id');
+        $x = $request->filled('items.is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+        if($flag == 'actived') {
+            $x->whereIsCategory(0)->whereIsActive(1);
+        }
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function sewa_ruangan(Request $request, $flag = '') {
+        $x = Item::with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')
+        ->whereHas('price', function(Builder $query) use($request){
+            $query->whereIsSewaRuangan(1);
+        })
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id');
+        $x = $request->filled('items.is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+        if($flag == 'actived') {
+            $x->whereIsCategory(0)->whereIsActive(1);
+        }
 
         return Datatables::eloquent($x)->make(true);
     }

@@ -25,6 +25,8 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
       {
         data:null, 
         name:null,
+        orderable : false,
+        searchable : false,
         className: 'text-right',
         render : resp => $filter('number')(resp.service.price)
       },
@@ -34,8 +36,18 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
         searchable : false,
         className : 'text-center capitalize',
         render : function(resp) {
-            if(resp.is_registration == 1) {
-                return 'Registrasi';
+            if(resp.is_registration == 1 || resp.is_sewa_ruangan == 1 || resp.is_sewa_alkes == 1) {
+                var outp = []
+                if(resp.is_registration == 1) {
+                  outp.push('Administrasi')
+                } 
+                if(resp.is_sewa_ruangan == 1) {
+                  outp.push('Sewa ruangan')
+                } 
+                 if(resp.is_sewa_alkes == 1) {
+                  outp.push('Sewa alkes')
+                }
+                return outp.join(',');
             } else {
                 if(resp.destination == 'POLIKLINIK') {
                     return 'Poliklinik ' + resp.polyclinic.name

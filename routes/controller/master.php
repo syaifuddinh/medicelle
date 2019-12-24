@@ -2,6 +2,7 @@
 
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('master')->namespace('Master')->group(function(){
+        Route::get('province', 'CityController@province');
         Route::get('city', 'CityController@index');
         Route::get('district', 'DistrictController@index');
         Route::get('village', 'VillageController@index');
@@ -18,6 +19,11 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('piece/activate/{piece}', 'PieceController@activate');
         Route::get('piece/actived', 'PieceController@actived');
         Route::resource('piece', 'PieceController');
+
+
+        Route::put('lokasi/activate/{lokasi}', 'LokasiController@activate');
+        Route::get('lokasi/actived', 'LokasiController@actived');
+        Route::resource('lokasi', 'LokasiController');
 
         Route::put('supplier/activate/{id}', 'SupplierController@activate');
         Route::resource('supplier', 'SupplierController');

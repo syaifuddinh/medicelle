@@ -3,26 +3,32 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', function($scope,
     $scope.formData = {}
     $scope.data = {}
     var path = window.location.pathname;
-    if(/edit/.test(path)) {
-        $scope.title = 'Edit Departemen';
-        id = path.replace(/.+\/(\d+)/, '$1');
-        $http.get(baseUrl + '/controller/user/price/' + id).then(function(data) {
-            $scope.formData = data.data
-            $scope.formData.name = data.data.service.name
-            $scope.formData.price = data.data.service.rate
-        }, function(error) {
-          $rootScope.disBtn=false;
-          if (error.status==422) {
-            var det="";
-            angular.forEach(error.data.errors,function(val,i) {
-              det+="- "+val+"<br>";
+    $scope.show = function() {
+
+        if(/edit/.test(path)) {
+            $scope.title = 'Edit Departemen';
+            id = path.replace(/.+\/(\d+)/, '$1');
+            $http.get(baseUrl + '/controller/user/price/' + id).then(function(data) {
+                $scope.formData = data.data
+                $scope.formData.name = data.data.service.name
+                $scope.formData.price = data.data.service.rate
+                $scope.formData.piece_id = data.data.service.piece_id
+            }, function(error) {
+              $scope.show()
+              $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
             });
-            toastr.warning(det,error.data.message);
-          } else {
-            toastr.error(error.data.message,"Error Has Found !");
-          }
-        });
+        }
     }
+    $scope.show()
 
     $scope.grup_nota = function() {
         $http.get(baseUrl + '/controller/user/grup_nota').then(function(data) {
@@ -43,6 +49,26 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', function($scope,
         });
     }
     $scope.grup_nota()
+
+    $scope.piece = function() {
+        $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
+            $scope.data.piece = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.piece()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.piece()
 
 
     $scope.polyclinic = function() {

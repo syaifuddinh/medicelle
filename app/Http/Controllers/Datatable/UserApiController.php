@@ -54,7 +54,8 @@ class UserApiController extends Controller
         $x = Price::with('service:id,name,price', 'grup_nota:id,slug', 'polyclinic:id,name')
         ->where('destination', '!=', 'OBAT')
         ->where('destination', '!=', 'BHP')
-        ->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'item_id', 'grup_nota_id', 'prices.is_active');
+        ->orWhere('destination', '=', null)
+        ->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'is_sewa_ruangan', 'is_sewa_alkes', 'item_id', 'grup_nota_id', 'prices.is_active');
         $x = $request->filled('is_active') ? $x->where('prices.is_active', $request->is_active) : $x;
 
         if($request->draw == 1)

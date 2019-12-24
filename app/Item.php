@@ -13,17 +13,6 @@ class Item extends Model
 
     public static function boot() {
         parent::boot();
-        static::creating(function(Item $item) {
-            if($item->is_disease == 1 && $item->is_category == 0) {
-                if($item->category_id == null) {
-                    $item->is_category = 1;
-                } else {
-                    $category = Item::find($item->category_id);
-                    $item->code = $category->code . '.' . $item->code; 
-                }
-            }
-
-        });
 
         static::created(function(Item $item) {
 

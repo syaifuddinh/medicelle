@@ -17,6 +17,11 @@ class SignaMedicalRecordDetail extends Migration
             $table->unsignedInteger('signa1')->nullable(true)->index();
             $table->unsignedInteger('signa2')->nullable(true)->index();
             $table->date('result_date')->nullable(true)->index();
+            $table->integer('is_schedule')->nullable(false)->default(0);
+            $table->integer('is_radiology')->nullable(false)->default(0);
+            $table->integer('is_laboratory')->nullable(false)->default(0);
+            $table->integer('is_pathology')->nullable(false)->default(0);
+            $table->index(['is_radiology', 'is_laboratory', 'is_pathology']);
         });
     }
 
@@ -28,7 +33,7 @@ class SignaMedicalRecordDetail extends Migration
     public function down()
     {
         Schema::table('medical_record_details', function (Blueprint $table) {
-            $table->dropColumn(['signa1', 'signa2', 'result_date',]);
+            $table->dropColumn(['signa1', 'signa2', 'result_date', 'is_radiology',  'is_pathology', 'is_laboratory', 'is_schedule']);
         });
     }
 }

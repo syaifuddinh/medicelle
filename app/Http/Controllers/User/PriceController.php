@@ -34,7 +34,7 @@ class PriceController extends Controller
         ->whereIsActive(1)
         ->whereIsAdministration(1)
         ->whereHas('price', function(Builder $query) {
-            $query->whereIsRegistration(0);
+            $query->whereIsRegistration(0)->whereIsSewaRuangan(0)->whereIsSewaAlkes(0);
         })
         ->get();
         return Response::json($item, 200);
@@ -81,6 +81,7 @@ class PriceController extends Controller
         $item = new Item();
         $item->is_administration = 1;
         $item->name = $request->name;
+        $item->piece_id = $request->piece_id;
         $item->code = date('ym') . rand(1, 999);
         $item->price = $request->price;
         $item->save();
@@ -99,7 +100,7 @@ class PriceController extends Controller
      */
     public function show($id)
     {   
-        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price', 'polyclinic:id,name');
+        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name');
         return Response::json($price->find($id), 200);
     }
 
@@ -135,6 +136,7 @@ class PriceController extends Controller
         $price->fill($request->all());
         $item = Item::find($price->item_id);
         $item->name = $request->name;
+        $item->piece_id = $request->piece_id;
         $item->price = $request->price;
         $item->save();
         $price->custom_price = $request->price;

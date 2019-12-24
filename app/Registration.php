@@ -49,6 +49,7 @@ class Registration extends Model
         static::updating(function(Registration $registration) {
             $registration->updated_by = Auth::user()->id;
             if($registration->status == 2) {
+                DB::beginTransaction();
                 $invoice = Invoice::whereRegistrationId($registration->id)->first();
                 if($invoice == null) {
                     DB::beginTransaction();
@@ -102,6 +103,20 @@ class Registration extends Model
 
                     DB::commit();
                 }
+
+                $r = Registration::find($registration->id);
+                if(count($r->medical_record_item) == 0) {
+                    $detail = $r->detail;
+                    foreach ($detail as $x) {
+                        $medicalRecordDetail = $x->medical_record();
+                        $fill = $registration->toArray();
+                        $fill['registration_id'] = $registration->id;
+                        $m = $medicalRecordDetail->create($fill);
+                        $r->medical_record_id = $r->id;   
+                    }
+                    $r->save();
+                }
+                DB::commit();
             }
         });
 
@@ -125,6 +140,10 @@ class Registration extends Model
 
     public function detail() {
         return $this->hasMany('App\RegistrationDetail');
+    }
+
+    public function medical_record_item() {
+        return $this->hasMany('App\MedicalRecord');
     }
     public function polyclinic_registered() {
         $outp = $this->hasOne('App\RegistrationDetail', 'registration_id', 'id')->whereDestination('POLIKLINIK');

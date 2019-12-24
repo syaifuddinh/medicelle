@@ -20,4 +20,10 @@ class CityController extends Controller
         $x = City::with('province')->get();
         return Response::json($x, 200);
     }
+
+    public function province()
+    {
+        $x = DB::table('provinces')->select('id', 'name')->get();
+        return Response::json($x, 200);
+    }
 }

@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-                            <a href='{{ route("assesment.index", ["id" => $patient_id]) }}' class="btn btn-info btn-sm" >Riwayat assesment</a>
-                            <a href='{{ route("medical_record.index.polyclinic", ["id" => $patient_id]) }}' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
+                            <a href='{{ route("assesment.index", ["id" => $patient_id]) }}' target='_blank' class="btn btn-info btn-sm" >Riwayat assesment</a>
+                            <a href='{{ route("medical_record.index.polyclinic", ["id" => $patient_id]) }}' target='_blank' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
                         </div>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                             @endif
 
                              @if(Auth::user()->allow_update_medical_record())
-                            <a id='medicalRecordButton' ng-show='formData.invoice.status > 2' href='{{ route("medical_record.edit", ["id" => $patient_id]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>     
+                            <a target='_blank' id='medicalRecordButton' ng-show='formData.invoice.status > 2' href='{{ route("medical_record.edit", ["id" => $medical_record_id]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>     
                             <a id='medicalRecordButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-success btn-sm" >Isi rekam medis</a>     
                             </div>
                             @endif

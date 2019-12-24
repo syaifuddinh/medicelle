@@ -82,3 +82,8 @@ Route::name('price.')->prefix('price')->group(function(){
         return view('user/price/show')->withId($id);
     })->name('show');
 });
+Route::name('setting.')->prefix('setting')->group(function(){
+    Route::get('/', function (){
+        return view('user/setting/company');
+    })->name('company');
+});

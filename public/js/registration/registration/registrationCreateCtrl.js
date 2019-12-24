@@ -15,21 +15,46 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     $scope.title = 'Edit Registrasi';
   } 
 
+  $scope.city = function() {
 
-  $http.get(baseUrl + '/controller/master/city').then(function(data) {
-    $scope.data.city = data.data
-  }, function(error) {
-    $rootScope.disBtn=false;
-    if (error.status==422) {
-      var det="";
-      angular.forEach(error.data.errors,function(val,i) {
-        det+="- "+val+"<br>";
+      $http.get(baseUrl + '/controller/master/city').then(function(data) {
+        $scope.data.city = data.data
+      }, function(error) {
+        $rootScope.disBtn=false;
+        $scope.city()
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
       });
-      toastr.warning(det,error.data.message);
-    } else {
-      toastr.error(error.data.message,"Error Has Found !");
-    }
-  });
+  }
+  $scope.city()
+
+
+  $scope.province = function() {
+
+      $http.get(baseUrl + '/controller/master/province').then(function(data) {
+        $scope.data.province = data.data
+      }, function(error) {
+        $rootScope.disBtn=false;
+        $scope.province()
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  }
+  $scope.province()
 
   patient_datatable = $('#patient_datatable').DataTable({
     processing: true,

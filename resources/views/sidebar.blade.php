@@ -6,6 +6,7 @@
                   @if(Auth::user()->allow_view_setting())
                       <li><a><i class="fa fa-gear"></i> Setting & user <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
+                          <li><a href="{{ route('setting.company') }}">Perusahaan</a></li>
                           <li><a href="{{ route('user.index') }}">User</a></li>
                           <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
                           <li><a href="{{ route('grup_nota.index') }}">Grup nota</a></li>
@@ -33,6 +34,7 @@
                         @endif
                         <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
                         <li><a href="{{ route('cure.index') }}">Item medis</a></li>
+                        <li><a href="{{ route('lokasi.index') }}">Daftar lokasi</a></li>
                         <li><a href="{{ route('piece.index') }}">Satuan</a></li>
                         <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
                         <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>

@@ -18,7 +18,7 @@ Route::name('polyclinic.patient.')->prefix('polyclinic/patient')
     })->name('edit');
     Route::get('/{id}', function ($id){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
     })->name('show');
 });
 
@@ -41,7 +41,7 @@ Route::name('radiology.')->prefix('radiology/patient')
     })->name('edit');
     Route::get('/{id}', function ($id){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
     })->name('show');
 });
 
@@ -64,7 +64,7 @@ Route::name('chemoterapy.')->prefix('chemoterapy/patient')
     })->name('edit');
     Route::get('/{id}', function ($id){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
     })->name('show');
 });
 

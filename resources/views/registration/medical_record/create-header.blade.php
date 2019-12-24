@@ -18,17 +18,29 @@
                         <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
                     </li>
                     
+                    <li class='{{ strpos(url()->current(), "utilization") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.utilization.bhp', ['id' => $id]) }}">BHP, sewa ruang & sewa alkes</a>
+                    </li>
+                    
                     <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'>
                         <a href="{{ route('medical_record.edit.radiology', ['id' => $id]) }}">Radiologi</a>
                     </li>
+                    
+                    <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.laboratory', ['id' => $id]) }}">Laboratorium</a>
+                    </li>
 
-                    <span class="hidden">
-                        
-                        <li class='{{ strpos(url()->current(), "bhp") != null ? "active" : "" }}'><a href="#">BHP - Sewa Alkes & Ruang</a></li>
-                        <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'><a href="#">Laboratorium</a></li>
-                        <li class='{{ strpos(url()->current(), "patologi") != null ? "active" : "" }}'><a href="#">Patologi anatomi</a></li>
-                        <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'><a href="#">Jadwal kontrol</a></li>
-                    </span>
+                    <li class='{{ strpos(url()->current(), "pathology") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.pathology', ['id' => $id]) }}">Patologi & anatomi</a>
+                    </li>
+
+                    <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.schedule', ['id' => $id]) }}">Jadwal kontrol</a>
+                    </li>
+
+                    <li class='{{ strpos(url()->current(), "resume") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.resume', ['id' => $id]) }}">Resume medis</a>
+                    </li>
                 </ul> 
         </div>
     </div>
@@ -50,6 +62,9 @@
                         </a>
                         <a href='#' class="btn btn-dark pull-right btn-xs mg-r2">
                             <i class="fa fa-list-alt"></i> <% code %>
+                        </a>
+                        <a href='#' class="btn btn-default pull-right btn-xs">
+                            <i class="fa fa-user-md"></i> <% doctor.name %>
                         </a>
                     </div>
                 </div>
