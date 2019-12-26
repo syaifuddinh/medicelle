@@ -30,7 +30,7 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
     ],
 
     columns:[
-      {data:"code", name:"code", width : '35mm' },
+      {data:"medical_record.code", name:"medical_record.code", width : '35mm'},
       {
         data:null, 
         orderable:false,
@@ -38,8 +38,8 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         width : '45mm',
         render:resp => $filter('fullDate')(resp.date)
       },
-      {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
-      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name", orderable:false, searchable:false},
+      {data:"medical_record.main_complaint", name:"medical_record.main_complaint", orderable:false, searchable:false},
+      {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,
@@ -47,8 +47,8 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a allow_update_medical_record class='btn btn-xs btn-success' " + (resp.registration_detail.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + resp.id +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>" + 
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/step/1/show/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_update_medical_record class='btn btn-xs btn-success' " + (resp.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record.id +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>" + 
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_record/step/1/show/" + resp.medical_record.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

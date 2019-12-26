@@ -55,6 +55,9 @@ class MasterApiController extends Controller
         if($request->filled('polyclinic_id')) {
             $x = $x->wherePolyclinicId($request->polyclinic_id);
         }
+        if($request->filled('current_id')) {
+            $x = $x->where('contacts.id', '!=', $request->current_id);  
+        }
         if($request->filled('specialization_id')) {
             $x = $x->whereSpecializationId($request->specialization_id);
         }

@@ -53,10 +53,25 @@
                     <div class="col-md-3">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-9.1">
-                        <a href='#' class="text-primary pull-right" ng-click='showMedicalRecord()'>
-                            Apakah anda ingin menyalin dari rekam medis sebelumnya ?
-                        </a>
+                    <div class="col-md-9">
+                        <div class="btn-group pull-right">
+                          <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class='fa fa-angle-down'> </i>
+                          </button>
+                           <ul class="list-group dropdown-menu">
+                                <li class='list-group-item'>
+                                    <a href='#' class="text-primary" ng-click='referMedicalRecord()' ng-show='doctor.id == {{ Auth::user()->contact_id }}'>
+                                        Rujuk ke dokter lain ?
+                                    </a>      
+                                    <a href='#' class="text-primary" ng-click='showMedicalRecord()'>
+                                        Apakah anda ingin menyalin dari rekam medis sebelumnya ?
+                                    </a>      
+                                </li>
+                            </ul>
+                         <!--  <div class="dropdown-menu" style='width:100mm'>
+                                       
+                          </div> -->
+                        </div>
                         <a href='#' class="btn btn-primary pull-right btn-xs">
                             <i class="fa fa-user"></i> <% patient.name %>
                         </a>
@@ -64,7 +79,12 @@
                             <i class="fa fa-list-alt"></i> <% code %>
                         </a>
                         <a href='#' class="btn btn-default pull-right btn-xs">
-                            <i class="fa fa-user-md"></i> <% doctor.name %>
+                            <i class="fa fa-user-md"></i> 
+                            <% doctor.name %>
+                        </a>
+                        <a href='#' class="btn btn-default pull-right btn-xs" ng-show='refer_doctor.name'>
+                            <i class="fa fa-user-md"></i> 
+                            Dirujuk ke <% refer_doctor.name %>
                         </a>
                     </div>
                 </div>

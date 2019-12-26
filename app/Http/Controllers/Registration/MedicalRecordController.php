@@ -6,10 +6,12 @@ use App\MedicalRecord;
 use App\MedicalRecordDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\Mod;
 use Response;
 use DB;
 use Str;
 use File;
+use PDF;
 
 class MedicalRecordController extends Controller
 {
@@ -59,11 +61,26 @@ class MedicalRecordController extends Controller
         ->get();
         return Response::json($medicalRecordDetail, 200);
     }
+
+    public function refer_doctor($id, $doctor_id) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $medicalRecord->refer_doctor_id = $doctor_id;
+        $medicalRecord->save();
+        return Response::json(['message' => 'Dokter rujukan telah dipilih'], 200);
+    }
     public function doctor($id) {
         $medicalRecord = MedicalRecord::findOrFail($id);
         $doctor = $medicalRecord->registration_detail->doctor;
+        $refer_doctor = $medicalRecord->refer_doctor;
         $resp = [
-            'name' => $doctor->name
+            'doctor' => [
+                'id' => $doctor->id,
+                'name' => $doctor->name
+            ],
+            'refer_doctor' => [
+                'id' => $refer_doctor->name ?? null,
+                'name' => $refer_doctor->name ?? null
+            ]
         ];
         return Response::json($resp, 200);
     }
@@ -91,8 +108,8 @@ class MedicalRecordController extends Controller
             'sewa_ruangan.item:id,name,piece_id',
             'sewa_ruangan.item.piece:id,name',
             'sewa_ruangan.lokasi:id,name',
-            'radiology:id,medical_record_id,date,result_date,name,description,is_radiology',
-            'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory',
+            'radiology:id,medical_record_id,date,result_date,name,description,is_radiology,saran,kesimpulan,kanan,kiri',
+            'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,saran,kesimpulan,kanan,kiri',
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
             'diagnose_history:medical_record_id,disease_id,type,description',
 
@@ -120,15 +137,24 @@ class MedicalRecordController extends Controller
             'pain_cure_history:medical_record_id,cure,emergence_time',
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
             'imunisasi_history:medical_record_id,is_other_imunisasi,imunisasi_year_age,imunisasi_month_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
-        )->find($id);
+        )->findOrFail($id);
 
         return $resp;
     }
 
     public function show($id)
     {
+
         $x = $this->fetch($id);
         return Response::json($x, 200);
+    }
+
+    public function pdf(Request $request, $id)
+    {
+        $medicalRecord = $this->fetch($id);
+        $date = $request->filled('date') ? $request->date : date('Y-m-d');
+        $pdf = PDF::loadview('pdf/medical_resume',['medicalRecord'=>$medicalRecord, 'date' => $date, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('resume-medis.pdf');
     }
 
     /**
@@ -447,6 +473,22 @@ class MedicalRecordController extends Controller
                 $medicalRecordDetail->save();
                 break;
         }
+        DB::commit();
+    }
+
+    public function update_research(Request $request, $medical_record_detail_id) {
+        $this->validate($request, [
+            'kanan' => 'required',
+            'kiri' => 'required'
+        ], [
+            'kanan.required' => 'Kanan tidak boleh kosong',
+            'kiri.required' => 'Kiri tidak boleh kosong'
+        ]);
+        DB::beginTransaction();
+        $medicalRecordDetail = MedicalRecordDetail::find($medical_record_detail_id);
+        $medicalRecordDetail->fill($request->all());
+        $medicalRecordDetail->save();
+        
         DB::commit();
     }
 

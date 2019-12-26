@@ -8,8 +8,14 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
       medical_record_url = medical_record_head + 'polyclinic_medical_record/'
   } else if( path.indexOf('radiology') > -1) {
       medical_record_url = medical_record_head + 'radiology_medical_record/'
+  } else if( path.indexOf('laboratory') > -1) {
+      medical_record_url = medical_record_head + 'laboratory_medical_record/'
   } else if( path.indexOf('chemoterapy') > -1) {
       medical_record_url = medical_record_head + 'chemoterapy_medical_record/'
+  } else if( path.indexOf('ruang_tindakan') > -1) {
+      medical_record_url = medical_record_head + 'ruang_tindakan_medical_record/'
+  } else if( path.indexOf('medical_checkup') > -1) {
+      medical_record_url = medical_record_head + 'medical_checkup_medical_record/'
   }
 
   oTable = $('#listview').DataTable({
@@ -33,16 +39,28 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
     ],
 
     columns:[
-      {data:"code", name:"code", width : '35mm' },
+
+      {
+        data:null, 
+        orderable:false, 
+        searchable:false,
+        width : '35mm',
+        render : resp => resp.medical_record != null ? resp.medical_record.code : resp.medical_record_refer.code
+      },
       {
         data:null, 
         orderable:false,
         searchable:false,
         width : '45mm',
-        render:resp => $filter('fullDate')(resp.date)
+        render:resp => resp.medical_record != null ? $filter('fullDate')(resp.medical_record.date) : $filter('fullDate')(resp.medical_record_refer.date)
       },
-      {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
-      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name", orderable:false, searchable:false},
+      {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
+      {
+        data:null, 
+        orderable:false, 
+        searchable:false,
+        render : resp => resp.medical_record != null ? resp.medical_record.main_complaint : resp.medical_record_refer.main_complaint
+      },
       {
         data: null, 
         orderable : false,
@@ -50,7 +68,7 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-success' " + (resp.registration_detail.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + resp.id +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>"
+        "<a allow_update_medical_record class='btn btn-xs btn-success' " + (resp.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + (resp.medical_record != null ? resp.medical_record.id : resp.medical_record_refer.id) +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>" 
       },
     ],
     createdRow: function(row, data, dataIndex) {

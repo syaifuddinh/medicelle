@@ -157,6 +157,8 @@ class Registration extends Model
         return $outp;
     }
 
+    
+
     public function invoice() {
         return $this->hasOne('App\Invoice', 'registration_id', 'id');
     }

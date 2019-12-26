@@ -71,7 +71,7 @@
                 <br />
 
                 <div>
-                  <img src="{{ asset('images/medicelle.png') }}" class="img-responsive" alt="">
+                  <img src="{{ Mod::company()->logo }}" class="img-responsive" alt="">
                   <p style='margin-top:2mm'>©2016 All Rights Reserved, Medicelle Clinic. Privacy and Terms</p>
                 </div>
               </div>

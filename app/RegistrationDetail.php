@@ -10,7 +10,7 @@ use Auth;
 
 class RegistrationDetail extends Model
 {
-    protected $fillable = ['registration_id', 'destination', 'polyclinic_id', 'time', 'doctor_id'];
+    protected $fillable = ['registration_id', 'destination', 'polyclinic_id', 'time', 'doctor_id', 'medical_record_refer_id'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['status_name', 'visiting_room'];
 
@@ -55,6 +55,44 @@ class RegistrationDetail extends Model
         return $self;
     }
 
+    public static function registered_laboratory() {
+        $self = self::whereDestination('LABORATORIUM');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $self->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $self;
+    }
+
+
+    public static function registered_ruang_tindakan() {
+        $self = self::whereDestination('RUANG TINDAKAN');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $self->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $self;
+    }
+
+    public static function registered_medical_checkup() {
+        $self = self::whereDestination('MEDICAL CHECK-UP');
+        $user = Auth::user();
+        if($user->is_admin != 1) {
+            if($user->doctor) {
+                return $self->whereDoctorId($user->contact_id);
+            } 
+        }
+
+        return $self;
+    }
+
+
     public static function registered_radiology() {
         $self = self::whereDestination('RADIOLOGI');
         $user = Auth::user();
@@ -86,6 +124,9 @@ class RegistrationDetail extends Model
 
     public function medical_record() {
         return $this->hasOne('App\MedicalRecord',  'registration_detail_id', 'id');
+    }
+    public function medical_record_refer() {
+        return $this->belongsTo('App\MedicalRecord',  'medical_record_refer_id', 'id');
     }
 
     public function polyclinic() {

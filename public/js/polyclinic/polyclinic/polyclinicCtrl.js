@@ -13,6 +13,15 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
   } else if( path.indexOf('chemoterapy') > -1) {
       patient_url = patient_head + 'chemoterapy_registered'
       flag = 'chemoterapy'
+  }  else if( path.indexOf('laboratory') > -1) {
+      patient_url = patient_head + 'laboratory_registered'
+      flag = 'chemoterapy'
+  } else if( path.indexOf('ruang_tindakan') > -1) {
+      patient_url = patient_head + 'ruang_tindakan_registered'
+      flag = 'ruang_tindakan'
+  } else if( path.indexOf('medical_checkup') > -1) {
+      patient_url = patient_head + 'medical_checkup_registered'
+      flag = 'medical_checkup'
   } 
   oTable = $('#listview').DataTable({
     processing: true,
@@ -71,6 +80,12 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
+    },
+    initComplete : function() {
+        var patientTable = this.api()
+        setInterval(function(){
+            patientTable.ajax.reload()
+        }, 20000)
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );

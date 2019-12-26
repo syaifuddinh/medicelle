@@ -310,23 +310,6 @@ Route::name('pathology.')->prefix('pathology')
     })->name('show');
 });
 
-Route::name('laboratory.')->prefix('laboratory')
-->group(function(){
-
-    Route::get('/', function (){
-        return view('master/laboratory/index');
-    })->name('index');
-    Route::get('/create', function (){
-        return view('master/laboratory/create');
-    })->name('create');
-    Route::get('/edit/{id}', function ($id){
-        return view('master/laboratory/create')->withId($id);
-    })->name('edit');
-    Route::get('/{id}', function ($id){
-        return view('master/laboratory/show')->withId($id);
-    })->name('show');
-});
-
 Route::name('pharmacy.')->prefix('pharmacy')
 ->group(function(){
 

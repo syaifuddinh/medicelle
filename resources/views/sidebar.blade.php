@@ -70,9 +70,40 @@
 
                   @if(Auth::user()->allow_view_polyclinic())
                       <li>
+                        <a href='{{ route("laboratory.index") }}'><i class="fa fa-filter"></i>Laboratorium</a>
+                      </li>
+                  @endif
+
+
+                  @if(Auth::user()->allow_view_polyclinic())
+                      <li>
                         <a href='{{ route("chemoterapy.index") }}'><i class="fa fa-medkit"></i>Kemoterapi</a>
                       </li>
                   @endif
+
+
+                  @if(Auth::user()->allow_view_polyclinic())
+                      <li>
+                        <a href='{{ route("ruang_tindakan.index") }}'><i class="fa fa-inbox"></i>Ruang tindakan</a>
+                      </li>
+                  @endif
+
+
+                  @if(Auth::user()->allow_view_polyclinic())
+                      <li>
+                        <a href='{{ route("medical_checkup.index") }}'><i class="fa fa-tasks"></i>Medical Checkup</a>
+                      </li>
+                  @endif
+
+                  <li><a><i class="fa fa-bookmark"></i>Layanan<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                          <li><a href="{{ route('surat.cuti_hamil.index') }}">Surat cuti hamil</a></li>
+                          <li><a href="">Surat keterangan dokter</a></li>
+                          <li><a href="">Surat keterangan sehat</a></li>
+                          <li><a href="">Surat layak terbang</a></li>
+                          <li><a href="">Surat rujukan pasien</a></li>
+                        </ul>
+                      </li>
 
                   <li class='hidden'><a><i class="fa fa-external-link"></i> Poliklinik <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">

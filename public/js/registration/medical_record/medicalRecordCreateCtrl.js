@@ -8,6 +8,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
+    var today = new Date()
+    $scope.resume_date = today.getFullYear() + '-' + (parseInt(today.getMonth()) + 1) + '-' + today.getDate()
 
 
     $("[ng-model='obgyn_disease_history.disease_name'], [ng-model='obgyn_family_disease_history.disease_name']").easyAutocomplete({
@@ -43,21 +45,38 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         window.location = home_url
     }
 
-    $scope.printDocument = function(documentId) {
-        var doc = document.getElementById(documentId);
+    $scope.showNewResearch = function(medical_record_detail_id) {
+        $scope.medical_record_detail_id = medical_record_detail_id
+        var research = $scope.formData.radiology.concat($scope.formData.laboratory)
+        var sample = research.find(x => x.id == medical_record_detail_id)
+        $scope.new_research = {
+            'kanan' : sample.kanan,
+            'kiri' : sample.kiri,
+            'saran' : sample.saran,
+            'kesimpulan' : sample.kesimpulan
+        }        
+        $('#newResearchModal').modal()
+    }
 
-        //Wait until PDF is ready to print    
-        if (typeof doc.print === 'undefined') {    
-            setTimeout(function(){$scope.printDocument(documentId);}, 1000);
+    $scope.submitNewResearch = function() {
+        $scope.updateResearch($scope.medical_record_detail_id, function(){
+            $('#newResearchModal').modal('hide')
+            window.location.reload()
+        })
+    }
+
+    $scope.changeResumeDate = function() {
+        $scope.showResume($scope.resume_date)
+    }
+
+    $scope.showResume = function(date) {
+        if(date == null) {
+            $('#pdfDocument').attr('src', baseUrl + '/controller/registration/medical_record/' + id + '/pdf')
         } else {
-            doc.print();
+            $('#pdfDocument').attr('src', baseUrl + '/controller/registration/medical_record/' + id + '/pdf?date=' + date)          
         }
     }
-
-    $scope.printResume = function() {
-        $('#pdfDocument').attr('src', 'http://supplychainindonesia.com/new/wp-content/files/1._Pengantar_Manajemen_Logistik_2015.pdf')
-        $scope.printDocument('pdfDocument')
-    }
+    $scope.showResume()
     // $scope.printDocument('pdfDocument')
 
   $scope.browse_medical_record = function() {
@@ -89,6 +108,33 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
             {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
           ],
+          createdRow: function(row, data, dataIndex) {
+            $compile(angular.element(row).contents())($scope);
+          }
+        });
+  }
+
+  $scope.browse_doctor = function() {
+      doctor_datatable = $('#doctor_datatable').DataTable({
+          processing: true,
+          serverSide: true,
+          dom: 'frtip',
+          ajax: {
+            url : baseUrl+'/datatable/master/doctor',
+            data : d => Object.assign(d, {'current_id' : $scope.doctor.id})
+          },
+
+          columns:[
+            {
+              data: null, 
+              orderable : false,
+              searchable : false,
+              className : 'text-center',
+              render : resp => '<button class="btn btn-sm btn-primary" ng-disabled="disBtn" ng-click="selectDoctor($event.currentTarget)">Pilih</button>'
+            },
+            {data:"name", name:"name" },
+            {data:"specialization.name", name:"specialization.name" },
+           ],
           createdRow: function(row, data, dataIndex) {
             $compile(angular.element(row).contents())($scope);
           }
@@ -217,25 +263,27 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       
   $scope.next_schedule = function() {
       $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/next_schedule').then(function(data) {
-        $scope.next_schedule = data.data
-    }, function(error) {
-      $scope.next_schedule()
-      $rootScope.disBtn=false;
-      if (error.status==422) {
-        var det="";
-        angular.forEach(error.data.errors,function(val,i) {
-          det+="- "+val+"<br>";
-        });
-        toastr.warning(det,error.data.message);
-      } else {
-        toastr.error(error.data.message,"Error Has Found !");
-      }
-    });
+          $scope.next_schedule = data.data
+      }, function(error) {
+        $scope.next_schedule()
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
   }
 
   $scope.doctor = function() {
       $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/doctor').then(function(data) {
-        $scope.doctor = data.data
+        $scope.doctor = data.data.doctor
+        $scope.refer_doctor = data.data.refer_doctor
+        $scope.browse_doctor()
     }, function(error) {
       $scope.doctor()
       $rootScope.disBtn=false;
@@ -944,11 +992,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     'columns' : [
       {
           data : null,
+          width : '18%',
           render : resp => $filter('fullDate')(resp.date)
       },
       {data : 'name'},
       {
           data : null,
+          width : '15%',
           render : resp => $filter('fullDate')(resp.result_date)
       },
       {
@@ -959,7 +1009,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteRadiology($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+          width : '12%',
+        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-default" ng-click="showNewResearch(' + resp.id + ')" title="Isi form radiologi"><i class="fa fa-newspaper-o"></i></button><button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteRadiology($event.currentTarget)"><i class="fa fa-trash-o"></i></button></div>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -972,11 +1023,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     'columns' : [
       {
           data : null,
+          width : '18%',
           render : resp => $filter('fullDate')(resp.date)
       },
       {data : 'name'},
       {
           data : null,
+          width : '15%',
           render : resp => $filter('fullDate')(resp.result_date)
       },
       {
@@ -987,7 +1040,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteLaboratory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-default" ng-click="showNewResearch(' + resp.id + ')" title="Isi form radiologi"><i class="fa fa-newspaper-o"></i></button><button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteLaboratory($event.currentTarget)"><i class="fa fa-trash-o"></i></button></div>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1515,6 +1568,31 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $('#BHPModal').modal('hide')
     }
 
+    $scope.referMedicalRecord = function() {
+      doctor_datatable.ajax.reload()
+      $('#doctorModal').modal()
+    }
+
+    $scope.selectDoctor = function(e) {
+        var tr = $(e).parents('tr')
+        var doctor = doctor_datatable.row(tr).data()
+        $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/refer_doctor/' + doctor.id).then(function(data) {
+            toastr.success("Dokter rujukan telah dipilih");
+            $('#doctorModal').modal('hide')
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+
     $scope.selectSewaAlkes = function(e) {
         var tr = $(e).parents('tr')
         var sewa_alkes = browse_sewa_alkes_datatable.row(tr).data()
@@ -1641,10 +1719,38 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                    toastr.error(resp.message,"Error Has Found !");
                 }
                $('.submitButton').removeAttr('disabled');
+               $compile(angular.element($('.submitButton')[0]).contents())($scope)
             },
           }).done(function() {
                $('.submitButton').removeAttr('disabled');
+               $compile(angular.element($('.submitButton')[0]).contents())($scope)
           });
           
+    }
+
+    $scope.updateResearch=function(medical_record_detail_id, action) {
+      $rootScope.disBtn= true
+      var url = baseUrl + '/controller/registration/medical_record/update_research/' + medical_record_detail_id;
+      var method = 'post';
+
+
+      $http[method](url, $scope.new_research).then(function(data) {
+        $rootScope.disBtn = false
+        $scope.new_research = {}
+        toastr.success("Data Berhasil Disimpan !");
+        action()
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
     }
 }]);

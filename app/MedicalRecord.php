@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\RegistrationDetail;
 use Auth;
 use DB;
 
@@ -99,11 +100,32 @@ class MedicalRecord extends Model
 
               $medicalRecord->risk_level_status = $risk_level_status;
               $medicalRecord->risk_level_description = $risk_level_description;
+
+              // Rujukan dokter
+              if($medicalRecord->refer_doctor_id != null) {
+                    $latestRefer = RegistrationDetail::whereMedicalRecordReferId($medicalRecord->id)
+                    ->first();
+                    if($latestRefer == null) {
+                        $registrationDetail = new RegistrationDetail();
+                        $registrationDetail->fill($medicalRecord->registration_detail->toArray());
+                        $registrationDetail->medical_record_refer_id = $medicalRecord->id;
+                        $registrationDetail->doctor_id = $medicalRecord->refer_doctor_id;
+                        $registrationDetail->save();
+                    } else {
+                        $latestRefer->update([
+                            'doctor_id' => $medicalRecord->refer_doctor_id
+                        ]);
+                    }
+              }
         });
     }
 
     public function patient() {
         return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);
+    }
+
+    public function refer_doctor() {
+        return $this->belongsTo('App\Contact', 'refer_doctor_id', 'id')->whereIsDoctor(1);
     }
 
     public function registration_detail() {

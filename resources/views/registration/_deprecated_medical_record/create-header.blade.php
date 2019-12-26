@@ -16,6 +16,14 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-9.1">
+                        <div class="btn-group pull-right">
+                          <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Small button
+                          </button>
+                          <div class="dropdown-menu">
+                            ...
+                          </div>
+                        </div>
                         <a href='#' class="text-primary pull-right" ng-click='showMedicalRecord()'>
                             Apakah anda ingin menyalin dari rekam medis sebelumnya ?
                         </a>
