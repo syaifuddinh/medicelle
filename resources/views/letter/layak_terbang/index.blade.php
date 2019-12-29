@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="cutiHamil">
+        <div class="right_col" role="main" ng-controller="layakTerbang">
           <!-- top tiles -->
           
 
@@ -40,12 +40,12 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Surat cuti hamil</h3>
+                    <h3>Surat layak terbang</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm hidden'>Filter</button>
-                          <a href="{{ route('surat.cuti_hamil.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          <a href="{{ route('surat.layak_terbang.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                       </div>                    
                   </div>
                 </div>
@@ -83,5 +83,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilCtrl.js"></script>
+    <script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangCtrl.js"></script>
 

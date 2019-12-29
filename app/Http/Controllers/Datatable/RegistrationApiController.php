@@ -188,6 +188,21 @@ class RegistrationApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function medical_record(Request $request) {
+        $x = MedicalRecord::with('registration_detail:id,doctor_id', 
+            'registration_detail.doctor:id,name,specialization_id',
+            'registration_detail.doctor.specialization:id,name',
+            'patient:id,name,age,birth_date,gender,city_id,phone,address',
+            'patient.city:id,name'
+        )
+        ->select('medical_records.id','medical_records.patient_id','medical_records.code', 'registration_detail_id');
+
+        if($request->draw == 1)
+            $x->orderBy('medical_records.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function polyclinic_medical_record(Request $request, $patient_id) {
         $x = RegistrationDetail::registered_polyclinic()
         ->has('registration.invoice')

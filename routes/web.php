@@ -25,6 +25,7 @@ Route::group(
         require(base_path('routes/controller/master.php'));
         require(base_path('routes/controller/registration.php'));
         require(base_path('routes/controller/cashier.php'));
+        require(base_path('routes/controller/letter.php'));
 
         Route::namespace('Datatable')
         ->prefix('datatable')
@@ -34,6 +35,7 @@ Route::group(
             require(base_path('routes/datatable/master.php'));
             require(base_path('routes/datatable/registration.php'));
             require(base_path('routes/datatable/cashier.php'));
+            require(base_path('routes/datatable/letter.php'));
         });
 });
 Route::get('/logout', 'Auth\LoginController@logout');

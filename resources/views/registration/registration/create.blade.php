@@ -18,8 +18,9 @@
                     <div class="col-md-6">
                         <span class='pull-right' ng-show='formData.id'>
                             
-                            <label class='label label-primary'><i class='fa fa-thumb-tack'></i> <% formData.status_name %></label>
-                            <label class='label label-default'><i class='fa fa-calendar'></i> <% formData.date | fullDate %></label>
+                            <a class='btn btn-xs btn-outline-dark'><i class='fa fa-barcode'></i> <% formData.code %></a>
+                            <a class='btn btn-xs btn-outline-primary'><i class='fa fa-thumb-tack'></i> <% formData.status_name %></a>
+                            <a class='btn btn-xs btn-outline-success'><i class='fa fa-calendar'></i> <% formData.date | fullDate %></a>
                         </span>
                     </div>
                 </div>

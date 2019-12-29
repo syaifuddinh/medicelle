@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="cutiHamilCreate">
+        <div class="right_col" role="main" ng-controller="keteranganDokterCreate">
           <!-- top tiles -->
           
 
@@ -98,50 +98,25 @@
                             </div>
 
                             <div class="col-md-6">
+                                
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal taksiran persalinan
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class='form-control' ng-model='formData.review_date' datepick>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Lama istirahat<span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.age_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
+                                        <div class="col-md-12">
+                                            <div class="input-group">
                                                 
-                                            </select>
+                                                <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
+                                                <div class="input-group-addon">Hari</div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Perkiraan cuti hamil<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.duration' maxlength='2' only-num>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.duration_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai cuti<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai istirahat<span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
@@ -155,7 +130,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Keterangan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <textarea ng-model='formData.description' class='form-control'></textarea>
@@ -219,5 +194,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilCreateCtrl.js"></script>
+    <script src="{{ asset('') }}js/letter/keterangan_dokter/keteranganDokterCreateCtrl.js"></script>
 

@@ -24,7 +24,7 @@
                       {{ csrf_field() }}
                       <div class="form-group avatar-container">
                         <img class="img-responsive" id='img-preview' style='height:50mm;margin:auto' src='<% formData.company.logo %>'>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Logo
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Logo
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="file" id='logo' name='logo' class="form-control col-md-7 col-xs-12">
@@ -32,14 +32,14 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Nama<span class="required">*</span>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Nama<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="first-name" ng-model='formData.company.name' required="required" class="form-control col-md-7 col-xs-12" autofocus>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="last-name">Alamat
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Alamat
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <textarea id="last-name" ng-model='formData.company.address' name="last-name"  class="form-control col-md-7 col-xs-12">
@@ -47,14 +47,35 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="last-name">No Telepon
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Kota
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type='text' ng-model='formData.company.city' class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Email
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type='text' ng-model='formData.company.email' class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Website
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type='text' ng-model='formData.company.website' class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">No Telepon
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type='text' ng-model='formData.company.phone_number' class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="last-name">Fax
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Fax
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type='text' ng-model='formData.company.fax' class="form-control col-md-7 col-xs-12">

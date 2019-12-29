@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers\Datatable;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+use App\Specialization;
+use App\Letter;
+use DataTables;
+
+class LetterApiController extends Controller
+{
+    public function cuti_hamil(Request $request) {
+        $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
+        ->whereIsCutiHamil(1)
+        ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        return Datatables::eloquent($x)->make(true);
+           
+    }
+
+    public function keterangan_dokter(Request $request) {
+        $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
+        ->whereIsKeteranganDokter(1)
+        ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        return Datatables::eloquent($x)->make(true);
+           
+    }
+    
+    public function keterangan_sehat(Request $request) {
+        $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
+        ->whereIsKeteranganSehat(1)
+        ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        return Datatables::eloquent($x)->make(true);
+           
+    }
+    
+    public function layak_terbang(Request $request) {
+        $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
+        ->whereIsLayakTerbang(1)
+        ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        return Datatables::eloquent($x)->make(true);
+           
+    }
+}

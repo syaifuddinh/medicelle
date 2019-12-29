@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="cutiHamilShow">
+<div class="right_col" role="main" ng-controller="layakTerbangShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">
@@ -18,18 +18,15 @@
             <div class="dashboard_graph">
 
                 <div class="row x_title">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <a href='#' class="btn btn-default pull-right btn-xs">
                             <i class="fa fa-file-archive-o"></i> <% medical_record.code %>
                         </a>
                         <a href='#' class="btn btn-primary pull-right btn-xs">
                             <i class="fa fa-user-md"></i> <% formData.doctor.name %>, Spesialis <% formData.doctor.specialization.name %> 
-                        </a>
-                        <a href='#' class="btn btn-dark pull-right btn-xs">
-                            <i class="fa fa-barcode"></i> <% formData.code %>
                         </a>
                     </div>
                 </div>
@@ -100,37 +97,25 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal taksiran persalinan
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.review_date | fullDate %>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7 capitalize">
-                                            <% formData.age %> <% formData.age_type.toLowerCase() %>
-                                        </div>
-                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
+                                        <% formData.age %> <% formData.age_type.toLowerCase() %>                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Perkiraan cuti hamil
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Kelayaan terbang
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7 capitalize">
-                                            <% formData.duration %> <% formData.duration_type.toLowerCase() %>
-                                        </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
+                                            <% formData.option.toLowerCase() %>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai cuti
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tujuan ke
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
-                                            <% formData.start_date | fullDate %> s/d <% formData.end_date | fullDate %>
+                                            <% formData.additional.destination %>
                                         </div>
                                     </div>
                                 </div>
@@ -188,5 +173,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilShowCtrl.js"></script>
+<script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangShowCtrl.js"></script>
 

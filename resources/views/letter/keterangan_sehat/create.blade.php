@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="cutiHamilCreate">
+        <div class="right_col" role="main" ng-controller="keteranganSehatCreate">
           <!-- top tiles -->
           
 
@@ -98,61 +98,102 @@
                             </div>
 
                             <div class="col-md-6">
+                                
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal taksiran persalinan
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class='form-control' ng-model='formData.review_date' datepick>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Hasil pemeriksaan<span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">TD</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.td'>
+                                            </div>
+                                        </div>          
+                                        <div class="col-md-4">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">N</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.n'>
+                                            </div>
                                         </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.age_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
-                                                
-                                            </select>
+                                        <div class="col-md-4">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">RR</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.rr'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Sh</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.sh'>
+                                            </div>
+                                        </div>          
+                                        <div class="col-md-4">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">BB</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.bb'>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">TB</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.tb'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class='col-md-12'>Buta warna</label>
+                                            <div class="col-md-5">
+                                                <label class="radio-inline">
+                                                    <input type="radio" ng-model='formData.additional.buta_warna' ng-value='"YA"'> Ya
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" ng-model='formData.additional.buta_warna' ng-value='"TIDAK"'> Tidak
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Perkiraan cuti hamil<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Pemeriksaan mata
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.duration' maxlength='2' only-num>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.duration_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
-                                                
-                                            </select>
-                                        </div>
+                                        <textarea ng-model='formData.additional.eye_diagnose' class='form-control'></textarea>  
+
                                     </div>
                                 </div>
+                                
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai cuti<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Pemeriksaan telinga
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="input-group">
-                                            <input type="text" class='form-control' ng-model='formData.start_date' datepick>
-                                            <div class="input-group-addon">
-                                              s/d
-                                            </div>
-                                            <input type="text" class='form-control' ng-model='formData.end_date' datepick>
-                                        </div>
+                                        <textarea ng-model='formData.additional.ear_diagnose' class='form-control'></textarea>  
+
                                     </div>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Keadaan pasien
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <label class="radio-inline">
+                                            <input type="radio" ng-model='formData.option' ng-value='"SEHAT"'> Sehat
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" ng-model='formData.option' ng-value='"TIDAK SEHAT"'> Tidak sehat
+                                        </label>
+                                    </div>
+                                </div>
+                                
+
                                 
                                 <div class="form-group">
                                     <label class="col-md-12 col-sm-12 col-xs-12">Keterangan
@@ -219,5 +260,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilCreateCtrl.js"></script>
+    <script src="{{ asset('') }}js/letter/keterangan_sehat/keteranganSehatCreateCtrl.js"></script>
 

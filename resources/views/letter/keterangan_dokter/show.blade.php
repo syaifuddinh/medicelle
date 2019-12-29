@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="cutiHamilShow">
+<div class="right_col" role="main" ng-controller="keteranganDokterShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">
@@ -100,33 +100,17 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal taksiran persalinan
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.review_date | fullDate %>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Lama istirahat
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-7 capitalize">
-                                            <% formData.age %> <% formData.age_type.toLowerCase() %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Perkiraan cuti hamil
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7 capitalize">
-                                            <% formData.duration %> <% formData.duration_type.toLowerCase() %>
+                                            <% formData.age %> Hari
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai cuti
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai istirahat
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
@@ -136,7 +120,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Keterangan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
@@ -188,5 +172,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilShowCtrl.js"></script>
+<script src="{{ asset('') }}js/letter/keterangan_dokter/keteranganDokterShowCtrl.js"></script>
 

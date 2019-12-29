@@ -11,6 +11,7 @@ Route::prefix('registration')->group(function(){
     Route::get('medical_checkup_registered/{flag?}', 'RegistrationApiController@medical_checkup_registered');
 
     Route::get('polyclinic_medical_record/{patient_id}', 'RegistrationApiController@polyclinic_medical_record');
+    Route::get('medical_record', 'RegistrationApiController@medical_record');
     Route::get('radiology_medical_record/{patient_id}', 'RegistrationApiController@radiology_medical_record');
     Route::get('laboratory_medical_record/{patient_id}', 'RegistrationApiController@laboratory_medical_record');
     Route::get('chemoterapy_medical_record/{patient_id}', 'RegistrationApiController@chemoterapy_medical_record');

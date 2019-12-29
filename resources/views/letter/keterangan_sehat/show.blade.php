@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="cutiHamilShow">
+<div class="right_col" role="main" ng-controller="keteranganSehatShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">
@@ -18,10 +18,10 @@
             <div class="dashboard_graph">
 
                 <div class="row x_title">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <a href='#' class="btn btn-default pull-right btn-xs">
                             <i class="fa fa-file-archive-o"></i> <% medical_record.code %>
                         </a>
@@ -100,38 +100,56 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal taksiran persalinan
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.review_date | fullDate %>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Hasil pemeriksaan
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7 capitalize">
-                                            <% formData.age %> <% formData.age_type.toLowerCase() %>
-                                        </div>
+                                        <a href="#" class='btn btn-sm btn-outline-primary'>
+                                            TD = <% formData.additional.td %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                            N = <% formData.additional.n %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-warning'>
+                                            RR = <% formData.additional.rr %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                            Sh = <% formData.additional.sh %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-primary'>
+                                            BB = <% formData.additional.bb %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                            TB = <% formData.additional.tb %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-dark' style='margin-top:3mm'>
+                                            <i class="fa fa-tasks"></i>
+                                            Pasien dinyatakan <% formData.additional.buta_warna == 'YA' ? 'buta warna' : 'tidak buta warna'  %>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Perkiraan cuti hamil
+
+                                <div class="form-group" style='padding-top:3mm'>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Pemeriksaan mata
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7 capitalize">
-                                            <% formData.duration %> <% formData.duration_type.toLowerCase() %>
-                                        </div>
+                                            <% formData.additional.eye_diagnose %>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Pemeriksaan telinga
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <% formData.additional.ear_diagnose %>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tanggal mulai cuti
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Keadaan pasien
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="input-group">
-                                            <% formData.start_date | fullDate %> s/d <% formData.end_date | fullDate %>
-                                        </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
+                                            <% formData.option.toLowerCase() %>
                                     </div>
                                 </div>
 
@@ -188,5 +206,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/letter/cuti_hamil/cutiHamilShowCtrl.js"></script>
+<script src="{{ asset('') }}js/letter/keterangan_sehat/keteranganSehatShowCtrl.js"></script>
 
