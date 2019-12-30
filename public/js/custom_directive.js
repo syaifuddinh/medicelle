@@ -135,17 +135,11 @@ app.directive('clockpick', function() {
     require: 'ngModel',
     link: function(scope, el, attr, ngModel) {
       // console.log(ngModel);
-      var attr = attr['clockpickPosition'];
-      if (attr) {
-        var aname=attr;
-      } else {
-        var aname='top'
-      }
-      $(el).clockpicker({
-        placement:aname,
-        autoclose:true,
-        donetext:'DONE',
+      var time = $(el).pickatime({
+          'interval' : 15,
+          'format' : 'H:i'
       });
+      var p = time.pickatime('picker')
     }
   };
 });

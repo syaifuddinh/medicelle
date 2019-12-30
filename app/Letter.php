@@ -44,7 +44,7 @@ class Letter extends Model
                 $current_month = date('m');
                 $current_year = date('Y');
                 $id = DB::table('letters')
-                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_keterangan_dokter = 1")
+                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_keterangan_sehat = 1")
                 ->count('id') + 1;
                 $id = $id == null ? 1 : $id;
                 $id = str_pad($id, 3, '0', STR_PAD_LEFT);
@@ -55,11 +55,33 @@ class Letter extends Model
                 $current_month = date('m');
                 $current_year = date('Y');
                 $id = DB::table('letters')
-                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_keterangan_dokter = 1")
+                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_layak_terbang = 1")
                 ->count('id') + 1;
                 $id = $id == null ? 1 : $id;
                 $id = str_pad($id, 3, '0', STR_PAD_LEFT);
                 $code = $id . '/SLT/MDC/' . date('m') . '/' . date('Y');
+
+                $letter->code = $code;
+            } else if($letter->is_pengantar_mrs == 1) {
+                $current_month = date('m');
+                $current_year = date('Y');
+                $id = DB::table('letters')
+                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_pengantar_mrs = 1")
+                ->count('id') + 1;
+                $id = $id == null ? 1 : $id;
+                $id = str_pad($id, 3, '0', STR_PAD_LEFT);
+                $code = $id . '/MRS/MDC/' . date('m') . '/' . date('Y');
+
+                $letter->code = $code;
+            } else if($letter->is_rujukan_pasien == 1) {
+                $current_month = date('m');
+                $current_year = date('Y');
+                $id = DB::table('letters')
+                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_rujukan_pasien = 1")
+                ->count('id') + 1;
+                $id = $id == null ? 1 : $id;
+                $id = str_pad($id, 3, '0', STR_PAD_LEFT);
+                $code = $id . '/PRJ/MDC/' . date('m') . '/' . date('Y');
 
                 $letter->code = $code;
             }

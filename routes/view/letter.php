@@ -73,5 +73,39 @@ Route::name('surat.')->prefix('surat')
         })->name('show');
 
     });
+    Route::name('pengantar_mrs.')->prefix('pengantar_mrs')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('letter/pengantar_mrs/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('letter/pengantar_mrs/create');
+        })->name('create');
+        Route::get('/edit/{id}', function ($id){
+            return view('letter/pengantar_mrs/create')->withId($id);
+        })->name('edit');
+        Route::get('/{id}', function ($id){
+            return view('letter/pengantar_mrs/show')->withId($id);
+        })->name('show');
+
+    });
+Route::name('rujukan_pasien.')->prefix('rujukan_pasien')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('letter/rujukan_pasien/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('letter/rujukan_pasien/create');
+        })->name('create');
+        Route::get('/edit/{id}', function ($id){
+            return view('letter/rujukan_pasien/create')->withId($id);
+        })->name('edit');
+        Route::get('/{id}', function ($id){
+            return view('letter/rujukan_pasien/show')->withId($id);
+        })->name('show');
+
+    });
 
 });

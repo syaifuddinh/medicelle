@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="layakTerbangShow">
+<div class="right_col" role="main" ng-controller="rujukanPasienShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">
@@ -18,10 +18,10 @@
             <div class="dashboard_graph">
 
                 <div class="row x_title">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <a href='#' class="btn btn-default pull-right btn-xs">
                             <i class="fa fa-file-archive-o"></i> <% medical_record.code %>
                         </a>
@@ -99,27 +99,55 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
+
+                                <div class="form-group" style='padding-top:3mm'>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Rumah sakit
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
-                                        <% formData.age %> <% formData.age_type.toLowerCase() %>                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <% formData.additional.hospital %>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Kelayaan terbang
+
+                                <div class="form-group" style='padding-top:3mm'>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Alamat rumah sakit
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
-                                            <% formData.option.toLowerCase() %>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <% formData.additional.hospital_address %>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tujuan ke
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Hasil pemeriksaan
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="input-group">
-                                            <% formData.additional.destination %>
-                                        </div>
+                                        <a href="#" class='btn btn-sm btn-outline-primary'>
+                                            TD = <% formData.additional.td %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                            N = <% formData.additional.n %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-warning'>
+                                            RR = <% formData.additional.rr %>
+                                        </a>
+                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                            GCS = <% formData.additional.gcs %>
+                                        </a>
+                                    </div>
+                                </div>
+                
+                                <div class="form-group" style='padding-top:3mm'>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa kerja
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <% formData.additional.diagnose %>
+                                    </div>
+                                </div>
+                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Terapi kerja diberikan
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <% formData.additional.therapy %>
                                     </div>
                                 </div>
 
@@ -176,5 +204,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangShowCtrl.js"></script>
+<script src="{{ asset('') }}js/letter/rujukan_pasien/rujukanPasienShowCtrl.js"></script>
 

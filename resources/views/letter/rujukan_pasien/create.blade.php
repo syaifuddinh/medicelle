@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="layakTerbangCreate">
+        <div class="right_col" role="main" ng-controller="rujukanPasienCreate">
           <!-- top tiles -->
           
 
@@ -98,45 +98,75 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
-                                            <small>
-                                                <b class='text-danger'>* Untuk ibu hamil</b>
-                                            </small>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.age_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Kelayakan terbang
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <label class="radio-inline">
-                                            <input type="radio" ng-model='formData.option' ng-value='"LAYAK"'> Layak
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" ng-model='formData.option' ng-value='"TIDAK LAYAK"'>Tidak layak
-                                        </label>
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tujuan ke<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Rumah sakit
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" class="form-control" ng-model='formData.additional.destination' >
+                                        <input type="text" ng-model='formData.additional.hospital' class='form-control'>  
+
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Alamat rumah sakit
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea ng-model='formData.additional.hospital_address' class='form-control'></textarea>  
+
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Hasil pemeriksaan<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">TD</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.td'>
+                                            </div>
+                                        </div>          
+                                        <div class="col-md-5">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">N</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.n'>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">RR</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.rr'>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                            <div class="input-group">
+                                                <div class="input-group-addon">GCS</div>
+                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.gcs'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa kerja
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea ng-model='formData.additional.diagnose' class='form-control'></textarea>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Terapi yang diberikan
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea ng-model='formData.additional.therapy' class='form-control'></textarea>
                                     </div>
                                 </div>
                                 
@@ -205,5 +235,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangCreateCtrl.js"></script>
+    <script src="{{ asset('') }}js/letter/rujukan_pasien/rujukanPasienCreateCtrl.js"></script>
 

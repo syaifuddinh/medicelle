@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="layakTerbangShow">
+<div class="right_col" role="main" ng-controller="pengantarMrsShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">
@@ -18,10 +18,10 @@
             <div class="dashboard_graph">
 
                 <div class="row x_title">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <a href='#' class="btn btn-default pull-right btn-xs">
                             <i class="fa fa-file-archive-o"></i> <% medical_record.code %>
                         </a>
@@ -100,25 +100,55 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Rumah sakit
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
-                                        <% formData.age %> <% formData.age_type.toLowerCase() %>                                    </div>
+                                        <% formData.age %> <% formData.additional.hospital %>                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Kelayaan terbang
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Jenis pengantar
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12 capitalize">
-                                            <% formData.option.toLowerCase() %>
+                                            <% formData.additional.type %>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tujuan ke
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tindakan direncanakan pada
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
-                                            <% formData.additional.destination %>
+                                            Hari <% formData.review_date |  day %>, <% formData.review_date | fullDate %> pukul <% formData.additional.time %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group">
+                                            <% formData.additional.diagnose %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Jenis operasi
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group">
+                                            <% formData.additional.operation_type %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tindakan operasi
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group">
+                                            <% formData.additional.operation_treatment %>
                                         </div>
                                     </div>
                                 </div>
@@ -176,5 +206,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangShowCtrl.js"></script>
+<script src="{{ asset('') }}js/letter/pengantar_mrs/pengantarMrsShowCtrl.js"></script>
 

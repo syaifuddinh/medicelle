@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="layakTerbangCreate">
+        <div class="right_col" role="main" ng-controller="pengantarMrsCreate">
           <!-- top tiles -->
           
 
@@ -99,44 +99,56 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Usia kehamilan
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Rumah sakit
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
-                                            <small>
-                                                <b class='text-danger'>* Untuk ibu hamil</b>
-                                            </small>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.age_type" >
-                                                <option value=""></option>
-                                                <option value="MINGGU">Minggu</option>
-                                                <option value="BULAN">Bulan</option>
-                                                
-                                            </select>
-                                        </div>
+                                        <input type="text" class='form-control' ng-model='formData.additional.hospital'>
                                     </div>
-                                    
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Kelayakan terbang
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Jenis pengantar
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <label class="radio-inline">
-                                            <input type="radio" ng-model='formData.option' ng-value='"LAYAK"'> Layak
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" ng-model='formData.option' ng-value='"TIDAK LAYAK"'>Tidak layak
-                                        </label>
+                                        <input type="text" class='form-control' ng-model='formData.additional.type'>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tindakan direncanakan pada <% formData.review_date ? 'Hari' : '' %> <% formData.review_date | day %>
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group">
+                                            
+                                            <input type="text" class='form-control' ng-model='formData.review_date' datepick>
+                                            <div class="input-group-addon">
+                                                 pukul 
+                                            </div>
+                                            <input type="text" class='form-control' ng-model='formData.additional.time' clockpick>
 
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Tujuan ke<span class="required">*</span>
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" class="form-control" ng-model='formData.additional.destination' >
+                                        <textarea ng-model='formData.additional.diagnose' class='form-control'></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Jenis operasi
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea ng-model='formData.additional.operation_type' class='form-control'></textarea>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12 col-sm-12 col-xs-12">Tindakan operasi
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea ng-model='formData.additional.operation_treatment' class='form-control'></textarea>
                                     </div>
                                 </div>
                                 
@@ -205,5 +217,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/letter/layak_terbang/layakTerbangCreateCtrl.js"></script>
+    <script src="{{ asset('') }}js/letter/pengantar_mrs/pengantarMrsCreateCtrl.js"></script>
 

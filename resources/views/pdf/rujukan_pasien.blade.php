@@ -25,7 +25,7 @@
 
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <div class="header" style='text-align:center'>
-                    <h3 style='font-weight:bold;'><span style='border-bottom:1px solid black'>SURAT LAYAK TERBANG</span></h3>
+                    <h3 style='font-weight:bold;'><span style='border-bottom:1px solid black'>SURAT RUJUKAN PASIEN</span></h3>
                     <h4 style='font-weight:bold;'>{{ $letter->code }}</h4>
                 </div>
                 <br>

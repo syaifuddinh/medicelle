@@ -14,6 +14,7 @@
 
     <link href="{{ asset('') }}css/classic.css" rel="stylesheet">
     <link href="{{ asset('') }}css/classic.date.css" rel="stylesheet">
+    <link href="{{ asset('') }}css/classic.time.css" rel="stylesheet">
 
 
     <!-- Font Awesome -->

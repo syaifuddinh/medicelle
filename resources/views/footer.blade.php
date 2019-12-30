@@ -61,6 +61,7 @@
     <!-- PickADate -->
     <script src="{{ asset('') }}js/picker.js"></script>
     <script src="{{ asset('') }}js/picker.date.js"></script>
+    <script src="{{ asset('') }}js/picker.time.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('') }}vendors/moment/min/moment.min.js"></script>
 
