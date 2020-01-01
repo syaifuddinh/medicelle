@@ -29,18 +29,39 @@
                     <h4 style='font-weight:bold;'>{{ $letter->code }}</h4>
                 </div>
                 <br>
-                <p>Yang bertanda tangan dibawah ini menerangkan bahwa : </p><br>
+                <p>Kepada</p>
+                <p>{{ $letter->additional->hospital ?? '' }}</p>
+                <p>{{ $letter->additional->hospital_address ?? '' }}</p><br>
+
+                <p>Dengan hormat, </p>
+                <p>Mohon bantuan sejawat atas pasien :</p><br>
+
                 <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Nama</span> <span style='display:inline-block;font-weight:bold'>: {{ $letter->medical_record->patient->name }}</span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Umur</span> <span style='display:inline-block;'>: {{ $letter->medical_record->patient->age }} Tahun</span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Umur</span> <span style='display:inline-block;'>: {{ $letter->medical_record->patient->age }} Tahun, {{ strtolower($letter->medical_record->patient->gender) }}</span></p>
 
                 <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Alamat</span> <span style='display:inline-block;'>: {{ $letter->medical_record->patient->address }} </span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Umur kehamilan</span> <span style='display:inline-block;'>: {{ $letter->age . 
-                ' ' . $letter->age_type }} </span></p>
-                <p style='padding-left:8mm;text-decoration:italic'>(Untuk ibu hamil)</p><br>
+                <p style='padding-left:8mm'>
+                    <span style='display:inline-block;width:20mm'>Untuk</span> 
+                    <span style='display:inline-block;'>:</span>
+                </p>
+                <ol>
+                    <li>Pengambilalihan kasus ini untuk tindakan selanjutnya.</li>
+                    <li>Tindakan masalah medis untuk saat ini.</li>
+                    <li>Atas permintaan pasien / keluarganya.</li>
+                </ol>
+                <br>
 
-                <p style="text-indent:8mm">Telah diperiksa dan dinyatakan dalam kondisi sehat (khusus untuk ibu hamil : ibu dan janin dalam kondisi sehat) dan dinyatakan <b>{{ $letter->option }}</b> dari {{ $company->city }} menuju {{ $letter->additional->destination }}. {{ ucfirst($letter->description) }}.</p>
+                <p>Keterangan klinis :</p><br>   
+                <p>
+                    <span style='display:inline-block;'>TD : {{$letter->additional->td ?? ''}}
+                    </span>
+                </p>
+                <p>Diagnosa kerja : {{ $letter->additional->diagnose }}</p>
+                <p>Terapi yang diberikan : {{ $letter->additional->therapy }}</p><br>
+
+                <p>Terima kasih atas bantuan dan kerjasama yang diberikan.</p>
                 <br><br>
                 <p>
                     <span style="display:inline-block;margin-left:120mm">

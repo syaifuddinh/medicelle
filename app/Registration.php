@@ -34,7 +34,12 @@ class Registration extends Model
             $code = 'RJ-' . date('ym') . $id;
 
             $registration->code = $code;
-            
+            // Validasi tanggal
+            $date = $registration->date;
+            if(preg_match('/19\d{2}-\d+-\d+/', $date)) {
+                $date = preg_replace('/19(\d{2}-\d+-\d+)/', '20$1', $date);
+                $registration->date = $date;
+            }
             DB::commit();
         });
 

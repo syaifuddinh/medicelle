@@ -121,13 +121,22 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Umur
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Tanggal lahir
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text"  ng-model='formData.patient.age' class="form-control col-md-7 col-xs-12" ng-disabled='!is_new_patient' only-num>
+                                        <input type="text"  ng-model='formData.patient.birth_date' ng-disabled='!is_new_patient' class="form-control col-md-7 col-xs-12" ng-change='countAge()' datepick>
                                     </div>
                                 </div>
 
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Umur
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  ng-model='formData.patient.age' class="form-control col-md-7 col-xs-12" readonly only-num>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -228,8 +237,8 @@
                     </div>
                     <div class="ln_solid"></div>
                     <h2>Jadwal</h2>
-                    <div class="row">
-                        <div class="col-md-2">
+                    <div class="row" style='margin-left:3mm'>
+                        <div class="col-md-3">
                             <label>Tujuan</label>
                             <select class="form-control" data-placeholder-text-single="'Pilih Tujuan'"  chosen allow-single-deselect="false" ng-model="detail.destination" ng-change='adjustDestination()'>
                                 <option value=""></option>
@@ -241,7 +250,7 @@
                                 <option value="RUANG TINDAKAN">Ruang tindakan</option>
                             </select>
                         </div>
-                        <div class="col-md-2 col-md-offset-1" ng-show='detail.destination == "POLIKLINIK"'>
+                        <div class="col-md-3" ng-show='detail.destination == "POLIKLINIK"'>
                             <div class="form-group">
                                 <label>Poliklinik</label>
                                 <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'"  chosen allow-single-deselect="false" ng-model="detail.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic" ng-change="changeDoctor()">
@@ -249,26 +258,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-md-offset-1">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class='col-md-12'>Waktu</label>
                                 <div class="col-md-12" style='display:flex'>
-                                    <select class="form-control" ng-model='detail.hour' ng-options="h as h for h in data.hours" ng-change='adjustTime()'>
-                                        <option value=""></option>
-                                    </select>  
-                                    <span style='display:inline-flex;margin-right:1mm;margin-left:1mm;align-items:center'> : </span> 
-                                    <select class="form-control" ng-model='detail.minute' ng-change='adjustTime()'> 
-                                        <option value=""></option>
-                                        <option value="00">00</option>
-                                        <option value="15">15</option>
-                                        <option value="30">30</option>
-                                        <option value="45">45</option>
-                                    </select>
+                                    <input type="text" class="form-control" ng-model='detail.time' clockpick>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="col-md-2 col-md-offset-1">
+                        <div class="col-md-3">
                             <div class="form-group">
 
                                 <label>Dokter</label>

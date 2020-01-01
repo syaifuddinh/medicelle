@@ -74,7 +74,8 @@ app.directive('onlyNum', function($browser) {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, element, attrs, modelCtrl) {
-            var keyCode = [8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
+            var keyCode = [173,8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
+            $(element).addClass('text-right')
             element.bind("keydown", function(event) {
                 if (modelCtrl.$modelValue) {
                   // var hitungTitik=(modelCtrl.$modelValue.match(/./g)||[]).length;
@@ -82,15 +83,16 @@ app.directive('onlyNum', function($browser) {
                   var hitungTitik=modelVal.split('.').length-1;
                   var slength=modelVal.length;
                   // console.log(slength);
-                  if (slength>0 && modelVal.charAt(0)=="0") {
+                  // alert(modelVal)
+                  if (slength>1 && modelVal.charAt(0)=="0" && (modelVal.charAt(1)!=".")) {
                     var newVal=modelVal.indexOf('0') == 0 ? modelVal.substring(1) : modelVal;
                     modelCtrl.$setViewValue(newVal);
                     modelCtrl.$render();
                   }
                   if (hitungTitik>0) {
-                    keyCode=[8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110];
+                    keyCode=[173, 8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110];
                   } else {
-                    keyCode=[8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
+                    keyCode=[173, 8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
                   }
                 }
                 if($.inArray(event.which,keyCode) == -1) {

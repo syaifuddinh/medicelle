@@ -1,5 +1,4 @@
 @include('header')
- 
         <!-- /top navigation -->
 
         <!-- page content -->
@@ -37,7 +36,8 @@
                           <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
-                     
+                      <div class="ln_solid"></div>
+                      @include('master/specialization/medical_record_roles')
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

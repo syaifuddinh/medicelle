@@ -16,9 +16,9 @@ Route::name('polyclinic.patient.')->prefix('polyclinic/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id)->withFlag($flag);
     })->name('show');
 });
 
@@ -39,9 +39,13 @@ Route::name('radiology.')->prefix('radiology/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')
+        ->withId($id)
+        ->with('patient_id', $registration->patient_id)
+        ->with('medical_record_id', $registration->medical_record_id)
+        ->withFlag($flag);
     })->name('show');
 });
 
@@ -61,9 +65,9 @@ Route::name('laboratory.')->prefix('laboratory/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id)->withFlag($flag);
     })->name('show');
 });
 
@@ -84,9 +88,9 @@ Route::name('chemoterapy.')->prefix('chemoterapy/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id)->withFlag($flag);
     })->name('show');
 });
 
@@ -106,9 +110,9 @@ Route::name('ruang_tindakan.')->prefix('ruang_tindakan/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id)->withFlag($flag);
     })->name('show');
 });
 
@@ -128,9 +132,9 @@ Route::name('medical_checkup.')->prefix('medical_checkup/patient')
     Route::get('/edit/{id}', function ($id){
         return view('polyclinic/polyclinic/create')->withId($id);
     })->name('edit');
-    Route::get('/{id}', function ($id){
+    Route::get('/{id}', function ($id) use($flag){
         $registration = App\Registration::find($id);
-        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id);
+        return view('polyclinic/polyclinic/show')->withId($id)->with('patient_id', $registration->patient_id)->with('medical_record_id', $registration->medical_record_id)->withFlag($flag);
     })->name('show');
 });
 

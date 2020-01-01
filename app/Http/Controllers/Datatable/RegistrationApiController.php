@@ -15,15 +15,14 @@ use Auth;
 class RegistrationApiController extends Controller
 {
     public function registration(Request $request) {
-        $x = Registration::with('medical_record', 'patient:id,name,phone')->select('registrations.id', 'registrations.code', 'medical_record_id', 'registrations.patient_id', 'registrations.date', 'registrations.status')
+        $x = Registration::with('medical_record', 'patient:id,name,phone')->select('registrations.id', 'registrations.code', 'registrations.medical_record_id', 'registrations.patient_id', 'registrations.date', 'registrations.status')
         ->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
 
         if($request->filled('status')) {
             $x = $x->where('registrations.status', $request->status);
         }
 
-        if($request->draw == 1)
-            $x->orderBy('registrations.id', 'DESC');
+        $x->orderBy('registrations.date', 'DESC')->orderBy('registrations.id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -212,8 +211,11 @@ class RegistrationApiController extends Controller
             'medical_record:id,registration_detail_id,code,main_complaint,date',
             'medical_record_refer:id,registration_detail_id,code,main_complaint,date',
             'registration:id',
-            'registration.invoice:id,registration_id,status'
+            'registration.invoice:id,registrati1on_id,status'
         )
+        ->whereHas('registration', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
         if(Auth::user()->is_admin != 1) {
@@ -250,6 +252,9 @@ class RegistrationApiController extends Controller
             'registration:id',
             'registration.invoice:id,registration_id,status'
         )
+        ->whereHas('registration', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
         if(Auth::user()->is_admin != 1) {
@@ -285,6 +290,9 @@ class RegistrationApiController extends Controller
             'registration:id',
             'registration.invoice:id,registration_id,status'
         )
+        ->whereHas('registration', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
         if(Auth::user()->is_admin != 1) {
@@ -314,17 +322,24 @@ class RegistrationApiController extends Controller
         $x = RegistrationDetail::registered_chemoterapy()
         ->has('registration.invoice')
         ->has('medical_record')
-        ->orHas('medical_record_refer')
+        // ->orHas('medical_record_refer')
         ->with('doctor:id,name', 
-            'medical_record:id,registration_detail_id,code,main_complaint,date',
+            'medical_record:id,registration_detail_id,code,main_complaint,date,patient_id',
             'medical_record_refer:id,registration_detail_id,code,main_complaint,date',
-            'registration:id',
+            'registration:id,patient_id',
             'registration.invoice:id,registration_id,status'
         )
+        ->whereHas('medical_record', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
+        ->orWhereHas('medical_record_refer', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
-        if(Auth::user()->is_admin != 1) {
-            if(Auth::user()->doctor) {
+        $contact = Auth::user()->contact;
+        if(Auth::user()->is_admin != 1 && $contact) {
+            if($contact->is_doctor == 1) {
                 $x->whereDoctorId(Auth::user()->contact_id);
             }
         }
@@ -357,6 +372,9 @@ class RegistrationApiController extends Controller
             'registration:id',
             'registration.invoice:id,registration_id,status'
         )
+        ->whereHas('registration', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
         if(Auth::user()->is_admin != 1) {
@@ -392,6 +410,9 @@ class RegistrationApiController extends Controller
             'registration:id',
             'registration.invoice:id,registration_id,status'
         )
+        ->whereHas('registration', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
         ->select('registration_details.id', 'doctor_id', 'registration_details.registration_id', 'registration_details.medical_record_refer_id');
 
         if(Auth::user()->is_admin != 1) {

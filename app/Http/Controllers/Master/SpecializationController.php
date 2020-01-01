@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Specialization;
+use App\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
@@ -125,5 +126,10 @@ class SpecializationController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function medical_record_roles() {
+        $roles = Setting::whereName('medical_record_roles')->first();
+        return Response::json($roles->content, 200);
     }
 }

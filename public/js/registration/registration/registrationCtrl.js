@@ -1,4 +1,12 @@
 app.controller('registration', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+  var currentDate = new Date()
+  var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ) + '-' + currentDate.getDate()
+  $scope.formData = {
+      'date_end' : date 
+  }
+  setTimeout(function () {    
+        $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+  }, 300)
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
@@ -20,16 +28,22 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"medical_record.code", name:"medical_record.code"},
+      {
+        data:null,
+        name:'code',
+        orderable:false, 
+        searchable:false,
+        render: resp => "<a href='" + baseUrl + "/registration/" + resp.id +  "'>" + resp.code + "</a>"
+      },
+      {data:"medical_record.code", name:"medical_record.code", orderable:false, searchable:false},
       {
         data:null, 
         searchable:false,
         orderable:false,
         render:resp => $filter('fullDate')(resp.date),
       },
-      {data:"patient.name", name:"patient.name"},
-      {data:"patient.phone", name:"patient.phone"},
+      {data:"patient.name", name:"patient.name", orderable:false, searchable:false},
+      {data:"patient.phone", name:"patient.phone", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,

@@ -8,6 +8,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('village', 'VillageController@index');
 
         Route::put('specialization/activate/{specialization}', 'SpecializationController@activate');
+        Route::get('specialization/medical_record_roles', 'SpecializationController@medical_record_roles');
         Route::resource('specialization', 'SpecializationController');
 
         Route::put('polyclinic/activate/{polyclinic}', 'PolyclinicController@activate');

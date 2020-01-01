@@ -21,20 +21,29 @@ Route::name('medical_record.')->prefix('medical_record')
 ->group(function(){
 
     Route::get('/step/1/edit/{id}', function ($id){
-        return view('registration/medical_record/create')->withId($id);
+        if(Specialization::allow_access('anamnesa') != 1) {
+            return redirect()->route('medical_record.edit.2', ['id' => $id]);
+        } else {
+            return view('registration/medical_record/create')->withId($id);
+        }
     })->name('edit');
     Route::get('/step/2/edit/{id}', function ($id){
         return view('registration/medical_record/create-2')->withId($id);
     })->name('edit.2');
-    Route::get('/step/3/edit/{id}', function ($id){
-        return view('registration/medical_record/create-3')->withId($id);
-    })->name('edit.3');
-    Route::get('/step/4/edit/{id}', function ($id){
-        return view('registration/medical_record/create-4')->withId($id);
-    })->name('edit.4');
 
     Route::get('/physique/general/{id}', function ($id){
-        return view('registration/medical_record/create-physique-general')->withId($id);
+        if(Specialization::allow_access('umum') != 1) {
+            $alternative = ['kepala', 'breast', 'rectum'];
+            $alternative_route = ['head', 'breast', 'rectum'];
+            foreach($alternative as $key => $role) {
+                if(Specialization::allow_access($role) == 1) {
+                    return redirect()->route('medical_record.edit.physique.' . $role, ['id' => $id]);
+                }                
+            }
+        } else {
+            return view('registration/medical_record/create-physique-general')->withId($id);
+        }
+
     })->name('edit.physique.general');
     Route::get('/physique/head/{id}', function ($id){
         return view('registration/medical_record/create-physique-head')->withId($id);
@@ -105,6 +114,18 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/radiology/{id}/patient', function (){
         return view('registration/medical_record/index');
     })->name('index.radiology');
+    Route::get('/laboratory/{id}/patient', function (){
+        return view('registration/medical_record/index');
+    })->name('index.laboratory');
+    Route::get('/chemoterapy/{id}/patient', function (){
+        return view('registration/medical_record/index');
+    })->name('index.chemoterapy');
+    Route::get('/ruang_tindakan/{id}/patient', function (){
+        return view('registration/medical_record/index');
+    })->name('index.ruang_tindakan');
+    Route::get('/medical_checkup/{id}/patient', function (){
+        return view('registration/medical_record/index');
+    })->name('index.medical_checkup');
 });
 
 Route::name('assesment.')->prefix('assesment')

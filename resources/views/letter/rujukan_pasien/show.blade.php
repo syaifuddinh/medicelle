@@ -126,10 +126,10 @@
                                         <a href="#" class='btn btn-sm btn-outline-success'>
                                             N = <% formData.additional.n %>
                                         </a>
-                                        <a href="#" class='btn btn-sm btn-outline-warning'>
+                                        <a href="#" class='btn btn-sm btn-outline-dark'>
                                             RR = <% formData.additional.rr %>
                                         </a>
-                                        <a href="#" class='btn btn-sm btn-outline-success'>
+                                        <a href="#" class='btn btn-sm btn-outline-primary'>
                                             GCS = <% formData.additional.gcs %>
                                         </a>
                                     </div>

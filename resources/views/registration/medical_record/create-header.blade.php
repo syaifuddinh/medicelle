@@ -9,38 +9,56 @@
         <div class="col-md-12">
             
                 <ul class="nav nav-pills" style='margin-bottom:1mm'>
-                    <li class='{{ strpos(url()->current(), "step") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Anamnesa</a></li>
-                    <li class='{{ strpos(url()->current(), "physique") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.physique.general', ['id' => $id]) }}">Pemeriksaan Fisik</a>
-                    </li>
+                    @if( Specialization::allow_access('anamnesa') == 1 || Specialization::allow_access('anamnesa_obgyn') == 1 )
+                        <li class='{{ strpos(url()->current(), "step") != null ? "active" : "" }}'><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Anamnesa</a></li>
+                    @endif
+    
+                    @if( Specialization::allow_access('umum') == 1 || Specialization::allow_access('kepala') == 1 || Specialization::allow_access('breast') == 1 || Specialization::allow_access('rectum') == 1)
+                        <li class='{{ strpos(url()->current(), "physique") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.physique.general', ['id' => $id]) }}">Pemeriksaan Fisik</a>
+                        </li>
+                    @endif
 
-                    <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
-                    </li>
+                    @if( Specialization::allow_access('tindakan') == 1 || Specialization::allow_access('diagnostik') == 1 || Specialization::allow_access('obat') == 1)
+                        <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
+                        </li>
+                    @endif
                     
-                    <li class='{{ strpos(url()->current(), "utilization") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.utilization.bhp', ['id' => $id]) }}">BHP, sewa ruang & sewa alkes</a>
-                    </li>
+                    @if( Specialization::allow_access('bhp') == 1 || Specialization::allow_access('sewa_alkes') == 1 || Specialization::allow_access('sewa_ruangan') == 1)
+                        <li class='{{ strpos(url()->current(), "utilization") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.utilization.bhp', ['id' => $id]) }}">BHP, sewa ruang & sewa alkes</a>
+                        </li>
+                    @endif
                     
-                    <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.radiology', ['id' => $id]) }}">Radiologi</a>
-                    </li>
+                    @if( Specialization::allow_access('radiologi') == 1)
+                        <li class='{{ strpos(url()->current(), "radiology") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.radiology', ['id' => $id]) }}">Radiologi</a>
+                        </li>
+                    @endif
                     
-                    <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.laboratory', ['id' => $id]) }}">Laboratorium</a>
-                    </li>
+                    @if( Specialization::allow_access('laboratorium')  == 1)
+                        <li class='{{ strpos(url()->current(), "laboratory") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.laboratory', ['id' => $id]) }}">Laboratorium</a>
+                        </li>
+                    @endif
 
-                    <li class='{{ strpos(url()->current(), "pathology") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.pathology', ['id' => $id]) }}">Patologi & anatomi</a>
-                    </li>
+                    @if( Specialization::allow_access('patologi')  == 1)
+                        <li class='{{ strpos(url()->current(), "pathology") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.pathology', ['id' => $id]) }}">Patologi & anatomi</a>
+                        </li>
+                    @endif
 
-                    <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.schedule', ['id' => $id]) }}">Jadwal kontrol</a>
-                    </li>
-
-                    <li class='{{ strpos(url()->current(), "resume") != null ? "active" : "" }}'>
-                        <a href="{{ route('medical_record.edit.resume', ['id' => $id]) }}">Resume medis</a>
-                    </li>
+                    @if( Specialization::allow_access('jadwal_kontrol') == 1 )
+                        <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.schedule', ['id' => $id]) }}">Jadwal kontrol</a>
+                        </li>
+                    @endif
+                    @if( Specialization::allow_access('resume_medis') == 1 )
+                        <li class='{{ strpos(url()->current(), "resume") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.resume', ['id' => $id]) }}">Resume medis</a>
+                        </li>
+                    @endif
                 </ul> 
         </div>
     </div>

@@ -11,11 +11,13 @@ class Setting extends Model
     public function getContentAttribute() {
         if(array_key_exists('content', $this->attributes)) {
             $content = json_decode($this->attributes['content']);
-            $content->logo = isset($content->logo) ? asset('files/' . $content->logo) : asset('');
+            $has_logo = $content->logo ?? null;
+            if($has_logo) {
+                $content->logo = isset($content->logo) ? asset('files/' . $content->logo) : asset('');
+            }
             return $content;
         }
         return json_decode('{}');
     }
 
-    
 }

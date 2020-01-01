@@ -291,49 +291,52 @@ app.directive('inputThousandSeparator', [
         };
       }
     ]);
-app.directive('onlyNum', function($browser) {
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attrs, modelCtrl) {
-            $(element).addClass('text-right')
-            var keyCode = [8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
-            element.bind("keydown", function(event) {
-                if (event.which == 13) {
-                   var nextInput = inputs.get(inputs.index(this) + 1);
-                   if (nextInput) {
-                      nextInput.focus();
-                   }
-                }
-                if (modelCtrl.$modelValue) {
-                  // var hitungTitik=(modelCtrl.$modelValue.match(/./g)||[]).length;
-                  var modelVal=modelCtrl.$modelValue;
-                  var hitungTitik=modelVal.split('.').length-1;
-                  var slength=modelVal.length;
-                  // console.log(slength);
-                  if (slength>0 && modelVal.charAt(0)=="0") {
-                    var newVal=modelVal.indexOf('0') == 0 ? modelVal.substring(1) : modelVal;
-                    modelCtrl.$setViewValue(newVal);
-                    modelCtrl.$render();
-                  }
-                  if (hitungTitik>0) {
-                    keyCode=[8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110];
-                  } else {
-                    keyCode=[8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
-                  }
-                }
-                if($.inArray(event.which,keyCode) == -1) {
-                    scope.$apply(function(){
-                        scope.$eval(attrs.onlyNum);
-                        event.preventDefault();
-                    });
-                    event.preventDefault();
-                }
-            });
+// app.directive('onlyNum', function($browser) {
+//       return {
+//         restrict: 'A',
+//         require: 'ngModel',
+//         link: function(scope, element, attrs, modelCtrl) {
+//             $(element).addClass('text-right')
+//             // keyCode = [173, 8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
+//             // element.bind("keyup", function(event) {
+//             //     if (event.which == 13) {
+//             //        var nextInput = inputs.get(inputs.index(this) + 1);
+//             //        if (nextInput) {
+//             //           nextInput.focus();
+//             //        }
+//             //     }
+//             //     if (modelCtrl.$modelValue) {
+//             //       // var hitungTitik=(modelCtrl.$modelValue.match(/./g)||[]).length;
+//             //       var modelVal=modelCtrl.$modelValue;
+//             //       var hitungTitik=modelVal.split('.').length-1;
+//             //       var slength=modelVal.length;
+//             //       // console.log(slength);
+//             //       alert(modelVal)
+//             //       modelCtrl.$render();
+//             //       // if (slength>0 && modelVal.charAt(0)=="0") {
+//             //       //   // var newVal=modelVal.indexOf('0') == 0 ? modelVal.substring(1) : modelVal;
+//             //       //   // modelCtrl.$setViewValue(newVal);
+//             //       //   modelCtrl.$render();
+//             //       // }
+//             //       // if (hitungTitik>0) {
+//             //       //   keyCode=[173,8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110];
+//             //       // } else {
+//             //       //   keyCode=[173,8,9,37,39,48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,110,190];
+//             //       // }
+//             //     }
+//             //     if($.inArray(event.which,keyCode) == -1) {
+//             //         console.log(event.which)
+//             //         scope.$apply(function(){
+//             //             scope.$eval(attrs.onlyNum);
+//             //             event.preventDefault();
+//             //         });
+//             //         event.preventDefault();
+//             //     }
+//             // });
 
-        }
-      }
-  });
+//         }
+//       }
+//   });
 app.directive('ngConfirmClick', [
     function(){
         return {

@@ -108,7 +108,7 @@
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Qty default
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <input type="text" ng-model='formData.qty' class="form-control" ng-value='1' jnumber2 only-num>
+                                      <input type="text" ng-model='formData.qty' class="form-control" ng-value='1' only-num>
                                   </div>
                               </div>
                             

@@ -230,7 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Mod' => App\Helpers\Mod::class
+        'Mod' => App\Helpers\Mod::class,
+        'Specialization' => App\Specialization::class,
     ],
     'api_url' => 'http://dms_test',
     'features' => [

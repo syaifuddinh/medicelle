@@ -62,10 +62,10 @@ class MedicalRecordController extends Controller
         return Response::json($medicalRecordDetail, 200);
     }
 
-    public function refer_doctor($id, $doctor_id) {
-        $medicalRecord = MedicalRecord::findOrFail($id);
-        $medicalRecord->refer_doctor_id = $doctor_id;
-        $medicalRecord->save();
+    // public function refer_doctor($id, $doctor_id) {
+    //     $medicalRecord = MedicalRecord::findOrFail($id);
+    //     $medicalRecord->refer_doctor_id = $doctor_id;
+    //     $medicalRecord->save();
         return Response::json(['message' => 'Dokter rujukan telah dipilih'], 200);
     }
     public function doctor($id) {

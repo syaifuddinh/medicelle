@@ -95,7 +95,6 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       data : null,
       className : 'capitalize',
       render : function(resp) {
-        console.log(resp)
         if(resp.destination == 'POLIKLINIK') {
           var poly = $scope.data.polyclinic.find(x => x.id == resp.polyclinic_id);
           return 'Poliklinik ' + poly.name
@@ -135,6 +134,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
   }
 
   $scope.reset = function() {
+    var now = new Date()
     $scope.formData = {
       'family_type' : 'DIRI SENDIRI',
       'patient' : {
@@ -142,7 +142,9 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       },
       'detail' : {}
     }
-    $scope.detail = {}
+    $scope.detail = {
+      'time' : now.getHours() + ':' + now.getMinutes().toString().padStart(2, 0)
+    }
     $scope.formData.patient_type = 'UMUM'
     var currentDate = new Date()
     var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ) + '-' + currentDate.getDate()
@@ -239,11 +241,9 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     }
   });
 
-
-
-  $scope.adjustTime = function() {
-    $scope.detail.time = ($scope.detail.hour || '00') + ':' + ($scope.detail.minute || '00')
-  } 
+  // $scope.adjustTime = function() {
+  //   $scope.detail.time = ($scope.detail.hour || '00') + ':' + ($scope.detail.minute || '00')
+  // } 
 
   $scope.adjustDestination = function() {
     $scope.detail.doctor_id = null
@@ -271,9 +271,23 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     $('#patientModal').modal('hide');
   }
 
+  $scope.countAge = function() {
+      var birth_year = $scope.formData.patient.birth_date.replace(/(\d+)-.+/, '$1');
+      var current_date = new Date();
+      var current_year = current_date.getFullYear();
+      var age = (parseInt(current_year) || 0) - (parseInt(birth_year) || 0)
+      $scope.formData.patient.age = age;
+    }
+
   $scope.submitDetail = function() {
+    var now = new Date()
     registration_detail_datatable.row.add($scope.detail).draw()
-    $scope.detail = {}
+    $scope.detail = {
+        'time' : now.getHours() + ':' + now.getMinutes().toString().padStart(2, 0)
+    }
+    setTimeout(function(){
+      window.scrollTo(0, 1000)
+    }, 50)
   }
 
   $scope.submitForm=function() {

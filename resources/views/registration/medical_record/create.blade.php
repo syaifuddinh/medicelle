@@ -1,7 +1,11 @@
 @include('registration/medical_record/create-header')
                          <ul class="nav nav-pills">
-                            <li class="active"><a href="#">Anamnesa</a></li>
-                            <li><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Anamnesa(Obgyn)</a></li>
+                            @if(Specialization::allow_access('anamnesa') == 1)
+                                <li class="active"><a href="#">Anamnesa</a></li>
+                            @endif
+                            @if(Specialization::allow_access('anamnesa_obgyn') == 1)
+                                <li><a href="{{ route('medical_record.edit.2', ['id' => $id]) }}">Anamnesa(Obgyn)</a></li>
+                            @endif
                           </ul> 
                       </nav>
                         <div class="ln_solid"></div>

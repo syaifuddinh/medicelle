@@ -18,7 +18,10 @@
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
                             <a href='{{ route("assesment.index", ["id" => $patient_id]) }}' target='_blank' class="btn btn-info btn-sm" >Riwayat assesment</a>
-                            <a href='{{ route("medical_record.index.polyclinic", ["id" => $patient_id]) }}' target='_blank' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
+                            <?php 
+                                $path = preg_replace('/([a-z]+)\..*/', '$1', $flag);
+                             ?>
+                            <a href='{{ route("medical_record.index.$path", ["id" => $patient_id]) }}' target='_blank' class="btn btn-success btn-sm" >Riwayat rekam medis</a>
                         </div>
                     </div>
                 </div>

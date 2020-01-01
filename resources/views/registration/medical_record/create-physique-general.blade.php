@@ -110,7 +110,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4 col-xs-12">BB sebelum lahir
+                                    <label class="control-label col-md-4 col-xs-12">BB lahir
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
@@ -124,7 +124,7 @@
                                 
                                 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4 col-xs-12">BB setelah lahir
+                                    <label class="control-label col-md-4 col-xs-12">BB sekarang
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">

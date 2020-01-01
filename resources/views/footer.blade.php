@@ -91,7 +91,7 @@
                           $.ajax(this)
                       }
                   }
-            },
+            }
         } );
         $(document).ready(function(){
             setTimeout(function(){
@@ -159,5 +159,6 @@
             }, 1000)
         })
     </script>
+    
   </body>
 </html>
