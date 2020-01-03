@@ -10,6 +10,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     step = parseInt(step)
     var today = new Date()
     $scope.resume_date = today.getFullYear() + '-' + (parseInt(today.getMonth()) + 1) + '-' + today.getDate()
+    setTimeout(function () {    
+          $('[ng-model="resume_date"]').val( $filter('fullDate')($scope.resume_date))
+    }, 300)
 
 
     $("[ng-model='obgyn_disease_history.disease_name'], [ng-model='obgyn_family_disease_history.disease_name']").easyAutocomplete({
@@ -1239,14 +1242,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     dom: 'rt',
     'columns' : [
     { data : 'disease_name' },
-    {data : 'cure'},
-    {
-      data : null,
-      render : function(resp) {
-        return $filter('fullDate')(resp.last_checkup_date);
-      }
-    },
-
+    {data : 'description'},
     {
       data : null,
       className : 'text-center',
@@ -1340,7 +1336,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           family_disease_history_datatable.clear().draw();
           pain_history_datatable.clear().draw();
       } else if(step == 2) {
-          allergy_history_datatable.clear().draw();
+          kid_history_datatable.clear().draw();
+          kb_history_datatable.clear().draw();
+          komplikasi_kb_history_datatable.clear().draw();
+          ginekologi_history_datatable.clear().draw();
+          obgyn_disease_history_datatable.clear().draw();
+          obgyn_family_disease_history_datatable.clear().draw();
       } else if(step == 3) {
           kid_history_datatable.clear().draw();
       }
@@ -1579,6 +1580,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/refer_doctor/' + doctor.id).then(function(data) {
             toastr.success("Dokter rujukan telah dipilih");
             $('#doctorModal').modal('hide')
+            setTimeout(function(){
+                window.location.reload()
+            }, 1200)
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

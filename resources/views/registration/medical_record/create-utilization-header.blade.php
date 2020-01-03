@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
-    @if( Specialization::allow_access('umum') == 1)
+    @if( Specialization::allow_access('bhp') == 1)
         <li class='{{ strpos(url()->current(), "bhp") != null ? "active" : "" }}'>
             <a href='{{ strpos(url()->current(), "bhp") == null ? route("medical_record.edit.utilization.bhp", ["id" => $id]) : "#" }}'>BHP</a>
         </li>

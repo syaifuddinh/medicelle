@@ -51,7 +51,7 @@
                             <b>Tanggal lahir</b>
                         </div>
                         <div style="display:inline-block;">
-                            : {{ Mod::fullDate($medicalRecord->registration->patient->patient_type) }}
+                            : {{ Mod::fullDate($medicalRecord->registration->patient->birth_date) }}
                         </div>
                     </div>
                     <div>

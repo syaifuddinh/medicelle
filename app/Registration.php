@@ -117,7 +117,10 @@ class Registration extends Model
                         $fill = $registration->toArray();
                         $fill['registration_id'] = $registration->id;
                         $m = $medicalRecordDetail->create($fill);
-                        $r->medical_record_id = $r->id;   
+                        $r->medical_record_id = $m->id;   
+                        $x->pivot_medical_record()->create([
+                            'medical_record_id' => $m->id
+                        ]);
                     }
                     $r->save();
                 }

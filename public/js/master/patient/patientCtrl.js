@@ -22,7 +22,11 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
 
     columns:[
       {data:"civil_code", name:"civil_code"},
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/patient/" + resp.id +  "' >" + resp.name + "</a>"
+      },
       {data:"phone", name:"phone"},
       {
         data:null, 

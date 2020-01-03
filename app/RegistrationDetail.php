@@ -125,6 +125,10 @@ class RegistrationDetail extends Model
     public function medical_record() {
         return $this->hasOne('App\MedicalRecord',  'registration_detail_id', 'id');
     }
+
+    public function pivot_medical_record() {
+        return $this->hasMany('App\PivotMedicalRecord', 'registration_detail_id', 'id');
+    }
     public function medical_record_refer() {
         return $this->belongsTo('App\MedicalRecord',  'medical_record_refer_id', 'id');
     }

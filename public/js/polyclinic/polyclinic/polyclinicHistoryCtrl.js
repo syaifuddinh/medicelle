@@ -2,13 +2,26 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
   var path = window.location.pathname
   var patient_head =  baseUrl + '/datatable/registration/'
   var patient_url;
+  var flag
   if( path.indexOf('polyclinic') > -1) {
       patient_url = patient_head + 'polyclinic_registered'
+      flag = 'polyclinic'
   } else if( path.indexOf('radiology') > -1) {
       patient_url = patient_head + 'radiology_registered'
+      flag = 'radiology'
   } else if( path.indexOf('chemoterapy') > -1) {
       patient_url = patient_head + 'chemoterapy_registered'
-  }
+      flag = 'chemoterapy'
+  }  else if( path.indexOf('laboratory') > -1) {
+      patient_url = patient_head + 'laboratory_registered'
+      flag = 'chemoterapy'
+  } else if( path.indexOf('ruang_tindakan') > -1) {
+      patient_url = patient_head + 'ruang_tindakan_registered'
+      flag = 'ruang_tindakan'
+  } else if( path.indexOf('medical_checkup') > -1) {
+      patient_url = patient_head + 'medical_checkup_registered'
+      flag = 'medical_checkup'
+  } 
 
   patient_url += '/finish'
 
@@ -33,29 +46,29 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
     ],
 
     columns:[
-      {data:"registration.code", name:"registration.code"},
-      {data:"medical_record.code", name:"medical_record.code"},
+      {data:"registration_detail.registration.code", name:"registration_detail.registration.code", width:'13%',},
+      {data:"medical_record.code", name:"medical_record.code", width:'16%',},
       {
         data:null, 
         searchable:false,
         orderable:false,
-        render:resp => $filter('fullDate')(resp.registration.date),
+        render:resp => $filter('fullDate')(resp.registration_detail.registration.date),
       },
-      {data:"registration.patient.name", name:"registration.patient.name"},
-      {data:"registration.patient.phone", name:"registration.patient.phone"},
+      {data:"registration_detail.registration.patient.name", name:"registration_detail.registration.patient.name"},
+      {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {
         data: null, 
         orderable : false,
         searchable : false,
         className : 'capitalize',
-        render : resp => resp.registration.patient.gender.toLowerCase()
+        render : resp => resp.registration_detail.registration.patient.gender.toLowerCase()
       },
       {
-        data:"polyclinic.name", 
-        name:"polyclinic.name",
+        data:"registration_detail.polyclinic.name", 
+        name:"registration_detail.polyclinic.name",
         className : path.indexOf('polyclinic') > -1 ? '' : 'hidden',
       },
-      {data:"doctor.name", name:"doctor.name"},
+      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
       {
         data: null, 
         orderable : false,
@@ -63,7 +76,7 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/polyclinic/" + resp.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-default' href='" + baseUrl +  '/' + flag + "/patient/" + resp.registration_detail.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

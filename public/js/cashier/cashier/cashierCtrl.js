@@ -21,7 +21,11 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
     ],
 
     columns:[
-      {data:"registration.code", name:"registration.code"},
+      {
+        data:null, 
+        name:"registration.code",
+        render : resp => "<a class='' href='" + baseUrl + "/cashier/" + resp.id +  "'>" + resp.registration.code + "</a>"
+      },
       {data:"registration.medical_record.code", name:"registration.medical_record.code"},
       {
         data:null, 

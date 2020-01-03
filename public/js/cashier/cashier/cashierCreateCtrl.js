@@ -227,7 +227,12 @@ app.controller('cashierCreate', ['$scope', '$http', '$rootScope','$compile','$fi
 
     $('#payButton').click(function(){
         $scope.pay = 1
-        $scope.submitForm()
+        if(!$scope.formData.code) {
+            toastr.error("No. Nota harus diisi")
+        } else {
+          
+          $scope.submitForm()
+        }
     });
     $('#draftButton').click(function(){
         $scope.submitForm()

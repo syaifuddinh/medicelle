@@ -21,8 +21,16 @@ app.controller('doctor', ['$scope', '$compile', '$http', function($scope, $compi
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"code",
+        render : resp => "<a class='' href='" + baseUrl + "/doctor/" + resp.id +  "' title='Detail'>" + resp.code + "</a>"
+      },
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/doctor/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+      },
       {data:"phone", name:"phone"},
       {data:"specialization.name", name:"specialization.name"},
       {data:"polyclinic.name", name:"polyclinic.name"},

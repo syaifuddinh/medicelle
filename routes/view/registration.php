@@ -22,7 +22,13 @@ Route::name('medical_record.')->prefix('medical_record')
 
     Route::get('/step/1/edit/{id}', function ($id){
         if(Specialization::allow_access('anamnesa') != 1) {
-            return redirect()->route('medical_record.edit.2', ['id' => $id]);
+            $alternative = ['anamnesa_obgyn', 'umum', 'kepala', 'breast', 'rectum', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'jadwal_kontrol', 'resume_medis'];
+            $alternative_route = ['2', 'physique.general', 'physique.head', 'physique.breast', 'physique.rectum', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'schedule', 'resume_medis'];
+            foreach($alternative as $key => $role) {
+                if(Specialization::allow_access($role) == 1) {
+                    return redirect()->route('medical_record.edit.' . $alternative_route[$key], ['id' => $id]);
+                }                
+            }
         } else {
             return view('registration/medical_record/create')->withId($id);
         }
@@ -37,7 +43,7 @@ Route::name('medical_record.')->prefix('medical_record')
             $alternative_route = ['head', 'breast', 'rectum'];
             foreach($alternative as $key => $role) {
                 if(Specialization::allow_access($role) == 1) {
-                    return redirect()->route('medical_record.edit.physique.' . $role, ['id' => $id]);
+                    return redirect()->route('medical_record.edit.physique.' . $alternative_route[$key], ['id' => $id]);
                 }                
             }
         } else {
@@ -57,7 +63,17 @@ Route::name('medical_record.')->prefix('medical_record')
     })->name('edit.physique.rectum');
 
     Route::get('/therapy/treatment/{id}', function ($id){
-        return view('registration/medical_record/create-therapy-treatment')->withId($id);
+        if(Specialization::allow_access('tindakan') != 1) {
+            $alternative = ['diagnostik', 'obat'];
+            $alternative_route = ['diagnostic', 'drug'];
+            foreach($alternative as $key => $role) {
+                if(Specialization::allow_access($role) == 1) {
+                    return redirect()->route('medical_record.edit.therapy.' . $alternative_route[$key], ['id' => $id]);
+                }                
+            }
+        } else {
+            return view('registration/medical_record/create-therapy-treatment')->withId($id);
+        }
     })->name('edit.therapy.treatment');
     Route::get('/therapy/diagnostic/{id}', function ($id){
         return view('registration/medical_record/create-therapy-diagnostic')->withId($id);
@@ -67,7 +83,17 @@ Route::name('medical_record.')->prefix('medical_record')
     })->name('edit.therapy.drug');
 
     Route::get('/utilization/bhp/{id}', function ($id){
-        return view('registration/medical_record/create-utilization-bhp')->withId($id);
+        if(Specialization::allow_access('bhp') != 1) {
+            $alternative = ['sewa_alkes', 'sewa_ruangan'];
+            $alternative_route = ['sewa_alkes', 'sewa_ruangan'];
+            foreach($alternative as $key => $role) {
+                if(Specialization::allow_access($role) == 1) {
+                    return redirect()->route('medical_record.edit.utilization.' . $alternative_route[$key], ['id' => $id]);
+                }                
+            }
+        } else {
+            return view('registration/medical_record/create-utilization-bhp')->withId($id);
+        }
     })->name('edit.utilization.bhp');
     Route::get('/utilization/sewa_alkes/{id}', function ($id){
         return view('registration/medical_record/create-utilization-sewa_alkes')->withId($id);

@@ -29,6 +29,9 @@ app.filter('rupiah', function () {
 
 app.filter('fullDate', function() {
   return function(val) {
+    if(!val) {
+        return '';
+    }
     var days = new Date(val);
     // var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nop','Des'];
     var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];

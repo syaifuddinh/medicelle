@@ -3,7 +3,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
 
   var patient_head =  baseUrl + '/datatable/registration/'
   var patient_url;
-  var flagl
+  var flag
   if( path.indexOf('polyclinic') > -1) {
       patient_url = patient_head + 'polyclinic_registered'
       flag = 'polyclinic'
@@ -44,38 +44,46 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
     ],
 
     columns:[
-      {data:"registration.code", name:"registration.code", width:'13%',},
-      {data:"medical_record.code", name:"medical_record.code", width:'16%',},
+      {data:"registration_detail.registration.code", name:"registration_detail.registration.code", width:'13%',},
+      {
+        data:null, 
+        name:"medical_record.code", 
+        width:'16%',
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/" + flag + "/" + resp.registration_detail.registration.patient.id + "/patient'>" + resp.medical_record.code + "</a>"
+      },
       {
         data:null, 
         searchable:false,
         orderable:false,
-        render:resp => $filter('fullDate')(resp.registration.date),
+        render:resp => $filter('fullDate')(resp.registration_detail.registration.date),
       },
-      {data:"registration.patient.name", name:"registration.patient.name"},
-      {data:"registration.patient.phone", name:"registration.patient.phone"},
+      {
+        data:null, 
+        name:"registration_detail.registration.patient.name",
+        render : resp => "<a class='btn' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "'>" + resp.registration_detail.registration.patient.name + "</a>"
+      },
+      {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {
         data: null, 
         orderable : false,
         searchable : false,
         className : 'capitalize',
-        render : resp => resp.registration.patient.gender.toLowerCase()
+        render : resp => resp.registration_detail.registration.patient.gender.toLowerCase()
       },
       {
-        data:"polyclinic.name", 
-        name:"polyclinic.name",
+        data:"registration_detail.polyclinic.name", 
+        name:"registration_detail.polyclinic.name",
         className : path.indexOf('polyclinic') > -1 ? '' : 'hidden'
       },
-      {data:"doctor.name", name:"doctor.name"},
+      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
       {
         data: null,
         width:'10%', 
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => 
-        "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        render : resp => "<div class='btn-group'>" + 
+        "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.registration_detail.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

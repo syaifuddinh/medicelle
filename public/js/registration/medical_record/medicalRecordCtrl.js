@@ -41,26 +41,22 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
     columns:[
 
       {
-        data:null, 
-        orderable:false, 
-        searchable:false,
+        data:'medical_record.code', 
+        name:'medical_record.code',
         width : '35mm',
-        render : resp => resp.medical_record != null ? resp.medical_record.code : resp.medical_record_refer.code
       },
       {
         data:null, 
         orderable:false,
         searchable:false,
         width : '45mm',
-        render:resp => resp.medical_record != null ? $filter('fullDate')(resp.medical_record.date) : $filter('fullDate')(resp.medical_record_refer.date)
+        render:resp => $filter('fullDate')(resp.medical_record.date)
       },
-      {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
       {
-        data:null, 
-        orderable:false, 
-        searchable:false,
-        render : resp => resp.medical_record != null ? resp.medical_record.main_complaint : resp.medical_record_refer.main_complaint
+        data:'medical_record.main_complaint', 
+        name:'medical_record.main_complaint' 
       },
+      {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
       {
         data: null, 
         orderable : false,
@@ -68,7 +64,7 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a allow_update_medical_record class='btn btn-xs btn-success' " + (resp.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + (resp.medical_record != null ? resp.medical_record.id : resp.medical_record_refer.id) +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>" 
+        "<a allow_update_medical_record class='btn btn-xs btn-success' " + (resp.registration_detail.registration.invoice.status > 2 ? " href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record.id +  "' " : ' disabled href="#" ') + " title='Edit'><i class='fa fa-pencil'></i></a>" 
       },
     ],
     createdRow: function(row, data, dataIndex) {

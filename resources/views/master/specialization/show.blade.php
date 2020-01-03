@@ -49,7 +49,8 @@
                           <% formData.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
                         </div>
                       </div>
-
+                      <div class="ln_solid"></div>
+                      @include('master/specialization/medical_record_roles')
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 ">

@@ -64,9 +64,9 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Jenis pasien
                                 </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
 
-                                    <% formData.patient_type %>
+                                    <% formData.patient_type.toLowerCase() %>
 
 
                                 </div>
@@ -75,9 +75,9 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Jenis kelamin
                                 </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="col-md-8 col-sm-8 col-xs-12 capitalize">
 
-                                    <% formData.patient.gender %>
+                                    <% formData.patient.gender.toLowerCase() %>
 
                                 </div>
                             </div>
@@ -163,15 +163,8 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                     </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.family_type %>
-
-
-
-
-
-
-
+                                    <div class="col-md-10 col-xs-12 capitalize">
+                                        <% formData.family_type.toLowerCase() %>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -193,20 +186,8 @@
                                 <div class="form-group">
                                     <label class="col-md-12 col-xs-12" for="first-name">Pekerjaan
                                     </label>
-                                    <div class="col-md-10 col-xs-12">
-                                        <% formData.patient.family.job %>
-
-
-
-
-
-
-
-
-
-
-
-
+                                    <div class="col-md-10 col-xs-12 capitalize">
+                                        <% formData.patient.family.job.toLowerCase() %>
                                     </div>
                                 </div>
                             </span>

@@ -6,6 +6,44 @@ app.controller('specializationCreate', ['$scope', '$http', '$rootScope', '$compi
     }
     var path = window.location.pathname;
 
+    $scope.uncheckAll = function() {
+      var doctor = $('#doctor')
+      var nurse = $('#nurse')
+      var flag;
+
+      if(doctor.hasClass('active')) {
+         flag = 'doctor'
+      } else {
+          flag = 'nurse'
+      }
+      $scope.formData[flag + '_roles'] = {}
+    }
+
+    $scope.checkAll = function() {
+      var doctor = $('#doctor')
+      var nurse = $('#nurse')
+      var flag;
+
+      if(doctor.hasClass('active')) {
+         flag = 'doctor'
+      } else {
+          flag = 'nurse'
+      }
+
+      var roles = $('[ng-model*="formData.' + flag + '_roles"]');
+      var role, unit;
+      var regex = new RegExp("formData\." + flag + "_roles\.(.+)")
+      for(model = 0;model < roles.length;model++) {
+          unit = $(roles[model])
+          if(unit.length > 0) {
+            role = unit.attr('ng-model').replace(regex, '$1')
+            console.log(role)
+            $scope.formData[flag + '_roles'][role] = 1
+          }
+
+      }
+    }
+
     $scope.show = function() {
         if(/edit/.test(path)) {
             $scope.title = 'Edit Spesialisasi';

@@ -103,19 +103,22 @@ class MedicalRecord extends Model
 
               // Rujukan dokter
               if($medicalRecord->refer_doctor_id != null) {
-                    // $latestRefer = RegistrationDetail::whereMedicalRecordReferId($medicalRecord->id)
-                    // ->first();
-                    // if($latestRefer == null) {
-                    //     $registrationDetail = new RegistrationDetail();
-                    //     $registrationDetail->fill($medicalRecord->registration_detail->toArray());
-                    //     $registrationDetail->medical_record_refer_id = $medicalRecord->id;
-                    //     $registrationDetail->doctor_id = $medicalRecord->refer_doctor_id;
-                    //     $registrationDetail->save();
-                    // } else {
-                    //     $latestRefer->update([
-                    //         'doctor_id' => $medicalRecord->refer_doctor_id
-                    //     ]);
-                    // }
+                    $latestRefer = RegistrationDetail::whereMedicalRecordReferId($medicalRecord->id)
+                    ->first();
+                    if($latestRefer == null) {
+                        $registrationDetail = new RegistrationDetail();
+                        $registrationDetail->fill($medicalRecord->registration_detail->toArray());
+                        $registrationDetail->medical_record_refer_id = $medicalRecord->id;
+                        $registrationDetail->doctor_id = $medicalRecord->refer_doctor_id;
+                        $registrationDetail->save();
+                        $registrationDetail->pivot_medical_record()->create([
+                            'medical_record_id' => $medicalRecord->id
+                        ]);
+                    } else {
+                        $latestRefer->update([
+                            'doctor_id' => $medicalRecord->refer_doctor_id
+                        ]);
+                    }
               }
         });
     }
@@ -197,7 +200,7 @@ class MedicalRecord extends Model
     }
 
     public function next_schedule() {
-        return $this->hasOne('App\MedicalRecordDetail')->whereIsSchedule(1)->where('date', '>', date('Y-m-d'))->orderBy('date', 'ASC');
+        return $this->hasOne('App\MedicalRecordDetail')->whereIsSchedule(1)->where('date', '>', date('Y-m-d'))->orderBy('date', 'ASC')->withDefault(['date' => '']);
     }
 
     public function schedule() {

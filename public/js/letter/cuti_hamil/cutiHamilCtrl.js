@@ -20,7 +20,11 @@ app.controller('cutiHamil', ['$scope', '$compile', '$http', function($scope, $co
     ],
 
     columns:[
-      {data:"code", name:"code"},
+      {
+        data:null, 
+        name:"code",
+        render : resp => "<a class='font-weight-bold' href='" + baseUrl + "/surat/cuti_hamil/" + resp.id +  "'>" + resp.code + "</a>"
+      },
       {data:"medical_record.code", name:"medical_record.code"},
       {data:"medical_record.patient.name", name:"medical_record.patient.name"},
       {data:"medical_record.patient.address", name:"medical_record.patient.address"},

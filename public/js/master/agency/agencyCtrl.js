@@ -20,8 +20,16 @@ app.controller('agency', ['$scope', '$compile', '$http', function($scope, $compi
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"code",
+        render : resp => "<a class='' href='" + baseUrl + "/agency/" + resp.id +  "' title='Detail'>" + resp.code + "</a>" 
+      },
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/agency/" + resp.id +  "' title='Detail'>" + resp.name + "</a>" 
+      },
       {data:"agency_type", name:"agency_type"},
       {data:"city.name", name:"city.name"},
       {data:"phone", name:"phone"},

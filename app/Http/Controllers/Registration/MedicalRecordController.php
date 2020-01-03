@@ -62,10 +62,10 @@ class MedicalRecordController extends Controller
         return Response::json($medicalRecordDetail, 200);
     }
 
-    // public function refer_doctor($id, $doctor_id) {
-    //     $medicalRecord = MedicalRecord::findOrFail($id);
-    //     $medicalRecord->refer_doctor_id = $doctor_id;
-    //     $medicalRecord->save();
+    public function refer_doctor($id, $doctor_id) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $medicalRecord->refer_doctor_id = $doctor_id;
+        $medicalRecord->save();
         return Response::json(['message' => 'Dokter rujukan telah dipilih'], 200);
     }
     public function doctor($id) {
@@ -75,7 +75,10 @@ class MedicalRecordController extends Controller
         $resp = [
             'doctor' => [
                 'id' => $doctor->id,
-                'name' => $doctor->name
+                'name' => $doctor->name,
+                'specialization' => [
+                    'name' =>  $doctor->specialization->name
+                ]
             ],
             'refer_doctor' => [
                 'id' => $refer_doctor->name ?? null,
@@ -116,7 +119,7 @@ class MedicalRecordController extends Controller
             'disease_history:medical_record_id,disease_name,cure,last_checkup_date',
             'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
 
-            'family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+            'family_disease_history:medical_record_id,disease_name,description', 
             'obgyn_family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
 
             'kb_history:medical_record_id,name,duration', 

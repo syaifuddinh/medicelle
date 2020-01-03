@@ -75,6 +75,13 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">No Whatsapp
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type='text' ng-model='formData.company.whatsapp_number' class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Fax
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

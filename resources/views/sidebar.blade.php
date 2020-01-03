@@ -95,17 +95,18 @@
                       </li>
                   @endif
 
-                  <li><a><i class="fa fa-bookmark"></i>Layanan<span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                          <li><a href="{{ route('surat.cuti_hamil.index') }}">Surat cuti hamil</a></li>
-                          <li><a href="{{ route('surat.keterangan_dokter.index') }}">Surat keterangan dokter</a></li>
-                          <li><a href="{{ route('surat.keterangan_sehat.index') }}">Surat keterangan sehat</a></li>
-                          <li><a href="{{ route('surat.layak_terbang.index') }}">Surat layak terbang</a></li>
-                          <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat pengantar MRS</a></li>
-                          <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat rujukan pasien</a></li>
-                        </ul>
-                      </li>
-
+                  @if(Auth::user()->allow_access('surat'))
+                    <li><a><i class="fa fa-bookmark"></i>Layanan<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li><a href="{{ route('surat.cuti_hamil.index') }}">Surat cuti hamil</a></li>
+                            <li><a href="{{ route('surat.keterangan_dokter.index') }}">Surat keterangan dokter</a></li>
+                            <li><a href="{{ route('surat.keterangan_sehat.index') }}">Surat keterangan sehat</a></li>
+                            <li><a href="{{ route('surat.layak_terbang.index') }}">Surat layak terbang</a></li>
+                            <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat pengantar MRS</a></li>
+                            <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat rujukan pasien</a></li>
+                          </ul>
+                    </li>
+                  @endif
                  
                 </ul>
               </div>
