@@ -1306,7 +1306,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.formData = {
         code : $scope.code,
         patient : $scope.patient,
-        pain_score : 0
+        pain_score : 0,
+        additional : {}
       }
       $scope.sewa_alkes = {}
       $scope.sewa_ruangan = {}
@@ -1617,8 +1618,14 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $('#sewaRuanganModal').modal('hide')
     }
 
-    $scope.submitForm=function() {
+    $scope.submitOne = function(key) {
+        $scope.silent = 1
+        $scope.submitForm(0, key)
+    }
+
+    $scope.submitForm=function(is_massive = 1, key) {
       $rootScope.disBtn=true;
+      var submitData
       var url = baseUrl + '/controller/registration/medical_record/' + id;
       var method = 'put';
       
@@ -1666,11 +1673,31 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $scope.formData.sewa_ruangan = sewa_ruangan_datatable.data().toArray()
       }
 
-      $http[method](url, $scope.formData).then(function(data) {
+      if(is_massive == 1) {
+          submitData = $scope.formData
+      } else {
+          submitData = {}
+          is_additional = /([a-z_]+)\.([a-z_]+)/
+          if(is_additional.test(key)) {
+              primary = key.replace(is_additional, '$1')
+              second = key.replace(is_additional, '$2')
+              submitData[primary] = {}
+              submitData[primary][second] = $scope.formData[primary][second]
+
+          } else {
+
+            submitData[key] = $scope.formData[key]
+          }
+      }
+
+      $http[method](url, submitData).then(function(data) {
         $rootScope.disBtn = false
-        toastr.success("Data Berhasil Disimpan !");
-        
+        if(is_massive == 1) {
+            toastr.success("Data Berhasil Disimpan !");
+        }
+        $scope.silent = 0
       }, function(error) {
+        $scope.silent = 0
         $rootScope.disBtn=false;
         if (error.status==422) {
           var det="";

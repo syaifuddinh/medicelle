@@ -331,7 +331,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='kid_history.komplikasi_nifas'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitKidHistory()' ng-disabled='!kid_history.kid_order'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitKidHistory()' ng-disabled='!kid_history.kid_order'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>

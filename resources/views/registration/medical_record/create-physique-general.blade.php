@@ -12,7 +12,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12"></textarea>
+                                        <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12" ng-change='submitOne("general_condition")'></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -21,7 +21,7 @@
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             
-                                            <input type="text" ng-model='formData.long' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.long' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("long")' only-num>
                                             <div class="input-group-addon">
                                                 CM
                                             </div>
@@ -35,7 +35,7 @@
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="input-group">
                                             
-                                            <input type="text" ng-model='formData.weight' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.weight'  ng-change='submitOne("weight")' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
                                                 KG
                                             </div>
@@ -49,7 +49,7 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.blood_pressure' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.blood_pressure' ng-change='submitOne("blood_pressure")' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
                                                 MMHG
                                             </div>
@@ -61,7 +61,7 @@
                                     <label class="control-label col-md-4 col-xs-12">Pemeriksaan fisik
                                     </label>
                                     <div class="col-md-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.physique'></textarea>
+                                        <textarea class="form-control" ng-model='formData.physique'  ng-change='submitOne("physique")'></textarea>
                                     </div>
                                 </div>
 
@@ -73,9 +73,9 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.pulse' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.pulse' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("pulse")' only-num>
                                             <div class="input-group-addon">
-                                                X/Mnt
+                                                Bpm
                                             </div>
                                         </div>
                                     </div>
@@ -87,9 +87,9 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.temperature' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.temperature'  ng-change='submitOne("temperature")' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
-                                                C
+                                                <sup>o</sup>C
                                             </div>
                                         </div>
                                     </div>
@@ -101,9 +101,9 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.breath_frequency' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.breath_frequency' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("breath_frequency")' only-num>
                                             <div class="input-group-addon">
-                                                X/Mnt
+                                                Rpm
                                             </div>
                                         </div>
                                     </div>
@@ -114,21 +114,20 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.prebirth_weight' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.prebirth_weight' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("prebirth_weight")' only-num>
                                             <div class="input-group-addon">
                                                 KG
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
+                                </div>     
                                 
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-xs-12">BB sekarang
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.postbirth_weight' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.postbirth_weight'  ng-change='submitOne("postbirth_weight")' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
                                                 KG
                                             </div>
@@ -136,8 +135,34 @@
                                     </div>
                                 </div>
                                 
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-12">PB lahir
+                                    </label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" ng-model='formData.additional.pb_lahir' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_lahir")' only-num>
+                                            <div class="input-group-addon">
+                                                CM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-12">PB sekarang
+                                    </label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" ng-model='formData.additional.pb_sekarang' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_sekarang")' only-num>
+                                            <div class="input-group-addon">
+                                                CM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                  <div class="form-group">
-                                    <label class="control-label col-md-4 col-xs-12">EKG
+                                    <label class="control-label col-md-4 col-xs-12">Bacaan EKG
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <textarea class="form-control" ng-model='formData.ekg'></textarea>
@@ -152,7 +177,7 @@
                                     <label class="col-md-4 col-xs-12">Hasil USG
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.usg'></textarea>
+                                        <textarea class="form-control" ng-model='formData.usg' ng-change='submitOne("usg")'></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +220,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='diagnose_history.description'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDiagnoseHistory()' ng-disabled='!diagnose_history.disease_id || !diagnose_history.type'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiagnoseHistory()' ng-disabled='!diagnose_history.disease_id || !diagnose_history.type'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 

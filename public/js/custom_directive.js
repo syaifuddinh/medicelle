@@ -75,7 +75,7 @@ app.directive('datepick', function() {
     link: function(scope, el, attr, ngModel) {
 
       var pick = $(el).pickadate({
-        'selectYears' : true,
+        'selectYears' : 90,
         'selectMonths' : true
       });
       var p = pick.pickadate('picker')

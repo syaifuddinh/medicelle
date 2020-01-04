@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-md-12" style='display:flex'>
                                 <div class="form-group col-md-6">
-                                    <button type='button' class='btn btn-sm btn-success' ng-click='submitResearch("laboratory")' ng-disabled='!research.name || disBtn'>Tambah</button> </div>
+                                    <button type='button' class='btn btn-sm btn-success' ng-click='submitResearch("laboratory")' ng-disabled='!research.name || disBtn'><i class="fa fa-check"></i></button> </div>
                             </div>
                         </div>
 

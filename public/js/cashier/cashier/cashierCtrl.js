@@ -33,7 +33,11 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         searchable:false,
         render: resp => $filter('fullDate')(resp.date)
       },
-      {data:"registration.patient.name", name:"registration.patient.name"},
+      {
+        data:null, 
+        name:"registration.patient.name",
+        render: resp => "<a href='" + baseUrl + "/patient/" + resp.registration.patient_id +  "'>" + resp.registration.patient.name + "</a>"
+      },
       {
         data: null, 
         orderable : false,

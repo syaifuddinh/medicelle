@@ -30,7 +30,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 

@@ -10,7 +10,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model="schedule.date"  datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitSchedule()' ng-disabled='!schedule.date || disBtn'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitSchedule()' ng-disabled='!schedule.date || disBtn'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>

@@ -19,7 +19,11 @@ app.controller('lokasi', ['$scope', '$compile', '$http', function($scope, $compi
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/lokasi/edit/" + resp.id +  "' title='Edit'>" + resp.name + "</a>"
+      },
       {data:"description", name:"description"},
       {
         data: null, 

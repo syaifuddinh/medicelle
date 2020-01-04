@@ -276,7 +276,7 @@
                                         <option value=""></option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type='button' class='btn btn-success' ng-click='submitDetail()' ng-disabled='!detail.destination || !detail.doctor_id || !detail.time || (detail.destination == "POLIKLINIK" && !detail.polyclinic_id)'>Tambah</button>
+                                        <button type='button' class='btn btn-success' ng-click='submitDetail()' ng-disabled='!detail.destination || !detail.doctor_id || !detail.time || (detail.destination == "POLIKLINIK" && !detail.polyclinic_id)'><i class="fa fa-check"></i></button>
                                     </div>
                                 </div>
 

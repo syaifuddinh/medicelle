@@ -19,8 +19,16 @@ app.controller('specialization', ['$scope', '$compile', '$http', function($scope
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"code",
+        render : resp => "<a class='' href='" + baseUrl + "/specialization/" + resp.id +  "' title='Detail'>" + resp.code + "</a>"
+      },
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/specialization/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+      },
       {
         data: null, 
         orderable : false,

@@ -4,13 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Item;
+use App\Permission;
 use Str;
 
 
 class MedicalRecordDetail extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['medical_record_id', 'disease_id', 'disease_name', 'name', 'duration', 'cure', 'last_checkup_date', 'pain_type', 'is_other_pain_type', 'pain_location', 'pain_duration', 'emergence_time', 'side_effect', 'is_allergy_history', 'is_disease_history', 'is_family_disease_history', 'is_pain_history', 'is_pain_cure_history', 'is_unknown', 'is_kid_history','is_pregnant_week_age','kid_order','partus_year','partus_location','pregnant_month_age','pregnant_week_age','birth_type','birth_helper','birth_obstacle','weight','long','komplikasi_nifas', 'baby_gender', 'is_imunisasi_history','is_other_imunisasi','is_imunisasi_month_age','imunisasi_month_age','imunisasi_year_age','imunisasi','reaksi_imunisasi', 'is_ginekologi_history', 'is_other_ginekologi', 'is_obgyn_disease_history', 'is_obgyn_family_disease_history', 'is_kb_history', 'is_komplikasi_kb_history', 'is_diagnose_history', 'type', 'description', 'is_other', 'is_drug', 'is_treatment', 'is_diagnostic', 'item_id', 'qty', 'reduksi', 'date', 'result_date', 'signa1', 'signa2', 'lokasi_id', 'kanan', 'kiri', 'kesimpulan', 'saran'
+    protected $fillable = ['medical_record_id', 'disease_id', 'disease_name', 'name', 'duration', 'cure', 'last_checkup_date', 'pain_type', 'is_other_pain_type', 'pain_location', 'pain_duration', 'emergence_time', 'side_effect', 'is_allergy_history', 'is_disease_history', 'is_family_disease_history', 'is_pain_history', 'is_pain_cure_history', 'is_unknown', 'is_kid_history','is_pregnant_week_age','kid_order','partus_year','partus_location','pregnant_month_age','pregnant_week_age','birth_type','birth_helper','birth_obstacle','weight','long','komplikasi_nifas', 'baby_gender', 'is_imunisasi_history','is_other_imunisasi','is_imunisasi_month_age','imunisasi_month_age','imunisasi_year_age','imunisasi','reaksi_imunisasi', 'is_ginekologi_history', 'is_other_ginekologi', 'is_obgyn_disease_history', 'is_obgyn_family_disease_history', 'is_kb_history', 'is_komplikasi_kb_history', 'is_diagnose_history', 'type', 'description', 'is_other', 'is_drug', 'is_treatment', 'is_diagnostic', 'item_id', 'qty', 'reduksi', 'date', 'result_date', 'signa1', 'signa2', 'lokasi_id', 'kanan', 'kiri', 'kesimpulan', 'saran', 'additional'
     ];
     protected $appends = ['filename'];
 
@@ -27,6 +28,36 @@ class MedicalRecordDetail extends Model
                 $disease->is_category = 0;
                 $disease->save();
                 $this->attributes['disease_id'] = $disease->id;
+            }
+        }
+    }
+
+    public function setSigna1Attribute($value) {
+        if($value != null) {
+            $is_number = preg_match('/^(\d+)$/', $value);
+            if( $is_number ) {
+                $this->attributes['signa1'] = $value;
+            } else {
+                $signa = new Permission();
+                $signa->name = $value;
+                $signa->description = 'signa1';
+                $signa->is_signa = 1;
+                $this->attributes['signa1'] = $signa->id;
+            }
+        }
+    }
+
+    public function setSigna2Attribute($value) {
+        if($value != null) {
+            $is_number = preg_match('/^(\d+)$/', $value);
+            if( $is_number ) {
+                $this->attributes['signa2'] = $value;
+            } else {
+                $signa = new Permission();
+                $signa->name = $value;
+                $signa->description = 'signa2';
+                $signa->is_signa = 2;
+                $this->attributes['signa2'] = $signa->id;
             }
         }
     }

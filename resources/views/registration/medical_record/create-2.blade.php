@@ -17,7 +17,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.obgyn_main_complaint'></textarea>
+                                        <textarea class="form-control" ng-model='formData.obgyn_main_complaint'  ng-change="submitOne('obgyn_main_complaint')"></textarea>
                                     </div>
                                 </div>
 
@@ -232,7 +232,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='kid_history.komplikasi_nifas'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitKidHistory()' ng-disabled='!kid_history.kid_order'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitKidHistory()' ng-disabled='!kid_history.kid_order'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +273,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.obgyn_current_disease'></textarea>
+                                        <textarea class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></textarea>
                                     </div>
                                 </div>
 
@@ -300,7 +300,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='obgyn_disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitObgynDiseaseHistory()' ng-disabled='!obgyn_disease_history.disease_name'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitObgynDiseaseHistory()' ng-disabled='!obgyn_disease_history.disease_name'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -332,7 +332,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.operasi'></textarea>
+                                            <textarea class="form-control" ng-model='formData.additional.obgyn_operasi'  ng-change="submitOne('additional.obgyn_operasi')"></textarea>
                                         </div>
                                     </div>
 
@@ -360,7 +360,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='obgyn_family_disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitObgynFamilyDiseaseHistory()' ng-disabled='!obgyn_family_disease_history.disease_name'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitObgynFamilyDiseaseHistory()' ng-disabled='!obgyn_family_disease_history.disease_name'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -396,7 +396,7 @@
                                         <div class="input-group">
                                             <input type="text" class='form-control' ng-model="ginekologi_history.name">
                                             <div class="input-group-btn">
-                                                <button type='button' class='btn btn-success' ng-click='submitGinekologiHistory()' ng-disabled='!ginekologi_history.name'>Tambah</button>
+                                                <button type='button' class='btn btn-success' ng-click='submitGinekologiHistory()' ng-disabled='!ginekologi_history.name'><i class="fa fa-check"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -441,7 +441,7 @@
                                             Tahun
                                         </div>  
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitKbHistory()' ng-disabled='!kb_history.name || !kb_history.duration'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitKbHistory()' ng-disabled='!kb_history.name || !kb_history.duration'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -475,7 +475,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model="komplikasi_kb_history.name">
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitKomplikasiKbHistory()' ng-disabled='!komplikasi_kb_history.name'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitKomplikasiKbHistory()' ng-disabled='!komplikasi_kb_history.name'><i class="fa fa-check"></i></button>
                                         </div>        
                                     </div>
                                 </div>

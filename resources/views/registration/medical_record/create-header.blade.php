@@ -116,7 +116,7 @@
 
                                     <div class="col-md-8">
                                         
-                                        <input type="text" class="form-control" ng-model='formData.reduksi' maxlength="3"  jnumber2 only-num>
+                                        <input type="text" class="form-control" ng-model='formData.reduksi' ng-change='submitOne("reduksi")' maxlength="3"  jnumber2 only-num>
                                     </div>
                                 </div>
                             </div>

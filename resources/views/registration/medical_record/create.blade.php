@@ -16,7 +16,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.main_complaint'></textarea>
+                                        <textarea class="form-control" ng-model='formData.main_complaint' ng-change="submitOne('main_complaint')"></textarea>
                                     </div>
                                 </div>
 
@@ -28,7 +28,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.current_disease'></textarea>
+                                        <textarea class="form-control" ng-model='formData.current_disease'  ng-change="submitOne('current_disease')"></textarea>
                                     </div>
                                 </div>
 
@@ -55,7 +55,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_name'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_name'><i class='fa fa-check'></i></button>
                                         </div>
                                     </div>
 
@@ -87,7 +87,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.operasi'></textarea>
+                                            <textarea class="form-control" ng-model='formData.operasi'  ng-change="submitOne('operasi')"></textarea>
                                         </div>
                                     </div>
 
@@ -110,7 +110,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='family_disease_history.description'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_name'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_name'><i class='fa fa-check'></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +181,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='pain_history.emergence_time'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitPainHistory()' ng-disabled='!pain_history.pain_location'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitPainHistory()' ng-disabled='!pain_history.pain_location'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +225,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='pain_cure_history.emergence_time'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitPainCureHistory()' ng-disabled='!pain_cure_history.cure'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitPainCureHistory()' ng-disabled='!pain_cure_history.cure'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.psiko_sosial'></textarea>
+                                            <textarea class="form-control" ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></textarea>
                                         </div>
                                     </div>
 

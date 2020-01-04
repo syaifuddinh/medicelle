@@ -43,7 +43,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -90,7 +90,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='family_disease_history.last_checkup_date' datepick>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -163,7 +163,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='pain_history.emergence_time'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitPainHistory()' ng-disabled='!pain_history.pain_location'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitPainHistory()' ng-disabled='!pain_history.pain_location'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                                     <div class="input-group">
                                         <input type="text" class='form-control' ng-model='pain_cure_history.emergence_time'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitPainCureHistory()' ng-disabled='!pain_cure_history.cure'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitPainCureHistory()' ng-disabled='!pain_cure_history.cure'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>

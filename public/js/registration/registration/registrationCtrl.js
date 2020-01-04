@@ -31,8 +31,6 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
       {
         data:null,
         name:'code',
-        orderable:false, 
-        searchable:false,
         render: resp => "<a href='" + baseUrl + "/registration/" + resp.id +  "'>" + resp.code + "</a>"
       },
       {data:"medical_record.code", name:"medical_record.code", orderable:false, searchable:false},
@@ -42,7 +40,11 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
         orderable:false,
         render:resp => $filter('fullDate')(resp.date),
       },
-      {data:"patient.name", name:"patient.name", orderable:false, searchable:false},
+      {
+        data:null, 
+        name:"patient.name", 
+        render: resp => "<a href='" + baseUrl + "/patient/" + resp.patient_id +  "'>" + resp.patient.name + "</a>"
+      },
       {data:"patient.phone", name:"patient.phone", orderable:false, searchable:false},
       {
         data: null, 

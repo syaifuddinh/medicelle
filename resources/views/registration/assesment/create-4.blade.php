@@ -330,7 +330,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='imunisasi_history.reaksi_imunisasi'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitImunisasiHistory()' ng-disabled='!imunisasi_history.imunisasi'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitImunisasiHistory()' ng-disabled='!imunisasi_history.imunisasi'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 

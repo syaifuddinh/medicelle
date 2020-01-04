@@ -19,7 +19,11 @@ app.controller('piece', ['$scope', '$compile', '$http', function($scope, $compil
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/piece/edit/" + resp.id +  "' title='Edit'>" + resp.name + "</a>"
+      },
       {
         data: null, 
         orderable : false,

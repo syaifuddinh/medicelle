@@ -19,8 +19,16 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', function($scope, $c
     ],
 
     columns:[
-      {data:"code", name:"code"},
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"code",
+        render : resp => "<a class='' href='" + baseUrl + "/polyclinic/" + resp.id +  "' title='Detail'>" + resp.code + "</a>"        
+      },
+      {
+        data:null, 
+        name:"name",
+        render : resp => "<a class='' href='" + baseUrl + "/polyclinic/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+      },
       {data:"index", name:"index"},
       {data:"cost_center", name:"cost_center"},
       {

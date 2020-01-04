@@ -23,7 +23,7 @@ app.controller('disease', ['$scope', '$compile', '$http', function($scope, $comp
       {
           data:null, 
           name:"code",
-          render:x => x.category.code + '.' + x.code
+          render : resp => "<a class='' href='" + baseUrl + "/disease/" + resp.id +  "' title='Detail'>" + resp.unique_code + "</a>"
       },
       {data:"name", name:"name"},
       {

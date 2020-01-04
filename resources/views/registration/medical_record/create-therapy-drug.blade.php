@@ -45,7 +45,7 @@
                                             <option value=""></option>
                                         </select>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDrug()' ng-disabled='!drug.item_id'>Tambah</button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDrug()' ng-disabled='!drug.item_id'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                 </div>

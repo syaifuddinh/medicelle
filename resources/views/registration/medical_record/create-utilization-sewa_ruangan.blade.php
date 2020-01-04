@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group col-md-1" style='margin-top:1.2mm;margin-right:2mm'>
                                     <br>
-                                    <button type='button' class='btn btn-success' ng-click='submitSewaRuangan()' ng-disabled='!sewa_ruangan.item_id || !sewa_ruangan.qty || !sewa_ruangan.lokasi_id'>Tambah</button>
+                                    <button type='button' class='btn btn-success' ng-click='submitSewaRuangan()' ng-disabled='!sewa_ruangan.item_id || !sewa_ruangan.qty || !sewa_ruangan.lokasi_id'><i class="fa fa-check"></i></button>
                                 </div>
                             </div>
                             
