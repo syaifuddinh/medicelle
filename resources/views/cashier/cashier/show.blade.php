@@ -73,7 +73,7 @@
                                             <th style='width:10%'>Qty</th>
                                             <th style='width:15%'>Harga</th>
                                             <th style='width:10%'>Diskon(%)</th>
-                                            <th  style='width:20%'>Subtotal</th>
+                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> 10%</button></th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -83,6 +83,14 @@
                                             <th></th>
                                             <th colspan='2' class='text-right'>Total</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% grosstotal | number%></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th colspan='2' class='text-right'>Diskon(Rp)</th>
+                                            <th class='text-right' title='Diskon untuk seluruh item'>
+                                                <% formData.massive_discount | number%>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th></th>

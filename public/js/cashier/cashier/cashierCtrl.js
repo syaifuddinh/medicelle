@@ -1,5 +1,13 @@
 app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
-  $scope.formData = {}
+  var currentDate = new Date()
+  var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
+  $scope.formData = {
+      'date_end' : date 
+  }
+  setTimeout(function () {    
+        $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+  }, 300)
+  
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
@@ -56,12 +64,22 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
+    },
+    initComplete : function() {
+        var cashierTable = this.api()
+        setInterval(function(){
+            cashierTable.ajax.reload()
+        }, 20000)
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );
-
+  
   $scope.filter = function() {
+    is_date = /\d+-\d+-\d+/
+    if(is_date.test($scope.formData.date_start) || is_date.test($scope.formData.date_end)) {
+      
       oTable.ajax.reload()
+    }
   }
 
   $scope.delete = function(id) {

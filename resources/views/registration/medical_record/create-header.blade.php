@@ -19,6 +19,12 @@
                         </li>
                     @endif
 
+                    @if( Specialization::allow_access('medical_checkup') == 1)
+                        <li class='{{ strpos(url()->current(), "medical_checkup") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.medical_checkup', ['id' => $id]) }}">Medical Checkup</a>
+                        </li>
+                    @endif
+
                     @if( Specialization::allow_access('tindakan') == 1 || Specialization::allow_access('diagnostik') == 1 || Specialization::allow_access('obat') == 1)
                         <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'>
                             <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>

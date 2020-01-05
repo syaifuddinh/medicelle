@@ -242,7 +242,7 @@ class RegistrationController extends Controller
     public function finish($registration_detail_id)
     {
         DB::beginTransaction();
-        $registration = RegistrationDetail::find($registration_detail_id);
+        $registration = RegistrationDetail::findOrFail($registration_detail_id);
         $registration->status = 1;
         $registration->save();
         DB::commit();

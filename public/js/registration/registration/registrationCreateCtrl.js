@@ -268,6 +268,9 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     var data = patient_datatable.row(tr).data();
     $scope.formData.patient = data;
     $scope.formData.patient.city_id = parseInt(data.city_id)
+    setTimeout(function () {    
+        $('[ng-model="formData.patient.birth_date"]').val( $filter('fullDate')($scope.formData.patient.birth_date))
+  }, 300)
     $('#patientModal').modal('hide');
   }
 

@@ -9,7 +9,7 @@ use App\Discount;
 class InvoiceDetail extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent'];
+    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'reduksi'];
 
     public static function boot() {
         parent::boot();
@@ -23,8 +23,11 @@ class InvoiceDetail extends Model
             $invoiceDetail->grandtotal = $grandtotal;
             $invoice = Invoice::find($invoiceDetail->invoice_id);
             $invoice->increment('netto', $grandtotal);
-            if($invoiceDetail->is_discount == 1) {
+            if($invoiceDetail->is_discount == 1 || $invoiceDetail->is_discount_total == 1) {
                 $invoice->increment('discount', -$grandtotal);                
+            } 
+            if($invoiceDetail->is_reduksi == 1) {
+                $invoice->increment('reduksi', -$grandtotal);                
             } 
             if($invoiceDetail->is_item == 1) {
                 $invoice->increment('gross', $grandtotal);                                
@@ -65,6 +68,24 @@ class InvoiceDetail extends Model
                 $discountDetail->invoice_detail_id = $invoiceDetail->id;
                 $discountDetail->save();
             }
+
+            if($invoiceDetail->reduksi > 0) {
+                $total_debet = $invoiceDetail->debet;
+                $percentage = $invoiceDetail->item->price->percentage ?? 0;
+                $doctor_allocation = $total_debet * $percentage / 100;
+                $owner_allocation = $total_debet * (100 - $percentage) / 100;
+                $reduksi_value = $doctor_allocation * $invoiceDetail->reduksi / 100;
+                $reduksi_charge = $total_debet - $owner_allocation + $reduksi_value;
+
+                $discountDetail = new InvoiceDetail();
+                $discountDetail->invoice_id = $invoiceDetail->invoice_id;
+                $discountDetail->item_id = $invoiceDetail->item_id;
+                $discountDetail->qty = 1;
+                $discountDetail->credit = $reduksi_charge;
+                $discountDetail->is_reduksi = 1;
+                $discountDetail->invoice_detail_id = $invoiceDetail->id;
+                $discountDetail->save();
+            }
         });
     }
 
@@ -74,6 +95,15 @@ class InvoiceDetail extends Model
 
     public function discount_reference() {
         return $this->belongsTo('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsDiscount(1);
+    }
+    
+
+    public function reduksi_reference() {
+        return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsReduksi(1)->withDefault(['total_credit' => 0]);
+    }
+    
+    public function price_reference() {
+        return $this->belongsTo('App\Price', 'item_id', 'item_id')->whereIsReduksi(1);
     }
     
     public function grup_nota() {

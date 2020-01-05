@@ -5,7 +5,6 @@
         <!-- page content -->
         <div class="right_col" role="main" ng-controller="cure">
           <!-- top tiles -->
-          @include('master/cure/index-navigation')
           
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -41,12 +40,12 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Obat</h3>
+                    <h3>Item Medis</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('cure.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          <a href="{{ route('medical_item.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                       </div>                    
                   </div>
                 </div>

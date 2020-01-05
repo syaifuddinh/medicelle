@@ -9,7 +9,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
     var today = new Date()
-    $scope.resume_date = today.getFullYear() + '-' + (parseInt(today.getMonth()) + 1) + '-' + today.getDate()
+    $scope.resume_date = today.getFullYear() + '-' + (parseInt(today.getMonth()) + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0)
     setTimeout(function () {    
           $('[ng-model="resume_date"]').val( $filter('fullDate')($scope.resume_date))
     }, 300)
@@ -366,20 +366,33 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.submitTreatment = function() {
-      console.log($scope.data.treatment)
       treatment_datatable.row.add($scope.treatment).draw()
-      $scope.treatment = {}
+      $scope.treatment = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
+      }, 300)
   }
 
   $scope.submitDiagnostic = function() {
       diagnostic_datatable.row.add($scope.diagnostic).draw()
-      $scope.diagnostic = {}
+      $scope.diagnostic = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+      }, 300)
   }
 
   $scope.submitDrug = function() {
-      console.log($scope.drug)
       drug_datatable.row.add($scope.drug).draw()
-      $scope.drug = {}
+      $scope.drug = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+      }, 300)
   }
 
   $scope.submitDiagnoseHistory = function() {
@@ -1314,9 +1327,24 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.bhp = {}
       $scope.schedule = {}
       $scope.research = {}
-      $scope.diagnostic = {}
-      $scope.treatment = {}
-      $scope.drug = {}
+      $scope.diagnostic = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+      }, 300)
+      $scope.treatment = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
+      }, 300)
+      $scope.drug = {
+        date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
+      }, 300)
       $scope.diagnose_history = { is_other : 1 }
       $scope.disease_history = {}
       $scope.family_disease_history = {}

@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Registration;
 use App\Contact;
+use App\Invoice;
+use App\InvoiceDetail;
+use App\PivotMedicalRecord;
 use DB;
 use Auth;
 
@@ -14,6 +17,68 @@ class RegistrationDetail extends Model
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['status_name', 'visiting_room'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::updating(function(RegistrationDetail $registrationDetail) {
+            if($registrationDetail->status == 1) {
+                PivotMedicalRecord::where('registration_detail_id', '!=', $registrationDetail->id)->whereMedicalRecordId($registrationDetail->medical_record->id)->delete();
+                $latestInvoice = Invoice::whereRegistrationId($registrationDetail->registration_id)->whereIsNotaPengobatan(1)->first();
+                if($latestInvoice == null) {
+                    $registration = $registrationDetail->registration;
+                    $invoice = new Invoice();
+                    $invoice->is_nota_pengobatan = 1;
+                    $invoice->payment_method = 'TUNAI';
+                    if($registration->patient_type == 'ASURANSI SWASTA') {
+                        $invoice->payment_type = 'ASURANSI SWASTA';                        
+                    } else {
+                        $invoice->payment_type = 'BAYAR SENDIRI';                        
+                    }
+                    $invoice->registration_id = $registration->id;
+                    $invoice->save();
+                } else {
+                    $invoice = Invoice::find($latestInvoice->id);
+                }
+                $medicalRecord = $registrationDetail->medical_record;
+                $treatments = $medicalRecord->treatment;
+                $diagnostics = $medicalRecord->diagnostic;
+                $drugs = $medicalRecord->drug;
+                DB::beginTransaction();
+                foreach($treatments as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($diagnostics as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($drugs as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                DB::commit();
+
+            }
+        });
+
+    }
 
     public function getStatusNameAttribute() {
         if(!array_key_exists('status', $this->attributes)) {

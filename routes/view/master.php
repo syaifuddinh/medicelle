@@ -327,20 +327,20 @@ Route::name('pharmacy.')->prefix('pharmacy')
     })->name('show');
 });
 
-Route::name('cure.')->prefix('cure')
+Route::name('medical_item.')->prefix('medical_item')
 ->group(function(){
 
     Route::get('/', function (){
-        return view('master/cure/index');
+        return view('master/medical_item/index');
     })->name('index');
     Route::get('/create', function (){
-        return view('master/cure/create');
+        return view('master/medical_item/create');
     })->name('create');
     Route::get('/edit/{id}', function ($id){
-        return view('master/cure/create')->withId($id);
+        return view('master/medical_item/create')->withId($id);
     })->name('edit');
     Route::get('/{id}', function ($id){
-        return view('master/cure/show')->withId($id);
+        return view('master/medical_item/show')->withId($id);
     })->name('show');
 });
 

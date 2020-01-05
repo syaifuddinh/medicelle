@@ -23,6 +23,7 @@ Route::prefix('master')->group(function(){
     // Route::get('radiology', 'MasterApiController@radiology');
 
     Route::get('cure', 'MasterApiController@cure');
+    Route::get('medical_item', 'MasterApiController@medical_item');
     Route::get('bhp/{flag?}', 'MasterApiController@bhp');
     Route::get('sewa_alkes/{flag?}', 'MasterApiController@sewa_alkes');
     Route::get('sewa_ruangan/{flag?}', 'MasterApiController@sewa_ruangan');

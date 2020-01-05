@@ -5,7 +5,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/cure',
+      url : baseUrl+'/datatable/master/medical_item',
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [
@@ -43,7 +43,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
           resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
           : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/cure/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/cure/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/medical_item/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

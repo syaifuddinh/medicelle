@@ -73,7 +73,7 @@
                                             <th style='width:10%'>Qty</th>
                                             <th style='width:15%'>Harga</th>
                                             <th style='width:10%'>Diskon(%)</th>
-                                            <th  style='width:20%'>Subtotal</th>
+                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> 10%</button></th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -83,6 +83,14 @@
                                             <th></th>
                                             <th colspan='2' class='text-right'>Total</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% grosstotal | number%></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th colspan='2' class='text-right'>Diskon(Rp)</th>
+                                            <th class='text-right' title='Diskon untuk seluruh item'>
+                                                <input type="text" class='form-control' ng-model='formData.massive_discount' ng-change='countTotal()' jnumber2 only-num>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th></th>
@@ -152,10 +160,10 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <label class='radio-inline'>
-                                            <input type="radio" ng-model='formData.payment_type' name='payment_type' ng-value="'BAYAR SENDIRI'"> Bayar sendiri
+                                            <input type="radio" ng-model='formData.payment_type' name='payment_type' ng-value="'BAYAR SENDIRI'" ng-change='countTotal()'> Bayar sendiri
                                         </label>
                                         <label class='radio-inline'>
-                                            <input type="radio" ng-model='formData.payment_type' name='payment_type' ng-value="'ASURANSI SWASTA'"> Asuransi swasta
+                                            <input type="radio" ng-model='formData.payment_type' name='payment_type' ng-value="'ASURANSI SWASTA'" ng-change='countTotal()'> Asuransi swasta
                                         </label>
                                     </div>
                                 </div>
@@ -195,7 +203,7 @@
                             <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-1">
                                 <div class="btn-group">
 
-                                    <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
+                                    <a class="btn btn-default btn-sm" href='{{ route("cashier.index") }}'>Batal</a>
                                     <button type="button" id='draftButton' ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Draft</button>
                                     <button type="button"  id='payButton' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
                                 </div>

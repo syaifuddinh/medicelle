@@ -7,7 +7,7 @@ use App\Price;
 
 class Item extends Model
 {
-    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'piece_id'];
+    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'purchase_price', 'supplier_price', 'piece_id', 'purchase_piece_id', 'minimal_stock', 'ratio', 'additional', 'is_cure', 'is_non_cure', 'is_umum', 'is_alkes_disposible', 'is_alkes_non_disposible', 'is_inventaris', 'is_bhp'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['unique_code', 'rate'];
 
@@ -17,7 +17,7 @@ class Item extends Model
         static::created(function(Item $item) {
 
             // Is Active a.k.a grup nota id
-            if(($item->is_cure == 1 || $item->is_bhp == 1 ) && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
+            if($item->is_medical_item == 1  && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
 
@@ -29,11 +29,6 @@ class Item extends Model
                         $price->item_id = $item->id;
                         $price->is_registration = 0;
                         $price->grup_nota_id = $item->is_pharmacy;
-                        if($item->is_cure == 1) {
-                            $price->destination = 'OBAT';
-                        } else if($item->is_bhp == 1) {
-                            $price->destination = 'BHP';
-                        }
                         $price->save();
 
                 }
@@ -45,7 +40,7 @@ class Item extends Model
         static::updating(function(Item $item) {
             // Is Active a.k.a grup nota id
 
-            if(($item->is_cure == 1 || $item->is_bhp == 1 ) && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
+            if($item->is_medical_item == 1 && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
                     $price = Price::find($price->id);
@@ -53,15 +48,10 @@ class Item extends Model
                     $price->save();
                     $item->is_pharmacy = 1;
                 } else {
-                     $price = new Price();
+                    $price = new Price();
                     $price->item_id = $item->id;
                     $price->is_registration = 0;
                     $price->grup_nota_id = $item->is_pharmacy;
-                    if($item->is_cure == 1) {
-                        $price->destination = 'OBAT';
-                    } else if($item->is_bhp == 1) {
-                        $price->destination = 'BHP';
-                    }
                     $price->save();
 
                 }
@@ -70,6 +60,19 @@ class Item extends Model
         });
 
     }
+
+    public function getAdditionalAttribute() {
+        if(array_key_exists('additional', $this->attributes)) {
+            $additional = json_decode($this->attributes['additional']);
+            return $additional;
+        }
+        return json_decode('{}');
+    }
+
+    public function setAdditionalAttribute($value) {
+        $this->attributes['additional'] = json_encode($value);    
+    }
+
 
     public function getUniqueCodeAttribute() {
         $attr = $this->attributes;
@@ -118,12 +121,20 @@ class Item extends Model
         return self::whereIsCure(1);
     }
 
+    public static function medical_item() {
+        return self::whereIsMedicalItem(1);
+    }
+
     public static function bhp() {
         return self::whereIsBhp(1);
     }
 
     public static function disease_category() {
         return self::whereIsDisease(1)->whereIsCategory(1);
+    }
+
+    public static function medical_item_category() {
+        return self::whereIsMedicalItem(1)->whereIsCategory(1);
     }
 
     public function category() {

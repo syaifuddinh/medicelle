@@ -71,11 +71,11 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('radiology/actived', 'RadiologyController@actived');
         Route::resource('radiology', 'RadiologyController');
 
-        Route::put('cure/activate/{id}', 'CureController@activate');
-        Route::get('cure/category', 'CureController@category');
-        Route::get('cure/category/actived', 'CureController@actived_category');
-        Route::get('cure/actived', 'CureController@actived');
-        Route::resource('cure', 'CureController');
+        Route::put('medical_item/activate/{id}', 'MedicalItemController@activate');
+        Route::get('medical_item/category', 'MedicalItemController@category');
+        Route::get('medical_item/category/actived', 'MedicalItemController@actived_category');
+        Route::get('medical_item/actived', 'MedicalItemController@actived');
+        Route::resource('medical_item', 'MedicalItemController');
 
         Route::put('bhp/activate/{id}', 'BhpController@activate');
         Route::get('bhp/category', 'BhpController@category');

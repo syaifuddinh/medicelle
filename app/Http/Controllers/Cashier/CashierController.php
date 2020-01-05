@@ -50,10 +50,11 @@ class CashierController extends Controller
      */
     public function show($id)
     {
-        $invoice = Invoice::with('promo:invoice_id,total_credit', 'promo_info:id,code,name')->find($id);
+        $invoice = Invoice::with('promo:invoice_id,total_credit', 'promo_info:id,code,name', 'massive_discount:invoice_id,total_credit')->find($id);
         $invoice_detail = InvoiceDetail::with(
             'item:id,name', 
-            'grup_nota:permissions.id,name,slug'
+            'grup_nota:permissions.id,name,slug',
+            'reduksi_reference:id,invoice_detail_id,total_credit'
         )->select('id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent')
         ->whereInvoiceId($id)
         ->whereIsItem(1)
@@ -108,6 +109,13 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
+        $invoiceDetail = new InvoiceDetail();
+        $invoiceDetail->invoice_id = $invoice->id;
+        $invoiceDetail->qty = 1;
+        $invoiceDetail->debet = 0;
+        $invoiceDetail->credit = $request->massive_discount ?? 0;
+        $invoiceDetail->is_discount_total  = 1;
+        $invoiceDetail->save();
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);

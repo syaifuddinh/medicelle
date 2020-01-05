@@ -82,7 +82,6 @@ app.directive('datepick', function() {
       var model = attr.ngModel
       var second = model.replace(/.+\.([a-z_]+)$/, '$1')
       var first = model.replace(/(.+)\.([a-z_]+)$/, '$1') || null
-
       p.on('close', function(){
           var dateElement = this.$node['0']
           var nextInput = inputs.get(inputs.index(dateElement) + 1);
@@ -97,7 +96,6 @@ app.directive('datepick', function() {
             var datepick = scope[first][second]
         }
       }
-
       if(datepick) {
         
           if(/(\d{4})-(\d{2})-(\d{2})/.test(datepick)) {

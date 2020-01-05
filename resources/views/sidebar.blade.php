@@ -33,7 +33,7 @@
                             <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
                         @endif
                         <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
-                        <li><a href="{{ route('cure.index') }}">Item medis</a></li>
+                        <li><a href="{{ route('medical_item.index') }}">Item medis</a></li>
                         <li><a href="{{ route('lokasi.index') }}">Daftar lokasi</a></li>
                         <li><a href="{{ route('piece.index') }}">Satuan</a></li>
                         <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>

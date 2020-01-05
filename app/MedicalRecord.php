@@ -136,7 +136,12 @@ class MedicalRecord extends Model
     }
 
     public function setAdditionalAttribute($value) {
-        $this->attributes['additional'] = json_encode($value);    
+        $json = $value;
+        $additional = $this->additional;
+        foreach($json as $key => $unit) {
+            $additional->{$key} = $unit;
+        } 
+        $this->attributes['additional'] = json_encode($additional); 
     }
 
 

@@ -34,6 +34,7 @@ class Invoice extends Model
 
         static::creating(function(Invoice $invoice) {
             $invoice->created_by = Auth::user()->id;
+            $invoice->date = date('Y-m-d');
         });
 
     }
@@ -56,16 +57,30 @@ class Invoice extends Model
         }
     }
 
+    public function setMassiveDiscountAttribute($value) {
+        $this->child()->create([
+            'qty' => 1,
+            'credit' => $value ?? 0,
+            'is_discount_total' => 1
+        ]);
+    }
+
     public function registration() {
         return $this->belongsTo('App\Registration');
     }
     public function promo() {
         return $this->hasOne('App\InvoiceDetail', 'invoice_id', 'id')->whereIsPromo(1);
     }
+    public function massive_discount() {
+        return $this->hasOne('App\InvoiceDetail', 'invoice_id', 'id')->whereIsDiscountTotal(1)->withDefault(['total_credit' => 0]);
+    }
     public function promo_info() {
         return $this->belongsTo('App\Discount', 'discount_id', 'id');
     }
     public function detail() {
         return $this->hasMany('App\InvoiceDetail')->whereIsItem(1);
+    }
+    public function child() {
+        return $this->hasMany('App\InvoiceDetail');
     }
 }

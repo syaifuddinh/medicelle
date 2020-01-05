@@ -22,8 +22,8 @@ Route::name('medical_record.')->prefix('medical_record')
 
     Route::get('/step/1/edit/{id}', function ($id){
         if(Specialization::allow_access('anamnesa') != 1) {
-            $alternative = ['anamnesa_obgyn', 'umum', 'kepala', 'breast', 'rectum', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'jadwal_kontrol', 'resume_medis'];
-            $alternative_route = ['2', 'physique.general', 'physique.head', 'physique.breast', 'physique.rectum', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'schedule', 'resume_medis'];
+            $alternative = ['anamnesa_obgyn', 'umum', 'kepala', 'breast', 'rectum', 'medical_checkup', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'jadwal_kontrol', 'resume_medis'];
+            $alternative_route = ['2', 'physique.general', 'physique.head', 'physique.breast', 'physique.rectum', 'medical_checkup', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'schedule', 'resume_medis'];
             foreach($alternative as $key => $role) {
                 if(Specialization::allow_access($role) == 1) {
                     return redirect()->route('medical_record.edit.' . $alternative_route[$key], ['id' => $id]);
@@ -51,6 +51,7 @@ Route::name('medical_record.')->prefix('medical_record')
         }
 
     })->name('edit.physique.general');
+
     Route::get('/physique/head/{id}', function ($id){
         return view('registration/medical_record/create-physique-head')->withId($id);
     })->name('edit.physique.head');
@@ -61,6 +62,10 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/physique/rectum/{id}', function ($id){
         return view('registration/medical_record/create-physique-rectum')->withId($id);
     })->name('edit.physique.rectum');
+
+    Route::get('/medical_checkup/{id}', function ($id){
+        return view('registration/medical_record/create-medical_checkup')->withId($id);
+    })->name('edit.medical_checkup');
 
     Route::get('/therapy/treatment/{id}', function ($id){
         if(Specialization::allow_access('tindakan') != 1) {

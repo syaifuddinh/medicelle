@@ -68,7 +68,6 @@ class Registration extends Model
                         } else {
                             $invoice->payment_type = 'BAYAR SENDIRI';                        
                         }
-                        $invoice->date = $registration->date;
                         $invoice->registration_id = $registration->id;
                         $invoice->save();
                         $invoice_id = $invoice->id;

@@ -1,5 +1,6 @@
 app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filter', function($scope, $http, $rootScope, $compile, $filter) {
     // $scope.title = 'Tambah1 Kasir';
+    $('#asuransi_flag').hide()
     $scope.formData = {
       payment_method : 'KREDIT'
     }
@@ -106,6 +107,10 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
               var promo_info = $scope.formData.promo_info
               $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
             }
+            if($scope.formData.massive_discount != null) {
+                var massive_discount = $scope.formData.massive_discount.total_credit
+                $scope.formData.massive_discount = massive_discount 
+            }
             $scope.registration()
             $scope.showInvoiceDetail()
             setTimeout(function () {    
@@ -200,25 +205,37 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         invoice_detail_datatable.row.add(row).draw()
     } 
 
-    $scope.countTotal = function() {
-      var gross, disc_value, netto, unit;
-      var grandtotal = 0, discount_total = 0, qty_total = 0, grosstotal = 0
-      var detail = $scope.formData.invoice_detail
-      for(grup_nota in detail) {
-         for(index in detail[grup_nota]) {
+    
+$scope.countTotal = function() {
+    var gross, disc_value, netto, unit, grosstotal;
+    var grandtotal = 0, discount_total = 0, qty_total = 0, grosstotal = 0
+    var detail = $scope.formData.invoice_detail
+    var increase_rate
+
+    if($scope.formData.payment_type == 'ASURANSI SWASTA') {
+        $('#asuransi_flag').show()
+    } else {
+        $('#asuransi_flag').hide()        
+    }
+    for(grup_nota in detail) {
+        for(index in detail[grup_nota]) {
+            increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? 10 : 0 
             unit = detail[grup_nota][index]
             gross = unit.qty * unit.debet;
+            gross += (gross * (increase_rate/100))
             disc_value = gross * ((unit.disc_percent || 0) / 100) 
+            grosstotal += gross
             netto = gross - disc_value
             $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
             grandtotal += parseInt(netto)
             discount_total += parseInt(disc_value)
-         }
-      }
-
-      $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0)
-      $scope.discount_total = discount_total
+            $scope.formData.invoice_detail[grup_nota][index].subtotal = gross
+        }
     }
+    $scope.grosstotal = grosstotal
+    $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0) - (parseInt($scope.formData.massive_discount) || 0) 
+    $scope.discount_total = parseInt(discount_total) + (parseInt($scope.formData.massive_discount) || 0)
+}
 
     $scope.registration = function() {
         $http.get(baseUrl + '/controller/registration/registration/' + $scope.formData.registration_id).then(function(data) {

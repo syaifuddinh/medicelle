@@ -1,7 +1,8 @@
 app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.title = 'Tambah Obat';
     $scope.formData = {
-        is_category : 0
+        is_category : 0,
+        additional : {}
     }
     $scope.data = {}
     var path = window.location.pathname;
@@ -10,7 +11,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
         if(/edit/.test(path)) {
             $scope.title = 'Edit Obat';
             id = path.replace(/.+\/(\d+)/, '$1');
-            $http.get(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+            $http.get(baseUrl + '/controller/master/medical_item/' + id).then(function(data) {
                 $scope.formData = data.data
                 $scope.formData.grup_nota_id = data.data.price.grup_nota_id
                 $scope.formData.price = data.data.rate
@@ -58,7 +59,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
     }
 
     $scope.category = function() {
-        $http.get(baseUrl + '/controller/master/cure/category/actived').then(function(data) {
+        $http.get(baseUrl + '/controller/master/medical_item/category/actived').then(function(data) {
             $scope.data.category = data.data
             if(/edit/.test(path)) {
                 $scope.show()
@@ -117,17 +118,17 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/master/cure';
+      var url = baseUrl + '/controller/master/medical_item';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/master/cure/' + id;
+          var url = baseUrl + '/controller/master/medical_item/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/cure'          
+          window.location = baseUrl + '/medical_item'          
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;
