@@ -162,6 +162,13 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
+        $invoiceDetail = new InvoiceDetail();
+        $invoiceDetail->invoice_id = $invoice->id;
+        $invoiceDetail->qty = 1;
+        $invoiceDetail->debet = 0;
+        $invoiceDetail->credit = $request->massive_discount ?? 0;
+        $invoiceDetail->is_discount_total  = 1;
+        $invoiceDetail->save();
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil terbayar'], 200);

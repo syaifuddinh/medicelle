@@ -75,7 +75,7 @@
     <script src="{{ asset('') }}js/toastr.min.js"></script>
     <script src="{{ asset('') }}js/jquery.easy-autocomplete.min.js"></script>
     <script src="{{ asset('') }}js/chosen.jquery.js"></script>
-    <link rel='stylesheet' id='norebro-global-fonts-css'  href='//fonts.googleapis.com/css?family=Rubik%3A900i%2C900%2C700i%2C700%2C500i%2C500%2C400i%2C400%2C300i%2C300%7CPoppins%3A700%2C600%2C500%2C400%2C300%26subset%3Dcyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew&#038;ver=1.0.0' type='text/css' media='all' />
+    
 
     
     <!-- Angular -->
@@ -161,6 +161,7 @@
             }, 1000)
         })
     </script>
+    <link rel='stylesheet' id='norebro-global-fonts-css'  href='//fonts.googleapis.com/css?family=Rubik%3A900i%2C900%2C700i%2C700%2C500i%2C500%2C400i%2C400%2C300i%2C300%7CPoppins%3A700%2C600%2C500%2C400%2C300%26subset%3Dcyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew&#038;ver=1.0.0' type='text/css' media='all' />
     
   </body>
 </html>
