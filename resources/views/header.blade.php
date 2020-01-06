@@ -30,6 +30,7 @@
     <link href="{{ asset('') }}build/css/custom.min.css" rel="stylesheet">
     <link href="{{ asset('') }}vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('') }}vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+
     <script>
         baseUrl = '{{ url('') }}'
     </script>
