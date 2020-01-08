@@ -45,7 +45,7 @@
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">PIN(Fingerprint)
+                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">PIN
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
 <% formData.pin %>
@@ -104,7 +104,7 @@
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Departemen
+                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Dept
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <% formData.group_user.name %>
