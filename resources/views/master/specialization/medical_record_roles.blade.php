@@ -15,10 +15,32 @@
     </ul>
     <div class="tab-content">
         <div id="doctor" class='tab-pane fade in active roles_container'>
-            <table class="table" id='medical_record_doctor_roles_table'></table>
+            <table class="table" id='medical_record_doctor_roles_table'>
+                <thead>
+                    <tr>
+                        <th>Hak akses</th> 
+                        <th class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
+                            <i class="fa fa-pencil"></i>
+                        </th>
+                        <th  class='text-right' title='Hanya diizinkan untuk melihat data'>
+                            <i class="fa fa-file-text-o"></i>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
         </div>
         <div id="nurse" class='tab-pane fade roles_container'>
-            <table class="table" id='medical_record_nurse_roles_table'></table>
+            <table class="table" id='medical_record_nurse_roles_table'>
+                <tr>
+                        <th>Hak akses</th> 
+                        <th  class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
+                            <i class="fa fa-pencil"></i>
+                        </th>
+                        <th  class='text-right' title='Hanya diizinkan untuk melihat data'>
+                            <i class="fa fa-file-text-o"></i>
+                        </th>
+                    </tr>
+            </table>
         </div>
     </div>
 </div>

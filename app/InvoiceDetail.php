@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Invoice;
 use App\Discount;
 use DB;
+use Mod;
 
 class InvoiceDetail extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'is_profit_sharing', 'reduksi'];
+    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'is_profit_sharing', 'reduksi', 'is_asuransi'];
 
     public static function boot() {
         parent::boot();
@@ -30,6 +31,10 @@ class InvoiceDetail extends Model
             if($invoiceDetail->is_reduksi == 1) {
                 $invoice->increment('reduksi', -$grandtotal);                
             } 
+
+            if($invoiceDetail->is_asuransi == 1) {
+                $invoice->increment('asuransi_value', $grandtotal);                                
+            }
             if($invoiceDetail->is_item == 1) {
                 $invoice->increment('gross', $grandtotal);                                
                 $invoice->increment('qty', 1);
@@ -52,6 +57,7 @@ class InvoiceDetail extends Model
                         $discountDetail->increment('credit', $totalDiscount);
                     }
                 }
+
             }
             $invoice->balance = $invoice->netto - $invoice->paid;
             $invoice->save();
@@ -79,15 +85,29 @@ class InvoiceDetail extends Model
                 $reduksi_value = $doctor_allocation * $invoiceDetail->reduksi / 100;
                 $reduksi_charge = $reduksi_value;
 
-                $discountDetail = new InvoiceDetail();
-                $discountDetail->invoice_id = $invoiceDetail->invoice_id;
-                $discountDetail->item_id = $invoiceDetail->item_id;
-                $discountDetail->qty = 1;
-                $discountDetail->credit = $reduksi_charge;
-                $discountDetail->is_reduksi = 1;
-                $discountDetail->invoice_detail_id = $invoiceDetail->id;
-                $discountDetail->save();
+                $reduksiDetail = new InvoiceDetail();
+                $reduksiDetail->invoice_id = $invoiceDetail->invoice_id;
+                $reduksiDetail->qty = $invoiceDetail->qty;
+                $reduksiDetail->credit = $reduksi_charge;
+                $reduksiDetail->is_reduksi = 1;
+                $reduksiDetail->invoice_detail_id = $invoiceDetail->id;
+                $reduksiDetail->save();
             }
+
+            if($invoiceDetail->is_item == 1 && $invoiceDetail->invoice->asuransi_percentage > 0) {
+                $latestAsuransi = InvoiceDetail::whereIsAsuransi(1)->whereInvoiceDetailId($invoiceDetail->id)->first();
+                if($latestAsuransi == null) {
+
+                    $asuransiDetail = new InvoiceDetail();
+                    $asuransiDetail->invoice_id = $invoiceDetail->invoice_id;
+                    $asuransiDetail->qty = $invoiceDetail->qty;
+                    $asuransiDetail->debet = $$invoiceDetail->debet * $invoiceDetail->invoice->asuransi_percentage / 100;
+                    $asuransiDetail->is_asuransi = 1;
+                    $asuransiDetail->invoice_detail_id = $invoiceDetail->id;
+                    $asuransiDetail->save();
+                }
+            }
+
         });
     }
 
@@ -99,9 +119,12 @@ class InvoiceDetail extends Model
         return $this->belongsTo('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsDiscount(1);
     }
     
-
     public function reduksi_reference() {
         return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsReduksi(1)->withDefault(['total_credit' => 0]);
+    }
+    
+    public function asuransi_reference() {
+        return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsAsuransi(1)->withDefault(['total_debet' => 0]);
     }
     
     public function price_reference() {

@@ -22,10 +22,12 @@
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="code" ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" autofocus>
+                          <input type="text" id="code" ng-model='formData.code' class="form-control col-md-7 col-xs-12" autofocus>
+                          <br>
+                          <p class="text-primary">* Jika kode dikosongi, maka kode akan dibuat secara otomatis</p>
                         </div>
                       </div>
 

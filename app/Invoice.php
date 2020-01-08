@@ -15,6 +15,10 @@ class Invoice extends Model
         parent::boot();
 
         static::updating(function(Invoice $invoice) {
+            if($invoice->payment_type == 'ASURANSI SWASTA') {
+                $invoice->asuransi_percentage = Mod::finance()->asuransi_rate_percentage ?? 0;
+            }
+
             if($invoice->status != 1) {
                 if($invoice->paid_at == null && $invoice->paid_by == null) {
                     $invoice->paid_at = date('Y-m-d H:i:s');

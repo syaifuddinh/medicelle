@@ -12,6 +12,39 @@ class Specialization extends Model
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['doctor_roles', 'doctor_roles'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function(Specialization $specialization){
+            if($specialization->code == null || $specialization->code == '') {
+                if(strlen($specialization->name) > 2) {
+                    $code = strtoupper($specialization->name[0] . $specialization->name[1]);
+                    $latestSpecialization = Specialization::whereRaw("code LIKE '$code%'")->first();
+                    if($latestSpecialization != null) {
+                        $similarSpecialization = Specialization::whereRaw("code LIKE '$code%'")->count('id');
+                        $code .= $similarSpecialization;
+                    }
+
+                    $specialization->code = $code;
+                }
+            }
+        });
+        static::updating(function(Specialization $specialization){
+            if($specialization->code == null || $specialization->code == '') {
+                if(strlen($specialization->name) > 2) {
+                    $code = strtoupper($specialization->name[0] . $specialization->name[1]);
+                    $latestSpecialization = Specialization::whereRaw("code LIKE '$code%'")->first();
+                    if($latestSpecialization != null) {
+                        $similarSpecialization = Specialization::whereRaw("code LIKE '$code%'")->count('id');
+                        $code .= $similarSpecialization;
+                    }
+
+                    $specialization->code = $code;
+                }
+            }
+        });
+    }
+
 
     public function setDoctorRolesAttribute($value) {
         if(json_encode($value) != '[]') {

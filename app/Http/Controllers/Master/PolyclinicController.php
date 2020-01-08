@@ -40,10 +40,8 @@ class PolyclinicController extends Controller
     public function store(Request $request, Polyclinic $polyclinic)
     {
         $request->validate([
-            'code' => 'unique:polyclinics,code',
             'name' => 'required',
         ], [
-            'code.unique' => 'Kode sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 
@@ -86,10 +84,8 @@ class PolyclinicController extends Controller
     public function update(Request $request, polyclinic $polyclinic)
     {
         $request->validate([
-            'code' => 'unique:polyclinics,code,'.$polyclinic->id,
             'name' => 'required',
         ], [
-            'code.unique' => 'Kode sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 

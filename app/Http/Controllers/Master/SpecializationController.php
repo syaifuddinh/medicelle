@@ -41,10 +41,8 @@ class SpecializationController extends Controller
     public function store(Request $request, Specialization $specialization)
     {
         $request->validate([
-            'code' => 'unique:specializations,code',
             'name' => 'required',
         ], [
-            'code.unique' => 'Kode sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 
@@ -87,10 +85,8 @@ class SpecializationController extends Controller
     public function update(Request $request, specialization $specialization)
     {
         $request->validate([
-            'code' => 'unique:specializations,code,'.$specialization->id,
             'name' => 'required',
         ], [
-            'code.unique' => 'Kode sudah digunakan',
             'name.required' => 'Nama tidak boleh kosong',
         ]);
 

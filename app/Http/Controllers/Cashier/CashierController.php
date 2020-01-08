@@ -93,6 +93,7 @@ class CashierController extends Controller
         $invoice->fill($request->all());
         $invoice->gross = 0;
         $invoice->netto = 0;
+        $invoice->asuransi_value = 0;
         $invoice->qty = 0;
         $invoice->discount = 0;
         $invoice->save();
