@@ -76,7 +76,7 @@
                                             <th style='width:10%'>Qty</th>
                                             <th style='width:15%'>Harga</th>
                                             <th style='width:10%'>Diskon(%)</th>
-                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> <% formData.asuransi_percentage || 0 %>%</button></th>
+                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i></button></th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

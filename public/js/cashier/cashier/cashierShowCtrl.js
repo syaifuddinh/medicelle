@@ -107,6 +107,11 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
               var promo_info = $scope.formData.promo_info
               $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
             }
+            if($scope.formData.status != 3) {
+              $('#payButton').show()
+            } else {
+              $('#payButton').hide()              
+            }
             if($scope.formData.massive_discount != null) {
                 var massive_discount = $scope.formData.massive_discount.total_credit
                 $scope.formData.massive_discount = massive_discount 
@@ -214,6 +219,7 @@ $scope.countTotal = function() {
 
     if($scope.formData.payment_type == 'ASURANSI SWASTA') {
         $('#asuransi_flag').show()
+        $('#asuransi_flag').append(' ' + $scope.formData.asuransi_percentage + '%')
     } else {
         $('#asuransi_flag').hide()        
     }
