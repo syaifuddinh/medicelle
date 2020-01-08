@@ -6,7 +6,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     id = path.replace(/.+\/(\d+)/, '$1');
     
     $scope.show = function() {
-      $http.get(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+      $http.get(baseUrl + '/controller/master/medical_item/' + id).then(function(data) {
             $scope.formData = data.data
             $scope.formData = data.data
             $scope.changeSampleCode()
@@ -26,7 +26,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     }
 
     $scope.category = function() {
-        $http.get(baseUrl + '/controller/master/cure/category').then(function(data) {
+        $http.get(baseUrl + '/controller/master/medical_item/category').then(function(data) {
             $scope.data.category = data.data
             $scope.show()
         }, function(error) {

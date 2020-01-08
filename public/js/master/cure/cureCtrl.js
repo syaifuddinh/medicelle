@@ -21,8 +21,17 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
     ],
 
     columns:[
-      {data:"unique_code", searchable : false, orderable : false},
-      {data:"name", name:"items.name"},
+      {
+        data:null, 
+        searchable : false, 
+        orderable : false,
+        render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.unique_code + "</a>"
+      },
+      {
+        data:null, 
+        name:"items.name",
+        render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+      },
       {data:"group.name", name:"group.name"},
       {data:"price.grup_nota.slug", name:"price.grup_nota.slug"},
       {

@@ -50,6 +50,7 @@ class RegistrationDetail extends Model
                         'item_id' => $value->item_id,
                         'qty' => $value->qty,
                         'is_item' => 1,
+                        'is_profit_sharing' => 1,
                         'debet' => $value->item->price,
                         'reduksi' => $value->reduksi
                     ]);
@@ -58,6 +59,7 @@ class RegistrationDetail extends Model
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,
+                        'is_profit_sharing' => 1,
                         'qty' => $value->qty,
                         'is_item' => 1,
                         'debet' => $value->item->price,

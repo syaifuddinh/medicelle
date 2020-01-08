@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Invoice;
 use App\Discount;
+use DB;
 
 class InvoiceDetail extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'reduksi'];
+    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'is_profit_sharing', 'reduksi'];
 
     public static function boot() {
         parent::boot();
@@ -69,13 +70,14 @@ class InvoiceDetail extends Model
                 $discountDetail->save();
             }
 
-            if($invoiceDetail->reduksi > 0) {
+            if($invoiceDetail->is_item == 1 && $invoiceDetail->is_profit_sharing == 1) {
                 $total_debet = $invoiceDetail->debet;
-                $percentage = $invoiceDetail->item->price->percentage ?? 0;
+                $price = DB::table('prices')->whereItemId($invoiceDetail->item_id)->first();
+                $percentage = $price->percentage;
                 $doctor_allocation = $total_debet * $percentage / 100;
                 $owner_allocation = $total_debet * (100 - $percentage) / 100;
                 $reduksi_value = $doctor_allocation * $invoiceDetail->reduksi / 100;
-                $reduksi_charge = $total_debet - $owner_allocation + $reduksi_value;
+                $reduksi_charge = $reduksi_value;
 
                 $discountDetail = new InvoiceDetail();
                 $discountDetail->invoice_id = $invoiceDetail->invoice_id;

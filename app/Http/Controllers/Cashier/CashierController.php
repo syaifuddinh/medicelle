@@ -55,7 +55,7 @@ class CashierController extends Controller
             'item:id,name', 
             'grup_nota:permissions.id,name,slug',
             'reduksi_reference:id,invoice_detail_id,total_credit'
-        )->select('id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent')
+        )->select('id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'reduksi', 'is_item', 'is_sharing_profit', 'is_reduksi')
         ->whereInvoiceId($id)
         ->whereIsItem(1)
         ->get();
