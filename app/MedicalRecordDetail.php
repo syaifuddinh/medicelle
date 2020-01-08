@@ -40,8 +40,10 @@ class MedicalRecordDetail extends Model
             } else {
                 $signa = new Permission();
                 $signa->name = $value;
+                $signa->slug = Str::random(4) . $value;
                 $signa->description = 'signa1';
                 $signa->is_signa = 1;
+                $signa->save();
                 $this->attributes['signa1'] = $signa->id;
             }
         }
@@ -55,8 +57,10 @@ class MedicalRecordDetail extends Model
             } else {
                 $signa = new Permission();
                 $signa->name = $value;
+                $signa->slug = Str::random(4) . $value;
                 $signa->description = 'signa2';
-                $signa->is_signa = 2;
+                $signa->is_signa = 1;
+                $signa->save();
                 $this->attributes['signa2'] = $signa->id;
             }
         }

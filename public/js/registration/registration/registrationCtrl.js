@@ -2,6 +2,7 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
   var currentDate = new Date()
   var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
   $scope.formData = {
+      'date_start' : date, 
       'date_end' : date 
   }
   oTable = $('#listview').DataTable({
@@ -82,7 +83,7 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
   
   $scope.filter = function() {
     is_date = /\d+-\d+-\d+/
-    if(is_date.test($scope.formData.date_start) || is_date.test($scope.formData.date_end)) {
+    if(is_date.test($scope.formData.date_start) && is_date.test($scope.formData.date_end)) {
       
       oTable.ajax.reload()
     }

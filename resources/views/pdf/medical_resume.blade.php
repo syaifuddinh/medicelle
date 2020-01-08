@@ -97,6 +97,8 @@
                     </span>
                 </p>
                 <p >SPESIALIS {{ strtoupper($medicalRecord->registration_detail->doctor->specialization->name) }}</p>
+                <br>
+                @include('pdf/letter_footer')   
             </div>
         </div>
  </div>

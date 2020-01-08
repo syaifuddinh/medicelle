@@ -338,7 +338,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       var lokasi = $scope.data.lokasi.find(x => x.id == $scope.bhp.lokasi_id)
       $scope.bhp.lokasi = lokasi
       bhp_datatable.row.add($scope.bhp).draw()
-      $scope.bhp = {}
+      $scope.bhp = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="bhp.date"]').val( $filter('fullDate')($scope.bhp.date))
+      }, 300)
   }
 
 
@@ -350,7 +355,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       var lokasi = $scope.data.lokasi.find(x => x.id == $scope.sewa_alkes.lokasi_id)
       $scope.sewa_alkes.lokasi = lokasi
       sewa_alkes_datatable.row.add($scope.sewa_alkes).draw()
-      $scope.sewa_alkes = {}
+      $scope.sewa_alkes = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="sewa_alkes.date"]').val( $filter('fullDate')($scope.sewa_alkes.date))
+      }, 300)
   }
 
 
@@ -362,7 +372,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       var lokasi = $scope.data.lokasi.find(x => x.id == $scope.sewa_ruangan.lokasi_id)
       $scope.sewa_ruangan.lokasi = lokasi
       sewa_ruangan_datatable.row.add($scope.sewa_ruangan).draw()
-      $scope.sewa_ruangan = {}
+      $scope.sewa_ruangan = {
+          date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="sewa_ruangan.date"]').val( $filter('fullDate')($scope.sewa_ruangan.date))
+      }, 300)
   }
 
   $scope.submitTreatment = function() {
@@ -388,10 +403,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitDrug = function() {
       drug_datatable.row.add($scope.drug).draw()
       $scope.drug = {
-          date : $scope.resume_date
+          date : $scope.resume_date,
+          is_new_signa1 : 1,
+          is_new_signa2 : 1
       }
       setTimeout(function () {    
-            $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+            $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
       }, 300)
   }
 
@@ -1135,11 +1152,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : resp => resp.signa1 ? $scope.data.signa1.find(x => x.id == resp.signa1).name : ''
+        render : function(resp) {
+            var is_id = /^(\d+)$/
+            return is_id.test(resp.signa1) ? $scope.data.signa1.find(x => x.id == resp.signa1).name : resp.signa1
+        } 
       },
       { 
         data : null,
-        render : resp => resp.signa2 ?  $scope.data.signa2.find(x => x.id == resp.signa2).name : ''
+        render : function(resp) {
+            var is_id = /^(\d+)$/
+            return is_id.test(resp.signa2) ? $scope.data.signa2.find(x => x.id == resp.signa2).name : resp.signa2
+        }
       },
 
       {
@@ -1322,9 +1345,24 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         pain_score : 0,
         additional : {}
       }
-      $scope.sewa_alkes = {}
-      $scope.sewa_ruangan = {}
-      $scope.bhp = {}
+      $scope.sewa_alkes = {        
+        date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="sewa_alkes.date"]').val( $filter('fullDate')($scope.sewa_alkes.date))
+      }, 300)
+      $scope.sewa_ruangan = {        
+        date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="sewa_ruangan.date"]').val( $filter('fullDate')($scope.sewa_ruangan.date))
+      }, 300)
+      $scope.bhp = {
+        date : $scope.resume_date
+      }
+      setTimeout(function () {    
+            $('[ng-model="bhp.date"]').val( $filter('fullDate')($scope.bhp.date))
+      }, 300)
       $scope.schedule = {}
       $scope.research = {}
       $scope.diagnostic = {
@@ -1340,7 +1378,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
       }, 300)
       $scope.drug = {
-        date : $scope.resume_date
+        date : $scope.resume_date,
+        is_new_signa1 : 1,
+        is_new_signa2 : 1
       }
       setTimeout(function () {    
             $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))

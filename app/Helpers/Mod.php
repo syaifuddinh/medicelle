@@ -26,4 +26,9 @@ class Mod {
         $company = Setting::whereName('company')->first();
         return $company != null ? $company->content : json_decode('{}');
     }
+
+    public static function finance() {
+        $finance = Setting::whereName('finance')->first();
+        return $finance != null ? $finance->content : json_decode('{}');
+    }
 }

@@ -3,6 +3,9 @@
 <!-- /top navigation -->
 
 <!-- page content -->
+<script>
+    asuransi_rate_percentage = {{ Mod::finance()->asuransi_rate_percentage ?? 0 }}
+</script>
 <div class="right_col" role="main" ng-controller="cashierShow" ng-cloak>
     <!-- top tiles -->
 
@@ -12,10 +15,10 @@
             <div class="dashboard_graph">
 
                 <div class="row x_title">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <span class='pull-right' ng-show='formData.registration_id'>
                             
                             <a href='#' ng-show='formData.status != 1' class='btn btn-sm btn-primary'><i class='fa fa-credit-card'></i> <% formData.status_name %></a>
@@ -73,7 +76,7 @@
                                             <th style='width:10%'>Qty</th>
                                             <th style='width:15%'>Harga</th>
                                             <th style='width:10%'>Diskon(%)</th>
-                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> 10%</button></th>
+                                            <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> {{ Mod::finance()->asuransi_rate_percentage ?? 0 }}%</button></th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

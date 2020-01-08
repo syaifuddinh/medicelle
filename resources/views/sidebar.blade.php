@@ -7,6 +7,7 @@
                       <li><a><i class="fa fa-gear"></i> Setting & User <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                           <li><a href="{{ route('setting.company') }}">Perusahaan</a></li>
+                          <li><a href="{{ route('setting.finance') }}">Keuangan</a></li>
                           <li><a href="{{ route('user.index') }}">User</a></li>
                           <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
                           <li><a href="{{ route('grup_nota.index') }}">Grup Nota</a></li>

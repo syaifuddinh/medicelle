@@ -219,7 +219,7 @@ $scope.countTotal = function() {
     }
     for(grup_nota in detail) {
         for(index in detail[grup_nota]) {
-            increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? 10 : 0 
+            increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
             gross = unit.qty * unit.debet;
             gross += (gross * (increase_rate/100))

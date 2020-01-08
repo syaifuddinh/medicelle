@@ -32,18 +32,33 @@
                                 
                                 <div class="form-group col-md-4">
                                     <label>Signa 1</label>
-                                    <select class="form-control" data-placeholder-text-single="'Pilih signa 1'" chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.group.name  for c in data.signa1" ng-model="drug.signa1">
-                                        <option value=""></option>
-                                    </select>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" ng-click='drug.is_new_signa1 = !drug.is_new_signa1'>
+                                            <i class="fa fa-pencil" ng-show='!drug.is_new_signa1'></i>
+                                            <i class="fa fa-close" ng-show='drug.is_new_signa1'></i>
+                                        </div>
+                                        <span ng-show='!drug.is_new_signa1'>
+                                                <select class="form-control" data-placeholder-text-single="'Pilih signa 1'" chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.group.name  for c in data.signa1" ng-model="drug.signa1">
+                                                    <option value=""></option>
+                                                </select>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model='drug.signa1' ng-show='drug.is_new_signa1'>
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>Signa 2</label>
                                     <div class="input-group">
-                                        
-                                        <select class="form-control" data-placeholder-text-single="'Pilih signa 2'" chosen allow-single-deselect="false" ng-options="c.id as c.name for c in data.signa2" ng-model="drug.signa2">
-                                            <option value=""></option>
-                                        </select>
+                                        <div class="input-group-addon" ng-click='drug.is_new_signa2 = !drug.is_new_signa2'>
+                                            <i class="fa fa-pencil" ng-show='!drug.is_new_signa2'></i>
+                                            <i class="fa fa-close" ng-show='drug.is_new_signa2'></i>
+                                        </div>
+                                        <span ng-show='!drug.is_new_signa2'>
+                                                <select class="form-control" data-placeholder-text-single="'Pilih signa 2'" chosen allow-single-deselect="false" ng-options="c.id as c.name for c in data.signa2" ng-model="drug.signa2">
+                                                    <option value=""></option>
+                                                </select>
+                                        </span>
+                                        <input type="text" class="form-control" ng-model='drug.signa2' ng-show='drug.is_new_signa2'>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitDrug()' ng-disabled='!drug.item_id'><i class="fa fa-check"></i></button>
                                         </div>

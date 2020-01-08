@@ -22,7 +22,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('user', 'UserController');
 
         Route::get('setting/company', 'SettingController@company');
+        Route::get('setting/finance', 'SettingController@finance');
         Route::put('setting/store_company', 'SettingController@store_company');
+        Route::put('setting/store_finance', 'SettingController@store_finance');
         Route::post('setting/store_logo', 'SettingController@store_logo');
     });
 });

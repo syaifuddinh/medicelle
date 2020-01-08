@@ -43,6 +43,9 @@ class RegistrationDetail extends Model
                 $treatments = $medicalRecord->treatment;
                 $diagnostics = $medicalRecord->diagnostic;
                 $drugs = $medicalRecord->drug;
+                $bhp = $medicalRecord->bhp;
+                $sewa_ruangan = $medicalRecord->sewa_ruangan;
+                $sewa_alkes = $medicalRecord->sewa_alkes;
                 DB::beginTransaction();
                 foreach($treatments as $value) {
                     InvoiceDetail::create([
@@ -67,6 +70,33 @@ class RegistrationDetail extends Model
                     ]);
                 }
                 foreach($drugs as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($bhp as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_ruangan as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_alkes as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,

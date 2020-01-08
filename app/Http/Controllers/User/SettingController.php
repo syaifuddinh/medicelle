@@ -62,6 +62,23 @@ class SettingController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
+    public function store_finance(Request $request)
+    {
+        DB::beginTransaction();
+        $setting = Setting::whereName('finance');
+        $json = $request->finance;
+        $content = $setting->first()->content;
+        foreach($json as $key => $unit) {
+            $content->{$key} = $unit;
+        } 
+
+        $setting->update([
+            'content' => json_encode($content)
+        ]);   
+        DB::commit();
+        return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
+    }
+
     public function store_logo(Request $request) {
         $filename = '';
         if($request->hasFile('logo')) {
@@ -87,6 +104,13 @@ class SettingController extends Controller
         $company = Setting::whereName('company')->first()->content;
         
         return Response::json($company, 200);
+    }
+
+    public function finance()
+    {
+        $finance = Setting::whereName('finance')->first()->content;
+        
+        return Response::json($finance, 200);
     }
 
     /**

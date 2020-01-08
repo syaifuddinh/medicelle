@@ -83,7 +83,10 @@ Route::name('price.')->prefix('price')->group(function(){
     })->name('show');
 });
 Route::name('setting.')->prefix('setting')->group(function(){
-    Route::get('/', function (){
+    Route::get('/company', function (){
         return view('user/setting/company');
     })->name('company');
+    Route::get('/finance', function (){
+        return view('user/setting/finance');
+    })->name('finance');
 });
