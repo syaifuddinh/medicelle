@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use Mod;
 
 class Invoice extends Model
 {

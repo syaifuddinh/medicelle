@@ -94,17 +94,21 @@ class InvoiceDetail extends Model
                 $reduksiDetail->save();
             }
 
-            if($invoiceDetail->is_item == 1 && $invoiceDetail->invoice->asuransi_percentage > 0) {
-                $latestAsuransi = InvoiceDetail::whereIsAsuransi(1)->whereInvoiceDetailId($invoiceDetail->id)->first();
-                if($latestAsuransi == null) {
+            if($invoiceDetail->is_item == 1) {
+                $invoice = Invoice::find($invoiceDetail->invoice_id);
+                if($invoice->asuransi_percentage > 0) {
 
-                    $asuransiDetail = new InvoiceDetail();
-                    $asuransiDetail->invoice_id = $invoiceDetail->invoice_id;
-                    $asuransiDetail->qty = $invoiceDetail->qty;
-                    $asuransiDetail->debet = $$invoiceDetail->debet * $invoiceDetail->invoice->asuransi_percentage / 100;
-                    $asuransiDetail->is_asuransi = 1;
-                    $asuransiDetail->invoice_detail_id = $invoiceDetail->id;
-                    $asuransiDetail->save();
+                    $latestAsuransi = InvoiceDetail::whereIsAsuransi(1)->whereInvoiceDetailId($invoiceDetail->id)->first();
+                    if($latestAsuransi == null) {
+
+                        $asuransiDetail = new InvoiceDetail();
+                        $asuransiDetail->invoice_id = $invoiceDetail->invoice_id;
+                        $asuransiDetail->qty = $invoiceDetail->qty;
+                        $asuransiDetail->debet = $invoiceDetail->debet * $invoice->asuransi_percentage / 100;
+                        $asuransiDetail->is_asuransi = 1;
+                        $asuransiDetail->invoice_detail_id = $invoiceDetail->id;
+                        $asuransiDetail->save();
+                    }
                 }
             }
 

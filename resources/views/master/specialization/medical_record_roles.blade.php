@@ -18,7 +18,7 @@
             <table class="table" id='medical_record_doctor_roles_table'>
                 <thead>
                     <tr>
-                        <th>Hak akses</th> 
+                        <th style='width:90%'>Hak akses</th> 
                         <th class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
                             <i class="fa fa-pencil"></i>
                         </th>
@@ -32,7 +32,7 @@
         <div id="nurse" class='tab-pane fade roles_container'>
             <table class="table" id='medical_record_nurse_roles_table'>
                 <tr>
-                        <th>Hak akses</th> 
+                        <th  style='width:90%'>Hak akses</th> 
                         <th  class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
                             <i class="fa fa-pencil"></i>
                         </th>
