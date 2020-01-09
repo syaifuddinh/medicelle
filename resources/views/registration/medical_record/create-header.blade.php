@@ -117,7 +117,7 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                         <nav style='margin-bottom:2mm'>
                             <div class="pull-right">
-                                <div class="form-group">
+                                <div class="form-group" id='reduksi_form_group'>
                                     <label class='col-md-3' style="margin-top:1.5mm">Reduksi(%)</label>
 
                                     <div class="col-md-8">

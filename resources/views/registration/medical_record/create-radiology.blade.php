@@ -2,49 +2,54 @@
                           
                       </nav>
                         <h2>Daftar Pemeriksaan Radiologi</h2>
-                        <div class="row">
-                            <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-6">
-                                    
-                                    <label>Tanggal pemeriksaaan</label>
-                                    <input type="text" class='form-control' ng-model="research.date"  datepick>
+                        <div id='role_layer' style="position:relative">
+                                @if(Specialization::readonly('radiologi') == 1)
+                                    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
+                                @endif
+                                <div class="row">
+                                    <div class="col-md-12" style='display:flex'>
+                                        <div class="form-group col-md-6">
+                                            
+                                            <label>Tanggal pemeriksaaan</label>
+                                            <input type="text" class='form-control' ng-model="research.date"  datepick>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Jenis pemeriksaan</label>
+                                            <input type="text" ng-model='research.name' class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style='display:flex'>
+                                        <div class="form-group col-md-6">
+                                            <label>Tanggal hasil</label>
+                                            <input type="text" class='form-control' ng-model="research.result_date"  datepick>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>File</label>
+                                            <input type="file" name='file' id='file'>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style='display:flex'>
+                                        <div class="form-group col-md-6">
+                                            <button type='button' class='btn btn-sm btn-success submitButton' ng-click='submitResearch("radiology")' ng-disabled='!research.name || disBtn'><i class="fa fa-check"></i></button> </div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label>Jenis pemeriksaan</label>
-                                    <input type="text" ng-model='research.name' class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-6">
-                                    <label>Tanggal hasil</label>
-                                    <input type="text" class='form-control' ng-model="research.result_date"  datepick>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>File</label>
-                                    <input type="file" name='file' id='file'>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-6">
-                                    <button type='button' class='btn btn-sm btn-success submitButton' ng-click='submitResearch("radiology")' ng-disabled='!research.name || disBtn'><i class="fa fa-check"></i></button> </div>
-                            </div>
-                        </div>
 
-                        <div class="row" style='margin-top:4mm'>
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id='radiology_datatable'>
-                                    <thead>
-                                        <tr>
-                                            <td>Tanggal pemeriksaan</td>
-                                            <td>Jenis pemeriksaan</td>
-                                            <td>Tanggal hasil</td>
-                                            <td>File</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
+                                <div class="row" style='margin-top:4mm'>
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered" id='radiology_datatable'>
+                                            <thead>
+                                                <tr>
+                                                    <td>Tanggal pemeriksaan</td>
+                                                    <td>Jenis pemeriksaan</td>
+                                                    <td>Tanggal hasil</td>
+                                                    <td>File</td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
                         
                         <div class="ln_solid"></div>

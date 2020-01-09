@@ -42,6 +42,20 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
     $compile(angular.element($(".ginekologi, .disease")).contents())($scope)
 
+    // Pengaturan hak akses
+    var role_layer = $('#role_layer')
+    var role_cover
+    var role_message
+    if(role_layer.length > 0) {
+        role_cover = role_layer.find('[style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"]')
+        if(role_cover.length > 0) {
+            $("[ng-click='reset()']").hide()
+            $("button[type='submit']").hide()
+            $("#reduksi_form_group").hide()
+            role_message = $('<p class="text-primary" style="margin-bottom:6mm"><b><i class="fa fa-info-circle"></i> Anda hanya diizinkan untuk melihat data</b></p>')
+            role_layer.before(role_message)
+        }
+    }
 
     $scope.backtohome = function() {
         var home_url = baseUrl + '/medical_record/polyclinic/' + $scope.patient.id + '/patient';  

@@ -17,7 +17,7 @@ class Polyclinic extends Model
         static::creating(function(Polyclinic $polyclinic){
             if($polyclinic->code == null || $polyclinic->code == '') {
                 if(strlen($polyclinic->name) > 2) {
-                    $code = strtoupper($polyclinic->name[0] . $polyclinic->name[1]);
+                    $code = strtoupper($polyclinic->name[0] . $polyclinic->name[1] . $polyclinic->name[2]);
                     $latestPolyclinic = Polyclinic::whereRaw("code LIKE '$code%'")->first();
                     if($latestPolyclinic != null) {
                         $similarPolyclinic = Polyclinic::whereRaw("code LIKE '$code%'")->count('id');
@@ -31,7 +31,7 @@ class Polyclinic extends Model
         static::updating(function(Polyclinic $polyclinic){
             if($polyclinic->code == null || $polyclinic->code == '') {
                 if(strlen($polyclinic->name) > 2) {
-                    $code = strtoupper($polyclinic->name[0] . $polyclinic->name[1]);
+                    $code = strtoupper($polyclinic->name[0] . $polyclinic->name[1] . $polyclinic->name[2]);
                     $latestPolyclinic = Polyclinic::whereRaw("code LIKE '$code%'")->first();
                     if($latestPolyclinic != null) {
                         $similarPolyclinic = Polyclinic::whereRaw("code LIKE '$code%'")->count('id');

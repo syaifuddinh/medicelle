@@ -19,11 +19,11 @@
                 <thead>
                     <tr>
                         <th style='width:90%'>Hak akses</th> 
-                        <th class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
-                            <i class="fa fa-pencil"></i>
-                        </th>
                         <th  class='text-right' title='Hanya diizinkan untuk melihat data'>
                             <i class="fa fa-file-text-o"></i>
+                        </th>
+                        <th class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
+                            <i class="fa fa-pencil"></i>
                         </th>
                     </tr>
                 </thead>
@@ -33,11 +33,11 @@
             <table class="table" id='medical_record_nurse_roles_table'>
                 <tr>
                         <th  style='width:90%'>Hak akses</th> 
-                        <th  class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
-                            <i class="fa fa-pencil"></i>
-                        </th>
                         <th  class='text-right' title='Hanya diizinkan untuk melihat data'>
                             <i class="fa fa-file-text-o"></i>
+                        </th>
+                        <th  class='text-right' title='Diizinkan untuk melihat dan mengubah data'>
+                            <i class="fa fa-pencil"></i>
                         </th>
                     </tr>
             </table>

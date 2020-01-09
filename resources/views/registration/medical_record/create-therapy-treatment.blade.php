@@ -4,53 +4,58 @@
                       </nav>
                         <div class="ln_solid"></div>
                         <h2>Daftar tindakan</h2>
-                        <div class="row">
-                            <div class="col-md-12" style='display:flex'>
-                                <div class="form-group col-md-4">
-                                    
-                                    <label>Tanggal</label>
-                                    <input type="text" class='form-control' ng-model="treatment.date"  datepick>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Tindakan / jenis pemeriksaan</label>
-                                    <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="treatment.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2 mg-r2">
-                                    <label>Qty</label>
-                                    <input type="text" class='form-control' ng-model="treatment.qty" jnumber2 only-num>
-                                </div>
-                                <div class="form-group col-md-3 mg-r2">
+                        <div id='role_layer' style="position:relative">
+                                @if(Specialization::readonly('tindakan') == 1)
+                                    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
+                                @endif
+                                <div class="row">
+                                    <div class="col-md-12" style='display:flex'>
+                                        <div class="form-group col-md-4">
+                                            
+                                            <label>Tanggal</label>
+                                            <input type="text" class='form-control' ng-model="treatment.date"  datepick>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Tindakan / jenis pemeriksaan</label>
+                                            <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="treatment.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2 mg-r2">
+                                            <label>Qty</label>
+                                            <input type="text" class='form-control' ng-model="treatment.qty" jnumber2 only-num>
+                                        </div>
+                                        <div class="form-group col-md-3 mg-r2">
 
-                                    <label>Reduksi(%)</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='treatment.reduksi' ng-value='formData.reduksi'  maxlength='2' only-num>
-                                        <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitTreatment()' ng-disabled='!treatment.item_id'><i class="fa fa-check"></i></button>
+                                            <label>Reduksi(%)</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" ng-model='treatment.reduksi' ng-value='formData.reduksi'  maxlength='2' only-num>
+                                                <div class="input-group-btn">
+                                                    <button type='button' class='btn btn-success' ng-click='submitTreatment()' ng-disabled='!treatment.item_id'><i class="fa fa-check"></i></button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-
+                                    
                                 </div>
-                            </div>
-                            
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered" id='treatment_datatable'>
-                                    <thead>
-                                        <tr>
-                                            <td>Tanggal</td>
-                                            <td>Tindakan / jenis pemeriksaan</td>
-                                            <td>Qty</td>
-                                            <td>Reduksi</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered" id='treatment_datatable'>
+                                            <thead>
+                                                <tr>
+                                                    <td>Tanggal</td>
+                                                    <td>Tindakan / jenis pemeriksaan</td>
+                                                    <td>Qty</td>
+                                                    <td>Reduksi</td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
                         
                         <div class="ln_solid"></div>

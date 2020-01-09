@@ -21,9 +21,9 @@ app.controller('specializationShow', ['$scope', '$http', '$rootScope', '$compile
                     medical_record_nurse_roles_table.append(row.clone())
                     for(y in roles.child) {
                         role = roles.child[y]
-                        row = $('<tr><td style="padding-left:10mm">' + role.label + '</td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.doctor_roles.' + role.name + '" ng-true-value="1" ng-false-value="0"></label><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.doctor_roles.' + role.name + '_readonly" ng-true-value="1" ng-false-value="0"></label></td></tr>')
+                        row = $('<tr><td style="padding-left:10mm">' + role.label + '</td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.doctor_roles.' + role.name + '" ng-true-value="1" ng-false-value="0"></label><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.doctor_roles.' + role.name + '_editable" ng-true-value="1" ng-false-value="0"></label></td></tr>')
                         medical_record_doctor_roles_table.append(row)
-                        row = $('<tr><td style="padding-left:10mm">' + role.label + '</td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.nurse_roles.' + role.name + '" ng-true-value="1" ng-false-value="0"></label></td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.nurse_roles.' + role.name + '_readonly" ng-true-value="1" ng-false-value="0"></label></td></tr>')
+                        row = $('<tr><td style="padding-left:10mm">' + role.label + '</td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.nurse_roles.' + role.name + '" ng-true-value="1" ng-false-value="0"></label></td><td class="text-right"><label class="radio-inline"><input type="checkbox" ng-model="formData.nurse_roles.' + role.name + '_editable" ng-true-value="1" ng-false-value="0"></label></td></tr>')
                         medical_record_nurse_roles_table.append(row)
                     }
                 }

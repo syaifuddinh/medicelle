@@ -4,21 +4,26 @@
                       </nav>
                         <div class="ln_solid"></div>
                         <h2>Pemeriksaan rectum & anal canal</h2>
+                        
+                        <div id='role_layer' style="position:relative">
+                                @if(Specialization::readonly('rectum') == 1)
+                                    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
+                                @endif
+                                <div class="row">
+                                    <div class="col-md-12">
 
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                 <div class="form-group">
-                                    <label class="col-md-4 col-xs-12">Keterangan
-                                    </label>
-                                    <div class="col-md-12 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.rectum_description'></textarea>
+                                         <div class="form-group">
+                                            <label class="col-md-4 col-xs-12">Keterangan
+                                            </label>
+                                            <div class="col-md-12 col-xs-12">
+                                                <textarea class="form-control" ng-model='formData.rectum_description'></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                
+                                <div class="ln_solid"></div>
                         </div>
-                        
-                        <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="btn-group pull-right">

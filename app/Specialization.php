@@ -18,7 +18,7 @@ class Specialization extends Model
         static::creating(function(Specialization $specialization){
             if($specialization->code == null || $specialization->code == '') {
                 if(strlen($specialization->name) > 2) {
-                    $code = strtoupper($specialization->name[0] . $specialization->name[1]);
+                    $code = strtoupper($specialization->name[0] . $specialization->name[1] . $specialization->name[2]);
                     $latestSpecialization = Specialization::whereRaw("code LIKE '$code%'")->first();
                     if($latestSpecialization != null) {
                         $similarSpecialization = Specialization::whereRaw("code LIKE '$code%'")->count('id');
@@ -32,7 +32,7 @@ class Specialization extends Model
         static::updating(function(Specialization $specialization){
             if($specialization->code == null || $specialization->code == '') {
                 if(strlen($specialization->name) > 2) {
-                    $code = strtoupper($specialization->name[0] . $specialization->name[1]);
+                    $code = strtoupper($specialization->name[0] . $specialization->name[1] . $specialization->name[2]);
                     $latestSpecialization = Specialization::whereRaw("code LIKE '$code%'")->first();
                     if($latestSpecialization != null) {
                         $similarSpecialization = Specialization::whereRaw("code LIKE '$code%'")->count('id');
@@ -102,6 +102,32 @@ class Specialization extends Model
                         if($contact->specialization->{$column}->{$medical_record_part} == 1) {
                             $is_allow = 1;
                         } 
+                    }
+                }
+            }
+        }
+
+        return $is_allow;
+    }
+
+    public static function readonly($medical_record_part) {
+        $user = Auth::user();
+        $is_allow = $user->is_admin == 1 ? 0 : 1;
+        if($user->contact) {
+            $contact = $user->contact;
+            if($contact->specialization) {
+                if($contact->is_doctor == 1 || $contact->is_nurse == 1 || $contact->is_nurse_helper == 1) {
+                    if($contact->is_doctor == 1) {
+                        $column = 'doctor_roles';
+                    } else {
+                        $column = 'nurse_roles';                        
+                    }
+                    if(isset($contact->specialization->{$column}->{$medical_record_part})) {
+                        if($contact->specialization->{$column}->{$medical_record_part} == 1 && 0 == ($contact->specialization->{$column}->{$medical_record_part . '_editable'} ?? 0)) {
+                            $is_allow = 1;
+                        } else {
+                            $is_allow = 0;                            
+                        }
                     }
                 }
             }
