@@ -45,10 +45,10 @@
 
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">No. Nota<span class="required">*</span>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">No. Nota
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">                                        
-                                        <input type="text" class='form-control' ng-model='formData.code' required='required'>
+                                        <input type="text" class='form-control' ng-model='formData.code' readonly>
                                     </div>
                                 </div>
 
@@ -226,7 +226,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="">Daftar Pasien</h4>
+                    <h4 class="modal-title" id="">Daftar Promo</h4>
                 </div>
                 <div class="modal-body">
 

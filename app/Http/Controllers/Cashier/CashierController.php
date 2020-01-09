@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Cashier;
 
 use App\Invoice;
 use App\InvoiceDetail;
+use App\Registration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use PDF;
 
 class CashierController extends Controller
 {
@@ -20,6 +22,14 @@ class CashierController extends Controller
     {
         $invoice = Invoice::whereStatus(2)->get();
         return Response::json($invoice, 200);
+    }
+
+    public function pdf($id)
+    {
+        $data = $this->fetch($id);
+        $registration = Registration::with('patient:id,phone', 'medical_record:id,code');
+        $pdf = PDF::loadview('pdf/cashier',['data'=>$data]);
+        return $pdf->stream('Pembayaran kasir.pdf');
     }
 
     /**
@@ -50,6 +60,11 @@ class CashierController extends Controller
      */
     public function show($id)
     {
+        $data = $this->fetch($id);
+        return Response::json($data, 200);
+    }
+
+    public function fetch($id) {
         $invoice = Invoice::with('promo:invoice_id,total_credit', 'promo_info:id,code,name', 'massive_discount:invoice_id,total_credit')->find($id);
         $invoice_detail = InvoiceDetail::with(
             'item:id,name', 
@@ -64,7 +79,8 @@ class CashierController extends Controller
             'invoice' => $invoice,
             'invoice_detail' => $invoice_detail
         ];
-        return Response::json($data, 200);
+
+        return $data;
     }
 
     /**
@@ -147,6 +163,8 @@ class CashierController extends Controller
         $invoice->status = 2;
         $invoice->gross = 0;
         $invoice->netto = 0;
+        $invoice->balance = 0;
+        $invoice->asuransi_value = 0;
         $invoice->qty = 0;
         $invoice->discount = 0;
         $invoice->save();

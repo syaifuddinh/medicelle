@@ -14,7 +14,9 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
     var path = window.location.pathname;
     
     $scope.title = 'Pembayaran';
-        id = path.replace(/.+\/(\d+)/, '$1');
+    id = path.replace(/.+\/(\d+)/, '$1');
+
+    $('#pdfDocument').attr('src', baseUrl + '/controller/cashier/cashier/' + id + '/pdf')
 
     invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
       ordering:false,

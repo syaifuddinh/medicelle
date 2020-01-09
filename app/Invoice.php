@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Mod;
+use DB;
 
 class Invoice extends Model
 {
@@ -40,6 +41,18 @@ class Invoice extends Model
         static::creating(function(Invoice $invoice) {
             $invoice->created_by = Auth::user()->id;
             $invoice->date = date('Y-m-d');
+
+            // Generate code
+            $current_month = date('m');
+            $current_year = date('Y');
+            $id = DB::table('invoices')
+            ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+            ->count('id') + 1;
+            $id = $id == null ? 1 : $id;
+            $id = str_pad($id, 5, '0', STR_PAD_LEFT);
+            $code = 'NJ-' . date('dm') . '-' . $id;
+
+            $invoice->code = $code;
         });
 
     }

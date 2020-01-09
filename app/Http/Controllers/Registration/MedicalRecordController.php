@@ -12,6 +12,7 @@ use DB;
 use Str;
 use File;
 use PDF;
+use Image;
 
 class MedicalRecordController extends Controller
 {
@@ -429,6 +430,25 @@ class MedicalRecordController extends Controller
             });
         }
         DB::commit();
+
+        return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
+    }
+
+    public function store_signature(Request $request, $id, $flag) {
+        $medical_record = MedicalRecord::findOrFail($id);
+        $filename = '';
+        if($request->hasFile($flag . '_visual')) {
+            if(null != ($medical_record->additional->{$flag . '_visual'} ?? null)) {
+                $base_url = asset('files') . '/';
+                $file = str_replace($base_url, '', $medical_record->additional->{$flag . '_visual'});
+                File::delete(public_path('files/' . $file));
+            }
+            $filename = date('YmdHis') . Str::random(5) . '.png';
+            Image::make( file_get_contents( $request->{$flag . '_visual'}))->save(public_path('files/' . $filename));
+        }
+        $additional = ["$flag" . '_visual' => $filename];
+        $medical_record->additional = $additional;
+        $medical_record->save();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }

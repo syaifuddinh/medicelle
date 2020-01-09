@@ -11,8 +11,15 @@
 
 
     <div class="row">
+
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="dashboard_graph">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#detail">Detail</a></li>
+                <li><a data-toggle="tab" href="#cetakan">Cetakan</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="detail" class="tab-pane fade in active">
+                    <div class="dashboard_graph">
 
                 <div class="row x_title">
                     <div class="col-md-5">
@@ -39,7 +46,7 @@
                                     <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">Tanggal
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-<% formData.date | fullDate %>
+                            <% formData.date | fullDate %>
                                     </div>
                                 </div>
 
@@ -48,7 +55,7 @@
                                     <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">No. Nota
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">                                        
-<% formData.code %>
+                        <% formData.code %>
                                     </div>
                                 </div>
 
@@ -57,7 +64,7 @@
                                     <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">Keterangan
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">                                        
-<% formData.description %>
+                        <% formData.description %>
                                     </div>
                                 </div>
 
@@ -123,7 +130,7 @@
                                             <th></th>
                                             <th  colspan='2' class='text-right' style='padding-top:4mm'>Dibayar</th>
                                             <th class='text-right' title='Nominal yang terbayar'>
-<% formData.paid | number %>
+                    <% formData.paid | number %>
                                             </th>
                                         </tr>
                                         <tr>
@@ -156,7 +163,7 @@
                                     <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-<% formData.payment_type %>
+                <% formData.payment_type %>
                                     </div>
                                 </div>
 
@@ -165,7 +172,7 @@
                                     <label class="col-md-12 col-xs-12" for="first-name">Cara bayar
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-<% formData.payment_method %>
+                <% formData.payment_method %>
 
 
 
@@ -183,7 +190,7 @@
                                     <label class="col-md-12 col-xs-12">Keterangan promo
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">                                        
-<% formData.promo_description %>
+                            <% formData.promo_description %>
                                     </div>
                                 </div>
                             </div>
@@ -206,6 +213,12 @@
 
                 <div class="clearfix"></div>
             </div>
+                </div>
+                <div id="cetakan" class="tab-pane fade">
+                    <embed id='pdfDocument' style='width:100%;height:28cm'>
+                </div>
+            </div>
+            
         </div>
     </div>
 

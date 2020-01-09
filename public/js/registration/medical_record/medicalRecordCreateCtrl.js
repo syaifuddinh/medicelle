@@ -57,6 +57,104 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         }
     }
 
+    const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+     contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+      var blob = new Blob(byteArrays, {type: contentType});
+      return blob;
+  }
+
+    var signature_driver = $(".signature").jSignature({height:450, width:500, color:'blue'});
+    bodyImage = new Image()
+    bodyImage.onload = function() {
+        ctx.drawImage(bodyImage, 0, 0)
+    }
+    setTimeout(function () {
+
+        var canvas =  $('canvas')[0]
+        ctx = canvas.getContext('2d')
+        $scope.resetSignature()
+    }, 300)
+
+    $scope.resetSignature = function() {
+        $(".signature").jSignature('reset') 
+        if(path.indexOf('physique/head') > -1) {
+              bodySrc = baseUrl + '/images/kepala.bmp'
+        } else if(path.indexOf('physique/general') > -1) {
+              bodySrc = baseUrl + '/images/general.bmp'
+        } else if(path.indexOf('physique/breast') > -1) {
+              bodySrc = baseUrl + '/images/breast.bmp'
+        } else if(path.indexOf('physique/rectum') > -1) {
+              bodySrc = baseUrl + '/images/rectum.bmp'
+        }
+
+        bodyImage.src = bodySrc     
+    }
+
+    $scope.storeSignature = function() {
+        if(path.indexOf('physique/head') > -1) {
+              key = 'head'
+        } else if(path.indexOf('physique/general') > -1) {
+              key = 'general'
+        } else if(path.indexOf('physique/breast') > -1) {
+              key = 'breast'
+        } else if(path.indexOf('physique/rectum') > -1) {
+              key = 'rectum'
+        }
+        var fd = new FormData();
+        var signature = $('.signature').jSignature("getData", "image");
+        const contentType = signature[0];
+        const b64Data = signature[1];
+        const blob = b64toBlob(b64Data, contentType);
+        console.log({contentType, b64Data, blob} );
+        const body_visual = blob;
+        fd.append(key + '_visual', body_visual);
+        $('.submitButton').attr('disabled', 'disabled');
+        $.ajax({
+            'url':baseUrl + '/controller/registration/medical_record/' + id + '/store_signature/' + key,
+            contentType : false,
+            processData : false,
+            'type' : 'post',
+            data : fd,
+            success:function(data) {
+              toastr.success("Foto Berhasil Disimpan!");
+               $('.submitButton').removeAttr('disabled');
+               window.location.reload()
+            },
+            error : function(xhr) {
+              var resp = JSON.parse(xhr.responseText);
+                if (xhr.status==422) {
+                  var det="";
+                  angular.forEach(resp.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,resp.message);
+                } else {
+
+                   toastr.error(resp.message,"Error Has Found !");
+                }
+               $('.submitButton').removeAttr('disabled');
+            }
+          });
+    }
+
     $scope.backtohome = function() {
         var home_url = baseUrl + '/medical_record/polyclinic/' + $scope.patient.id + '/patient';  
         window.location = home_url

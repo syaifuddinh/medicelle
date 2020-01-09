@@ -245,12 +245,7 @@ $scope.registration = function() {
 
 $('#payButton').click(function(){
     $scope.pay = 1
-    if(!$scope.formData.code) {
-        toastr.error("No. Nota harus diisi")
-    } else {
-
-        $scope.submitForm()
-    }
+    $scope.submitForm()
 });
 $('#draftButton').click(function(){
     $scope.submitForm()
@@ -264,7 +259,7 @@ $scope.submitForm=function() {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-            window.location = baseUrl + '/cashier'          
+            window.location = baseUrl + '/cashier/' + id          
         }, 1000)
     }, function(error) {
         $rootScope.disBtn=false;

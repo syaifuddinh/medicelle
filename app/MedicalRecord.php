@@ -127,9 +127,21 @@ class MedicalRecord extends Model
     }
 
 
-    public function getAdditionalAttribute() {
+public function getAdditionalAttribute() {
         if(array_key_exists('additional', $this->attributes)) {
             $additional = json_decode($this->attributes['additional']);
+            if(null != ($additional->head_visual ?? null)) {
+                $additional->head_visual = asset('files/' . $additional->head_visual);
+            }
+            if(null != ($additional->general_visual ?? null)) {
+                $additional->general_visual = asset('files/' . $additional->general_visual);
+            }
+            if(null != ($additional->rectum_visual ?? null)) {
+                $additional->rectum_visual = asset('files/' . $additional->rectum_visual);
+            }
+            if(null != ($additional->breast_visual ?? null)) {
+                $additional->breast_visual = asset('files/' . $additional->breast_visual);
+            }
             return $additional;
         }
         return json_decode('{}');
@@ -140,6 +152,11 @@ class MedicalRecord extends Model
         $additional = $this->additional;
         foreach($json as $key => $unit) {
             $additional->{$key} = $unit;
+        } 
+        foreach($additional as $key => $unit) {
+            $base_url = asset('files') . '/';
+            $input = str_replace($base_url, '', $unit);
+            $additional->{$key} = $input;
         } 
         $this->attributes['additional'] = json_encode($additional); 
     }

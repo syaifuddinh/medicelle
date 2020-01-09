@@ -96,7 +96,7 @@ class InvoiceDetail extends Model
 
             if($invoiceDetail->is_item == 1) {
                 $invoice = Invoice::find($invoiceDetail->invoice_id);
-                if($invoice->asuransi_percentage > 0) {
+                if($invoice->payment_type == 'ASURANSI SWASTA' && $invoice->asuransi_percentage > 0) {
 
                     $latestAsuransi = InvoiceDetail::whereIsAsuransi(1)->whereInvoiceDetailId($invoiceDetail->id)->first();
                     if($latestAsuransi == null) {

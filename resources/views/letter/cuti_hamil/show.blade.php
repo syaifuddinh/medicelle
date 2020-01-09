@@ -13,7 +13,7 @@
 
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
-<div class="row">
+            <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="dashboard_graph">
 

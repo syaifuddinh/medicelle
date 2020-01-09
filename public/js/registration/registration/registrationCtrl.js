@@ -83,7 +83,7 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
   
   $scope.filter = function() {
     is_date = /\d+-\d+-\d+/
-    if(is_date.test($scope.formData.date_start) && is_date.test($scope.formData.date_end)) {
+    if(is_date.test($scope.formData.date_start) && is_date.test($scope.formData.date_end)  || !$scope.formData.date_end || !$scope.formData.date_start) {
       
       oTable.ajax.reload()
     }

@@ -4,6 +4,12 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
   var patient_head =  baseUrl + '/datatable/registration/'
   var patient_url;
   var flag
+  var currentDate = new Date()
+  var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
+  $scope.formData = {
+      'date_start' : date, 
+      'date_end' : date 
+  }
   if( path.indexOf('polyclinic') > -1) {
       patient_url = patient_head + 'polyclinic_registered'
       flag = 'polyclinic'
@@ -99,7 +105,10 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
   oTable.buttons().container().appendTo( '.export_button' );
 
   $scope.filter = function() {
-    oTable.ajax.reload()
+    is_date = /\d+-\d+-\d+/
+    if((is_date.test($scope.formData.date_start) && is_date.test($scope.formData.date_end)) || !$scope.formData.date_end || !$scope.formData.date_start) {
+        oTable.ajax.reload()
+    }
   }
 
   $scope.delete = function(id) {
