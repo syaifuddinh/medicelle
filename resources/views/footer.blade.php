@@ -159,6 +159,14 @@
                 'allow_show_discount' : {!! Auth::user()->allow_access('setting.discount.show') !!},
                 'allow_activate_discount' : {!! Auth::user()->allow_access('setting.discount.activate') !!},
                 'allow_destroy_discount' : {!! Auth::user()->allow_access('setting.discount.destroy') !!},
+
+                'allow_edit_registration' : {!! Auth::user()->allow_access('registration.edit') !!},
+                'allow_show_registration' : {!! Auth::user()->allow_access('registration.show') !!},
+                'allow_attend_registration' : {!! Auth::user()->allow_access('registration.attend') !!},
+                'allow_destroy_registration' : {!! Auth::user()->allow_access('registration.destroy') !!},
+
+                'allow_edit_cashier' : {!! Auth::user()->allow_access('cashier.edit') !!},
+                'allow_show_cashier' : {!! Auth::user()->allow_access('cashier.show') !!},
             }
 
             setInterval(function(){

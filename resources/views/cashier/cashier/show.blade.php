@@ -203,7 +203,9 @@
                                 <div class="btn-group">
 
                                     <button class="btn btn-default btn-sm" id='backButton' type="button">Kembali</button> 
-                                    <button class="btn btn-success btn-sm" ng-show='formData.status != 3' id='payButton' type="button">Bayar</button> 
+                                    @if(Auth::user()->allow_access('cashier.edit'))
+                                        <button class="btn btn-success btn-sm" ng-show='formData.status != 3' id='payButton' type="button">Bayar</button> 
+                                    @endif
                                 </div>
                             </div>
                         </div>

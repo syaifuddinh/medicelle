@@ -32,7 +32,13 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
       {
         data:null, 
         name:"registration.code",
-        render : resp => "<a class='' href='" + baseUrl + "/cashier/" + resp.id +  "'>" + resp.registration.code + "</a>"
+        render : function(resp) {
+            var url = '#'
+            if(roles['allow_show_cashier'] == 1) {
+                url = baseUrl + "/cashier/" + resp.id
+            } 
+            return "<a class='' href='" + url +  "'>" + resp.registration.code + "</a>"
+        } 
       },
       {data:"registration.medical_record.code", name:"registration.medical_record.code"},
       {
@@ -44,7 +50,13 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
       {
         data:null, 
         name:"registration.patient.name",
-        render: resp => "<a href='" + baseUrl + "/patient/" + resp.registration.patient_id +  "'>" + resp.registration.patient.name + "</a>"
+        render: function(resp) {
+            var url = '#'
+            if(roles['allow_show_patient'] == 1) {
+                url = baseUrl + "/patient/" + resp.registration.patient_id
+            }
+            return "<a href='" + url +  "'>" + resp.registration.patient.name + "</a>"
+        } 
       },
       {
         data: null, 
@@ -58,8 +70,8 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => (resp.status != 3 ? "<div class='btn-group'><a class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        render : resp => (resp.status != 3 ? "<div class='btn-group'><a allow_edit_cashier class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +
+        "<a class='btn btn-xs btn-default' allow_show_cashier href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

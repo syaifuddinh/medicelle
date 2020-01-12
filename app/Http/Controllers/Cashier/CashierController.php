@@ -27,7 +27,7 @@ class CashierController extends Controller
     public function pdf($id)
     {
         $data = $this->fetch($id);
-        $registration = Registration::with('patient:id,phone,name', 'medical_record:id,code,patient_type')->find($data['invoice']->registration_id);
+        $registration = Registration::with('patient:id,phone,name,patient_type', 'medical_record:id,code')->find($data['invoice']->registration_id);
         $pdf = PDF::loadview('pdf/cashier',['data'=>$data, 'registration' => $registration]);
         return $pdf->stream('Pembayaran kasir.pdf');
     }

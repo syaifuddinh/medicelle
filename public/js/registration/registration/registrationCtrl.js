@@ -29,7 +29,13 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
       {
         data:null,
         name:'code',
-        render: resp => "<a href='" + baseUrl + "/registration/" + resp.id +  "'>" + resp.code + "</a>"
+        render: function(resp) {
+            var url = '#';
+            if(roles['allow_show_registration'] == 1) {
+                url = baseUrl + "/registration/" + resp.id
+            }
+            return "<a href='" + url +  "'>" + resp.code + "</a>"
+        } 
       },
       {data:"medical_record.code", name:"medical_record.code", orderable:false, searchable:false},
       {
@@ -41,7 +47,13 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
       {
         data:null, 
         name:"patient.name", 
-        render: resp => "<a href='" + baseUrl + "/patient/" + resp.patient_id +  "'>" + resp.patient.name + "</a>"
+        render: function(resp) {
+          var url = '#';
+          if(roles['allow_show_patient'] == 1) {
+              url = baseUrl + "/patient/" + resp.patient_id
+          }
+          return "<a href='" + url +  "'>" + resp.patient.name + "</a>"
+        } 
       },
       {data:"patient.phone", name:"patient.phone", orderable:false, searchable:false},
       {
@@ -69,10 +81,10 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.status == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Batalkan'><i class='fa fa-trash-o'></i></button><button class='btn btn-xs btn-primary' ng-click='attend(" + resp.id + ")' title='Hadir'><i class='fa fa-check'></i></button><a class='btn btn-xs btn-success' href='" + baseUrl + "/registration/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a>"
+          resp.status == 1 ? "<button class='btn btn-xs btn-danger' allow_destroy_registration ng-click='delete(" + resp.id + ")' title='Batalkan'><i class='fa fa-trash-o'></i></button><button class='btn btn-xs btn-primary' allow_attend_registration ng-click='attend(" + resp.id + ")' title='Hadir'><i class='fa fa-check'></i></button><a allow_edit_registration class='btn btn-xs btn-success' href='" + baseUrl + "/registration/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a>"
           : ""
         ) +
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_show_registration class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

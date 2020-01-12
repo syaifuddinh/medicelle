@@ -17,8 +17,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-                            
-                            <a ng-if='formData.status == 1' href='{{ route("registration.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                            @if(Auth::user()->allow_access('registration.edit'))
+                                <a ng-if='formData.status == 1' href='{{ route("registration.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                            @endif
                             <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
                             <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
                         </div>
