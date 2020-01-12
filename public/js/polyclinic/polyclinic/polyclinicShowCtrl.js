@@ -4,8 +4,11 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
   $scope.data = {}
   var path = window.location.pathname
   id = path.replace(/.+\/(\d+)/, '$1');
+  
   $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
     $scope.formData = data.data
+    var assesment_url = $('#assesmentButton').attr('href') + '/' + data.data.assesment.id
+    $('#assesmentButton').attr('href', assesment_url)
     $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
       $scope.data.polyclinic = data.data
 

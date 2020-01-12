@@ -59,7 +59,9 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-
+<a href="#menu_toggle" class="anchor-scroll btn btn-md btn-primary" data-class-to="this" data-on-scroll="blur-effect" style='position:fixed;bottom: 7mm;right:9mm'>
+    <i class='fa fa-arrow-up'></i>
+</a>
 @include('footer')
 <script src="{{ asset('') }}js/registration/medical_record/medicalRecordCreateCtrl.js"></script>
 

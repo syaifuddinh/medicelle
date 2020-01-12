@@ -78,6 +78,7 @@
     <script src="{{ asset('') }}js/toastr.min.js"></script>
     <script src="{{ asset('') }}js/jquery.easy-autocomplete.min.js"></script>
     <script src="{{ asset('') }}js/chosen.jquery.js"></script>
+    <script src="{{ asset('') }}js/jquery.anchor-scroll.min.js"></script>
     
 
     
@@ -103,6 +104,17 @@
                 $('#listview').css('width', '100%')
                 $('[id*="_datatable"]').css('width', '100%')
             }, 500);
+
+            $('.anchor-scroll').anchorScroll({
+                scrollSpeed: 800, // scroll speed
+                offsetTop: 0, // offset for fixed top bars (defaults to 0)
+                onScroll: function () { 
+                  // callback on scroll start
+                },
+                scrollEnd: function () { 
+                  // callback on scroll end
+                }
+             });
             $(window).bind('keydown', function(e){
                 if(e.ctrlKey && e.which == 32) {
                     createButton = $('[href*="create"]')

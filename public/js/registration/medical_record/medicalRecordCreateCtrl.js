@@ -89,15 +89,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     setTimeout(function () {
 
         var canvas =  $('canvas')[0]
-        ctx = canvas.getContext('2d')
-        $scope.resetSignature()
+        if( $('canvas').length > 0 ) {
+            ctx = canvas.getContext('2d')
+            $scope.resetSignature()
+        }
     }, 300)
 
     $scope.resetSignature = function() {
         $(".signature").jSignature('reset') 
         if(path.indexOf('physique/head') > -1) {
               bodySrc = baseUrl + '/images/kepala.bmp'
-        } else if(path.indexOf('physique/general') > -1) {
+        } else if(path.indexOf('physique/surgical') > -1) {
               bodySrc = baseUrl + '/images/general.bmp'
         } else if(path.indexOf('physique/breast') > -1) {
               bodySrc = baseUrl + '/images/breast.bmp'
@@ -111,8 +113,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.storeSignature = function() {
         if(path.indexOf('physique/head') > -1) {
               key = 'head'
-        } else if(path.indexOf('physique/general') > -1) {
-              key = 'general'
+        } else if(path.indexOf('physique/surgical') > -1) {
+              key = 'surgical'
         } else if(path.indexOf('physique/breast') > -1) {
               key = 'breast'
         } else if(path.indexOf('physique/rectum') > -1) {

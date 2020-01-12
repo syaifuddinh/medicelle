@@ -203,8 +203,8 @@
                             </div>
                             <div class="btn-group pull-right">
                              @if(Auth::user()->allow_update_assesment())
-                                <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => $patient_id]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
-                                <a id='assesmentButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-info btn-sm" >Isi assesment</a>                                
+                                <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => ""]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
+                                <a ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-info btn-sm" >Isi assesment</a>                                
                             @endif
 
                              @if(Auth::user()->allow_update_medical_record())

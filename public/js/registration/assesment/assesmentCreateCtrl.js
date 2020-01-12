@@ -41,6 +41,11 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
         });
   }
 
+  $scope.submitOne = function(key) {
+        $scope.silent = 1
+        $scope.submitForm(0, key)
+    }
+
   $scope.showAssesment = function() {
       $('#assesmentModal').modal()
   }
@@ -141,6 +146,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
           $scope.pain_status = 'nyeri yang tidak terbayangkan dan tidak dapat diungkapkan sampai tidak sadarkan diri'
       }
       $compile(angular.element($('#pain_status')[0]).contents())($scope);
+      $scope.submitOne('pain_score')
   }
 
   $scope.changeRiskLevel = function() {
@@ -464,7 +470,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
     family_disease_history_datatable.row(tr).remove().draw()
   }
 
-    $scope.submitForm=function() {
+    $scope.submitForm=function(is_massive = 1, key) {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/registration/assesment/' + id;
       var method = 'put';
@@ -481,29 +487,52 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
       } else if(step == 4) {
           $scope.formData.imunisasi_history = imunisasi_history_datatable.data().toArray()
       }
+
+      if(is_massive == 1) {
+          submitData = $scope.formData
+      } else {
+          submitData = {}
+          is_additional = /([a-z_]+)\.([a-z_]+)/
+          if(is_additional.test(key)) {
+              primary = key.replace(is_additional, '$1')
+              second = key.replace(is_additional, '$2')
+              submitData[primary] = {}
+              submitData[primary][second] = $scope.formData[primary][second]
+
+          } else {
+
+            submitData[key] = $scope.formData[key]
+          }
+      }
+
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
-        toastr.success("Data Berhasil Disimpan !");
-        if($scope.back == 1) {
+        if(is_massive == 1) {
+            toastr.success("Data Berhasil Disimpan !");
+            if($scope.back == 1) {
 
-            setTimeout(function () {
-              window.location = baseUrl + '/assesment/step/' + (step - 1) + '/edit/' + id          
-            }, 1000)
-        } else {
-            if($scope.finished != 1) {
-              
-              setTimeout(function () {
-                window.location = baseUrl + '/assesment/step/' + (step + 1) + '/edit/' + id          
-              }, 1000)
+                setTimeout(function () {
+                  window.location = baseUrl + '/assesment/step/' + (step - 1) + '/edit/' + id          
+                }, 1000)
             } else {
-              setTimeout(function () {
-                window.location = baseUrl + '/assesment/' + $scope.patient.id + '/patient/'          
-              }, 1000)
+                if($scope.finished != 1) {
+                  
+                  setTimeout(function () {
+                    window.location = baseUrl + '/assesment/step/' + (step + 1) + '/edit/' + id          
+                  }, 1000)
+                } else {
+                  setTimeout(function () {
+                    window.location = baseUrl + '/assesment/' + $scope.patient.id + '/patient/'          
+                  }, 1000)
+
+                }
 
             }
-
         }
+        $scope.silent = 0
+        
       }, function(error) {
+        $scope.silent = 0
         $rootScope.disBtn=false;
         if (error.status==422) {
           var det="";

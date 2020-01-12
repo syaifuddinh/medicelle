@@ -85,7 +85,7 @@ class AssesmentController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        $assesment = Assesment::find($id);
+        $assesment = Assesment::findOrFail($id);
         $assesment->fill($request->all());
         $assesment->save();
 

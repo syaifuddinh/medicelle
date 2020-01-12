@@ -3,6 +3,7 @@ app.controller('keteranganSehat', ['$scope', '$compile', '$http', function($scop
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
+    order : [[0, 'desc']],
     ajax: {
       url : baseUrl+'/datatable/letter/keterangan_sehat',
       data : x => Object.assign(x, $scope.formData)

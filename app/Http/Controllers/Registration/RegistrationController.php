@@ -127,7 +127,8 @@ class RegistrationController extends Controller
             'pic:id,name', 
             'detail', 
             'medical_record:id,code',
-            'invoice:registration_id,status'
+            'invoice:registration_id,status',
+            'assesment:id,registration_id'
         )->find($id);
         return Response::json($registration, 200);
     }

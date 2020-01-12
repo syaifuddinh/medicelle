@@ -113,58 +113,6 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-xs-12">BB lahir
-                                            </label>
-                                            <div class="col-md-8 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" ng-model='formData.prebirth_weight' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("prebirth_weight")' only-num>
-                                                    <div class="input-group-addon">
-                                                        KG
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>     
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-xs-12">BB sekarang
-                                            </label>
-                                            <div class="col-md-8 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" ng-model='formData.postbirth_weight'  ng-change='submitOne("postbirth_weight")' class="form-control col-md-7 col-xs-12" only-num>
-                                                    <div class="input-group-addon">
-                                                        KG
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-xs-12">PB lahir
-                                            </label>
-                                            <div class="col-md-8 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" ng-model='formData.additional.pb_lahir' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_lahir")' only-num>
-                                                    <div class="input-group-addon">
-                                                        CM
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>     
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-xs-12">PB sekarang
-                                            </label>
-                                            <div class="col-md-8 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" ng-model='formData.additional.pb_sekarang' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_sekarang")' only-num>
-                                                    <div class="input-group-addon">
-                                                        CM
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
                                          <div class="form-group">
                                             <label class="control-label col-md-4 col-xs-12">Bacaan EKG
                                             </label>
@@ -176,21 +124,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div style='position:relative;'>
-                                            <div style="position:absolute;top:0;left:0;width:100%;height:100%;" ng-show='!is_fill_signature'></div>      
-                                            <div class="signature"  ng-show='is_fill_signature' style='width:20mm'></div>
-                                            <img src="<% formData.additional.general_visual %>" ng-show='!is_fill_signature && formData.additional.general_visual' alt="">
-                                            <img src="{{ asset('images/general.bmp') }}" ng-show='!is_fill_signature && !formData.additional.general_visual' alt="">
-                                        </div>
-                                        <div class="form-group" style='padding-bottom:7mm;padding-left:2mm'>
-                                            <div class="btn-group">
-                                                
-                                                <button type='button' class='btn btn-sm btn-danger' ng-click='resetSignature();is_fill_signature = 0' ng-show='is_fill_signature'>Batal</button>
-                                                <button type='button' class='btn btn-sm btn-success' ng-click='resetSignature();is_fill_signature = !is_fill_signature' ng-show='!is_fill_signature'>Ubah</button>
-                                                <button type='button' class='btn btn-sm btn-primary submitButton' ng-click='storeSignature();' ng-show='is_fill_signature'>Simpan</button>
-                                            </div>
-                                        </div>
-
                                          <div class="form-group">
                                             <label class="col-md-4 col-xs-12">Hasil USG
                                             </label>

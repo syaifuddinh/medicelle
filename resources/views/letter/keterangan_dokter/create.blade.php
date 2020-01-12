@@ -106,7 +106,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 
-                                                <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
+                                                <input type="text" class='form-control' ng-model='formData.age' ng-change='adjustEndDate()' maxlength='2' only-num>
                                                 <div class="input-group-addon">Hari</div>
                                             </div>
                                         </div>
@@ -120,11 +120,11 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" class='form-control' ng-model='formData.start_date' datepick>
+                                            <input type="text" class='form-control' ng-model='formData.start_date' ng-change='adjustEndDate()' datepick>
                                             <div class="input-group-addon">
                                               s/d
                                             </div>
-                                            <input type="text" class='form-control' ng-model='formData.end_date' datepick>
+                                            <input type="text" class='form-control' ng-model='formData.end_date' disabled datepick>
                                         </div>
                                     </div>
                                 </div>

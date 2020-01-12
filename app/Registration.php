@@ -152,6 +152,9 @@ class Registration extends Model
     public function medical_record_item() {
         return $this->hasMany('App\MedicalRecord');
     }
+    public function assesment() {
+        return $this->hasOne('App\Assesment', 'registration_id', 'id');
+    }
     public function polyclinic_registered() {
         $outp = $this->hasOne('App\RegistrationDetail', 'registration_id', 'id')->whereDestination('POLIKLINIK');
         $user = Auth::user();

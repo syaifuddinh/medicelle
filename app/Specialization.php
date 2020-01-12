@@ -103,6 +103,11 @@ class Specialization extends Model
                             $is_allow = 1;
                         } 
                     }
+                    if(isset($contact->specialization->{$column}->{$medical_record_part . '_editable'})) {
+                        if($contact->specialization->{$column}->{$medical_record_part . '_editable'} == 1) {
+                            $is_allow = 1;
+                        } 
+                    }
                 }
             }
         }

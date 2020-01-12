@@ -82,31 +82,31 @@
                                             <td>Riwayat jatuh</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.fallen" ng-value='25' ng-change='changeRiskLevel()'>
+                                                  <input type="radio" ng-model="formData.fallen" ng-value='25' ng-change='changeRiskLevel();submitOne("fallen")'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.fallen" ng-value='0' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.fallen" ng-value='0' ng-change='changeRiskLevel();submitOne("fallen")'>
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.fallen %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description' ></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.fallen_description' ng-change='submitOne("fallen_description")'></td>
                                         </tr>
                                         <tr>
                                             <td>Diagnosa sekunder</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='15' ng-change='changeRiskLevel()'>
+                                                  <input type="radio" ng-model="formData.secondary_diagnose" ng-value='15' ng-change='changeRiskLevel();submitOne("secondary_diagnose")'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.secondary_diagnose" ng-value='0' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.secondary_diagnose" ng-value='0' ng-change='changeRiskLevel();submitOne("secondary_diagnose")'>
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.secondary_diagnose %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.secondary_diagnose_description'></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.secondary_diagnose_description' ng-change='submitOne("secondary_diagnose_description")'></td>
                                         </tr>
                                         <tr>
                                             <td>Alat bantu</td>
@@ -117,18 +117,18 @@
                                                 </label>
                                                 <br>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='15' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.helper" ng-value='15' ng-change='changeRiskLevel();submitOne("helper")'>
                                                       <h5>Tongkat / walker</h5>
                                                 </label>
                                                 <br>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.helper" ng-value='0' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.helper" ng-value='0' ng-change='changeRiskLevel();submitOne("helper")'>
                                                       <h5>Kursi roda/tanpa alat bantu</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.helper %></td>
                                             <td>
-                                                <textarea class="form-control" ng-model='formData.helper_description'>
+                                                <textarea class="form-control" ng-model='formData.helper_description' ng-change='submitOne("helper_description")'>
                                                 </textarea>
                                             </td>
                                         </tr>
@@ -136,50 +136,50 @@
                                             <td>Pasien diinfus</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.infus" ng-value='20' ng-change='changeRiskLevel()'>
+                                                  <input type="radio" ng-model="formData.infus" ng-value='20' ng-change='changeRiskLevel();submitOne("infus")'>
                                                   <h5>Ya</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.infus" ng-value='0' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.infus" ng-value='0' ng-change='changeRiskLevel();submitOne("infus")'>
                                                       <h5>Tidak</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.infus %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.infus_description'></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.infus_description' ng-change='submitOne("infus_description")'></td>
                                         </tr>
                                         <tr>
                                             <td>Cara berjalan</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.walking" ng-value='20' ng-change='changeRiskLevel()'>
+                                                  <input type="radio" ng-model="formData.walking" ng-value='20' ng-change='changeRiskLevel();submitOne("walking")'>
                                                   <h5>Terganggu</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='10' ng-change='changeRiskLevel()'>
+                                                      <input type="radio" ng-model="formData.walking" ng-value='10' ng-change='changeRiskLevel();submitOne("walking")'>
                                                       <h5>Lemah</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                      <input type="radio" ng-model="formData.walking" ng-value='0'>
+                                                      <input type="radio" ng-model="formData.walking" ng-value='0' ng-change='changeRiskLevel();submitOne("walking")'>
                                                       <h5>Normal</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.walking %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.walking_description' ng-change='changeRiskLevel()'></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.walking_description' ng-change='changeRiskLevel();submitOne("walking_description")'></td>
                                         </tr>
                                         <tr>
                                             <td>Kondisi mental</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='15'>
+                                                  <input type="radio" ng-model="formData.mental" ng-value='15' ng-change='changeRiskLevel();submitOne("mental")'>
                                                   <h5>Keterbatasan daya ingat</h5>
                                                 </label>
                                                 <label class="radio-inline">
-                                                  <input type="radio" ng-model="formData.mental" ng-value='0' ng-change='changeRiskLevel()'>
+                                                  <input type="radio" ng-model="formData.mental" ng-value='0' ng-change='changeRiskLevel();submitOne("mental")'>
                                                   <h5>Normal</h5>
                                                 </label>
                                             </td>
                                             <td class="text-right"><% formData.mental %></td>
-                                            <td><input type="text" class="form-control" ng-model='formData.mental_description'></td>
+                                            <td><input type="text" class="form-control" ng-model='formData.mental_description' ng-change="submitOne('mental_description')"></td>
                                         </tr>
                                         <tfoot>
                                             <tr>

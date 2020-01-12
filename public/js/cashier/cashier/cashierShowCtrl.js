@@ -12,7 +12,9 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
     $scope.promo = 0
     $compile(angular.element($('tfoot')).contents())($scope);
     var path = window.location.pathname;
-    
+    if(window.location.hash == '#cetakan') {
+        $('[href="#cetakan"]').trigger('click')
+    }   
     $scope.title = 'Pembayaran';
     id = path.replace(/.+\/(\d+)/, '$1');
 

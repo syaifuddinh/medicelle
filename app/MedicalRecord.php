@@ -136,6 +136,9 @@ public function getAdditionalAttribute() {
             if(null != ($additional->general_visual ?? null)) {
                 $additional->general_visual = asset('files/' . $additional->general_visual);
             }
+            if(null != ($additional->surgical_visual ?? null)) {
+                $additional->surgical_visual = asset('files/' . $additional->surgical_visual);
+            }
             if(null != ($additional->rectum_visual ?? null)) {
                 $additional->rectum_visual = asset('files/' . $additional->rectum_visual);
             }

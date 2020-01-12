@@ -2,6 +2,7 @@ app.controller('layakTerbang', ['$scope', '$compile', '$http', function($scope, 
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
+    order : [[0, 'desc']],
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl+'/datatable/letter/layak_terbang',

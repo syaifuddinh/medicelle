@@ -3,6 +3,7 @@ app.controller('rujukanPasien', ['$scope', '$compile', '$http', function($scope,
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
+    order : [[0, 'desc']],
     ajax: {
       url : baseUrl+'/datatable/letter/rujukan_pasien',
       data : x => Object.assign(x, $scope.formData)

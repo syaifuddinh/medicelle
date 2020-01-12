@@ -259,7 +259,7 @@ $scope.submitForm=function() {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-            window.location = baseUrl + '/cashier/' + id          
+            window.location = baseUrl + '/cashier/' + id + '#cetakan'          
         }, 1000)
     }, function(error) {
         $rootScope.disBtn=false;

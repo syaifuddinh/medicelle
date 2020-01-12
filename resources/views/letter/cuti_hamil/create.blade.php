@@ -127,10 +127,10 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.duration' maxlength='2' only-num>
+                                            <input type="text" class='form-control' ng-model='formData.duration'  ng-change='adjustEndDate()' maxlength='2' only-num>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.duration_type" >
+                                            <select class="form-control"  chosen allow-single-deselect="false" ng-model="formData.duration_type"  ng-change='adjustEndDate()' >
                                                 <option value=""></option>
                                                 <option value="MINGGU">Minggu</option>
                                                 <option value="BULAN">Bulan</option>
@@ -145,11 +145,11 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" class='form-control' ng-model='formData.start_date' datepick>
+                                            <input type="text" class='form-control' ng-model='formData.start_date'  ng-change='adjustEndDate()'  datepick>
                                             <div class="input-group-addon">
                                               s/d
                                             </div>
-                                            <input type="text" class='form-control' ng-model='formData.end_date' datepick>
+                                            <input type="text" class='form-control' ng-model='formData.end_date' disabled datepick>
                                         </div>
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@ app.controller('pengantarMrs', ['$scope', '$compile', '$http', function($scope, 
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
+    order : [[0, 'desc']],
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl+'/datatable/letter/pengantar_mrs',

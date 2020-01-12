@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Setting;
+use Carbon\Carbon;
 
 class Mod {
     public static function fullDate($time) {
@@ -10,6 +11,12 @@ class Mod {
         $Y = self::calc('Y', $time);
         $months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
         return $d . ' ' . $months[$m] . ' ' . $Y;
+    }
+
+    public static function now() {
+        $now = Carbon::now()->format('Y-m-d');
+
+        return self::fullDate($now) . ' ' . Carbon::now()->format('h:i');
     }
 
     public static function day($time) {
@@ -30,5 +37,33 @@ class Mod {
     public static function finance() {
         $finance = Setting::whereName('finance')->first();
         return $finance != null ? $finance->content : json_decode('{}');
+    }
+
+    public static function readMoney($nilai) {
+        $nilai = abs($nilai);
+        $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        $temp = "";
+        if ($nilai < 12) {
+            $temp = " ". $huruf[$nilai];
+        } else if ($nilai <20) {
+            $temp = self::readMoney($nilai - 10). " belas";
+        } else if ($nilai < 100) {
+            $temp = self::readMoney($nilai/10)." puluh". self::readMoney($nilai % 10);
+        } else if ($nilai < 200) {
+            $temp = " seratus" . self::readMoney($nilai - 100);
+        } else if ($nilai < 1000) {
+            $temp = self::readMoney($nilai/100) . " ratus" . self::readMoney($nilai % 100);
+        } else if ($nilai < 2000) {
+            $temp = " seribu" . self::readMoney($nilai - 1000);
+        } else if ($nilai < 1000000) {
+            $temp = self::readMoney($nilai/1000) . " ribu" . self::readMoney($nilai % 1000);
+        } else if ($nilai < 1000000000) {
+            $temp = self::readMoney($nilai/1000000) . " juta" . self::readMoney($nilai % 1000000);
+        } else if ($nilai < 1000000000000) {
+            $temp = self::readMoney($nilai/1000000000) . " milyar" . self::readMoney(fmod($nilai,1000000000));
+        } else if ($nilai < 1000000000000000) {
+            $temp = self::readMoney($nilai/1000000000000) . " trilyun" . self::readMoney(fmod($nilai,1000000000000));
+        }
+        return $temp;
     }
 }

@@ -27,8 +27,8 @@ class CashierController extends Controller
     public function pdf($id)
     {
         $data = $this->fetch($id);
-        $registration = Registration::with('patient:id,phone', 'medical_record:id,code');
-        $pdf = PDF::loadview('pdf/cashier',['data'=>$data]);
+        $registration = Registration::with('patient:id,phone,name', 'medical_record:id,code,patient_type')->find($data['invoice']->registration_id);
+        $pdf = PDF::loadview('pdf/cashier',['data'=>$data, 'registration' => $registration]);
         return $pdf->stream('Pembayaran kasir.pdf');
     }
 
@@ -65,12 +65,21 @@ class CashierController extends Controller
     }
 
     public function fetch($id) {
-        $invoice = Invoice::with('promo:invoice_id,total_credit', 'promo_info:id,code,name', 'massive_discount:invoice_id,total_credit')->find($id);
+        $invoice = Invoice::with(
+            'promo:invoice_id,total_credit', 
+            'promo_info:id,code,name', 
+            'massive_discount:invoice_id,total_credit',
+            'teller:id,name'
+        )->find($id);
+
         $invoice_detail = InvoiceDetail::with(
-            'item:id,name', 
+            'item:id,name,piece_id,code,category_id', 
+            'item.piece:id,name', 
             'grup_nota:permissions.id,name,slug',
-            'reduksi_reference:id,invoice_detail_id,total_credit'
-        )->select('id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'reduksi', 'is_item', 'is_profit_sharing', 'is_reduksi')
+            'asuransi_reference:id,invoice_detail_id,total_debet,debet',
+            'reduksi_reference:id,invoice_detail_id,total_credit,credit',
+            'discount_reference:id,invoice_detail_id,total_credit,credit'
+        )->select('id', 'item_id', 'qty', 'debet', 'total_debet', 'credit', 'disc_percent', 'reduksi', 'is_item', 'is_profit_sharing', 'is_reduksi')
         ->whereInvoiceId($id)
         ->whereIsItem(1)
         ->get();
@@ -79,7 +88,6 @@ class CashierController extends Controller
             'invoice' => $invoice,
             'invoice_detail' => $invoice_detail
         ];
-
         return $data;
     }
 

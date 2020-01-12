@@ -53,6 +53,27 @@ app.controller('cutiHamilCreate', ['$scope', '$http', '$rootScope', '$filter', '
         $('#medicalRecordModal').modal()
     }
 
+    $scope.adjustEndDate = function() {
+        var start_date, month, duration, date, end_date = ''
+        if($scope.formData.start_date) {
+            start_date = new Date($scope.formData.start_date)
+            if($scope.formData.duration_type == 'MINGGU') {
+              duration = parseInt($scope.formData.duration) || 0
+              duration *= 7
+              start_date.setDate( parseInt(start_date.getDate()) + duration )
+            } else {
+              duration = parseInt($scope.formData.duration) || 0
+              start_date.setMonth( parseInt(start_date.getMonth()) + duration )
+
+            }
+          end_date = start_date.getFullYear() + '-' + ( start_date.getMonth() + 1 ).toString().padStart(2, 0) + '-' + start_date.getDate().toString().padStart(2, 0)
+        }
+        $scope.formData.end_date = end_date
+        setTimeout(function () {    
+              $('[ng-model="formData.end_date"]').val( $filter('fullDate')($scope.formData.end_date))
+        }, 300)
+    }
+
     $scope.selectMedicalRecord = function(e) {
         var tr = $(e).parents('tr')
         var data = browse_medical_record_datatable.row(tr).data()

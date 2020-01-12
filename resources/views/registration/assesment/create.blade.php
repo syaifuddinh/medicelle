@@ -14,7 +14,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.main_complaint'></textarea>
+                                        <textarea class="form-control" ng-model='formData.main_complaint' ng-change='submitOne("main_complaint")'></textarea>
                                     </div>
                                 </div>
 
@@ -236,11 +236,11 @@
                                 </label>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <label class="radio-inline">
-                                  <input type="radio" ng-model="formData.is_disturb" ng-value='1'>
+                                  <input type="radio" ng-model="formData.is_disturb" ng-value='1' ng-change='submitOne("is_disturb")'>
                                   <h5>Ya</h5>
                                 </label>
                                  <label class="radio-inline">
-                                      <input type="radio" ng-model="formData.is_disturb" ng-value='0'>
+                                      <input type="radio" ng-model="formData.is_disturb" ng-value='0' ng-change='submitOne("is_disturb")'>
                                       <h5>Tidak</h5>
                                  </label>
                                 </div>

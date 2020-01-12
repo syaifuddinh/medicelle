@@ -24,6 +24,9 @@ class LetterApiController extends Controller
         $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
         ->whereIsKeteranganDokter(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
 
         return Datatables::eloquent($x)->make(true);
            
@@ -34,6 +37,11 @@ class LetterApiController extends Controller
         ->whereIsKeteranganSehat(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
 
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
+
+
         return Datatables::eloquent($x)->make(true);
            
     }
@@ -43,14 +51,23 @@ class LetterApiController extends Controller
         ->whereIsLayakTerbang(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
 
-        return Datatables::eloquent($x)->make(true);
-           
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
+
+
+        return Datatables::eloquent($x)->make(true);   
     }
 
     public function pengantar_mrs(Request $request) {
         $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
         ->whereIsPengantarMrs(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
+
 
         return Datatables::eloquent($x)->make(true);
            
@@ -59,6 +76,11 @@ class LetterApiController extends Controller
         $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
         ->whereIsRujukanPasien(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
+
 
         return Datatables::eloquent($x)->make(true);
            
