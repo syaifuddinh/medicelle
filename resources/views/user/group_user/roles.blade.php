@@ -142,6 +142,48 @@
                                             </label>
                                         </td>
                                     </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.patient.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.patient.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.patient.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.patient.activate"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Non-aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.patient.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- ======================================== -->
                                     <tr>
                                         <td style="padding-left:10mm">Tenaga medis</td>
                                         <td class='text-right'>
@@ -158,6 +200,48 @@
                                             </label>
                                         </td>
                                     </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.employee.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.employee.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.employee.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.employee.activate"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Non-aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["master.employee.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- ======================================== -->
                                     <tr>
                                         <th>Registrasi pasien</th>
                                         <th class='text-right'>

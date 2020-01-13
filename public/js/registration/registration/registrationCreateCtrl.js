@@ -64,6 +64,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       data : function(d) {
         d.is_display_all = 1
         d.length = 6
+        d.is_active = 1
 
         return d
       }

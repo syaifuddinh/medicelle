@@ -258,9 +258,11 @@ $scope.submitForm=function() {
     $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
-        setTimeout(function () {
-            window.location = baseUrl + '/cashier/' + id + '#cetakan'          
-        }, 1000)
+        if(roles['allow_show_cashier'] == 1) {
+            setTimeout(function () {
+                window.location = baseUrl + '/cashier/' + id + '#cetakan'          
+            }, 1000)
+        }
     }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {

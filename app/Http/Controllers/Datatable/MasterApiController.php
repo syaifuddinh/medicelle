@@ -152,12 +152,13 @@ class MasterApiController extends Controller
     }
 
     public function employee(Request $request) {
-        $x = Contact::employee()->with('city', 'group_user:id,name')->select('id', 'code', 'name', 'city_id', 'pin', 'phone', 'group_user_id', 'is_active');
+        $x = Contact::employee()->with('city', 'group_user:id,name')->select('contacts.id', 'contacts.code', 'contacts.name', 'city_id', 'pin', 'phone', 'group_user_id', 'is_active');
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
-        if($request->draw == 1)
-            $x->orderBy('id', 'DESC');
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('contacts.id', $request->order[0]['dir']);
+        }
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -173,8 +174,10 @@ class MasterApiController extends Controller
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
-        if($request->draw == 1)
-            $x->orderBy('id', 'DESC');
+
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('id', $request->order[0]['dir']);
+        }
 
         return Datatables::eloquent($x)->make(true);
     }

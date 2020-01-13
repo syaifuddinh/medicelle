@@ -160,6 +160,16 @@
                 'allow_activate_discount' : {!! Auth::user()->allow_access('setting.discount.activate') !!},
                 'allow_destroy_discount' : {!! Auth::user()->allow_access('setting.discount.destroy') !!},
 
+                'allow_edit_patient' : {!! Auth::user()->allow_access('master.patient.edit') !!},
+                'allow_show_patient' : {!! Auth::user()->allow_access('master.patient.show') !!},
+                'allow_activate_patient' : {!! Auth::user()->allow_access('master.patient.activate') !!},
+                'allow_destroy_patient' : {!! Auth::user()->allow_access('master.patient.destroy') !!},
+
+                'allow_edit_employee' : {!! Auth::user()->allow_access('master.employee.edit') !!},
+                'allow_show_employee' : {!! Auth::user()->allow_access('master.employee.show') !!},
+                'allow_activate_employee' : {!! Auth::user()->allow_access('master.employee.activate') !!},
+                'allow_destroy_employee' : {!! Auth::user()->allow_access('master.employee.destroy') !!},
+
                 'allow_edit_registration' : {!! Auth::user()->allow_access('registration.edit') !!},
                 'allow_show_registration' : {!! Auth::user()->allow_access('registration.show') !!},
                 'allow_attend_registration' : {!! Auth::user()->allow_access('registration.attend') !!},

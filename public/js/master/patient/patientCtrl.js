@@ -25,7 +25,13 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
       {
         data:null, 
         name:"name",
-        render : resp => "<a class='' href='" + baseUrl + "/patient/" + resp.id +  "' >" + resp.name + "</a>"
+        render : function(resp) {
+            var url = '#'
+            if(roles['allow_show_patient'] == 1) {
+                url = baseUrl + "/patient/" + resp.id
+            }
+            return "<a class='' href='" + url +  "' >" + resp.name + "</a>"
+        } 
       },
       {data:"phone", name:"phone"},
       {
@@ -51,10 +57,10 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' allow_destroy_patient ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' allow_activate_patient ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/patient/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/patient/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' allow_edit_patient href='" + baseUrl + "/patient/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a  allow_show_patient class='btn btn-xs btn-default' href='" + baseUrl + "/patient/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

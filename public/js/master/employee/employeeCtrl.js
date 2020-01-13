@@ -2,6 +2,7 @@ app.controller('employee', ['$scope', '$compile', '$http', function($scope, $com
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
+    order : [[0, 'desc']],
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl+'/datatable/master/employee',
@@ -23,12 +24,24 @@ app.controller('employee', ['$scope', '$compile', '$http', function($scope, $com
       {
         data:null, 
         name:"code",
-        render : resp => "<a class='' href='" + baseUrl + "/employee/" + resp.id +  "' title='Detail'>" + resp.code + "</a>" 
+        render : function(resp){
+            var url = '#'
+            if(roles['allow_show_employee'] == 1) {
+                url = baseUrl + "/employee/" + resp.id
+            }
+            return "<a class='' href='" + url +  "' title='Detail'>" + resp.code + "</a>" 
+        } 
       },
       {
         data:null, 
         name:"name",
-        render : resp => "<a class='' href='" + baseUrl + "/employee/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+        render : function(resp){
+            var url = '#'
+            if(roles['allow_show_employee'] == 1) {
+                url = baseUrl + "/employee/" + resp.id
+            }
+            return "<a class='' href='" + url +  "' title='Detail'>" + resp.name + "</a>" 
+        }
       },
       {data:"pin", name:"pin"},
       {data:"group_user.name", name:"group_user.name"},
@@ -49,10 +62,10 @@ app.controller('employee', ['$scope', '$compile', '$http', function($scope, $com
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+          resp.is_active == 1 ? "<button allow_destroy_employee class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' allow_activate_employee ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/employee/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/employee/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_edit_employee class='btn btn-xs btn-success' href='" + baseUrl + "/employee/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a allow_show_employee class='btn btn-xs btn-default' href='" + baseUrl + "/employee/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
