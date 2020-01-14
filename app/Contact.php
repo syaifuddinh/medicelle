@@ -74,8 +74,10 @@ class Contact extends Model
                     $user->fill(
                         collect($contact->toArray())
                         ->except('email')
+                        ->except('is_doctor')
                         ->toArray()
                     );
+                    $user->contact_id = $contact->id;
                     $user->save();
                 } 
                 DB::commit();

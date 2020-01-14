@@ -84,7 +84,7 @@
                           </button>
                            <ul class="list-group dropdown-menu">
                                 <li class='list-group-item'>
-                                    <a href='#' class="text-primary" ng-click='referMedicalRecord()' ng-show='doctor.id == {{ Auth::user()->contact_id ?? "null" }} || 1 == {{ Auth::user()->is_admin }}'>
+                                    <a href='#' class="text-primary" ng-click='referMedicalRecord()'>
                                         Rujuk ke dokter lain ?
                                     </a>      
                                     <a href='#' class="text-primary" ng-click='showMedicalRecord()'>

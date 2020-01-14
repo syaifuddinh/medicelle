@@ -20,31 +20,37 @@ class MedicalRecord extends Model
             $medicalRecord->date = date('Y-m-d');
             $medicalRecord->created_by = Auth::user()->id;
             // Generate medical record code
-            $current_month = date('m');
-            $current_year = date('Y');
-            $latest = DB::table('medical_records')
-            ->whereRegistrationId($medicalRecord->registration_id)
-            ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month'  AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
-            ->selectRaw('COALESCE(COUNT(id), 0) + 1 AS new_id')
-            ->first();
-            $id = $latest->new_id;
-            if($id < 2) {
-                $newest = DB::table('medical_records')
-                ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
-                ->selectRaw('COALESCE(COUNT(DISTINCT code), 0) + 1 AS new_id')
-                ->first();
-                $id = $newest->new_id;
-                $id = str_pad($id, 4, '0', STR_PAD_LEFT);
-                $code = date('y.m.') . $id;
+            $existingMedicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)->select('code')->first();
+            if($existingMedicalRecord != null) {
+                $medicalRecord->code = $existingMedicalRecord->code;
             } else {
+                
+                $current_month = date('m');
+                $current_year = date('Y');
                 $latest = DB::table('medical_records')
                 ->whereRegistrationId($medicalRecord->registration_id)
-                ->select('code')
+                ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month'  AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+                ->selectRaw('COALESCE(COUNT(id), 0) + 1 AS new_id')
                 ->first();
-                $code = $latest->code;
-            }
+                $id = $latest->new_id;
+                if($id < 2) {
+                    $newest = DB::table('medical_records')
+                    ->whereRaw("TO_CHAR(date :: DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+                    ->selectRaw('COALESCE(COUNT(DISTINCT code), 0) + 1 AS new_id')
+                    ->first();
+                    $id = $newest->new_id;
+                    $id = str_pad($id, 4, '0', STR_PAD_LEFT);
+                    $code = date('y.m.') . $id;
+                } else {
+                    $latest = DB::table('medical_records')
+                    ->whereRegistrationId($medicalRecord->registration_id)
+                    ->select('code')
+                    ->first();
+                    $code = $latest->code;
+                }
 
-            $medicalRecord->code = $code; 
+                $medicalRecord->code = $code; 
+            }
         });
 
         static::updating(function(MedicalRecord $medicalRecord) {

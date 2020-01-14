@@ -326,23 +326,23 @@ class User extends Authenticatable
     }
 
     public function allow_view_polyclinic() {
+        $is_allow = 0;
         if( $this->is_admin == 1) {
-            return 1;
+            $is_allow =  1;
         } else {
             if($this->contact_id != null) {
                 $contact = $this->contact; 
                 if($contact->is_nurse == 1 || $contact->is_nurse_helper == 1 || $contact->is_doctor == 1) {
-                    return 1;
+                    $is_allow = 1;
                 }
             }
-
             if($this->group_user) {
                 $roles = $this->group_user->roles;
-                return $roles->polyclinic ?? 0;
+                $is_allow = $roles->polyclinic ?? 0;
             }
         }
 
-        return 0;
+        return $is_allow;
 
     }
 

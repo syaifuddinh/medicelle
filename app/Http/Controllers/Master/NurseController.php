@@ -97,6 +97,7 @@ class NurseController extends Controller
         $contact = Contact::find($id);
 
         $contact->fill($request->all());
+        $contact->is_nurse = 1;
         $contact->save();
         DB::commit();
 

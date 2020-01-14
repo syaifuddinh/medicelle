@@ -115,11 +115,13 @@ class CashierController extends Controller
         DB::beginTransaction();
         $invoice = Invoice::find($id);
         $invoice->fill($request->all());
+        $invoice->discount_total_percentage = $request->massive_discount;
         $invoice->gross = 0;
         $invoice->netto = 0;
         $invoice->asuransi_value = 0;
         $invoice->qty = 0;
         $invoice->discount = 0;
+        $invoice->discount_total_value = 0;
         $invoice->save();
         InvoiceDetail::whereInvoiceId($invoice->id)->delete();
         collect($request->invoice_detail)->each(function($val) use($invoice){
@@ -134,13 +136,7 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
-        $invoiceDetail = new InvoiceDetail();
-        $invoiceDetail->invoice_id = $invoice->id;
-        $invoiceDetail->qty = 1;
-        $invoiceDetail->debet = 0;
-        $invoiceDetail->credit = $request->massive_discount ?? 0;
-        $invoiceDetail->is_discount_total  = 1;
-        $invoiceDetail->save();
+        
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -168,6 +164,7 @@ class CashierController extends Controller
         DB::beginTransaction();
         $invoice = Invoice::find($id);
         $invoice->fill($request->all());
+        $invoice->discount_total_percentage = $request->massive_discount;
         $invoice->status = 2;
         $invoice->gross = 0;
         $invoice->netto = 0;
@@ -189,13 +186,6 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
-        $invoiceDetail = new InvoiceDetail();
-        $invoiceDetail->invoice_id = $invoice->id;
-        $invoiceDetail->qty = 1;
-        $invoiceDetail->debet = 0;
-        $invoiceDetail->credit = $request->massive_discount ?? 0;
-        $invoiceDetail->is_discount_total  = 1;
-        $invoiceDetail->save();
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil terbayar'], 200);

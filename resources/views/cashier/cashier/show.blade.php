@@ -97,7 +97,7 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Diskon(Rp)</th>
+                                            <th colspan='2' class='text-right'>Diskon(%)</th>
                                             <th class='text-right' title='Diskon untuk seluruh item'>
                                                 <% formData.massive_discount | number%>
                                             </th>

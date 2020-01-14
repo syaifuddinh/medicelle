@@ -90,9 +90,9 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Diskon(Rp)</th>
+                                            <th colspan='2' class='text-right'>Diskon(%)</th>
                                             <th class='text-right' title='Diskon untuk seluruh item'>
-                                                <input type="text" class='form-control' ng-model='formData.massive_discount' ng-change='countTotal()' jnumber2 only-num>
+                                                <input type="text" class='form-control' ng-model='formData.massive_discount' ng-change='countTotal()' maxlength='3' only-num>
                                             </th>
                                         </tr>
                                         <tr>

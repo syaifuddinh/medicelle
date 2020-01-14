@@ -95,8 +95,8 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $contact = Contact::find($id);
-
         $contact->fill($request->all());
+        $contact->is_doctor = 1;
         $contact->save();
         DB::commit();
 

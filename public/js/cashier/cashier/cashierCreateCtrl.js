@@ -3,6 +3,7 @@ app.controller('cashierCreate', ['$scope', '$http', '$rootScope','$compile','$fi
 $scope.formData = {
     payment_method : 'KREDIT'
 }
+$scope.promo_detail = {}
 $scope.registration = {}
 $scope.grandtotal = 0
 $scope.grosstotal = 0
@@ -74,7 +75,7 @@ discount_datatable = $('#discount_datatable').DataTable({
         orderable:false,
         className : 'text-right',
         render : function(resp) {
-            var grosstotal = $scope.grosstotal;
+            var grosstotal = $scope.grosstotal - $scope.discount_subtotal;
             var disc_value = parseInt(resp.disc_value)
             var percent_disc_value = grosstotal * (parseInt(resp.disc_percent) / 100)
             return $filter('number')(disc_value + percent_disc_value)
@@ -98,10 +99,8 @@ $scope.show = function() {
             var promo_info = $scope.formData.promo_info
             $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
         }
-        if($scope.formData.massive_discount != null) {
-            var massive_discount = $scope.formData.massive_discount.total_credit
-            $scope.formData.massive_discount = massive_discount 
-        }
+
+        $scope.formData.massive_discount = $scope.formData.discount_total_percentage
         $scope.registration()
         $scope.showInvoiceDetail()
         setTimeout(function () {    
@@ -138,16 +137,18 @@ $scope.selectDiscount = function(e) {
 
     $scope.formData.discount_id = resp.id
     $scope.promo_name = resp.code + ' - ' + resp.name
-
-    var grosstotal = $scope.grosstotal;
-    var disc_value = parseInt(resp.disc_value)
-    var percent_disc_value = grosstotal * (parseInt(resp.disc_percent) / 100)
-    console.log({grosstotal, disc_value, percent_disc_value})
-    $scope.promo = disc_value + percent_disc_value
+    $scope.promo_detail = resp
     $scope.countTotal()
     $('#discountModal').modal('hide')
 }
 
+$scope.countPromo = function(resp) {
+    var grosstotal = $scope.grosstotal - $scope.discount_subtotal;
+    var disc_value = parseInt($scope.promo_detail.disc_value)
+    var percent_disc_value = grosstotal * (parseInt($scope.promo_detail.disc_percent) / 100)
+    console.log({grosstotal, disc_value, percent_disc_value})
+    $scope.promo = disc_value + percent_disc_value
+}
 
 $scope.removeDiscount = function(e) {
     $scope.formData.discount_id = null
@@ -195,7 +196,7 @@ $scope.showItemDetail = function(detail, grup_nota, index) {
 } 
 
 $scope.countTotal = function() {
-    var gross, disc_value, netto, unit, grosstotal;
+    var gross, disc_value, netto, unit, grosstotal, discount_total_value;
     var grandtotal = 0, discount_total = 0, qty_total = 0, grosstotal = 0
     var detail = $scope.formData.invoice_detail
     var increase_rate
@@ -220,9 +221,13 @@ $scope.countTotal = function() {
             $scope.formData.invoice_detail[grup_nota][index].subtotal = gross
         }
     }
+
+    discount_total_value = (parseInt($scope.formData.massive_discount) || 0) / 100 * grandtotal
     $scope.grosstotal = grosstotal
-    $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0) - (parseInt($scope.formData.massive_discount) || 0) 
-    $scope.discount_total = parseInt(discount_total) + (parseInt($scope.formData.massive_discount) || 0)
+    $scope.discount_subtotal = parseInt(discount_total)
+    $scope.countPromo()
+    $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0) - (parseInt(discount_total_value) || 0) 
+    $scope.discount_total = parseInt(discount_total) + (parseInt(discount_total_value) || 0)
 }
 
 $scope.registration = function() {
