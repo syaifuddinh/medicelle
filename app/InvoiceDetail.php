@@ -24,12 +24,8 @@ class InvoiceDetail extends Model
             $invoiceDetail->total_credit = $total_credit;
             $invoiceDetail->grandtotal = $grandtotal;
             $invoice = Invoice::find($invoiceDetail->invoice_id);
-            $invoice->increment('netto', $grandtotal);
             if($invoiceDetail->is_discount == 1) {
                 $invoice->increment('discount', -$grandtotal);                
-            } 
-            if($invoiceDetail->is_discount_total == 1) {
-                $invoice->increment('discount_total_value', -$grandtotal);                
             } 
             if($invoiceDetail->is_reduksi == 1) {
                 $invoice->increment('reduksi', -$grandtotal);                
@@ -43,14 +39,16 @@ class InvoiceDetail extends Model
                 $invoice->increment('qty', 1);
                 
             }
-            $invoice->balance = $invoice->netto - $invoice->paid;
             $invoice->save();
         });
+
+
         static::created(function(InvoiceDetail $invoiceDetail){
             $invoice = Invoice::find($invoiceDetail->invoice_id);
 
             if($invoiceDetail->disc_percent > 0) {
-                $total_debet = $invoiceDetail->qty * $invoiceDetail->debet;
+                $total_debet = $invoiceDetail->qty * $invoiceDetail->debet ;
+                $total_debet = $total_debet + ($total_debet * $invoice->asuransi_percentage / 100); 
                 $disc_value = $total_debet * ($invoiceDetail->disc_percent / 100);
                 $discountDetail = new InvoiceDetail();
                 $discountDetail->invoice_id = $invoiceDetail->invoice_id;
@@ -99,39 +97,65 @@ class InvoiceDetail extends Model
 
             }
             
-            if($invoiceDetail->is_item == 1 || $invoiceDetail->is_discount == 1) {
-                $subtotal = ($invoice->gross - $invoice->discount) * $invoice->discount_total_percentage / 100;
+            if($invoiceDetail->is_item == 1 || $invoiceDetail->is_discount == 1 || $invoiceDetail->is_asuransi == 1) {
+
 
                 // Menghitung diskon total
-                $latestDiscountTotal = InvoiceDetail::whereInvoiceId($invoiceDetail->invoice_id)
-                                ->whereIsDiscountTotal(1);
-                                
-                if($latestDiscountTotal->first() == null) {
-                    $discountTotalDetail = new InvoiceDetail();
-                    $discountTotalDetail->invoice_id = $invoice->id;
-                    $discountTotalDetail->qty = 1;
-                    $discountTotalDetail->credit = $subtotal;
-                    $discountTotalDetail->is_discount_total = 1;
-                    $discountTotalDetail->save();
-                } else {
-                    $latestDiscountTotal->update([
-                        'credit' => $subtotal,
-                        'total_credit' => $subtotal,
-                        'grandtotal' => -$subtotal
-                    ]);
+                if($invoice->discount_total_percentage > 0) {
+                    if($invoiceDetail->is_item == 1 || $invoiceDetail->is_asuransi == 1) {
+                        $subtotal = $invoiceDetail->total_debet;
+                        
+                    } else if($invoiceDetail->is_discount == 1) {
+                        $subtotal = -1 * $invoiceDetail->total_credit;
+                    }
+                    $subtotal = $subtotal * $invoice->discount_total_percentage / 100;
+                    $latestDiscountTotal = InvoiceDetail::whereInvoiceId($invoiceDetail->invoice_id)
+                                    ->whereIsDiscountTotal(1);
+                    $detail = $latestDiscountTotal->first();
+                    if($latestDiscountTotal->first() == null) {
+                        $discountTotalDetail = new InvoiceDetail();
+                        $discountTotalDetail->invoice_id = $invoice->id;
+                        $discountTotalDetail->qty = 1;
+                        $discountTotalDetail->credit = $subtotal;
+                        $discountTotalDetail->is_discount_total = 1;
+                        $discountTotalDetail->save();
+
+                    } else {
+                        $credit = $detail->credit;
+                        $total_credit = $detail->total_credit;
+                        $grandtotal = $detail->grandtotal;
+                        $latestDiscountTotal->update([
+                            'credit' => $credit + $subtotal,
+                            'total_credit' => $total_credit + $subtotal,
+                            'grandtotal' => $grandtotal - $subtotal,
+                        ]);
+
+                    }
+
+                    $invoice->discount_total_value = $invoice->discount_total_value - $subtotal;
+                        $invoice->save(); 
 
                 }
                 
                 // Menghitung promo
                 if($invoice->discount_id != null) {
-                    $subtotal = $invoice->gross - $invoice->discount;
+                    if($invoiceDetail->is_item == 1 || $invoiceDetail->is_asuransi == 1) {
+                        $subtotal = $invoiceDetail->total_debet;
+                    } else if($invoiceDetail->is_discount == 1) {
+                        $subtotal = -$invoiceDetail->total_credit;
+                    }
+
+
                     $promoDetail = InvoiceDetail::whereIsPromo(1)
                     ->whereInvoiceId($invoice->id);
+                    $promo = $promoDetail->first();
                     $discount = Discount::find($invoice->discount_id);
                     $disc_value = $discount->disc_value;
                     $percent_disc_value = $subtotal * ($discount->disc_percent / 100);
-                    $totalDiscount = $disc_value + $percent_disc_value;
+                    $totalDiscount = $percent_disc_value;
                     if($promoDetail->first() == null) {
+                        $totalDiscount = $percent_disc_value + $disc_value;
+
                         $promoDetail = new InvoiceDetail();
                         $promoDetail->invoice_id = $invoice->id;
                         $promoDetail->qty = 1;
@@ -139,17 +163,22 @@ class InvoiceDetail extends Model
                         $promoDetail->is_promo = 1;
                         $promoDetail->save();
                     } else {
+                        $credit = $promo->credit;
+                        $total_credit = $promo->total_credit;
+                        $grandtotal = $promo->grandtotal;
                         $promoDetail->update([
-                            'credit' => $totalDiscount,
-                            'total_credit' => $totalDiscount,
-                            'grandtotal' => -$totalDiscount
+                            'credit' => $credit + $totalDiscount,
+                            'total_credit' => $total_credit + $totalDiscount,
+                            'grandtotal' => $grandtotal - $totalDiscount,
                         ]);
                     }
                 }
 
             }
 
-
+            $summaryInvoiceDetail = InvoiceDetail::whereInvoiceId($invoiceDetail->invoice_id)->sum('grandtotal');
+            $invoice->netto = $summaryInvoiceDetail;
+            $invoice->save();
         });
     }
 

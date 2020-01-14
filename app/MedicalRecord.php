@@ -133,7 +133,7 @@ class MedicalRecord extends Model
     }
 
 
-public function getAdditionalAttribute() {
+    public function getAdditionalAttribute() {
         if(array_key_exists('additional', $this->attributes)) {
             $additional = json_decode($this->attributes['additional']);
             if(null != ($additional->head_visual ?? null)) {

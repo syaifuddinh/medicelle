@@ -113,7 +113,7 @@ class MedicalRecordController extends Controller
             'sewa_ruangan.item.piece:id,name',
             'sewa_ruangan.lokasi:id,name',
             'radiology:id,medical_record_id,date,result_date,name,description,is_radiology,saran,kesimpulan,kanan,kiri',
-            'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,saran,kesimpulan,kanan,kiri',
+            'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,additional',
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
             'diagnose_history:medical_record_id,disease_id,type,description',
 
@@ -500,13 +500,6 @@ class MedicalRecordController extends Controller
     }
 
     public function update_research(Request $request, $medical_record_detail_id) {
-        $this->validate($request, [
-            'kanan' => 'required',
-            'kiri' => 'required'
-        ], [
-            'kanan.required' => 'Kanan tidak boleh kosong',
-            'kiri.required' => 'Kiri tidak boleh kosong'
-        ]);
         DB::beginTransaction();
         $medicalRecordDetail = MedicalRecordDetail::find($medical_record_detail_id);
         $medicalRecordDetail->fill($request->all());

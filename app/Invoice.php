@@ -17,8 +17,11 @@ class Invoice extends Model
         parent::boot();
 
         static::updating(function(Invoice $invoice) {
+            $invoice->balance = $invoice->netto - $invoice->paid;
             if($invoice->payment_type == 'ASURANSI SWASTA') {
                 $invoice->asuransi_percentage = Mod::finance()->asuransi_rate_percentage ?? 0;
+            } else {
+                $invoice->asuransi_percentage = 0;
             }
 
             if($invoice->status != 1) {
@@ -87,7 +90,7 @@ class Invoice extends Model
         return $this->belongsTo('App\Registration');
     }
     public function promo() {
-        return $this->hasOne('App\InvoiceDetail', 'invoice_id', 'id')->whereIsPromo(1);
+        return $this->hasOne('App\InvoiceDetail', 'invoice_id', 'id')->whereIsPromo(1)->withDefault(['credit' => 0, 'total_credit' => 0]);
     }
     public function massive_discount() {
         return $this->hasOne('App\InvoiceDetail', 'invoice_id', 'id')->whereIsDiscountTotal(1)->withDefault(['total_credit' => 0]);

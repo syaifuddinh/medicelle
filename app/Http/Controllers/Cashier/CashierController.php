@@ -67,7 +67,7 @@ class CashierController extends Controller
     public function fetch($id) {
         $invoice = Invoice::with(
             'promo:invoice_id,total_credit', 
-            'promo_info:id,code,name', 
+            'promo_info:id,code,name,disc_value,disc_percent', 
             'massive_discount:invoice_id,total_credit',
             'teller:id,name'
         )->find($id);
@@ -115,7 +115,7 @@ class CashierController extends Controller
         DB::beginTransaction();
         $invoice = Invoice::find($id);
         $invoice->fill($request->all());
-        $invoice->discount_total_percentage = $request->massive_discount;
+        $invoice->discount_total_percentage = $request->massive_discount ?? 0;
         $invoice->gross = 0;
         $invoice->netto = 0;
         $invoice->asuransi_value = 0;
@@ -131,7 +131,7 @@ class CashierController extends Controller
                 $invoiceDetail->item_id = $item['item_id'];
                 $invoiceDetail->qty = $item['qty'];
                 $invoiceDetail->debet = $item['debet'];
-                $invoiceDetail->disc_percent = $item['disc_percent'];
+                $invoiceDetail->disc_percent = $item['disc_percent'] ?? 0;
                 $invoiceDetail->is_item = 1;
                 $invoiceDetail->save();
             });
@@ -164,7 +164,7 @@ class CashierController extends Controller
         DB::beginTransaction();
         $invoice = Invoice::find($id);
         $invoice->fill($request->all());
-        $invoice->discount_total_percentage = $request->massive_discount;
+        $invoice->discount_total_percentage = $request->massive_discount ?? 0;
         $invoice->status = 2;
         $invoice->gross = 0;
         $invoice->netto = 0;
@@ -172,6 +172,7 @@ class CashierController extends Controller
         $invoice->asuransi_value = 0;
         $invoice->qty = 0;
         $invoice->discount = 0;
+        $invoice->discount_total_value = 0;
         $invoice->save();
         InvoiceDetail::whereInvoiceId($invoice->id)->delete();
         collect($request->invoice_detail)->each(function($val) use($invoice){
@@ -181,7 +182,7 @@ class CashierController extends Controller
                 $invoiceDetail->item_id = $item['item_id'];
                 $invoiceDetail->qty = $item['qty'];
                 $invoiceDetail->debet = $item['debet'];
-                $invoiceDetail->disc_percent = $item['disc_percent'];
+                $invoiceDetail->disc_percent = $item['disc_percent'] ?? 0;
                 $invoiceDetail->is_item = 1;
                 $invoiceDetail->save();
             });

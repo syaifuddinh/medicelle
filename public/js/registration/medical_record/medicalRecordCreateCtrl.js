@@ -167,10 +167,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         var research = $scope.formData.radiology.concat($scope.formData.laboratory)
         var sample = research.find(x => x.id == medical_record_detail_id)
         $scope.new_research = {
-            'kanan' : sample.kanan,
-            'kiri' : sample.kiri,
-            'saran' : sample.saran,
-            'kesimpulan' : sample.kesimpulan
+            'additional' : sample.additional
         }        
         $('#newResearchModal').modal()
     }
@@ -1949,7 +1946,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
       $http[method](url, $scope.new_research).then(function(data) {
         $rootScope.disBtn = false
-        $scope.new_research = {}
+        $scope.new_research = {
+            'additional' : {}
+        }
         toastr.success("Data Berhasil Disimpan !");
         action()
       }, function(error) {

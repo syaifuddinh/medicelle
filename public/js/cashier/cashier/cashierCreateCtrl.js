@@ -98,6 +98,7 @@ $scope.show = function() {
         if($scope.formData.promo_info != null) {
             var promo_info = $scope.formData.promo_info
             $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
+            $scope.promo_detail = $scope.formData.promo_info
         }
 
         $scope.formData.massive_discount = $scope.formData.discount_total_percentage

@@ -139,7 +139,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->discount) }}</b>
+                                <b>{{ number_format($data['invoice']->discount + $data['invoice']->massive_discount->total_credit + $data['invoice']->promo->total_credit) }}</b>
                             </span>
                         </div>
                         <div style='padding-top:3mm'>
