@@ -99,12 +99,25 @@
                   @if(Auth::user()->allow_access('surat'))
                     <li><a><i class="fa fa-bookmark"></i>Layanan<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li><a href="{{ route('surat.cuti_hamil.index') }}">Surat Cuti Hamil</a></li>
-                            <li><a href="{{ route('surat.keterangan_dokter.index') }}">Surat Keterangan Dokter</a></li>
-                            <li><a href="{{ route('surat.keterangan_sehat.index') }}">Surat Keterangan Sehat</a></li>
-                            <li><a href="{{ route('surat.layak_terbang.index') }}">Surat Layak Terbang</a></li>
-                            <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat Pengantar MRS</a></li>
+                            @if(Auth::user()->allow_access('surat.cuti_hamil'))
+                                <li><a href="{{ route('surat.cuti_hamil.index') }}">Surat Cuti Hamil</a></li>
+                            @endif
+
+                            @if(Auth::user()->allow_access('surat.keterangan_dokter'))
+                                <li><a href="{{ route('surat.keterangan_dokter.index') }}">Surat Keterangan Dokter</a></li>
+                            @endif
+                            @if(Auth::user()->allow_access('surat.keterangan_sehat'))
+                                <li><a href="{{ route('surat.keterangan_sehat.index') }}">Surat Keterangan Sehat</a></li>
+                            @endif
+                            @if(Auth::user()->allow_access('surat.layak_terbang'))
+                                <li><a href="{{ route('surat.layak_terbang.index') }}">Surat Layak Terbang</a></li>
+                            @endif
+                            @if(Auth::user()->allow_access('surat.pengantar_mrs'))
+                                <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat Pengantar MRS</a></li>
+                            @endif
+                            @if(Auth::user()->allow_access('surat.pengantar_mrs'))
                             <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat Rujukan Pasien</a></li>
+                            @endif
                           </ul>
                     </li>
                   @endif

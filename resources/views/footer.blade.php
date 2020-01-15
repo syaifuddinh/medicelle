@@ -177,6 +177,30 @@
 
                 'allow_edit_cashier' : {!! Auth::user()->allow_access('cashier.edit') !!},
                 'allow_show_cashier' : {!! Auth::user()->allow_access('cashier.show') !!},
+
+                'allow_edit_cuti_hamil' : {!! Auth::user()->allow_access('surat.cuti_hamil.edit') !!},
+                'allow_show_cuti_hamil' : {!! Auth::user()->allow_access('surat.cuti_hamil.show') !!},
+                'allow_destroy_cuti_hamil' : {!! Auth::user()->allow_access('surat.cuti_hamil.destroy') !!},
+
+                'allow_edit_keterangan_dokter' : {!! Auth::user()->allow_access('surat.keterangan_dokter.edit') !!},
+                'allow_show_keterangan_dokter' : {!! Auth::user()->allow_access('surat.keterangan_dokter.show') !!},
+                'allow_destroy_keterangan_dokter' : {!! Auth::user()->allow_access('surat.keterangan_dokter.destroy') !!},
+
+                'allow_edit_keterangan_sehat' : {!! Auth::user()->allow_access('surat.keterangan_sehat.edit') !!},
+                'allow_show_keterangan_sehat' : {!! Auth::user()->allow_access('surat.keterangan_sehat.show') !!},
+                'allow_destroy_keterangan_sehat' : {!! Auth::user()->allow_access('surat.keterangan_sehat.destroy') !!},
+
+                'allow_edit_pengantar_mrs' : {!! Auth::user()->allow_access('surat.pengantar_mrs.edit') !!},
+                'allow_show_pengantar_mrs' : {!! Auth::user()->allow_access('surat.pengantar_mrs.show') !!},
+                'allow_destroy_pengantar_mrs' : {!! Auth::user()->allow_access('surat.pengantar_mrs.destroy') !!},
+
+                'allow_edit_layak_terbang' : {!! Auth::user()->allow_access('surat.layak_terbang.edit') !!},
+                'allow_show_layak_terbang' : {!! Auth::user()->allow_access('surat.layak_terbang.show') !!},
+                'allow_destroy_layak_terbang' : {!! Auth::user()->allow_access('surat.layak_terbang.destroy') !!},
+
+                'allow_edit_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.edit') !!},
+                'allow_show_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.show') !!},
+                'allow_destroy_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.destroy') !!},
             }
 
             setInterval(function(){

@@ -39,8 +39,8 @@ app.controller('keteranganDokter', ['$scope', '$compile', '$http', function($sco
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/surat/keterangan_dokter/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/keterangan_dokter/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-danger' allow_destroy_keterangan_dokter ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
+        "<a class='btn btn-xs btn-success' allow_edit_keterangan_dokter  href='" + baseUrl + "/surat/keterangan_dokter/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/keterangan_dokter/" + resp.id +  "' allow_show_keterangan_dokter title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

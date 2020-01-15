@@ -39,8 +39,8 @@ app.controller('keteranganSehat', ['$scope', '$compile', '$http', function($scop
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/surat/keterangan_sehat/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/keterangan_sehat/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_destroy_keterangan_sehat class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
+        "<a class='btn btn-xs btn-success' allow_edit_keterangan_sehat href='" + baseUrl + "/surat/keterangan_sehat/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' allow_show_keterangan_sehat href='" + baseUrl + "/surat/keterangan_sehat/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

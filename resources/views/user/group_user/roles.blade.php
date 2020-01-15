@@ -322,6 +322,265 @@
                                             </label>
                                         </th>
                                     </tr>
+
+                                    <tr>
+                                        <th>Layanan</th>
+                                        <th class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:10mm">Cuti Hamil</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.cuti_hamil"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.cuti_hamil.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.cuti_hamil.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.cuti_hamil.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.cuti_hamil.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:10mm">Keterangan Dokter</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_dokter"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_dokter.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_dokter.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_dokter.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_dokter.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding-left:10mm">Keterangan Sehat</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_sehat"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_sehat.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_sehat.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_sehat.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.keterangan_sehat.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="padding-left:10mm">Layak Terbang</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.layak_terbang"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.layak_terbang.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.layak_terbang.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.layak_terbang.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.layak_terbang.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="padding-left:10mm">Pengantar MRS</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.pengantar_mrs"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.pengantar_mrs.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.pengantar_mrs.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.pengantar_mrs.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.pengantar_mrs.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="padding-left:10mm">Rujukan Pasien</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.rujukan_pasien"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.rujukan_pasien.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.rujukan_pasien.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.rujukan_pasien.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Hapus</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.rujukan_pasien.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                           

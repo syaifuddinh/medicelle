@@ -45,7 +45,9 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm hidden'>Filter</button>
-                          <a href="{{ route('surat.layak_terbang.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @if(Auth::user()->allow_access('surat.layak_terbang.create'))
+                              <a href="{{ route('surat.layak_terbang.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>

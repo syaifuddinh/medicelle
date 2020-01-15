@@ -39,8 +39,8 @@ app.controller('layakTerbang', ['$scope', '$compile', '$http', function($scope, 
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/surat/layak_terbang/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/layak_terbang/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_destroy_layak_terbang class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
+        "<a class='btn btn-xs btn-success' allow_edit_layak_terbang href='" + baseUrl + "/surat/layak_terbang/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' allow_show_layak_terbang href='" + baseUrl + "/surat/layak_terbang/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

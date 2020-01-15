@@ -39,8 +39,8 @@ app.controller('pengantarMrs', ['$scope', '$compile', '$http', function($scope, 
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/surat/pengantar_mrs/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/pengantar_mrs/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-danger' allow_destroy_pengantar_mrs ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
+        "<a class='btn btn-xs btn-success' allow_edit_pengantar_mrs href='" + baseUrl + "/surat/pengantar_mrs/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' allow_show_pengantar_mrs href='" + baseUrl + "/surat/pengantar_mrs/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

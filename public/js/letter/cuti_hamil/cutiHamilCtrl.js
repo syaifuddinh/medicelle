@@ -39,8 +39,8 @@ app.controller('cutiHamil', ['$scope', '$compile', '$http', function($scope, $co
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/surat/cuti_hamil/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/surat/cuti_hamil/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a allow_destroy_cuti_hamil class='btn btn-xs btn-danger' ng-click='delete($event.currentTarget)' title='Hapus'><i class='fa fa-trash'></i></a>" +  
+        "<a allow_edit_cuti_hamil class='btn btn-xs btn-success' href='" + baseUrl + "/surat/cuti_hamil/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' allow_show_cuti_hamil href='" + baseUrl + "/surat/cuti_hamil/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
