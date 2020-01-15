@@ -16,7 +16,7 @@ class Mod {
     public static function now() {
         $now = Carbon::now()->format('Y-m-d');
 
-        return self::fullDate($now) . ' ' . Carbon::now()->format('h:i');
+        return self::fullDate($now) . ' ' . Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i');
     }
 
     public static function day($time) {
