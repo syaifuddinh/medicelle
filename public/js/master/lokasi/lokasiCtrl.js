@@ -40,10 +40,10 @@ app.controller('lokasi', ['$scope', '$compile', '$http', function($scope, $compi
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' allow_destroy_lokasi ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' allow_activate_lokasi title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/lokasi/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/lokasi/edit/" + resp.id +  "' title='Edit'  allow_edit_lokasi><i class='fa fa-pencil'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

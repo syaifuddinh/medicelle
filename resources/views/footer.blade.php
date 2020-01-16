@@ -170,6 +170,32 @@
                 'allow_activate_employee' : {!! Auth::user()->allow_access('master.employee.activate') !!},
                 'allow_destroy_employee' : {!! Auth::user()->allow_access('master.employee.destroy') !!},
 
+
+                'allow_edit_medical_item' : {!! Auth::user()->allow_access('master.medical_item.edit') !!},
+                'allow_show_medical_item' : {!! Auth::user()->allow_access('master.medical_item.show') !!},
+                'allow_activate_medical_item' : {!! Auth::user()->allow_access('master.medical_item.activate') !!},
+                'allow_destroy_medical_item' : {!! Auth::user()->allow_access('master.medical_item.destroy') !!},
+
+                'allow_edit_lokasi' : {!! Auth::user()->allow_access('master.lokasi.edit') !!},
+                'allow_activate_lokasi' : {!! Auth::user()->allow_access('master.lokasi.activate') !!},
+                'allow_destroy_lokasi' : {!! Auth::user()->allow_access('master.lokasi.destroy') !!},
+
+
+                'allow_edit_piece' : {!! Auth::user()->allow_access('master.piece.edit') !!},
+                'allow_activate_piece' : {!! Auth::user()->allow_access('master.piece.activate') !!},
+                'allow_destroy_piece' : {!! Auth::user()->allow_access('master.piece.destroy') !!},
+
+                'allow_edit_specialization' : {!! Auth::user()->allow_access('master.specialization.edit') !!},
+                'allow_show_specialization' : {!! Auth::user()->allow_access('master.specialization.show') !!},
+                'allow_activate_specialization' : {!! Auth::user()->allow_access('master.specialization.activate') !!},
+                'allow_destroy_specialization' : {!! Auth::user()->allow_access('master.specialization.destroy') !!},
+
+
+                'allow_edit_polyclinic' : {!! Auth::user()->allow_access('master.polyclinic.edit') !!},
+                'allow_show_polyclinic' : {!! Auth::user()->allow_access('master.polyclinic.show') !!},
+                'allow_activate_polyclinic' : {!! Auth::user()->allow_access('master.polyclinic.activate') !!},
+                'allow_destroy_polyclinic' : {!! Auth::user()->allow_access('master.polyclinic.destroy') !!},
+
                 'allow_edit_registration' : {!! Auth::user()->allow_access('registration.edit') !!},
                 'allow_show_registration' : {!! Auth::user()->allow_access('registration.show') !!},
                 'allow_attend_registration' : {!! Auth::user()->allow_access('registration.attend') !!},

@@ -17,7 +17,9 @@
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
-                          <a href="{{ route('piece.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @if(Auth::user()->allow_access('master.piece.create'))
+                              <a href="{{ route('piece.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>

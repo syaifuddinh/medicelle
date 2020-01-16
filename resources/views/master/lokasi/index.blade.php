@@ -17,7 +17,9 @@
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
+                          @if(Auth::user()->allow_access('master.lokasi.create'))
                           <a href="{{ route('lokasi.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>
