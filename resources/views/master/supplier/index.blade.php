@@ -53,7 +53,9 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          <a href="{{ route('supplier.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @if(Auth::user()->allow_access('master.supplier.create'))
+                              <a href="{{ route('supplier.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>

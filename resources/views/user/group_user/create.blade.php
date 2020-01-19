@@ -41,8 +41,8 @@
                       <div class="ln_solid"></div>
                       @include('user/group_user/roles')
                       <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                      <div class="form-group" style='position:fixed;bottom:3mm;right:2.7mm'>
+                        <div class="col-md-12">
                           <div class="btn-group compile">
                             
                             <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>

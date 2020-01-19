@@ -30,16 +30,37 @@
                         @if(Auth::user()->allow_view_medical_worker())
                             <li><a href="{{ route('doctor.index') }}">Tenaga Medis</a></li>
                         @endif
+
                         @if(Auth::user()->allow_view_employee())
                             <li><a href="{{ route('employee.index') }}">Karyawan/Non Medis</a></li>
                         @endif
-                        <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
-                        <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
+                        @if(Auth::user()->allow_access('master.supplier'))
+                          <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.medical_item'))
+                            <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.lokasi'))
                         <li><a href="{{ route('lokasi.index') }}">Daftar Lokasi</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.piece'))
                         <li><a href="{{ route('piece.index') }}">Satuan</a></li>
-                        <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.disease'))
+                            <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.specialization'))
                         <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
-                        <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
+                        @endif
+
+                        @if(Auth::user()->allow_access('master.polyclinic'))
+                          <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
+                        @endif
                       </ul>
                     </li>
                   @endif

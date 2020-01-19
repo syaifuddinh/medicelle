@@ -165,10 +165,22 @@
                 'allow_activate_patient' : {!! Auth::user()->allow_access('master.patient.activate') !!},
                 'allow_destroy_patient' : {!! Auth::user()->allow_access('master.patient.destroy') !!},
 
+
+                'allow_edit_medical_worker' : {!! Auth::user()->allow_access('master.medical_worker.edit') !!},
+                'allow_show_medical_worker' : {!! Auth::user()->allow_access('master.medical_worker.show') !!},
+                'allow_activate_medical_worker' : {!! Auth::user()->allow_access('master.medical_worker.activate') !!},
+                'allow_destroy_medical_worker' : {!! Auth::user()->allow_access('master.medical_worker.destroy') !!},
+
                 'allow_edit_employee' : {!! Auth::user()->allow_access('master.employee.edit') !!},
                 'allow_show_employee' : {!! Auth::user()->allow_access('master.employee.show') !!},
                 'allow_activate_employee' : {!! Auth::user()->allow_access('master.employee.activate') !!},
                 'allow_destroy_employee' : {!! Auth::user()->allow_access('master.employee.destroy') !!},
+
+
+                'allow_edit_supplier' : {!! Auth::user()->allow_access('master.supplier.edit') !!},
+                'allow_show_supplier' : {!! Auth::user()->allow_access('master.supplier.show') !!},
+                'allow_activate_supplier' : {!! Auth::user()->allow_access('master.supplier.activate') !!},
+                'allow_destroy_supplier' : {!! Auth::user()->allow_access('master.supplier.destroy') !!},
 
 
                 'allow_edit_medical_item' : {!! Auth::user()->allow_access('master.medical_item.edit') !!},
@@ -184,6 +196,13 @@
                 'allow_edit_piece' : {!! Auth::user()->allow_access('master.piece.edit') !!},
                 'allow_activate_piece' : {!! Auth::user()->allow_access('master.piece.activate') !!},
                 'allow_destroy_piece' : {!! Auth::user()->allow_access('master.piece.destroy') !!},
+
+
+
+                'allow_edit_disease' : {!! Auth::user()->allow_access('master.disease.edit') !!},
+                'allow_show_disease' : {!! Auth::user()->allow_access('master.disease.show') !!},
+                'allow_activate_disease' : {!! Auth::user()->allow_access('master.disease.activate') !!},
+                'allow_destroy_disease' : {!! Auth::user()->allow_access('master.disease.destroy') !!},
 
                 'allow_edit_specialization' : {!! Auth::user()->allow_access('master.specialization.edit') !!},
                 'allow_show_specialization' : {!! Auth::user()->allow_access('master.specialization.show') !!},

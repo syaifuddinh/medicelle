@@ -42,10 +42,10 @@ app.controller('disease_category', ['$scope', '$compile', '$http', function($sco
         render : resp => 
         "<div class='btn-group'>" + 
         ( 
-          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
+          resp.is_active == 1 ? "<button class='btn btn-xs btn-danger' allow_destroy_disease ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+          : "<button class='btn btn-xs btn-primary' allow_activate_disease ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
         ) +
-        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/disease_category/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/disease_category/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-success' href='" + baseUrl + "/disease_category/edit/" + resp.id +  "' allow_edit_disease title='Edit'><i class='fa fa-pencil'></i></a><a class='btn btn-xs btn-default' allow_show_disease href='" + baseUrl + "/disease_category/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
