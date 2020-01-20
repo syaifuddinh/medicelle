@@ -56,6 +56,26 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
         $scope.show()
     }
 
+    $scope.searchRoles = function() {
+        var keyword = $scope.keyword.toLowerCase().trim()
+        var roles = $('tbody td:first-child, tbody th:first-child')
+        var role, x, currentRow, row, hasParent = 1
+        var roleName
+        for(x = 0;x < roles.length;x++ ) {
+            role = $(roles[x])
+            currentRow = role.parents('tr')
+            roleName = role.text().toLowerCase().trim()
+            if(roleName.indexOf(keyword) > -1) {
+                currentRow.show()
+            } else {
+              currentRow.hide()
+              
+            }
+
+
+        }
+    }
+
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/user/group_user';

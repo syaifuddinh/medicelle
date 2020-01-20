@@ -218,7 +218,7 @@
                 </div>
                 <div id="cetakan" class="tab-pane fade">
                     <div class="dashboard_graph">
-                        <embed id='pdfDocument' style='width:100%;height:28cm'>
+                        <embed id='pdfDocument' style='width:100%;height:28cm' type='application/pdf'>
                     </div>
                 </div>
             </div>

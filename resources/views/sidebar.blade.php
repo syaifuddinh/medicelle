@@ -3,21 +3,41 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  @if(Auth::user()->allow_view_setting())
+                  @if(Auth::user()->allow_access('setting'))
                       <li><a><i class="fa fa-gear"></i> Setting & User <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                          <li><a href="{{ route('setting.company') }}">Perusahaan</a></li>
-                          <li><a href="{{ route('setting.finance') }}">Keuangan</a></li>
-                          <li><a href="{{ route('user.index') }}">User</a></li>
+                          @if(Auth::user()->allow_access('setting.company'))
+                              <li><a href="{{ route('setting.company') }}">Perusahaan</a></li>
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.finance'))
+                              <li><a href="{{ route('setting.finance') }}">Keuangan</a></li>
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.user'))
+                              <li><a href="{{ route('user.index') }}">User</a></li>
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.group_user'))
                           <li><a href="{{ route('group_user.index') }}">Departemen</a></li>
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.grup_nota'))
                           <li><a href="{{ route('grup_nota.index') }}">Grup Nota</a></li>
-                          @if(Auth::user()->allow_view_price())
+                          @endif
+
+                          @if(Auth::user()->allow_access('setting.price'))
                               <li><a href="{{ route('price.index') }}">Tarif</a></li>
                           @endif
-                          @if(Auth::user()->allow_view_discount())
+
+                          @if(Auth::user()->allow_access('setting.discount'))
                               <li><a href="{{ route('discount.index') }}">Promo</a></li>
                           @endif
+
+                          @if(Auth::user()->allow_access('setting.signa'))
                           <li><a href="{{ route('signa.index') }}">Signa</a></li>
+                          @endif
+                          
                         </ul>
                       </li>
                   @endif

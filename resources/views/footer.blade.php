@@ -150,6 +150,22 @@
                 'allow_update_assesment' : {!! Auth::user()->allow_update_assesment() !!},
                 'allow_update_medical_record' : {!! Auth::user()->allow_update_medical_record() !!},
 
+                'allow_edit_user' : {!! Auth::user()->allow_access('setting.user.edit') !!},
+                'allow_show_user' : {!! Auth::user()->allow_access('setting.user.show') !!},
+                'allow_activate_user' : {!! Auth::user()->allow_access('setting.user.activate') !!},
+                'allow_destroy_user' : {!! Auth::user()->allow_access('setting.user.destroy') !!},
+
+                'allow_edit_group_user' : {!! Auth::user()->allow_access('setting.group_user.edit') !!},
+                'allow_show_group_user' : {!! Auth::user()->allow_access('setting.group_user.show') !!},
+                'allow_activate_group_user' : {!! Auth::user()->allow_access('setting.group_user.activate') !!},
+                'allow_destroy_group_user' : {!! Auth::user()->allow_access('setting.group_user.destroy') !!},
+
+
+                'allow_edit_grup_nota' : {!! Auth::user()->allow_access('setting.grup_nota.edit') !!},
+                'allow_show_grup_nota' : {!! Auth::user()->allow_access('setting.grup_nota.show') !!},
+                'allow_activate_grup_nota' : {!! Auth::user()->allow_access('setting.grup_nota.activate') !!},
+                'allow_destroy_grup_nota' : {!! Auth::user()->allow_access('setting.grup_nota.destroy') !!},
+
                 'allow_edit_price' : {!! Auth::user()->allow_access('setting.price.edit') !!},
                 'allow_show_price' : {!! Auth::user()->allow_access('setting.price.show') !!},
                 'allow_activate_price' : {!! Auth::user()->allow_access('setting.price.activate') !!},
@@ -159,6 +175,11 @@
                 'allow_show_discount' : {!! Auth::user()->allow_access('setting.discount.show') !!},
                 'allow_activate_discount' : {!! Auth::user()->allow_access('setting.discount.activate') !!},
                 'allow_destroy_discount' : {!! Auth::user()->allow_access('setting.discount.destroy') !!},
+
+                'allow_edit_signa' : {!! Auth::user()->allow_access('setting.signa.edit') !!},
+                'allow_show_signa' : {!! Auth::user()->allow_access('setting.signa.show') !!},
+                'allow_activate_signa' : {!! Auth::user()->allow_access('setting.signa.activate') !!},
+                'allow_destroy_signa' : {!! Auth::user()->allow_access('setting.signa.destroy') !!},
 
                 'allow_edit_patient' : {!! Auth::user()->allow_access('master.patient.edit') !!},
                 'allow_show_patient' : {!! Auth::user()->allow_access('master.patient.show') !!},
