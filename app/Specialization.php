@@ -8,9 +8,9 @@ use Auth;
 class Specialization extends Model
 {
     //
-    protected $fillable = ['name', 'code', 'doctor_roles', 'nurse_roles', 'is_active'];
+    protected $fillable = ['name', 'code', 'doctor_roles', 'nurse_roles', 'grup_nota_roles', 'is_active'];
     protected $hidden = ['created_at', 'updated_at'];
-    protected $appends = ['doctor_roles', 'doctor_roles'];
+    protected $appends = ['doctor_roles', 'nurse_roles', 'grup_nota_roles'];
 
     public static function boot() {
         parent::boot();
@@ -45,12 +45,19 @@ class Specialization extends Model
         });
     }
 
-
     public function setDoctorRolesAttribute($value) {
         if(json_encode($value) != '[]') {
             $this->attributes['doctor_roles'] = json_encode($value);    
         } else {
             $this->attributes['doctor_roles'] = '[]';                
+        }
+    }
+
+    public function setGrupNotaRolesAttribute($value) {
+        if(json_encode($value) != '[]') {
+            $this->attributes['grup_nota_roles'] = json_encode($value);    
+        } else {
+            $this->attributes['grup_nota_roles'] = '[]';                
         }
     }
 
@@ -72,6 +79,18 @@ class Specialization extends Model
             return $doctor_roles;
         }
         return json_decode('{}');
+    }
+
+    public function getGrupNotaRolesAttribute() {
+        if(array_key_exists('grup_nota_roles', $this->attributes)) {
+            if($this->attributes['grup_nota_roles'] == '[]') {            
+                $grup_nota_roles = json_decode('[]');
+            } else {
+                $grup_nota_roles = json_decode($this->attributes['grup_nota_roles']);
+            }
+            return $grup_nota_roles;
+        }
+        return json_decode('[]');
     }
 
     public function getNurseRolesAttribute() {

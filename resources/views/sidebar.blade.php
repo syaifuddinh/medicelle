@@ -157,8 +157,9 @@
                                 <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat Pengantar MRS</a></li>
                             @endif
                             @if(Auth::user()->allow_access('surat.pengantar_mrs'))
-                            <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat Rujukan Pasien</a></li>
+                                <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat Rujukan Pasien</a></li>
                             @endif
+                                <li><a href="{{ route('surat.persetujuan_tindakan_medis.index') }}">Persetujuan Tindakan Medis</a></li>
                           </ul>
                     </li>
                   @endif

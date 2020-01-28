@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Response;
 use DB;
 use Str;
+use Auth;
 
 class PriceController extends Controller
 {
@@ -34,7 +35,20 @@ class PriceController extends Controller
         ->whereIsActive(1)
         ->whereIsAdministration(1)
         ->whereHas('price', function(Builder $query) {
-            $query->whereIsRegistration(0)->whereIsSewaRuangan(0)->whereIsSewaAlkes(0);
+            $query->whereIsRegistration(0)
+            ->whereIsSewaRuangan(0)
+            ->whereIsSewaAlkes(0);
+
+            if(Auth::user()->is_admin != 1) {
+                $contact = Auth::user()->contact;
+                if($contact != null) {
+                    if($contact->is_doctor == 1 || $contact->is_nurse == 1 || $contact->is_nurse_helper == 1 ) {
+                        $specialization = $contact->specialization;
+                        $roles = $specialization->grup_nota_roles;
+                        $query->whereIn('destination', $roles);
+                    }
+                }
+            } 
         })
         ->get();
         return Response::json($item, 200);

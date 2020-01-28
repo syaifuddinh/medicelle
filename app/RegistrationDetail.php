@@ -42,7 +42,6 @@ class RegistrationDetail extends Model
                 $medicalRecord = $registrationDetail->medical_record;
                 $treatments = $medicalRecord->treatment;
                 $diagnostics = $medicalRecord->diagnostic;
-                $drugs = $medicalRecord->drug;
                 $bhp = $medicalRecord->bhp;
                 $sewa_ruangan = $medicalRecord->sewa_ruangan;
                 $sewa_alkes = $medicalRecord->sewa_alkes;
@@ -67,15 +66,6 @@ class RegistrationDetail extends Model
                         'is_item' => 1,
                         'debet' => $value->item->price,
                         'reduksi' => $value->reduksi
-                    ]);
-                }
-                foreach($drugs as $value) {
-                    InvoiceDetail::create([
-                        'invoice_id' => $invoice->id,
-                        'item_id' => $value->item_id,
-                        'qty' => $value->qty,
-                        'is_item' => 1,
-                        'debet' => $value->item->price,
                     ]);
                 }
                 foreach($bhp as $value) {

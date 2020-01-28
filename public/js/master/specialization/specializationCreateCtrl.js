@@ -1,8 +1,10 @@
 app.controller('specializationCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Spesialisasi';
+    $scope.data = {}
     $scope.formData = {
         'doctor_roles' : {},
-        'nurse_roles' : {}
+        'nurse_roles' : {},
+        'grup_nota_roles' : []
     }
     var path = window.location.pathname;
 

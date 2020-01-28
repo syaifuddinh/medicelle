@@ -7,6 +7,7 @@ Route::prefix('letter')->group(function(){
     Route::get('layak_terbang', 'LetterApiController@layak_terbang');
     Route::get('pengantar_mrs', 'LetterApiController@pengantar_mrs');
     Route::get('rujukan_pasien', 'LetterApiController@rujukan_pasien');
+    Route::get('persetujuan_tindakan_medis', 'LetterApiController@persetujuan_tindakan_medis');
     
 });
 

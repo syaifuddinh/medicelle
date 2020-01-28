@@ -69,9 +69,9 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.pulse' ng-change='submitOne("pulse")'class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.pulse' ng-change='submitOne("pulse")'class="form-control col-md-7 col-xs-12">
                                             <div class="input-group-addon">
-                                                X/Mnt
+                                                Bpm
                                             </div>
                                         </div>
                                     </div>
@@ -83,9 +83,9 @@
                                     </label>
                                     <div class="col-md-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text" ng-model='formData.temperature' ng-change="submitOne('temperature')" class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text" ng-model='formData.temperature' ng-change="submitOne('temperature')" class="form-control col-md-7 col-xs-12">
                                             <div class="input-group-addon">
-                                                C
+                                                <sup>o</sup>C
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                                         <div class="input-group">
                                             <input type="text" ng-model='formData.breath_frequency' ng-change='submitOne("breath_frequency")' class="form-control col-md-7 col-xs-12" only-num>
                                             <div class="input-group-addon">
-                                                X/Mnt
+                                                Rpm
                                             </div>
                                         </div>
                                     </div>

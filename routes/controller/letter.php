@@ -19,6 +19,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::get('rujukan_pasien/{id}/pdf', 'RujukanPasienController@pdf')->name('rujukan_pasien.pdf');
         Route::resource('rujukan_pasien', 'RujukanPasienController');
+
+        Route::get('persetujuan_tindakan_medis/{id}/pdf', 'PersetujuanTindakanMedisController@pdf')->name('persetujuan_tindakan_medis.pdf');
+        Route::resource('persetujuan_tindakan_medis', 'PersetujuanTindakanMedisController');
     });
 });
 
