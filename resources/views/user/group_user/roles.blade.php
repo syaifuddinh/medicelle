@@ -1186,10 +1186,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding-left:10mm">Persetujuan Tindakan Pasien</td>
+                                        <td style="padding-left:10mm">Persetujuan Tindakan Medis</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_pasien"]' ng-true-value='"1"' ng-false-value='"0"'>
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_medis"]' ng-true-value='"1"' ng-false-value='"0"'>
                                             </label>
                                         </td>
                                     </tr>
@@ -1198,7 +1198,7 @@
                                         <td style="padding-left:20mm">Tambah</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_pasien.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_medis.create"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>
@@ -1206,7 +1206,7 @@
                                         <td style="padding-left:20mm">Edit</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_pasien.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_medis.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>
@@ -1214,7 +1214,7 @@
                                         <td style="padding-left:20mm">Detail</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_pasien.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_medis.show"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>
@@ -1222,7 +1222,7 @@
                                         <td style="padding-left:20mm">Hapus</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_pasien.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["surat.persetujuan_tindakan_medis.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>

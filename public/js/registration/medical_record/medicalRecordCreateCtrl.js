@@ -81,7 +81,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       return blob;
   }
 
-    var signature_driver = $(".signature").jSignature({height:450, width:500, color:'blue'});
+    if(path.indexOf('permintaan/fnab') > -1) {
+        var signature_driver = $(".signature").jSignature({height:640, width:760, color:'blue'});
+    } else {
+        var signature_driver = $(".signature").jSignature({height:450, width:500, color:'blue'});
+    }
     bodyImage = new Image()
     bodyImage.onload = function() {
         ctx.drawImage(bodyImage, 0, 0)
@@ -105,6 +109,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               bodySrc = baseUrl + '/images/breast.bmp'
         } else if(path.indexOf('physique/rectum') > -1) {
               bodySrc = baseUrl + '/images/rectum.bmp'
+        } else if(path.indexOf('permintaan/fnab') > -1) {
+              bodySrc = baseUrl + '/images/fnab.png'
         }
 
         bodyImage.src = bodySrc     
@@ -119,6 +125,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               key = 'breast'
         } else if(path.indexOf('physique/rectum') > -1) {
               key = 'rectum'
+        } else if(path.indexOf('permintaan/fnab') > -1) {
+              key = 'fnab'
         }
         var fd = new FormData();
         var signature = $('.signature').jSignature("getData", "image");

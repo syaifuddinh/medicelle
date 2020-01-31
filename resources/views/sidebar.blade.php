@@ -159,7 +159,9 @@
                             @if(Auth::user()->allow_access('surat.pengantar_mrs'))
                                 <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat Rujukan Pasien</a></li>
                             @endif
+                            @if(Auth::user()->allow_access('surat.persetujuan_tindakan_medis'))
                                 <li><a href="{{ route('surat.persetujuan_tindakan_medis.index') }}">Persetujuan Tindakan Medis</a></li>
+                            @endif
                           </ul>
                     </li>
                   @endif

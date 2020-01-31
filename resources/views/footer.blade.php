@@ -267,6 +267,10 @@
                 'allow_edit_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.edit') !!},
                 'allow_show_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.show') !!},
                 'allow_destroy_rujukan_pasien' : {!! Auth::user()->allow_access('surat.rujukan_pasien.destroy') !!},
+
+                'allow_edit_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.edit') !!},
+                'allow_show_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.show') !!},
+                'allow_destroy_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.destroy') !!},
             }
 
             setInterval(function(){

@@ -151,6 +151,9 @@ class MedicalRecord extends Model
             if(null != ($additional->breast_visual ?? null)) {
                 $additional->breast_visual = asset('files/' . $additional->breast_visual);
             }
+            if(null != ($additional->fnab_visual ?? null)) {
+                $additional->fnab_visual = asset('files/' . $additional->fnab_visual);
+            }
             return $additional;
         }
         return json_decode('{}');
