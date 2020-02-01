@@ -15,6 +15,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }, 300)
 
 
+
     $("[ng-model='obgyn_disease_history.disease_name'], [ng-model='obgyn_family_disease_history.disease_name']").easyAutocomplete({
         data : ['Asma', 'Hipertensi', 'DM', 'Tiroid', 'Epilepsi'],
         list : { match: {
@@ -299,7 +300,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
-
+        setTimeout(function () {    
+              $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
+              $('[ng-model="formData.additional.sitologi_date"]').val( $filter('fullDate')($scope.formData.additional.sitologi_date))
+        }, 300)
         $scope.browse_medical_record()
         if(step) {
             if(step == 1){

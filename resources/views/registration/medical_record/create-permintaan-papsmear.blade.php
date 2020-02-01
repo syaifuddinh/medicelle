@@ -15,7 +15,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Hari pertama haid terakhir / menopause
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_hari_menopause' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_hari_menopause")'></textarea>
                                             </div>
                                         </div>
@@ -23,7 +23,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat vaksinasi
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_vaksinasi")'></textarea>
                                             </div>
                                         </div>
@@ -32,7 +32,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat kontrasepsi
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_kontrasepsi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_kontrasepsi")'></textarea>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_papsmear")'></textarea>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Keluhan saat ini
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_keluhan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_keluhan")'></textarea>
                                             </div>
                                         </div>
@@ -60,119 +60,44 @@
                                         <div class="form-group">
                                             <label class="col-md-12 col-sm-12 col-xs-12">Tanggal pengambilan papsmear
                                             </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <input  ng-model='formData.additional.papsmear_hari_menopause' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_hari_menopause")'>
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <input  ng-model='formData.additional.papsmear_date' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_date")' datepick>
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Riwayat vaksinasi
-                                            </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_vaksinasi")'></textarea>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Riwayat kontrasepsi
-                                            </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_kontrasepsi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_kontrasepsi")'></textarea>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear
-                                            </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_papsmear")'></textarea>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Keluhan saat ini
-                                            </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_keluhan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_keluhan")'></textarea>
-                                            </div>
-                                        </div>
-                                        
-
-                                    </div>
-                                    
-                                </div>
-
-                                
-                                <div class="ln_solid"></div>
-
-                                <h2>Keterangan Klinik</h2>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Anamnesa
+                                            <label class="col-md-12 col-sm-12 col-xs-12">Jumlah slide papsmear
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_anamnesa' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_anamnesa")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_jumlah_slide' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_jumlah_slide")'></textarea>
                                             </div>
                                         </div>
                                         
                                         
                                         <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Status Lokasi
+                                            <label class="col-md-12 col-sm-12 col-xs-12">Lokasi pengambilan
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_status_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_status_lokasi")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_lokasi")'></textarea>
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Keadaan kelenjar regional
+                                            <label class="col-md-12 col-sm-12 col-xs-12">Gambaran portio cervix / vagina
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_keadaan_kelenjar_regional' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_keadaan_kelenjar_regional")'></textarea>
-                                            </div>
-                                        </div>
-                                                                                
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Metastasis
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_metastasis' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_metastasis")'></textarea>
-                                            </div>
-                                        </div>
-                                                                                
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Rontgen foto
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_rontgen_foto' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_rontgen_foto")'></textarea>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Radiasi
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_radiasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_radiasi")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_cervix' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_cervix")'></textarea>
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Terapi
+                                            <label class="col-md-12 col-sm-12 col-xs-12">Informasi klinis
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_terapi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_terapi")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_description")'></textarea>
                                             </div>
                                         </div>
-                                                                                
+                                        
 
                                     </div>
                                     
