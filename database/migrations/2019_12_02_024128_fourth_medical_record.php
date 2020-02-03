@@ -21,8 +21,8 @@ class FourthMedicalRecord extends Migration
             $table->float('weight')->nullable(false)->default(0);
             $table->float('blood_pressure')->nullable(false)->default(0);
             $table->float('pulse')->nullable(false)->default(0);
-            $table->float('temperature')->nullable(false)->default(0);
             $table->float('breath_frequency')->nullable(false)->default(0);
+            $table->float('temperature')->nullable(false)->default(0);
             $table->float('prebirth_weight')->nullable(false)->default(0);
             $table->float('postbirth_weight')->nullable(false)->default(0);
             $table->float('birth_long')->nullable(false)->default(0);

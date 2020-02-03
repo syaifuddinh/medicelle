@@ -15,6 +15,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }, 300)
 
 
+
     $("[ng-model='obgyn_disease_history.disease_name'], [ng-model='obgyn_family_disease_history.disease_name']").easyAutocomplete({
         data : ['Asma', 'Hipertensi', 'DM', 'Tiroid', 'Epilepsi'],
         list : { match: {
@@ -81,7 +82,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       return blob;
   }
 
-    var signature_driver = $(".signature").jSignature({height:450, width:500, color:'blue'});
+    if(path.indexOf('permintaan/fnab') > -1) {
+        var signature_driver = $(".signature").jSignature({height:640, width:760, color:'blue'});
+    } else {
+        var signature_driver = $(".signature").jSignature({height:450, width:500, color:'blue'});
+    }
     bodyImage = new Image()
     bodyImage.onload = function() {
         ctx.drawImage(bodyImage, 0, 0)
@@ -105,6 +110,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               bodySrc = baseUrl + '/images/breast.bmp'
         } else if(path.indexOf('physique/rectum') > -1) {
               bodySrc = baseUrl + '/images/rectum.bmp'
+        } else if(path.indexOf('permintaan/fnab') > -1) {
+              bodySrc = baseUrl + '/images/fnab.png'
         }
 
         bodyImage.src = bodySrc     
@@ -119,6 +126,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               key = 'breast'
         } else if(path.indexOf('physique/rectum') > -1) {
               key = 'rectum'
+        } else if(path.indexOf('permintaan/fnab') > -1) {
+              key = 'fnab'
         }
         var fd = new FormData();
         var signature = $('.signature').jSignature("getData", "image");
@@ -291,7 +300,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
-
+        setTimeout(function () {    
+              $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
+              $('[ng-model="formData.additional.sitologi_date"]').val( $filter('fullDate')($scope.formData.additional.sitologi_date))
+        }, 300)
         $scope.browse_medical_record()
         if(step) {
             if(step == 1){

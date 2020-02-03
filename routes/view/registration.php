@@ -22,8 +22,8 @@ Route::name('medical_record.')->prefix('medical_record')
 
     Route::get('/step/1/edit/{id}', function ($id){
         if(Specialization::allow_access('anamnesa') != 1) {
-            $alternative = ['anamnesa_obgyn', 'umum', 'children', 'surgical', 'kepala', 'breast', 'rectum', 'medical_checkup', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'jadwal_kontrol', 'resume_medis'];
-            $alternative_route = ['2', 'physique.general', 'physique.children', 'physique.surgical', 'physique.head', 'physique.breast', 'physique.rectum', 'medical_checkup', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'schedule', 'resume_medis'];
+            $alternative = ['anamnesa_obgyn', 'umum', 'children', 'surgical', 'kepala', 'breast', 'rectum', 'medical_checkup', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'fnab', 'histopatologi', 'papsmear', 'sitologi', 'jadwal_kontrol', 'resume_medis'];
+            $alternative_route = ['2', 'physique.general', 'physique.children', 'physique.surgical', 'physique.head', 'physique.breast', 'physique.rectum', 'medical_checkup', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'permintaan.fnab', 'permintaan.histopatologi', 'permintaan.papsmear', 'permintaan.sitologi', 'schedule', 'resume_medis'];
             foreach($alternative as $key => $role) {
                 if(Specialization::allow_access($role) == 1) {
                     return redirect()->route('medical_record.edit.' . $alternative_route[$key], ['id' => $id]);
@@ -116,6 +116,30 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/utilization/sewa_ruangan/{id}', function ($id){
         return view('registration/medical_record/create-utilization-sewa_ruangan')->withId($id);
     })->name('edit.utilization.sewa_ruangan');
+
+    Route::get('/permintaan/fnab/{id}', function ($id){
+        if(Specialization::allow_access('umum') != 1) {
+            $alternative = ['histologi', 'papsmear', 'sitologi'];
+            $alternative_route = ['histologi', 'papsmear', 'sitologi'];
+            foreach($alternative as $key => $role) {
+                if(Specialization::allow_access($role) == 1) {
+                    return redirect()->route('medical_record.edit.permintaan.' . $alternative_route[$key], ['id' => $id]);
+                }                
+            }
+        } else {
+
+            return view('registration/medical_record/create-permintaan-fnab')->withId($id);
+        }
+    })->name('edit.permintaan.fnab');
+    Route::get('/permintaan/histopatologi/{id}', function ($id){
+        return view('registration/medical_record/create-permintaan-histopatologi')->withId($id);
+    })->name('edit.permintaan.histopatologi');
+    Route::get('/permintaan/papsmear/{id}', function ($id){
+        return view('registration/medical_record/create-permintaan-papsmear')->withId($id);
+    })->name('edit.permintaan.papsmear');
+    Route::get('/permintaan/sitologi/{id}', function ($id){
+        return view('registration/medical_record/create-permintaan-sitologi')->withId($id);
+    })->name('edit.permintaan.sitologi');
 
     Route::get('/resume/{id}', function ($id){
         return view('registration/medical_record/create-resume')->withId($id);

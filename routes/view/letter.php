@@ -90,7 +90,7 @@ Route::name('surat.')->prefix('surat')
         })->name('show');
 
     });
-Route::name('rujukan_pasien.')->prefix('rujukan_pasien')
+    Route::name('rujukan_pasien.')->prefix('rujukan_pasien')
     ->group(function(){
 
         Route::get('/', function (){
@@ -108,4 +108,26 @@ Route::name('rujukan_pasien.')->prefix('rujukan_pasien')
 
     });
 
+    
+Route::name('persetujuan_tindakan_medis.')->prefix('persetujuan_tindakan_medis')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('letter/persetujuan_tindakan_medis/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('letter/persetujuan_tindakan_medis/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('letter/persetujuan_tindakan_medis/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('letter/persetujuan_tindakan_medis/show')->withId($id);
+    })->name('show');
+
 });
+
+});
+
+
+

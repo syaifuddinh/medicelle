@@ -55,6 +55,10 @@
                         </li>
                     @endif
 
+                    <li class='{{ strpos(url()->current(), "permintaan") != null ? "active" : "" }}'>
+                        <a href="{{ route('medical_record.edit.permintaan.fnab', ['id' => $id]) }}">Permintaan</a>
+                    </li>
+
                     @if( Specialization::allow_access('jadwal_kontrol') == 1 )
                         <li class='{{ strpos(url()->current(), "schedule") != null ? "active" : "" }}'>
                             <a href="{{ route('medical_record.edit.schedule', ['id' => $id]) }}">Jadwal kontrol</a>

@@ -84,6 +84,17 @@ class Letter extends Model
                 $code = $id . '/PRJ/MDC/' . date('m') . '/' . date('Y');
 
                 $letter->code = $code;
+            } else if($letter->is_persetujuan_tindakan_medis == 1) {
+                $current_month = date('m');
+                $current_year = date('Y');
+                $id = DB::table('letters')
+                ->whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year' AND is_rujukan_pasien = 1")
+                ->count('id') + 1;
+                $id = $id == null ? 1 : $id;
+                $id = str_pad($id, 3, '0', STR_PAD_LEFT);
+                $code = $id . '/SPM/MDC/' . date('m') . '/' . date('Y');
+
+                $letter->code = $code;
             }
         });
 

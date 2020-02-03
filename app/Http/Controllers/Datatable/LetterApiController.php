@@ -73,9 +73,24 @@ class LetterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
            
     }
+
     public function rujukan_pasien(Request $request) {
         $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
         ->whereIsRujukanPasien(1)
+        ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
+
+        if($request->order[0]['column'] == 0) {
+            $x->orderBy('letters.id', $request->order[0]['dir']);
+        }
+
+
+        return Datatables::eloquent($x)->make(true);
+           
+    }
+    
+    public function persetujuan_tindakan_medis(Request $request) {
+        $x = Letter::with('doctor:id,name,specialization_id','doctor.specialization:id,name', 'medical_record:id,code,patient_id', 'medical_record.patient:id,name,address')
+        ->whereIsPersetujuanTindakanMedis(1)
         ->select('letters.id', 'letters.code', 'doctor_id', 'medical_record_id');
 
         if($request->order[0]['column'] == 0) {
