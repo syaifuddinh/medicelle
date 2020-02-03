@@ -133,6 +133,13 @@ class RegistrationController extends Controller
         return Response::json($registration, 200);
     }
 
+    public function detail($registration_id, $registration_detail_id)
+    {
+        $registration = Registration::findOrFail($registration_id);
+        $registrationDetail = RegistrationDetail::findOrFail($registration_detail_id);
+        return Response::json($registrationDetail, 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

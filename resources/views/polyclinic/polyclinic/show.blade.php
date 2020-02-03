@@ -15,7 +15,7 @@
                     <div class="col-md-6">
                         <h3><% title %></h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 hidden">
                         <div class="btn-group pull-right">
                             <a href='{{ route("assesment.index", ["id" => $patient_id]) }}' target='_blank' class="btn btn-info btn-sm" >Riwayat assesment</a>
                             <?php 
