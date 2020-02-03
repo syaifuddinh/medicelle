@@ -153,12 +153,16 @@ class MedicalRecordController extends Controller
         return Response::json($x, 200);
     }
 
-    public function pdf(Request $request, $id)
+    public function pdf(Request $request, $id, $flag = 'preview')
     {
         $medicalRecord = $this->fetch($id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
         $pdf = PDF::loadview('pdf/medical_resume',['medicalRecord'=>$medicalRecord, 'date' => $date, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
-        return $pdf->stream('resume-medis.pdf');
+        if($flag == 'preview') {
+            return $pdf->stream('resume-medis.pdf');
+        } else {
+            return $pdf->download('resume-medis.pdf');            
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
+        Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');
         Route::resource('registration', 'RegistrationController');
 
     Route::get('medical_record/{id}/next_schedule', 'MedicalRecordController@next_schedule');
@@ -11,7 +12,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/{id}/refer_doctor/{doctor_id}', 'MedicalRecordController@refer_doctor');
         Route::get('medical_record/{id}/doctor', 'MedicalRecordController@doctor');
         Route::post('medical_record/{id}/store_signature/{flag}', 'MedicalRecordController@store_signature');
-        Route::get('medical_record/{id}/pdf', 'MedicalRecordController@pdf');
+        Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
         Route::post('medical_record/submit_research/{id}/{flag?}', 'MedicalRecordController@submit_research');
         Route::post('medical_record/update_research/{medical_record_detail_id}/', 'MedicalRecordController@update_research');
         Route::post('medical_record/submit_schedule/{id}', 'MedicalRecordController@submit_schedule');

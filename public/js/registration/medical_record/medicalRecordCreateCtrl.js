@@ -14,8 +14,84 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $('[ng-model="resume_date"]').val( $filter('fullDate')($scope.resume_date))
     }, 300)
 
+    $scope.medicalRecordHistory = function() {
 
+        if(path.indexOf('resume') > -1) {
+            var medical_record_url = baseUrl + '/datatable/registration/medical_records/'
+            $scope.filterData = {}            
 
+            oTable = $('#listview').DataTable({
+              processing: true,
+              serverSide: true,
+              dom: 'Blfrtip',
+              ajax: {
+                url : medical_record_url  + $scope.formData.patient_id,
+                data : d => Object.assign(d, $scope.filterData)
+              },
+              buttons: [
+                {
+                  'extend' : 'excel',
+                  'enabled' : true,
+                  'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
+                  'className' : 'btn btn-default btn-sm',
+                  'filename' : 'Rekam Medis - '+new Date(),
+                  'sheetName' : 'Data',
+                  'title' : 'Rekam Medis'
+                },
+              ],
+
+              columns:[
+
+                {
+                  data:'medical_record.code', 
+                  name:'medical_record.code',
+                  width : '18mm',
+                },
+                {
+                  data:null, 
+                  orderable:false,
+                  searchable:false,
+                  width : '30mm',
+                  render:resp => $filter('fullDate')(resp.medical_record.date)
+                },
+                {
+                  data:null, 
+                  className : 'capitalize',
+                  render:function(resp) {
+                      var destination = resp.registration_detail.destination.toLowerCase()
+                      return destination
+                  }
+                },
+                {
+                  data:null, 
+                  render:function(resp) {
+                      var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      return summary
+                  }
+                },
+                {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
+                {
+                  data: null, 
+                  orderable : false,
+                  searchable : false,
+                  width : '15mm',
+                  className : 'text-center',
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume()' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume()' title='Download'><i class='fa fa-download'></i></a></div>"
+                },
+              ],
+              createdRow: function(row, data, dataIndex) {
+                $compile(angular.element(row).contents())($scope);
+              }
+            });
+            oTable.buttons().container().appendTo( '.export_button' );
+
+            $scope.filter = function() {
+              oTable.ajax.reload();
+            }
+
+        }
+    }
+ 
     $("[ng-model='obgyn_disease_history.disease_name'], [ng-model='obgyn_family_disease_history.disease_name']").easyAutocomplete({
         data : ['Asma', 'Hipertensi', 'DM', 'Tiroid', 'Epilepsi'],
         list : { match: {
@@ -192,14 +268,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.showResume($scope.resume_date)
     }
 
-    $scope.showResume = function(date) {
-        if(date == null) {
-            $('#pdfDocument').attr('src', baseUrl + '/controller/registration/medical_record/' + id + '/pdf')
-        } else {
-            $('#pdfDocument').attr('src', baseUrl + '/controller/registration/medical_record/' + id + '/pdf?date=' + date)          
-        }
+    $scope.previewResume = function(date) {
+        var source = baseUrl + '/controller/registration/medical_record/' + id + '/pdf'
+        window.open(source)
     }
-    $scope.showResume()
+
+    $scope.downloadResume = function(date) {
+        var source = baseUrl + '/controller/registration/medical_record/' + id + '/pdf/download'
+        window.open(source)
+    }
     // $scope.printDocument('pdfDocument')
 
   $scope.browse_medical_record = function() {
@@ -281,18 +358,19 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               $('#medicalRecordModal').modal('hide')
           }, 500)
       }, function(error) {
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
-          });
-          toastr.warning(det,error.data.message);
-        } else {
-          toastr.error(error.data.message,"Error Has Found !");
-        }
-        $rootScope.disBtn = false
-    });
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+          $rootScope.disBtn = false
+      });
   }
+  
     
   $scope.show = function() {
       $scope.reset()
@@ -304,6 +382,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
               $('[ng-model="formData.additional.sitologi_date"]').val( $filter('fullDate')($scope.formData.additional.sitologi_date))
         }, 300)
+        $scope.medicalRecordHistory()
         $scope.browse_medical_record()
         if(step) {
             if(step == 1){
