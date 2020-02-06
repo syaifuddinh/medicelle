@@ -37,7 +37,7 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. RM</th>
+                          <th>No. Registrasi</th>
                           <th>Tanggal</th>
                           <th>Tujuan</th>
                           <th>Rangkuman</th>
