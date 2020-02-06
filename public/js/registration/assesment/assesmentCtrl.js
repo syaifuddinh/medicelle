@@ -11,17 +11,6 @@ app.controller('assesment', ['$scope', '$rootScope', '$compile', '$http', '$filt
       url : baseUrl+'/datatable/registration/assesment/' + patient_id,
       data : d => Object.assign(d, $scope.formData)
     },
-    buttons: [
-      {
-        'extend' : 'excel',
-        'enabled' : true,
-        'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
-        'className' : 'btn btn-default btn-sm',
-        'filename' : 'Assesment - '+new Date(),
-        'sheetName' : 'Data',
-        'title' : 'Assesment'
-      },
-    ],
 
     columns:[
       {

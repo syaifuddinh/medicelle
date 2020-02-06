@@ -1,11 +1,54 @@
 app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
     $scope.title = 'Form Assesment';
     $scope.data = {}
+    $scope.filterData = {}
     $scope.priceSlider = 209
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
+
+
+  $scope.assesmentHistory = function() {
+      if(path.indexOf('history') > -1) {
+          oTable = $('#listview').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url : baseUrl+'/datatable/registration/assesment/' + $scope.formData.patient_id,
+                data : d => Object.assign(d, $scope.filterData)
+              },
+
+              columns:[
+                {
+                  data:null, 
+                  orderable:false,
+                  searchable:false,
+                  width : '45mm',
+                  render:resp => $filter('fullDate')(resp.date)
+                },
+                {data:"main_complaint", name:"main_complaint", orderable:false},
+                {data:"nurse.name", name:"nurse.name", orderable:false, searchable:false},
+                {
+                  data: null, 
+                  orderable : false,
+                  searchable : false,
+                  className : 'text-center',
+                  render : resp => 
+                  "<div class='btn-group'>" + 
+                  "<a allow_update_assesment class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a></div>"
+                },
+              ],
+              createdRow: function(row, data, dataIndex) {
+                $compile(angular.element(row).contents())($scope);
+              }
+            });
+      }
+  }
+
+  $scope.filter = function() {
+    oTable.ajax.reload();
+  }
 
   $scope.browse_assesment = function() {
       assesment_datatable = $('#assesment_datatable').DataTable({
@@ -82,6 +125,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
         $scope.patient = data.data.patient
         $scope.code = data.data.code
 
+        $scope.assesmentHistory()
         $scope.browse_assesment()
         if(step == 1){
 

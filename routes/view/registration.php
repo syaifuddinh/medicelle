@@ -208,6 +208,9 @@ Route::name('assesment.')->prefix('assesment')
     Route::get('/step/4/edit/{id}', function ($id){
         return view('registration/assesment/create-4')->withId($id);
     })->name('edit.4');
+    Route::get('/step/history/{id}', function ($id){
+        return view('registration/assesment/history')->withId($id);
+    })->name('edit.history');
 
 
     Route::get('/step/1/show/{id}', function ($id){
