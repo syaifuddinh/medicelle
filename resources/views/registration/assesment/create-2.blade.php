@@ -4,6 +4,7 @@
                             <li class="active"><a href="#">Langkah 2</a></li>
                             <li><a href="{{ route('assesment.edit.3', ['id' => $id]) }}">Langkah 3</a></li>                            
                             <li><a href="{{ route('assesment.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
+                            <li><a href="{{ route('assesment.edit.history', ['id' => $id]) }}">Riwayat</a></li>
                             
                           </ul> 
                       </nav>
