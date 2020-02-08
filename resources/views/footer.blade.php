@@ -147,6 +147,8 @@
     <script>
         $(document).ready(function(){
             roles = {
+                'is_nurse' : {!! Auth::user()->contact == null ? 1 : (Auth::user()->contact->is_nurse == 0 ? Auth::user()->contact->is_nurse_helper : Auth::user()->contact->is_nurse)  !!},
+
                 'allow_update_assesment' : {!! Auth::user()->allow_update_assesment() !!},
                 'allow_update_medical_record' : {!! Auth::user()->allow_update_medical_record() !!},
 

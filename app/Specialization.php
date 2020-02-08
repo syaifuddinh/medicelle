@@ -135,6 +135,7 @@ class Specialization extends Model
     }
 
     public static function readonly($medical_record_part) {
+        $medical_record_part = trim($medical_record_part);
         $user = Auth::user();
         $is_allow = $user->is_admin == 1 ? 0 : 1;
         if($user->contact) {
@@ -156,7 +157,6 @@ class Specialization extends Model
                 }
             }
         }
-
         return $is_allow;
     }
 }

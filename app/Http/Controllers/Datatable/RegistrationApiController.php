@@ -258,6 +258,7 @@ class RegistrationApiController extends Controller
             'patient:id,name,age,birth_date,gender,city_id,phone,address',
             'patient.city:id,name'
         )
+        ->join('registration_details', 'registration_details.id', 'medical_records.registration_detail_id')
         ->select('medical_records.id','medical_records.patient_id','medical_records.code', 'registration_detail_id');
 
         if($request->draw == 1)
@@ -271,7 +272,7 @@ class RegistrationApiController extends Controller
             'registration_detail:id,registration_id,doctor_id,destination',
             'registration_detail.doctor:id,name,registration_id', 
             'medical_record',
-            'registration_detail.registration:id',
+            'registration_detail.registration:id,code',
             'registration_detail.registration.invoice:id,registration_id,status'
         )
         ->whereHas('medical_record', function(Builder $query) use($request, $patient_id){

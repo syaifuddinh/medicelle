@@ -69,6 +69,11 @@
                             <a href="{{ route('medical_record.edit.resume', ['id' => $id]) }}">Resume medis</a>
                         </li>
                     @endif
+                    @if( Specialization::allow_access('assesment') == 1 )
+                        <li class='{{ strpos(url()->current(), "assesment") != null ? "active" : "" }}'>
+                            <a href="{{ route('medical_record.edit.assesment', ['id' => $id]) }}">Riwayat Assesment</a>
+                        </li>
+                    @endif
                 </ul> 
         </div>
     </div>
