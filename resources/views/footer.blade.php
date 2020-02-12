@@ -211,6 +211,11 @@
                 'allow_activate_medical_item' : {!! Auth::user()->allow_access('master.medical_item.activate') !!},
                 'allow_destroy_medical_item' : {!! Auth::user()->allow_access('master.medical_item.destroy') !!},
 
+                'allow_edit_obat' : {!! Auth::user()->allow_access('master.obat.edit') !!},
+                'allow_show_obat' : {!! Auth::user()->allow_access('master.obat.show') !!},
+                'allow_activate_obat' : {!! Auth::user()->allow_access('master.obat.activate') !!},
+                'allow_destroy_obat' : {!! Auth::user()->allow_access('master.obat.destroy') !!},
+
                 'allow_edit_lokasi' : {!! Auth::user()->allow_access('master.lokasi.edit') !!},
                 'allow_activate_lokasi' : {!! Auth::user()->allow_access('master.lokasi.activate') !!},
                 'allow_destroy_lokasi' : {!! Auth::user()->allow_access('master.lokasi.destroy') !!},

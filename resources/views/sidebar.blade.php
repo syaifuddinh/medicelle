@@ -62,6 +62,10 @@
                             <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
                         @endif
 
+                        @if(Auth::user()->allow_access('master.obat'))
+                            <li><a href="{{ route('obat.index') }}">Obat</a></li>
+                        @endif
+
                         @if(Auth::user()->allow_access('master.lokasi'))
                         <li><a href="{{ route('lokasi.index') }}">Daftar Lokasi</a></li>
                         @endif

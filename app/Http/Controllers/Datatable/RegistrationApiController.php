@@ -258,13 +258,26 @@ class RegistrationApiController extends Controller
             'patient:id,name,age,birth_date,gender,city_id,phone,address',
             'patient.city:id,name'
         )
-        ->join('registration_details', 'registration_details.id', 'medical_records.registration_detail_id')
-        ->select('medical_records.id','medical_records.patient_id','medical_records.code', 'registration_detail_id');
+        ->select('medical_records.code','medical_records.patient_id','medical_records.id', 'registration_detail_id');
+        //->groupBy('medical_records.code');
 
-        if($request->draw == 1)
-            $x->orderBy('medical_records.id', 'DESC');
+        // if($request->draw == 1)
+        //     $x->orderBy('medical_records.id', 'DESC');
 
-        return Datatables::eloquent($x)->make(true);
+        return Datatables::of($x)
+        ->order(function ($query) {
+                $query->orderBy('medical_records.code', 'desc');
+        })
+        ->make(true);
+    }
+
+    public function medical_record_history(Request $request) {
+        $x = DB::table('medical_records');
+
+        // if($request->draw == 1)
+        //     $x->orderBy('medical_records.id', 'DESC');
+
+        return Datatables::of($x)->make(true);
     }
 
     public function medical_records(Request $request, $patient_id) {
