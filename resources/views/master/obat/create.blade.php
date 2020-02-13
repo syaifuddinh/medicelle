@@ -88,7 +88,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <input type="text"  ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" only-num maxlength="3" ng-change='changeSampleCode()'>
+                    <input type="text"  ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" maxlength="3" ng-change='changeSampleCode()'>
                     <div class="input-group-addon">
                         <% sample_code %>
                     </div>
@@ -231,7 +231,7 @@
                     <div class="form-group" style='padding-bottom:8mm'>
                         <label class='col-md-4'>Kode</label>
                         <div class="col-md-8">
-                            <input type="text" ng-model='insertData.code' class="form-control" only-num>
+                            <input type="text" ng-model='insertData.code' class="form-control">
                         </div>
                     </div>
                     <div class="form-group"  style='padding-bottom:8mm'>
