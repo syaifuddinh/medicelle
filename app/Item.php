@@ -144,6 +144,20 @@ class Item extends Model
     public function group() {
         return $this->belongsTo('App\Item', 'category_id', 'id');
     }
+
+    public function classification() {
+        return $this->belongsTo('App\Item', 'classification_id', 'id');
+    }
+
+    public function subclassification() {
+        return $this->belongsTo('App\Item', 'subclassification_id', 'id');
+    }
+
+
+    public function generic() {
+        return $this->belongsTo('App\Item', 'generic_id', 'id');
+    }
+
     public function piece() {
         return $this->belongsTo('App\Piece');
     }

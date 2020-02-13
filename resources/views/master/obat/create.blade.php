@@ -231,7 +231,7 @@
                     <div class="form-group" style='padding-bottom:8mm'>
                         <label class='col-md-4'>Kode</label>
                         <div class="col-md-8">
-                            <input type="text" ng-model='insertData.code' class="form-control" >
+                            <input type="text" ng-model='insertData.code' class="form-control" only-num>
                         </div>
                     </div>
                     <div class="form-group"  style='padding-bottom:8mm'>

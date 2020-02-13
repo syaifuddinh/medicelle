@@ -17,10 +17,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
+                            @if(Auth::user()->allow_access('master.obat.edit'))
+                              <a href='{{ route("obat.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                            @endif
 
-                            <a href='{{ route("obat.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
-                            <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
-                            <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
+                            @if(Auth::user()->allow_access('master.obat.destroy'))
+                              <button type="button" ng-if='formData.is_active == 1' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Non-aktifkan</button>
+                            @endif
+
+                            @if(Auth::user()->allow_access('master.obat.activate'))
+                              <button type="button" ng-if='formData.is_active == 0' class="btn btn-default btn-sm" ng-click='activate({{ $id }})'>Aktifkan</button>
+                              @endif
                         </div>
                     </div>
                 </div>
@@ -29,20 +36,36 @@
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
 
             <div class="form-group">
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Apakah kategori ?
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Administrasi
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.is_category == 1 ? 'Ya' : 'Tidak' %>
+                  <% formData.group.name %>
               </div>
             </div>
 
-            <div class="form-group" ng-show='formData.is_category != 1'>
-              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori
+
+            <div class="form-group">
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Kelas
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.obat_category.name %>
+                  <% formData.classification.name %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Sub-Kelas
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <% formData.subclassification.name %>
+              </div>
+            </div>
 
 
+            <div class="form-group">
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Generik
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <% formData.generic.name %>
               </div>
             </div>
 
@@ -106,10 +129,18 @@
             </div>
 
             <div class="form-group">
+              <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Komposisi
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <% formData.additional.ingredient %>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Keterangan
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.description %>
+                  <% formData.description %>
               </div>
             </div>
 

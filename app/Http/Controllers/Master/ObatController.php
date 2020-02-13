@@ -158,7 +158,7 @@ class ObatController extends Controller
      */
     public function show($id)
     {
-        $x = Item::with('group:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name')->find($id);
+        $x = Item::with('group:id,name,code','classification:id,name,code', 'subclassification:id,name,code', 'generic:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name')->find($id);
         return Response::json($x, 200);
     }
 
