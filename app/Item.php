@@ -35,6 +35,12 @@ class Item extends Model
                 $item->is_pharmacy = 0;
             }
 
+            if($item->is_cure == 1 && $item->is_category == 1) {
+                DB::table('cure_restrictions')->insert([
+                    'category_id' => $item->id 
+                ]);
+            }
+
         });
 
         static::updating(function(Item $item) {
@@ -143,6 +149,15 @@ class Item extends Model
 
     public function group() {
         return $this->belongsTo('App\Item', 'category_id', 'id');
+    }
+
+    public function cure_restriction() {
+        return $this->hasOne('App\CureRestriction', 'item_id', 'id')
+        ->withDefault([
+            'is_allow_classification' => 1,
+            'is_allow_subclassification' => 1,
+            'is_allow_generic' => 1
+        ]);
     }
 
     public function classification() {
