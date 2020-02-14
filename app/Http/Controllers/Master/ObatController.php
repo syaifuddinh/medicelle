@@ -39,7 +39,7 @@ class ObatController extends Controller
     public function actived_category()
     {
         $item = Item::cure()
-        ->with('cure_restriction:item_id,is_allow_classification,is_allow_subclassification,is_allow_generic')
+        ->with('cure_restriction:category_id,is_allow_classification,is_allow_subclassification,is_allow_generic')
         ->whereNull('category_id')
         ->whereIsActive(1)
         ->select('id', 'code', 'name')

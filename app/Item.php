@@ -152,7 +152,7 @@ class Item extends Model
     }
 
     public function cure_restriction() {
-        return $this->hasOne('App\CureRestriction', 'item_id', 'id')
+        return $this->hasOne('App\CureRestriction', 'category_id', 'id')
         ->withDefault([
             'is_allow_classification' => 1,
             'is_allow_subclassification' => 1,
@@ -191,7 +191,7 @@ class Item extends Model
 
 
     public function cure_category() {
-        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsCure(1);
+        return $this->belongsTo('App\CureCategory', 'category_id', 'id')->whereIsCure(1);
     }
 
     public function bhp_category() {
