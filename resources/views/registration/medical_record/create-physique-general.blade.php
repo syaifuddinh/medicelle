@@ -53,7 +53,7 @@
                                             </label>
                                             <div class="col-md-8 col-xs-12">
                                                 <div class="input-group">
-                                                    <input type="text" ng-model='formData.blood_pressure' ng-change='submitOne("blood_pressure")' class="form-control col-md-7 col-xs-12" only-num>
+                                                    <input type="text" ng-model='formData.blood_pressure' ng-change='submitOne("blood_pressure")' class="form-control col-md-7 col-xs-12">
                                                     <div class="input-group-addon">
                                                         MMHG
                                                     </div>

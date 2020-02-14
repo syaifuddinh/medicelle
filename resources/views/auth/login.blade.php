@@ -24,6 +24,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('') }}build/css/custom.min.css" rel="stylesheet">
+    <link href="{{ asset('') }}css/classic.css" rel="stylesheet">
+
   </head>
 
   <body class="login">
@@ -47,7 +49,7 @@
             </div>
             <form action='/login' method='post'>
               {{ csrf_field() }}
-              <h1>LOGIN USER</h1>
+              <h1 class="modal-title">LOGIN USER</h1>
               <div>
                 <input type="text" class="form-control" name='username' placeholder="Username" required="" autofocus />
               </div>
@@ -56,16 +58,16 @@
               </div>
               <div>
                 <button class="btn btn-default submit">Log in</button>
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <!--<a class="reset_pass" href="#">Lost your password?</a>-->
 
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New to site?
+                <!--<p class="change_link">New to site?
                   <a href="#signup" class="to_register"> Create Account </a>
-                </p>
+                </p>-->
 
                 <div class="clearfix"></div>
                 <br />

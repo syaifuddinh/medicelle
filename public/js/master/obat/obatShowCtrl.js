@@ -8,7 +8,7 @@ app.controller('obatShow', ['$scope', '$http', '$rootScope', '$filter', function
     $scope.show = function() {
       $http.get(baseUrl + '/controller/master/obat/' + id).then(function(data) {
             $scope.formData = data.data
-            $scope.sample_code = $scope.formData.group.code + '.' + $scope.formData.classification.code + '.' + $scope.formData.subclassification.code + '.' + $scope.formData.generic.code + '.' + $scope.formData.code
+            $scope.sample_code = '400.01.' + $scope.formData.group.code + '.' + $scope.formData.classification.code + '.' + $scope.formData.subclassification.code + '.' + $scope.formData.generic.code + '.' + $scope.formData.code
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
