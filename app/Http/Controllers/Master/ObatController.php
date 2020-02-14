@@ -31,6 +31,7 @@ class ObatController extends Controller
     {
         $item = Item::cure()
         ->whereNull('category_id')
+		->whereIsCategory(1)
         ->select('id', 'code', 'name')
         ->get();
         return Response::json($item, 200);
@@ -42,6 +43,7 @@ class ObatController extends Controller
         ->with('cure_restriction:category_id,is_allow_classification,is_allow_subclassification,is_allow_generic')
         ->whereNull('category_id')
         ->whereIsActive(1)
+		->whereIsCategory(1)
         ->select('id', 'code', 'name')
         ->get();
         return Response::json($item, 200);

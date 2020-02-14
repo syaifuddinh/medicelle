@@ -144,7 +144,7 @@ class Item extends Model
     }
 
     public function category() {
-        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsDisease(1)->whereIsCategory(1);
+        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsCure(1)->whereIsCategory(1);
     }
 
     public function group() {
