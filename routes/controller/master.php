@@ -77,6 +77,22 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_item/actived', 'MedicalItemController@actived');
         Route::resource('medical_item', 'MedicalItemController');
 
+
+        Route::post('obat/category', 'ObatController@store_jenis_administrasi');
+        Route::post('obat/classification', 'ObatController@store_classification');
+        Route::post('obat/subclassification', 'ObatController@store_subclassification');
+        Route::post('obat/generic', 'ObatController@store_generic');
+
+        Route::get('obat/category/actived', 'ObatController@actived_category');
+        Route::get('obat/classification/actived', 'ObatController@actived_classification');
+        Route::get('obat/subclassification/actived', 'ObatController@actived_subclassification');
+        Route::get('obat/generic/actived', 'ObatController@actived_generic');
+
+        Route::put('obat/activate/{id}', 'ObatController@activate');
+        Route::get('obat/category', 'ObatController@category');
+        Route::get('obat/actived', 'ObatController@actived');
+        Route::resource('obat', 'ObatController');
+
         Route::put('bhp/activate/{id}', 'BhpController@activate');
         Route::get('bhp/category', 'BhpController@category');
         Route::get('bhp/category/actived', 'BhpController@actived_category');

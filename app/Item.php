@@ -7,7 +7,7 @@ use App\Price;
 
 class Item extends Model
 {
-    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'purchase_price', 'supplier_price', 'piece_id', 'purchase_piece_id', 'minimal_stock', 'ratio', 'additional', 'is_cure', 'is_non_cure', 'is_umum', 'is_alkes_disposible', 'is_alkes_non_disposible', 'is_inventaris', 'is_bhp'];
+    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'purchase_price', 'supplier_price', 'piece_id', 'purchase_piece_id', 'minimal_stock', 'ratio', 'additional', 'is_cure', 'is_non_cure', 'is_umum', 'is_alkes_disposible', 'is_alkes_non_disposible', 'is_inventaris', 'is_bhp', 'classification_id', 'subclassification_id', 'generic_id'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['unique_code', 'rate'];
 
@@ -138,12 +138,26 @@ class Item extends Model
     }
 
     public function category() {
-        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsDisease(1)->whereIsCategory(1);
+        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsCure(1)->whereIsCategory(1);
     }
 
     public function group() {
         return $this->belongsTo('App\Item', 'category_id', 'id');
     }
+
+    public function classification() {
+        return $this->belongsTo('App\Item', 'classification_id', 'id');
+    }
+
+    public function subclassification() {
+        return $this->belongsTo('App\Item', 'subclassification_id', 'id');
+    }
+
+
+    public function generic() {
+        return $this->belongsTo('App\Item', 'generic_id', 'id');
+    }
+
     public function piece() {
         return $this->belongsTo('App\Piece');
     }

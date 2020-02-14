@@ -335,13 +335,13 @@ class User extends Authenticatable
                 if($contact->is_nurse == 1 || $contact->is_nurse_helper == 1 || $contact->is_doctor == 1) {
                     $is_allow = 1;
                 }
+                return $is_allow;
             }
             if($this->group_user) {
                 $roles = $this->group_user->roles;
                 $is_allow = $roles->polyclinic ?? 0;
             }
         }
-
         return $is_allow;
 
     }
@@ -363,7 +363,9 @@ class User extends Authenticatable
         if( $this->is_admin == 1) {
             return 1;
         } else {
-            if($this->doctor) {
+            if($this->contact) {
+                $contact = $this->contact;
+                if($contact->is_doctor == 1 || $contact->is_nurse == 1 || $contact->is_nurse_helper == 1)
                 return 1;
             }
         }

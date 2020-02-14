@@ -344,6 +344,23 @@ Route::name('medical_item.')->prefix('medical_item')
     })->name('show');
 });
 
+Route::name('obat.')->prefix('obat')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('master/obat/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('master/obat/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('master/obat/create')->withId($id);
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('master/obat/show')->withId($id);
+    })->name('show');
+});
+
 Route::name('bhp.')->prefix('bhp')
 ->group(function(){
 

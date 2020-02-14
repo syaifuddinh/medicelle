@@ -20,7 +20,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             var medical_record_url = baseUrl + '/datatable/registration/medical_records/'
             $scope.filterData = {}            
 
-            oTable = $('#listview').DataTable({
+            medical_record_history = $('#medical_record_history').DataTable({
               processing: true,
               serverSide: true,
               dom: 'Blfrtip',
@@ -43,8 +43,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               columns:[
 
                 {
-                  data:'medical_record.code', 
-                  name:'medical_record.code',
+                  data:'registration_detail.registration.code', 
+                  name:'registration_detail.registration.code',
                   width : '18mm',
                 },
                 {
@@ -83,10 +83,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 $compile(angular.element(row).contents())($scope);
               }
             });
-            oTable.buttons().container().appendTo( '.export_button' );
+            medical_record_history.buttons().container().appendTo( '.export_button' );
 
             $scope.filter = function() {
-              oTable.ajax.reload();
+              medical_record_history.ajax.reload();
             }
 
         }
@@ -371,6 +371,45 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       });
   }
   
+  $scope.assesmentHistory = function() {
+          assesment_history = $('#assesment_history').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url : baseUrl+'/datatable/registration/assesment/' + $scope.formData.patient_id,
+                data : d => Object.assign(d, $scope.filterData)
+              },
+
+              columns:[
+                {
+                  data:null, 
+                  orderable:false,
+                  searchable:false,
+                  width : '45mm',
+                  render:resp => $filter('fullDate')(resp.date)
+                },
+                {data:"main_complaint", name:"main_complaint", orderable:false},
+                {data:"nurse.name", name:"nurse.name", orderable:false, searchable:false},
+                {
+                  data: null, 
+                  orderable : false,
+                  searchable : false,
+                  className : 'text-center',
+                  render : resp => 
+                  "<div class='btn-group'>" + 
+                  "<a is_nurse class='btn btn-xs btn-success' href='" + baseUrl + "/assesment/step/1/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a></div>"
+                },
+              ],
+              createdRow: function(row, data, dataIndex) {
+                $compile(angular.element(row).contents())($scope);
+              }
+            });
+
+          $scope.filter = function() {
+            assesment_history.ajax.reload();
+          }
+      
+  }
     
   $scope.show = function() {
       $scope.reset()
@@ -440,6 +479,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
         if(path.indexOf('sewa_ruangan') > -1) {
               sewa_ruangan_datatable.rows.add(data.data.sewa_ruangan).draw()
+        }
+        if(path.indexOf('assesment') > -1) {
+              $scope.assesmentHistory()
         }
         if(path.indexOf('resume') > -1) {
               var unit, disease_name, disease;

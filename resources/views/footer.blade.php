@@ -147,6 +147,8 @@
     <script>
         $(document).ready(function(){
             roles = {
+                'is_nurse' : {!! Auth::user()->contact == null ? 1 : (Auth::user()->contact->is_nurse == 0 ? Auth::user()->contact->is_nurse_helper : Auth::user()->contact->is_nurse)  !!},
+
                 'allow_update_assesment' : {!! Auth::user()->allow_update_assesment() !!},
                 'allow_update_medical_record' : {!! Auth::user()->allow_update_medical_record() !!},
 
@@ -208,6 +210,11 @@
                 'allow_show_medical_item' : {!! Auth::user()->allow_access('master.medical_item.show') !!},
                 'allow_activate_medical_item' : {!! Auth::user()->allow_access('master.medical_item.activate') !!},
                 'allow_destroy_medical_item' : {!! Auth::user()->allow_access('master.medical_item.destroy') !!},
+
+                'allow_edit_obat' : {!! Auth::user()->allow_access('master.obat.edit') !!},
+                'allow_show_obat' : {!! Auth::user()->allow_access('master.obat.show') !!},
+                'allow_activate_obat' : {!! Auth::user()->allow_access('master.obat.activate') !!},
+                'allow_destroy_obat' : {!! Auth::user()->allow_access('master.obat.destroy') !!},
 
                 'allow_edit_lokasi' : {!! Auth::user()->allow_access('master.lokasi.edit') !!},
                 'allow_activate_lokasi' : {!! Auth::user()->allow_access('master.lokasi.activate') !!},

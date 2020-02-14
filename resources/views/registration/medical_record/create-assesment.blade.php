@@ -1,11 +1,14 @@
 @include('registration/medical_record/create-header')
                           
                       </nav>
-                        <h2>Resume medis</h2>
+                        <h2>Assesment medis</h2>
                         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
                 <div class="row x_title" ng-show='!isFilter'>
+                      @if(Specialization::readonly('assesment ') == 1)
+                          <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
+                      @endif
                     <form action="" class='form-horizontal form-label-left'>
                         
                         <div class="form-group">
@@ -13,9 +16,9 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <div class="input-daterange input-group" style="width:100%;">
-                                <input type="text" class="input-sm form-control" ng-model="formData.date_start" ng-change='filter()' datepick/>
+                                <input type="text" class="input-sm form-control" ng-model="filterData.date_start" ng-change='filter()' datepick/>
                                 <span class="input-group-addon">s/d</span>
-                                <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='filter()' datepick />
+                                <input type="text" class="input-sm form-control" ng-model="filterData.date_end" ng-change='filter()' datepick />
                               </div>
                               <div class="form-group">
                                   <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
@@ -34,14 +37,12 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <table class="table table-bordered" id='medical_record_history'>
+                  <table class="table table-bordered" id='assesment_history'>
                       <thead>
                         <tr>
-                          <th>No. Registrasi</th>
                           <th>Tanggal</th>
-                          <th>Tujuan</th>
-                          <th>Rangkuman</th>
-                          <th>Dokter</th>
+                          <th>Keluhan utama</th>
+                          <th>Perawat</th>
                           <th></th>
                         </tr>
                       </thead>
