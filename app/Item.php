@@ -35,6 +35,12 @@ class Item extends Model
                 $item->is_pharmacy = 0;
             }
 
+            if($item->is_cure == 1 && $item->is_category == 1) {
+                DB::table('cure_restrictions')->insert([
+                    'category_id' => $item->id 
+                ]);
+            }
+
         });
 
         static::updating(function(Item $item) {
@@ -76,15 +82,41 @@ class Item extends Model
 
     public function getUniqueCodeAttribute() {
         $attr = $this->attributes;
+        $prefix = '';
         if(array_key_exists('code', $attr)) {
             $code = str_pad($attr['code'], 3, '0', STR_PAD_LEFT);
 
+
             if(array_key_exists('category_id', $attr)) {
                 if($attr['category_id'] != null) {
-                    $prefix =  str_pad($this->group->code, 3, '0', STR_PAD_LEFT);
-                    $code = $prefix . '.' . $code;
+                    $prefix .=  str_pad($this->group->code, 3, '0', STR_PAD_LEFT);
+                    $prefix = $prefix . '.';
                 }
             }
+
+            if(array_key_exists('classification_id', $attr)) {
+                if($attr['classification_id'] != null) {
+                    $prefix .=  str_pad($this->classification->code, 3, '0', STR_PAD_LEFT);
+                    $prefix = $prefix . '.';
+                }
+            }
+
+            if(array_key_exists('subclassification_id', $attr)) {
+                if($attr['subclassification_id'] != null) {
+                    $prefix .=  str_pad($this->subclassification->code, 3, '0', STR_PAD_LEFT);
+                    $prefix = $prefix . '.';
+                }
+            }
+
+            if(array_key_exists('generic_id', $attr)) {
+                if($attr['generic_id'] != null) {
+                    $prefix .=  str_pad($this->generic->code, 3, '0', STR_PAD_LEFT);
+                    $prefix = $prefix . '.';
+                }
+            }
+
+
+            $code = $prefix . $code;
 
             return $code;
 
@@ -118,7 +150,11 @@ class Item extends Model
     }
 
     public static function cure() {
-        return self::whereIsCure(1);
+        return self::whereIsCure(1)
+        ->whereIsCategory(0)
+        ->whereIsClassification(0)
+        ->whereIsSubclassification(0)
+        ->whereIsGeneric(0);
     }
 
     public static function medical_item() {
@@ -143,6 +179,15 @@ class Item extends Model
 
     public function group() {
         return $this->belongsTo('App\Item', 'category_id', 'id');
+    }
+
+    public function cure_restriction() {
+        return $this->hasOne('App\CureRestriction', 'category_id', 'id')
+        ->withDefault([
+            'is_allow_classification' => 1,
+            'is_allow_subclassification' => 1,
+            'is_allow_generic' => 1
+        ]);
     }
 
     public function classification() {
@@ -181,7 +226,7 @@ class Item extends Model
 
 
     public function cure_category() {
-        return $this->belongsTo('App\Item', 'category_id', 'id')->whereIsCure(1);
+        return $this->belongsTo('App\CureCategory', 'category_id', 'id')->whereIsCure(1);
     }
 
     public function bhp_category() {

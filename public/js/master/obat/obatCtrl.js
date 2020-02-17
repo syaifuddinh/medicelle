@@ -5,7 +5,7 @@ app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl+'/datatable/master/cure',
+      url : baseUrl+'/datatable/master/obat',
       data : x => Object.assign(x, $scope.formData)
     },
     buttons: [

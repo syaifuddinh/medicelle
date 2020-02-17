@@ -28,7 +28,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Jenis Administrasi'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Jenis Administrasi'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();setCategoryPrivilege()'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("category")'>
@@ -38,7 +38,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-show='is_allow_classification == 1'>
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Kelas<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
@@ -53,7 +53,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-show='is_allow_subclassification == 1'>
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Sub-Kelas<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
@@ -68,7 +68,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-show='is_allow_generic == 1'>
               <label class="control-label col-md-3 col-sm-3 col-xs-12">Generik<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">

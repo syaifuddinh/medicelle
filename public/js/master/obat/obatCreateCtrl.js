@@ -1,5 +1,8 @@
 app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.title = 'Tambah Obat';
+    $scope.is_allow_classification = 1
+    $scope.is_allow_subclassification = 1
+    $scope.is_allow_generic = 1
     $scope.formData = {
         is_category : 0,
         additional : {}
@@ -7,6 +10,22 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     $scope.insertData = {}
     $scope.data = {}
     var path = window.location.pathname;
+
+    $scope.setCategoryPrivilege = function() {P
+        var is_allow_classification = 1
+        var is_allow_subclassification = 1
+        var is_allow_generic = 1
+        var category = $scope.data.category.find(x => x.id == $scope.formData.category_id)
+        if(category != null) {
+            is_allow_classification = category.is_allow_classification
+            is_allow_subclassification = category.is_allow_subclassification
+            is_allow_generic = category.is_allow_generic
+        }
+
+        $scope.is_allow_classification = is_allow_classification
+        $scope.is_allow_subclassification = is_allow_subclassification
+        $scope.is_allow_generic = is_allow_generic
+    }
 
     $scope.show = function() {
         if(/edit/.test(path)) {
@@ -199,15 +218,15 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
           
             if($scope.formData.category_id && $scope.formData.classification_id && $scope.formData.subclassification_id && $scope.formData.generic_id) {
                 category_code = $scope.data.category.find(x => x.id == $scope.formData.category_id).code
-                category_code = category_code.padStart(2, 0)
+                category_code = category_code.padStart(3, 0)
                 classification_code = $scope.data.classification.find(x => x.id == $scope.formData.classification_id).code
-                classification_code = classification_code.padStart(2, 0)
+                classification_code = classification_code.padStart(3, 0)
                 subclassification_code = $scope.data.subclassification.find(x => x.id == $scope.formData.subclassification_id).code
-                subclassification_code = subclassification_code.padStart(2, 0)
+                subclassification_code = subclassification_code.padStart(3, 0)
                 generic_code = $scope.data.generic.find(x => x.id == $scope.formData.generic_id).code
                 generic_code = generic_code.padStart(3, 0)
 
-                prefix = '400.01.' + category_code + '.' + classification_code + '.' + subclassification_code + '.' + generic_code + '.'
+                prefix = category_code + '.' + classification_code + '.' + subclassification_code + '.' + generic_code + '.'
             }
 
             var code = $scope.formData.code.padStart(3, 0)
