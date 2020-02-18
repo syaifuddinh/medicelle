@@ -57,8 +57,9 @@ class PriceController extends Controller
 
     public function drug()
     {
-        $item = Item::with('piece:id,name', 'group:id,name')->select('id', 'name', 'piece_id', 'category_id')
+        $item = Item::with('piece:id,name', 'generic:id,name')->select('id', 'name', 'piece_id', 'generic_id')
         ->whereIsCategory(0)
+        ->whereNotNull('category_id')
         ->whereIsActive(1)
         ->whereIsCure(1)
         ->get();

@@ -188,6 +188,11 @@ class Item extends Model
         return $this->belongsTo('App\Item', 'generic_id', 'id');
     }
 
+    public function grup_nota_obat() {
+        return $this->belongsTo('App\Permission', 'is_pharmacy', 'id');
+    }
+
+
     public function piece() {
         return $this->belongsTo('App\Piece');
     }
