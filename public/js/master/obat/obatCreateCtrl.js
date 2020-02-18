@@ -11,22 +11,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     $scope.data = {}
     var path = window.location.pathname;
 
-    $scope.setCategoryPrivilege = function() {P
-        var is_allow_classification = 1
-        var is_allow_subclassification = 1
-        var is_allow_generic = 1
-        var category = $scope.data.category.find(x => x.id == $scope.formData.category_id)
-        if(category != null) {
-            is_allow_classification = category.is_allow_classification
-            is_allow_subclassification = category.is_allow_subclassification
-            is_allow_generic = category.is_allow_generic
-        }
-
-        $scope.is_allow_classification = is_allow_classification
-        $scope.is_allow_subclassification = is_allow_subclassification
-        $scope.is_allow_generic = is_allow_generic
-    }
-
     $scope.show = function() {
         if(/edit/.test(path)) {
             $scope.title = 'Edit Obat';

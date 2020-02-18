@@ -28,7 +28,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Jenis Administrasi'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();setCategoryPrivilege()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Jenis Administrasi'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("category")'>
