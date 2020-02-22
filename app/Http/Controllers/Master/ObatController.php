@@ -90,6 +90,7 @@ class ObatController extends Controller
         DB::table('items')->insert([
             'code' => $request->code,
             'name' => $request->name,
+            'category_id' => $request->category_id,
             'is_cure' => 1,
             'is_classification' => 1
         ]);
@@ -101,6 +102,7 @@ class ObatController extends Controller
         DB::table('items')->insert([
             'code' => $request->code,
             'name' => $request->name,
+            'classification_id' => $request->classification_id,
             'is_cure' => 1,
             'is_subclassification' => 1
         ]);
@@ -112,6 +114,7 @@ class ObatController extends Controller
         DB::table('items')->insert([
             'code' => $request->code,
             'name' => $request->name,
+            'subclassification_id' => $request->subclassification,
             'is_cure' => 1,
             'is_generic' => 1
         ]);

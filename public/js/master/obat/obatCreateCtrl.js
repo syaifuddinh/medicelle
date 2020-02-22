@@ -14,6 +14,10 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     $scope.data = {}
     var path = window.location.pathname;
 
+    $scope.countPrice = function() {
+        $scope.formData.price = parseInt($scope.formData.purchase_price) * parseInt($scope.formData.additional.margin)
+    }
+
     $scope.show = function() {
         if(/edit/.test(path)) {
             $scope.title = 'Edit Obat';
