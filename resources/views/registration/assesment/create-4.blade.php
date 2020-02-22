@@ -105,33 +105,6 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-xs-12">BB sebelum lahir
-                                    </label>
-                                    <div class="col-md-8 col-xs-12">
-                                        <div class="input-group">
-                                            <input type="text" ng-model='formData.prebirth_weight' ng-change='submitOne("prebirth_weight")'class="form-control col-md-7 col-xs-12" only-num>
-                                            <div class="input-group-addon">
-                                                KG
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-xs-12">BB setelah lahir
-                                    </label>
-                                    <div class="col-md-8 col-xs-12">
-                                        <div class="input-group">
-                                            <input type="text" ng-model='formData.postbirth_weight' ng-change='submitOne("postbirth_weight")'class="form-control col-md-7 col-xs-12" only-num>
-                                            <div class="input-group-addon">
-                                                KG
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
                             </div>
                         </div>
 
@@ -282,6 +255,35 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-12">BB sebelum lahir
+                                    </label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" ng-model='formData.prebirth_weight' ng-change='submitOne("prebirth_weight")'class="form-control col-md-7 col-xs-12" only-num>
+                                            <div class="input-group-addon">
+                                                KG
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-xs-12">BB setelah lahir
+                                    </label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" ng-model='formData.postbirth_weight' ng-change='submitOne("postbirth_weight")'class="form-control col-md-7 col-xs-12" only-num>
+                                            <div class="input-group-addon">
+                                                KG
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                            </div>
                         </div>
 

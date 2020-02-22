@@ -47,6 +47,21 @@
                                         
 
                                         <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Tensi
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <div class="input-group">
+                                                    
+                                                    <input type="text" ng-model='formData.additional.blood_pressure' ng-change='submitOne("additional.blood_pressure")' class="form-control col-md-12 col-xs-12">
+                                                    <div class="input-group-addon">
+                                                        mmHg
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="form-group">
                                             <label class="control-label col-md-4 col-xs-12">Index massa tubuh
                                             </label>
                                             <div class="col-md-8 col-xs-12">
@@ -167,7 +182,7 @@
                                     <div class="col-md-12">
 
                                          <div class="form-group">
-                                            <label class="col-md-4 col-xs-12">Pemeriksaan penunjang
+                                            <label class="col-md-4 col-xs-12">Keterangan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
                                                 <textarea class="form-control" ng-model='formData.additional.medical_checkup_pemeriksaan_penunjang' ng-change='submitOne("additional.medical_checkup_pemeriksaan_penunjang")'></textarea>

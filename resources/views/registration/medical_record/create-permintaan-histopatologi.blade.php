@@ -54,7 +54,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Anamnesa
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_anamnesa' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_anamnesa")'></textarea>
+                                                <textarea  ng-model='formData.current_disease' class="form-control col-md-7 col-xs-12" ng-change='submitOne("current_disease")'></textarea>
                                             </div>
                                         </div>
                                         

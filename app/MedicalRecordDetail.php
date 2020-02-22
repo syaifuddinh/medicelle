@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Item;
 use App\Permission;
+use App\MedicalRecord;
 use Str;
+use DB;
 
 
 class MedicalRecordDetail extends Model
@@ -15,6 +17,39 @@ class MedicalRecordDetail extends Model
     ];
     protected $appends = ['filename', 'additional'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::created(function(MedicalRecordDetail $medicalRecordDetail){
+                $cure = DB::table('medical_record_details')
+                ->join('items', 'medical_record_details.item_id', 'items.id')
+                ->join('pieces', 'pieces.id', 'items.piece_id')
+                ->whereIsDrug(1)
+                ->whereMedicalRecordId($medicalRecordDetail->medical_record_id)
+                ->selectRaw("ARRAY_TO_STRING(ARRAY_AGG( CONCAT(items.name, ' sebanyak ', medical_record_details.qty, ' ', pieces.name) ), ', ') AS component")
+                ->first();
+                $medical_record = MedicalRecord::find($medicalRecordDetail->medical_record_id);
+                $additional = $medical_record->additional;
+                $additional->histopatologi_terapi = $cure->component;
+                $medical_record->additional = $additional;
+                $medical_record->save();
+        });
+        static::deleted(function(MedicalRecordDetail $medicalRecordDetail){
+                $cure = DB::table('medical_record_details')
+                ->join('items', 'medical_record_details.item_id', 'items.id')
+                ->join('pieces', 'pieces.id', 'items.piece_id')
+                ->whereIsDrug(1)
+                ->whereMedicalRecordId($medicalRecordDetail->medical_record_id)
+                ->selectRaw("ARRAY_TO_STRING(ARRAY_AGG( CONCAT(items.name, ' sebanyak ', medical_record_details.qty, ' ', pieces.name) ), ', ') AS component")
+                ->first();
+                $medical_record = MedicalRecord::find($medicalRecordDetail->medical_record_id);
+                $additional = $medical_record->additional;
+                $additional->histopatologi_terapi = $cure->component;
+                $medical_record->additional = $additional;
+                $medical_record->save();
+        });
+
+    }
 
     public function getAdditionalAttribute() {
         if(array_key_exists('additional', $this->attributes)) {

@@ -645,15 +645,24 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.submitDrug = function() {
-      drug_datatable.row.add($scope.drug).draw()
-      $scope.drug = {
-          date : $scope.resume_date,
-          is_new_signa1 : 1,
-          is_new_signa2 : 1
-      }
-      setTimeout(function () {    
-            $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
-      }, 300)
+      var is_id = /^(\d+)$/
+      if($scope.drug.is_new_signa1 && is_id.test($scope.drug.signa1)) {
+          toastr.warning('Signa 1 harus berisi huruf')
+      } else if($scope.drug.is_new_signa2 && is_id.test($scope.drug.signa2)) {
+          toastr.warning('Signa 2 harus berisi huruf')
+      } else {
+        
+          drug_datatable.row.add($scope.drug).draw()
+          $scope.drug = {
+              date : $scope.resume_date,
+              is_new_signa1 : 1,
+              is_new_signa2 : 1
+          }
+          setTimeout(function () {    
+                $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
+          }, 300)
+      } 
+
   }
 
   $scope.submitDiagnoseHistory = function() {

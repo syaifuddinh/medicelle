@@ -45,6 +45,155 @@ class Assesment extends Model
         });
     }
 
+    public function setLongAttribute($value) {
+        if($value == null) {
+            $this->attributes['long'] = 0;
+        } else {
+            $this->attributes['long'] = $value;            
+        }
+    }
+
+    public function setWeightAttribute($value) {
+        if($value == null) {
+            $this->attributes['weight'] = 0;
+        } else {
+            $this->attributes['weight'] = $value;            
+        }
+    }
+
+    public function setBloodPressureAttribute($value) {
+        if($value == null) {
+            $this->attributes['blood_pressure'] = 0;
+        } else {
+            $this->attributes['blood_pressure'] = $value;            
+        }
+    }
+
+    public function setPulseAttribute($value) {
+        if($value == null) {
+            $this->attributes['pulse'] = 0;
+        } else {
+            $this->attributes['pulse'] = $value;            
+        }
+    }
+
+
+    public function setTemperatureAttribute($value) {
+        if($value == null) {
+            $this->attributes['temperature'] = 0;
+        } else {
+            $this->attributes['temperature'] = $value;            
+        }
+    }
+
+    public function setBreathFrequencyAttribute($value) {
+        if($value == null) {
+            $this->attributes['breath_frequency'] = 0;
+        } else {
+            $this->attributes['breath_frequency'] = $value;            
+        }
+    }
+
+
+    public function setBirthLongAttribute($value) {
+        if($value == null) {
+            $this->attributes['birth_long'] = 0;
+        } else {
+            $this->attributes['birth_long'] = $value;            
+        }
+    }
+
+
+    public function setBirthWeightAttribute($value) {
+        if($value == null) {
+            $this->attributes['birth_weight'] = 0;
+        } else {
+            $this->attributes['birth_weight'] = $value;            
+        }
+    }
+
+    public function setHeadSizeAttribute($value) {
+        if($value == null) {
+            $this->attributes['head_size'] = 0;
+        } else {
+            $this->attributes['head_size'] = $value;            
+        }
+    }
+
+
+    public function setArmSizeAttribute($value) {
+        if($value == null) {
+            $this->attributes['arm_size'] = 0;
+        } else {
+            $this->attributes['arm_size'] = $value;            
+        }
+    }
+
+    public function setBergulingUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['berguling_usia'] = 0;
+        } else {
+            $this->attributes['berguling_usia'] = $value;            
+        }
+    }
+
+    public function setDudukUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['duduk_usia'] = 0;
+        } else {
+            $this->attributes['duduk_usia'] = $value;            
+        }
+    }
+
+
+    public function setMerangkakUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['merangkak_usia'] = 0;
+        } else {
+            $this->attributes['merangkak_usia'] = $value;            
+        }
+    }
+
+    public function setBerdiriUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['berdiri_usia'] = 0;
+        } else {
+            $this->attributes['berdiri_usia'] = $value;            
+        }
+    }
+
+    public function setBerjalanUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['berjalan_usia'] = 0;
+        } else {
+            $this->attributes['berjalan_usia'] = $value;            
+        }
+    }
+
+    public function setBicaraUsiaAttribute($value) {
+        if($value == null) {
+            $this->attributes['bicara_usia'] = 0;
+        } else {
+            $this->attributes['bicara_usia'] = $value;            
+        }
+    }
+
+    public function setPrebirthWeightAttribute($value) {
+        if($value == null) {
+            $this->attributes['prebirth_weight'] = 0;
+        } else {
+            $this->attributes['prebirth_weight'] = $value;            
+        }
+    }
+
+    public function setPostbirthWeightAttribute($value) {
+        if($value == null) {
+            $this->attributes['postbirth_weight'] = 0;
+        } else {
+            $this->attributes['postbirth_weight'] = $value;            
+        }
+    }
+
 
     public function patient() {
         return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);

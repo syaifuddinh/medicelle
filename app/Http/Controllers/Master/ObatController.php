@@ -51,7 +51,7 @@ class ObatController extends Controller
     {
         $item = Item::whereIsClassification(1)
         ->whereIsActive(1)
-        ->select('id', 'code', 'name')
+        ->select('id', 'code', 'name', 'category_id')
         ->get();
         return Response::json($item, 200);
     }
@@ -60,7 +60,7 @@ class ObatController extends Controller
     {
         $item = Item::whereIsSubclassification(1)
         ->whereIsActive(1)
-        ->select('id', 'code', 'name')
+        ->select('id', 'code', 'name', 'classification_id')
         ->get();
         return Response::json($item, 200);
     }
@@ -70,7 +70,7 @@ class ObatController extends Controller
     {
         $item = Item::whereIsGeneric(1)
         ->whereIsActive(1)
-        ->select('id', 'code', 'name')
+        ->select('id', 'code', 'name', 'subclassification_id')
         ->get();
         return Response::json($item, 200);
     }

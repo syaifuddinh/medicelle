@@ -8,6 +8,9 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         additional : {}
     }
     $scope.insertData = {}
+    $scope.classification = []
+    $scope.subclassification = []
+    $scope.generic = []
     $scope.data = {}
     var path = window.location.pathname;
 
@@ -37,6 +40,18 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     }
     $scope.show()
 
+    $scope.changeClassification = function() {
+        classification = $scope.data.classification.filter(x => x.category_id == $scope.formData.category_id)
+    }
+
+    $scope.changeSubclassification = function() {
+        subclassification = $scope.data.subclassification.filter(x => x.classification_id == $scope.formData.classification_id)
+    }
+
+    $scope.changeGeneric = function() {
+        generic = $scope.data.generic.filter(x => x.subclassification_id == $scope.formData.subclassification_id)
+    }
+
     $scope.insert = function(flag) {
       var label
       switch (flag) {
@@ -45,17 +60,32 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
           break
         case 'classification' :
           label = 'Kelas'
+          $scope.insertData.category_id = $scope.formData.category_id
           break
         case 'subclassification' :
           label = 'Sub-Kelas'
+          $scope.insertData.classification_id = $scope.formData.classification_id
           break
         case 'generic' :
           label = 'Generic'
+          $scope.insertData.subclassification_id = $scope.formData.subclassification_id
           break
       }
       $scope.insert_title = 'Tambah ' + label
       $scope.componentState = flag
-      $('#insertModal').modal()
+      if(flag != 'category') {
+          if(flag == 'classification' && !$scope.formData.category_id) {
+              toastr.warning("Jenis administrasi tidak boleh kosong")
+          } else if(flag == 'subclassification' && !$scope.formData.classification_id) {
+              toastr.warning("Kelas tidak boleh kosong")
+          } else if(flag == 'generic' && !$scope.formData.subclassification_id) {
+              toastr.warning("Sub-kelas tidak boleh kosong")
+          } else {
+            $('#insertModal').modal()
+          }
+      } else {
+            $('#insertModal').modal()        
+      }
     }
 
     $scope.grup_nota = function() {
@@ -257,6 +287,10 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         $scope.classification()
         $scope.subclassification()
         $scope.generic()
+
+        $scope.changeClassification()
+        $scope.changeSubclassification()
+        $scope.changeGeneric()
 
         $scope.insertData = {}
         $('#insertModal').modal('hide')

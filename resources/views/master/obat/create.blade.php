@@ -43,7 +43,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Kelas'" chosen allow-single-deselect="false" ng-model="formData.classification_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.classification" ng-change='changeSampleCode()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Kelas'" chosen allow-single-deselect="false" ng-model="formData.classification_id" ng-options="c.id as c.code + ' - ' + c.name for c in classification" ng-change='changeSampleCode()'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("classification")'>
@@ -58,7 +58,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Sub-Kelas'" chosen allow-single-deselect="false" ng-model="formData.subclassification_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.subclassification" ng-change='changeSampleCode()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Sub-Kelas'" chosen allow-single-deselect="false" ng-model="formData.subclassification_id" ng-options="c.id as c.code + ' - ' + c.name for c in subclassification" ng-change='changeSampleCode()'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("subclassification")'>
@@ -73,7 +73,7 @@
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Generik'" chosen allow-single-deselect="false" ng-model="formData.generic_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.generic" ng-change='changeSampleCode()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Generik'" chosen allow-single-deselect="false" ng-model="formData.generic_id" ng-options="c.id as c.code + ' - ' + c.name for c in generic" ng-change='changeSampleCode()'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("generic")'>
