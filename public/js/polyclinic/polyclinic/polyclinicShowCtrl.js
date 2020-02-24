@@ -1,11 +1,39 @@
 app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope,  $compile) {
   $scope.title = 'Detail Pasien';
+  $scope.pivot = {}
   $scope.formData = {}
   $scope.data = {}
   var path = window.location.pathname
   id = path.replace(/.+\/(\d+)\/\d*/, '$1');
   pivot_medical_record_id = path.replace(/.+\/(\d+)\/(\d*)/, '$2');
   
+
+  $scope.pivot = function() {
+
+      $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
+        $scope.pivot = data.data
+        $scope.pivotData = JSON.parse($scope.pivot.additional);
+      }, function(error) {
+        $scope.pivot()
+      });
+  }
+  $scope.pivot()
+
+  $scope.updateRuangTindakanDescription = function() {
+      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/description', $scope.pivotData).then(function(data) {
+      }, function(error) {
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  } 
+
   $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
     $scope.formData = data.data
     var assesment_url = $('#assesmentButton').attr('href') + '/' + data.data.assesment.id

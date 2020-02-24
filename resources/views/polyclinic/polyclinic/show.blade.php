@@ -107,11 +107,12 @@
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group" ng-show='pivot.is_ruang_tindakan == 1'>
                                 <label class="col-md-3 col-sm-3 col-xs-12">Keterangan
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <textarea class="form-control" ng-model='formData.ruang_tindakan_description'></textarea>
+                                    <textarea class="form-control" ng-model='pivotData.ruang_tindakan_description' ng-change='updateRuangTindakanDescription()'></textarea>
+                                    
                                 </div>
                             </div>
 

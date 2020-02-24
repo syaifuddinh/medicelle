@@ -27,6 +27,28 @@ class MedicalRecordController extends Controller
         return Response::json($medical_record, 200);
     }
 
+    public function pivot($pivot_medical_record_id)
+    {
+        $pivot = DB::table('pivot_medical_records')
+        ->whereId($pivot_medical_record_id)
+        ->select('is_ruang_tindakan', 'additional')
+        ->first();
+        return Response::json($pivot, 200);
+    }
+
+    public function update_ruang_tindakan_description(Request $request, $id) {
+        $additional = [
+            'ruang_tindakan_description' => $request->ruang_tindakan_description ?? ''
+        ];
+
+        DB::table('pivot_medical_records')
+        ->whereId($id)
+        ->update([
+            'additional' => json_encode($additional)
+        ]);
+
+        return Response::json(['message' => 'Dokter rujukan telah dipilih'], 200);
+    }
     /**
      * Show the form for creating a new resource.
      *

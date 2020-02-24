@@ -29,11 +29,29 @@ class MedicalRecordDetail extends Model
                 ->selectRaw("ARRAY_TO_STRING(ARRAY_AGG( CONCAT(items.name, ' sebanyak ', medical_record_details.qty, ' ', pieces.name) ), ', ') AS component")
                 ->first();
                 $medical_record = MedicalRecord::find($medicalRecordDetail->medical_record_id);
+                $registration_detail_id = $medical_record->registration_detail_id;
                 $additional = $medical_record->additional;
                 $additional->histopatologi_terapi = $cure->component;
                 $medical_record->additional = $additional;
                 $medical_record->save();
+
+                if($medicalRecordDetail->is_treatment == 1) {
+                    $price = DB::table('prices')
+                    ->whereItemId($medicalRecordDetail->item_id)
+                    ->first();
+                    if($price->destination == 'RUANG TINDAKAN') {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_ruang_tindakan' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                    }
+                }
         });
+        
         static::deleted(function(MedicalRecordDetail $medicalRecordDetail){
                 $cure = DB::table('medical_record_details')
                 ->join('items', 'medical_record_details.item_id', 'items.id')

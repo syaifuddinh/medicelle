@@ -7,6 +7,8 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');
         Route::resource('registration', 'RegistrationController');
 
+        Route::get('medical_record/pivot/{pivot_medical_record_id}', 'MedicalRecordController@pivot');
+        Route::put('medical_record/pivot/{pivot_medical_record_id}/ruang_tindakan/description', 'MedicalRecordController@update_ruang_tindakan_description');
         Route::get('medical_record/{id}/fnab/pdf', 'MedicalRecordController@fnab_pdf');
         Route::get('medical_record/{id}/histopatologi/pdf', 'MedicalRecordController@histopatologi_pdf');
         Route::get('medical_record/{id}/papsmear/pdf', 'MedicalRecordController@papsmear_pdf');

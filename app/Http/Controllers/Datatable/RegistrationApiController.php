@@ -209,6 +209,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('RUANG TINDAKAN');
         })
+        ->orWhere('is_ruang_tindakan', 1)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
