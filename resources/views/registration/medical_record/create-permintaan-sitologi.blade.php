@@ -16,7 +16,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa klinik
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.sitologi_diagnose2' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_diagnose")'></textarea>
+                                                <textarea  ng-model='formData.additional.sitologi_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_diagnose")'></textarea>
                                             </div>
                                         </div>
                                         

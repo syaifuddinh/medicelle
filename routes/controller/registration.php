@@ -7,7 +7,11 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');
         Route::resource('registration', 'RegistrationController');
 
-    Route::get('medical_record/{id}/next_schedule', 'MedicalRecordController@next_schedule');
+        Route::get('medical_record/{id}/fnab/pdf', 'MedicalRecordController@fnab_pdf');
+        Route::get('medical_record/{id}/histopatologi/pdf', 'MedicalRecordController@histopatologi_pdf');
+        Route::get('medical_record/{id}/papsmear/pdf', 'MedicalRecordController@papsmear_pdf');
+        Route::get('medical_record/{id}/sitologi/pdf', 'MedicalRecordController@sitologi_pdf');
+        Route::get('medical_record/{id}/next_schedule', 'MedicalRecordController@next_schedule');
         Route::get('medical_record/{id}/schedule', 'MedicalRecordController@schedule');
         Route::get('medical_record/{id}/refer_doctor/{doctor_id}', 'MedicalRecordController@refer_doctor');
         Route::get('medical_record/{id}/doctor', 'MedicalRecordController@doctor');

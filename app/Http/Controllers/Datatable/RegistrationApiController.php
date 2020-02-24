@@ -46,7 +46,10 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('POLIKLINIK');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id', 
+            'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.medical_record_id');
 
         $user = Auth::user();
         if($user->is_admin != 1) {
@@ -83,7 +86,11 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('RADIOLOGI');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.medical_record_id'
+        );
 
         $user = Auth::user();
         if($user->is_admin != 1) {
@@ -120,7 +127,11 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id',
+             'pivot_medical_records.medical_record_id'
+         );
 
         $user = Auth::user();
         if($user->is_admin != 1) {
@@ -157,7 +168,11 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('KEMOTERAPI');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.medical_record_id'
+        );
 
         $user = Auth::user();
         if($user->is_admin != 1) {
@@ -194,7 +209,11 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('RUANG TINDAKAN');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id',
+            'pivot_medical_records.medical_record_id'
+        );
 
         $user = Auth::user();
         if($user->is_admin != 1) {
@@ -231,7 +250,10 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('MEDICAL CHECK-UP');
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.medical_record_id');
 
         $user = Auth::user();
         if($user->is_admin != 1) {

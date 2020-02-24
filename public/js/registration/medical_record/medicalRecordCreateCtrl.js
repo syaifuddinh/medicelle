@@ -14,6 +14,23 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $('[ng-model="resume_date"]').val( $filter('fullDate')($scope.resume_date))
     }, 300)
 
+    $('#printButton').hide()
+    if(path.indexOf('permintaan') > -1) {
+        $('#printButton').show()
+    } 
+
+    $('#printButton').click(function(){
+       if(path.indexOf('fnab') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/' + id + '/fnab/pdf'  )
+       } else if(path.indexOf('histopatologi') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/' + id + '/histopatologi/pdf'  )
+       } else if(path.indexOf('papsmear') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/' + id + '/papsmear/pdf'  )
+       } else if(path.indexOf('sitologi') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/' + id + '/sitologi/pdf'  )
+       }
+    })
+
     $scope.medicalRecordHistory = function() {
 
         if(path.indexOf('resume') > -1) {

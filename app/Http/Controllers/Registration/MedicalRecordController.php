@@ -55,7 +55,7 @@ class MedicalRecordController extends Controller
      */
     public function schedule($id) {
         $medicalRecord = MedicalRecord::findOrFail($id);
-        $medicalRecordDetail = MedicalRecordDetail::with('medical_record:id,registration_id,registration_detail_id', 'medical_record.registration:id,code,patient_type', 'medical_record.registration_detail:id,doctor_id,polyclinic_id,destination', 'medical_record.registration_detail.doctor:id,name,specialization_id', 'medical_record.registration_detail.doctor.specialization:id,name')
+        $medicalRecordDetail = MedicalRecordDetail::with('medical_record:id,registration_id,registration_detail_id', 'medical_record.registration:id,code,patient_type', 'medical_record.registration_detail:id,doctor_id,polyclinic_id,destination', 'medical_record.registration_detail.doctor:id,name,specialization_id,phone', 'medical_record.registration_detail.doctor.specialization:id,name')
         ->whereMedicalRecordId($id)
         ->whereIsSchedule(1)
         ->select('id', 'medical_record_id', 'date')
@@ -99,7 +99,7 @@ class MedicalRecordController extends Controller
 
     public function fetch($id) {
         $resp = MedicalRecord::with(
-            'patient:id,name', 
+            'patient:id,name,age,address,gender,phone,marriage_status', 
             'bhp:medical_record_id,item_id,qty,date,lokasi_id',
             'bhp.item:id,name,piece_id',
             'bhp.item.piece:id,name',
@@ -163,6 +163,33 @@ class MedicalRecordController extends Controller
         } else {
             return $pdf->download('resume-medis.pdf');            
         }
+    }
+
+    public function fnab_pdf(Request $request, $id)
+    {
+        $medicalRecord = $this->fetch($id);
+        $pdf = PDF::loadview('pdf/fnab',['medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('fnab.pdf');
+    }
+
+    public function histopatologi_pdf(Request $request, $id)
+    {
+        $medicalRecord = $this->fetch($id);
+        $pdf = PDF::loadview('pdf/histopatologi',['medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('histopatologi.pdf');
+    }
+
+    public function papsmear_pdf(Request $request, $id)
+    {
+        $medicalRecord = $this->fetch($id);
+        $pdf = PDF::loadview('pdf/papsmear',['medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('papsmear.pdf');
+    }
+    public function sitologi_pdf(Request $request, $id)
+    {
+        $medicalRecord = $this->fetch($id);
+        $pdf = PDF::loadview('pdf/sitologi',['medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('sitologi.pdf');
     }
 
     /**

@@ -38,7 +38,7 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear
+                                            <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear(Tanggal & Hasil)
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <textarea  ng-model='formData.additional.papsmear_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_papsmear")'></textarea>

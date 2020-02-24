@@ -3,7 +3,8 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
   $scope.formData = {}
   $scope.data = {}
   var path = window.location.pathname
-  id = path.replace(/.+\/(\d+)/, '$1');
+  id = path.replace(/.+\/(\d+)\/\d*/, '$1');
+  pivot_medical_record_id = path.replace(/.+\/(\d+)\/(\d*)/, '$2');
   
   $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
     $scope.formData = data.data

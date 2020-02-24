@@ -59,9 +59,16 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<a href="#menu_toggle" class="anchor-scroll btn btn-md btn-primary" data-class-to="this" data-on-scroll="blur-effect" style='position:fixed;bottom: 7mm;right:9mm'>
-    <i class='fa fa-arrow-up'></i>
-</a>
+<div class="btn-group" style='position:fixed;bottom: 7mm;right:9mm'>
+    
+    <button  type='button' class="btn btn-md btn-success" id='printButton' ng-click='openPDF()'>
+        <i class='fa fa-file-pdf-o'></i>
+    </button>
+    
+    <a href="#menu_toggle" class="anchor-scroll btn btn-md btn-primary" data-class-to="this" data-on-scroll="blur-effect">
+        <i class='fa fa-arrow-up'></i>
+    </a>
+</div>
 @include('footer')
 <script src="{{ asset('') }}js/registration/medical_record/medicalRecordCreateCtrl.js"></script>
 

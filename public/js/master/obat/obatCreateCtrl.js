@@ -27,6 +27,9 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
                 $scope.formData.grup_nota_id = data.data.price.grup_nota_id
                 $scope.formData.price = data.data.rate
                 $scope.changeSampleCode()
+                $scope.changeClassification()
+                $scope.changeSubclassification()
+                $scope.changeGeneric()
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {
@@ -45,15 +48,24 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     $scope.show()
 
     $scope.changeClassification = function() {
-        classification = $scope.data.classification.filter(x => x.category_id == $scope.formData.category_id)
+        if($scope.formData.category_id) {
+            classification = $scope.data.classification.filter(x => x.category_id == $scope.formData.category_id)
+            $scope.classification = classification
+        }
     }
 
     $scope.changeSubclassification = function() {
-        subclassification = $scope.data.subclassification.filter(x => x.classification_id == $scope.formData.classification_id)
+        if($scope.formData.classification_id) {
+            subclassification = $scope.data.subclassification.filter(x => x.classification_id == $scope.formData.classification_id)
+            $scope.subclassification = subclassification
+        } 
     }
 
     $scope.changeGeneric = function() {
-        generic = $scope.data.generic.filter(x => x.subclassification_id == $scope.formData.subclassification_id)
+        if($scope.formData.subclassification_id) {
+            generic = $scope.data.generic.filter(x => x.subclassification_id == $scope.formData.subclassification_id)
+            $scope.generic = generic
+        }
     }
 
     $scope.insert = function(flag) {
@@ -140,9 +152,10 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     }
     $scope.category()
 
-    $scope.classification = function() {
+    $scope.showClassification = function() {
         $http.get(baseUrl + '/controller/master/obat/classification/actived').then(function(data) {
             $scope.data.classification = data.data
+            $scope.changeClassification()
             if(/edit/.test(path)) {
                 $scope.show()
             }
@@ -156,16 +169,17 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
             toastr.warning(det,error.data.message);
           } else {
             
-            $scope.classification()
+            $scope.showClassification()
             toastr.error(error.data.message,"Error Has Found !");
           }
         });
     }
-    $scope.classification()
+    $scope.showClassification()
 
-    $scope.subclassification = function() {
+    $scope.showSubclassification = function() {
         $http.get(baseUrl + '/controller/master/obat/subclassification/actived').then(function(data) {
             $scope.data.subclassification = data.data
+            $scope.changeSubclassification()
             if(/edit/.test(path)) {
                 $scope.show()
             }
@@ -179,16 +193,17 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
             toastr.warning(det,error.data.message);
           } else {
             
-            $scope.subclassification()
+            $scope.showSubclassification()
             toastr.error(error.data.message,"Error Has Found !");
           }
         });
     }
-    $scope.subclassification()
+    $scope.showSubclassification()
 
-    $scope.generic = function() {
+    $scope.showGeneric = function() {
         $http.get(baseUrl + '/controller/master/obat/generic/actived').then(function(data) {
             $scope.data.generic = data.data
+            $scope.changeGeneric()
             if(/edit/.test(path)) {
                 $scope.show()
             }
@@ -202,12 +217,12 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
             toastr.warning(det,error.data.message);
           } else {
             
-            $scope.generic()
+            $scope.showGeneric()
             toastr.error(error.data.message,"Error Has Found !");
           }
         });
     }
-    $scope.generic()
+    $scope.showGeneric()
 
     $scope.piece = function() {
         $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
@@ -288,13 +303,13 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         $scope.category()
-        $scope.classification()
-        $scope.subclassification()
-        $scope.generic()
-
-        $scope.changeClassification()
-        $scope.changeSubclassification()
-        $scope.changeGeneric()
+        if($scope.componentState == 'classification') {
+            $scope.showClassification()
+        } else if($scope.componentState == 'subclassification') {
+            $scope.showSubclassification()
+        } else if($scope.componentState == 'generic') {
+            $scope.showGeneric()
+        }
 
         $scope.insertData = {}
         $('#insertModal').modal('hide')

@@ -103,7 +103,15 @@
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                     <% formData.patient.age %>
+                                </div>
+                            </div>
 
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12">Keterangan
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <textarea class="form-control" ng-model='formData.ruang_tindakan_description'></textarea>
                                 </div>
                             </div>
 
