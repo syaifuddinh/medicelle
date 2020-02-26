@@ -86,6 +86,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('RADIOLOGI');
         })
+        ->orWhere('is_radiology', 1)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id', 
@@ -127,6 +128,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
         })
+        ->orWhere('is_laboratory', 1)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
@@ -212,6 +214,7 @@ class RegistrationApiController extends Controller
         ->orWhere('is_ruang_tindakan', 1)
         ->select(
             'pivot_medical_records.id',
+            'pivot_medical_records.is_referenced',
             'pivot_medical_records.registration_detail_id',
             'pivot_medical_records.medical_record_id'
         );

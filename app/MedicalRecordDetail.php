@@ -50,6 +50,35 @@ class MedicalRecordDetail extends Model
                         ]);
                     }
                 }
+
+                if($medicalRecordDetail->is_diagnostic == 1) {
+                    $price = DB::table('prices')
+                    ->whereItemId($medicalRecordDetail->item_id)
+                    ->first();
+                    $radiology_groups = ['USG MAMMAE', 'USG ABDOMEN UPPER LOWER WANITA', 'USG ABDOMEN UPPER LOWER PRIA', 'USG THYROID', 'MAMMOGRAFI', 'X-RAY']; 
+                    if( array_search(trim($price->radiology_group), $radiology_groups) !== false ) {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_radiology' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                    }
+
+                    $laboratory_groups = ['HEMATOLOGI', 'DARAH LENGKAP', 'KIMIA KLINIK', 'IMUNO']; 
+                    if( array_search(trim($price->laboratory_group), $laboratory_groups) !== false ) {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_laboratory' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                    }
+                }
         });
         
         static::deleted(function(MedicalRecordDetail $medicalRecordDetail){

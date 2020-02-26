@@ -26,9 +26,9 @@
                           <div class="col-md-6 col-sm-12">
                             
                               <div class="form-group">
-                                  <label class="control-label col-md-5 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <select class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.grup_nota_id" ng-options="c.id as c.slug + ' - ' + c.name for c in data.grup_nota">
                                       <option value=""></option>
                                     </select>
@@ -36,16 +36,16 @@
                               </div>
 
                               <div class="form-group">
-                                  <label class="control-label col-md-5 col-sm-3 col-xs-12" for="first-name">Nama tarif<span class="required">*</span>
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Nama tarif<span class="required">*</span>
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12" autofocus>
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="control-label col-md-5 col-sm-3 col-xs-12" for="last-name">Jenis
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Jenis
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <label class="radio-inline">
                                         <input type="checkbox" ng-model='formData.is_registration' ng-true-value='1' ng-false-value='0'> Administrasi
                                     </label><br>
@@ -62,9 +62,9 @@
 
                           <div class="col-md-6 col-sm-6">
                               <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Tujuan
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Tujuan
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <select class="form-control" data-placeholder-text-single="'Pilih Tujuan'"  chosen allow-single-deselect="false" ng-model="formData.destination">
                                         <option value=""></option>
                                         <option value="POLIKLINIK">Poliklinik</option>
@@ -76,11 +76,41 @@
                                     </select>
                                   </div>
                               </div>
+
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Kelompok radiologi
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok Radiologi'"  chosen allow-single-deselect="true" ng-model="formData.radiology_group">
+                                        <option value=""></option>
+                                        <option value="USG MAMMAE">USG Mammae</option>
+                                        <option value="USG ABDOMEN UPPER LOWER WANITA">USG Abdomen Upper Lower Wanita</option>
+                                        <option value="USG ABDOMEN UPPER LOWER PRIA">USG Abdomen Upper Lower Pria</option>
+                                        <option value="USG THYROID">USG Thyroid</option>
+                                        <option value="MAMMOGRAFI">Mammografi</option>
+                                        <option value="X-RAY">X-Ray</option>
+                                    </select>
+                                  </div>
+                              </div>
+                            
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Kelompok laboratorium
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok Laboratorium'"  chosen allow-single-deselect="true" ng-model="formData.laboratory_group">
+                                        <option value=""></option>
+                                        <option value="HEMATOLOGI">Hematologi</option>
+                                        <option value="DARAH LENGKAP">Darah Lengkap</option>
+                                        <option value="KIMIA KLINIK">Kimia Klinik</option>
+                                        <option value="IMUNO">Imuno / Serologi</option>
+                                    </select>
+                                  </div>
+                              </div>
                             
                               <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes)'>
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Poliklinik
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'"  chosen allow-single-deselect="false" ng-model="formData.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic" ng-change="changeDoctor()">
                                         <option value=""></option>
                                     </select>
@@ -88,35 +118,35 @@
                               </div>
                             
                               <div class="form-group">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Harga
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Harga
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                       <input type="text" ng-model='formData.price' class="form-control" jnumber2 only-num>
                                   </div>
                               </div>
 
                               <div class="form-group">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Satuan
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Satuan
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                     <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
                                     </select>
                                   </div>
                               </div>
                             
                               <div class="form-group">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Qty default
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Qty default
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                       <input type="text" ng-model='formData.qty' class="form-control" ng-value='1' only-num>
                                   </div>
                               </div>
                             
                             
                               <div class="form-group">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Persentase dokter(%)
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Persentase dokter(%)
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
                                       <input type="text" ng-model='formData.percentage' class="form-control" maxlength='2' ng-value='0' jnumber2 only-num>
                                   </div>
                               </div>

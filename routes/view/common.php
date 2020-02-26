@@ -68,6 +68,21 @@ Route::name('signa.')->prefix('signa')->group(function(){
     })->name('show');
 });
 
+Route::name('laboratory_type.')->prefix('laboratory_type')->group(function(){
+    Route::get('/', function (){
+        return view('user/laboratory_type/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/laboratory_type/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/laboratory_type/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/laboratory_type/show')->withId($id);
+    })->name('show');
+});
+
 Route::name('price.')->prefix('price')->group(function(){
     Route::get('/', function (){
         return view('user/price/index');

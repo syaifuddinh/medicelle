@@ -88,15 +88,23 @@
                                   <label class="col-md-3 col-xs-12" for="last-name">Tujuan
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
-<% formData.destination.toLowerCase() %>
-
-
-
-
-
-
-
-
+                                        <% formData.destination.toLowerCase() %>
+                                  </div>
+                              </div>
+                            
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                                  <label class="col-md-3 col-xs-12" for="last-name">Kelompok Radiologi
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
+                                        <% formData.radiology_group.toLowerCase() %>
+                                  </div>
+                              </div>
+                            
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                                  <label class="col-md-3 col-xs-12" for="last-name">Kelompok Laboratorium
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
+                                        <% formData.laboratory_group.toLowerCase() %>
                                   </div>
                               </div>
                             

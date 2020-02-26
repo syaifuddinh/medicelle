@@ -89,7 +89,8 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         searchable : false,
         className : 'text-center',
         render : resp => "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.registration_detail.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a><a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        (resp.is_referenced != 1 ? "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.registration_detail.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a>" : '') +
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

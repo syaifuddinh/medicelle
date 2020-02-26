@@ -8,11 +8,51 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
   pivot_medical_record_id = path.replace(/.+\/(\d+)\/(\d*)/, '$2');
   
 
+  
+  $scope.openPDF = function() {
+      if(path.indexOf('ruang_tindakan') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/pdf')
+      } else if(path.indexOf('radiology') > -1) {
+          if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG MAMMAE") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_mammae/pdf')
+          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG ABDOMEN UPPER LOWER WANITA") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_abdomen_upper_lower_wanita/pdf')
+          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG ABDOMEN UPPER LOWER PRIA") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_abdomen_upper_lower_pria/pdf')
+          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG THYROID") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_thyroid/pdf')
+          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "MAMMOGRAFI") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/mammografi/pdf')
+          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "X-RAY") {
+              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/xray/pdf')
+          }
+      }
+  }
+
+  $scope.submitAdditionalPivot = function(key)  {
+      var data = {}
+      data[key] = $scope.pivotData[key]
+      
+      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/additional', data).then(function(data) {
+        
+      }, function(error) {
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+      });      
+  }
+  
   $scope.pivot = function() {
 
       $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
         $scope.pivot = data.data
-        $scope.pivotData = JSON.parse($scope.pivot.additional);
+        $scope.pivotData = $scope.pivot.additional;
       }, function(error) {
         $scope.pivot()
       });

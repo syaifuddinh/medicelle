@@ -9,6 +9,16 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::get('medical_record/pivot/{pivot_medical_record_id}', 'MedicalRecordController@pivot');
         Route::put('medical_record/pivot/{pivot_medical_record_id}/ruang_tindakan/description', 'MedicalRecordController@update_ruang_tindakan_description');
+        Route::put('medical_record/pivot/{pivot_medical_record_id}/additional', 'MedicalRecordController@update_additional_pivot');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/ruang_tindakan/pdf', 'MedicalRecordController@ruang_tindakan_pdf');
+
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_mammae/pdf', 'MedicalRecordController@usg_mammae_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_thyroid/pdf', 'MedicalRecordController@usg_thyroid_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/mammografi/pdf', 'MedicalRecordController@mammografi_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/xray/pdf', 'MedicalRecordController@xray_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_pria/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_pria_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_wanita/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_wanita_pdf');
+
         Route::get('medical_record/{id}/fnab/pdf', 'MedicalRecordController@fnab_pdf');
         Route::get('medical_record/{id}/histopatologi/pdf', 'MedicalRecordController@histopatologi_pdf');
         Route::get('medical_record/{id}/papsmear/pdf', 'MedicalRecordController@papsmear_pdf');

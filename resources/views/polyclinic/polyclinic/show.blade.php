@@ -202,15 +202,29 @@
                             </span>
                         </div>
                     </div>
+
+                    @include('polyclinic/polyclinic/radiology/usg_mammae')
+                    @include('polyclinic/polyclinic/radiology/usg_abdomen_upper_lower_pria')
+                    @include('polyclinic/polyclinic/radiology/usg_abdomen_upper_lower_wanita')
+                    @include('polyclinic/polyclinic/radiology/usg_thyroid')
+                    @include('polyclinic/polyclinic/radiology/xray')
+                    @include('polyclinic/polyclinic/radiology/mammografi')
                     
                     <div class="ln_solid"></div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                             <div class="btn-group pull-left">
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
-                            <div class="btn-group pull-right">
+
+                            <div class="btn-group pull-right" ng-show='pivot.is_referenced == 1'>
+
+                                <button class="btn btn-primary btn-sm" ng-click="openPDF()" type="button" title='Buka dokumen PDF'>
+                                    <i class="fa fa-file-pdf-o"></i>
+                                </button>
+                            </div>
+                            <div class="btn-group pull-right" ng-hide='pivot.is_referenced == 1'>
                              @if(Auth::user()->allow_update_assesment())
                                 <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => ""]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
                                 <a ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-info btn-sm" >Isi assesment</a>                                
@@ -223,6 +237,7 @@
                             @endif
                         </div>
                     </div>
+
                 </form>
             </div>
 

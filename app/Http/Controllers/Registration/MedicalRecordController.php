@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Registration;
 
 use App\MedicalRecord;
 use App\MedicalRecordDetail;
+use App\PivotMedicalRecord;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Mod;
@@ -29,10 +30,11 @@ class MedicalRecordController extends Controller
 
     public function pivot($pivot_medical_record_id)
     {
-        $pivot = DB::table('pivot_medical_records')
-        ->whereId($pivot_medical_record_id)
-        ->select('is_ruang_tindakan', 'additional')
-        ->first();
+        $pivot = PivotMedicalRecord::with(
+            'medical_record_detail:id,item_id',
+            'medical_record_detail.item:id',
+            'medical_record_detail.item.price:id,item_id,laboratory_group,radiology_group'
+        )->findOrFail($pivot_medical_record_id);
         return Response::json($pivot, 200);
     }
 
@@ -48,6 +50,20 @@ class MedicalRecordController extends Controller
         ]);
 
         return Response::json(['message' => 'Dokter rujukan telah dipilih'], 200);
+    }
+
+    public function update_additional_pivot(Request $request, $id) {
+        $pivot_medical_record = PivotMedicalRecord::findOrFail($id);
+        $additional = $pivot_medical_record->additional;
+        $inputs = $request->all();
+        foreach ($inputs as $key => $input) {
+            $additional->{$key} = $input;
+        }
+
+        $pivot_medical_record->additional = json_encode($additional);
+        $pivot_medical_record->save();
+
+        return Response::json(['message' => 'Data berhasil di-update'], 200);
     }
     /**
      * Show the form for creating a new resource.
@@ -185,6 +201,62 @@ class MedicalRecordController extends Controller
         } else {
             return $pdf->download('resume-medis.pdf');            
         }
+    }
+
+    public function ruang_tindakan_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/ruang_tindakan',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('ruang_tindakan.pdf');
+    }
+
+    public function usg_mammae_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/usg_mammae',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('usg_mammae.pdf');
+    }
+
+    public function usg_abdomen_upper_lower_wanita_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/usg_abdomen_upper_lower_wanita',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('usg_abdomen_upper_lower_wanita.pdf');
+    }
+
+    public function usg_abdomen_upper_lower_pria_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/usg_abdomen_upper_lower_pria',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('usg_abdomen_upper_lower_pria.pdf');
+    }
+
+    public function usg_thyroid_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/usg_thyroid',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('usg_thyroid.pdf');
+    }
+
+    public function mammografi_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/mammografi',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('mammografi.pdf');
+    }
+
+    public function xray_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/xray',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('xray.pdf');
     }
 
     public function fnab_pdf(Request $request, $id)
