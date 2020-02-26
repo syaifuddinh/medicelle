@@ -39,14 +39,20 @@
                     </form>
                 </div>
                 <div class="row x_title">
-                  <div class="col-md-6">
-                    <h3>Signa</h3>
+                  <div class="col-md-8">
+                    <h3>Jenis pemeriksaan <br>laboratorium</h3>
                   </div>
-                  <div class="col-md-6">
-                      <div class="btn-group pull-right export_button">
+                  <div class="col-md-4">
+                      <div class="col-md-11 pull-right">
+                          <select class='form-control'  title='Jumlah grid' ng-model='settingData.grid_amount'  data-placeholder-text-single="'Pilih Jumlah Grid'" chosen ng-options='c.id as c.name for c in data.grids' ng-change='submitGridAmount()'>
+                              
+                          </select>
+                      </div>
+                      <div class="col-md-11 btn-group pull-right export_button">
+                          
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
                           @if(Auth::user()->allow_access('setting.laboratory_type.create'))
-                              <a href="{{ route('laboratory_type.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                              <a href="{{ route('laboratory_type.create') }}" style='width:37%' class='btn btn-success btn-sm'>Tambah</a>
                           @endif
                       </div>                    
                   </div>
@@ -56,7 +62,6 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>Kategori</th>
                           <th>Nama</th>
                           <th>Status</th>
                           <th></th>

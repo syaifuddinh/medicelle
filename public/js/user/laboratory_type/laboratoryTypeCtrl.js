@@ -1,4 +1,13 @@
-app.controller('laboratoryType', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('laboratoryType', ['$scope', '$compile', '$http', '$rootScope', function($scope, $compile, $http, $rootScope) {
+  $scope.settingData = {}
+  $scope.data = {
+      grids : [
+        {id : 1, name : 1},
+        {id : 2, name : 2},
+        {id : 3, name : 3},
+        {id : 4, name : 4}
+      ]
+  }
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
@@ -20,12 +29,6 @@ app.controller('laboratoryType', ['$scope', '$compile', '$http', function($scope
     ],
 
     columns:[
-      {
-        data:null, 
-        orderable : false,
-        searchable:false,
-        render : resp => resp.description == 'laboratoryType1' ? 'Jenis Pemeriksaan Laboratorium 1' : 'Jenis Pemeriksaan Laboratorium 2'
-      },
       {data:"name", name:"name"},
       {
         data: null, 
@@ -52,6 +55,49 @@ app.controller('laboratoryType', ['$scope', '$compile', '$http', function($scope
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+
+    $scope.submitGridAmount=function() {
+      $rootScope.disBtn=true;
+      var url = baseUrl + '/controller/user/setting/laboratory/grid';
+      var method = 'put';
+
+      $http[method](url, $scope.settingData).then(function(data) {
+        $rootScope.disBtn = false
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
+    }
+
+    $scope.show = function() {
+        $http.get(baseUrl + '/controller/user/setting/laboratory').then(function(data) {
+            $scope.settingData = data.data
+            console.log($scope.settingData)
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+          $scope.show()
+        });
+    }
+    $scope.show()
 
   $scope.filter = function() {
     oTable.ajax.reload()

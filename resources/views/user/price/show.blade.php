@@ -87,7 +87,7 @@
                               <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Tujuan
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
+                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize"  style='padding-left:9.6mm'>
                                         <% formData.destination.toLowerCase() %>
                                   </div>
                               </div>
@@ -95,23 +95,26 @@
                               <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Kelompok Radiologi
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
+                                  <div class="col-md-6 col-sm-6 col-xs-12 capitalize" style='padding-left:9.6mm'>
                                         <% formData.radiology_group.toLowerCase() %>
                                   </div>
                               </div>
                             
                               <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
-                                  <label class="col-md-3 col-xs-12" for="last-name">Kelompok Laboratorium
+                                  <label class="col-md-3 col-xs-12" for="last-name">Kategori Laboratorium
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
-                                        <% formData.laboratory_group.toLowerCase() %>
+                                        <ol id="laboratory_treatment_list">
+                                            
+                                        </ol>
                                   </div>
                               </div>
+                            
                             
                               <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (formData.is_registration == 0)'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
 <% formData.polyclinic.name %>
 
 
@@ -122,7 +125,7 @@
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Harga
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
                                       <% formData.service.price | number %>
                                   </div>
                               </div>
@@ -130,24 +133,24 @@
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Satuan
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-                                      <% formData.service.piece.name %>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                                        <% formData.service.piece.name %>
                                   </div>
                               </div>
                             
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Qty default
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.qty %>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                                      <% formData.qty %>
                                   </div>
                               </div>
                             
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Persentasi dokter
                                   </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.percentage %>%
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                                      <% formData.percentage %>%
                                   </div>
                               </div>
                             

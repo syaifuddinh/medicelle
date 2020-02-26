@@ -30,4 +30,8 @@ class Price extends Model
     public function grup_nota() {
         return $this->belongsTo('App\Permission')->whereIsGrupNota(1);
     }
+
+    public function laboratory_treatment() {
+        return $this->hasMany('App\LaboratoryTreatment', 'price_id', 'id');
+    }
 }

@@ -210,6 +210,8 @@
                     @include('polyclinic/polyclinic/radiology/xray')
                     @include('polyclinic/polyclinic/radiology/mammografi')
                     
+                    @include('polyclinic/polyclinic/radiology/laboratory_treatment')
+                    
                     <div class="ln_solid"></div>
                     <div class="form-group" >
                         <div class="col-md-12 col-sm-12 col-xs-12 ">

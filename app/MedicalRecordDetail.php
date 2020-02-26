@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Item;
+use App\Price;
 use App\Permission;
 use App\MedicalRecord;
 use Str;
@@ -51,10 +52,10 @@ class MedicalRecordDetail extends Model
                     }
                 }
 
+                $price = DB::table('prices')
+                ->whereItemId($medicalRecordDetail->item_id)
+                ->first();
                 if($medicalRecordDetail->is_diagnostic == 1) {
-                    $price = DB::table('prices')
-                    ->whereItemId($medicalRecordDetail->item_id)
-                    ->first();
                     $radiology_groups = ['USG MAMMAE', 'USG ABDOMEN UPPER LOWER WANITA', 'USG ABDOMEN UPPER LOWER PRIA', 'USG THYROID', 'MAMMOGRAFI', 'X-RAY']; 
                     if( array_search(trim($price->radiology_group), $radiology_groups) !== false ) {
                         DB::table('pivot_medical_records')
@@ -67,16 +68,40 @@ class MedicalRecordDetail extends Model
                         ]);
                     }
 
-                    $laboratory_groups = ['HEMATOLOGI', 'DARAH LENGKAP', 'KIMIA KLINIK', 'IMUNO']; 
-                    if( array_search(trim($price->laboratory_group), $laboratory_groups) !== false ) {
-                        DB::table('pivot_medical_records')
-                        ->insert([
-                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
-                            'registration_detail_id' => $registration_detail_id,
-                            'is_referenced' => 1,
-                            'is_laboratory' => 1,
-                            'medical_record_detail_id' => $medicalRecordDetail->id
-                        ]);
+                    $price = Price::find($price->id);
+                    if($price->laboratory_treatment()->count('id') > 0) {
+                           $checklist = [];
+                           $laboratory_treatment = $price->laboratory_treatment;
+                           foreach($laboratory_treatment as $treatment) {
+                                $laboratory_type = DB::table('laboratory_types')
+                                ->whereId($treatment->laboratory_type_id)
+                                ->first();
+                                $laboratory_type_detail = DB::table('laboratory_type_details')
+                                ->whereLaboratoryTypeId($treatment->laboratory_type_id)
+                                ->get();
+                                $checklist_detail = [];
+                                foreach($laboratory_type_detail as $detail) {
+                                    array_push($checklist_detail, [
+                                        'name' => $detail->name,
+                                    ]);
+                                }
+                                array_push($checklist, [
+                                    'id' => $laboratory_type->id,
+                                    'name' => $laboratory_type->name,
+                                    'detail' => $checklist_detail
+                                ]);
+                           }
+
+                           $checklist = json_encode($checklist);
+                           DB::table('pivot_medical_records')
+                            ->insert([
+                                'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                                'registration_detail_id' => $registration_detail_id,
+                                'is_referenced' => 1,
+                                'is_laboratory' => 1,
+                                'medical_record_detail_id' => $medicalRecordDetail->id,
+                                'additional' => '{"treatment":' . $checklist . '}'
+                            ]); 
                     }
                 }
         });

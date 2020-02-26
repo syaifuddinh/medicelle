@@ -8,6 +8,7 @@ use App\Permission;
 use App\User;
 use App\Item;
 use App\Price;
+use App\LaboratoryType;
 use DataTables;
 
 class UserApiController extends Controller
@@ -32,6 +33,15 @@ class UserApiController extends Controller
 
     public function signa(Request $request) {
         $x = Permission::select('id', 'name', 'description', 'is_active', 'description')->whereIsSigna(1);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function laboratory_type(Request $request) {
+        $x = LaboratoryType::select('id', 'name', 'is_active');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

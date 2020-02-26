@@ -34,6 +34,11 @@ class Mod {
         return $company != null ? $company->content : json_decode('{}');
     }
 
+    public static function laboratory() {
+        $laboratory = Setting::whereName('laboratory')->first();
+        return $laboratory != null ? $laboratory->content : json_decode('{}');
+    }
+
     public static function finance() {
         $finance = Setting::whereName('finance')->first();
         return $finance != null ? $finance->content : json_decode('{}');

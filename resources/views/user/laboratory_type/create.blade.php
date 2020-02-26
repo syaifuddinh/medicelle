@@ -23,35 +23,46 @@
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Nama<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <label class="radio-inline">
-                                <input type="radio" ng-model='formData.description' ng-value='"laboratory_type1"'>Signa 1 
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" ng-model='formData.description' ng-value='"laboratory_type2"'>Signa 2 
-                            </label>
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12" autofocus>
+                          <input type="text" id="first-name" ng-model='formData.name' class="form-control col-md-7 col-xs-12" autofocus>
                         </div>
                       </div>
 
                       <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <div class="btn-group">
-                            
-                            <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
-                            <button class="btn btn-warning btn-sm" type="button" ng-click='formData = {description : "laboratory_type1"}'>Reset</button>
-                            <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
-                          </div>
+
+                      <div class="row">
+                         <div class="col-md-12">
+                            <button type="button" class="btn btn-sm btn-primary pull-right" ng-click='addDetail()'>Tambah</button>
+                         </div>
+                         <div class="col-md-12">
+                              <table class="table" id='detail_datatable'>
+                                  <thead>
+                                      <th>Nama</th>
+                                      <th></th>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                              </table>
+                         </div>
+                       </div> 
+
+                      <div class="ln_solid"></div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          
+                              <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="btn-group">
+                                    
+                                    <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
+                                    <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
+                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
+                                  </div>
+                                </div>
+                              </div>
                         </div>
                       </div>
 

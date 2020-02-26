@@ -34,35 +34,21 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
-
                       <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kode
+                        <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Nama
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <% formData.slug %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Nama
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
                           <% formData.name %>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Status
+                        <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Detail
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <% formData.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
+                          <ol id='laboratory_type_detail_list'></ol>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12" for="last-name">Keterangan
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <% formData.description %>
-                        </div>
-                      </div>
+                      
 
                       <div class="ln_solid"></div>
                       <div class="form-group">

@@ -5,6 +5,14 @@ app.controller('priceShow', ['$scope', '$http', '$rootScope', function($scope, $
     id = path.replace(/.+\/(\d+)/, '$1');
     $http.get(baseUrl + '/controller/user/price/' + id).then(function(data) {
             $scope.formData = data.data
+            var unit, li
+            var laboratory_treatment_list = $('#laboratory_treatment_list') 
+
+            for(x in $scope.formData.laboratory_treatment) {
+                unit = $scope.formData.laboratory_treatment[x]
+                li = $('<li>' + unit.laboratory_type.name + '</li>')
+                $('#laboratory_treatment_list').append(li)
+            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

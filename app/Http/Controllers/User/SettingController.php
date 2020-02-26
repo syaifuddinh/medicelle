@@ -106,6 +106,25 @@ class SettingController extends Controller
         return Response::json($company, 200);
     }
 
+    public function laboratory()
+    {
+        $laboratory = Setting::whereName('laboratory')->first()->content;
+        
+        return Response::json($laboratory, 200);
+    }
+
+    public function store_grid(Request $request)
+    {
+        $laboratory = Setting::whereName('laboratory');
+        $content = $laboratory->first()->content;
+        $content->grid_amount =$request->grid_amount ?? 1;
+        $laboratory->update([
+            'content' => json_encode($content)
+        ]);
+        
+        return Response::json(['message' => 'Grid berhasil di-update'], 200);
+    }
+
     public function finance()
     {
         $finance = Setting::whereName('finance')->first()->content;

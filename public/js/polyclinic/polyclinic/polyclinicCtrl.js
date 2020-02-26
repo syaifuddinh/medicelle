@@ -21,7 +21,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       flag = 'chemoterapy'
   }  else if( path.indexOf('laboratory') > -1) {
       patient_url = patient_head + 'laboratory_registered'
-      flag = 'chemoterapy'
+      flag = 'laboratory'
   } else if( path.indexOf('ruang_tindakan') > -1) {
       patient_url = patient_head + 'ruang_tindakan_registered'
       flag = 'ruang_tindakan'

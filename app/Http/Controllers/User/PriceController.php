@@ -86,8 +86,10 @@ class PriceController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'grup_nota_id' => 'required',
         ], [
+            'grup_nota_id.required' => 'Grup nota tidak boleh kosong',
             'name.required' => 'Nama tidak boleh kosong',
             'price.required' => 'Harga tidak boleh kosong'
         ]);
@@ -103,6 +105,14 @@ class PriceController extends Controller
         $price->item_id = $item->id;
         $price->custom_price = $request->price;
         $price->save();
+        foreach ($request->laboratory_types as $value) {
+            if(1 == ($value['is_active'] ?? null)) {
+
+                $price->laboratory_treatment()->create([
+                    'laboratory_type_id' => $value['id']
+                ]);
+            }
+        }
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
@@ -115,7 +125,7 @@ class PriceController extends Controller
      */
     public function show($id)
     {   
-        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name');
+        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name');
         return Response::json($price->find($id), 200);
     }
 
@@ -140,9 +150,11 @@ class PriceController extends Controller
     public function update(Request $request, $id)
     {
          $request->validate([
+            'grup_nota' => 'required',
             'name' => 'required',
             'price' => 'required'
         ], [
+            'grup_nota.required' => 'Grup nota tidak boleh tidak boleh kosong',
             'name.required' => 'Nama tidak boleh kosong',
             'price.required' => 'Harga tidak boleh kosong'
         ]);
@@ -156,6 +168,15 @@ class PriceController extends Controller
         $item->save();
         $price->custom_price = $request->price;
         $price->save();
+        $price->laboratory_treatment()->delete();
+        foreach ($request->laboratory_types as $value) {
+            if(1 === ($value['is_active'] ?? null)) {
+
+                $price->laboratory_treatment()->create([
+                    'laboratory_type_id' => $value['id']
+                ]);
+            }
+        }
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);

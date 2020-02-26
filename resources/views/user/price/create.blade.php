@@ -93,20 +93,6 @@
                                   </div>
                               </div>
                             
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
-                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Kelompok laboratorium
-                                  </label>
-                                  <div class="col-md-7 col-sm-6 col-xs-12">
-                                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok Laboratorium'"  chosen allow-single-deselect="true" ng-model="formData.laboratory_group">
-                                        <option value=""></option>
-                                        <option value="HEMATOLOGI">Hematologi</option>
-                                        <option value="DARAH LENGKAP">Darah Lengkap</option>
-                                        <option value="KIMIA KLINIK">Kimia Klinik</option>
-                                        <option value="IMUNO">Imuno / Serologi</option>
-                                    </select>
-                                  </div>
-                              </div>
-                            
                               <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes)'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
@@ -154,6 +140,18 @@
                           </div>
                       </div>
 
+                      <span ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                          
+                            <div class="ln_solid"></div>
+                            <h2>Kategori Laboratorium</h2>
+                            <div class="row">
+                              <div class="col-md-12">
+                                  <table class="table" id='laboratory_type_datatable'>
+                                      <tbody></tbody>
+                                  </table>
+                              </div>
+                            </div>
+                      </span>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -161,7 +159,7 @@
                             
                             <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
                             <button class="btn btn-warning btn-sm" type="button" ng-click='formData = {}'>Reset</button>
-                            <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
+                            <button type="button" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='submitForm()'>Simpan</button>
                           </div>
                         </div>
                       </div>

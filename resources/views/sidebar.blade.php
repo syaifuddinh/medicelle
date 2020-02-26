@@ -37,6 +37,10 @@
                           @if(Auth::user()->allow_access('setting.signa'))
                           <li><a href="{{ route('signa.index') }}">Signa</a></li>
                           @endif
+
+                          @if(Auth::user()->allow_access('setting.laboratory_type'))
+                          <li><a href="{{ route('laboratory_type.index') }}">Laboratorium</a></li>
+                          @endif
                           
                         </ul>
                       </li>

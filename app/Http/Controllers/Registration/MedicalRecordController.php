@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Registration;
 
 use App\MedicalRecord;
 use App\MedicalRecordDetail;
+use App\LaboratoryType;
 use App\PivotMedicalRecord;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -62,6 +63,17 @@ class MedicalRecordController extends Controller
 
         $pivot_medical_record->additional = json_encode($additional);
         $pivot_medical_record->save();
+
+        return Response::json(['message' => 'Data berhasil di-update'], 200);
+    }
+    public function update_laboratory(Request $request, $id) {
+        $pivot_medical_record = PivotMedicalRecord::findOrFail($id);
+        $additional = $pivot_medical_record->additional;
+       $additional->treatment[$request->row]->detail[$request->column]->is_active = $request->is_active;
+
+        $pivot_medical_record->additional = json_encode($additional);
+        $pivot_medical_record->save();
+
 
         return Response::json(['message' => 'Data berhasil di-update'], 200);
     }
@@ -209,6 +221,22 @@ class MedicalRecordController extends Controller
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $pdf = PDF::loadview('pdf/ruang_tindakan',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
         return $pdf->stream('ruang_tindakan.pdf');
+    }
+
+    public function laboratory_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $laboratoryType = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name')->get(); 
+        $pdf = PDF::loadview('pdf/laboratory/laboratory',[
+                'pivotMedicalRecord' => $pivotMedicalRecord,
+                'medicalRecord' => $medicalRecord, 
+                'laboratoryType' => $laboratoryType, 
+                'dot' => '.............................................................................................................', 
+                'shortDot' => '..........']
+        );
+
+        return $pdf->stream('laboratory.pdf');
     }
 
     public function usg_mammae_pdf(Request $request, $id)

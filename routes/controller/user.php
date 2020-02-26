@@ -21,7 +21,13 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::post('user/{user}', 'UserController@update');
         Route::resource('user', 'UserController');
 
+        Route::put('laboratory_type/activate/{id}', 'LaboratoryTypeController@activate');
+        Route::post('laboratory_type/{id}', 'LaboratoryTypeController@update');
+        Route::resource('laboratory_type', 'LaboratoryTypeController');
+
         Route::get('setting/company', 'SettingController@company');
+        Route::get('setting/laboratory', 'SettingController@laboratory');
+        Route::put('setting/laboratory/grid', 'SettingController@store_grid');
         Route::get('setting/finance', 'SettingController@finance');
         Route::put('setting/store_company', 'SettingController@store_company');
         Route::put('setting/store_finance', 'SettingController@store_finance');
