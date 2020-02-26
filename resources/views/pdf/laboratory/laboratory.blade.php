@@ -143,7 +143,7 @@
                                                 <p style='margin-bottom:2mm'>{{ $value->name }}</p>
                                                 @foreach($value->laboratory_type_detail as $detail)
                                                     <p>
-                                                        <input type="checkbox" style='margin-right: 1mm' checked>
+                                                        <input type="checkbox" style='margin-right: 1mm'>
                                                         <span style="display: inline-block;padding-bottom:1mm">
                                                               {{ $detail->name }}
                                                         </span>
