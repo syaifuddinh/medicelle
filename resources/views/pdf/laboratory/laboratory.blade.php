@@ -140,10 +140,26 @@
                                     <tr>
                                         @foreach($unit as $value)
                                             <td>
+                                                <?php 
+                                                        $selected = [];
+                                                        foreach($pivotMedicalRecord->additional->treatment as $treatment) {
+                                                            if($treatment->id == $value->id) {
+                                                                $selected = $treatment->detail;
+                                                            }
+                                                        }
+                                                 ?>
                                                 <p style='margin-bottom:2mm'>{{ $value->name }}</p>
                                                 @foreach($value->laboratory_type_detail as $detail)
                                                     <p>
-                                                        <input type="checkbox" style='margin-right: 1mm'>
+                                                        <?php 
+                                                            $checked = '';
+                                                            foreach($selected as $unit) {
+                                                                if($unit->name == $detail->name && 1 == ($unit->is_active ?? null)) {
+                                                                    $checked = 'checked';
+                                                                }
+                                                            }
+                                                         ?>
+                                                        <input type="checkbox" style='margin-right: 1mm' {{ $checked }}>
                                                         <span style="display: inline-block;padding-bottom:1mm">
                                                               {{ $detail->name }}
                                                         </span>
