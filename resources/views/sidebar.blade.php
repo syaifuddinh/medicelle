@@ -173,6 +173,12 @@
                           </ul>
                     </li>
                   @endif
+
+                  <li><a><i class="fa fa-briefcase"></i>Farmasi<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                                <li><a href="{{ route('pharmacy.purchase_request.index') }}">Permintaan Pembelian</a></li>
+                          </ul>
+                    </li>
                  
                 </ul>
               </div>

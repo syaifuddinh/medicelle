@@ -20,12 +20,14 @@ Route::group(
         require(base_path('routes/view/cashier.php'));
         require(base_path('routes/view/polyclinic.php'));
         require(base_path('routes/view/letter.php'));
+        require(base_path('routes/view/pharmacy.php'));
 
         require(base_path('routes/controller/user.php'));
         require(base_path('routes/controller/master.php'));
         require(base_path('routes/controller/registration.php'));
         require(base_path('routes/controller/cashier.php'));
         require(base_path('routes/controller/letter.php'));
+        require(base_path('routes/controller/pharmacy.php'));
 
         Route::namespace('Datatable')
         ->prefix('datatable')
@@ -36,6 +38,7 @@ Route::group(
             require(base_path('routes/datatable/registration.php'));
             require(base_path('routes/datatable/cashier.php'));
             require(base_path('routes/datatable/letter.php'));
+            require(base_path('routes/datatable/pharmacy.php'));
         });
 });
 Route::get('/logout', 'Auth\LoginController@logout');

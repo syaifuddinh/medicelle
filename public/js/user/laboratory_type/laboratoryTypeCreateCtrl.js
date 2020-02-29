@@ -38,14 +38,14 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
             orderable : false,
             searchable : false,
             className : 'text-center',
-            render : resp =>  "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail($event.currentTarget)' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
+            render : resp =>  "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail($event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"
           },
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
           $(row).find('input').focus()
         }
-  });
+    });
 
   changeName = function(obj) {
       var name = $(obj).val()

@@ -3,15 +3,35 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="medicalRecord">
+        <div class="right_col" role="main" ng-controller="purchaseRequest">
           <!-- top tiles -->
+          
 
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
                 <div class="row x_title" ng-show='!isFilter'>
                     <form action="" class='form-horizontal form-label-left'>
-                        
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Status
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label class="radio-inline">
+                              <input type="radio" ng-model="formData.is_approve" ng-value='null' ng-change="filter()">
+                              <h5>Semua</h5>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" ng-model="formData.is_approve" ng-value='"1"' ng-change="filter()">
+                              <h5>Draft</h5>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" ng-model="formData.is_approve" ng-value='"2"' ng-change="filter()">
+                              <h5>
+                              Disetujui  
+                              </h5>
+                            </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Periode
                             </label>
@@ -30,20 +50,14 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <a href="#" class='btn btn-outline-dark' style='display:inline-block'>
-                        </i> <b>Riwayat rekam medis</b>
-                    </a>
-                    <a href="#" class='btn btn-sm btn-outline-primary'>
-                        <i class="fa fa-users"></i> <% patient.name %>
-                    </a>
-                    <a href="#" class='btn btn-sm btn-outline-success capitalize'>
-                        <i class="fa fa-male" ng-show='patient.gender == "PRIA"'></i><i class="fa fa-female" ng-show='patient.gender == "WANITA"'></i> <% patient.gender.toLowerCase() %>
-                    </a>
+                    <h3>Permintaan Pembelian</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          
+                          @if(Auth::user()->allow_access('purchaseRequest.create'))
+                              <a href="{{ route('pharmacy.purchase_request.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>
@@ -52,10 +66,10 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No. Rekam Medis</th>
-                          <th>Tanggal</th>
-                          <th>Keluhan utama</th>
-                          <th>Dokter</th>
+                          <th  style='width:14%'>Tanggal</th>
+                          <th style='width:16%'>Periode</th>
+                          <th style='width:16%'>Keterangan</th>
+                          <th>Status</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -79,5 +93,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/registration/medical_record/medicalRecordCtrl.js"></script>
+    <script src="{{ asset('') }}js/pharmacy/purchase_request/purchaseRequestCtrl.js"></script>
 

@@ -268,6 +268,22 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function item(Request $request) {
+        $x = Item::whereIsCategory(0)        
+        ->whereIsClassification(0)
+        ->whereIsSubclassification(0)
+        ->whereIsGeneric(0)
+        ->whereIsCure(1)
+        ->orWhere('is_medical_item', 1)
+        ->select('items.id', 'items.code', 'items.name', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id');
+
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function medical_item(Request $request) {
         $x = Item::medical_item()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')

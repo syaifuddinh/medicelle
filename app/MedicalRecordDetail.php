@@ -82,6 +82,7 @@ class MedicalRecordDetail extends Model
                                 $checklist_detail = [];
                                 foreach($laboratory_type_detail as $detail) {
                                     array_push($checklist_detail, [
+                                        'id' => $detail->id,
                                         'name' => $detail->name,
                                     ]);
                                 }
