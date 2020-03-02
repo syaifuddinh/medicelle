@@ -36,7 +36,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Supplier<span class="required">*</span>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Supplier
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
                                         <% formData.supplier.name %>
@@ -44,7 +44,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Alamat<span class="required">*</span>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Alamat
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
                                         <% formData.supplier.address %>
@@ -87,8 +87,7 @@
                             <div class="btn-group">
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
-                                <button type="button" ng-click='repeat = 1;submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan dan lanjutkan</button>
-                                <button type="button" ng-click='repeat = 0;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan dan keluar</button>
+                                <button type="button" ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan</button>
                             </div>
                         </div>
                     </div>

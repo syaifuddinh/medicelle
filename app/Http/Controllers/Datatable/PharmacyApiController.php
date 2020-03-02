@@ -40,6 +40,8 @@ class PharmacyApiController extends Controller
             } else if($request->status == 3) {
                 $x = $x->whereIsUsed(1)
                 ->whereIsReceiptCompleted(1);
+            } else if($request->status == 4) {
+                $x = $x->whereIsReceiptCompleted(0);
             }
         }
         if($request->draw == 1)

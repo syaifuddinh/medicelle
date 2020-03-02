@@ -94,10 +94,10 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
 
   $scope.show = function() {
       $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + id).then(function(data) {
-        $scope.formData = data.data
-        var detail = data.data.detail
+          $scope.formData = data.data
+          var detail = data.data.detail
           var unit
-
+          $scope.receipt_url = baseUrl + '/pharmacy/receipt/purchase_order/' + id + '/create'
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name

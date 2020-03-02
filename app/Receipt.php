@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Receipt extends Model
 {
@@ -30,7 +31,7 @@ class Receipt extends Model
     }
 
     public function detail() {
-        return $this->hasMany('App\PurchaseOrderDetail');
+        return $this->hasMany('App\ReceiptDetail');
     }
 
     public function purchase_order() {

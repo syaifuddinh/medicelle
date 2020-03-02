@@ -70,7 +70,9 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
     serverSide: true,
     ajax: {
       url : baseUrl + '/datatable/pharmacy/purchase_order',
-      data : d => Object.assign(d, $scope.formData)
+      data : function(d) {
+          d.status = 4
+      }
     },
     
     columns:[
@@ -103,8 +105,8 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
   });
 
   $scope.showPurchaseOrder = function() {
+      purchase_order_datatable.ajax.reload()
       $('#purchaseOrderModal').modal()
-      purchasse_order_datatable.ajax.reload()
   }
 
   $scope.selectPurchaseOrder = function(obj) {

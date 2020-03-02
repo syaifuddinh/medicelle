@@ -67,39 +67,6 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
     });
 
 
-    $scope.show = function() {
-
-      $http.get(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
-          var detail = data.data.detail
-          var unit
-
-          for(x in detail) {
-              unit = detail[x]
-              detail[x].item_name = unit.item.name
-              detail[x].supplier_name = unit.supplier.name
-              $scope.insertItem(unit)
-          }
-
-          $scope.formData = data.data
-          console.log($scope.formData)
-          $scope.formData.detail = detail
-
-          setTimeout(function () {
-              
-                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
-                $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
-                $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
-            }, 300)
-
-          for(x in detail) {
-              $scope.checkStock(x, detail[x].item_id)
-          }
-      }, function(error) {
-            $scope.show()
-      });
-    }
-   
-
     $scope.showPurchaseOrder = function() {
 
       $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + purchase_order_id).then(function(data) {
@@ -109,10 +76,12 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
+              detail[x].purchase_order_detail_id = unit.id
               $scope.insertItem(unit)
           }
 
           $scope.formData = data.data
+          $scope.formData.purchase_order_id = $scope.formData.id
           $scope.purchase_order_code = data.data.code
           $scope.formData.detail = detail
 
@@ -127,7 +96,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
               $scope.checkStock(x, detail[x].item_id)
           }
       }, function(error) {
-            $scope.show()
+            $scope.showPurchaseOrder()
       });
     }
     $scope.showPurchaseOrder()
@@ -241,37 +210,16 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/pharmacy/receipt';
-      var method = 'post';
-      if($scope.formData.id) {
-          var url = baseUrl + '/controller/pharmacy/receipt/' + id;
-          var method = 'put';
-      } 
-      $http[method](url, $scope.formData).then(function(data) {
+      $http.post(url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
-        if($scope.repeat == 1) {
-            if(path.indexOf('edit' > -1)) {          
-                setTimeout(function () {
-                  window.location = baseUrl + '/pharmacy/receipt/create'          
-                }, 1000)
-            }
-            $scope.reset()
-        } else {
-            setTimeout(function () {
+        setTimeout(function () {
               window.location = baseUrl + '/pharmacy/receipt'          
             }, 1000)
-        }
       }, function(error) {
-        $rootScope.disBtn=false;
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
-          });
-          toastr.warning(det,error.data.message);
-        } else {
-          toastr.error(error.data.message,"Error Has Found !");
-        }
+        console.log(error)
+        $rootScope.disBtn = false
+        toastr.error("Something wrong")
       });
       
     }

@@ -19,12 +19,19 @@
                         <div class="btn-group pull-right">
                             
                         </div>
+
+
+                        <a href='<% receipt_url %>' class="btn btn-primary btn-sm pull-right" ng-show='formData.is_receipt_completed == 0'>
+                              Buat penerimaan
+                          </a>
+
                         <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.id'>
                               <i class="fa fa-barcode"></i> <% formData.purchase_request.code %>
                           </a>
                         <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
                               <i class="fa fa-barcode"></i> <% formData.code %>
                           </a>
+
                     </div>
                 </div>
 

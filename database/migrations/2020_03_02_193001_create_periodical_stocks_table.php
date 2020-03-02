@@ -17,11 +17,16 @@ class CreatePeriodicalStocksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('year')->nullable(false)->index();
             $table->integer('month')->nullable(false)->index();
+            $table->unsignedInteger('stock_id')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
             $table->integer('gross')->nullable(false)->default(0)->index();
             $table->integer('netto')->nullable(false)->default(0)->index();
             $table->timestamps();
+
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('restrict');
+            $table->foreign('lokasi_id')->references('id')->on('permissions')->onDelete('restrict');
+            $table->foreign('stock_id')->references('id')->on('stocks')->onDelete('restrict');
         });
     }
 

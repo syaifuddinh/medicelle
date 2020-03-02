@@ -16,7 +16,7 @@ class CreateReceiptDetailsTable extends Migration
         Schema::create('receipt_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('receipt_id')->nullable(false)->index();
-            $table->unsignedInteger('purchase_order_id')->nullable(false)->index();
+            $table->unsignedInteger('purchase_order_detail_id')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('qty')->nullable(false)->default(0)->index();
             $table->unsignedInteger('received_qty')->nullable(false)->default(0)->index();
