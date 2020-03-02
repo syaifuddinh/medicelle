@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="purchaseRequestCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="receiptCreate" ng-cloak>
     <!-- top tiles -->
 
 
@@ -16,9 +16,9 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-6">
-                        <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
-                              <i class="fa fa-barcode"></i> <% formData.code %>
-                        </a>
+                        <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.id'>
+                              <i class="fa fa-barcode"></i> <% purchase_order_code %>
+                          </a>
                     </div>
                 </div>
 
@@ -36,16 +36,21 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Periode<span class="required">*</span>
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Supplier<span class="required">*</span>
                                     </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <div class="input-daterange input-group" style="width:100%;">
-                                            <input type="text" class="input-sm form-control" ng-model="formData.date_start" ng-change='adjustStock()' datepick/>
-                                            <span class="input-group-addon">s/d</span>
-                                            <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='adjustStock()' datepick />
-                                          </div>
+                                    <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
+                                        <% formData.supplier.name %>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Alamat<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
+                                        <% formData.supplier.address %>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Keterangan<span class="required">*</span>
                                     </label>
@@ -61,16 +66,11 @@
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-sm btn-primary" ng-click='insertItem()'>
-                                <i class="fa fa-plus"></i>
-                            </button>
-                            <table class="table table-bordered" id='purchase_request_detail_datatable'>
+                            <table class="table table-bordered" id='receipt_detail_datatable'>
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td>Supplier</td>
                                         <td style='width:12mm'>Jumlah Permintaan</td>
-                                        <td style='width:10mm'>Jumlah Terpakai</td>
                                         <td style='width:40mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
                                         <td></td>
@@ -102,54 +102,6 @@
 
 </div>
 
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
-    <div class="modal-dialog" style='width:80%'>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="">Daftar Barang</h4>
-            </div>
-            <div class="modal-body">
-
-                <table class="table table-bordered" id='item_datatable' style='width:100%'>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Kode</th>
-                            <th>Nama</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
-    <div class="modal-dialog" style='width:80%'>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="">Daftar Supplier</h4>
-            </div>
-            <div class="modal-body">
-
-                <table class="table table-bordered" id='supplier_datatable' style='width:100%'>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Kode</th>
-                            <th>Nama</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
 </div>
 <!-- /page content -->
 
@@ -158,5 +110,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/pharmacy/purchase_request/purchaseRequestCreateCtrl.js"></script>
+<script src="{{ asset('') }}js/pharmacy/receipt/receiptCreateCtrl.js"></script>
 

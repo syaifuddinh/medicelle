@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStocksTable extends Migration
+class CreatePeriodicalStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('periodical_stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('year')->nullable(false)->index();
+            $table->integer('month')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
-            $table->integer('qty')->nullable(false)->default(0)->index();
+            $table->integer('gross')->nullable(false)->default(0)->index();
+            $table->integer('netto')->nullable(false)->default(0)->index();
             $table->timestamps();
-
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('restrict');
-            $table->foreign('lokasi_id')->references('id')->on('permissions')->onDelete('restrict');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('periodical_stocks');
     }
 }

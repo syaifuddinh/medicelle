@@ -37,6 +37,19 @@
                           <textarea ng-model='formData.description' required="required" class="form-control col-md-7 col-xs-12"></textarea>
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gudang Farmasi ?
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                              <label for="" class="radio-inline">
+                                <input type="radio" ng-model='formData.is_gudang_farmasi' ng-value='1'> Ya
+                              </label>
+                              <label for="" class="radio-inline">
+                                <input type="radio" ng-model='formData.is_gudang_farmasi' ng-value='0'> Tidak
+                              </label>
+                        </div>
+                      </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

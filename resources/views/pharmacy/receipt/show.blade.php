@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="purchaseRequestShow">
+<div class="right_col" role="main" ng-controller="receiptShow">
     <!-- top tiles -->
 
 
@@ -17,17 +17,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-                            @if(Auth::user()->allow_access('purchase_request.edit'))
-                                <a ng-if='formData.is_approve == 0' href='{{ route("pharmacy.purchase_request.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
-                            @endif
-                            <button type="button" ng-if='formData.is_approve == 0' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Hapus</button>
-                            <button type="button" ng-if='formData.is_approve == 0' class="btn btn-default btn-sm" ng-click='approve({{ $id }})'>Setujui</button>
+                            
                         </div>
-                        <a href='#' class="btn btn-outline-success btn-sm pull-right" ng-show='formData.is_approve == 0'>
-                              <i class="fa fa-paperclip"></i> Draft
-                          </a>
-                        <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.is_approve == 1'>
-                              <i class="fa fa-check"></i> Disetujui
+                        <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.id'>
+                              <i class="fa fa-barcode"></i> <% formData.purchase_request.code %>
                           </a>
                         <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
                               <i class="fa fa-barcode"></i> <% formData.code %>
@@ -57,6 +50,23 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Supplier
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.supplier.name %>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <% formData.supplier.address %>
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Keterangan
@@ -74,11 +84,10 @@
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered" id='purchase_request_detail_datatable'>
+                            <table class="table table-bordered" id='receipt_detail_datatable'>
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td>Supplier</td>
                                         <td style='width:12mm'>Jumlah Permintaan</td>
                                         <td style='width:10mm'>Jumlah Terpakai</td>
                                         <td style='width:40mm'>Harga Beli</td>
@@ -116,5 +125,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/pharmacy/purchase_request/purchaseRequestShowCtrl.js"></script>
+<script src="{{ asset('') }}js/pharmacy/receipt/receiptShowCtrl.js"></script>
 

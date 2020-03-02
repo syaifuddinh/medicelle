@@ -15,7 +15,7 @@ class StockTransactionController extends Controller
             return Response::json(['message' => 'Barang tidak boleh kosong'], 500);
         }
 
-        $latest_id = StockTransaction::whereBetween('date', [$request->date_start, $date_end])
+        $latest_id = StockTransaction::whereBetween('date', [$request->date_start, $request->date_end])
         ->max('id');
 
         $stock_transaction = StockTransaction::find($latest_id);

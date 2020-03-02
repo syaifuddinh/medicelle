@@ -21,6 +21,9 @@
                           <a href="{{ route('lokasi.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                           @endif
                       </div>                    
+                      <a href='#' class="btn btn-outline-dark btn-sm pull-right" title='Gudang Farmasi' style="margin-right:1mm">
+                              <i class="fa fa-building"></i> <% gudang_farmasi_name %>
+                        </a>
                   </div>
                 </div>
 

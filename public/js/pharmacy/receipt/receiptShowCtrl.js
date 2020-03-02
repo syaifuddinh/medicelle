@@ -1,11 +1,11 @@
-app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
-    $scope.title = 'Detail Permintaan Pembelian';
+app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+    $scope.title = 'Detail Penerimaan';
     $scope.data = {}
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
 
-    purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
+    receipt_detail_datatable = $('#receipt_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
@@ -15,15 +15,6 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].item_name %>"
-            }
-          },
-          {
-            data: null, 
-            orderable : false,
-            searchable : false,
-            render : function(resp) {
-                var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].supplier_name %>"
             }
           },
           {
@@ -77,10 +68,10 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
             toastr.success("Data Berhasil dihapus")
             setTimeout(function() {
-                location.href = baseUrl + '/pharmacy/purchase_request'
+                location.href = baseUrl + '/pharmacy/receipt'
             }, 800)
         }, function(error) {
           if (error.status==422) {
@@ -98,11 +89,11 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
 
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
-        purchase_request_detail_datatable.row.add({}).draw()
+        receipt_detail_datatable.row.add({}).draw()
     }
 
   $scope.show = function() {
-      $http.get(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
+      $http.get(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
         $scope.formData = data.data
         var detail = data.data.detail
           var unit
@@ -110,7 +101,6 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
-              detail[x].supplier_name = unit.supplier.name
               $scope.insertItem(unit)
               $scope.checkStock(x, unit.item_id)
           }

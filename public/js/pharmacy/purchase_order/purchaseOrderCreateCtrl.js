@@ -1,5 +1,5 @@
-app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
-    $scope.title = 'Form Permintaan Pembelian';
+app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+    $scope.title = 'Form Order Pembelian';
     $scope.data = {}
     $scope.formData = {}
     $scope.dot = '.............................................................................................................'
@@ -10,7 +10,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
 
     $scope.show = function() {
 
-      $http.get(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
+      $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + id).then(function(data) {
           var detail = data.data.detail
           var unit
 
@@ -41,7 +41,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
     }
    
 
-    purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
+    purchase_order_detail_datatable = $('#purchase_order_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
@@ -260,7 +260,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
       setTimeout(function () {    
             $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
       }, 300)
-      purchase_request_detail_datatable.clear().draw()
+      purchase_order_detail_datatable.clear().draw()
       window.scrollTo(0, 0)
     }
     $scope.reset()
@@ -270,22 +270,22 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
 
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
-        purchase_request_detail_datatable.row.add({}).draw()
+        purchase_order_detail_datatable.row.add({}).draw()
     }
 
     $scope.deleteDetail = function(index, obj) {
         $scope.formData.detail[index] = {}
         var row = $(obj).parents('tr')
-        purchase_request_detail_datatable.row(row).remove().draw()
+        purchase_order_detail_datatable.row(row).remove().draw()
     } 
 
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/pharmacy/purchase_request';
+      var url = baseUrl + '/controller/pharmacy/purchase_order';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/pharmacy/purchase_request/' + id;
+          var url = baseUrl + '/controller/pharmacy/purchase_order/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
@@ -294,13 +294,13 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
         if($scope.repeat == 1) {
             if(path.indexOf('edit' > -1)) {          
                 setTimeout(function () {
-                  window.location = baseUrl + '/pharmacy/purchase_request/create'          
+                  window.location = baseUrl + '/pharmacy/purchase_order/create'          
                 }, 1000)
             }
             $scope.reset()
         } else {
             setTimeout(function () {
-              window.location = baseUrl + '/pharmacy/purchase_request'          
+              window.location = baseUrl + '/pharmacy/purchase_order'          
             }, 1000)
         }
       }, function(error) {

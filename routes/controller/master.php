@@ -22,6 +22,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('piece', 'PieceController');
 
 
+        Route::get('lokasi/gudang_farmasi', 'LokasiController@gudang_farmasi');
         Route::put('lokasi/activate/{lokasi}', 'LokasiController@activate');
         Route::get('lokasi/actived', 'LokasiController@actived');
         Route::resource('lokasi', 'LokasiController');

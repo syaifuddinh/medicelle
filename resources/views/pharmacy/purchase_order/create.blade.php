@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="purchaseRequestCreate" ng-cloak>
+<div class="right_col" role="main" ng-controller="purchaseOrderCreate" ng-cloak>
     <!-- top tiles -->
 
 
@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
                               <i class="fa fa-barcode"></i> <% formData.code %>
-                        </a>
+                          </a>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                             <button type="button" class="btn btn-sm btn-primary" ng-click='insertItem()'>
                                 <i class="fa fa-plus"></i>
                             </button>
-                            <table class="table table-bordered" id='purchase_request_detail_datatable'>
+                            <table class="table table-bordered" id='purchase_order_detail_datatable'>
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
@@ -158,5 +158,5 @@
 <!-- ============================================================== -->
 
 @include('footer')
-<script src="{{ asset('') }}js/pharmacy/purchase_request/purchaseRequestCreateCtrl.js"></script>
+<script src="{{ asset('') }}js/pharmacy/purchase_order/purchaseOrderCreateCtrl.js"></script>
 

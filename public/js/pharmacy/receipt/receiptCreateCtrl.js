@@ -1,5 +1,5 @@
-app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
-    $scope.title = 'Form Permintaan Pembelian';
+app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+    $scope.title = 'Form Penerimaan';
     $scope.data = {}
     $scope.formData = {}
     $scope.dot = '.............................................................................................................'
@@ -7,41 +7,11 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
     $scope.priceSlider = 209
     path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
+    purchase_order_id = path.replace(/.+\/(\d+)\/create/, '$1');
 
-    $scope.show = function() {
 
-      $http.get(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
-          var detail = data.data.detail
-          var unit
 
-          for(x in detail) {
-              unit = detail[x]
-              detail[x].item_name = unit.item.name
-              detail[x].supplier_name = unit.supplier.name
-              $scope.insertItem(unit)
-          }
-
-          $scope.formData = data.data
-          console.log($scope.formData)
-          $scope.formData.detail = detail
-
-          setTimeout(function () {
-              
-                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
-                $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
-                $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
-            }, 300)
-
-          for(x in detail) {
-              $scope.checkStock(x, detail[x].item_id)
-          }
-      }, function(error) {
-            $scope.show()
-      });
-    }
-   
-
-    purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
+    receipt_detail_datatable = $('#receipt_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
@@ -50,16 +20,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<div style='height:9mm' ng-click='showItemModal(" + index + ")'><% formData.detail[" + index + "].item_name %></div>"
-            }
-          },
-          {
-            data: null, 
-            orderable : false,
-            searchable : false,
-            render : function(resp) {
-                var index = $scope.formData.detail.length - 1
-                return "<div style='height:9mm' ng-click='showSupplierModal(" + index + ")'><% formData.detail[" + index + "].supplier_name %></div>"
+                return "<div style='height:9mm'><% formData.detail[" + index + "].item_name %></div>"
             }
           },
           {
@@ -69,16 +30,6 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].qty' style='width:16mm' jnumber2 only-num>"
-            }
-          },
-          {
-            data: null, 
-            orderable : false,
-            searchable : false,
-            className : 'text-right',  
-            render : function(resp) {
-                var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].used_qty %>"
             }
           },
           {
@@ -112,67 +63,74 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
-          $(row).find('input').focus()
         }
     });
 
 
-  item_datatable = $('#item_datatable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url : baseUrl+'/datatable/master/item',
-      data : function(d) {
-        d.length = 6
-        d.is_active = 1
+    $scope.show = function() {
 
-        return d
-      }
-    },
-    columns:[
-    {
-      data:null, 
-      name:null,
-      searchable:false,
-      orderable:false,
-      className : 'text-center',
-      render : resp => "<button ng-disabled='disBtn' type='button' class='btn btn-xs btn-primary' ng-click='selectItem($event.currentTarget)'>Pilih</button>"
-    },
-    {data:"unique_code", orderable:false,searchable:false},
-    {data:"name", name:"name"},
-    ],
-    createdRow: function(row, data, dataIndex) {
-      $compile(angular.element(row).contents())($scope);
+      $http.get(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
+          var detail = data.data.detail
+          var unit
+
+          for(x in detail) {
+              unit = detail[x]
+              detail[x].item_name = unit.item.name
+              detail[x].supplier_name = unit.supplier.name
+              $scope.insertItem(unit)
+          }
+
+          $scope.formData = data.data
+          console.log($scope.formData)
+          $scope.formData.detail = detail
+
+          setTimeout(function () {
+              
+                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
+                $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
+                $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+            }, 300)
+
+          for(x in detail) {
+              $scope.checkStock(x, detail[x].item_id)
+          }
+      }, function(error) {
+            $scope.show()
+      });
     }
-  });
+   
 
-  supplier_datatable = $('#supplier_datatable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url : baseUrl+'/datatable/master/supplier',
-      data : function(d) {
-        d.length = 6
-        d.is_active = 1
+    $scope.showPurchaseOrder = function() {
 
-        return d
-      }
-    },
-    columns:[
-    {
-      data:null, 
-      searchable:false,
-      orderable:false,
-      className : 'text-center',
-      render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSupplier($event.currentTarget)'>Pilih</button>"
-    },
-    {data:"code", name:'code'},
-    {data:"name", name:"name"},
-    ],
-    createdRow: function(row, data, dataIndex) {
-      $compile(angular.element(row).contents())($scope);
+      $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + purchase_order_id).then(function(data) {
+          var detail = data.data.detail
+          var unit
+
+          for(x in detail) {
+              unit = detail[x]
+              detail[x].item_name = unit.item.name
+              $scope.insertItem(unit)
+          }
+
+          $scope.formData = data.data
+          $scope.purchase_order_code = data.data.code
+          $scope.formData.detail = detail
+
+          setTimeout(function () {
+              
+                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
+                $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
+                $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+            }, 300)
+
+          for(x in detail) {
+              $scope.checkStock(x, detail[x].item_id)
+          }
+      }, function(error) {
+            $scope.show()
+      });
     }
-  });
+    $scope.showPurchaseOrder()
 
     $scope.adjustStock = function() {
         if($scope.formData.detail.length > 0) {
@@ -260,7 +218,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
       setTimeout(function () {    
             $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
       }, 300)
-      purchase_request_detail_datatable.clear().draw()
+      receipt_detail_datatable.clear().draw()
       window.scrollTo(0, 0)
     }
     $scope.reset()
@@ -270,22 +228,22 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
 
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
-        purchase_request_detail_datatable.row.add({}).draw()
+        receipt_detail_datatable.row.add({}).draw()
     }
 
     $scope.deleteDetail = function(index, obj) {
         $scope.formData.detail[index] = {}
         var row = $(obj).parents('tr')
-        purchase_request_detail_datatable.row(row).remove().draw()
+        receipt_detail_datatable.row(row).remove().draw()
     } 
 
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/pharmacy/purchase_request';
+      var url = baseUrl + '/controller/pharmacy/receipt';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/pharmacy/purchase_request/' + id;
+          var url = baseUrl + '/controller/pharmacy/receipt/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
@@ -294,13 +252,13 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
         if($scope.repeat == 1) {
             if(path.indexOf('edit' > -1)) {          
                 setTimeout(function () {
-                  window.location = baseUrl + '/pharmacy/purchase_request/create'          
+                  window.location = baseUrl + '/pharmacy/receipt/create'          
                 }, 1000)
             }
             $scope.reset()
         } else {
             setTimeout(function () {
-              window.location = baseUrl + '/pharmacy/purchase_request'          
+              window.location = baseUrl + '/pharmacy/receipt'          
             }, 1000)
         }
       }, function(error) {

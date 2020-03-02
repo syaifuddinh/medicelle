@@ -85,6 +85,11 @@ class LokasiController extends Controller
         //
     }
 
+    public function gudang_farmasi()
+    {
+        return Response::json(Permission::gudang_farmasi());
+    }
+
     /**
      * Update the specified resource in storage.
      *

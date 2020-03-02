@@ -1,4 +1,4 @@
-app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
   $scope.formData = {}
   var path = window.location.pathname;
 
@@ -7,7 +7,7 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl + '/datatable/pharmacy/purchase_request',
+      url : baseUrl + '/datatable/pharmacy/receipt',
       data : d => Object.assign(d, $scope.formData)
     },
     buttons: [
@@ -27,6 +27,14 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
         data:'code', 
         name:'code' 
       },
+      {
+        data:'purchase_request.code', 
+        name:'purchase_request.code' 
+      },
+      {
+        data:'supplier.name', 
+        name:'supplier.name' 
+      },
 
       {
         data:null, 
@@ -41,27 +49,13 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
         render:resp => $filter('fullDate')(resp.date_start) + ' s/d ' + $filter('fullDate')(resp.date_end)
       },
       {
-        data:'description', 
-        name:'description' 
-      },
-      {
-        data: null, 
-        orderable : false,
-        searchable : false,
-        className : 'text-center',
-        render : resp => resp.is_approve == 0 ? '<label class="label label-warning">Draft</label>' : '<label class="label label-success">Disetujui</label>'
-      },
-      {
         data: null, 
         orderable : false,
         searchable : false,
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        ( resp.is_approve == 0 ? "<a allow_update_purchase_request class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/purchase_request/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
-        "<a allow_show_purchase_request class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/purchase_request/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
-         (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
-         (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 
+        "<a allow_show_receipt class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/receipt/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
          "</div>" 
       },
     ],
@@ -71,10 +65,59 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
+  purchase_order_datatable = $('#purchase_order_datatable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+      url : baseUrl + '/datatable/pharmacy/purchase_order',
+      data : d => Object.assign(d, $scope.formData)
+    },
+    
+    columns:[
+      {
+        data:null, 
+        name:null,
+        searchable:false,
+        orderable:false,
+        className : 'text-center',
+        render : resp => "<button ng-disabled='disBtn' type='button' class='btn btn-xs btn-primary' ng-click='selectPurchaseOrder($event.currentTarget)'>Pilih</button>"
+      },
+      {
+        data:'code', 
+        name:'code' 
+      },
+      {
+        data:'purchase_request.code', 
+        name:'purchase_request.code' 
+      },
+      {
+        data:null, 
+        orderable:false,
+        searchable:false,
+        render:resp => $filter('fullDate')(resp.date)
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+
+  $scope.showPurchaseOrder = function() {
+      $('#purchaseOrderModal').modal()
+      purchasse_order_datatable.ajax.reload()
+  }
+
+  $scope.selectPurchaseOrder = function(obj) {
+      var tr = $(obj).parents('tr')
+      var data = purchase_order_datatable.row(tr).data() 
+
+      location.href = baseUrl + '/pharmacy/receipt/purchase_order/' + data.id + '/create'
+  }
+
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data berhasil dihapus");
         }, function(error) {
@@ -94,7 +137,7 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
   $scope.approve = function(id) {
     is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
     if(is_approve)
-        $http.put(baseUrl + '/controller/pharmacy/purchase_request/' + id + '/approve').then(function(data) {
+        $http.put(baseUrl + '/controller/pharmacy/receipt/' + id + '/approve').then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data berhasil disetujui");
         }, function(error) {

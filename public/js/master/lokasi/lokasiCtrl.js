@@ -52,6 +52,15 @@ app.controller('lokasi', ['$scope', '$compile', '$http', function($scope, $compi
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
+  $scope.showGudangFarmasi = function() {
+      $http.get(baseUrl + '/controller/master/lokasi/gudang_farmasi').then(function(data) {
+            $scope.gudang_farmasi_name = data.data.name
+        }, function(error) {
+            $scope.showGudangFarmasi()
+      });
+  }
+  $scope.showGudangFarmasi()
+
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)

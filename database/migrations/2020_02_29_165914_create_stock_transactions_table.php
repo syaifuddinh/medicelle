@@ -26,9 +26,9 @@ class CreateStockTransactionsTable extends Migration
             $table->unsignedInteger('amount')->nullable(false)->default(0)->index();
             $table->text('description')->nullable(true)->index();
 
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('restrict');
             $table->foreign('supplier_id')->references('id')->on('contacts')->onDelete('restrict');
-            $table->foreign('lokasi_id')->references('id')->on('permisssions')->onDelete('restrict');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('restrict');
+            $table->foreign('lokasi_id')->references('id')->on('permissions')->onDelete('restrict');
         });
     }
 

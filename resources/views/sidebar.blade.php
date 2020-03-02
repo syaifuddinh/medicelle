@@ -177,6 +177,9 @@
                   <li><a><i class="fa fa-briefcase"></i>Farmasi<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
                                 <li><a href="{{ route('pharmacy.purchase_request.index') }}">Permintaan Pembelian</a></li>
+
+                                <li><a href="{{ route('pharmacy.purchase_order.index') }}">Order Pembelian</a></li>
+                                <li><a href="{{ route('pharmacy.receipt.index') }}">Penerimaan</a></li>
                           </ul>
                     </li>
                  
