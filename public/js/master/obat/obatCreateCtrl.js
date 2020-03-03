@@ -15,7 +15,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     var path = window.location.pathname;
 
     $scope.countPrice = function() {
-        $scope.formData.price = parseInt($scope.formData.purchase_price) * parseInt($scope.formData.additional.margin)
+        $scope.formData.price = parseInt($scope.formData.purchase_price) * ( 100 + parseInt($scope.formData.additional.margin)) / 100
     }
 
     $scope.show = function() {
@@ -30,6 +30,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
                 $scope.changeClassification()
                 $scope.changeSubclassification()
                 $scope.changeGeneric()
+                $scope.countPrice()
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {

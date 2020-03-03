@@ -17,7 +17,7 @@ class Item extends Model
         static::created(function(Item $item) {
 
             // Is Active a.k.a grup nota id
-            if($item->is_medical_item == 1  && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
+            if(($item->is_medical_item == 1 || $item->is_cure == 1)  && $item->is_category == 0 && $item->category_id!= null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
 
@@ -35,12 +35,14 @@ class Item extends Model
                 $item->is_pharmacy = 0;
             }
 
+            $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
+
         });
 
         static::updating(function(Item $item) {
             // Is Active a.k.a grup nota id
 
-            if($item->is_medical_item == 1 && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
+            if(($item->is_medical_item == 1 || $item->is_cure == 1) && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
                     $price = Price::find($price->id);
@@ -57,6 +59,7 @@ class Item extends Model
                 }
             }
 
+            $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
         });
 
     }

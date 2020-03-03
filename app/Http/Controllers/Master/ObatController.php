@@ -188,8 +188,10 @@ class ObatController extends Controller
     {
        $request->validate([
             'name' => 'required',
+            'grup_nota_id' => 'required'
         ], [
             'name.required' => 'Nama tidak boleh kosong',
+            'grup_nota_id.required' => 'Grup nota tidak boleh kosong'
         ]);
 
         DB::beginTransaction();
