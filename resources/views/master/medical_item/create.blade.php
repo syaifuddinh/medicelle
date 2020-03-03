@@ -108,25 +108,35 @@
             </div>
 
             <div class="col-md-6">
+
+                <div class="form-group" ng-show='formData.is_category != 1'> 
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
+                  </label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="pd-l2">
+                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price" ng-change='countPrice()' jnumber2 only-num>
+                    </div>
+                      
+                  </div>
+                </div>
                 
                 <div class="form-group" ng-show='formData.is_category != 1'> 
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga jual<span class="required">*</span>
                   </label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.price" jnumber2 only-num>
+                        <p><% formData.price | number %></p>
                     </div>
                       
                   </div>
                 </div>
-                
-                
+
                 <div class="form-group" ng-show='formData.is_category != 1'> 
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Margin
                   </label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price" jnumber2 only-num>
+                        <input type="text" class="form-control" ng-required='formData.is_category != 1' ng-model="formData.additional.margin" ng-change='countPrice()' jnumber2 only-num>
                     </div>
                       
                   </div>
@@ -137,7 +147,7 @@
                   </label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.supplier_price" jnumber2 only-num>
+                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.supplier_price" ng-change='countPrice ()' jnumber2 only-num>
                     </div>
                       
                   </div>

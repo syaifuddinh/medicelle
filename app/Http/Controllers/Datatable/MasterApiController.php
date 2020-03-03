@@ -260,7 +260,7 @@ class MasterApiController extends Controller
         $x = Item::cure()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')
         ->whereIsCategory(0)
-        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id');
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id', 'is_cure');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

@@ -84,6 +84,13 @@ class Item extends Model
             $code = str_pad($attr['code'], 3, '0', STR_PAD_LEFT);
 
 
+            if(array_key_exists('is_cure', $attr)) {
+                if($attr['is_cure'] == 1) {
+                    $prefix .=  400;
+                    $prefix = $prefix . '.';
+                }
+            }
+
             if(array_key_exists('category_id', $attr)) {
                 if($attr['category_id'] != null) {
                     $prefix .=  str_pad($this->group->code, 3, '0', STR_PAD_LEFT);

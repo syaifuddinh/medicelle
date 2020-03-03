@@ -133,9 +133,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
     $scope.category = function() {
         $http.get(baseUrl + '/controller/master/obat/category/actived').then(function(data) {
             $scope.data.category = data.data
-            if(/edit/.test(path)) {
-                $scope.show()
-            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -157,9 +154,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         $http.get(baseUrl + '/controller/master/obat/classification/actived').then(function(data) {
             $scope.data.classification = data.data
             $scope.changeClassification()
-            if(/edit/.test(path)) {
-                $scope.show()
-            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -181,9 +175,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         $http.get(baseUrl + '/controller/master/obat/subclassification/actived').then(function(data) {
             $scope.data.subclassification = data.data
             $scope.changeSubclassification()
-            if(/edit/.test(path)) {
-                $scope.show()
-            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -205,9 +196,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
         $http.get(baseUrl + '/controller/master/obat/generic/actived').then(function(data) {
             $scope.data.generic = data.data
             $scope.changeGeneric()
-            if(/edit/.test(path)) {
-                $scope.show()
-            }
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -260,7 +248,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
                 generic_code = $scope.data.generic.find(x => x.id == $scope.formData.generic_id).code
                 generic_code = generic_code.padStart(3, 0)
 
-                prefix = category_code + '.' + classification_code + '.' + subclassification_code + '.' + generic_code + '.'
+                prefix = '400.' + category_code + '.' + classification_code + '.' + subclassification_code + '.' + generic_code + '.'
             }
 
             var code = $scope.formData.code.padStart(3, 0)
@@ -310,6 +298,8 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
             $scope.showSubclassification()
         } else if($scope.componentState == 'generic') {
             $scope.showGeneric()
+        } else if($scope.componentState == 'category') {
+            $scope.category()
         }
 
         $scope.insertData = {}

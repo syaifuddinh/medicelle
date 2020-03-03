@@ -1,4 +1,4 @@
-app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', function($scope, $http, $rootScope, $filter) {
     $scope.title = 'Tambah Obat';
     $scope.formData = {
         is_category : 0,
@@ -6,6 +6,11 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
     }
     $scope.data = {}
     var path = window.location.pathname;
+
+
+    $scope.countPrice = function() {
+        $scope.formData.price = parseInt($scope.formData.purchase_price) * ( 100 + parseInt($scope.formData.additional.margin)) / 100
+    }
 
     $scope.show = function() {
         if(/edit/.test(path)) {
@@ -16,6 +21,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope', function($scope, 
                 $scope.formData.grup_nota_id = data.data.price.grup_nota_id
                 $scope.formData.price = data.data.rate
                 $scope.changeSampleCode()
+                $scope.countPrice()
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {
