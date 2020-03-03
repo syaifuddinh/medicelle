@@ -33,7 +33,7 @@ app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile
         render:resp => "<a href='" + baseUrl + "/obat/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
       {data:"group.name", name:"group.name"},
-      {data:"price.grup_nota.slug", name:"price.grup_nota.slug"},
+      {data:"price.grup_nota.name", name:"price.grup_nota.name"},
       {
         data: null, 
         orderable : false,
