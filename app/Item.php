@@ -87,27 +87,27 @@ class Item extends Model
             if(array_key_exists('is_cure', $attr)) {
                 if($attr['is_cure'] == 1) {
                     $prefix .=  400;
-                    $prefix = $prefix . '.';
+                    $prefix = $prefix . '.01.';
                 }
             }
 
             if(array_key_exists('category_id', $attr)) {
                 if($attr['category_id'] != null) {
-                    $prefix .=  str_pad($this->group->code, 3, '0', STR_PAD_LEFT);
+                    $prefix .=  str_pad($this->group->code, 2, '0', STR_PAD_LEFT);
                     $prefix = $prefix . '.';
                 }
             }
 
             if(array_key_exists('classification_id', $attr)) {
                 if($attr['classification_id'] != null) {
-                    $prefix .=  str_pad($this->classification->code, 3, '0', STR_PAD_LEFT);
+                    $prefix .=  str_pad($this->classification->code, 2, '0', STR_PAD_LEFT);
                     $prefix = $prefix . '.';
                 }
             }
 
             if(array_key_exists('subclassification_id', $attr)) {
                 if($attr['subclassification_id'] != null) {
-                    $prefix .=  str_pad($this->subclassification->code, 3, '0', STR_PAD_LEFT);
+                    $prefix .=  str_pad($this->subclassification->code, 2, '0', STR_PAD_LEFT);
                     $prefix = $prefix . '.';
                 }
             }
