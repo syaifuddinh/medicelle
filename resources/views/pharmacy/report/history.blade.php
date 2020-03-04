@@ -49,12 +49,11 @@
                           <th>Generik</th>
                           <th>Nama barang</th>
                           <th>Satuan</th>
+                          <th>Lokasi</th>
                           <th>Stok awal</th>
                           <th>Stok akhir</th>
                         </tr>
-                      </thead>
-                      <tbody>
-                        
+                      </thead>            
                       </tbody>
                     </table>
                 </div>

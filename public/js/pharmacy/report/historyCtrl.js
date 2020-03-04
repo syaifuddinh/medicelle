@@ -48,6 +48,10 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
         name:'item.piece.name' 
       },
       {
+        data:'lokasi.name', 
+        name:'lokasi.name' 
+      },
+      {
         data:'early_stock.gross', 
         className : 'text-right',
         orderable : false,

@@ -24,4 +24,9 @@ class Stock extends Model
 
         return $this->belongsTo('App\Item');
     }
+
+    public function lokasi() {
+
+        return $this->belongsTo('App\Permission', 'lokasi_id', 'id');
+    }
 }

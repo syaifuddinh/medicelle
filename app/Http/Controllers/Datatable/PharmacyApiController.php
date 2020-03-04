@@ -66,9 +66,8 @@ class PharmacyApiController extends Controller
     }
 
     public function history(Request $request) {
-        $x = Stock::with('item:id,name,category_id,classification_id,subclassification_id,generic_id,piece_id', 'item.piece:id,name', 'item.group:id,name', 'item.classification:id,name', 'item.subclassification:id,name', 'item.generic:id,name', 'early_stock:id,stock_id,gross,netto')
-        ->select('stocks.id', 'stocks.item_id', DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock"));
-
+        $x = Stock::with('item:id,name,category_id,classification_id,subclassification_id,generic_id,piece_id', 'item.piece:id,name', 'item.group:id,name', 'item.classification:id,name', 'item.subclassification:id,name', 'item.generic:id,name', 'early_stock:id,stock_id,gross,netto', 'lokasi:id,name')
+        ->select('stocks.id', 'stocks.item_id', 'stocks.lokasi_id', DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock"));
         if($request->draw == 1)
             $x->orderBy('stocks.id', 'DESC');
 
