@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use DB;
 
 class Receipt extends Model
 {
@@ -27,6 +28,12 @@ class Receipt extends Model
             $code = 'TF-' . date('ym') . '-' .  $id;
 
             $receipt->code = $code;
+
+            $po = DB::table('purchase_orders')
+            ->whereId($receipt->purchase_order_id)
+            ->update([
+                'is_used' => 1
+            ]);
         });
     }
 

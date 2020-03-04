@@ -17,6 +17,7 @@ class CreateStockTransactionsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->date('date')->nullable(false)->index();
+            $table->unsignedInteger('stock_id')->nullable(true)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('supplier_id')->nullable(true)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();

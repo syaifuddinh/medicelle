@@ -31,7 +31,6 @@
                           <th style='width:14%'>No. Order</th>
                           <th style='width:14%'>Supplier</th>
                           <th style='width:14%'>Tanggal</th>
-                          <th style='width:16%'>Periode</th>
                           <th></th>
                         </tr>
                       </thead>

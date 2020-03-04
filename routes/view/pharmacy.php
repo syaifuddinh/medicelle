@@ -47,4 +47,17 @@ Route::name('pharmacy.')->prefix('pharmacy')
         })->name('show');
     });
 
+    Route::name('report.')->prefix('report')
+    ->group(function(){
+
+        Route::get('/distribution', function (){
+            return view('pharmacy/report/distribution');
+        })->name('distribution');
+
+        Route::get('/history', function (){
+            return view('pharmacy/report/history');
+        })->name('history');
+
+    });
+
 });

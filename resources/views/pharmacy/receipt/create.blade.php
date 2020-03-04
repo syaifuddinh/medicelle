@@ -70,7 +70,9 @@
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td style='width:12mm'>Jumlah Permintaan</td>
+                                        <td style='width:12mm'>Qty Diterima</td>
+                                        <td style='width:12mm'>Qty Awal</td>
+                                        <td style='width:12mm'>Qty Sisa</td>
                                         <td style='width:40mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
                                         <td></td>

@@ -54,23 +54,28 @@ class PurchaseRequestController extends Controller
         ]);
 
         DB::beginTransaction();
-        $purchaseRequest = new PurchaseRequest();
-        $purchaseRequest->fill($request->all());
-        $purchaseRequest->save();
+        try {
+            $purchaseRequest = new PurchaseRequest();
+            $purchaseRequest->fill($request->all());
+            $purchaseRequest->save();
 
-        $entries = 0;
-        foreach($request->detail as $detail) {
-            if(null != ($detail['item_id'] ?? null)) {
-                if(null == ($detail['supplier_id'] ?? null)) {
-                    return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
+            $entries = 0;
+            foreach($request->detail as $detail) {
+                if(null != ($detail['item_id'] ?? null)) {
+                    if(null == ($detail['supplier_id'] ?? null)) {
+                        return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
+                    }
+                    ++$entries;
+                    $purchaseRequest->detail()->create($detail);
                 }
-                ++$entries;
-                $purchaseRequest->detail()->create($detail);
             }
+            if($entries == 0) {
+                return Response::json(['message' => 'Detail barang tidak boleh kosong'], 500);
+            }
+        } catch (Exception $e) {
+            dd($e);
         }
-        if($entries == 0) {
-            return Response::json(['message' => 'Detail barang tidak boleh kosong'], 500);
-        }
+        
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
@@ -120,18 +125,23 @@ class PurchaseRequestController extends Controller
             'date.required' => 'Tanggal sudah digunakan'
         ]);
         DB::beginTransaction();
-        $purchaseRequest = PurchaseRequest::findOrFail($id);
-        $purchaseRequest->fill($request->all());
-        $purchaseRequest->save();
-        $purchaseRequest->detail()->delete();
-        foreach($request->detail as $detail) {
-            if(null != ($detail['item_id'] ?? null)) {
-                if(null == ($detail['supplier_id'] ?? null)) {
-                    return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
+        try {
+            $purchaseRequest = PurchaseRequest::findOrFail($id);
+            $purchaseRequest->fill($request->all());
+            $purchaseRequest->save();
+            $purchaseRequest->detail()->delete();
+            foreach($request->detail as $detail) {
+                if(null != ($detail['item_id'] ?? null)) {
+                    if(null == ($detail['supplier_id'] ?? null)) {
+                        return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
+                    }
+                    $purchaseRequest->detail()->create($detail);
                 }
-                $purchaseRequest->detail()->create($detail);
             }
+        } catch (Exception $e) {
+            dd($e);
         }
+        
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);

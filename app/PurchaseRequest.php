@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\PurchaseOrder;
 use App\PurchaseRequestDetail;
+use Exception;
 
 class PurchaseRequest extends Model
 {
@@ -17,6 +18,8 @@ class PurchaseRequest extends Model
         parent::boot(); 
 
         static::creating(function(PurchaseRequest $purchaseRequest) {   
+
+
             $purchaseRequest->created_by = Auth::user()->id;
 
             $current_month = date('m');

@@ -34,7 +34,17 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].used_qty %>"
+                return "<% formData.detail[" + index + "].purchase_order_detail.qty | number %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].purchase_order_detail.leftover_qty | number %>"
             }
           },
           {
@@ -102,7 +112,6 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
               unit = detail[x]
               detail[x].item_name = unit.item.name
               $scope.insertItem(unit)
-              $scope.checkStock(x, unit.item_id)
           }
 
 
@@ -124,29 +133,6 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
   $scope.show()
 
 
-    $scope.checkStock = function(index, item_id) {
-      var param = {
-          'item_id' : item_id,
-          date_start : $scope.formData.date_start,
-          date_end : $scope.formData.date_end
-        }
-
-      $http.get(baseUrl + '/controller/pharmacy/stock_transaction/check?' + $.param(param)).then(function(data) {
-            $('#itemModal').modal('hide')
-            $rootScope.disBtn=false;
-            $scope.formData.detail[index].used_qty = data.data.qty
-      }, function(error) {
-            $rootScope.disBtn=false;
-            if (error.status==422) {
-              var det="";
-              angular.forEach(error.data.errors,function(val,i) {
-                det+="- "+val+"<br>";
-              });
-              toastr.warning(det,error.data.message);
-            } else {
-              toastr.error(error.data.message,"Error Has Found !");
-            }
-      });
-    }
+   
 
 }]);

@@ -28,8 +28,8 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
         name:'code' 
       },
       {
-        data:'purchase_request.code', 
-        name:'purchase_request.code' 
+        data:'purchase_order.code', 
+        name:'purchase_order.code' 
       },
       {
         data:'supplier.name', 
@@ -41,12 +41,6 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
         orderable:false,
         searchable:false,
         render:resp => $filter('fullDate')(resp.date)
-      },
-      {
-        data:null, 
-        orderable:false,
-        searchable:false,
-        render:resp => $filter('fullDate')(resp.date_start) + ' s/d ' + $filter('fullDate')(resp.date_end)
       },
       {
         data: null, 

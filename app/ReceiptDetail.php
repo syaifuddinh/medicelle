@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\StockTransaction;
+use App\PurchaseOrderDetail;
 use Carbon\Carbon;
 use DB;
+use Exception;
 
 class ReceiptDetail extends Model
 {
@@ -14,7 +16,7 @@ class ReceiptDetail extends Model
     public static function boot() {
         parent::boot(); 
 
-        static::created(function(ReceiptDetail $receiptDetail) {   
+        static::creating(function(ReceiptDetail $receiptDetail) {   
             // Update harga beli pada master item
             DB::table('items')
             ->whereId($receiptDetail->item_id)
@@ -22,10 +24,17 @@ class ReceiptDetail extends Model
                 'purchase_price' => $receiptDetail->purchase_price
             ]);
 
-            $purchase_order_detail = DB::table('purchase_order_details')
-            ->whereId($receiptDetail->purchase_order_detail_id);
-            $purchase_order_detail->increment('received_qty');
-            $purchase_order_detail->decrement('leftover_qty');
+            $purchase_order_detail = PurchaseOrderDetail::find($receiptDetail->purchase_order_detail_id);
+            if($receiptDetail->qty <= 0) {
+                throw new Exception('Minimal barang yang diterima adalah 1 item');
+            }
+
+            if($receiptDetail->qty > $purchase_order_detail->leftover_qty) {
+                throw new Exception('Jumlah barang yang diterima melebihi jumlah sisa di PO');
+            }
+
+            $purchase_order_detail->increment('received_qty', $receiptDetail->qty);
+            $purchase_order_detail->decrement('leftover_qty', $receiptDetail->qty);
 
             $receipt = DB::table('receipts')
             ->whereId($receiptDetail->receipt_id)
@@ -46,6 +55,8 @@ class ReceiptDetail extends Model
                 'lokasi_id' => $gudang_farmasi->id,
                 'receipt_detail_id' => $receiptDetail->id
             ]);
+
+            $receiptDetail->stock_transaction_id = $stockTransaction->id;
         });
     }
 

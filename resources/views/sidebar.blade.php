@@ -180,6 +180,7 @@
 
                                 <li><a href="{{ route('pharmacy.purchase_order.index') }}">Order Pembelian</a></li>
                                 <li><a href="{{ route('pharmacy.receipt.index') }}">Penerimaan</a></li>
+                                <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
                           </ul>
                     </li>
                  

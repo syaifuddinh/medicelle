@@ -38,6 +38,24 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return $scope.formData.detail[index].qty
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return $scope.formData.detail[index].leftover_qty
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<input type='text' style='width:40mm' class='form-control' ng-model='formData.detail[" + index + "].purchase_price' only-num jnumber2>"
             }
           },
@@ -92,27 +110,12 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
                 $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
             }, 300)
 
-          for(x in detail) {
-              $scope.checkStock(x, detail[x].item_id)
-          }
       }, function(error) {
             $scope.showPurchaseOrder()
       });
     }
     $scope.showPurchaseOrder()
 
-    $scope.adjustStock = function() {
-        if($scope.formData.detail.length > 0) {
-            var unit
-            var detail = $scope.formData.detail
-            for(x in detail) {
-                unit = detail[x]
-                if(unit.item_id) {
-                    $scope.checkStock(x, unit.item_id)
-                }
-            }
-        }
-    }
 
     $scope.showItemModal = function(index) {
         item_datatable.ajax.reload()
@@ -134,34 +137,9 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
         $scope.formData.detail[$scope.currentIndex].item_id= data.id
         
 
-        $scope.checkStock($scope.currentIndex, data.id)
       
     }
 
-    $scope.checkStock = function(index, item_id) {
-      var param = {
-          'item_id' : item_id,
-          date_start : $scope.formData.date_start,
-          date_end : $scope.formData.date_end
-        }
-
-      $http.get(baseUrl + '/controller/pharmacy/stock_transaction/check?' + $.param(param)).then(function(data) {
-            $('#itemModal').modal('hide')
-            $rootScope.disBtn=false;
-            $scope.formData.detail[index].used_qty = data.data.qty
-      }, function(error) {
-            $rootScope.disBtn=false;
-            if (error.status==422) {
-              var det="";
-              angular.forEach(error.data.errors,function(val,i) {
-                det+="- "+val+"<br>";
-              });
-              toastr.warning(det,error.data.message);
-            } else {
-              toastr.error(error.data.message,"Error Has Found !");
-            }
-      });
-    }
 
     $scope.selectSupplier = function(obj) {
         var tr = $(obj).parents('tr')
@@ -217,9 +195,16 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
               window.location = baseUrl + '/pharmacy/receipt'          
             }, 1000)
       }, function(error) {
-        console.log(error)
-        $rootScope.disBtn = false
-        toastr.error("Something wrong")
+        $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
       });
       
     }

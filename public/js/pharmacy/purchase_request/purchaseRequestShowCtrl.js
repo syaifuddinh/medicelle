@@ -74,6 +74,26 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
     });
 
 
+  $scope.approve = function(id) {
+    is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
+    if(is_approve)
+        $http.put(baseUrl + '/controller/pharmacy/purchase_request/' + id + '/approve').then(function(data) {
+            toastr.success("Data berhasil disetujui");
+            location.reload()
+        }, function(error) {
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+  }
+
+
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
     if(is_delete)

@@ -182,20 +182,28 @@ class Item extends Model
     }
 
     public function group() {
-        return $this->belongsTo('App\Item', 'category_id', 'id');
+        return $this->belongsTo('App\Item', 'category_id', 'id')->withDefault([
+            'name' => ''
+        ]);
     }
 
     public function classification() {
-        return $this->belongsTo('App\Item', 'classification_id', 'id');
+        return $this->belongsTo('App\Item', 'classification_id', 'id')->withDefault([
+            'name' => ''
+        ]);
     }
 
     public function subclassification() {
-        return $this->belongsTo('App\Item', 'subclassification_id', 'id');
+        return $this->belongsTo('App\Item', 'subclassification_id', 'id')->withDefault([
+            'name' => ''
+        ]);
     }
 
 
     public function generic() {
-        return $this->belongsTo('App\Item', 'generic_id', 'id');
+        return $this->belongsTo('App\Item', 'generic_id', 'id')->withDefault([
+            'name' => ''
+        ]);
     }
 
     public function grup_nota_obat() {

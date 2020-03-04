@@ -20,7 +20,7 @@
                             
                         </div>
                         <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.id'>
-                              <i class="fa fa-barcode"></i> <% formData.purchase_request.code %>
+                              <i class="fa fa-barcode"></i> <% formData.purchase_order.code %>
                           </a>
                         <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
                               <i class="fa fa-barcode"></i> <% formData.code %>
@@ -38,15 +38,6 @@
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                         <% formData.date | fullDate %>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Periode
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.date_start | fullDate %> s/d <% formData.date_end | fullDate %>
                                 </div>
                             </div>
 
@@ -88,8 +79,9 @@
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td style='width:12mm'>Jumlah Permintaan</td>
-                                        <td style='width:10mm'>Jumlah Terpakai</td>
+                                        <td style='width:12mm'>Qty Diterima</td>
+                                        <td style='width:10mm'>Qty PO</td>
+                                        <td style='width:10mm'>Qty Sisa PO</td>
                                         <td style='width:40mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
                                     </tr>
