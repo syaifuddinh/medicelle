@@ -15,6 +15,7 @@ class CurrentStockItemAndGudangFarmasi extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->integer('current_stock')->nullable(false)->default(0)->index();
+            $table->integer('has_stock')->nullable(false)->default(0)->index();
         });
         Schema::table('permissions', function (Blueprint $table) {
             $table->integer('is_gudang_farmasi')->nullable(false)->default(0);

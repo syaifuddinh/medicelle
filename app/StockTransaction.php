@@ -87,6 +87,17 @@ class StockTransaction extends Model
 
             $last_stock += $qty;
             $stockTransaction->amount = $last_stock;
+
+            $item = DB::table('items') 
+            ->whereId($stockTransaction->item_id);
+            $item->increment('current_stock', $qty);
+            $item->update([
+                'has_stock' => 1
+            ]);
         });
+    }
+
+    public function stock() {
+        return $this->belongsTo('App\Stock');
     }
 }

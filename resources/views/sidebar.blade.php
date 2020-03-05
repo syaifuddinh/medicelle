@@ -180,7 +180,9 @@
 
                                 <li><a href="{{ route('pharmacy.purchase_order.index') }}">Order Pembelian</a></li>
                                 <li><a href="{{ route('pharmacy.receipt.index') }}">Penerimaan</a></li>
+                                <li><a href="{{ route('pharmacy.movement.index') }}">Perpindahan</a></li>
                                 <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
+                                <li><a href="{{ route('pharmacy.report.distribution') }}">Laporan distribusi</a></li>
                           </ul>
                     </li>
                  

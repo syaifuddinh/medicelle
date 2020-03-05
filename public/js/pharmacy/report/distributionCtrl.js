@@ -1,4 +1,4 @@
-app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+app.controller('distribution', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
   $scope.formData = {}
   var path = window.location.pathname;
 
@@ -7,7 +7,7 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl + '/datatable/pharmacy/history',
+      url : baseUrl + '/datatable/pharmacy/distribution',
       data : d => Object.assign(d, $scope.formData)
     },
     buttons: [
@@ -24,38 +24,12 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
-        data:'item.group.name', 
-        name:'item.group.name' 
-      },
-      {
-        data:'item.classification.name', 
-        name:'item.classification.name' 
-      },
-      {
-        data:'item.subclassification.name', 
-        name:'item.subclassification.name' 
-      },
-      {
-        data:'item.generic.name', 
-        name:'item.generic.name' 
-      },
-      {
         data:'item.name', 
         name:'item.name' 
       },
       {
-        data:'item.piece.name', 
-        name:'item.piece.name' 
-      },
-      {
         data:'lokasi.name', 
         name:'lokasi.name' 
-      },
-      {
-        data:'early_stock', 
-        className : 'text-right',
-        orderable : false,
-        searchable: false
       },
       {
         data:'latest_stock', 
@@ -73,7 +47,7 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/pharmacy/history/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/pharmacy/distribution/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data berhasil dihapus");
         }, function(error) {
@@ -93,7 +67,7 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
   $scope.approve = function(id) {
     is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
     if(is_approve)
-        $http.put(baseUrl + '/controller/pharmacy/history/' + id + '/approve').then(function(data) {
+        $http.put(baseUrl + '/controller/pharmacy/distribution/' + id + '/approve').then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data berhasil disetujui");
         }, function(error) {

@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="distribution">
+        <div class="right_col" role="main" ng-controller="movement">
           <!-- top tiles -->
           
 
@@ -30,11 +30,14 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Laporan Distribusi Barang</h3>
+                    <h3>Perpindahan</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
+                          @if(Auth::user()->allow_access('movement.create'))
+                              <a href="{{ route('pharmacy.movement.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @endif
                       </div>                    
                   </div>
                 </div>
@@ -43,9 +46,9 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>Barang</th>
-                          <th>Lokasi</th>
-                          <th>Qty</th>
+                          <th >Tanggal</th>
+                          <th >Dibuat oleh</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -68,5 +71,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/pharmacy/report/distributionCtrl.js"></script>
+    <script src="{{ asset('') }}js/pharmacy/movement/movementCtrl.js"></script>
 
