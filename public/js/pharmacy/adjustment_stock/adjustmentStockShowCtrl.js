@@ -67,7 +67,7 @@ app.controller('adjustmentStockShow', ['$scope', '$http', '$rootScope', '$filter
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
-              detail[x].lokasi_awal_name = unit.lokasi.name
+              detail[x].lokasi_name = unit.lokasi.name
               detail[x].stock_at_now = unit.stock_transaction.stock.qty
               $scope.insertItem(unit)
           }
