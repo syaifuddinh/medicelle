@@ -15,10 +15,11 @@ class CreateAdjustmentStockDetailsTable extends Migration
     {
         Schema::create('adjustment_stock_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('movement_id')->nullable(false)->index();
+            $table->unsignedInteger('adjustment_stock_id')->nullable(false)->index();
             $table->unsignedInteger('stock_awal_id')->nullable(true)->index();
             $table->unsignedInteger('stock_transaction_id')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
+            $table->unsignedInteger('previous_qty')->nullable(false)->default(0)->index();
             $table->unsignedInteger('qty')->nullable(false)->default(0)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
             $table->timestamps();

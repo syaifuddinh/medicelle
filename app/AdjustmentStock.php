@@ -3,7 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
+ 
 class AdjustmentStock extends Model
 {
     
@@ -11,8 +12,8 @@ class AdjustmentStock extends Model
     public static function boot() {
         parent::boot(); 
 
-        static::creating(function(Movement $movement) {   
-            $movement->created_by = Auth::user()->id;
+        static::creating(function(AdjustmentStock $adjustmentStock) {   
+            $adjustmentStock->created_by = Auth::user()->id;
         });
     }
 

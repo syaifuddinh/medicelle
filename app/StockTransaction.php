@@ -34,13 +34,15 @@ class StockTransaction extends Model
             } else {
                 $stock = Stock::whereItemId($stockTransaction->item_id)
                 ->whereLokasiId($stockTransaction->lokasi_id);
-                $stock->increment('qty', $qty);
                 $stock = $stock->first();
+                $stock_id = $stock->id;
                 if($stock->qty + $qty < 0) {
                     throw new Exception("Stok tidak boleh minus");
                 }
+                $stock = Stock::whereItemId($stockTransaction->item_id)
+                ->whereLokasiId($stockTransaction->lokasi_id);
+                $stock->increment('qty', $qty);
 
-                $stock_id = $stock->id;
             }
 
             $stockTransaction->stock_id = $stock_id;

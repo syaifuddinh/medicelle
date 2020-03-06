@@ -29,11 +29,22 @@ Route::name('pharmacy.')->prefix('pharmacy')
         Route::get('/create', function (){
             return view('pharmacy/movement/create');
         })->name('create');
-        Route::get('/edit/{id}', function ($id){
-            return view('pharmacy/movement/create')->withId($id);
-        })->name('edit');
         Route::get('/{id}', function ($id){
             return view('pharmacy/movement/show')->withId($id);
+        })->name('show');
+    }); 
+
+    Route::name('adjustment_stock.')->prefix('adjustment_stock')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('pharmacy/adjustment_stock/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('pharmacy/adjustment_stock/create');
+        })->name('create');
+        Route::get('/{id}', function ($id){
+            return view('pharmacy/adjustment_stock/show')->withId($id);
         })->name('show');
     });
     

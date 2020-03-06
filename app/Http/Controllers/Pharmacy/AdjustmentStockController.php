@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Pharmacy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\PurchaseRequest;
+use App\AdjustmentStock;
 use DB;
 use PDF;
 use Response;
 
-class PurchaseRequestController extends Controller
+class AdjustmentStockController extends Controller
 {
 
     /**
@@ -43,37 +43,30 @@ class PurchaseRequestController extends Controller
     {
         $request->validate([
             'date' => 'required',
-            'date_start' => 'required',
-            'date_end' => 'required',
             'detail' => 'required',
         ], [
             'date.required' => 'Tanggal tidak boleh kosong',
-            'date_start.required' => 'Periode awal tidak boleh kosong',
-            'date_end.required' => 'Periode akhir tidak boleh kosong',
             'detail.required' => 'Detail barang tidak boleh kosong'
         ]);
 
         DB::beginTransaction();
         try {
-            $purchaseRequest = new PurchaseRequest();
-            $purchaseRequest->fill($request->all());
-            $purchaseRequest->save();
+            $adjustmentStock = new AdjustmentStock();
+            $adjustmentStock->fill($request->all());
+            $adjustmentStock->save();
 
             $entries = 0;
             foreach($request->detail as $detail) {
                 if(null != ($detail['item_id'] ?? null)) {
-                    if(null == ($detail['supplier_id'] ?? null)) {
-                        return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
-                    }
                     ++$entries;
-                    $purchaseRequest->detail()->create($detail);
+                    $adjustmentStock->detail()->create($detail);
                 }
             }
             if($entries == 0) {
                 return Response::json(['message' => 'Detail barang tidak boleh kosong'], 500);
             }
         } catch (Exception $e) {
-            return Response::json(['message', $e->getMessage()], 500);
+            dd($e);
         }
         
         DB::commit();
@@ -88,14 +81,14 @@ class PurchaseRequestController extends Controller
      */
     public function show($id)
     {
-        $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name')->findOrFail($id);
-        return Response::json($purchaseRequest, 200);
+        $adjustmentStock = AdjustmentStock::with('detail:id,adjustment_stock_id,item_id,qty,previous_qty,stock_transaction_id,lokasi_id', 'detail.item:id,name', 'detail.lokasi:id,name', 'detail.stock_transaction:id,stock_id', 'detail.stock_transaction.stock:id,qty')->findOrFail($id);
+        return Response::json($adjustmentStock, 200);
     }
 
     public function pdf($id)
     {
-        $purchaseRequest = PurchaseRequest::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
-        $pdf = PDF::loadview('pdf/cuti_hamil',['purchaseRequest'=>$purchaseRequest]);
+        $adjustmentStock = AdjustmentStock::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
+        $pdf = PDF::loadview('pdf/cuti_hamil',['AdjustmentStock'=>$adjustmentStock]);
         return $pdf->stream('cuti-hamil.pdf');
     }
 
@@ -126,16 +119,16 @@ class PurchaseRequestController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $purchaseRequest = PurchaseRequest::findOrFail($id);
-            $purchaseRequest->fill($request->all());
-            $purchaseRequest->save();
-            $purchaseRequest->detail()->delete();
+            $adjustmentStock = AdjustmentStock::findOrFail($id);
+            $adjustmentStock->fill($request->all());
+            $adjustmentStock->save();
+            $adjustmentStock->detail()->delete();
             foreach($request->detail as $detail) {
                 if(null != ($detail['item_id'] ?? null)) {
                     if(null == ($detail['supplier_id'] ?? null)) {
                         return Response::json(['message' => 'Supplier tidak boleh kosong'], 500);
                     }
-                    $purchaseRequest->detail()->create($detail);
+                    $adjustmentStock->detail()->create($detail);
                 }
             }
         } catch (Exception $e) {
@@ -157,8 +150,8 @@ class PurchaseRequestController extends Controller
     {
         //
         DB::beginTransaction();
-        $purchaseRequest = PurchaseRequest::findOrFail($id);
-        $purchaseRequest->delete();
+        $adjustmentStock = AdjustmentStock::findOrFail($id);
+        $adjustmentStock->delete();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
@@ -168,9 +161,9 @@ class PurchaseRequestController extends Controller
     {
         //
         DB::beginTransaction();
-        $purchaseRequest = PurchaseRequest::findOrFail($id);
-        $purchaseRequest->is_approve = 1;
-        $purchaseRequest->save();
+        $adjustmentStock = AdjustmentStock::findOrFail($id);
+        $adjustmentStock->is_approve = 1;
+        $adjustmentStock->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil disetujui'], 200);

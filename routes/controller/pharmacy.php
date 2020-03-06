@@ -19,6 +19,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         ->name('stock_transaction.check');
 
         Route::resource('movement', 'MovementController');
+        Route::resource('adjustment_stock', 'AdjustmentStockController');
     });
 });
 

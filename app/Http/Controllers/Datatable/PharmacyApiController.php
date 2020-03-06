@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\PurchaseRequest;
 use App\PurchaseOrder;
 use App\Movement;
+use App\AdjustmentStock;
 use App\Receipt;
 use App\Stock;
 use Carbon\Carbon;
@@ -21,6 +22,17 @@ class PharmacyApiController extends Controller
         $x = Movement::with('creator:id,name')
         ->whereBetween('date', [$request->date_start, $request->date_end])
         ->select('movements.id', 'movements.date', 'movements.created_by');
+
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function adjustment_stock(Request $request) {
+        $x = AdjustmentStock::with('creator:id,name')
+        ->whereBetween('date', [$request->date_start, $request->date_end])
+        ->select('adjustment_stocks.id', 'adjustment_stocks.date', 'adjustment_stocks.created_by');
 
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

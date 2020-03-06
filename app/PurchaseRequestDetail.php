@@ -18,6 +18,7 @@ class PurchaseRequestDetail extends Model
         static::creating(function(PurchaseRequestDetail $purchaseRequestDetail) {   
             $latestItem = PurchaseRequestDetail::whereItemId($purchaseRequestDetail->item_id)
             ->whereSupplierId($purchaseRequestDetail->supplier_id)
+            ->wherePurchaseRequestId($purchaseRequestDetail->purchase_request_id)
             ->count('id');
 
             if($latestItem > 0) {
@@ -28,6 +29,10 @@ class PurchaseRequestDetail extends Model
                 ->whereId($purchaseRequestDetail->supplier_id)
                 ->first();
                 throw new Exception( $item->name . " dengan supplier " . $supplier->name . " sudah diinputkan sekali" );
+            }
+
+            if($purchaseRequestDetail->qty < 1) {
+                throw new Exception( "Jumlah permintaan tidak boleh kosong" );                
             }
         });
 
