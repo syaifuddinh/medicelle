@@ -17,11 +17,12 @@ class StockTransactionController extends Controller
             return Response::json(['message' => 'Barang tidak boleh kosong'], 500);
         }
 
-        $latest_id = StockTransaction::whereBetween('date', [$request->date_start, $request->date_end])
-        ->max('id');
+        $stock_transaction = StockTransaction::whereBetween('date', [$request->date_start, $request->date_end])
+        ->whereItemId($request->item_id)
+        ->selectRaw('SUM(in_qty - out_qty) AS amount')
+        ->first();
 
-        $stock_transaction = StockTransaction::find($latest_id);
-        return Response::json(['qty' => $stock_transaction->qty ?? 0]);
+        return Response::json(['qty' => $stock_transaction->amount ?? 0]);
 
     }
 
