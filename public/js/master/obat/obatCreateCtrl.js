@@ -1,4 +1,4 @@
-app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope, $filter) {
     $scope.title = 'Tambah Obat';
     $scope.is_allow_classification = 1
     $scope.is_allow_subclassification = 1
@@ -26,6 +26,9 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', function($scope, 
                 $scope.formData = data.data
                 $scope.formData.grup_nota_id = data.data.price.grup_nota_id
                 $scope.formData.price = data.data.rate
+                setTimeout(function () {    
+                    $('[ng-model="formData.additional.expired_date"]').val( $filter('fullDate')($scope.formData.additional.expired_date))
+              }, 300)
                 $scope.changeSampleCode()
                 $scope.changeClassification()
                 $scope.changeSubclassification()
