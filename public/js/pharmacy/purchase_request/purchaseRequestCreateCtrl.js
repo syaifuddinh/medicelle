@@ -1,4 +1,4 @@
-app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', '$timeout', function($scope, $http, $rootScope, $filter, $compile, $timeout) {
     $scope.title = 'Form Permintaan Pembelian';
     $scope.data = {}
     $scope.formData = {}
@@ -277,6 +277,9 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
         purchase_request_detail_datatable.row.add({}).draw()
+        $timeout(function () {
+            $scope.showItemModal($scope.formData.detail.length - 1)
+        }, 400)
     }
 
     $scope.deleteDetail = function(index, obj) {

@@ -31,6 +31,29 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
        }
     })
 
+
+    $scope.checkStock = function(item_id) {
+      var param = {
+          'item_id' : item_id,
+        }
+
+      $http.get(baseUrl + '/controller/pharmacy/stock_transaction/item/check?' + $.param(param)).then(function(data) {
+            $rootScope.disBtn=false;
+            $scope.stock = data.data.qty
+      }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+      });
+    }
+
     $scope.medicalRecordHistory = function() {
 
         if(path.indexOf('resume') > -1) {
@@ -723,6 +746,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.changeDrugPiece = function() {
      $scope.piece_name = $scope.data.drug.find(x => x.id == $scope.drug.item_id).piece.name
+     $scope.checkStock($scope.drug.item_id)
   }
 
   $scope.changePainStatus = function() {
@@ -1905,6 +1929,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.bhp.name = bhp.name
         $scope.bhp.qty = tr.find('#qty').val()
         $scope.bhp.piece = bhp.piece
+        $scope.checkStock(bhp.id) 
         $('#BHPModal').modal('hide')
     }
 

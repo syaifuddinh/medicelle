@@ -13,10 +13,13 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::resource('receipt', 'ReceiptController');
 
-        Route::get('stock_transaction/check', 'StockTransactionController@check');
-        Route::get('stock_transaction/lokasi/check', 'StockTransactionController@check_by_lokasi')
+        Route::get('stock_transaction/check', 'StockTransactionController@check')
         ->middleware(['compareDate'])
         ->name('stock_transaction.check');
+
+        Route::get('stock_transaction/lokasi/check', 'StockTransactionController@check_by_lokasi');
+
+        Route::get('stock_transaction/item/check', 'StockTransactionController@check_by_item');
 
         Route::resource('movement', 'MovementController');
         Route::resource('adjustment_stock', 'AdjustmentStockController');

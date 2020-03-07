@@ -30,6 +30,7 @@
                                                     <i class="fa fa-search"></i>
                                                 </div>
                                             </div>
+                                            <p ng-show='bhp.item_id'>Memiliki stok sebanyak <% stock %></p>
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label>Qty</label>

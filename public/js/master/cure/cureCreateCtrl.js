@@ -1,5 +1,5 @@
 app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', function($scope, $http, $rootScope, $filter) {
-    $scope.title = 'Tambah Obat';
+    $scope.title = 'Tambah Item Medis';
     $scope.formData = {
         is_category : 0,
         additional : {}
@@ -14,7 +14,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
 
     $scope.show = function() {
         if(/edit/.test(path)) {
-            $scope.title = 'Edit Obat';
+            $scope.title = 'Edit Item Medis';
             id = path.replace(/.+\/(\d+)/, '$1');
             $http.get(baseUrl + '/controller/master/medical_item/' + id).then(function(data) {
                 $scope.formData = data.data

@@ -42,4 +42,18 @@ class StockTransactionController extends Controller
         return Response::json(['qty' => $stock->qty ?? 0]);
 
     }
+    // Mencari barang berdasarkan item id
+    public function check_by_item(Request $request) {
+        if(!$request->filled('item_id')) {
+            return Response::json(['message' => 'Barang tidak boleh kosong'], 500);
+        }        
+        
+
+        $stock = DB::table('stocks')
+        ->whereItemId($request->item_id)
+        ->sum('qty');
+
+        return Response::json(['qty' => $stock ?? 0]);
+
+    }
 }

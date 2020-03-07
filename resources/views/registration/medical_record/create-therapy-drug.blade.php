@@ -20,6 +20,7 @@
                                             <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.name group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
                                                 <option value=""></option>
                                             </select>
+                                            <p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Qty</label>
@@ -29,6 +30,7 @@
                                                     <% !drug.item_id ? 'Item' : piece_name %>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>

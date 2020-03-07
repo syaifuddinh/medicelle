@@ -9,6 +9,7 @@ use App\Permission;
 use App\MedicalRecord;
 use Str;
 use DB;
+use Exception;
 
 
 class MedicalRecordDetail extends Model
@@ -20,6 +21,7 @@ class MedicalRecordDetail extends Model
 
     public static function boot() {
         parent::boot();
+
 
         static::created(function(MedicalRecordDetail $medicalRecordDetail){
                 $cure = DB::table('medical_record_details')

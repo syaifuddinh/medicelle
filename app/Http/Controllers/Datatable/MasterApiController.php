@@ -269,12 +269,7 @@ class MasterApiController extends Controller
     }
 
     public function item(Request $request) {
-        $x = Item::whereIsCategory(0)        
-        ->whereIsClassification(0)
-        ->whereIsSubclassification(0)
-        ->whereIsGeneric(0)
-        ->whereIsCure(1)
-        ->orWhere('is_medical_item', 1)
+        $x = Item::whereRaw('(is_cure = 1 OR is_medical_item = 1) AND (is_category = 0 AND is_classification = 0 AND is_subclassification = 0 AND is_generic = 0)')
         ->select('items.id', 'items.code', 'items.name', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id');
 
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;

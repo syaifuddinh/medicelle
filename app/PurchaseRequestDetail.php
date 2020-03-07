@@ -34,6 +34,14 @@ class PurchaseRequestDetail extends Model
             if($purchaseRequestDetail->qty < 1) {
                 throw new Exception( "Jumlah permintaan tidak boleh kosong" );                
             }
+
+            $item = DB::table('items')
+            ->whereId($purchaseRequestDetail->item_id)
+            ->first();
+
+            if($item->minimal_stock > $item->current_stock + $purchaseRequestDetail->qty) {
+                throw new Exception( "Minimal stok dari " . $item->name . " adalah " . $item->minimal_stock);                                
+            } 
         });
 
     }

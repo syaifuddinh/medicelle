@@ -34,9 +34,10 @@ class Item extends Model
                 }
                 $item->is_pharmacy = 0;
             }
+        });
 
+        static::creating(function(Item $item) {
             $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
-
         });
 
         static::updating(function(Item $item) {
@@ -45,10 +46,12 @@ class Item extends Model
             if(($item->is_medical_item == 1 || $item->is_cure == 1) && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
                 $price = Price::whereItemId($item->id)->first();
                 if($price != null) {
-                    $price = Price::find($price->id);
-                    $price->grup_nota_id = $item->is_pharmacy;
-                    $price->save();
-                    $item->is_pharmacy = 1;
+                    if( 0 != ($item->is_pharmacy ?? 0) && 1 != ($item->is_pharmacy ?? 1)) {
+                        $price = Price::find($price->id);
+                        $price->grup_nota_id = $item->is_pharmacy;
+                        $price->save();
+                        $item->is_pharmacy = 1;
+                    } 
                 } else {
                     $price = new Price();
                     $price->item_id = $item->id;
@@ -166,7 +169,7 @@ class Item extends Model
     }
 
     public static function bhp() {
-        return self::whereIsBhp(1);
+        return self::whereIsBhp(1)->whereIsMedicalItem(1);
     }
 
     public static function disease_category() {
@@ -213,6 +216,10 @@ class Item extends Model
 
     public function piece() {
         return $this->belongsTo('App\Piece');
+    }
+
+    public function purchase_piece() {
+        return $this->belongsTo('App\Piece', 'purchase_piece_id', 'id');
     }
 
     public function administration_category() {

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\StockTransaction;
 use App\PurchaseOrderDetail;
+use App\Item;
 use Carbon\Carbon;
 use DB;
 use Exception;
@@ -18,11 +19,10 @@ class ReceiptDetail extends Model
 
         static::creating(function(ReceiptDetail $receiptDetail) {   
             // Update harga beli pada master item
-            DB::table('items')
-            ->whereId($receiptDetail->item_id)
-            ->update([
-                'purchase_price' => $receiptDetail->purchase_price
-            ]);
+            $item = Item::find($receiptDetail->item_id);
+            $item->purchase_price = $receiptDetail->purchase_price;
+            $item->save();
+            
 
             $purchase_order_detail = PurchaseOrderDetail::find($receiptDetail->purchase_order_detail_id);
             if($receiptDetail->qty <= 0) {

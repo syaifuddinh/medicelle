@@ -38,7 +38,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return $scope.formData.detail[index].qty
+                return $scope.formData.detail[index].qty_po
             }
           },
           {
@@ -94,6 +94,8 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
+              detail[x].qty_po = unit.qty
+              detail[x].qty = unit.leftover_qty
               detail[x].purchase_order_detail_id = unit.id
               $scope.insertItem(unit)
           }

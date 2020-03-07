@@ -22,7 +22,6 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
           }
 
           $scope.formData = data.data
-          console.log($scope.formData)
           $scope.formData.detail = detail
 
           setTimeout(function () {
