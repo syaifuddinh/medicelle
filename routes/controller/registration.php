@@ -32,11 +32,12 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/{id}/doctor', 'MedicalRecordController@doctor');
         Route::post('medical_record/{id}/store_signature/{flag}', 'MedicalRecordController@store_signature');
         Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
+        Route::get('medical_record/{id}/docx', 'MedicalRecordController@docx');
         Route::post('medical_record/submit_research/{id}/{flag?}', 'MedicalRecordController@submit_research');
         Route::post('medical_record/update_research/{medical_record_detail_id}/', 'MedicalRecordController@update_research');
         Route::post('medical_record/submit_schedule/{id}', 'MedicalRecordController@submit_schedule');
         Route::put('medical_record/{destination_id}/origin/{origin_id}', 'MedicalRecordController@clone');
-        Route::delete('medical_record/detail/{id}', 'MedicalRecordController@destroy_detail');
+        Route::delete('medical_record/{id}/detail/{detail_id}', 'MedicalRecordController@destroy_detail');
         Route::resource('medical_record', 'MedicalRecordController');
 
         Route::put('assesment/{destination_id}/origin/{origin_id}', 'AssesmentController@clone');

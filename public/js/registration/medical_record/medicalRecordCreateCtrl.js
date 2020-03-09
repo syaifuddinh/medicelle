@@ -63,23 +63,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             medical_record_history = $('#medical_record_history').DataTable({
               processing: true,
               serverSide: true,
-              dom: 'Blfrtip',
               ajax: {
                 url : medical_record_url  + $scope.formData.patient_id,
                 data : d => Object.assign(d, $scope.filterData)
               },
-              buttons: [
-                {
-                  'extend' : 'excel',
-                  'enabled' : true,
-                  'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
-                  'className' : 'btn btn-default btn-sm',
-                  'filename' : 'Rekam Medis - '+new Date(),
-                  'sheetName' : 'Data',
-                  'title' : 'Rekam Medis'
-                },
-              ],
-
               columns:[
 
                 {
@@ -116,7 +103,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   searchable : false,
                   width : '15mm',
                   className : 'text-center',
-                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume()' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume()' title='Download'><i class='fa fa-download'></i></a></div>"
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume()' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume()' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX()' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
                 },
               ],
               createdRow: function(row, data, dataIndex) {
@@ -317,9 +304,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         var source = baseUrl + '/controller/registration/medical_record/' + id + '/pdf/download'
         window.open(source)
     }
-    // $scope.printDocument('pdfDocument')
 
-  $scope.browse_medical_record = function() {
+    $scope.downloadResumeDOCX = function(date) {
+        var source = baseUrl + '/controller/registration/medical_record/' + id + '/docx'
+        window.open(source)
+    }
+
+    $scope.browse_medical_record = function() {
       medical_record_datatable = $('#medical_record_datatable').DataTable({
           processing: true,
           serverSide: true,
@@ -1284,7 +1275,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteTreatment($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1422,7 +1413,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<button  type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1464,7 +1455,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDrug($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<button  type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDrug($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1662,6 +1653,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.schedule = {}
       $scope.research = {}
       $scope.diagnostic = {
+          is_diagnostic : 1,
           date : $scope.resume_date,
           qty : 1
       }
@@ -1669,6 +1661,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
       }, 300)
       $scope.treatment = {
+          is_treatment : 1,
           date : $scope.resume_date,
           qty : 1
       }
@@ -1676,6 +1669,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
       }, 300)
       $scope.drug = {
+        is_drug : 1,
         date : $scope.resume_date,
         is_new_signa1 : 1,
         is_new_signa2 : 1
@@ -1787,8 +1781,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   $scope.deleteTreatment = function(e) {
     var tr = $(e).parents('tr');
-    treatment_datatable.row(tr).remove().draw()
-  }
+    var data = treatment_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)  }
     
   $scope.deleteRadiology = function(e) {
     var tr = $(e).parents('tr');
@@ -1852,13 +1846,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   $scope.deleteDiagnostic = function(e) {
     var tr = $(e).parents('tr');
-    diagnostic_datatable.row(tr).remove().draw()
+    var data = diagnostic_datatable.row(tr).data()
+    var data = diagnostic_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     
   $scope.deleteDrug = function(e) {
     var tr = $(e).parents('tr');
-    drug_datatable.row(tr).remove().draw()
+    var data = drug_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     
@@ -2181,9 +2178,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       
     }
 
-    $scope.destroyDetail=function(data, id) {
+    $scope.destroyDetail=function(detail_id) {
       $rootScope.disBtn= true
-      var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
+      var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail/' + detail_id;
       var method = 'delete';
 
 

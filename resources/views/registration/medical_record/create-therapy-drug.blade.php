@@ -66,7 +66,7 @@
                                                 </span>
                                                 <input type="text" class="form-control" ng-model='drug.signa2' ng-show='drug.is_new_signa2'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitDrug()' ng-disabled='!drug.item_id'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(drug)' ng-disabled='!drug.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
                                         </div>

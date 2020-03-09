@@ -154,7 +154,7 @@
                                                         <?php 
                                                             $checked = '';
                                                             foreach($selected as $unit) {
-                                                                if( (strtolower($unit->name) == strtolower($detail->name || $unit->id == $detail->id)) && 1 == ($unit->is_active ?? null)) {
+                                                                if( (strtolower($unit->name) == strtolower($detail->name) || $unit->id == $detail->id) && 1 == ($unit->is_active ?? null)) {
                                                                     $checked = 'checked';
                                                                 }
                                                             }

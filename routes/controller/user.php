@@ -32,6 +32,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('setting/store_company', 'SettingController@store_company');
         Route::put('setting/store_finance', 'SettingController@store_finance');
         Route::post('setting/store_logo', 'SettingController@store_logo');
+        Route::post('setting/store_logo/{flag}', 'SettingController@store_logo');
     });
 });
 

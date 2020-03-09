@@ -79,15 +79,25 @@ class SettingController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
-    public function store_logo(Request $request) {
+    public function store_logo(Request $request, $flag = null) {
         $filename = '';
-        if($request->hasFile('logo')) {
+        if($request->hasFile('logo') && $flag == null) {
             $filename = date('YmdHis') . Str::random(5) . '.png';
             Image::make( file_get_contents( $request->logo))->save(public_path('files/' . $filename));
+        } else if($request->hasFile('logo2') && $flag == 2) {
+            $filename = date('YmdHis') . Str::random(5) . '.png';
+            Image::make( file_get_contents( $request->logo2))->save(public_path('files/' . $filename));
         }
+
         $setting = Setting::whereName('company');
         $content = $setting->first()->content;
-        $content->logo = $filename;
+        if($flag == null) {
+            $content->logo = $filename;
+            $content->logo2 = preg_replace('/.+files\/(.*)/', '$1', $content->logo2);
+        } else if($flag == 2) {
+            $content->logo2 = $filename;
+            $content->logo = preg_replace('/.+files\/(.*)/', '$1', $content->logo);
+        }
         $setting->update([
             'content' => json_encode($content)
         ]);

@@ -20,6 +20,23 @@ Route::name('pharmacy.')->prefix('pharmacy')
         })->name('show');
     });
     
+    Route::name('formula.')->prefix('formula')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('pharmacy/formula/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('pharmacy/formula/create');
+        })->name('create');
+        Route::get('/edit/{id}', function ($id){
+            return view('pharmacy/formula/create')->withId($id);
+        })->name('edit');
+        Route::get('/{id}', function ($id){
+            return view('pharmacy/formula/show')->withId($id);
+        })->name('show');
+    });
+    
     Route::name('movement.')->prefix('movement')
     ->group(function(){
 

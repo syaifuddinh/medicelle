@@ -24,10 +24,20 @@
                       {{ csrf_field() }}
                       <div class="form-group avatar-container">
                         <img class="img-responsive" id='img-preview' style='height:50mm;margin:auto' src='<% formData.company.logo %>'>
-                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Logo
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Logo 1
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="file" id='logo' name='logo' class="form-control col-md-7 col-xs-12">
+                          
+                        </div>
+                      </div>
+
+                      <div class="form-group avatar-container">
+                        <img class="img-responsive" id='img-preview-2' style='height:50mm;margin:auto' src='<% formData.company.logo2 %>'>
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Logo 2
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="file" id='logo2' name='logo2' class="form-control col-md-7 col-xs-12">
                           
                         </div>
                       </div>

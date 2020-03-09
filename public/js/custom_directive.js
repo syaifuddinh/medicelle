@@ -82,13 +82,7 @@ app.directive('datepick', function() {
       var model = attr.ngModel
       var second = model.replace(/.+\.([a-z_]+)$/, '$1')
       var first = model.replace(/(.+)\.([a-z_]+)$/, '$1') || null
-      p.on('close', function(){
-          var dateElement = this.$node['0']
-          var nextInput = inputs.get(inputs.index(dateElement) + 1);
-           if (nextInput) {
-              nextInput.focus();
-           }
-      })
+     
       if(second == first) {
         var datepick = scope[second]
       } else {

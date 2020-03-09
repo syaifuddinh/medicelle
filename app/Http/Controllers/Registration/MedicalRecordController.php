@@ -14,6 +14,7 @@ use DB;
 use Str;
 use File;
 use PDF;
+use PhpOffice\PhpWord\PhpWord;
 use Image;
 
 class MedicalRecordController extends Controller
@@ -178,9 +179,9 @@ class MedicalRecordController extends Controller
 
             'ginekologi_history:medical_record_id,name', 
 
-            'treatment:medical_record_id,item_id,date,qty,reduksi', 
-            'diagnostic:medical_record_id,item_id,date,qty,reduksi', 
-            'drug:medical_record_id,item_id,date,qty,signa1,signa2', 
+            'treatment:id,medical_record_id,item_id,date,qty,reduksi', 
+            'diagnostic:id,medical_record_id,item_id,date,qty,reduksi', 
+            'drug:id,medical_record_id,item_id,date,qty,signa1,signa2', 
             'drug.item:id,name,piece_id',
             'drug.item.piece:id,name',
 
@@ -213,6 +214,21 @@ class MedicalRecordController extends Controller
         } else {
             return $pdf->download('resume-medis.pdf');            
         }
+    }
+
+    public function docx(Request $request, $id)
+    {
+        $headers = array(
+            "Content-type"=>"application/vnd.ms-word",
+            "Content-Disposition"=>"attachment;Filename=resume.docx"
+        );
+        $medicalRecord = $this->fetch($id);
+        $date = $request->filled('date') ? $request->date : date('Y-m-d');
+        // $docx= new PhpWord();
+        $content = view('pdf/medical_resume',['medicalRecord'=>$medicalRecord, 'date' => $date, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+
+        return Response::make($content,200, $headers);
+        
     }
 
     public function ruang_tindakan_pdf(Request $request, $id)
@@ -404,20 +420,6 @@ class MedicalRecordController extends Controller
                 $medical_record_detail->save();
             });
         }
-
-        $medical_record_detail = new MedicalRecordDetail();
-        if(isset($request->drug)) {
-            $medical_record_detail->drug()->whereMedicalRecordId($medical_record->id)->delete();
-            $drug = collect($request->drug);
-            $drug = $drug->each(function($val) use($medical_record){
-                $medical_record_detail = new MedicalRecordDetail();
-                $val['medical_record_id'] = $medical_record->id;
-                $medical_record_detail->fill($val);
-                $medical_record_detail->is_drug = 1;
-                $medical_record_detail->save();
-            });
-        }
-
 
         $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->imunisasi_history)) {
@@ -656,9 +658,17 @@ class MedicalRecordController extends Controller
         DB::beginTransaction();
         $medicalRecord = MedicalRecord::findOrFail($id);
         if($request->is_treatment == 1) {
-            $medicalRecord->treatment()->create($request->all());
+            $input = $request->all();
+            $input['is_treatment'] = 1;
+            $medicalRecord->treatment()->create($input);
         } else if($request->is_diagnostic == 1) {
-            $medicalRecord->diagnostic()->create($request->all());
+            $input = $request->all();
+            $input['is_diagnostic'] = 1;
+            $medicalRecord->diagnostic()->create($input);
+        } else if($request->is_drug == 1) {
+            $input = $request->all();
+            $input['is_drug'] = 1;
+            $medicalRecord->diagnostic()->create($input);
         } 
         DB::commit();
 
@@ -682,18 +692,14 @@ class MedicalRecordController extends Controller
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
 
-    public function destroy_detail($id)
+    public function destroy_detail($id, $detail_id)
     {
         DB::beginTransaction();
-        $medical_record_detail = MedicalRecordDetail::findOrFail($id);
-        $filepath = public_path('archive') . '/' . $medical_record_detail->description;
-        if (File::exists($filepath)) {
-            File::delete($filepath);
-        }
+        $medical_record_detail = MedicalRecordDetail::findOrFail($detail_id);
         $medical_record_detail->delete();
         DB::commit();
 
-        return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
+        return Response::json(['message' => 'Data berhasil dihapus'], 200);
     }
     
     public function clone($destination_id, $origin_id)

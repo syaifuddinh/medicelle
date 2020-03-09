@@ -31,7 +31,7 @@
                                             <div class="input-group">
                                                 <input type="text" class="form-control" ng-model='treatment.reduksi' maxlength='2' only-num>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitTreatment()' ng-disabled='!treatment.item_id'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(treatment)' ng-disabled='!treatment.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
 

@@ -5,21 +5,33 @@ app.controller('companySetting', ['$scope', '$http', '$rootScope', '$compile', f
     }
 
 
-    function readURL(input) {
+    function readURL(input, flag = 1) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         
         reader.onload = function(e) {
-          $('#img-preview').removeClass('hidden')
-          $('#img-preview').attr('src', e.target.result)
+          if(flag == 1) {
+              $('#img-preview').removeClass('hidden')
+              $('#img-preview').attr('src', e.target.result)
+          } else {
+            
+              $('#img-preview-2').removeClass('hidden')
+              $('#img-preview-2').attr('src', e.target.result)
+          }
 
         }
         
         reader.readAsDataURL(input.files[0]);
         fd = new FormData();
-        fd.append('logo', input.files[0])
+        var logo_url = baseUrl + '/controller/user/setting/store_logo'
+        if(flag == 1) {
+            fd.append('logo', input.files[0])
+        } else if(flag == 2) {
+            fd.append('logo2', input.files[0])
+            logo_url = baseUrl + '/controller/user/setting/store_logo/2'
+        }
         $.ajax({
-            'url' : baseUrl + '/controller/user/setting/store_logo',
+            'url' : logo_url,
             contentType : false,
             processData : false,
             'type' : 'post',
@@ -45,7 +57,10 @@ app.controller('companySetting', ['$scope', '$http', '$rootScope', '$compile', f
     }
 
     $('#logo').change(function(){
-        readURL(this)
+        readURL(this, 1)
+    })
+    $('#logo2').change(function(){
+        readURL(this, 2)
     })
 
     $scope.show = function() {
