@@ -70,11 +70,13 @@
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td style='width:12mm'>Qty Diterima</td>
+                                        <td style='width:19mm'>Qty Diterima</td>
                                         <td style='width:12mm'>Qty Awal</td>
                                         <td style='width:12mm'>Qty Sisa</td>
+                                        <td style='width:40mm'>Tanggal kadaluarsa</td>
                                         <td style='width:40mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
+                                        <td style='width:40mm'>HNA</td>
                                         <td></td>
                                     </tr>
                                 </thead>

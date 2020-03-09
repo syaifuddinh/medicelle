@@ -32,6 +32,12 @@ app.controller('distribution', ['$scope', '$rootScope', '$compile', '$http', '$f
         name:'lokasi.name' 
       },
       {
+        data:null, 
+        name:'expired_date',
+        searchable : false,
+        render : resp => $filter('fullDate')(resp.expired_date) 
+      },
+      {
         data:'latest_stock', 
         className : 'text-right',
         orderable : false,

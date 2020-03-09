@@ -100,6 +100,7 @@ class PharmacyApiController extends Controller
             'stocks.id', 
             'stocks.item_id', 
             'stocks.lokasi_id', 
+            'stocks.expired_date', 
             DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock"),
             DB::raw("COALESCE((SELECT gross FROM periodical_stocks WHERE stock_id = stocks.id AND year = $year AND month = $month ), 0) AS early_stock")
         );
@@ -115,6 +116,7 @@ class PharmacyApiController extends Controller
             'stocks.id', 
             'stocks.item_id', 
             'stocks.lokasi_id', 
+            'stocks.expired_date', 
             DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock")
         );
         if($request->draw == 1)

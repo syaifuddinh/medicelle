@@ -406,32 +406,6 @@ class MedicalRecordController extends Controller
         }
 
         $medical_record_detail = new MedicalRecordDetail();
-        if(isset($request->treatment)) {
-            $medical_record_detail->treatment()->whereMedicalRecordId($medical_record->id)->delete();
-            $treatment = collect($request->treatment);
-            $treatment = $treatment->each(function($val) use($medical_record){
-                $medical_record_detail = new MedicalRecordDetail();
-                $val['medical_record_id'] = $medical_record->id;
-                $medical_record_detail->fill($val);
-                $medical_record_detail->is_treatment = 1;
-                $medical_record_detail->save();
-            });
-        }
-
-        $medical_record_detail = new MedicalRecordDetail();
-        if(isset($request->diagnostic)) {
-            $medical_record_detail->diagnostic()->whereMedicalRecordId($medical_record->id)->delete();
-            $diagnostic = collect($request->diagnostic);
-            $diagnostic = $diagnostic->each(function($val) use($medical_record){
-                $medical_record_detail = new MedicalRecordDetail();
-                $val['medical_record_id'] = $medical_record->id;
-                $medical_record_detail->fill($val);
-                $medical_record_detail->is_diagnostic = 1;
-                $medical_record_detail->save();
-            });
-        }
-
-        $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->drug)) {
             $medical_record_detail->drug()->whereMedicalRecordId($medical_record->id)->delete();
             $drug = collect($request->drug);
@@ -675,6 +649,20 @@ class MedicalRecordController extends Controller
         $medicalRecordDetail->save();        
         DB::commit();
         return Response::json(['message' => 'Data jadwal berhasil dimasukkan'], 200);
+    }
+
+    public function store_detail(Request $request, $id) {
+
+        DB::beginTransaction();
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        if($request->is_treatment == 1) {
+            $medicalRecord->treatment()->create($request->all());
+        } else if($request->is_diagnostic == 1) {
+            $medicalRecord->diagnostic()->create($request->all());
+        } 
+        DB::commit();
+
+        return Response::json(['message' => 'Detail berhasil disimpan']);
     }
 
     /**

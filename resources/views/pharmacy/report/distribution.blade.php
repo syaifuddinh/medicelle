@@ -45,6 +45,7 @@
                         <tr>
                           <th>Barang</th>
                           <th>Lokasi</th>
+                          <th>Tanggal Kadaluarsa</th>
                           <th>Qty</th>
                         </tr>
                       </thead>

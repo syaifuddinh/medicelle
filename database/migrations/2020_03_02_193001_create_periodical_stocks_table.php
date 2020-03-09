@@ -20,6 +20,7 @@ class CreatePeriodicalStocksTable extends Migration
             $table->unsignedInteger('stock_id')->nullable(false)->index();
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
+            $table->date('expired_date')->nullable(true)->index();
             $table->integer('gross')->nullable(false)->default(0)->index();
             $table->integer('netto')->nullable(false)->default(0)->index();
             $table->timestamps();
@@ -38,5 +39,7 @@ class CreatePeriodicalStocksTable extends Migration
     public function down()
     {
         Schema::dropIfExists('periodical_stocks');
+        DB::table('items')
+        ->update(['current_stock' => 0]);
     }
 }

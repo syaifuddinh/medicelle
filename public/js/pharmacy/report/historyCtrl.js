@@ -52,6 +52,12 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
         name:'lokasi.name' 
       },
       {
+        data:null, 
+        name:'expired_date', 
+        searchable:false,
+        render:resp => $filter('fullDate')(resp.expired_date)
+      },
+      {
         data:'early_stock', 
         className : 'text-right',
         orderable : false,

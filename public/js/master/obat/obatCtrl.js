@@ -29,11 +29,11 @@ app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile
       },
       {
         data:null, 
-        name:"items.name",
+        name:"name",
         render:resp => "<a href='" + baseUrl + "/obat/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
       {data:"group.name", name:"group.name"},
-      {data:"price.grup_nota.name", name:"price.grup_nota.name"},
+      {data:"price.grup_nota.name", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,

@@ -12,7 +12,7 @@ use Exception;
 
 class ReceiptDetail extends Model
 {
-    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'purchase_order_detail_id'];
+    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'purchase_order_detail_id', 'expired_date', 'hna'];
 
     public static function boot() {
         parent::boot(); 
@@ -21,6 +21,9 @@ class ReceiptDetail extends Model
             // Update harga beli pada master item
             $item = Item::find($receiptDetail->item_id);
             $item->purchase_price = $receiptDetail->purchase_price;
+            $additional = $item->additional;
+            $additional->hna = $receiptDetail->hna;
+            $item->additional = $additional;
             $item->save();
             
 
@@ -53,7 +56,8 @@ class ReceiptDetail extends Model
                 'supplier_id' => $receipt->supplier_id,
                 'in_qty' => $receiptDetail->qty,
                 'lokasi_id' => $gudang_farmasi->id,
-                'receipt_detail_id' => $receiptDetail->id
+                'receipt_detail_id' => $receiptDetail->id,
+                'expired_date' => $receiptDetail->expired_date
             ]);
 
             $receiptDetail->stock_transaction_id = $stockTransaction->id;

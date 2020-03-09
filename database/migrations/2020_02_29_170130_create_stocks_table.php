@@ -17,6 +17,7 @@ class CreateStocksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
+            $table->date('expired_date')->nullable(true)->index();
             $table->integer('qty')->nullable(false)->default(0)->index();
             $table->timestamps();
 

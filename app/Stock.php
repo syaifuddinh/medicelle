@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Stock extends Model
 {
-    protected $fillable = ['item_id', 'lokasi_id', 'qty'];
+    protected $fillable = ['item_id', 'lokasi_id', 'qty', 'expired_date'];
     protected $hidden = ['created_at', 'updated_at'];
 
 

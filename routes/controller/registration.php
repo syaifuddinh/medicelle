@@ -21,6 +21,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_pria/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_pria_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_wanita/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_wanita_pdf');
 
+        Route::post('medical_record/{id}/detail', 'MedicalRecordController@store_detail');
         Route::get('medical_record/{id}/fnab/pdf', 'MedicalRecordController@fnab_pdf');
         Route::get('medical_record/{id}/histopatologi/pdf', 'MedicalRecordController@histopatologi_pdf');
         Route::get('medical_record/{id}/papsmear/pdf', 'MedicalRecordController@papsmear_pdf');

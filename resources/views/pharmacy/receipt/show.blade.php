@@ -82,8 +82,10 @@
                                         <td style='width:12mm'>Qty Diterima</td>
                                         <td style='width:10mm'>Qty PO</td>
                                         <td style='width:10mm'>Qty Sisa PO</td>
-                                        <td style='width:40mm'>Harga Beli</td>
+                                        <td style='width:40mm'>Tanggal Kadaluarsa</td>
+                                        <td style='width:30mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
+                                        <td style='width:30mm'>HNA</td>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

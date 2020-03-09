@@ -90,6 +90,7 @@ class RegistrationApiController extends Controller
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.is_referenced', 
             'pivot_medical_records.medical_record_id'
         );
 
@@ -132,6 +133,7 @@ class RegistrationApiController extends Controller
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
+            'pivot_medical_records.is_referenced',
              'pivot_medical_records.medical_record_id'
          );
 

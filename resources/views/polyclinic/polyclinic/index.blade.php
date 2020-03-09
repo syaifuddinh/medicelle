@@ -52,6 +52,7 @@
                           <th>Jenis kelamin</th>
                           <th>Poliklinik</th>
                           <th>Dokter</th>
+                          <th>Jenis</th>
                           <th></th>
                         </tr>
                       </thead>

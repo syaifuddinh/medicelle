@@ -40,7 +40,7 @@ class CurrentStockItemAndGudangFarmasi extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->dropColumn(['current_stock']);
+            $table->dropColumn(['current_stock', 'has_stock']);
         });
         Schema::table('permissions', function (Blueprint $table) {
             $table->dropColumn(['is_gudang_farmasi']);

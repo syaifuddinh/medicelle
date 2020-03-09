@@ -29,9 +29,9 @@
 
                                             <label>Reduksi(%)</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" ng-model='diagnostic.reduksi' ng-value='formData.reduksi' maxlength='3' only-num>
+                                                <input type="text" class="form-control" ng-model='diagnostic.reduksi' maxlength='3' only-num>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitDiagnostic()' ng-disabled='!diagnostic.item_id'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(diagnostic)' ng-disabled='!diagnostic.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
 

@@ -667,7 +667,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitTreatment = function() {
       treatment_datatable.row.add($scope.treatment).draw()
       $scope.treatment = {
-          date : $scope.resume_date
+          date : $scope.resume_date,
+          qty : 1
       }
       setTimeout(function () {    
             $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
@@ -677,7 +678,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.submitDiagnostic = function() {
       diagnostic_datatable.row.add($scope.diagnostic).draw()
       $scope.diagnostic = {
-          date : $scope.resume_date
+          date : $scope.resume_date,
+          qty : 1
       }
       setTimeout(function () {    
             $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
@@ -1660,13 +1662,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.schedule = {}
       $scope.research = {}
       $scope.diagnostic = {
-          date : $scope.resume_date
+          date : $scope.resume_date,
+          qty : 1
       }
       setTimeout(function () {    
             $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
       }, 300)
       $scope.treatment = {
-          date : $scope.resume_date
+          date : $scope.resume_date,
+          qty : 1
       }
       setTimeout(function () {    
             $('[ng-model="treatment.date"]').val( $filter('fullDate')($scope.treatment.date))
@@ -2135,6 +2139,60 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         }
         toastr.success("Data Berhasil Disimpan !");
         action()
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
+    }
+
+    $scope.storeDetail=function(data) {
+      $rootScope.disBtn= true
+      var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
+      var method = 'post';
+
+
+      $http[method](url, data).then(function(data) {
+        $rootScope.disBtn = false
+        toastr.success("Data Berhasil Disimpan !");
+        setTimeout(function() {
+            location.reload()
+        }, 800)
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
+    }
+
+    $scope.destroyDetail=function(data, id) {
+      $rootScope.disBtn= true
+      var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
+      var method = 'delete';
+
+
+      $http[method](url).then(function(data) {
+        $rootScope.disBtn = false
+        toastr.success("Data Berhasil Disimpan !");
+        setTimeout(function() {
+            location.reload()
+        }, 800)
       }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {

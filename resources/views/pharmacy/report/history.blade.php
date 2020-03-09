@@ -50,6 +50,7 @@
                           <th>Nama barang</th>
                           <th>Satuan</th>
                           <th>Lokasi</th>
+                          <th>Tanggal Kadaluarsa</th>
                           <th>Stok awal</th>
                           <th>Stok akhir</th>
                         </tr>

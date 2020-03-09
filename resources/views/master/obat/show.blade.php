@@ -150,6 +150,20 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12">HNA
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <% (formData.additional.hna || 0) | number %>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12">HNA + PPN
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <% ((formData.additional.hna || 0) * 110 / 100) | number %>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-3 col-sm-3 col-xs-12">Tanggal kadaluarsa
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">

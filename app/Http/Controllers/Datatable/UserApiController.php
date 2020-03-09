@@ -9,6 +9,7 @@ use App\User;
 use App\Item;
 use App\Price;
 use App\LaboratoryType;
+use Illuminate\Database\Eloquent\Builder;
 use DataTables;
 
 class UserApiController extends Controller
@@ -65,8 +66,14 @@ class UserApiController extends Controller
         ->where('destination', '!=', 'OBAT')
         ->where('destination', '!=', 'BHP')
         ->orWhere('destination', '=', null)
-        ->select('prices.id', 'destination', 'polyclinic_id', 'is_registration', 'is_sewa_ruangan', 'is_sewa_alkes', 'item_id', 'grup_nota_id', 'prices.is_active');
+        ->select('prices.id', 'destination', 'prices.polyclinic_id', 'prices.is_registration', 'prices.is_sewa_ruangan', 'prices.is_sewa_alkes', 'prices.item_id', 'prices.grup_nota_id', 'prices.is_active');
         $x = $request->filled('is_active') ? $x->where('prices.is_active', $request->is_active) : $x;
+
+        if($request->filled('search')) {
+            $x = $x->whereHas('service', function(Builder $query) use($request){
+                $query->whereRaw("name LIKE '%" . $request->search['value'] . "%'");
+            });
+        }
 
         if($request->draw == 1)
             $x->orderBy('prices.id', 'DESC');

@@ -24,8 +24,7 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
       {data:"service.name", name:"service.name"},
       {
         data:null, 
-        name:null,
-        orderable : false,
+        name:'service.price',
         searchable : false,
         className: 'text-right',
         render : resp => $filter('number')(resp.service.price)

@@ -51,6 +51,15 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             data: null, 
             orderable : false,
             searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].expired_date | fullDate %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
@@ -65,6 +74,16 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].discount %>%"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].hna | number %>"
             }
           }
         ],

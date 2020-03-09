@@ -29,6 +29,8 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       patient_url = patient_head + 'medical_checkup_registered'
       flag = 'medical_checkup'
   } 
+  $scope.flag = flag
+
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
@@ -82,6 +84,13 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         className : path.indexOf('polyclinic') > -1 ? '' : 'hidden'
       },
       {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
+      {
+        data:null, 
+      orderable:false,
+        searchable:false,
+        className : $scope.flag == 'laboratory'  || $scope.flag == 'radiology' ? '' : 'hidden',
+        render : resp => resp.is_referenced == 1 ? 'Permintaan' : 'Pemeriksaan'
+      },
       {
         data: null,
         width:'10%', 

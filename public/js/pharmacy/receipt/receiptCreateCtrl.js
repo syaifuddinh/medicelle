@@ -29,7 +29,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].qty' style='width:16mm' jnumber2 only-num>"
+                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].qty' style='width:20mm' jnumber2 only-num>"
             }
           },
           {
@@ -56,6 +56,15 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<input type='text' style='width:40mm' class='form-control' ng-model='formData.detail[" + index + "].expired_date' datepick>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<input type='text' style='width:40mm' class='form-control' ng-model='formData.detail[" + index + "].purchase_price' only-num jnumber2>"
             }
           },
@@ -66,6 +75,15 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].discount' maxlength='2' style='width:12mm' only-num>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].hna' style='width:40mm' only-num jnumber2>"
             }
           },
           {
