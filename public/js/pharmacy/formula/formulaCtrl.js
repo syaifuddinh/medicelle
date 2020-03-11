@@ -57,6 +57,7 @@ app.controller('formula', ['$scope', '$rootScope', '$compile', '$http', '$filter
         "<div class='btn-group'>" + 
         ( resp.is_approve == 0 ? "<a allow_update_formula class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/formula/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
         "<a allow_show_formula class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/formula/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
+         (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 
          (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
          "</div>" 
       },

@@ -7,6 +7,8 @@ use App\Invoice;
 use App\RegistrationDetail;
 use App\StockTransaction;
 use DB;
+use Carbon\Carbon;
+use Exception;
 
 class Formula extends Model
 {
@@ -23,7 +25,7 @@ class Formula extends Model
                     $invoice = new Invoice();
                     $invoice->is_nota_pemeriksaan = 1;
                     $invoice->payment_method = 'TUNAI';
-                    $registration_detail = RegistrationDetail::with('registration:id,patient_id','registration.patient:id,name,patient_type')->find($formula->registration_detail);
+                    $registration_detail = RegistrationDetail::with('registration:id,patient_id','registration.patient:id,name,patient_type')->find($formula->registration_detail_id);
                     $registration = $registration_detail->registration;
                     if($registration->patient_type == 'ASURANSI SWASTA') {
                         $invoice->payment_type = 'ASURANSI SWASTA';                        
@@ -46,13 +48,14 @@ class Formula extends Model
                         ]);
 
                         $stock = DB::table('stocks')
-                        ->whereStockId($detail->stock_id)
+                        ->whereId($detail->stock_id)
                         ->first();
-
+                        // throw new Exception($detail->qty);
                         $stockTransaction = StockTransaction::create([
                             'date' => Carbon::now()->format('Y-m-d'),
                             'description' => 'Penggunaan Resep Obat',
                             'item_id' => $detail->item_id,
+                            'in_qty' => 0,
                             'out_qty' => $detail->qty,
                             'lokasi_id' => $detail->lokasi_id,
                             'expired_date' => $stock->expired_date
