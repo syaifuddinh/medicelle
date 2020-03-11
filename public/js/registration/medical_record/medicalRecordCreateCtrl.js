@@ -700,7 +700,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.submitDiagnoseHistory = function() {
       $scope.diagnose_history.is_other = !$scope.diagnose_history.is_other ? 0 : 1 
-      if($scope.diagnose_history.disease_id && $scope.diagnose_history.type) {
+      if($scope.diagnose_history.disease_id && $scope.diagnose_history.item_id) {
 
           diagnose_history_datatable.row.add($scope.diagnose_history).draw()
           $scope.diagnose_history = {is_other : 1}
@@ -1441,14 +1441,14 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         render : function(resp) {
             var is_id = /^(\d+)$/
-            return is_id.test(resp.signa1) ? $scope.data.signa1.find(x => x.id == resp.signa1).name : resp.signa1
+            return is_id.test(resp.signa1) ? ($scope.data.signa1.find(x => x.id == resp.signa1) ? $scope.data.signa1.find(x => x.id == resp.signa1).name : '') : resp.signa1
         } 
       },
       { 
         data : null,
         render : function(resp) {
             var is_id = /^(\d+)$/
-            return is_id.test(resp.signa2) ? $scope.data.signa2.find(x => x.id == resp.signa2).name : resp.signa2
+            return is_id.test(resp.signa2) ? ($scope.data.signa2.find(x => x.id == resp.signa2) ? $scope.data.signa2.find(x => x.id == resp.signa2).name : '') : resp.signa2
         }
       },
 
@@ -1492,16 +1492,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     'columns' : [
     { 
         data : null,
-        render : resp => resp.is_other != 1 ? $scope.data.disease.find(x => x.id == resp.disease_id).code : ''
-    },
-    { 
-        data : null,
         render : resp => resp.is_other != 1 ? $scope.data.disease.find(x => x.id == resp.disease_id).name : resp.disease_id
     },
     { 
         data : null,
-        className : 'capitalize',
-        render : resp => resp.type.toLowerCase()
+        render : resp => "<b>" + $scope.data.disease.find(x => x.id == resp.item_id).unique_code + " / </b>" + $scope.data.disease.find(x => x.id == resp.item_id).name
     },
     {data : 'description'},
     {
@@ -2186,7 +2181,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
       $http[method](url).then(function(data) {
         $rootScope.disBtn = false
-        toastr.success("Data Berhasil Disimpan !");
+        toastr.success("Data Berhasil Dihapuss !");
         setTimeout(function() {
             location.reload()
         }, 800)

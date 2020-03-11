@@ -23,6 +23,19 @@ class MedicalRecordDetail extends Model
         parent::boot();
 
 
+        static::creating(function(MedicalRecordDetail $medicalRecordDetail){
+            if($medicalRecordDetail->is_drug == 1) {
+                $stock = DB::table('stocks')
+                ->whereItemId($medicalRecordDetail->item_id)
+                ->whereRaw('NOW() < expired_date')
+                ->sum('qty');
+
+                if($medicalRecordDetail->qty > $stock) {
+                    throw new Exception('Stok tidak mencukupi !');
+                }
+            }
+        });
+        
         static::created(function(MedicalRecordDetail $medicalRecordDetail){
                 $cure = DB::table('medical_record_details')
                 ->join('items', 'medical_record_details.item_id', 'items.id')

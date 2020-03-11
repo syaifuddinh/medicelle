@@ -16,19 +16,24 @@
                         <h3><% title %></h3>
                     </div>
                     <div class="col-md-6">
-                        <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>
-                              <i class="fa fa-barcode"></i> <% formData.code %>
+                        
+                        <a href='#' class="btn btn-outline-primary btn-sm pull-right">
+                              <i class="fa fa-tag"></i> <% registration.code %>
                         </a>
+                        <a href='#' class="btn btn-outline-success btn-sm pull-right">
+                              <i class="fa fa-medkit"></i> <% formData.medical_record.code %>
+                        </a>
+                        
                     </div>
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Tanggal<span class="required">*</span>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Tanggal<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <input type="text" class='form-control' ng-model='formData.date' datepick>
@@ -36,21 +41,62 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Periode<span class="required">*</span>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Pasien
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <div class="input-daterange input-group" style="width:100%;">
-                                            <input type="text" class="input-sm form-control" ng-model="formData.date_start" ng-change='adjustStock()' datepick/>
-                                            <span class="input-group-addon">s/d</span>
-                                            <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='adjustStock()' datepick />
-                                          </div>
+                                        <div class="input-group" ng-click='showMedicalRecordModal()'>
+                                            <input type="text" class="form-control" ng-model="registration.patient.name" readonly>
+                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Tanggal Registrasi
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
+                                            <% registration.date | fullDate %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Jenis Pasien
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% registration.patient_type.toLowerCase()  %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Jenis Kelamin
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% registration.patient.gender.toLowerCase() %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Alamat
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% registration.patient.address %>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Keterangan<span class="required">*</span>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Kota
                                     </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class='form-control' ng-model='formData.description'></textarea>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% registration.patient.city.name %>, <% registration.patient.city.province.name %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">No. Telepon
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% registration.patient.phone %>
                                     </div>
                                 </div>
                             </div>
@@ -68,11 +114,11 @@
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
-                                        <td>Supplier</td>
+                                        <td>Lokasi</td>
+                                        <td>Tanggal Kadaluarsa</td>
                                         <td style='width:12mm'>Jumlah Permintaan</td>
-                                        <td style='width:10mm'>Jumlah Terpakai</td>
-                                        <td style='width:40mm'>Harga Beli</td>
-                                        <td style='width:10mm'>Diskon</td>
+                                        <td style='width:10mm'>Stok</td>
+                                        <td style='width:40mm'>Harga Jual</td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -125,26 +171,54 @@
         </div>
     </div>
 </div>
+<!-- Modal rekam medis -->
+<div class="modal fade" id="medicalRecordModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Riwayat rekam medis</h4>
+                </div>
+                <div class="modal-body">
 
-<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
-    <div class="modal-dialog" style='width:80%'>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="">Daftar Supplier</h4>
-            </div>
-            <div class="modal-body">
-
-                    <table class="table table-bordered" id='supplier_datatable' style='width:100%'>
+                    <table class="table table-bordered" id='medical_record_datatable' style='width:100%'>
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Kode</th>
+                                <th>No. Rekam Medis</th>
+                                <th>No. Registrasi</th>
+                                <th>Tanggal</th>
                                 <th>Nama</th>
+                                <th>Dokter</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal lokasi -->
+<div class="modal fade" id="lokasiModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal-dialog" style='width:80%'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id=""><% lokasiModalTitle %></h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-bordered" id='lokasi_datatable' style='width:100%'>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nama</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-primary pull-left" ng-click='backwardModal()'>Sebelumnya</button>

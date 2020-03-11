@@ -24,25 +24,22 @@ app.controller('formula', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
-        data:'code', 
-        name:'code' 
-      },
-
-      {
         data:null, 
         orderable:false,
-        searchable:false,
+        name:'date',
         render:resp => $filter('fullDate')(resp.date)
       },
       {
-        data:null, 
-        orderable:false,
-        searchable:false,
-        render:resp => $filter('fullDate')(resp.date_start) + ' s/d ' + $filter('fullDate')(resp.date_end)
+        data:'medical_record.code', 
+        name:'medical_record.code' 
       },
       {
-        data:'description', 
-        name:'description' 
+        data:'registration_detail.registration.code', 
+        name:'registration_detail.registration.code' 
+      },
+      {
+        data:'registration_detail.registration.patient.name', 
+        name:'registration_detail.registration.patient.name' 
       },
       {
         data: null, 
@@ -61,7 +58,6 @@ app.controller('formula', ['$scope', '$rootScope', '$compile', '$http', '$filter
         ( resp.is_approve == 0 ? "<a allow_update_formula class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/formula/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
         "<a allow_show_formula class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/formula/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
          (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
-         (resp.is_approve == 0 ? "<button type='button' class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 
          "</div>" 
       },
     ],

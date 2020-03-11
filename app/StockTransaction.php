@@ -140,6 +140,8 @@ class StockTransaction extends Model
     }
 
     public function stock() {
-        return $this->belongsTo('App\Stock');
+        return $this->belongsTo('App\Stock')->withDefault([
+            'expired_date' => null
+        ]);
     }
 }

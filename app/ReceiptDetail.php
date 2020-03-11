@@ -22,8 +22,13 @@ class ReceiptDetail extends Model
             $item = Item::find($receiptDetail->item_id);
             $item->purchase_price = $receiptDetail->purchase_price;
             $additional = $item->additional;
-            $additional->hna = $receiptDetail->hna;
-            $item->additional = $additional;
+            if(json_encode($additional) == '[]') {
+
+                $item->additional = json_decode('{"hna":' . $receiptDetail->hna . '}');
+            } else {
+                $additional->hna = $receiptDetail->hna;
+                $item->additional = $additional;
+            }
             $item->save();
             
 
@@ -63,7 +68,6 @@ class ReceiptDetail extends Model
             $receiptDetail->stock_transaction_id = $stockTransaction->id;
         });
     }
-
 
     public function  setQtyAttribute($value) {
         if($value == null) {

@@ -18,7 +18,8 @@ class CreateFormulasTable extends Migration
             $table->date('date')->nullable(false)->index();
             $table->unsignedInteger('medical_record_id')->nullable(false)->index();
             $table->unsignedInteger('registration_detail_id')->nullable(false)->index();
-            $table->unsignedInteger('invoice_id')->nullable(null)->index();
+            $table->unsignedInteger('invoice_id')->nullable(true)->index();
+            $table->unsignedInteger('is_approve')->nullable(false)->default(0)->index();
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('set null');

@@ -3,12 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Formula;
 use App\Registration;
 use App\Contact;
 use App\Invoice;
 use App\InvoiceDetail;
 use App\PivotMedicalRecord;
+use Carbon\Carbon;
 use DB;
+use Exception;
 use Auth;
 
 class RegistrationDetail extends Model
@@ -27,7 +30,7 @@ class RegistrationDetail extends Model
                 if($latestInvoice == null) {
                     $registration = $registrationDetail->registration;
                     $invoice = new Invoice();
-                    $invoice->is_nota_pengobatan = 1;
+                    $invoice->is_nota_pemeriksaan = 1;
                     $invoice->payment_method = 'TUNAI';
                     if($registration->patient_type == 'ASURANSI SWASTA') {
                         $invoice->payment_type = 'ASURANSI SWASTA';                        
@@ -45,6 +48,7 @@ class RegistrationDetail extends Model
                 $bhp = $medicalRecord->bhp;
                 $sewa_ruangan = $medicalRecord->sewa_ruangan;
                 $sewa_alkes = $medicalRecord->sewa_alkes;
+                $drug = $medicalRecord->drug;
                 DB::beginTransaction();
                 foreach($treatments as $value) {
                     InvoiceDetail::create([
@@ -94,6 +98,37 @@ class RegistrationDetail extends Model
                         'is_item' => 1,
                         'debet' => $value->item->price,
                     ]);
+                }
+
+                // Generate resep obat 
+                if($medicalRecord->drug()->count('id') > 0) {
+                    $formula = Formula::create([
+                        'medical_record_id' => $medicalRecord->id,
+                        'registration_detail_id' => $registrationDetail->id,
+                        'date' => Carbon::now()->format('Y-m-d')
+
+                    ]);
+                    foreach($drug as $value) {
+                        $stock = DB::table('stocks')
+                        ->whereItemId($value->item_id)
+                        ->whereRaw('NOW() < expired_date')
+                        ->first();
+
+                        if($stock == null) {
+                            $item = DB::table('items')
+                            ->whereId($drug->item_id)
+                            ->select('name')
+                            ->first();
+                            throw new Exception('Stok ' . $item->name . '  tidak tersedia');
+                        } else {
+                            $formula->detail()->create([
+                                'item_id' => $value->item_id,
+                                'qty' => $value->qty,
+                                'lokasi_id' => $stock->lokasi_id,
+                                'stock_id' => $stock->id,
+                            ]);
+                        }
+                    }
                 }
                 DB::commit();
 

@@ -1,11 +1,11 @@
 app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
     $scope.title = 'Detail Resep Obat';
     $scope.data = {}
+    $scope.registration = {}
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
-
-    formula_detail_datatable = $('#formula_detail_datatable').DataTable({
+ formula_detail_datatable = $('#formula_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
@@ -23,17 +23,26 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].supplier_name %>"
+                return "<% formData.detail[" + index + "].lokasi_name %>"
             }
           },
           {
             data: null, 
             orderable : false,
             searchable : false,
-            className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].qty | number %>"
+                return "<% formData.detail[" + index + "].expired_date | fullDate %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className:'text-right',
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].qty %>"
             }
           },
           {
@@ -50,28 +59,38 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             data: null, 
             orderable : false,
             searchable : false,
-            className : 'text-right',  
+            className : 'text-right',
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].purchase_price | number %>"
+                return "<% formData.detail[" + index + "].price | number %>"
             }
           },
-          {
-            data: null, 
-            orderable : false,
-            searchable : false,
-            className : 'text-right',  
-            render : function(resp) {
-                var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].discount %>%"
-            }
-          }
+          
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
-          $(row).find('input').focus()
         }
     });
+
+
+    $scope.showRegistration = function() {
+        $rootScope.disBtn = true
+        $http.get(baseUrl + '/controller/registration/registration/' + $scope.formData.registration_detail.registration_id).then(function(data) {
+          $rootScope.disBtn = false
+          $scope.registration = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
 
 
   $scope.approve = function(id) {
@@ -130,12 +149,14 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
-              detail[x].supplier_name = unit.supplier.name
+              detail[x].price = unit.item.price
+              detail[x].lokasi_name = unit.lokasi.name
+              detail[x].used_qty = unit.stock.qty
+              detail[x].expired_date = unit.stock.expired_date
               $scope.insertItem(unit)
-              $scope.checkStock(x, unit.item_id)
           }
 
-
+          $scope.showRegistration()
     }, function(error) {
       $rootScope.disBtn=false;
       if (error.status==422) {

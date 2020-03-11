@@ -66,10 +66,10 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th style='width:14%'>Kode</th>
                           <th style='width:14%'>Tanggal</th>
-                          <th style='width:16%'>Periode</th>
-                          <th style='width:16%'>Keterangan</th>
+                          <th style='width:14%'>No. RM</th>
+                          <th style='width:14%'>No. Registrasi</th>
+                          <th style='width:16%'>Pasien</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

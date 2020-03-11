@@ -154,24 +154,22 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-2 mg-r2">
+
+                                        <div class="form-group col-md-3 mg-r2">
                                             
-                                            <label>Jenis</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih jenis'" chosen allow-single-deselect="false" ng-model="diagnose_history.type">
+                                            <label>ICD-10</label>
+                                            <select class="form-control" data-placeholder-text-single="'Pilih penyakit'" chosen allow-single-deselect="false" ng-model="diagnose_history.item_id" ng-options="c.id as ( c.code ? c.code + ' - ' : '') + c.name for c in data.disease">
                                                 <option value=""></option>
-                                                <option value="UTAMA">Utama</option>
-                                                <option value="SEKUNDER">Sekunder</option>
-                                                <option value="KOMPLIKASI">Komplikasi</option>
-                                                <option value="PATOLOGI">Patologi</option>
                                             </select>
                                         </div>
+                                        
                                         <div class="form-group col-md-6 mg-r2">
 
                                             <label>Keterangan</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" ng-model='diagnose_history.description'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitDiagnoseHistory()' ng-disabled='!diagnose_history.disease_id || !diagnose_history.type'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='submitDiagnoseHistory()' ng-disabled='!diagnose_history.disease_id || !diagnose_history.item_id'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
 
@@ -185,9 +183,8 @@
                                         <table class="table table-bordered" id='diagnose_history_datatable'>
                                             <thead>
                                                 <tr>
-                                                    <td>Kode</td>
                                                     <td>Diagnosa</td>
-                                                    <td>Jenis</td>
+                                                    <td>ICD-10</td>
                                                     <td>Keterangan</td>
                                                     <td></td>
                                                 </tr>

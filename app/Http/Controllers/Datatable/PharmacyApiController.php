@@ -10,6 +10,7 @@ use App\PurchaseOrder;
 use App\Movement;
 use App\AdjustmentStock;
 use App\Receipt;
+use App\Formula;
 use App\Stock;
 use Carbon\Carbon;
 use DB;
@@ -25,6 +26,20 @@ class PharmacyApiController extends Controller
 
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function formula(Request $request) {
+        $x = Formula::with('medical_record:id,code', 'registration_detail:id,registration_id', 'registration_detail.registration:id,patient_id,code', 'registration_detail.registration.patient:id,name')
+        ->whereBetween('date', [$request->date_start, $request->date_end])
+        ->select('formulas.id', 'formulas.date', 'formulas.medical_record_id', 'formulas.registration_detail_id', 'formulas.is_approve');
+
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        if($request->filled('is_approve'))
+            $x->where('formulas.is_approve', $request->is_approve);
 
         return Datatables::eloquent($x)->make(true);
     }

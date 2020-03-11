@@ -16,6 +16,7 @@ use File;
 use PDF;
 use PhpOffice\PhpWord\PhpWord;
 use Image;
+use Exception;
 
 class MedicalRecordController extends Controller
 {
@@ -166,7 +167,7 @@ class MedicalRecordController extends Controller
             'radiology:id,medical_record_id,date,result_date,name,description,is_radiology,saran,kesimpulan,kanan,kiri',
             'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,additional',
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
-            'diagnose_history:medical_record_id,disease_id,type,description',
+            'diagnose_history:medical_record_id,disease_id,item_id,type,description',
 
             'disease_history:medical_record_id,disease_name,cure,last_checkup_date',
             'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
@@ -656,20 +657,25 @@ class MedicalRecordController extends Controller
     public function store_detail(Request $request, $id) {
 
         DB::beginTransaction();
-        $medicalRecord = MedicalRecord::findOrFail($id);
-        if($request->is_treatment == 1) {
-            $input = $request->all();
-            $input['is_treatment'] = 1;
-            $medicalRecord->treatment()->create($input);
-        } else if($request->is_diagnostic == 1) {
-            $input = $request->all();
-            $input['is_diagnostic'] = 1;
-            $medicalRecord->diagnostic()->create($input);
-        } else if($request->is_drug == 1) {
-            $input = $request->all();
-            $input['is_drug'] = 1;
-            $medicalRecord->diagnostic()->create($input);
-        } 
+        try {
+            $medicalRecord = MedicalRecord::findOrFail($id);
+            if($request->is_treatment == 1) {
+                $input = $request->all();
+                $input['is_treatment'] = 1;
+                $medicalRecord->treatment()->create($input);
+            } else if($request->is_diagnostic == 1) {
+                $input = $request->all();
+                $input['is_diagnostic'] = 1;
+                $medicalRecord->diagnostic()->create($input);
+            } else if($request->is_drug == 1) {
+                $input = $request->all();
+                $input['is_drug'] = 1;
+                $medicalRecord->diagnostic()->create($input);
+            } 
+        } catch(Exception $e) {
+
+            return Response::json(['message' => $e->getMessage()], 422);
+        }
         DB::commit();
 
         return Response::json(['message' => 'Detail berhasil disimpan']);

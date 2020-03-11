@@ -36,10 +36,13 @@ class StockTransactionController extends Controller
         $stock = DB::table('stocks')
         ->whereItemId($request->item_id)
         ->whereLokasiId($request->lokasi_id)
-        ->select('qty')
+        ->select('qty', 'expired_date')
         ->first();
 
-        return Response::json(['qty' => $stock->qty ?? 0]);
+        return Response::json([
+            'qty' => $stock->qty ?? 0,
+            'expired_date' => $stock->expired_date ?? null
+        ]);
 
     }
     // Mencari barang berdasarkan item id
@@ -51,6 +54,7 @@ class StockTransactionController extends Controller
 
         $stock = DB::table('stocks')
         ->whereItemId($request->item_id)
+        ->whereRaw('NOW() < expired_date')
         ->sum('qty');
 
         return Response::json(['qty' => $stock ?? 0]);

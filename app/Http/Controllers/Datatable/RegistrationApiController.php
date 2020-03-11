@@ -280,11 +280,11 @@ class RegistrationApiController extends Controller
 
 
     public function medical_record(Request $request) {
-        $x = MedicalRecord::with('registration_detail:id,doctor_id', 
+        $x = MedicalRecord::with('registration_detail:id,registration_id,doctor_id', 
             'registration_detail.doctor:id,name,specialization_id',
             'registration_detail.doctor.specialization:id,name',
             'patient:id,name,age,birth_date,gender,city_id,phone,address',
-            'patient.city:id,name'
+            'patient.city:id,name', 'registration_detail.registration:id,code,date'
         )
         ->select('medical_records.code','medical_records.patient_id','medical_records.id', 'registration_detail_id');
         //->groupBy('medical_records.code');
