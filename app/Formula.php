@@ -9,6 +9,7 @@ use App\StockTransaction;
 use DB;
 use Carbon\Carbon;
 use Exception;
+use Auth;
 
 class Formula extends Model
 {
@@ -19,7 +20,12 @@ class Formula extends Model
     public static function boot() {
         parent::boot(); 
 
+        static::creating(function(Formula $formula) {
+            $formula->updated_by = Auth::user()->id;
+        });
+
         static::updating(function(Formula $formula) {
+            $formula->updated_by = Auth::user()->id;
             if($formula->is_approve == 1) {
                 if($formula->invoice_id == null) {
                     $invoice = new Invoice();
@@ -73,6 +79,10 @@ class Formula extends Model
         });
     }
 
+
+    public function contributor() {
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
 
     public function medical_record() {
         return $this->belongsTo('App\MedicalRecord');

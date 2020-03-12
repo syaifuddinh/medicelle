@@ -5,7 +5,7 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
- formula_detail_datatable = $('#formula_detail_datatable').DataTable({
+    formula_detail_datatable = $('#formula_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
@@ -59,6 +59,16 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             data: null, 
             orderable : false,
             searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].piece_name %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
             className : 'text-right',
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
@@ -72,6 +82,10 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
         }
     });
 
+    $scope.print = function() {
+        var url = baseUrl + '/controller/pharmacy/formula/' + $scope.formData.id + '/pdf'
+        window.open(url)
+    }
 
     $scope.showRegistration = function() {
         $rootScope.disBtn = true
@@ -148,6 +162,7 @@ $scope.approve = function(id) {
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
+              detail[x].piece_name = unit.item.piece.name
               detail[x].price = unit.item.price
               detail[x].lokasi_name = unit.lokasi.name
               detail[x].used_qty = unit.stock.qty

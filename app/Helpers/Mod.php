@@ -19,6 +19,12 @@ class Mod {
         return self::fullDate($now) . ' ' . Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i');
     }
 
+    public static function today() {
+        $now = Carbon::now()->format('Y-m-d');
+
+        return self::fullDate($now);
+    }
+
     public static function day($time) {
         $N = (int) self::calc('N', $time) - 1;
         $readableDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];

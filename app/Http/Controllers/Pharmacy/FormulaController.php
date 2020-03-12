@@ -83,15 +83,15 @@ class FormulaController extends Controller
      */
     public function show($id)
     {
-        $formula = Formula::with('detail', 'detail.item:id,name,price', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code')->findOrFail($id);
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code', 'contributor:id,name')->findOrFail($id);
         return Response::json($formula, 200);
     }
 
     public function pdf($id)
     {
-        $formula = Formula::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
-        $pdf = PDF::loadview('pdf/cuti_hamil',['formula'=>$formula]);
-        return $pdf->stream('cuti-hamil.pdf');
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code')->findOrFail($id);
+        $pdf = PDF::loadview('pdf/resep_obat',['formula'=>$formula]);
+        return $pdf->stream('resep-obat.pdf');
     }
 
     /**

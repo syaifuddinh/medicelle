@@ -20,10 +20,12 @@ class CreateFormulasTable extends Migration
             $table->unsignedInteger('registration_detail_id')->nullable(false)->index();
             $table->unsignedInteger('invoice_id')->nullable(true)->index();
             $table->unsignedInteger('is_approve')->nullable(false)->default(0)->index();
+            $table->unsignedInteger('updated_by')->nullable(true)->index();
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('set null');
             $table->foreign('medical_record_id')->references('id')->on('medical_records')->onDelete('restrict');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('registration_detail_id')->references('id')->on('registration_details')->onDelete('restrict');
         });
     }

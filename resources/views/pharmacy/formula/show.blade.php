@@ -123,6 +123,7 @@
                                         <td>Tanggal Kadaluarsa</td>
                                         <td style='width:12mm'>Jumlah Permintaan</td>
                                         <td style='width:10mm'>Stok</td>
+                                        <td style='width:17mm'>Satuan</td>
                                         <td style='width:40mm'>Harga Jual</td>
                                     </tr>
                                 </thead>
@@ -133,9 +134,10 @@
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                        <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-1">
+                        <div class="col-md-8 col-sm-8 col-xs-12">
                             <div class="btn-group">
 
+                                <button class="btn btn-primary btn-sm" ng-click="print()" type="button">Cetak</button> 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> 
                             </div>
                         </div>

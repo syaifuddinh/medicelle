@@ -73,6 +73,7 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
+              detail[x].piece_name = unit.item.piece.name
               detail[x].price = unit.item.price
               detail[x].lokasi_name = unit.lokasi.name
               detail[x].used_qty = unit.stock.qty
@@ -141,6 +142,16 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].used_qty %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].piece_name %>"
             }
           },
           {
@@ -262,6 +273,7 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
         var tr = $(obj).parents('tr')
         var data = item_datatable.row(tr).data()
         $scope.formData.detail[$scope.currentIndex].item_name= data.name
+        $scope.formData.detail[$scope.currentIndex].piece_name= data.piece.name
         $scope.formData.detail[$scope.currentIndex].item_id= data.id
         $scope.formData.detail[$scope.currentIndex].price= data.price
         $('#itemModal').modal('hide')

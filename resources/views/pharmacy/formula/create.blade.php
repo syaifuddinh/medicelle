@@ -118,6 +118,7 @@
                                         <td>Tanggal Kadaluarsa</td>
                                         <td style='width:12mm'>Jumlah Permintaan</td>
                                         <td style='width:10mm'>Stok</td>
+                                        <td style='width:17mm'>Satuan</td>
                                         <td style='width:40mm'>Harga Jual</td>
                                         <td></td>
                                     </tr>
