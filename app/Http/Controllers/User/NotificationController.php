@@ -74,9 +74,12 @@ class NotificationController extends Controller
      * @param  \App\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function show(Notification $notification, $id)
+    public function show($id)
     {
-        return Response::json($notification->find($id), 200);
+        $notification = Notification::findOrFail($id);
+        $notification->is_read = 1;
+        $notification->save();
+        return Response::json($notification, 200);
     }
 
     /**

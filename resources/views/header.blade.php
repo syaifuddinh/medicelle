@@ -99,7 +99,7 @@
                   <ul id="notif-container" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <div class="text-center">
-                        <a>
+                        <a href='{{ route("notification.index") }}'>
                           <strong>Lihat Semua Pemberitahuan</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>

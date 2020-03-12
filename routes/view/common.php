@@ -5,6 +5,14 @@ Route::get('/', function (){
 })->name('home');
 
 
+Route::name('notification.')->prefix('notification')
+->group(function(){
+
+    Route::get('/', function (){
+        return view('user/notification/index');
+    })->name('index');
+});
+
 Route::name('user.')->prefix('user')
 ->group(function(){
 

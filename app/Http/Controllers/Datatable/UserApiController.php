@@ -5,15 +5,25 @@ namespace App\Http\Controllers\Datatable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Permission;
+use App\Notification;
 use App\User;
 use App\Item;
 use App\Price;
 use App\LaboratoryType;
 use Illuminate\Database\Eloquent\Builder;
 use DataTables;
+use Auth;
 
 class UserApiController extends Controller
 {
+    public function notification(Request $request) {
+        $x = Notification::select('id', 'title', 'description', 'is_read')->whereUserId( Auth::user()->id );
+        $x = $request->filled('is_read') ? $x->whereIsRead($request->is_read) : $x;
+        $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function group_user(Request $request) {
         $x = Permission::select('id', 'name', 'is_active', 'description')->whereIsPermission(1);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;

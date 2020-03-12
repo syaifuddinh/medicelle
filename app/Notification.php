@@ -10,6 +10,14 @@ use Mod;
 class Notification extends Model
 {
     protected $fillable = ['user_id', 'title', 'description', 'stock_id', 'route', 'param'];
+    protected $hidden = ['created_at', 'updated_at'];
+    protected $appends = ['route_link'];
+
+    public function getRouteLinkAttribute() {
+        if(array_key_exists('route', $this->attributes)) {
+            return route($this->attributes['route']);
+        }
+    }
 
     public static function generateExpiredCure() {
         $user_id = Auth::user()->id;
