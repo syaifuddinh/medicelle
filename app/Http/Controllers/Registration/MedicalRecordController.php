@@ -152,7 +152,7 @@ class MedicalRecordController extends Controller
     public function fetch($id) {
         $resp = MedicalRecord::with(
             'patient:id,name,age,address,gender,phone,marriage_status', 
-            'bhp:medical_record_id,item_id,qty,date,lokasi_id',
+            'bhp:id,medical_record_id,item_id,qty,date,lokasi_id',
             'bhp.item:id,name,piece_id',
             'bhp.item.piece:id,name',
             'bhp.lokasi:id,name',
@@ -475,18 +475,6 @@ class MedicalRecordController extends Controller
             });
         }
 
-        if(isset($request->bhp)) {
-            $medical_record_detail->bhp()->whereMedicalRecordId($medical_record->id)->delete();
-            $bhp = collect($request->bhp);
-            $bhp = $bhp->each(function($val) use($medical_record){
-                $medical_record_detail = new MedicalRecordDetail();
-                $val['medical_record_id'] = $medical_record->id;
-                $medical_record_detail->fill($val);
-                $medical_record_detail->is_bhp = 1;
-                $medical_record_detail->save();
-            });
-        }
-
         if(isset($request->sewa_ruangan)) {
             $medical_record_detail->sewa_ruangan()->whereMedicalRecordId($medical_record->id)->delete();
             $sewa_ruangan = collect($request->sewa_ruangan);
@@ -671,6 +659,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_drug'] = 1;
                 $medicalRecord->diagnostic()->create($input);
+            } else if($request->is_bhp == 1) {
+                $input = $request->all();
+                $input['is_bhp'] = 1;
+                $medicalRecord->bhp()->create($input);
             } 
         } catch(Exception $e) {
 

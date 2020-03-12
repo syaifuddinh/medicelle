@@ -39,7 +39,7 @@
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
                                             <div class="input-group">
-                                                <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12" only-num>
+                                                <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12" ng-change='submitOne("menarche_age")' only-num>
                                                 <div class="input-group-addon">
                                                     Tahun
                                                 </div>
@@ -50,14 +50,14 @@
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Siklus haid
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <input type="text"  ng-model='formData.siklus_haid' class="form-control col-md-7 col-xs-12">
+                                            <input type="text"  ng-model='formData.siklus_haid' ng-change='submitOne("siklus_haid")' class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Jumlah pemakaian pembalut/hr
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <input type="text"  only-num ng-model='formData.jumlah_pemakaian_pembalut' class="form-control col-md-7 col-xs-12">
+                                            <input type="text"  only-num ng-model='formData.jumlah_pemakaian_pembalut' ng-change='submitOne("jumlah_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -65,7 +65,7 @@
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
                                             <div class="input-group">
-                                                <input type="text" ng-model='formData.lama_pemakaian_pembalut' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
+                                                <input type="text" ng-model='formData.lama_pemakaian_pembalut' ng-change='submitOne("lama_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
                                                 <div class="input-group-addon">
                                                     Hari
                                                 </div>
@@ -76,7 +76,7 @@
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Riwayat vaksinasi
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea ng-model='formData.additional.riwayat_vaksinasi' class="form-control"></textarea>
+                                                <textarea ng-model='formData.additional.riwayat_vaksinasi' ng-change='submitOne("additional.riwayat_vaksinasi")' class="form-control"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -87,11 +87,11 @@
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
                                             <label class="radio-inline">
-                                          <input type="radio" ng-model="formData.is_tidy" ng-value='1'>
+                                          <input type="radio" ng-model="formData.is_tidy" ng-value='1' ng-change='submitOne("is_tidy")'>
                                           <h5>Ya</h5>
                                         </label>
                                          <label class="radio-inline">
-                                              <input type="radio" ng-model="formData.is_tidy" ng-value='0'>
+                                              <input type="radio" ng-model="formData.is_tidy" ng-value='0' ng-change='submitOne("is_tidy")'>
                                               <h5>Tidak</h5>
                                          </label>
                                         </div>
@@ -100,14 +100,14 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">HPHT
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <input type="text"  ng-model='formData.hpht' class="form-control col-md-7 col-xs-12" datepick>
+                                            <input type="text"  ng-model='formData.hpht' class="form-control col-md-7 col-xs-12" ng-change='submitOne("hpht")' datepick>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Keluhan haid
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.haid_complaint' class="form-control"></textarea>   
+                                            <textarea ng-model='formData.haid_complaint' ng-change='submitOne("haid_complaint")' class="form-control"></textarea>   
                                         </div>
                                     </div>
                                     
@@ -115,7 +115,7 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Papsmear
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.additional.obgyn_papsmear' class="form-control"></textarea>   
+                                            <textarea ng-model='formData.additional.obgyn_papsmear' class="form-control" ng-change='submitOne("additional.obgyn_papsmear")'></textarea>   
                                         </div>
                                     </div>
                                     
@@ -133,13 +133,13 @@
                                         </label>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"KAWIN"'> Kawin
+                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"KAWIN"' ng-change='submitOne("marriage_status")'> Kawin
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"BELUM KAWIN"'> Belum Kawin
+                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"BELUM KAWIN"' ng-change='submitOne("marriage_status")'> Belum Kawin
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"JANDA"'> Janda
+                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"JANDA"' ng-change='submitOne("marriage_status")'> Janda
                                             </label>
                                         </div>
                                     </div>
@@ -152,7 +152,7 @@
                                         </label>
                                         <div class="col-md-5 col-sm-5 col-xs-12">
                                             <div class="input-group">
-                                                <input type="text" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12">
+                                                <input type="text" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12" ng-change='submitOne("marriage_duration")' max-length="2" only-num>
                                                 <div class="input-group-addon">
                                                     Tahun
                                                 </div> 

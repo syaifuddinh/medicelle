@@ -6,12 +6,15 @@ use DB;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Mod;
+use Carbon\Carbon;
 
 class Notification extends Model
 {
-    protected $fillable = ['user_id', 'title', 'description', 'stock_id', 'route', 'param'];
+    protected $fillable = ['user_id', 'title', 'description', 'stock_id', 'route', 'param', 'created_at'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['route_link'];
+
+
 
     public function getRouteLinkAttribute() {
         if(array_key_exists('route', $this->attributes)) {
@@ -21,9 +24,11 @@ class Notification extends Model
 
     public static function generateExpiredCure() {
         $user_id = Auth::user()->id;
+        $today = Carbon::now()->format('Y-m-d');
         $unreadStock = DB::table('stocks')
-        ->whereRaw('id NOT IN (SELECT stock_id FROM notifications WHERE user_id = ' . $user_id .  ' AND DATE_PART(\'doy\', notifications.created_at) - DATE_PART(\'doy\', NOW()) = 0 )')
-        ->selectRaw('stocks.*, DATE_PART(\'doy\', stocks.expired_date) - DATE_PART(\'doy\', NOW()) AS batas_kadaluarsa')
+        ->whereRaw('id NOT IN (SELECT stock_id FROM notifications WHERE user_id = ' . $user_id .  ' AND DATE_PART(\'doy\', notifications.created_at) - DATE_PART(\'doy\', \'' . $today . '\'::timestamp) = 0 )')
+        ->whereNotNull('expired_date')
+        ->selectRaw('stocks.*, DATE_PART(\'doy\', stocks.expired_date) - DATE_PART(\'doy\', \'' . $today . '\'::timestamp) AS batas_kadaluarsa')
         ->get();
         DB::beginTransaction();
         foreach ($unreadStock as $stock) {

@@ -54,6 +54,31 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       });
     }
 
+    $scope.checkStockByLokasi = function(item_id, lokasi_id) {
+      if(item_id && lokasi_id) {
+          var param = {
+              'item_id' : item_id,
+              'lokasi_id' : lokasi_id,
+            }
+
+          $http.get(baseUrl + '/controller/pharmacy/stock_transaction/lokasi/check?' + $.param(param)).then(function(data) {
+                $rootScope.disBtn=false;
+                $scope.stock = data.data.qty
+          }, function(error) {
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+          });
+      }
+    }
+
     $scope.medicalRecordHistory = function() {
 
         if(path.indexOf('resume') > -1) {
@@ -449,6 +474,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.patient = data.data.patient
         $scope.code = data.data.code
         setTimeout(function () {    
+              $('[ng-model="formData.hpht"]').val( $filter('fullDate')($scope.formData.hpht))
               $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
               $('[ng-model="formData.additional.sitologi_date"]').val( $filter('fullDate')($scope.formData.additional.sitologi_date))
         }, 300)
@@ -980,13 +1006,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               render : resp => $filter('fullDate')(resp.date)
             },
             {data : 'lokasi.name'},
-            {data : 'item.piece.name'},
+            {data : 'item.name'},
             {data : 'qty'},
             {data : 'item.piece.name'},
             {
               data : null,
               className : 'text-center',
-              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteBHP($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteBHP($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
             },
             ],
             createdRow: function(row, data, dataIndex) {
@@ -1640,6 +1666,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="sewa_ruangan.date"]').val( $filter('fullDate')($scope.sewa_ruangan.date))
       }, 300)
       $scope.bhp = {
+        is_bhp : 1,
         date : $scope.resume_date
       }
       setTimeout(function () {    
@@ -1758,7 +1785,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.deleteBHP = function(e) {
     var tr = $(e).parents('tr');
-    bhp_datatable.row(tr).remove().draw()
+    var data = bhp_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
 
@@ -1925,7 +1953,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.bhp.name = bhp.name
         $scope.bhp.qty = tr.find('#qty').val()
         $scope.bhp.piece = bhp.piece
-        $scope.checkStock(bhp.id) 
+        $scope.checkStockByLokasi(bhp.id, $scope.bhp.lokasi_id) 
         $('#BHPModal').modal('hide')
     }
 

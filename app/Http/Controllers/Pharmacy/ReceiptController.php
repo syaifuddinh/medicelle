@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Receipt;
 use Response;
 use DB;
+use Exception;
 
 class ReceiptController extends Controller
 {
@@ -64,7 +65,7 @@ class ReceiptController extends Controller
                 return Response::json(['message' => 'Detail barang tidak boleh kosong'], 500);
             }
         } catch (Exception $e) {
-            dd($e);
+            return Response::json(['message' => $e->getMessage()], 421);
         }
 
         DB::commit();

@@ -10,6 +10,7 @@ use App\City;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Exception;
 
 class RegistrationController extends Controller
 {
@@ -250,9 +251,13 @@ class RegistrationController extends Controller
     public function finish($registration_detail_id)
     {
         DB::beginTransaction();
-        $registration = RegistrationDetail::findOrFail($registration_detail_id);
-        $registration->status = 1;
-        $registration->save();
+        try {
+            $registration = RegistrationDetail::findOrFail($registration_detail_id);
+            $registration->status = 1;
+            $registration->save();
+        } catch (Exception $e) {
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
         DB::commit();
 
         return Response::json(['message' => 'Pemeriksaan sudah selesai'], 200);

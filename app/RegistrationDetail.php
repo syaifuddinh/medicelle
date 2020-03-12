@@ -116,7 +116,7 @@ class RegistrationDetail extends Model
 
                         if($stock == null) {
                             $item = DB::table('items')
-                            ->whereId($drug->item_id)
+                            ->whereId($value->item_id)
                             ->select('name')
                             ->first();
                             throw new Exception('Stok ' . $item->name . '  tidak tersedia');

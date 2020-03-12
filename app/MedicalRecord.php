@@ -173,6 +173,37 @@ class MedicalRecord extends Model
         $this->attributes['additional'] = json_encode($additional); 
     }
 
+    public function setLongAttribute($value) { 
+        $this->attributes['long'] = $value ?? 0; 
+    }
+
+    public function setWeightAttribute($value) { 
+        $this->attributes['weight'] = $value ?? 0; 
+    }
+
+    public function setPulseAttribute($value) { 
+        $this->attributes['pulse'] = $value ?? 0; 
+    }
+
+    public function setTemperatureAttribute($value) { 
+        $this->attributes['temperature'] = $value ?? 0; 
+    }
+
+    public function setBloodPressureAttribute($value) { 
+        $this->attributes['blood_pressure'] = $value ?? 0; 
+    }
+
+    public function setBreathFrequencyAttribute($value) { 
+        $this->attributes['breath_frequency'] = $value ?? 0; 
+    }
+
+    public function setMenarcheAgeAttribute($value) { 
+        $this->attributes['menarche_age'] = $value ?? 0; 
+    }
+    public function setJumlahPemakaianPembalutAttribute($value) { 
+        $this->attributes['jumlah_pemakaian_pembalut'] = $value ?? 0; 
+    }
+
 
     public function patient() {
         return $this->belongsTo('App\Contact', 'patient_id', 'id')->whereIsPatient(1);

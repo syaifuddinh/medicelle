@@ -17,7 +17,7 @@
 
                                         <div class="form-group col-md-3">
                                             <label>Lokasi</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih lokasi'" chosen allow-single-deselect="false" ng-model="bhp.lokasi_id" ng-options="c.id as c.name for c in data.lokasi">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih lokasi'" chosen allow-single-deselect="false" ng-model="bhp.lokasi_id" ng-change='checkStockByLokasi(bhp.item_id, bhp.lokasi_id)' ng-options="c.id as c.name for c in data.lokasi">
                                                 <option value=""></option>
                                             </select>
                                         </div>
@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="form-group col-md-1" style='margin-top:1.2mm;margin-right:2mm'>
                                             <br>
-                                            <button type='button' class='btn btn-success' ng-click='submitBHP()' ng-disabled='!bhp.item_id || !bhp.qty || !bhp.lokasi_id'><i class="fa fa-check"></i></button>
+                                            <button type='button' class='btn btn-success' ng-click='storeDetail(bhp)' ng-disabled='!bhp.item_id || !bhp.qty || !bhp.lokasi_id || disBtn'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                     

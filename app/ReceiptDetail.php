@@ -20,6 +20,11 @@ class ReceiptDetail extends Model
         static::creating(function(ReceiptDetail $receiptDetail) {   
             // Update harga beli pada master item
             $item = Item::find($receiptDetail->item_id);
+            if($item->is_cure == 1) {
+                if($receiptDetail->expired_date == null) {
+                    throw new Exception('Tanggal kadaluarsa harus diisi karena ' . $item->name . ' adalah obat');
+                }
+            }
             $item->purchase_price = $receiptDetail->purchase_price;
             $additional = $item->additional;
             if(json_encode($additional) == '[]') {
