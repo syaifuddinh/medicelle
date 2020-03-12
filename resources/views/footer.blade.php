@@ -15,6 +15,7 @@
     <script src="{{asset('js/jSignature.js')}}"></script>
     <script src="{{asset('js/jSignature.CompressorBase30.js')}}"></script>
     <script src="{{asset('js/jSignature.CompressorSVG.js')}}"></script>
+    <script src="{{asset('js/notification.js')}}"></script>
     <script>
         $.ajaxSetup({
             headers: {

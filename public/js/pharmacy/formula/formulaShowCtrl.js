@@ -92,13 +92,13 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
         });
     }
 
-
-  $scope.approve = function(id) {
+$scope.approve = function(id) {
     is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
     if(is_approve)
+        var id = $scope.formData.id
         $http.put(baseUrl + '/controller/pharmacy/formula/' + id + '/approve').then(function(data) {
             toastr.success("Data berhasil disetujui");
-            location.reload()
+            $scope.show()
         }, function(error) {
           if (error.status==422) {
             var det="";
@@ -111,7 +111,6 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
           }
         });
   }
-
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');

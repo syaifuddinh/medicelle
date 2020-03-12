@@ -14,7 +14,8 @@ class CashierApiController extends Controller
         $x = Invoice::with('registration:id,code,medical_record_id,date,patient_id', 'registration.medical_record:id,code', 'registration.patient:id,name')->select('invoices.id', 'registration_id', 'invoices.status', 'invoices.date')
             ->whereBetween('invoices.date', [$request->date_start, $request->date_end])
             ->whereIsNotaRawatJalan(1)
-            ->orWhere('is_nota_pengobatan', 1);
+            ->orWhere('is_nota_pengobatan', 1)
+            ->orWhere('is_nota_pemeriksaan', 1);
 
         if($request->filled('status')) {
             $x = $x->where('invoices.status', $request->status);

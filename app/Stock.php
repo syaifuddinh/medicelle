@@ -4,12 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use DB;
 
 class Stock extends Model
 {
     protected $fillable = ['item_id', 'lokasi_id', 'qty', 'expired_date'];
     protected $hidden = ['created_at', 'updated_at'];
 
+
+    public function generateNotification() {
+
+        $undeliver_stock_count = DB::table('stocks');
+    }
 
     public function item() {
 
