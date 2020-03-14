@@ -21,6 +21,8 @@ class CreateAdjustmentStockDetailsTable extends Migration
             $table->unsignedInteger('item_id')->nullable(false)->index();
             $table->unsignedInteger('previous_qty')->nullable(false)->default(0)->index();
             $table->unsignedInteger('qty')->nullable(false)->default(0)->index();
+            $table->date('previous_expired_date')->nullable(true)->index();
+            $table->date('expired_date')->nullable(true)->index();
             $table->unsignedInteger('lokasi_id')->nullable(false)->index();
             $table->timestamps();
 

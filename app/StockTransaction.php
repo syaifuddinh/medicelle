@@ -16,7 +16,16 @@ class StockTransaction extends Model
     public static function boot() {
         parent::boot(); 
 
-        static::creating(function(StockTransaction $stockTransaction) {   
+        static::creating(function(StockTransaction $stockTransaction) {
+            $item = DB::table('items')
+            ->whereId($stockTransaction->item_id)
+            ->first();
+            if($item->is_cure == 1) {
+                if($stockTransaction->expired_date == null) {
+                    throw new Exception('Tanggal kadaluarsa harus diisi karena ' . $item->name . ' adalah obat');
+                }
+            }
+
             $qty = $stockTransaction->in_qty - $stockTransaction->out_qty;
 
             if($stockTransaction->expired_date == null) {

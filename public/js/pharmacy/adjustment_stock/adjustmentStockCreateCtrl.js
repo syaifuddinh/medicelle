@@ -59,6 +59,7 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
             data: null, 
             orderable : false,
             searchable : false,
+            className : 'text-right',
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].stock %>"
@@ -70,7 +71,25 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].previous_expired_date | fullDate %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].qty' style='width:16mm' jnumber2 only-num>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].expired_date' datepick>"
             }
           },
           {
@@ -205,6 +224,7 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
             $('#itemModal').modal('hide')
             $rootScope.disBtn=false;
             $scope.formData.detail[index].stock = data.data.qty
+            $scope.formData.detail[index].previous_expired_date = data.data.expired_date
       }, function(error) {
             $rootScope.disBtn=false;
             if (error.status==422) {
@@ -255,6 +275,7 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
         adjustment_stock_detail_datatable.row.add({}).draw()
+        $scope.showItemModal($scope.formData.detail.length - 1)
     }
 
     $scope.deleteDetail = function(index, obj) {

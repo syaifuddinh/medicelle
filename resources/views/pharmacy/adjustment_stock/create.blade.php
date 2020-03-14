@@ -51,7 +51,9 @@
                                     <tr>
                                         <td>Barang</td>
                                         <td>Stok sistem</td>
+                                        <td>Tanggal kadaluarsa sistem</td>
                                         <td>Stok asli</td>
+                                        <td>Tanggal kadaluarsa asli</td>
                                         <td>Lokasi</td>
                                         <td></td>
                                     </tr>

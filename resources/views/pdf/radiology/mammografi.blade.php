@@ -43,7 +43,7 @@
                     <span style="display:inline-block;width:22mm">CC Kanan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_cc_kanan ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_cc_kanan ?? $dot }}
                     </span>
                 </div>
 
@@ -51,7 +51,7 @@
                     <span style="display:inline-block;width:22mm">MLO Kanan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_mlo_kanan ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kanan ?? $dot }}
                     </span>
                 </div>
 
@@ -59,7 +59,7 @@
                     <span style="display:inline-block;width:22mm">CC Kiri</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_cc_kiri ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_cc_kiri ?? $dot }}
                     </span>
                 </div>
 
@@ -67,7 +67,7 @@
                     <span style="display:inline-block;width:22mm">MLO Kiri</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_mlo_kiri ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kiri ?? $dot }}
                     </span>
                 </div>
 
@@ -75,7 +75,7 @@
                     <span style="display:inline-block;width:22mm">Kesimpulan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_kesimpulan ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_kesimpulan ?? $dot }}
                     </span>
                 </div>
 
@@ -83,7 +83,7 @@
                     <span style="display:inline-block;width:22mm">Saran</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->usg_thyroid_saran ?? $dot }}
+                        {{ $pivotMedicalRecord->additional->mammografi_saran ?? $dot }}
                     </span>
                 </div>
                 

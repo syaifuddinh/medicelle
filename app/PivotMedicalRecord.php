@@ -28,4 +28,8 @@ class PivotMedicalRecord extends Model
     public function medical_record_detail() {
         return $this->belongsTo('App\MedicalRecordDetail');
     }
+
+    public function parent() {
+        return $this->belongsTo('App\PivotMedicalRecord', 'parent_id', 'id');
+    }
 }

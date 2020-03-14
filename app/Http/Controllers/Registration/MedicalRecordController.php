@@ -36,9 +36,20 @@ class MedicalRecordController extends Controller
         $pivot = PivotMedicalRecord::with(
             'medical_record_detail:id,item_id',
             'medical_record_detail.item:id',
+            'parent:id,additional',
             'medical_record_detail.item.price:id,item_id,laboratory_group,radiology_group'
         )->findOrFail($pivot_medical_record_id);
         return Response::json($pivot, 200);
+    }
+
+    public function update_laboratory_form(Request $request, $pivot_medical_record_id)
+    {
+        $pivot = PivotMedicalRecord::findOrFail($pivot_medical_record_id);
+        $additional = $pivot->additional;
+        $additional->treatment[$request->row]->detail[$request->column]->{$request->key} = $request->value;
+        $pivot->additional = json_encode($additional);
+        $pivot->save();
+        return Response::json(['message' => 'Data berhasil di-update'], 200);
     }
 
     public function update_ruang_tindakan_description(Request $request, $id) {

@@ -130,10 +130,12 @@ class RegistrationApiController extends Controller
             ->whereDestination('LABORATORIUM');
         })
         ->orWhere('is_laboratory', 1)
+        ->orWhere('is_laboratory_treatment', 1)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
             'pivot_medical_records.is_referenced',
+            'pivot_medical_records.is_laboratory_treatment',
              'pivot_medical_records.medical_record_id'
          );
 
@@ -217,6 +219,7 @@ class RegistrationApiController extends Controller
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.is_referenced',
+            'pivot_medical_records.is_laboratory',
             'pivot_medical_records.registration_detail_id',
             'pivot_medical_records.medical_record_id'
         );

@@ -70,6 +70,31 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
             }
 
             $compile(laboratory_treatment_datatable)($scope);
+        } else if($scope.pivot.is_laboratory_treatment == 1) {
+            var laboratory_treatment_form = $('#laboratory_treatment_form')
+            var unit, subunit, col, formgroup
+            $scope.laboratoryData = $scope.pivot.parent.additional.treatment 
+            for(x in $scope.pivot.parent.additional.treatment) {
+                unit = $scope.pivot.parent.additional.treatment[x]
+                for(y in unit.detail) {
+                    subunit = unit.detail[y]
+                    if(subunit.is_active == 1) {
+                        col = $("<div class='col-md-6'><h4>" + subunit.name + "</h4></div>")
+                        formgroup = $('<div class="form-group"><label>Hasil</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'hasil\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].hasil"></textarea></div>')
+                        col.append(formgroup)
+                        formgroup = $('<div class="form-group"><label>Satuan</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'satuan\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].satuan"></textarea></div>')
+                        col.append(formgroup)
+                        formgroup = $('<div class="form-group"><label>Nilai Normal</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'nilai_normal\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].nilai_normal"></textarea></div>')
+                        col.append(formgroup)
+                        formgroup = $('<div class="form-group"><label>Keterangan</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'keterangan\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].keterangan"></textarea></div>')
+                        col.append(formgroup)
+                        laboratory_treatment_form.append(col)
+                    }
+                }
+            }
+
+            $compile(laboratory_treatment_datatable)($scope);
+            $compile(laboratory_treatment_form)($scope);
         }
       }, function(error) {
         $scope.pivot()
@@ -85,6 +110,28 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
       }
 
       $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
+      }, function(error) {
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  }
+
+  $scope.submitLaboratoryForm = function(x, y, key) {
+      var data = {
+          "row" : x,
+          "column" : y,
+          "key" : key,
+          "value" : $scope.pivot.parent.additional.treatment[x].detail[y][key]
+      }
+
+      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot.parent.id + '/laboratory_form', data).then(function(data) {
       }, function(error) {
         if (error.status==422) {
           var det="";

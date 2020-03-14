@@ -10,7 +10,7 @@ use Exception;
 
 class AdjustmentStockDetail extends Model
 {
-    protected $fillable = ['item_id', 'previous_qty', 'qty',  'lokasi_id'];
+    protected $fillable = ['item_id', 'previous_qty', 'qty',  'lokasi_id', 'expired_date', 'previous_expired_date'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
@@ -25,12 +25,14 @@ class AdjustmentStockDetail extends Model
             $stock = DB::table('stocks')
             ->whereItemId($adjustmentStockDetail->item_id)
             ->whereLokasiId($adjustmentStockDetail->lokasi_id)
-            ->select('id', 'qty')
+            ->whereExpiredDate($adjustmentStockDetail->previous_expired_date)
+            ->select('id', 'qty', 'expired_date')
             ->first();
 
             $previous_qty = $stock->qty ?? 0;
             if($previous_qty > 0) {
                 $adjustmentStockDetail->previous_qty = $previous_qty;
+                $adjustmentStockDetail->previous_expired_date = $stock->expired_date ?? null;
                 $adjustmentStockDetail->stock_awal_id = $stock->id;
             } else {
                 $adjustmentStockDetail->previous_qty = 0;                
@@ -55,6 +57,7 @@ class AdjustmentStockDetail extends Model
                 'in_qty' => $in_qty,
                 'out_qty' => $out_qty,
                 'lokasi_id' => $adjustmentStockDetail->lokasi_id,
+                'expired_date' => $adjustmentStockDetail->expired_date
             ]);
 
             $adjustmentStockDetail->stock_transaction_id = $stockTransaction->id;

@@ -13,6 +13,10 @@ class Mod {
         return $d . ' ' . $months[$m] . ' ' . $Y;
     }
 
+    public static function calc($format, $time) {
+        return date($format, strtotime($time));
+    }
+    
     public static function now() {
         $now = Carbon::now()->format('Y-m-d');
 
@@ -31,9 +35,6 @@ class Mod {
         return $readableDays[$N];
     }
 
-    public static function calc($format, $time) {
-        return date($format, strtotime($time));
-    }
 
     public static function company() {
         $company = Setting::whereName('company')->first();

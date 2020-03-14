@@ -24,7 +24,6 @@ class MedicalRecordDetail extends Model
     public static function boot() {
         parent::boot();
 
-
         static::creating(function(MedicalRecordDetail $medicalRecordDetail){
             if($medicalRecordDetail->is_drug == 1) {
                 $stock = DB::table('stocks')
@@ -132,20 +131,34 @@ class MedicalRecordDetail extends Model
                            }
 
                            $checklist = json_encode($checklist);
-                           DB::table('pivot_medical_records')
-                            ->insert([
+                           $laboratory_id = DB::table('pivot_medical_records')
+                            ->insertGetId([
                                 'medical_record_id' => $medicalRecordDetail->medical_record_id,
                                 'registration_detail_id' => $registration_detail_id,
                                 'is_referenced' => 1,
                                 'is_laboratory' => 1,
                                 'medical_record_detail_id' => $medicalRecordDetail->id,
                                 'additional' => '{"treatment":' . $checklist . '}'
-                            ]); 
+                            ]);
+
+                            DB::table('pivot_medical_records')
+                            ->insert([
+                                'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                                'registration_detail_id' => $registration_detail_id,
+                                'is_referenced' => 1,
+                                'is_laboratory_treatment' => 1,
+                                'medical_record_detail_id' => $medicalRecordDetail->id,
+                                'parent_id' => $laboratory_id
+                            ]);
+
+
                     }
                 }
         });
         
         static::deleted(function(MedicalRecordDetail $medicalRecordDetail){
+
+
                 $cure = DB::table('medical_record_details')
                 ->join('items', 'medical_record_details.item_id', 'items.id')
                 ->join('pieces', 'pieces.id', 'items.piece_id')
@@ -161,17 +174,21 @@ class MedicalRecordDetail extends Model
         });
 
         static::deleting(function(MedicalRecordDetail $medicalRecordDetail){
+                DB::table('pivot_medical_records')
+                ->whereMedicalRecordDetailId($medicalRecordDetail->id)
+                ->whereIsReferenced(1)
+                ->delete();
                 if($medicalRecordDetail->is_bhp == 1) {
 
-                $stockTransaction = StockTransaction::create([
-                        'date' => Carbon::now()->format('Y-m-d'),
-                        'description' => 'Pembatalan penggunaan BHP pada pemeriksaan pasien',
-                        'item_id' => $medicalRecordDetail->item_id,
-                        'out_qty' => 0,
-                        'in_qty' => $medicalRecordDetail->qty,
-                        'lokasi_id' => $medicalRecordDetail->lokasi_id,
-                    ]);
-            }
+                    $stockTransaction = StockTransaction::create([
+                            'date' => Carbon::now()->format('Y-m-d'),
+                            'description' => 'Pembatalan penggunaan BHP pada pemeriksaan pasien',
+                            'item_id' => $medicalRecordDetail->item_id,
+                            'out_qty' => 0,
+                            'in_qty' => $medicalRecordDetail->qty,
+                            'lokasi_id' => $medicalRecordDetail->lokasi_id,
+                        ]);
+                }
         });
 
     }
