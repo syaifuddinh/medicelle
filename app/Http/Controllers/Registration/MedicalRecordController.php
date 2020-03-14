@@ -322,6 +322,15 @@ class MedicalRecordController extends Controller
         return $pdf->stream('fnab.pdf');
     }
 
+    public function laboratory_form_pdf(Request $request, $pivot_medical_record_id)
+    {   
+        $pivot = PivotMedicalRecord::findOrFail($pivot_medical_record_id);
+        $medicalRecordDetail = MedicalRecordDetail::find($pivot->medical_record_detail_id);
+        $medicalRecord = $this->fetch($medicalRecordDetail->medical_record_id);
+        $pdf = PDF::loadview('pdf/laboratory/laboratory_form',['medicalRecord' => $medicalRecord, 'treatments' => $pivot->parent->additional->treatment, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('fnab.pdf');
+    }
+
     public function histopatologi_pdf(Request $request, $id)
     {
         $medicalRecord = $this->fetch($id);

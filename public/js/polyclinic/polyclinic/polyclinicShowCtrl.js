@@ -27,7 +27,13 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
               window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/xray/pdf')
           }
       } else if(path.indexOf('laboratory') > -1) {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory/pdf')
+            if($scope.pivot.is_laboratory == 1) {
+
+                window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory/pdf')
+            } else if($scope.pivot.is_laboratory_treatment == 1) {
+              
+                window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory_form/pdf')
+            }
       }
   }
 
