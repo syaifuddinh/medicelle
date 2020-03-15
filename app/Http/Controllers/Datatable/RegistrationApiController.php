@@ -46,6 +46,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('POLIKLINIK');
         })
+        ->where('is_referenced', 0)
         ->select(
             'pivot_medical_records.id', 
             'pivot_medical_records.registration_detail_id', 
@@ -174,6 +175,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('KEMOTERAPI');
         })
+        ->where('is_referenced', 0)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id', 
@@ -259,6 +261,7 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('MEDICAL CHECK-UP');
         })
+        ->where('is_referenced', 0)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id', 

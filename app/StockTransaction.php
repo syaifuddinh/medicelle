@@ -10,7 +10,7 @@ use Exception;
 
 class StockTransaction extends Model
 {
-    protected $fillable = ['date', 'item_id', 'supplier_id', 'lokasi_id', 'receipt_detail_id', 'in_qty', 'out_qty', 'description', 'expired_date'];
+    protected $fillable = ['date', 'item_id', 'supplier_id', 'lokasi_id', 'receipt_detail_id', 'in_qty', 'out_qty', 'description', 'expired_date', 'is_adjustment'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public static function boot() {
@@ -35,10 +35,16 @@ class StockTransaction extends Model
                 ->whereNull('expired_date')
                 ->count('id');
             } else {
-                $stock_count = Stock::whereItemId($stockTransaction->item_id)
-                ->whereLokasiId($stockTransaction->lokasi_id)
-                ->whereExpiredDate($stockTransaction->expired_date)
-                ->count('id');                
+                if($stockTransaction->is_adjustment == 1) {
+                    $stock_count = Stock::whereItemId($stockTransaction->item_id)
+                    ->whereLokasiId($stockTransaction->lokasi_id)
+                    ->count('id');                
+                } else {
+                    $stock_count = Stock::whereItemId($stockTransaction->item_id)
+                    ->whereLokasiId($stockTransaction->lokasi_id)
+                    ->whereExpiredDate($stockTransaction->expired_date)
+                    ->count('id');                
+                }
             }
 
             if($stock_count == 0) {
@@ -54,11 +60,14 @@ class StockTransaction extends Model
                 $stock = Stock::whereItemId($stockTransaction->item_id)
                 ->whereLokasiId($stockTransaction->lokasi_id);
 
-                if($stockTransaction->expired_date == null) {
-                    $stock = $stock->whereNull('expired_date');                    
-                } else {
-                    $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                if($stockTransaction->is_adjustment == 0) {
+                    if($stockTransaction->expired_date == null) {
+                        $stock = $stock->whereNull('expired_date');                    
+                    } else {
+                        $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                    }
                 }
+                
                 $stock = $stock->first();
                 $stock_id = $stock->id;
                 if($stock->qty + $qty < 0) {
@@ -67,12 +76,19 @@ class StockTransaction extends Model
 
                 $stock = Stock::whereItemId($stockTransaction->item_id)
                 ->whereLokasiId($stockTransaction->lokasi_id);
-                if($stockTransaction->expired_date == null) {
-                    $stock = $stock->whereNull('expired_date');                    
-                } else {
-                    $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                if($stockTransaction->is_adjustment == 0) {
+                    if($stockTransaction->expired_date == null) {
+                        $stock = $stock->whereNull('expired_date');                    
+                    } else {
+                        $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                    }
                 }
                 $stock->increment('qty', $qty);
+                if($stockTransaction->is_adjustment == 1) {
+                    $stock->update([
+                        'expired_date' => $stockTransaction->expired_date
+                    ]);
+                }
 
             }
 

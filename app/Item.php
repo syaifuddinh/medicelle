@@ -37,7 +37,9 @@ class Item extends Model
         });
 
         static::creating(function(Item $item) {
-            $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
+            if(($item->is_medical_item == 1 || $item->is_cure == 1)){
+                     $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
+             }
         });
 
         static::updating(function(Item $item) {
@@ -62,7 +64,10 @@ class Item extends Model
                 }
             }
 
-            $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
+             if(($item->is_medical_item == 1 || $item->is_cure == 1)){
+                     $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
+             }
+           
         });
 
     }

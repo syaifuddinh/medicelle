@@ -57,7 +57,8 @@ class AdjustmentStockDetail extends Model
                 'in_qty' => $in_qty,
                 'out_qty' => $out_qty,
                 'lokasi_id' => $adjustmentStockDetail->lokasi_id,
-                'expired_date' => $adjustmentStockDetail->expired_date
+                'expired_date' => $adjustmentStockDetail->expired_date,
+                'is_adjustment' =>  1
             ]);
 
             $adjustmentStockDetail->stock_transaction_id = $stockTransaction->id;

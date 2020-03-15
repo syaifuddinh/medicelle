@@ -67,6 +67,7 @@ class AdjustmentStockController extends Controller
                 return Response::json(['message' => 'Detail barang tidak boleh kosong'], 500);
             }
         } catch (Exception $e) {
+            // dd($e);
             return Response::json(['message' => $e->getMessage()], 421);
         }
         

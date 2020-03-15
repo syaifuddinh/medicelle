@@ -16,7 +16,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Hari pertama haid terakhir / menopause
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_hari_menopause' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_hari_menopause")'></textarea>
+                                                <input type="text" datepick  ng-model='formData.hpht' class="form-control col-md-7 col-xs-12" ng-change='submitOne("hpht")'></input>
                                             </div>
                                         </div>
                                         
@@ -24,7 +24,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat vaksinasi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_vaksinasi")'></textarea>
+                                                <textarea  ng-model='formData.additional.riwayat_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.riwayat_vaksinasi")'></textarea>
                                             </div>
                                         </div>
                                         
@@ -41,7 +41,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear(Tanggal & Hasil)
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_papsmear")'></textarea>
+                                                <textarea  ng-model='formData.additional.obgyn_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.obgyn_papsmear")'></textarea>
                                             </div>
                                         </div>
                                         
