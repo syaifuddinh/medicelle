@@ -24,8 +24,9 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
-        data:'code', 
-        name:'code' 
+        data:null, 
+        name:'code',
+        render : resp => "<a href='" + baseUrl +"/pharmacy/receipt/" + resp.id + "'>" + resp.code + "</a>"  
       },
       {
         data:'purchase_order.code', 

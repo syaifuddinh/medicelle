@@ -24,8 +24,9 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
 
     columns:[
       {
-        data:'code', 
-        name:'code' 
+        data:null, 
+        name:'code',
+        render : resp => "<a href='" + baseUrl +"/pharmacy/purchase_request/" + resp.id + "'>" + resp.code + "</a>" 
       },
 
       {

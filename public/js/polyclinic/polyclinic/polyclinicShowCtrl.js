@@ -61,22 +61,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
       $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
         $scope.pivot = data.data
         $scope.pivotData = $scope.pivot.additional;
-        if($scope.pivot.is_laboratory == 1) {
-            var laboratory_treatment_datatable = $('#laboratory_treatment_datatable tbody')
-            var unit, subunit, tr
-            for(x in $scope.pivotData.treatment) {
-                unit = $scope.pivotData.treatment[x]
-                tr = $("<tr><td><b>" + unit.name + "</b></td></tr>")
-                laboratory_treatment_datatable.append(tr)
-                for(y in unit.detail) {
-                    subunit = unit.detail[y]
-                    tr = $("<tr><td>" + subunit.name + "<input type='checkbox' class='pull-right' ng-change='changeLaboratoryTreatment(" + x + ", " + y + ")' ng-model='pivotData.treatment[" + x +"].detail[" + y +"].is_active' ng-true-value='1' ng-false-value='0'></td></tr>")
-                    laboratory_treatment_datatable.append(tr)
-                }
-            }
-
-            $compile(laboratory_treatment_datatable)($scope);
-        } else if($scope.pivot.is_laboratory_treatment == 1) {
+        if($scope.pivot.is_laboratory_treatment == 1) {
             var laboratory_treatment_form = $('#laboratory_treatment_form')
             var unit, subunit, col, formgroup
             $scope.laboratoryData = $scope.pivot.parent.additional.treatment 
@@ -107,27 +92,6 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
       });
   }
   $scope.pivot()
-
-  $scope.changeLaboratoryTreatment = function(x, y) {
-      var data = {
-          "row" : x,
-          "column" : y,
-          "is_active" : $scope.pivotData.treatment[x].detail[y].is_active
-      }
-
-      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
-      }, function(error) {
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
-          });
-          toastr.warning(det,error.data.message);
-        } else {
-          toastr.error(error.data.message,"Error Has Found !");
-        }
-      });
-  }
 
   $scope.submitLaboratoryForm = function(x, y, key) {
       var data = {

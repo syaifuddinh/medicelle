@@ -17,7 +17,7 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <label class="radio-inline">
-                                    <input type="radio" ng-model="formData.is_active" name='is_read' ng-value='null' ng-change="filter()">
+                                    <input type="radio" ng-model="formData.is_read" name='is_read' ng-value='null' ng-change="filter()">
                                     <h5>Semua</h5>
                                 </label>
                                 <label class="radio-inline">
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <table class="table table-bordered" id='listview'>
+                  <table class="table" id='listview'>
                       <thead>
                         <tr>
                           <th>Judul</th>

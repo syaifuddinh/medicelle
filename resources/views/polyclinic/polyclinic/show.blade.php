@@ -210,7 +210,6 @@
                     @include('polyclinic/polyclinic/radiology/xray')
                     @include('polyclinic/polyclinic/radiology/mammografi')
                     
-                    @include('polyclinic/polyclinic/radiology/laboratory_treatment')
                     @include('polyclinic/polyclinic/laboratory/laboratory_treatment_description')
                     
                     <div class="ln_solid"></div>

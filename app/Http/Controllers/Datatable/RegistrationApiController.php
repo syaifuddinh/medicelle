@@ -130,7 +130,6 @@ class RegistrationApiController extends Controller
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
         })
-        ->orWhere('is_laboratory', 1)
         ->orWhere('is_laboratory_treatment', 1)
         ->select(
             'pivot_medical_records.id',

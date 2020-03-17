@@ -68,6 +68,7 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
       {
         data: null, 
         orderable : false,
+        width:'17mm',
         searchable : false,
         className : 'text-center',
         render : resp => (resp.status != 3 ? "<div class='btn-group'><a allow_edit_cashier class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +

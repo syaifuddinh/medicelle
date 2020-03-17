@@ -6,6 +6,16 @@ $(document).ready(function(){
             'url':url,
             'type' : method,
             success:function(data) {
+              var unread_notif_amount = parseInt(data)
+              var prev_unread_notif_amount = parseInt(localStorage.getItem('unread_notif_amount'))
+              if(unread_notif_amount != prev_unread_notif_amount) {
+                  localStorage.setItem('unread_notif_amount', unread_notif_amount)
+                  toastr.info('Anda memiliki ' + unread_notif_amount + ' pemberitahuan yang belum dibaca', 'Pemberitahuan', {
+                      onclick : function() {
+                          window.location = baseUrl + '/notification'
+                      }
+                  })
+              }
               $('#unread-notif-qty').text(data)
               getUnreadNotif()
             },

@@ -38,10 +38,11 @@ app.controller('distribution', ['$scope', '$rootScope', '$compile', '$http', '$f
         render : resp => $filter('fullDate')(resp.expired_date) 
       },
       {
-        data:'latest_stock', 
+        data:null, 
         className : 'text-right',
         orderable : false,
-        searchable: false
+        searchable: false,
+        render : resp => $filter('number')(resp.latest_stock) 
       },
     ],
     createdRow: function(row, data, dataIndex) {

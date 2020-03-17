@@ -273,6 +273,12 @@ class MedicalRecordDetail extends Model
         return null;
     }
 
+    public function laboratory_pivot() {
+        return $this->hasOne('App\PivotMedicalRecord', 'medical_record_detail_id', 'id')
+        ->whereIsReferenced(1)
+        ->whereIsLaboratory(1);
+    }
+
     public function disease() {
         return $this->belongsTo('App\Item', 'disease_id', 'id')->whereIsDisease(1);
     }

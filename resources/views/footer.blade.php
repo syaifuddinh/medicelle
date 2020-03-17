@@ -17,6 +17,8 @@
     <script src="{{asset('js/jSignature.CompressorSVG.js')}}"></script>
     <script src="{{asset('js/notification.js')}}"></script>
     <script>
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -294,6 +296,7 @@
                     }
                 }
             }, 1000)
+
         })
     </script>
     <link rel='stylesheet' id='norebro-global-fonts-css'  href='{{asset("css/font-google.css")}}' type='text/css' media='all' />

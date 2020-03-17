@@ -1439,7 +1439,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<button  type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button><button type="button" class="btn btn-sm btn-primary" title="Checklist Laboratorium" ng-click="showLaboratoryChecklistModal($event.currentTarget)"><i class="fa fa-code-fork"></i></button></div>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1644,6 +1644,61 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+  $scope.showLaboratoryChecklistModal = function(obj) {
+      var tr = $(obj).parents('tr')
+      var data = diagnostic_datatable.row(tr).data()
+      $scope.showLaboratoryChecklist(data.laboratory_pivot.id)
+      $('#laboratoryChecklistModal').modal()
+  }
+
+  $scope.openLaboratoryChecklistPDF =  function() {
+      window.open( baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot_medical_record_id + '/laboratory/pdf')
+  }
+
+  $scope.showLaboratoryChecklist = function(pivot_medical_record_id) {
+      $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
+          var laboratory_treatment_datatable = $('#laboratory_treatment_datatable')
+          var unit, subunit, tr, content
+          $scope.pivotData = data.data.additional
+          $scope.pivot_medical_record_id = data.data.id
+          for(x in $scope.pivotData.treatment) {
+              unit = $scope.pivotData.treatment[x]
+              tr = $("<div class='col-md-4'><b>" + unit.name + "</b><div class='ln_solid'></div></div>")
+              for(y in unit.detail) {
+                  subunit = unit.detail[y]
+                  content = $("<div><input type='checkbox' style='margin-right:4mm' ng-change='changeLaboratoryTreatment(" + x + ", " + y + ", " + data.data.id + ")' ng-model='pivotData.treatment[" + x +"].detail[" + y +"].is_active' ng-true-value='1' ng-false-value='0'>" + subunit.name + "</div><div class='ln_solid'></div>")
+                  tr.append(content)
+              }
+              laboratory_treatment_datatable.append(tr)
+          }
+
+          $compile(laboratory_treatment_datatable)($scope);
+      }, function(error) {
+          console.log(error)
+      });
+  }
+
+  $scope.changeLaboratoryTreatment = function(x, y, pivot_medical_record_id) {
+      var data = {
+          "row" : x,
+          "column" : y,
+          "is_active" : $scope.pivotData.treatment[x].detail[y].is_active
+      }
+
+      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
+      }, function(error) {
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  }
 
   $scope.reset = function() {
       $scope.patient = {}

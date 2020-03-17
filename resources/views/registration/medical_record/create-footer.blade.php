@@ -29,7 +29,26 @@
             </div>
         </div>
     </div>
+    <!-- Modal Checklist Laboratorium -->
+    <div class="modal fade" id="laboratoryChecklistModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Checklist Laboratorium</h4>
+                </div>
+                <div class="modal-body">
+                    @include('polyclinic/polyclinic/radiology/laboratory_treatment')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class='btn btn-primary btn-sm' ng-click='openLaboratoryChecklistPDF()'>Cetak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------- -->
 
+    <!-- Modal Dokter -->
     <div class="modal fade" id="doctorModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
         <div class="modal-dialog" style='width:80%'>
             <div class="modal-content">
@@ -53,6 +72,7 @@
             </div>
         </div>
     </div>
+    <!-- ------------- -->
 </div>
 <!-- /page content -->
 
