@@ -170,9 +170,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     registration_detail_datatable.row(tr).remove().draw()
   }
 
-
-  $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
-    $scope.data.polyclinic = data.data
+  $scope.showDoctor = function() {
 
     $http.get(baseUrl + '/controller/master/doctor').then(function(data) {
       $scope.data.doctor = data.data
@@ -202,6 +200,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
         });
       }
     }, function(error) {
+      $scope.showDoctor()
       $rootScope.disBtn=false;
       if (error.status==422) {
         var det="";
@@ -213,6 +212,12 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
         toastr.error(error.data.message,"Error Has Found !");
       }
     });
+  }
+
+
+  $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
+    $scope.data.polyclinic = data.data
+    $scope.showDoctor()
   }, function(error) {
     $rootScope.disBtn=false;
     if (error.status==422) {

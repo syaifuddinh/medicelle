@@ -15,8 +15,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('signa', 'SignaController');
         Route::get('signa/category/{flag?}', 'SignaController@index');
 
-        Route::put('price/activate/{permission}', 'PriceController@activate');
+        Route::put('price/activate/{id}', 'PriceController@activate');
         Route::get('price/treatment', 'PriceController@treatment');
+        Route::get('price/diagnostic', 'PriceController@diagnostic');
         Route::get('price/drug', 'PriceController@drug');
         Route::resource('price', 'PriceController');
 

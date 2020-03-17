@@ -54,6 +54,12 @@
                                     </label><br>
                                     <label class="radio-inline">
                                         <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_treatment' ng-true-value='1' ng-false-value='0'> Tindakan
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_diagnostic' ng-true-value='1' ng-false-value='0'> Diagnostik
                                     </label>
                                   </div>
                               </div>
@@ -61,7 +67,7 @@
                                               
 
                           <div class="col-md-6 col-sm-6">
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                              <div class="form-group" ng-show='!formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Tujuan
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">

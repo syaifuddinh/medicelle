@@ -72,7 +72,11 @@ class Registration extends Model
                         $invoice->save();
                         $invoice_id = $invoice->id;
 
-                        $registrationItem = Price::whereIsRegistration(1)->whereIsActive(1)->get()->toArray();
+                        $registrationItem = Price::whereIsRegistration(1)
+                        ->whereRaw("destination IN (SELECT destination FROM registration_details WHERE registration_id = " . $registration->id . ")")
+                        ->whereIsActive(1)
+                        ->get()
+                        ->toArray();
                         collect($registrationItem)->each(function($val) use($invoice_id){
                             $invoiceDetail = new InvoiceDetail();
                             $invoiceDetail->invoice_id = $invoice_id; 

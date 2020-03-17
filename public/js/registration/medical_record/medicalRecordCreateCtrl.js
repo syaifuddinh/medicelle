@@ -912,7 +912,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.disease()
 
   $scope.treatment_item = function() {
-      if(path.indexOf('treatment') > - 1 || path.indexOf('diagnostic') > -1) {
+      if(path.indexOf('treatment') > - 1) {
 
           $http.get(baseUrl + '/controller/user/price/treatment').then(function(data) {
             $scope.data.treatment = data.data
@@ -933,6 +933,29 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
   }
   $scope.treatment_item()
+
+  $scope.diagnostic_item = function() {
+      if(path.indexOf('diagnostic') > - 1) {
+
+          $http.get(baseUrl + '/controller/user/price/diagnostic').then(function(data) {
+            $scope.data.diagnostic = data.data
+            $scope.show()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.diagnostic_item()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.diagnostic_item()
 
   $scope.drug_item = function() {
       if( path.indexOf('drug') > -1 ) {

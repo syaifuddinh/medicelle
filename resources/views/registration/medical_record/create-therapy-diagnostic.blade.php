@@ -17,7 +17,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Tindakan / jenis pemeriksaan</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic">
                                                 <option value=""></option>
                                             </select>
                                         </div>

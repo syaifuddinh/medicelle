@@ -35,9 +35,31 @@ class PriceController extends Controller
         ->whereIsActive(1)
         ->whereIsAdministration(1)
         ->whereHas('price', function(Builder $query) {
-            $query->whereIsRegistration(0)
-            ->whereIsSewaRuangan(0)
-            ->whereIsSewaAlkes(0);
+            $query->whereIsTreatment(1);
+
+            if(Auth::user()->is_admin != 1) {
+                $contact = Auth::user()->contact;
+                if($contact != null) {
+                    if($contact->is_doctor == 1 || $contact->is_nurse == 1 || $contact->is_nurse_helper == 1 ) {
+                        $specialization = $contact->specialization;
+                        $roles = $specialization->grup_nota_roles;
+                        $query->whereIn('destination', $roles);
+                    }
+                }
+            } 
+        })
+        ->get();
+        return Response::json($item, 200);
+    }
+
+    public function diagnostic()
+    {
+        $item = Item::with('price:item_id,destination')->select('id', 'name', 'category_id')
+        ->whereIsCategory(0)
+        ->whereIsActive(1)
+        ->whereIsAdministration(1)
+        ->whereHas('price', function(Builder $query) {
+            $query->whereIsDiagnostic(1);
 
             if(Auth::user()->is_admin != 1) {
                 $contact = Auth::user()->contact;
@@ -196,15 +218,22 @@ class PriceController extends Controller
         DB::beginTransaction();
         $price = Price::find($id);
         $price->is_active = 0;
+        $price->service()->update([
+            'is_active' => 0
+        ]);
         $price->save();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
     }
-    public function activate(Price $price)
+    public function activate($id)
     {
         DB::beginTransaction();
+        $price = Price::find($id);
         $price->is_active = 1;
+        $price->service()->update([
+            'is_active' => 1
+        ]);
         $price->save();
         DB::commit();
 
