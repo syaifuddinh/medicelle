@@ -25,7 +25,7 @@ class CreatePurchaseRequestsTable extends Migration
             $table->text('additional')->nullable(false)->default('{}') ;
             $table->timestamps();
 
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
+            
         });
     }
 

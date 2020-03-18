@@ -96,6 +96,9 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/therapy/drug/{id}', function ($id){
         return view('registration/medical_record/create-therapy-drug')->withId($id);
     })->name('edit.therapy.drug');
+    Route::get('/therapy/treatment_group/{id}', function ($id){
+        return view('registration/medical_record/create-therapy-treatment_group')->withId($id);
+    })->name('edit.therapy.treatment_group');
 
     Route::get('/utilization/bhp/{id}', function ($id){
         if(Specialization::allow_access('bhp') != 1) {

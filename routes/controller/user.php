@@ -25,6 +25,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::post('user/{user}', 'UserController@update');
         Route::resource('user', 'UserController');
 
+        Route::put('treatment_group/activate/{id}', 'TreatmentGroupController@activate');
+        Route::resource('treatment_group', 'TreatmentGroupController');
+
         Route::put('laboratory_type/activate/{id}', 'LaboratoryTypeController@activate');
         Route::post('laboratory_type/{id}', 'LaboratoryTypeController@update');
         Route::resource('laboratory_type', 'LaboratoryTypeController');

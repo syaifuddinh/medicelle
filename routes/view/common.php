@@ -105,6 +105,21 @@ Route::name('price.')->prefix('price')->group(function(){
         return view('user/price/show')->withId($id);
     })->name('show');
 });
+
+Route::name('treatment_group.')->prefix('treatment_group')->group(function(){
+    Route::get('/', function (){
+        return view('user/treatment_group/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/treatment_group/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/treatment_group/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/treatment_group/show')->withId($id);
+    })->name('show');
+});
 Route::name('setting.')->prefix('setting')->group(function(){
     Route::get('/company', function (){
         return view('user/setting/company');

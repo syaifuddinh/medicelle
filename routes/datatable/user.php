@@ -6,6 +6,7 @@ Route::prefix('user')->group(function(){
     Route::get('user', 'UserApiController@user');
     Route::get('grup_nota', 'UserApiController@grup_nota');
     Route::get('price', 'UserApiController@price');
+    Route::get('treatment_group', 'UserApiController@treatment_group');
     Route::get('signa', 'UserApiController@signa');
     Route::get('laboratory_type', 'UserApiController@laboratory_type');
 });

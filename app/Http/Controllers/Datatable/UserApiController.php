@@ -10,6 +10,7 @@ use App\User;
 use App\Item;
 use App\Price;
 use App\LaboratoryType;
+use App\TreatmentGroup;
 use Illuminate\Database\Eloquent\Builder;
 use DataTables;
 use Auth;
@@ -26,6 +27,16 @@ class UserApiController extends Controller
 
     public function group_user(Request $request) {
         $x = Permission::select('id', 'name', 'is_active', 'description')->whereIsPermission(1);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function treatment_group(Request $request) {
+        $x = TreatmentGroup::with('item:id,name,price', 'grup_nota:id,name,slug')
+        ->select('treatment_groups.id', 'treatment_groups.item_id', 'treatment_groups.grup_nota_id', 'treatment_groups.is_active');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

@@ -514,6 +514,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               drug_datatable.rows.add(data.data.drug).draw()
         }
 
+        if(path.indexOf('therapy/treatment_group') > -1) {
+              treatment_group_datatable.rows.add(data.data.treatment_group).draw()
+        }
+
         if(path.indexOf('radiology') > -1) {
               radiology_datatable.rows.add(data.data.radiology).draw()
         }
@@ -700,6 +704,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
       setTimeout(function () {    
             $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+      }, 300)
+  }
+
+  $scope.submitTreatmentGroup = function() {
+      treatment_group_datatable.row.add($scope.treatment_group).draw()
+      $scope.treatment_group = {
+          date : $scope.resume_date,
+          qty : 1
+      }
+      setTimeout(function () {    
+            $('[ng-model="treatment_group.date"]').val( $filter('fullDate')($scope.treatment_group.date))
       }, 300)
   }
 
@@ -979,6 +994,29 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
   }
   $scope.drug_item()
+
+
+  $scope.treatment_group_item = function() {
+      if( path.indexOf('treatment_group') > -1 ) {
+
+          $http.get(baseUrl + '/controller/user/treatment_group').then(function(data) {
+            $scope.data.treatment_group = data.data
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.treatment_group_item()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.treatment_group_item()
 
 
   $scope.lokasi = function() {
@@ -1454,7 +1492,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : resp => $scope.data.treatment.find(x => x.id == resp.item_id).name
+        render : resp => $scope.data.diagnostic.find(x => x.id == resp.item_id) ? $scope.data.diagnostic.find(x => x.id == resp.item_id).name : ''
       },
       {data : 'qty', className : 'text-right', width:'10%', orderable:false},
       {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
@@ -1505,6 +1543,30 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         className : 'text-center',
         render : resp => '<button  type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDrug($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+   
+  treatment_group_datatable = $('#treatment_group_datatable').DataTable({
+    dom: 'rt',
+    'columns' : [
+      {
+          data : null,
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      { 
+        data : null,
+        render : resp => $scope.data.treatment_group.find(x => x.id == resp.item_id).name
+      },
+      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+      
+      {
+        data : null,
+        className : 'text-center',
+        render : resp => '<button  type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteTreatmentGroup($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -1759,6 +1821,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
       setTimeout(function () {    
             $('[ng-model="diagnostic.date"]').val( $filter('fullDate')($scope.diagnostic.date))
+            $('[ng-model="treatment_group.date"]').val( $filter('fullDate')($scope.treatment_group.date))
       }, 300)
       $scope.treatment = {
           is_treatment : 1,
@@ -1773,6 +1836,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         date : $scope.resume_date,
         is_new_signa1 : 1,
         is_new_signa2 : 1
+      }
+      $scope.treatment_group = {
+        is_treatment_group : 1,
+        date : $scope.resume_date
       }
       setTimeout(function () {    
             $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
@@ -1956,6 +2023,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteDrug = function(e) {
     var tr = $(e).parents('tr');
     var data = drug_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
+  }
+
+    
+  $scope.deleteTreatmentGroup = function(e) {
+    var tr = $(e).parents('tr');
+    var data = treatment_group_datatable.row(tr).data()
     $scope.destroyDetail(data.id)
   }
 

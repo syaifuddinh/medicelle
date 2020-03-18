@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="price">
+        <div class="right_col" role="main" ng-controller="treatmentGroup">
           <!-- top tiles -->
           
 
@@ -45,8 +45,8 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          @if(Auth::user()->allow_access('setting.price.create'))
-                              <a href="{{ route('price.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                          @if(Auth::user()->allow_access('setting.treatment_group.create'))
+                              <a href="{{ route('treatment_group.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                           @endif
                       </div>                    
                   </div>
@@ -56,10 +56,9 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                           <th>Grup nota</th>
+                          <th>Grup nota</th>
                           <th>Nama</th>
                           <th>Harga</th>
-                          <th>Kategori</th>
                           <th>Status</th>
                           <th></th>
                         </tr>
@@ -84,5 +83,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/user/price/priceCtrl.js"></script>
+    <script src="{{ asset('') }}js/user/treatment_group/treatmentGroupCtrl.js"></script>
 

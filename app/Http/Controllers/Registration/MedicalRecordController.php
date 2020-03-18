@@ -192,6 +192,7 @@ class MedicalRecordController extends Controller
             'ginekologi_history:medical_record_id,name', 
 
             'treatment:id,medical_record_id,item_id,date,qty,reduksi', 
+            'treatment_group:id,medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic:id,medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic.laboratory_pivot:id,medical_record_detail_id', 
             'drug:id,medical_record_id,item_id,date,qty,signa1,signa2', 
@@ -680,10 +681,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_drug'] = 1;
                 $medicalRecord->diagnostic()->create($input);
-            } else if($request->is_bhp == 1) {
+            } else if($request->is_treatment_group == 1) {
                 $input = $request->all();
-                $input['is_bhp'] = 1;
-                $medicalRecord->bhp()->create($input);
+                $input['is_treatment_group'] = 1;
+                $medicalRecord->treatment_group()->create($input);
             } 
         } catch(Exception $e) {
 

@@ -30,6 +30,8 @@
                               <li><a href="{{ route('price.index') }}">Tarif</a></li>
                           @endif
 
+                          <li><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
+
                           @if(Auth::user()->allow_access('setting.discount'))
                               <li><a href="{{ route('discount.index') }}">Promo</a></li>
                           @endif
