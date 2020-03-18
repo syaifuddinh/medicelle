@@ -1878,6 +1878,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           treatment_datatable.clear().draw();
       }
 
+      if(path.indexOf('therapy/treatment_group') > -1) {
+          treatment_group_datatable.clear().draw();
+      }
+
       if(path.indexOf('therapy/drug') > -1) {
           drug_datatable.clear().draw();
       }

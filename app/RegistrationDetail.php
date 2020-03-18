@@ -44,6 +44,7 @@ class RegistrationDetail extends Model
                 }
                 $medicalRecord = $registrationDetail->medical_record;
                 $treatments = $medicalRecord->treatment;
+                $treatment_groups = $medicalRecord->treatment_group;
                 $diagnostics = $medicalRecord->diagnostic;
                 $bhp = $medicalRecord->bhp;
                 $sewa_ruangan = $medicalRecord->sewa_ruangan;
@@ -51,6 +52,17 @@ class RegistrationDetail extends Model
                 $drug = $medicalRecord->drug;
                 DB::beginTransaction();
                 foreach($treatments as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'is_profit_sharing' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($treatment_groups as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,

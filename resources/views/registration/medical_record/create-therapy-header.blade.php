@@ -14,7 +14,7 @@
             <a href="{{ route('medical_record.edit.therapy.drug', ['id' => $id]) }}">Obat</a>
         </li>
     @endif
-    <li class=''>
+    <li class='{{ strpos(url()->current(), "treatment_group") != null ? "active" : "" }}'>
         <a href="{{ route('medical_record.edit.therapy.treatment_group', ['id' => $id]) }}">Paket Tindakan</a>
     </li>
   </ul>
