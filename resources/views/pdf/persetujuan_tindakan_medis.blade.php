@@ -62,10 +62,10 @@
                         </span>
                     </span> 
 
-                    <span style="display:inline-block;margin-left:90mm">
+                    <span style='float:right;text-align:center;display:inline-block;display:inline-block'>
                         {{ $company->city . ', '. Mod::fullDate(date('Y-m-d'))  }}<br>
                         Yang membuat pernyataan,<br><br><br><br>
-                        <span style='display:inline-block;width:50mm'>
+                        <span style='display:inline-block;'>
                            ( <b>{{ $letter->medical_record->patient->name }}</b> )
                         </span>
                     </span> 

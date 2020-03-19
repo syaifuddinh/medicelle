@@ -106,7 +106,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 
-                                                <input type="text" class='form-control' ng-model='formData.age' ng-change='adjustEndDate()' maxlength='2' only-num>
+                                                <input type="text" class='form-control' ng-model='formData.age' ng-change='adjustEndDate()' maxlength='3' only-num>
                                                 <div class="input-group-addon">Hari</div>
                                             </div>
                                         </div>

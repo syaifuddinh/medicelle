@@ -46,11 +46,11 @@
                 <p style="text-indent:8mm">Berdasarkan hasil pemeriksaan pasien tersebut selama {{ $letter->age }} hari, dari tanggal {{ Mod::fullDate($letter->start_date) }} s/d {{ Mod::fullDate($letter->end_date) }}, Diagnosa : {{ $letter->description }}</p>
                 <br>
                 <p style="text-indent:8mm">Demikian surat keterangan ini diberikan untuk diketahui dan dipergunakan dengan semestinya.</p><br><br>
-                <p>
-                    <span style="display:inline-block;margin-left:120mm">
+                <p style='float:right;text-align:center;display:inline-block;display:inline-block'>
+                    <span style="">
                         {{ $company->city . ', '. Mod::fullDate(date('Y-m-d'))  }}<br>
                         Dokter yang merawat,<br><br><br><br>
-                        <span style='display:inline-block;width:50mm'>
+                        <span style='display:inline-block;'>
                            ( <b>{{ $letter->doctor->name }}</b> )
                         </span>
                     </span> 

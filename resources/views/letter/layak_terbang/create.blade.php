@@ -103,7 +103,7 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-7">
-                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='2' only-num>
+                                            <input type="text" class='form-control' ng-model='formData.age' maxlength='3' only-num>
                                             <small>
                                                 <b class='text-danger'>* Untuk ibu hamil</b>
                                             </small>

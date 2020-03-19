@@ -139,7 +139,7 @@
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Persentase dokter(%)
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
-                                      <input type="text" ng-model='formData.percentage' class="form-control" maxlength='2' ng-value='0' jnumber2 only-num>
+                                      <input type="text" ng-model='formData.percentage' class="form-control" maxlength='3' ng-value='0' jnumber2 only-num>
                                   </div>
                               </div>
                             

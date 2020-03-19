@@ -43,10 +43,10 @@
                 <p style="text-indent:8mm">Telah diperiksa dan dinyatakan dalam kondisi sehat (khusus untuk ibu hamil : ibu dan janin dalam kondisi sehat) dan dinyatakan <b>{{ $letter->option }}</b> dari {{ $company->city }} menuju {{ $letter->additional->destination }}. {{ ucfirst($letter->description) }}.</p>
                 <br><br>
                 <p>
-                    <span style="display:inline-block;margin-left:120mm">
+                    <span style='float:right;text-align:center;display:inline-block;display:inline-block'>
                         {{ $company->city . ', '. Mod::fullDate(date('Y-m-d'))  }}<br>
                         Dokter yang merawat,<br><br><br><br>
-                        <span style='display:inline-block;width:50mm'>
+                        <span style='display:inline-block;'>
                            ( <b>{{ $letter->doctor->name }}</b> )
                         </span>
                     </span> 

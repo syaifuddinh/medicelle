@@ -176,7 +176,7 @@
                   </label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" maxlength='2' only-num  ng-change='countPrice()'>
+                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" maxlength='3' only-num  ng-change='countPrice()'>
                     </div>
                       
                   </div>
