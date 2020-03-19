@@ -37,7 +37,7 @@
                 <p>
                     <span style='display:inline-block;padding-right:8mm'>Mohon</span>
                     <span style='display:inline-block;padding-right:2mm'>:</span>
-                    <span>{{ $type->additional->hospital ?? '' }}</span>
+                    <span>{{ $letter->additional->type ?? '' }}</span>
                 </p><br>
 
                 <p style=''><span style='display:inline-block;width:35mm'>Nama</span> <span style='display:inline-block;font-weight:bold'>: {{ $letter->medical_record->patient->name }}</span></p>
