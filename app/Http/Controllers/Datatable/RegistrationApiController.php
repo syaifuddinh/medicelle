@@ -128,10 +128,13 @@ class RegistrationApiController extends Controller
             $query->whereBetween('date', [$request->date_start, $request->date_end])
             ->whereStatus(2);
         })
-        ->whereRaw('((is_laboratory_treatment = 1 AND is_laboratory = 0)OR (is_laboratory_treatment = 0 AND is_laboratory = 0))')
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
+        })
+        ->orWhere('is_laboratory_treatment', 1)
+        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
+            $query->whereStatus($status);
         })
         ->select(
             'pivot_medical_records.id',
