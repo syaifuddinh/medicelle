@@ -192,7 +192,7 @@ $scope.showItemDetail = function(detail, grup_nota, index) {
     row.name = '<div style="padding-left:8mm">' + row.item.name + '</div>'
     row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
     row.debet_binding = $filter('number')(row.debet)
-    row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='2' only-num></input>"
+    row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='3' only-num></input>"
     invoice_detail_datatable.row.add(row).draw()
 } 
 
