@@ -7,6 +7,7 @@ use App\Invoice;
 use App\Discount;
 use DB;
 use Mod;
+use Exception;
 
 class InvoiceDetail extends Model
 {
@@ -62,8 +63,20 @@ class InvoiceDetail extends Model
 
             if($invoiceDetail->is_item == 1 && $invoiceDetail->is_profit_sharing == 1) {
                 $total_debet = $invoiceDetail->debet;
-                $price = DB::table('prices')->whereItemId($invoiceDetail->item_id)->first();
-                $percentage = $price->percentage;
+                $current_item = DB::table('items')
+                ->whereId($invoiceDetail->item_id)
+                ->first();
+                if(!$current_item) {
+                    throw new Exception('Barang tidak ditemukan');
+                } else {
+                    if($current_item->is_treatment_group == 1) {
+                        $price = DB::table('treatment_groups')->whereItemId($invoiceDetail->item_id)->first();
+                    } else {
+                        $price = DB::table('prices')->whereItemId($invoiceDetail->item_id)->first();
+                    }
+                }
+
+                $percentage = $price->percentage ?? 0;
                 $doctor_allocation = $total_debet * $percentage / 100;
                 $owner_allocation = $total_debet * (100 - $percentage) / 100;
                 $reduksi_value = $doctor_allocation * $invoiceDetail->reduksi / 100;

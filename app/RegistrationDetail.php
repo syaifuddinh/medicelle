@@ -25,7 +25,13 @@ class RegistrationDetail extends Model
 
         static::updating(function(RegistrationDetail $registrationDetail) {
             if($registrationDetail->status == 1) {
-                PivotMedicalRecord::where('registration_detail_id', '!=', $registrationDetail->id)->whereMedicalRecordId($registrationDetail->medical_record->id)->delete();
+                $medical_record = DB::table('medical_records')
+                ->whereRegistrationDetailId($registrationDetail->id)
+                ->first();
+                if($medical_record == null) {
+                    throw new Exception('Rekam medis tidak ditemukan');
+                } 
+                PivotMedicalRecord::where('registration_detail_id', '!=', $registrationDetail->id)->whereMedicalRecordId($medical_record->id)->delete();
                 $latestInvoice = Invoice::whereRegistrationId($registrationDetail->registration_id)->whereIsNotaPengobatan(1)->first();
                 if($latestInvoice == null) {
                     $registration = $registrationDetail->registration;

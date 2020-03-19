@@ -84,7 +84,7 @@
                                               
 
                           <div class="col-md-6 col-sm-6">
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                              <div class="form-group" ng-show=' !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Tujuan
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize"  style='padding-left:9.6mm'>
@@ -111,7 +111,7 @@
                               </div>
                             
                             
-                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK" && (formData.is_registration == 0)'>
+                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK")'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>

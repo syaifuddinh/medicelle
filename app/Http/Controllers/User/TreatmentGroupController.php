@@ -23,7 +23,7 @@ class TreatmentGroupController extends Controller
     public function index()
     {
         $treatmentGroup = TreatmentGroup::join('items', 'items.id', 'treatment_groups.item_id')
-        ->select('treatment_groups.id', 'items.name AS name')
+        ->select('items.id', 'items.name AS name')
         ->where('treatment_groups.is_active', 1)
         ->get();
         return Response::json($treatmentGroup, 200);

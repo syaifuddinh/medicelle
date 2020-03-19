@@ -1,6 +1,6 @@
 <ul class="nav nav-pills">
     @if( Specialization::allow_access('tindakan') == 1)
-        <li class='{{ strpos(url()->current(), "treatment") != null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "treatment") == null ? route("medical_record.edit.therapy.treatment", ["id" => $id]) : "#" }}'>Tindakan</a>
+        <li class='{{ strpos(url()->current(), "treatment") != null && strpos(url()->current(), "treatment_group") == null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "treatment") == null ? route("medical_record.edit.therapy.treatment", ["id" => $id]) : "#" }}'>Tindakan</a>
         </li>
     @endif
 
