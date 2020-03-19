@@ -69,7 +69,7 @@ $(document).ready(function(){
 		$('.notif-item').remove()
 		for(x in details) {
 			detail = details[x]
-			li = $('<li class="notif-item"><a href="{{ ' + detail.route + ' }}"></a></li>')
+			li = $('<li class="notif-item"><a href="#" onclick="readNotif(' + detail.id + ')"></a></li>')
 			title = $('<span><b>' + detail.title + '</b></span>')
 			description = $('<span class="message">' + detail.description + '</span>')
 			li.find('a').append(title)
@@ -77,6 +77,31 @@ $(document).ready(function(){
 			notif_container.prepend(li)
 		}
 	}
+
+  readNotif = function(notif_id) {
+        $.ajax({
+            'url':baseUrl + '/controller/user/notification/' + notif_id,
+            'type' : 'get',
+            success:function(data) {
+              var resp =  data
+              location.href = resp.route_link
+            },
+            error : function(xhr) {
+              var resp = JSON.parse(xhr.responseText);
+                if (xhr.status==422) {
+                  var det="";
+                  angular.forEach(resp.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,resp.message);
+                } else {
+
+                   toastr.error(resp.message,"Error Has Found !");
+                }
+            }
+          });
+       
+  }
 
 	getUnreadNotifAmount()
 	setInterval(function(){
