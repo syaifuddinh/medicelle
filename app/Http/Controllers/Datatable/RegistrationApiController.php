@@ -12,6 +12,7 @@ use App\Assesment;
 use App\MedicalRecord;
 use DataTables;
 use Auth;
+use DB;
 
 class RegistrationApiController extends Controller
 {
@@ -114,6 +115,7 @@ class RegistrationApiController extends Controller
 
     public function laboratory_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
+        DB::enableQueryLog();
         $x = PivotMedicalRecord::with(
             'registration_detail:id,registration_id,doctor_id,polyclinic_id',
             'registration_detail.registration:id,code,patient_id,date',
@@ -126,11 +128,11 @@ class RegistrationApiController extends Controller
             $query->whereBetween('date', [$request->date_start, $request->date_end])
             ->whereStatus(2);
         })
+        ->whereRaw('((is_laboratory_treatment = 1 AND is_laboratory = 0)OR (is_laboratory_treatment = 0 AND is_laboratory = 0))')
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
         })
-        ->orWhere('is_laboratory_treatment', 1)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',

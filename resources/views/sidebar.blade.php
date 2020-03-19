@@ -26,12 +26,6 @@
                           <li><a href="{{ route('grup_nota.index') }}">Grup Nota</a></li>
                           @endif
 
-                          @if(Auth::user()->allow_access('setting.price'))
-                              <li><a href="{{ route('price.index') }}">Tarif</a></li>
-                          @endif
-
-                          <li><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
-
                           @if(Auth::user()->allow_access('setting.discount'))
                               <li><a href="{{ route('discount.index') }}">Promo</a></li>
                           @endif
@@ -67,6 +61,13 @@
                         @if(Auth::user()->allow_access('master.medical_item'))
                             <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
                         @endif
+                        
+                        @if(Auth::user()->allow_access('setting.price'))
+                              <li><a href="{{ route('price.index') }}">Tarif</a></li>
+                          @endif
+
+                        <li><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
+
 
                         @if(Auth::user()->allow_access('master.obat'))
                             <li><a href="{{ route('obat.index') }}">Obat</a></li>

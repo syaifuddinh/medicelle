@@ -14,7 +14,7 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
       flag = 'chemoterapy'
   }  else if( path.indexOf('laboratory') > -1) {
       patient_url = patient_head + 'laboratory_registered'
-      flag = 'chemoterapy'
+      flag = 'laboratory'
   } else if( path.indexOf('ruang_tindakan') > -1) {
       patient_url = patient_head + 'ruang_tindakan_registered'
       flag = 'ruang_tindakan'
@@ -22,7 +22,7 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
       patient_url = patient_head + 'medical_checkup_registered'
       flag = 'medical_checkup'
   } 
-
+  $scope.flag = flag
   patient_url += '/finish'
 
   oTable = $('#listview').DataTable({
@@ -78,6 +78,13 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         className : path.indexOf('polyclinic') > -1 ? '' : 'hidden',
       },
       {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
+      {
+        data:null, 
+        orderable:false,
+        searchable:false,
+        className : $scope.flag == 'laboratory'  || $scope.flag == 'radiology' ? '' : 'hidden',
+        render : resp => resp.is_referenced == 1 && resp.is_laboratory_treatment == 0 ? 'Permintaan' : (resp.is_laboratory_treatment  == 1 ? 'Uji Lab' :'Pemeriksaan')
+      },
       {
         data: null, 
         orderable : false,
