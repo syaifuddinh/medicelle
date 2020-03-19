@@ -31,6 +31,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
        }
     })
 
+    $scope.finishedMedicalRecord = function(is_finish) {
+        if(is_finish == 1) {
+          var role_layer = $('#role_layer')
+          var lock = $('<div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>')
+          role_layer.append(lock)
+        }
+    }
 
     $scope.checkStock = function(item_id) {
       var param = {
@@ -473,6 +480,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
+        $scope.finishedMedicalRecord($scope.formData.registration_detail.status)
         setTimeout(function () {    
               $('[ng-model="formData.hpht"]').val( $filter('fullDate')($scope.formData.hpht))
               $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))

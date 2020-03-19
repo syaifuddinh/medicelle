@@ -162,6 +162,7 @@ class MedicalRecordController extends Controller
 
     public function fetch($id) {
         $resp = MedicalRecord::with(
+            'registration_detail:id,status', 
             'patient:id,name,age,address,gender,phone,marriage_status', 
             'bhp:id,medical_record_id,item_id,qty,date,lokasi_id',
             'bhp.item:id,name,piece_id',

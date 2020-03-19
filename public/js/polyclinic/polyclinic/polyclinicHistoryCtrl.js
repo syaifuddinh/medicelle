@@ -47,14 +47,23 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
 
     columns:[
       {data:"registration_detail.registration.code", name:"registration_detail.registration.code", width:'13%',},
-      {data:"medical_record.code", name:"medical_record.code", width:'16%',},
+      {
+        data:null, 
+        name:"medical_record.code", 
+        width:'16%',
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
+      },
       {
         data:null, 
         searchable:false,
         orderable:false,
         render:resp => $filter('fullDate')(resp.registration_detail.registration.date),
       },
-      {data:"registration_detail.registration.patient.name", name:"registration_detail.registration.patient.name"},
+      {
+        data:null, 
+        name:"registration_detail.registration.patient.name",
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+      },
       {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {
         data: null, 
@@ -76,7 +85,7 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-default' href='" + baseUrl +  '/' + flag + "/patient/" + resp.registration_detail.registration_id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {
