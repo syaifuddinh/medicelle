@@ -68,7 +68,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       {
         data:null, 
         name:"registration_detail.registration.patient.name",
-        render : resp => "<a class='btn' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "'>" + resp.registration_detail.registration.patient.name + "</a>"
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/" + flag + "/" + resp.registration_detail.registration.patient.id + "/patient'>" + resp.registration_detail.registration.patient.name + "</a>"
       },
       {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {

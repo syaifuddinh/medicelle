@@ -125,7 +125,7 @@
                     <span style="display:inline-block;margin-right:1mm">HARI PERTAMA HAID TERAKHIR / MENOPAUSE</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                         {{ $medicalRecord->additional->papsmear_hari_menopause ?? $dot }}
+                         {{ $medicalRecord->hpht ?? $dot }}
                     </span>                    
                 </div>
                 <div>
@@ -139,7 +139,7 @@
                     <span style="display:inline-block;width:54mm">RIWAYAT VAKSINASI</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_vaksinasi ?? $dot }}
+                        {{ $medicalRecord->additional->obgyn_papsmear ?? $dot }}
                     </span>
                 </div>
                 <div>
@@ -171,14 +171,14 @@
                     <span style="display:inline-block;width:54mm">JUMLAH SLIDE PAPSMEAR  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_date ? Mod::fullDate($medicalRecord->additional->papsmear_jumlah_slide) : $dot }}
+                        {{ $medicalRecord->additional->papsmear_jumlah_slide ? $medicalRecord->additional->papsmear_jumlah_slide : $dot }}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">LOKASI PENGAMBILAN  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_date ? Mod::fullDate($medicalRecord->additional->papsmear_lokasi) : $dot }}
+                        {{ $medicalRecord->additional->papsmear_lokasi ? $medicalRecord->additional->papsmear_lokasi : $dot }}
                     </span>
                 </div>
                 <div>
@@ -192,7 +192,7 @@
                     <span style="display:inline-block;width:54mm">INFORMASI KLINIS LAIN</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_date ? Mod::fullDate($medicalRecord->additional->papsmear_description) : $dot }}
+                        {{ $medicalRecord->additional->papsmear_description ? $medicalRecord->additional->papsmear_description : $dot }}
                     </span>
                 </div>
 

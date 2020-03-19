@@ -38,11 +38,10 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Pasien<span class="required">*</span>
                                     </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12" {!! Auth::user()->contact_id != null ? (Auth::user()->contact->is_doctor == 1 ? 'ng-init="is_new_patient = 1"' : '') : '' !!}>
                                         <div class="input-group">
                                             <input type="text" id="first-name" ng-model='formData.patient.name' required="required" class="form-control col-md-7 col-xs-12" ng-click='showPatients()' ng-readonly='!is_new_patient' ng-change="changeFamilyName()">
                                             <div class="input-group-addon" ng-click='fillPatient()'>

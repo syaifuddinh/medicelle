@@ -100,7 +100,7 @@ class LaboratoryTypeController extends Controller
         $laboratory_type->save();
         $laboratory_type->laboratory_type_detail()->delete();
         foreach ($request->detail as $value) {
-            if( null != ($value['name']) ?? null) {
+            if( null != ($value['name'] ?? null)) {
                 $laboratory_type->laboratory_type_detail()->create([
                     'name' => $value['name']
                 ]);
