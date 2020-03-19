@@ -141,7 +141,7 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<% formData.detail[" + index + "].used_qty %>"
+                return "<% formData.detail[" + index + "].used_qty | number %>"
             }
           },
           {

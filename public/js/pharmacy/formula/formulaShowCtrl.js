@@ -158,7 +158,7 @@ $scope.approve = function(id) {
         $scope.formData = data.data
         var detail = data.data.detail
           var unit
-
+          formula_detail_datatable.clear().draw()
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
@@ -170,6 +170,7 @@ $scope.approve = function(id) {
               $scope.insertItem(unit)
           }
 
+          $scope.formData.detail = detail
           $scope.showRegistration()
     }, function(error) {
       $rootScope.disBtn=false;

@@ -36,7 +36,7 @@ class MovementDetail extends Model
             $stock = DB::table('stocks')
             ->whereItemId($movementDetail->item_id)
             ->whereLokasiId($movementDetail->lokasi_awal_id)
-            ->select('id', 'qty')
+            ->select('id', 'qty', 'expired_date')
             ->first();
 
             if($movementDetail->qty > ($stock->qty ?? 0)) {
@@ -54,7 +54,8 @@ class MovementDetail extends Model
                 'description' => 'Perpindahan Barang dari Lokasi Awal',
                 'item_id' => $movementDetail->item_id,
                 'in_qty' => $movementDetail->qty,
-                'lokasi_id' => $movementDetail->lokasi_awal_id
+                'lokasi_id' => $movementDetail->lokasi_awal_id,
+                'expired_date' => $stock->expired_date
             ]);
 
             $stockTransactionDestination = StockTransaction::create([
@@ -62,7 +63,8 @@ class MovementDetail extends Model
                 'description' => 'Perpindahan Barang ke Lokasi Akhir',
                 'item_id' => $movementDetail->item_id,
                 'in_qty' => $movementDetail->qty,
-                'lokasi_id' => $movementDetail->lokasi_akhir_id
+                'lokasi_id' => $movementDetail->lokasi_akhir_id,
+                'expired_date' => $stock->expired_date
             ]);
 
             $movementDetail->stock_transaction_source_id = $stockTransactionSource->id;

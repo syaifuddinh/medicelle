@@ -281,6 +281,9 @@ app.controller('movementCreate', ['$scope', '$http', '$rootScope', '$filter', '$
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
         movement_detail_datatable.row.add({}).draw()
+        $timeout(function () {
+            $scope.showItemModal($scope.formData.detail.length - 1)
+        }, 500)
     }
 
     $scope.deleteDetail = function(index, obj) {
