@@ -6,6 +6,9 @@ use Carbon\Carbon;
 
 class Mod {
     public static function fullDate($time) {
+        if($time == null) {
+            return null;
+        }
         $d = self::calc('d', $time);
         $m = (int )self::calc('m', $time) - 1;
         $Y = self::calc('Y', $time);

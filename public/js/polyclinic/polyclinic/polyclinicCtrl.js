@@ -57,7 +57,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         data:null, 
         name:"medical_record.code", 
         width:'16%',
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/" + flag + "/" + resp.registration_detail.registration.patient.id + "/patient'>" + resp.medical_record.code + "</a>"
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
       },
       {
         data:null, 
@@ -68,7 +68,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       {
         data:null, 
         name:"registration_detail.registration.patient.name",
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/" + flag + "/" + resp.registration_detail.registration.patient.id + "/patient'>" + resp.registration_detail.registration.patient.name + "</a>"
+        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
       },
       {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {

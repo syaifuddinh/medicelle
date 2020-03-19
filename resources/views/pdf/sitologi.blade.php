@@ -160,35 +160,7 @@
                         {{ $medicalRecord->additional->sitologi_date ? Mod::fullDate($medicalRecord->additional->sitologi_date) : $dot }}
                     </span>
                 </div>
-                <div>
-                    <span style="display:inline-block;width:77mm">JUMLAH SLIDE PAPSMEAR  </span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_jumlah_slide ?? $dot }}
-                    </span>
-                </div>
-                <div>
-                    <span style="display:inline-block;width:77mm">LOKASI PENGAMBILAN  </span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_lokasi ?? $dot }}
-                    </span>
-                </div>
-                <div>
-                    <span style="display:inline-block;width:77mm">GAMBARAN PORTIO CERVIX / VAGINA  </span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_cervix ?? $dot }}
-                    </span>
-                </div>
-                <div>
-                    <span style="display:inline-block;width:77mm">INFORMASI KLINIS LAIN</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_description ?? $dot }}
-                    </span>
-                </div>
-
+                
                 <div style='margin-top:10mm'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:40%;display:inline-block'>
