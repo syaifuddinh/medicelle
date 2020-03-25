@@ -312,6 +312,14 @@ class MedicalRecordController extends Controller
         return $pdf->stream('mammografi.pdf');
     }
 
+    public function radiology_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $pdf = PDF::loadview('pdf/radiology/radiology',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('radiology.pdf');
+    }
+
     public function xray_pdf(Request $request, $id)
     {
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);

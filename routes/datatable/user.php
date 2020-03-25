@@ -9,5 +9,6 @@ Route::prefix('user')->group(function(){
     Route::get('treatment_group', 'UserApiController@treatment_group');
     Route::get('signa', 'UserApiController@signa');
     Route::get('laboratory_type', 'UserApiController@laboratory_type');
+    Route::get('radiology_type', 'UserApiController@radiology_type');
 });
 

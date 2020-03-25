@@ -93,8 +93,7 @@ class MedicalRecordDetail extends Model
                 ->whereItemId($medicalRecordDetail->item_id)
                 ->first();
                 if($medicalRecordDetail->is_diagnostic == 1) {
-                    $radiology_groups = ['USG MAMMAE', 'USG ABDOMEN UPPER LOWER WANITA', 'USG ABDOMEN UPPER LOWER PRIA', 'USG THYROID', 'MAMMOGRAFI', 'X-RAY']; 
-                    if( array_search(trim($price->radiology_group), $radiology_groups) !== false ) {
+                    if($price->radiology_group != null) {
                         DB::table('pivot_medical_records')
                         ->insert([
                             'medical_record_id' => $medicalRecordDetail->medical_record_id,

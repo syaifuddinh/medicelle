@@ -150,7 +150,7 @@ class PriceController extends Controller
      */
     public function show($id)
     {   
-        $price = Price::with('grup_nota:id,slug,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name');
+        $price = Price::with('grup_nota:id,slug,name', 'radiology_type:id,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name');
         return Response::json($price->find($id), 200);
     }
 

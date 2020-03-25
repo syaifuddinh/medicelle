@@ -202,13 +202,6 @@
                             </span>
                         </div>
                     </div>
-
-                    @include('polyclinic/polyclinic/radiology/usg_mammae')
-                    @include('polyclinic/polyclinic/radiology/usg_abdomen_upper_lower_pria')
-                    @include('polyclinic/polyclinic/radiology/usg_abdomen_upper_lower_wanita')
-                    @include('polyclinic/polyclinic/radiology/usg_thyroid')
-                    @include('polyclinic/polyclinic/radiology/xray')
-                    @include('polyclinic/polyclinic/radiology/mammografi')
                     
                     @include('polyclinic/polyclinic/laboratory/laboratory_treatment_description')
                     

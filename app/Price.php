@@ -19,6 +19,10 @@ class Price extends Model
         });
     }
 
+    public function radiology_type() {
+        return $this->belongsTo('App\RadiologyType', 'radiology_group', 'id');
+    }
+
     public function service() {
         return $this->belongsTo('App\Item', 'item_id', 'id');
     }

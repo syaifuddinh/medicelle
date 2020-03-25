@@ -13,19 +13,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
       if(path.indexOf('ruang_tindakan') > -1) {
           window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/pdf')
       } else if(path.indexOf('radiology') > -1) {
-          if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG MAMMAE") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_mammae/pdf')
-          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG ABDOMEN UPPER LOWER WANITA") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_abdomen_upper_lower_wanita/pdf')
-          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG ABDOMEN UPPER LOWER PRIA") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_abdomen_upper_lower_pria/pdf')
-          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "USG THYROID") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/usg_thyroid/pdf')
-          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "MAMMOGRAFI") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/mammografi/pdf')
-          } else if($scope.pivot.medical_record_detail.item.price.radiology_group == "X-RAY") {
-              window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/xray/pdf')
-          }
+          window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/radiology/pdf')
       } else if(path.indexOf('laboratory') > -1) {
             if($scope.pivot.is_laboratory == 1) {
 

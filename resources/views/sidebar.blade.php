@@ -38,6 +38,7 @@
                           <li><a href="{{ route('laboratory_type.index') }}">Laboratorium</a></li>
                           @endif
                           
+                          <li><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
                         </ul>
                       </li>
                   @endif

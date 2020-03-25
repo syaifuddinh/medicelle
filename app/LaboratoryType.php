@@ -10,7 +10,5 @@ class LaboratoryType extends Model
 
     public function laboratory_type_detail() {
         return $this->hasMany('App\LaboratoryTypeDetail');
-    }
-
-    
+    }    
 }

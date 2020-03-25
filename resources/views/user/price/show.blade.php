@@ -96,7 +96,7 @@
                                   <label class="col-md-3 col-xs-12" for="last-name">Kelompok Radiologi
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize" style='padding-left:9.6mm'>
-                                        <% formData.radiology_group.toLowerCase() %>
+                                        <% formData.radiology_type.name.toLowerCase() %>
                                   </div>
                               </div>
                             

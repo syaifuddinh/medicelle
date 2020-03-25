@@ -91,6 +91,21 @@ Route::name('laboratory_type.')->prefix('laboratory_type')->group(function(){
     })->name('show');
 });
 
+Route::name('radiology_type.')->prefix('radiology_type')->group(function(){
+    Route::get('/', function (){
+        return view('user/radiology_type/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/radiology_type/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/radiology_type/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/radiology_type/show')->withId($id);
+    })->name('show');
+});
+
 Route::name('price.')->prefix('price')->group(function(){
     Route::get('/', function (){
         return view('user/price/index');

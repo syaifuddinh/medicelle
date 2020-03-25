@@ -87,14 +87,8 @@
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Kelompok radiologi
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
-                                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok Radiologi'"  chosen allow-single-deselect="true" ng-model="formData.radiology_group">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok Radiologi'" chosen allow-single-deselect="true" ng-model="formData.radiology_group" ng-options="c.id as c.name for c in data.radiology_type">
                                         <option value=""></option>
-                                        <option value="USG MAMMAE">USG Mammae</option>
-                                        <option value="USG ABDOMEN UPPER LOWER WANITA">USG Abdomen Upper Lower Wanita</option>
-                                        <option value="USG ABDOMEN UPPER LOWER PRIA">USG Abdomen Upper Lower Pria</option>
-                                        <option value="USG THYROID">USG Thyroid</option>
-                                        <option value="MAMMOGRAFI">Mammografi</option>
-                                        <option value="X-RAY">X-Ray</option>
                                     </select>
                                   </div>
                               </div>

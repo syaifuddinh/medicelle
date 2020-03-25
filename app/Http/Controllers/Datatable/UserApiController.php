@@ -10,6 +10,7 @@ use App\User;
 use App\Item;
 use App\Price;
 use App\LaboratoryType;
+use App\RadiologyType;
 use App\TreatmentGroup;
 use Illuminate\Database\Eloquent\Builder;
 use DataTables;
@@ -64,6 +65,15 @@ class UserApiController extends Controller
 
     public function laboratory_type(Request $request) {
         $x = LaboratoryType::select('id', 'name', 'is_active');
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function radiology_type(Request $request) {
+        $x = RadiologyType::select('id', 'name', 'is_active');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

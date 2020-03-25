@@ -74,7 +74,6 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', func
         $scope.showLaboratoryType()
     }
 
-
     $scope.grup_nota = function() {
         $http.get(baseUrl + '/controller/user/grup_nota').then(function(data) {
             $scope.data.grup_nota = data.data
@@ -94,6 +93,27 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', func
         });
     }
     $scope.grup_nota()
+
+
+    $scope.radiology_type = function() {
+        $http.get(baseUrl + '/controller/user/radiology_type').then(function(data) {
+            $scope.data.radiology_type = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.radiology_type()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.radiology_type()
 
     $scope.piece = function() {
         $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
