@@ -104,6 +104,17 @@ class MedicalRecordDetail extends Model
                         ]);
                     }
 
+                    if($price->is_chemoterapy == 1) {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_chemoterapy' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                    }
+
                     $price = Price::find($price->id);
                     if($price->laboratory_treatment()->count('id') > 0) {
                            $checklist = [];

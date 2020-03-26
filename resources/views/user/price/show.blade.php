@@ -68,6 +68,15 @@
                                     </label><br>
                                     <label class="radio-inline">
                                         <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_treatment' ng-true-value='1' ng-false-value='0'> Tindakan
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_diagnostic' ng-true-value='1' ng-false-value='0'> Diagnostik
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_chemoterapy' ng-true-value='1' ng-false-value='0'> Kemoterapi
                                     </label>
                                     <div style='position:absolute;width:100%;height:100%;top:0;left:0'></div>
                                   </div>

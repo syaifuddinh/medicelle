@@ -316,7 +316,13 @@ class MedicalRecordController extends Controller
     {
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
-        $pdf = PDF::loadview('pdf/radiology/radiology',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $price = DB::table('prices')
+        ->whereItemId($pivotMedicalRecord->medical_record_detail->item_id)
+        ->first();
+        $radiologyType = DB::table('radiology_types')
+        ->whereId($price->radiology_group)
+        ->first();
+        $pdf = PDF::loadview('pdf/radiology/radiology',['pivotMedicalRecord' => $pivotMedicalRecord, 'medicalRecord' => $medicalRecord, 'radiologyType' => $radiologyType, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
         return $pdf->stream('radiology.pdf');
     }
 

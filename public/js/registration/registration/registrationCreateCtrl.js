@@ -214,42 +214,26 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     });
   }
 
-
-  $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
-    $scope.data.polyclinic = data.data
-    $scope.showDoctor()
-  }, function(error) {
-    $rootScope.disBtn=false;
-    if (error.status==422) {
-      var det="";
-      angular.forEach(error.data.errors,function(val,i) {
-        det+="- "+val+"<br>";
+  $scope.showPolyclinic = function() {
+      $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
+        $scope.data.polyclinic = data.data
+        $scope.showDoctor()
+      }, function(error) {
+        $scope.showPolyclinic();
       });
-      toastr.warning(det,error.data.message);
-    } else {
-      toastr.error(error.data.message,"Error Has Found !");
-    }
-  });
+  }
+  $scope.showPolyclinic();
 
-  $http.get(baseUrl + '/controller/master/agency').then(function(data) {
-    $scope.data.agency = data.data
 
-  }, function(error) {
-    $rootScope.disBtn=false;
-    if (error.status==422) {
-      var det="";
-      angular.forEach(error.data.errors,function(val,i) {
-        det+="- "+val+"<br>";
+  $scope.showAgency = function() {
+
+      $http.get(baseUrl + '/controller/master/agency').then(function(data) {
+        $scope.data.agency = data.data
+      }, function(error) {
+        $scope.showAgency()
       });
-      toastr.warning(det,error.data.message);
-    } else {
-      toastr.error(error.data.message,"Error Has Found !");
-    }
-  });
-
-  // $scope.adjustTime = function() {
-  //   $scope.detail.time = ($scope.detail.hour || '00') + ':' + ($scope.detail.minute || '00')
-  // } 
+  }
+  $scope.showAgency()
 
   $scope.adjustDestination = function() {
     $scope.detail.doctor_id = null

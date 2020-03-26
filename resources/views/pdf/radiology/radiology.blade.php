@@ -32,61 +32,13 @@
             </div>
 
             <div class="col-md-12" style='padding-left:5.5mm'>
-                <p style='text-align:center;font-weight:bold;font-size:101%;'>HASIL BACAAN ULTRASONOGRAPHY ( USG )</p>
-                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>ULTRASONOGRAPHY ( USG ) MAMMOGRAFI </p>
+                <p style='text-align:center;font-weight:bold;font-size:101%;'>HASIL BACAAN </p>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>{{ strtoupper($radiologyType->name) }}</p>
                 
                 <div style='margin-bottom:4mm'>
-                    <p>TS. Yth, berikut saya sampaikan hasil Mammografi</p>
+                    <p>TS. Yth, berikut saya sampaikan hasil {{ $radiologyType->name }}</p>
                 </div>
 
-                <div>
-                    <span style="display:inline-block;width:22mm">CC Kanan</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_cc_kanan ?? $dot }}
-                    </span>
-                </div>
-
-                <div>
-                    <span style="display:inline-block;width:22mm">MLO Kanan</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kanan ?? $dot }}
-                    </span>
-                </div>
-
-                <div>
-                    <span style="display:inline-block;width:22mm">CC Kiri</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_cc_kiri ?? $dot }}
-                    </span>
-                </div>
-
-                <div>
-                    <span style="display:inline-block;width:22mm">MLO Kiri</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kiri ?? $dot }}
-                    </span>
-                </div>
-
-                <div>
-                    <span style="display:inline-block;width:22mm">Kesimpulan</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_kesimpulan ?? $dot }}
-                    </span>
-                </div>
-
-                <div>
-                    <span style="display:inline-block;width:22mm">Saran</span>
-                    <span style="display:inline-block;">:</span>
-                    <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_saran ?? $dot }}
-                    </span>
-                </div>
-                
                 <div style='position:absolute;bottom:28mm'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:40%;display:inline-block'>

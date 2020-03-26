@@ -60,6 +60,9 @@
                                     </label><br>
                                     <label class="radio-inline">
                                         <input type="checkbox" ng-model='formData.is_diagnostic' ng-true-value='1' ng-false-value='0'> Diagnostik
+                                    </label><br>
+                                    <label class="radio-inline">
+                                        <input type="checkbox" ng-model='formData.is_chemoterapy' ng-true-value='1' ng-false-value='0'> Kemoterapi
                                     </label>
                                   </div>
                               </div>

@@ -13,21 +13,27 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
   if( path.indexOf('polyclinic') > -1) {
       patient_url = patient_head + 'polyclinic_registered'
       flag = 'polyclinic'
+      flagLabel = 'Poliklinik'
   } else if( path.indexOf('radiology') > -1) {
       patient_url = patient_head + 'radiology_registered'
       flag = 'radiology'
+      flagLabel = 'Radiologi'
   } else if( path.indexOf('chemoterapy') > -1) {
       patient_url = patient_head + 'chemoterapy_registered'
       flag = 'chemoterapy'
+      flagLabel = 'Kemoterapi'
   }  else if( path.indexOf('laboratory') > -1) {
       patient_url = patient_head + 'laboratory_registered'
       flag = 'laboratory'
+      flagLabel = 'Laboratorium'
   } else if( path.indexOf('ruang_tindakan') > -1) {
       patient_url = patient_head + 'ruang_tindakan_registered'
       flag = 'ruang_tindakan'
+      flagLabel = 'Ruang Tindakan'
   } else if( path.indexOf('medical_checkup') > -1) {
       patient_url = patient_head + 'medical_checkup_registered'
       flag = 'medical_checkup'
+      flagLabel = 'Medical Checkup'
   } 
   $scope.flag = flag
 
@@ -45,9 +51,9 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Registrasi - '+new Date(),
+        'filename' : 'Pasien ' + flagLabel + ' - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Registrasi'
+        'title' : 'Pasien' + flagLabel
       },
     ],
 
@@ -93,7 +99,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       },
       {
         data: null,
-        width:'10%', 
+        width:'14%', 
         orderable : false,
         searchable : false,
         className : 'text-center',
