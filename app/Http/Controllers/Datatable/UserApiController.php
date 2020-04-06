@@ -9,6 +9,7 @@ use App\Notification;
 use App\User;
 use App\Item;
 use App\Price;
+use App\SideEffect;
 use App\LaboratoryType;
 use App\RadiologyType;
 use App\TreatmentGroup;
@@ -63,8 +64,26 @@ class UserApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function keadaan_umum(Request $request) {
+        $x = Permission::select('id', 'name', 'description', 'is_active', 'description')->whereIsKeadaanUmum(1);
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function laboratory_type(Request $request) {
         $x = LaboratoryType::select('id', 'name', 'is_active');
+        $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function side_effect(Request $request) {
+        $x = SideEffect::select('id', 'name', 'is_active');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

@@ -39,6 +39,10 @@
                           @endif
                           
                           <li><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
+                          
+                          <li><a href="{{ route('keadaan_umum.index') }}">Keadaan Umum</a></li>
+                          
+                          <li><a href="{{ route('side_effect.index') }}">Efek Samping</a></li>
                         </ul>
                       </li>
                   @endif

@@ -22,6 +22,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_thyroid/pdf', 'MedicalRecordController@usg_thyroid_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/mammografi/pdf', 'MedicalRecordController@mammografi_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/radiology/pdf', 'MedicalRecordController@radiology_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/chemoterapy/pdf', 'MedicalRecordController@chemoterapy_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/xray/pdf', 'MedicalRecordController@xray_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_pria/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_pria_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_wanita/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_wanita_pdf');

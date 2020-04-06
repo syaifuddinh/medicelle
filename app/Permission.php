@@ -16,7 +16,7 @@ class Permission extends Model
         parent::boot();
 
         static::creating(function(Permission $permission){
-            if($permission->is_permission == 1 || $permission->is_signa == 1 || $permission->is_lokasi == 1)
+            if($permission->is_permission == 1 || $permission->is_signa == 1 || $permission->is_lokasi == 1 || $permission->is_keadaan_umum == 1)
                 $permission->slug = Str::random() . Str::snake($permission->name);
         });
 

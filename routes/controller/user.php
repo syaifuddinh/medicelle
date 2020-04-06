@@ -11,6 +11,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('grup_nota/activate/{permission}', 'GrupNotaController@activate');
         Route::resource('grup_nota', 'GrupNotaController');
 
+        Route::put('keadaan_umum/activate/{permission}', 'KeadaanUmumController@activate');
+        Route::resource('keadaan_umum', 'KeadaanUmumController');
+
         Route::put('signa/activate/{permission}', 'SignaController@activate');
         Route::resource('signa', 'SignaController');
         Route::get('signa/category/{flag?}', 'SignaController@index');
@@ -31,6 +34,10 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('laboratory_type/activate/{id}', 'LaboratoryTypeController@activate');
         Route::post('laboratory_type/{id}', 'LaboratoryTypeController@update');
         Route::resource('laboratory_type', 'LaboratoryTypeController');
+
+        Route::put('side_effect/activate/{id}', 'SideEffectController@activate');
+        Route::post('side_effect/{id}', 'SideEffectController@update');
+        Route::resource('side_effect', 'SideEffectController');
 
         Route::put('radiology_type/activate/{id}', 'RadiologyTypeController@activate');
         Route::post('radiology_type/{id}', 'RadiologyTypeController@update');

@@ -6,6 +6,7 @@ use App\MedicalRecord;
 use App\MedicalRecordDetail;
 use App\LaboratoryType;
 use App\PivotMedicalRecord;
+use App\SideEffect;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Mod;
@@ -323,6 +324,25 @@ class MedicalRecordController extends Controller
         ->whereId($price->radiology_group)
         ->first();
         $pdf = PDF::loadview('pdf/radiology/radiology',['pivotMedicalRecord' => $pivotMedicalRecord, 'medicalRecord' => $medicalRecord, 'radiologyType' => $radiologyType, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        return $pdf->stream('radiology.pdf');
+    }
+
+    public function chemoterapy_pdf(Request $request, $id)
+    {
+        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        $price = DB::table('prices')
+        ->whereItemId($pivotMedicalRecord->medical_record_detail->item_id)
+        ->first();
+        $keadaanUmum = DB::table('permissions')
+        ->whereIsKeadaanUmum(1)
+        ->select('name')
+        ->get();
+
+        $sideEffects = SideEffect::with('detail:side_effect_id,name')
+        ->select('id', 'name')
+        ->get();
+        $pdf = PDF::loadview('pdf/chemoterapy/chemoterapy',['pivotMedicalRecord' => $pivotMedicalRecord, 'medicalRecord' => $medicalRecord, 'keadaanUmum' => $keadaanUmum, 'sideEffects' => $sideEffects, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
         return $pdf->stream('radiology.pdf');
     }
 

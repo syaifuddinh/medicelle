@@ -181,7 +181,7 @@ class RegistrationApiController extends Controller
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereDestination('KEMOTERAPI');
         })
-        ->owWhere('is_chemoterapy', 1)
+        ->orWhere('is_chemoterapy', 1)
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status);
         })

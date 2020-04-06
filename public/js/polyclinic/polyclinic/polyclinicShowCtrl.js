@@ -14,6 +14,8 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
           window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/pdf')
       } else if(path.indexOf('radiology') > -1) {
           window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/radiology/pdf')
+      } else if(path.indexOf('chemoterapy') > -1) {
+          window.open( baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/chemoterapy/pdf')
       } else if(path.indexOf('laboratory') > -1) {
             if($scope.pivot.is_laboratory == 1) {
 

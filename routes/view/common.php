@@ -60,7 +60,6 @@ Route::name('grup_nota.')->prefix('grup_nota')->group(function(){
     })->name('show');
 });
 
-
 Route::name('signa.')->prefix('signa')->group(function(){
     Route::get('/', function (){
         return view('user/signa/index');
@@ -73,6 +72,36 @@ Route::name('signa.')->prefix('signa')->group(function(){
     })->name('edit');
     Route::get('/{id}', function ($id){
         return view('user/signa/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('keadaan_umum.')->prefix('keadaan_umum')->group(function(){
+    Route::get('/', function (){
+        return view('user/keadaan_umum/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/keadaan_umum/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/keadaan_umum/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/keadaan_umum/show')->withId($id);
+    })->name('show');
+});
+
+Route::name('side_effect.')->prefix('side_effect')->group(function(){
+    Route::get('/', function (){
+        return view('user/side_effect/index');
+    })->name('index');
+    Route::get('/create', function (){
+        return view('user/side_effect/create');
+    })->name('create');
+    Route::get('/edit/{id}', function ($id){
+        return view('user/side_effect/create');
+    })->name('edit');
+    Route::get('/{id}', function ($id){
+        return view('user/side_effect/show')->withId($id);
     })->name('show');
 });
 
