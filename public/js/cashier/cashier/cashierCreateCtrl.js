@@ -188,7 +188,9 @@ $scope.delete = function(id, el) {
                 delete $scope.formData.invoice_detail[x]
                 invoice_detail_datatable.row(tr).remove().draw()
             }
+            
             $scope.countTotal()
+            break
         }
     }
 }
@@ -209,6 +211,64 @@ $scope.insert = function() {
 $scope.updateItem = function(el) {
     var tr = $(el).parents('tr')
     var data = price_datatable.row(tr).data()
+    var grup_nota = data.grup_nota.name
+    var details = $scope.formData.invoice_detail
+    var key, target, detail
+    
+    if($scope.is_edit) {
+        for(x in details) {
+            key = details[x]
+            target = key.findIndex(z => z.id == $scope.currentEdit.id)
+            if(target > -1) {
+                target = details[x][target]
+                detail = {
+                    id : target.id,
+                    item_id : data.service.id,
+                    debet : data.service.price,
+                    qty : target.qty,
+                    disc_percent : target.disc_percent,
+                    item : {
+                        name : data.service.name
+                    },
+                    reduksi_reference : {
+                        total_credit : 0,
+                        credit : 0
+                    }
+                }
+                $scope.delete($scope.currentEdit.id, $scope.currentEdit.el)
+                break
+            }
+        }
+        
+    } else {
+        detail = {
+            id : Math.floor(Math.random() * 1000),
+            item_id : data.service.id,
+            debet : data.service.price,
+            qty : 1,
+            item : {
+                name : data.service.name
+            },
+            reduksi_reference : {
+                total_credit : 0,
+                credit : 0
+            }
+        }
+    }
+
+    console.log(detail)
+    if(details[grup_nota]) {
+        $scope.formData.invoice_detail[grup_nota].push(detail) 
+    } else {
+        $scope.formData.invoice_detail[grup_nota] = [
+            detail
+        ]
+    }
+    
+    invoice_detail_datatable.clear().draw()
+    $scope.showInvoiceDetail()
+    $scope.is_edit = false
+    $('#priceModal').modal('hide')
 }
 
 $scope.countPromo = function(resp) {
@@ -233,6 +293,7 @@ $scope.showInvoiceDetail = function() {
     var item;
     var unit;
     var qty_total = 0, grosstotal = 0
+    var grup_nota
     for(grup_nota in detail) {
         $scope.showGrupNota(grup_nota)
         item = detail[grup_nota]
