@@ -31,15 +31,16 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
     columns:[
       {
         data:null, 
-        name:"registration.code",
+        name:"code",
         render : function(resp) {
             var url = '#'
             if(roles['allow_show_cashier'] == 1) {
                 url = baseUrl + "/cashier/" + resp.id
             } 
-            return "<a class='' href='" + url +  "'>" + resp.registration.code + "</a>"
+            return "<a class='' href='" + url +  "'>" + resp.code + "</a>"
         } 
       },
+      {data:"registration.code", name:"registration.code"},
       {data:"registration.medical_record.code", name:"registration.medical_record.code"},
       {
         data:null, 
@@ -63,7 +64,7 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => resp.status == 1 ? '<label class="label label-danger">' + resp.status_name + '</label>' : '<label class="label label-success">' + resp.status_name + '</label>'
+        render : resp => resp.status == 1 ? '<label class="label label-danger">' + resp.status_name + '</label>' : (resp.status != 5  ? '<label class="label label-success">' + resp.status_name + '</label>' : '<label class="label label-primary">' + resp.status_name + '</label>')
       },
       {
         data: null, 
@@ -71,7 +72,7 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
         width:'17mm',
         searchable : false,
         className : 'text-center',
-        render : resp => (resp.status != 3 ? "<div class='btn-group'><a allow_edit_cashier class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +
+        render : resp => (resp.status != 3 && resp.status != 5 ? "<div class='btn-group'><a allow_edit_cashier class='btn btn-xs btn-success' href='" + baseUrl + "/cashier/pay/" + resp.id +  "' title='Bayar'><i class='fa fa-pencil'></i></a>" : '') +
         "<a class='btn btn-xs btn-default' allow_show_cashier href='" + baseUrl + "/cashier/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],

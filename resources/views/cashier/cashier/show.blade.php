@@ -41,12 +41,26 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                         <div class="row">
                             <div class="col-md-12">
-
+                                <a href='{{ route("cashier.amandemen", ["id" => $id]) }}' ng-show='formData.status == 3' class='pull-right btn btn-sm btn-primary'> Amandemen</a>
+                                <div style='margin-left:2mm;margin-bottom:3mm'>
+                                    <div ng-if='formData.amandemen_to != null'>
+                                        Pembayaran ini telah di-amandemen ke
+                                        <a href="{{ route('cashier.show', ['id' => '']) }}/<% formData.amandemen_to.id %>">
+                                                <% formData.amandemen_to.code %>
+                                        </a>
+                                    </div>
+                                    <div ng-if='formData.amandemen_by != null'>
+                                        Pembayaran ini di-amandemen dari
+                                        <a href="{{ route('cashier.show', ['id' => '']) }}/<% formData.amandemen_by.id %>">
+                                                <% formData.amandemen_by.code %>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class=" col-md-2 col-sm-2 col-xs-12" for="first-name">Tanggal
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                            <% formData.date | fullDate %>
+                                        <% formData.date | fullDate %>
                                     </div>
                                 </div>
 
@@ -200,11 +214,11 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                <div class="btn-group">
+                                <div class="btn-group" id='buttonBar'>
 
                                     <button class="btn btn-default btn-sm" id='backButton' type="button">Kembali</button> 
                                     @if(Auth::user()->allow_access('cashier.edit'))
-                                        <button class="btn btn-success btn-sm" ng-show='formData.status != 3' id='payButton' type="button">Bayar</button> 
+                                        <button class="btn btn-success btn-sm" ng-show='formData.status != 3 && formData.status != 5' id='payButton' type="button">Bayar</button> 
                                     @endif
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ use DB;
 class Invoice extends Model
 {
     protected $hidden = ['updated_at'];
-    protected $fillable = ['discount_id', 'code', 'date', 'description', 'promo_description', 'payment_method', 'payment_type', 'paid'];
+    protected $fillable = ['discount_id', 'code', 'registration_id', 'date', 'description', 'promo_description', 'payment_method', 'payment_type', 'paid', 'invoice_amandemen_id', 'status'];
     protected $appends = ['status_name'];
 
     public static function boot() {
@@ -24,7 +24,7 @@ class Invoice extends Model
                 $invoice->asuransi_percentage = 0;
             }
 
-            if($invoice->status != 1) {
+            if($invoice->status != 1 && $invoice->status != 5) {
                 if($invoice->paid_at == null && $invoice->paid_by == null) {
                     $invoice->paid_at = date('Y-m-d H:i:s');
                     $invoice->paid_by = Auth::user()->id;
@@ -72,6 +72,8 @@ class Invoice extends Model
                 return 'Lunas';
             } else if($this->attributes['status'] == 4) {
                 return 'Lebih bayar';
+            } else if($this->attributes['status'] == 5) {
+                return 'Amandemen';
             } else {
                 return null;
             }
@@ -106,5 +108,11 @@ class Invoice extends Model
     }
     public function child() {
         return $this->hasMany('App\InvoiceDetail');
+    }
+    public function amandemen_to() {
+        return $this->hasOne('App\Invoice', 'invoice_amandemen_id', 'id');
+    }
+    public function amandemen_by() {
+        return $this->belongsTo('App\Invoice', 'invoice_amandemen_id', 'id');
     }
 }

@@ -32,6 +32,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
       ],
       createdRow: function(row, data, dataIndex) {
         $compile(angular.element(row).contents())($scope);
+        $compile($('#buttonBar'))($scope);
       }
     })
 

@@ -14,7 +14,7 @@ $compile(angular.element($('tfoot')).contents())($scope);
 var path = window.location.pathname;
 
 $scope.title = 'Pembayaran';
-id = path.replace(/.+\/(\d+)/, '$1');
+id = path.replace(/.+\/(\d+)(\/.+)*/, '$1');
 $('#asuransi_flag').hide()
 
 invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
@@ -390,13 +390,18 @@ $('#draftButton').click(function(){
 $scope.submitForm=function() {
     $rootScope.disBtn=true;
     var url = $scope.pay == 1 ? baseUrl + '/controller/cashier/cashier/pay/' + id : baseUrl + '/controller/cashier/cashier/' + id;
+    $scope.formData.pay = $scope.pay || '0' 
+    var is_amandemen = /amandemen/.test(path)
+    if(is_amandemen) {
+        url = baseUrl + '/controller/cashier/cashier/' + id + '/amandemen'
+    }
     var method = 'put';
     $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         if(roles['allow_show_cashier'] == 1) {
             setTimeout(function () {
-                window.location = baseUrl + '/cashier/' + id + '#cetakan'          
+                window.location = baseUrl + '/cashier/' + data.data.invoice_id + '#cetakan'          
             }, 1000)
         }
     }, function(error) {

@@ -73,6 +73,7 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
+                          <th>No. Pembayaran</th>
                           <th>No. Registrasi</th>
                           <th>No. Rekam Medis</th>
                           <th>Tanggal bayar</th>
