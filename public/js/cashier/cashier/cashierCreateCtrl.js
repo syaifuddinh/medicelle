@@ -22,7 +22,7 @@ invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
     dom : 'rt',
     'columns' : [
     {data : 'name', orderable:false},
-    {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+    {data : 'qty_binding', className : 'text-right', width:'15mm', orderable:false},
     {data : 'debet_binding', className : 'text-right', orderable:false},
     {data : 'discount', className : 'text-right', orderable:false},
     {
@@ -36,6 +36,36 @@ invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
         $compile(angular.element($('#formFooter')).contents())($scope);
     },
 })
+
+price_datatable = $('#price_datatable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+      url : baseUrl+'/datatable/user/price',
+    },
+    columns:[
+      {
+        data:null, 
+        name:"service.name",
+        render:resp => "<a ng-click='updateItem($event.currentTarget)' style='cursor:context-menu'>" + resp.service.name + "</a>"
+      },
+      {
+        data:null, 
+        name:"grup_nota.name",
+        render:resp => "<b>" + resp.grup_nota.name + "</b>"
+      },
+      {
+        data:null, 
+        name:'service.price',
+        searchable : false,
+        className: 'text-right',
+        render : resp => $filter('number')(resp.service.price)
+      },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
 
 discount_datatable = $('#discount_datatable').DataTable({
     dom : 'rt',
@@ -143,6 +173,44 @@ $scope.selectDiscount = function(e) {
     $('#discountModal').modal('hide')
 }
 
+$scope.delete = function(id, el) {
+    var details = $scope.formData.invoice_detail
+    var grup_nota, target, tr;
+    for(x in details) {
+        grup_nota = details[x]
+        target = grup_nota.findIndex(z => z.id == id)
+        if(target > -1) {
+            $scope.formData.invoice_detail[x].splice(target, 1)
+            tr = $(el).parents('tr')
+            invoice_detail_datatable.row(tr).remove().draw()
+            if($scope.formData.invoice_detail[x].length == 0) {
+                tr = $("[grup-nota='" + x + "']").parents('tr')
+                delete $scope.formData.invoice_detail[x]
+                invoice_detail_datatable.row(tr).remove().draw()
+            }
+            $scope.countTotal()
+        }
+    }
+}
+
+$scope.edit = function(id, el) {
+    $scope.is_edit = true
+    $scope.currentEdit = {
+        'id' : id,
+        'el' : el
+    }
+    $('#priceModal').modal()
+}
+$scope.insert = function() {
+    $scope.is_edit = false
+    $('#priceModal').modal()
+}
+
+$scope.updateItem = function(el) {
+    var tr = $(el).parents('tr')
+    var data = price_datatable.row(tr).data()
+}
+
 $scope.countPromo = function(resp) {
     var grosstotal = $scope.grosstotal - $scope.discount_subtotal;
     var disc_value = parseInt($scope.promo_detail.disc_value)
@@ -182,15 +250,16 @@ $scope.showInvoiceDetail = function() {
 
 $scope.showGrupNota = function(name) {
     var row = {
-        'name' : "<b>" + name + "</b>",
+        'name' : "<b grup-nota='" + name + "'>" + name + "</b>",
     }
     invoice_detail_datatable.row.add(row).draw()
 } 
 
 $scope.showItemDetail = function(detail, grup_nota, index) {
     var row = detail
-    row.name = '<div style="padding-left:8mm">' + row.item.name + '</div>'
+    row.name = '<div><button class="btn btn-sm btn-danger" style="margin-right:2mm" ng-click="delete(' + row.id + ', $event.currentTarget)"><i class="fa fa-trash"></i></button><a style="cursor:context-menu" ng-click="edit(' + row.id + ', $event.currentTarget)">' + row.item.name + '</a></div>'
     row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
+    row.qty_binding = "<input type='text' class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].qty' only-num>";
     row.debet_binding = $filter('number')(row.debet)
     row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='3' only-num></input>"
     invoice_detail_datatable.row.add(row).draw()

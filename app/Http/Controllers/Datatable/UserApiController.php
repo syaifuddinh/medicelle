@@ -112,7 +112,7 @@ class UserApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
     public function price(Request $request) {
-        $x = Price::with('service:id,name,price,is_cure', 'grup_nota:id,slug', 'polyclinic:id,name')
+        $x = Price::with('service:id,name,price,is_cure', 'grup_nota:id,slug,name', 'polyclinic:id,name')
         ->where('destination', '!=', 'OBAT')
         ->where('destination', '!=', 'BHP')
         ->select('prices.id', 'destination', 'prices.polyclinic_id', 'prices.is_registration', 'prices.is_sewa_ruangan', 'prices.is_sewa_alkes', 'prices.item_id', 'prices.grup_nota_id', 'prices.is_active');

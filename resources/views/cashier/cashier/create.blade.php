@@ -67,15 +67,20 @@
 
                         <div class="row">
                             <div class="ln_solid"></div>
-                            <h2>Detail pembayaran</h2>
+                            <h2>
+                                Detail pembayaran
+                                <button type='button' class='btn btn-sm btn-primary' ng-click='insert()' style='float:right'>
+                                    <i class='fa fa-plus'></i>
+                                </button>
+                            </h2>
                             <div class="col-md-12">
                                 <table class='table' id='invoice_detail_datatable'>
                                     <thead>
                                         <tr>
                                             <th>Item</th>
-                                            <th style='width:10%'>Qty</th>
+                                            <th style='width:10px'>Qty</th>
                                             <th style='width:15%'>Harga</th>
-                                            <th style='width:10%'>Diskon(%)</th>
+                                            <th style='width:20mm'>Diskon(%)</th>
                                             <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> {{ Mod::finance()->asuransi_rate_percentage ?? 0 }}%</button></th>
                                         </tr>
                                     </thead>
@@ -239,6 +244,30 @@
                                 <th style='width:10%'>Disc(Rp)</th>
                                 <th style='width:5%'>Disc(%)</th>
                                 <th>Total potongan</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Daftar Item</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-bordered" id='price_datatable' style='width:100%'>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Grup Nota</th>
+                                <th style='width:10%'>Harga</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
