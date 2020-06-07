@@ -44,15 +44,15 @@
 
                 <p style="text-indent:8mm">Hasil pemeriksaan :</p><br>
                 <p style='padding-left:8mm'>
-                    <span style="display:inline-block;padding-right:20mm">TD : {{ $letter->additional->td }}</span>
-                    <span style="display:inline-block;padding-right:20mm">N : {{ $letter->additional->n }}</span>
-                    <span style="display:inline-block;padding-right:20mm">RR : {{ $letter->additional->rr }}</span>
-                    <span style="display:inline-block;padding-right:20mm">Sh : {{ $letter->additional->sh }}</span>
+                    <span style="display:inline-block;width:30mm">TD : {{ $letter->additional->td }}</span>
+                    <span style="display:inline-block;width:30mm">N : {{ $letter->additional->n }}</span>
+                    <span style="display:inline-block;width:30mm">RR : {{ $letter->additional->rr }}</span>
+                    <span style="display:inline-block;width:30mm">Sh : {{ $letter->additional->sh }}</span>
                 </p>
                 <p style='padding-left:8mm'>
-                    <span style="display:inline-block;padding-right:20mm">BB : {{ $letter->additional->bb }}</span>
-                    <span style="display:inline-block;padding-right:20mm">TB : {{ $letter->additional->tb }}</span>
-                    <span style="display:inline-block;padding-right:20mm">Buta warna : {{ strtolower($letter->additional->buta_warna) }}</span>
+                    <span style="display:inline-block;width:30mm">BB : {{ $letter->additional->bb }}</span>
+                    <span style="display:inline-block;width:30mm">TB : {{ $letter->additional->tb }}</span>
+                    <span style="display:inline-block;width:30mm">Buta warna : {{ strtolower($letter->additional->buta_warna) }}</span>
                 </p>
                 <p style='padding-left:8mm'>
                     Pemeriksaan mata : {{ $letter->additional->eye_diagnose }} 

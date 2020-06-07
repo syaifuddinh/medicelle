@@ -96,7 +96,7 @@
                         {{ $medicalRecord->registration_detail->doctor->name }}
                     </span>
                 </p>
-                <p >SPESIALIS {{ strtoupper($medicalRecord->registration_detail->doctor->specialization->name) }}</p>
+                <p >SPESIALIS {{ strtoupper($medicalRecord->registration_detail->doctor->specialization->name ?? '') }}</p>
                 <br>
                 @include('pdf/letter_footer')   
             </div>

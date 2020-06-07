@@ -170,7 +170,10 @@
             <div id="detail" class="tab-pane fade">
                 <div class="row x_title dashboard_graph">
                     <div class="col-md-12">
-                        
+                        <p>
+                            Jika pdf tidak tampil, silahkan klik
+                            <a href="{{ route('controller.letter.cuti_hamil.pdf', ['id' => $id]) }}" target="_blank">disini</a>
+                        </p>
                         <embed id='pdfDocument' style='width:100%;height:28cm'>
                     </div>
                 </div>
