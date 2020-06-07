@@ -194,57 +194,7 @@
                                             </label>
                                         </td>
                                     </tr>
-                                    <!-- ======================================== -->
                                     
-                                    <tr>
-                                        <td style="padding-left:10mm">Tarif</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <!-- =========================================== -->
-                                    <tr>
-                                        <td style="padding-left:20mm">Tambah</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.create"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left:20mm">Edit</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left:20mm">Detail</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.show"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left:20mm">Aktifkan</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.activate"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-left:20mm">Non-aktifkan</td>
-                                        <td class='text-right'>
-                                            <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
-                                            </label>
-                                        </td>
-                                    </tr>
                                     <!-- ======================================== -->
                                     <tr>
                                         <td style="padding-left:10mm">Promo</td>
@@ -610,6 +560,57 @@
                                         </td>
                                     </tr>
                                     <!-- ======================================== -->    
+                                    <!-- ======================================== -->
+                                    
+                                    <tr>
+                                        <td style="padding-left:10mm">Tarif</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <!-- =========================================== -->
+                                    <tr>
+                                        <td style="padding-left:20mm">Tambah</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.create"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Edit</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Detail</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.show"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.activate"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Non-aktifkan</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["setting.price.destroy"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
 <!-- ======================================== -->
 
                                     <tr>
