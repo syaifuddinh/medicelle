@@ -112,42 +112,42 @@
                       </li>
                   @endif
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('polyclinic'))
                       <li>
                         <a href='{{ route("polyclinic.patient.index") }}'><i class="fa fa-user-md"></i>Poliklinik</a>
                       </li>
                   @endif
 
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('radiology'))
                       <li>
                         <a href='{{ route("radiology.index") }}'><i class="fa fa-bullseye"></i>Radiologi</a>
                       </li>
                   @endif
 
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('laboratory'))
                       <li>
                         <a href='{{ route("laboratory.index") }}'><i class="fa fa-filter"></i>Laboratorium</a>
                       </li>
                   @endif
 
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('chemoterapy'))
                       <li>
                         <a href='{{ route("chemoterapy.index") }}'><i class="fa fa-medkit"></i>Kemoterapi</a>
                       </li>
                   @endif
 
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('ruang_tindakan'))
                       <li>
                         <a href='{{ route("ruang_tindakan.index") }}'><i class="fa fa-inbox"></i>Ruang Tindakan</a>
                       </li>
                   @endif
 
 
-                  @if(Auth::user()->allow_view_polyclinic())
+                  @if(Auth::user()->allow_access('medical_checkup'))
                       <li>
                         <a href='{{ route("medical_checkup.index") }}'><i class="fa fa-tasks"></i>Medical Checkup</a>
                       </li>

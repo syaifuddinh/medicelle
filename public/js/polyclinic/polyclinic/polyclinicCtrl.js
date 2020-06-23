@@ -36,6 +36,9 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       flagLabel = 'Medical Checkup'
   } 
   $scope.flag = flag
+  var finish_role = 'allow_finish_' + flag + '_medical_record'
+  var show_role = 'allow_show_' + flag + '_medical_record'
+  var edit_role = 'allow_edit_' + flag + '_medical_record'
 
   oTable = $('#listview').DataTable({
     processing: true,
@@ -63,18 +66,30 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         data:null, 
         name:"medical_record.code", 
         width:'16%',
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
+        render : function(resp) {
+            if(roles[edit_role]) {
+                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
+            } else {
+                return resp.medical_record.code
+            }
+        } 
       },
       {
         data:null, 
+        name:'registration_detail.registration.date',
         searchable:false,
-        orderable:false,
         render:resp => $filter('fullDate')(resp.registration_detail.registration.date),
       },
       {
         data:null, 
         name:"registration_detail.registration.patient.name",
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+        render : function(resp) {
+            if(roles[edit_role]) {
+                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+            } else  {
+                return resp.registration_detail.registration.patient.name
+            }
+        }
       },
       {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {
@@ -92,7 +107,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
       {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
       {
         data:null, 
-      orderable:false,
+        orderable:false,
         searchable:false,
         className : $scope.flag == 'laboratory'  || $scope.flag == 'radiology' ? '' : 'hidden',
         render : resp => resp.is_referenced == 1 && resp.is_laboratory_treatment == 0 ? 'Permintaan' : (resp.is_laboratory_treatment  == 1 ? 'Uji Lab' :'Pemeriksaan')
@@ -104,8 +119,8 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         searchable : false,
         className : 'text-center',
         render : resp => "<div class='btn-group'>" + 
-        (resp.is_referenced != 1 ? "<a class='btn btn-xs btn-primary' ng-click='finish(" + resp.registration_detail.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a>" : '') +
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        (resp.is_referenced != 1 ? "<a class='btn btn-xs btn-primary' " + finish_role + " ng-click='finish(" + resp.registration_detail.id + ")' type='button' title='Pemeriksaan selesai'><i class='fa fa-check'></i></a>" : '') +
+        "<a class='btn btn-xs btn-default' " + show_role + " href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

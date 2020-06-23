@@ -1,5 +1,23 @@
 @include('header')
-
+<?php 
+    $path = Route::getCurrentRoute()->getName();
+    if( strpos($path, 'polyclinic') > -1) {
+      $flag = 'polyclinic';
+    } else if( strpos($path, 'radiology') > -1) {
+      $flag = 'radiology';
+    } else if( strpos($path, 'chemoterapy') > -1) {
+      $flag = 'chemoterapy';
+    }  else if( strpos($path, 'laboratory') > -1) {
+      $flag = 'laboratory';
+    } else if( strpos($path, 'ruang_tindakan') > -1) {
+      $flag = 'ruang_tindakan';
+    } else if( strpos($path, 'medical_checkup') > -1) {
+      $flag = 'medical_checkup';
+    } else {
+        $flag = '';
+    }
+    $edit_role = $flag . '.edit'
+?>
 <!-- /top navigation -->
 
 <!-- page content -->
@@ -225,11 +243,11 @@
                                 <a ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-info btn-sm" >Isi assesment</a>                                
                             @endif
 
-                             @if(Auth::user()->allow_update_medical_record())
-                            <a target='_blank' id='medicalRecordButton' ng-show='formData.invoice.status > 2' href='{{ route("medical_record.edit", ["id" => $medical_record_id]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>     
+                             @if(Auth::user()->allow_update_medical_record() && Auth::user()->allow_access($edit_role))
+                            <a target='_blank' id='medicalRecordButton' ng-show='formData.invoice.status > 2 && edit_role' href='{{ route("medical_record.edit", ["id" => $medical_record_id]) }}' class="btn btn-success btn-sm" >Isi rekam medis</a>     
                             <a id='medicalRecordButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-success btn-sm" >Isi rekam medis</a>     
-                            </div>
                             @endif
+                            </div>
                         </div>
                     </div>
 

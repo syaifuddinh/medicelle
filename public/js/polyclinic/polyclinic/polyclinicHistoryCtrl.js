@@ -24,6 +24,8 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
   } 
   $scope.flag = flag
   patient_url += '/finish'
+  var show_role = 'allow_show_' + flag + '_medical_record'
+  var edit_role = 'allow_edit_' + flag + '_medical_record'
 
   oTable = $('#listview').DataTable({
     processing: true,
@@ -51,7 +53,13 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         data:null, 
         name:"medical_record.code", 
         width:'16%',
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
+        render : function(resp) {
+            if(roles[edit_role]) {
+                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.medical_record.code + "</a>"
+            } else {
+                return resp.medical_record.code
+            }
+        } 
       },
       {
         data:null, 
@@ -62,7 +70,13 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
       {
         data:null, 
         name:"registration_detail.registration.patient.name",
-        render : resp => "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+        render : function(resp) {
+            if(roles[edit_role]) {
+                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+            } else  {
+                return resp.registration_detail.registration.patient.name
+            }
+        }
       },
       {data:"registration_detail.registration.patient.phone", name:"registration_detail.registration.patient.phone"},
       {
@@ -92,7 +106,7 @@ app.controller('polyclinicHistory', ['$scope', '$compile', '$http', '$filter', f
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        "<a class='btn btn-xs btn-default' href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        "<a class='btn btn-xs btn-default' " + show_role + " href='" + baseUrl + "/" + flag + "/patient/" + resp.registration_detail.registration_id +  "/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],
     createdRow: function(row, data, dataIndex) {

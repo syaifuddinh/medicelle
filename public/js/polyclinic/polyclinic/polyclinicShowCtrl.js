@@ -7,6 +7,20 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
   id = path.replace(/.+\/(\d+)\/\d*/, '$1');
   pivot_medical_record_id = path.replace(/.+\/(\d+)\/(\d*)/, '$2');
   
+  if( path.indexOf('polyclinic') > -1) {
+      flag = 'polyclinic'
+  } else if( path.indexOf('radiology') > -1) {
+      flag = 'radiology'
+  } else if( path.indexOf('chemoterapy') > -1) {
+      flag = 'chemoterapy'
+  }  else if( path.indexOf('laboratory') > -1) {
+      flag = 'laboratory'
+  } else if( path.indexOf('ruang_tindakan') > -1) {
+      flag = 'ruang_tindakan'
+  } else if( path.indexOf('medical_checkup') > -1) {
+      flag = 'medical_checkup'
+  }
+  $scope.edit_role = 'allow_edit_' + flag + '_medical_record' 
 
   
   $scope.openPDF = function() {

@@ -281,6 +281,30 @@
                 'allow_edit_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.edit') !!},
                 'allow_show_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.show') !!},
                 'allow_destroy_persetujuan_tindakan_medis' : {!! Auth::user()->allow_access('surat.persetujuan_tindakan_medis.destroy') !!},
+
+                'allow_edit_polyclinic_medical_record' : {!! Auth::user()->allow_access('polyclinic.edit') !!},
+                'allow_show_polyclinic_medical_record' : {!! Auth::user()->allow_access('polyclinic.show') !!},
+                'allow_finish_polyclinic_medical_record' : {!! Auth::user()->allow_access('polyclinic.finish') !!},
+
+                'allow_edit_radiology_medical_record' : {!! Auth::user()->allow_access('radiology.edit') !!},
+                'allow_show_radiology_medical_record' : {!! Auth::user()->allow_access('radiology.show') !!},
+                'allow_finish_radiology_medical_record' : {!! Auth::user()->allow_access('radiology.finish') !!},
+
+                'allow_edit_laboratory_medical_record' : {!! Auth::user()->allow_access('laboratory.edit') !!},
+                'allow_show_laboratory_medical_record' : {!! Auth::user()->allow_access('laboratory.show') !!},
+                'allow_finish_laboratory_medical_record' : {!! Auth::user()->allow_access('laboratory.finish') !!},
+
+                'allow_edit_chemoterapy_medical_record' : {!! Auth::user()->allow_access('chemoterapy.edit') !!},
+                'allow_show_chemoterapy_medical_record' : {!! Auth::user()->allow_access('chemoterapy.show') !!},
+                'allow_finish_chemoterapy_medical_record' : {!! Auth::user()->allow_access('chemoterapy.finish') !!},
+
+                'allow_edit_ruang_tindakan_medical_record' : {!! Auth::user()->allow_access('ruang_tindakan.edit') !!},
+                'allow_show_ruang_tindakan_medical_record' : {!! Auth::user()->allow_access('ruang_tindakan.show') !!},
+                'allow_finish_ruang_tindakan_medical_record' : {!! Auth::user()->allow_access('ruang_tindakan.finish') !!},
+
+                'allow_edit_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.edit') !!},
+                'allow_show_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.show') !!},
+                'allow_finish_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.finish') !!},
             }
 
             setInterval(function(){
