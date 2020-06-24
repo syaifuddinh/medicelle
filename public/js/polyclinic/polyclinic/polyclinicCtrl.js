@@ -110,7 +110,17 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         orderable:false,
         searchable:false,
         className : $scope.flag == 'laboratory'  || $scope.flag == 'radiology' ? '' : 'hidden',
-        render : resp => resp.is_referenced == 1 && resp.is_laboratory_treatment == 0 ? 'Permintaan' : (resp.is_laboratory_treatment  == 1 ? 'Uji Lab' :'Pemeriksaan')
+        render : function(resp) {
+            if(resp.is_referenced == 1 && resp.is_laboratory_treatment == 0) {
+                return 'Permintaan'
+            } else if(resp.is_laboratory_treatment == 1) {
+                return 'Uji Lab'
+            } else if(resp.is_referenced == 1 && resp.is_radiology == 1) {
+                return 'Permintaan'
+            } else {
+                return 'Pemeriksaan'              
+            }
+        } 
       },
       {
         data: null,
