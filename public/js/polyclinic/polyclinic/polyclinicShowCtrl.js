@@ -21,7 +21,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
       flag = 'medical_checkup'
   }
   $scope.edit_role = 'allow_edit_' + flag + '_medical_record' 
-
+  $scope.flag = flag
   
   $scope.openPDF = function() {
       if(path.indexOf('ruang_tindakan') > -1) {
@@ -121,6 +121,21 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
 
   $scope.updateRuangTindakanDescription = function() {
       $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/description', $scope.pivotData).then(function(data) {
+      }, function(error) {
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+  } 
+
+  $scope.updatePivot = function() {
+      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/additional', $scope.pivotData).then(function(data) {
       }, function(error) {
         if (error.status==422) {
           var det="";

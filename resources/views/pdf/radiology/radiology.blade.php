@@ -16,6 +16,13 @@
      p, span, li {
         font-size:10px;
      }
+
+     .indent {
+        text-indent:8mm
+     }
+     .mt-5 {
+        margin-top:5mm;
+     }
  </style>
  <div class="container">
      
@@ -37,6 +44,7 @@
                 
                 <div style='margin-bottom:4mm'>
                     <p>TS. Yth, berikut saya sampaikan hasil {{ $radiologyType->name }}</p>
+                    <p class='indent mt-5'>{{ $pivotMedicalRecord->additional->radiology_description ?? ''}}</p>
                 </div>
 
                 <div style='position:absolute;bottom:28mm'>
@@ -46,7 +54,7 @@
                         <p style='text-align:center;'>( {{$medicalRecord->registration_detail->doctor->name}} )</p>
                     </div>
                 </div>
-
+                
                 @include('pdf/letter_footer')   
             </div>
         </div>
