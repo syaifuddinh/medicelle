@@ -46,6 +46,14 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function setContactIdAttribute($value) {
+        if($value == 'null') {
+            $this->attributes['contact_id'] = null;
+        } else {
+            $this->attributes['contact_id'] = $value;            
+        }
+    }
+
     public function group_user()
     {
           return $this->belongsTo('App\Permission','group_user_id','id');
