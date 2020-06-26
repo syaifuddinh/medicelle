@@ -1503,7 +1503,15 @@
                                         <td style="padding-left:20mm">Edit</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["pharmacy.purchase_request.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["pharmacy.purchase_request.update"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20mm">Setujui</td>
+                                        <td class='text-right'>
+                                            <label class="radio-inline">
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["pharmacy.purchase_request.approve"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>
@@ -1538,7 +1546,7 @@
                                         <td style="padding-left:20mm">Edit</td>
                                         <td class='text-right'>
                                             <label class="radio-inline">
-                                                <input type="checkbox" name="_a" ng-model='formData.roles["pharmacy.purchase_order.edit"]' ng-true-value='"1"' ng-false-value='"0"' >
+                                                <input type="checkbox" name="_a" ng-model='formData.roles["pharmacy.purchase_order.update"]' ng-true-value='"1"' ng-false-value='"0"' >
                                             </label>
                                         </td>
                                     </tr>

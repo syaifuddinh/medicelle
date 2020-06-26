@@ -181,24 +181,32 @@
                           </ul>
                     </li>
                   @endif
+                  
+                  @if(Auth::user()->allow_access('pharmacy'))
+                      <li><a><i class="fa fa-briefcase"></i>Farmasi<span class="fa fa-chevron-down"></span></a>
+                              <ul class="nav child_menu">
+                                  @if(Auth::user()->allow_access('pharmacy.purchase_request'))
+                                  <li><a href="{{ route('pharmacy.purchase_request.index') }}">Permintaan Pembelian</a></li>
+                                  @endif
 
-                  <li><a><i class="fa fa-briefcase"></i>Farmasi<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                                <li><a href="{{ route('pharmacy.purchase_request.index') }}">Permintaan Pembelian</a></li>
+                                  @if(Auth::user()->allow_access('pharmacy.purchase_order'))
+                                    <li><a href="{{ route('pharmacy.purchase_order.index') }}">Order Pembelian</a></li>
+                                  @endif
 
-                                <li><a href="{{ route('pharmacy.purchase_order.index') }}">Order Pembelian</a></li>
-                                <li><a href="{{ route('pharmacy.receipt.index') }}">Penerimaan</a></li>
+                                  @if(Auth::user()->allow_access('pharmacy.receipt'))
+                                    <li><a href="{{ route('pharmacy.receipt.index') }}">Penerimaan</a></li>
+                                  @endif
+                                    <li><a href="{{ route('pharmacy.movement.index') }}">Perpindahan</a></li>
 
-                                <li><a href="{{ route('pharmacy.movement.index') }}">Perpindahan</a></li>
+                                    <li><a href="{{ route('pharmacy.formula.index') }}">Resep Obat</a></li>
+                                    
 
-                                <li><a href="{{ route('pharmacy.formula.index') }}">Resep Obat</a></li>
-                                
-
-                                <li><a href="{{ route('pharmacy.adjustment_stock.index') }}">Stok Opname</a></li>
-                                <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
-                                <li><a href="{{ route('pharmacy.report.distribution') }}">Laporan distribusi</a></li>
-                          </ul>
-                    </li>
+                                    <li><a href="{{ route('pharmacy.adjustment_stock.index') }}">Stok Opname</a></li>
+                                    <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
+                                    <li><a href="{{ route('pharmacy.report.distribution') }}">Laporan distribusi</a></li>
+                              </ul>
+                      </li>
+                  @endif             
                  
                 </ul>
               </div>

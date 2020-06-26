@@ -305,6 +305,11 @@
                 'allow_edit_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.edit') !!},
                 'allow_show_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.show') !!},
                 'allow_finish_medical_checkup_medical_record' : {!! Auth::user()->allow_access('medical_checkup.finish') !!},
+
+                'allow_update_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.update') !!},
+                'allow_show_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.show') !!},
+                'allow_destroy_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.destroy') !!},
+                'allow_approve_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.approve') !!},
             }
 
             setInterval(function(){

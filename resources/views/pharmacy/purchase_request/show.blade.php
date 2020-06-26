@@ -17,11 +17,16 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-                            @if(Auth::user()->allow_access('purchase_request.edit'))
+                            @if(Auth::user()->allow_access('pharmacy.purchase_request.update'))
                                 <a ng-if='formData.is_approve == 0' href='{{ route("pharmacy.purchase_request.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
                             @endif
+
+                            @if(Auth::user()->allow_access('pharmacy.purchase_request.destroy'))
                             <button type="button" ng-if='formData.is_approve == 0' class="btn btn-danger btn-sm" ng-click='delete({{ $id }})'>Hapus</button>
+                            @endif
+                            @if(Auth::user()->allow_access('pharmacy.purchase_request.approve'))
                             <button type="button" ng-if='formData.is_approve == 0' class="btn btn-default btn-sm" ng-click='approve({{ $id }})'>Setujui</button>
+                            @endif
                         </div>
                         <a href='#' class="btn btn-outline-success btn-sm pull-right" ng-show='formData.is_approve == 0'>
                               <i class="fa fa-paperclip"></i> Draft
