@@ -68,7 +68,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
     if(is_delete)
-        $http.delete(baseUrl + '/controller/master/cure/' + id).then(function(data) {
+        $http.delete(baseUrl + '/controller/master/medical_item/' + id).then(function(data) {
             oTable.ajax.reload();
             toastr.success("Data Berhasil dinon-aktifkan !");
         }, function(error) {
