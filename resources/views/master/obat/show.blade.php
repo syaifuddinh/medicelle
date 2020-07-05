@@ -167,7 +167,21 @@
                             <label class="col-md-3 col-sm-3 col-xs-12">Tanggal kadaluarsa
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <% formData.additional.expired_date | fullDate %>%
+                                <% formData.additional.expired_date | fullDate %>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12">Principal
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <% formData.additional.principal %>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 col-xs-12">Harga Eceran Tertinggi
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <% formData.additional.harga_eceran_tertinggi | number %>
                             </div>
                         </div>
                     </div>

@@ -14,10 +14,12 @@ class AlterAdditionalColumn extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
+            $table->dropColumn(['additional']);
+        });
+        Schema::table('items', function (Blueprint $table) {
             $table->json(DB::raw('additional'))
             ->nullable(false)
-            ->default('{"principal":""}')
-            ->change();
+            ->default('{"principal":""}');
         });
     }
 
@@ -29,10 +31,12 @@ class AlterAdditionalColumn extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
+            $table->dropColumn(['additional']);
+        });
+        Schema::table('items', function (Blueprint $table) {
             $table->text('additional')
             ->nullable(false)
-            ->default('{}')
-            ->change();
+            ->default('{}');
         });
     }
 }

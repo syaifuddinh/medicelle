@@ -200,26 +200,25 @@
                   <div class="col-md-8 col-sm-8 col-xs-12">
                     <input type="text" id="first-name" ng-model='formData.additional.expired_date' required="required" class="form-control col-md-7 col-xs-12" datepick>
                   </div>
-                </div>
               </div>
 
               <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Principal
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Principal
                   </label>
                   <div class="col-md-8 col-sm-8 col-xs-12">
-                    <input type="text" ng-model='formData.additional.principal' class="form-control col-md-7 col-xs-12" datepick>
+                    <input type="text" ng-model='formData.additional.principal' class="form-control col-md-7 col-xs-12">
                   </div>
-                </div>
               </div>
-
+                
               <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Eceran Tertinggi
                   </label>
                   <div class="col-md-8 col-sm-8 col-xs-12">
-                    <input type="text" ng-model='formData.additional.harga_eceran_tertinggi' jnumber2 only-num class="form-control col-md-7 col-xs-12" datepick>
+                    <input type="text" ng-model='formData.additional.harga_eceran_tertinggi' jnumber2 only-num class="form-control col-md-7 col-xs-12">
                   </div>
-                </div>
               </div>
+          </div>
+
             
 
               <div class="ln_solid"></div>

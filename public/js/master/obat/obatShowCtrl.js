@@ -114,9 +114,7 @@ app.controller('obatShow', ['$scope', '$http', '$rootScope', '$filter', function
       if(is_delete)
           $http.delete(baseUrl + '/controller/master/obat/' + id).then(function(data) {
               toastr.success("Data Berhasil dinon-aktifkan !");
-              setTimeout(function () {
-                  location.reload();
-              }, 1500)
+              $scope.show()
           }, function(error) {
             if (error.status==422) {
               var det="";
@@ -133,11 +131,9 @@ app.controller('obatShow', ['$scope', '$http', '$rootScope', '$filter', function
     $scope.activate = function(id) {
     is_activate = confirm('Apakah anda ingin mengaktifkan data ini ?');
       if(is_activate)
-          $http.put(baseUrl + '/controller/master/cure/activate/' + id).then(function(data) {
+          $http.put(baseUrl + '/controller/master/medical_item/activate/' + id).then(function(data) {
               toastr.success("Data Berhasil diaktifkan !");
-              setTimeout(function () {
-                  location.reload();
-              }, 1500)
+              $scope.show()
           }, function(error) {
             if (error.status==422) {
               var det="";

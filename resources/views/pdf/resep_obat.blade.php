@@ -1,4 +1,5 @@
 <?php 
+
     $company = Mod::company()
  ?>
  <style>
@@ -13,17 +14,28 @@
         padding-left:10mm
      }
 
-     p, span, li, td, th {
+     p, span, li, td, th, div {
         font-size:11px;
      }
 
      th, td {
         padding:1mm;
      }
-
+    
      table {
         width:100%
      }
+
+     .w30 {
+        width:30mm;
+     }
+     .inline-block {
+        display:inline-block;
+     }
+     .mb1 {
+        margin-bottom:1mm;
+     }
+
  </style>
  <div class="container">
      
@@ -40,37 +52,59 @@
             </div>
 
             <div class="col-md-12" style='padding-left:5.5mm'>
-                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>COPY RESEP</p>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>SALINAN RESEP</p>
             
+                <div class='mb1' style='position:relative;'>
+                    <div class="inline-block w30">
+                        No
+                    </div>
+                    <div class="inline-block"> : </div>
+                    <div class="inline-block">
+                        {{ $formula->medical_record->code }}
+                    </div>
+
+                    <div style='position: absolute;right:0mm'>
+                        Tanggal : {{ Mod::now() }}
+                    </div>
+                </div>
+            
+                <div class='mb1'>
+                    <div class="inline-block w30">
+                        Dari Dokter
+                    </div>
+                    <div class="inline-block"> : </div>
+                    <div class="inline-block">
+                        {{ $formula->registration_detail->doctor->name }}
+                    </div>
+                </div>
+            
+                <div class='mb1'>
+                    <div class="inline-block w30">
+                        Untuk
+                    </div>
+                    <div class="inline-block"> : </div>
+                    <div class="inline-block">
+                        {{ $formula->registration_detail->doctor->name }}
+                    </div>
+                </div>
                 
-                
-                <div style='margin-bottom:5mm'>
-                    <table cellpadding='1' cellspacing='0' border='1'>
-                        <thead>
-                            <tr>
-                                <th>Barang</th>
-                                <th>Lokasi</th>
-                                <th>Tanggal Kadaluarsa</th>
-                                <th style='width:12mm'>Jumlah Permintaan</th>
-                                <th style='width:10mm'>Stok</th>
-                                <th style='width:17mm'>Satuan</th>
-                                <th style='width:40mm'>Harga Jual</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($formula->detail as $detail)
-                                <tr>
-                                    <td>{{ $detail->item->name }}</td>
-                                    <td>{{ $detail->lokasi->name }}</td>
-                                    <td>{{ Mod::fullDate($detail->stock->expired_date) }}</td>
-                                    <td style="text-align:right">{{ number_format(1) }}</td>
-                                    <td style="text-align:right">{{ number_format($detail->stock->qty) }}</td>
-                                    <td>{{ $detail->item->piece->name }}</td>
-                                    <td style="text-align:right">{{ number_format($detail->item->price) }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div style='margin-bottom:25mm;margin-top:10mm'>
+                    @foreach($formula->detail as $detail)
+                        <div style='font-style:italic;width:100%'>
+                            <div class="inline-block" style='font-size:101%'>
+                                R / 
+                            </div>
+                            <div class="inline-block"  style='font-size:101%'>{{ $detail->item->name }}</div>
+                            <div  class="inline-block" style='font-size:101%'>{{ number_format($detail->stock->qty) }}</div>
+                            <div class="inline-block"  style='font-size:101%'>{{ $detail->item->piece->name }}</div>
+                            <div style='display:flex;position:relative'>
+                                <div style='position:absolute;left:0;top:1.5mm;border-bottom:1px solid black;height:1mm;width:96%'></div>
+                                <div style="float:right;font-size:101%;">
+                                    det
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
 
                 <div style='margin-top:10mm'>
