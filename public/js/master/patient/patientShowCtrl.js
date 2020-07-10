@@ -32,6 +32,11 @@ app.controller('patientShow', ['$scope', '$http', '$rootScope', function($scope,
     }
     $scope.patient()
 
+    $scope.exportSingleCard = function() {
+        var url = baseUrl + '/controller/master/patient/' + id + '/card';
+        window.open(url, '_blank');
+    }
+
     $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
       if(is_delete)

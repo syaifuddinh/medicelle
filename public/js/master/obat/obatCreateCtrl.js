@@ -14,6 +14,10 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
     $scope.data = {}
     var path = window.location.pathname;
 
+    $scope.backward = function() {
+      location.href = baseUrl + '/obat'
+    }
+
     $scope.countPrice = function() {
         $scope.formData.price = parseInt($scope.formData.purchase_price) * ( 100 + parseInt($scope.formData.additional.margin)) / 100
     }
@@ -28,12 +32,12 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
                 $scope.formData.price = data.data.rate
                 setTimeout(function () {    
                     $('[ng-model="formData.additional.expired_date"]').val( $filter('fullDate')($scope.formData.additional.expired_date))
-              }, 300)
-                $scope.changeSampleCode()
+                }, 300)
                 $scope.changeClassification()
                 $scope.changeSubclassification()
                 $scope.changeGeneric()
                 $scope.countPrice()
+                $scope.changeSampleCode()
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {
@@ -49,7 +53,6 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
             });
         }
     }
-    $scope.show()
 
     $scope.changeClassification = function() {
         if($scope.formData.category_id) {
@@ -136,6 +139,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
     $scope.category = function() {
         $http.get(baseUrl + '/controller/master/obat/category/actived').then(function(data) {
             $scope.data.category = data.data
+            $scope.show()
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -152,6 +156,28 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
         });
     }
     $scope.category()
+
+
+    $scope.supplier = function() {
+        $http.get(baseUrl + '/controller/master/supplier').then(function(data) {
+            $scope.data.supplier = data.data
+            $scope.show()
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.supplier()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.supplier()
 
     $scope.showClassification = function() {
         $http.get(baseUrl + '/controller/master/obat/classification/actived').then(function(data) {

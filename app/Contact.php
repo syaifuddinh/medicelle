@@ -149,6 +149,10 @@ class Contact extends Model
         return $this->belongsTo('App\Contact', 'contact_id', 'id')->whereIsFamily(1);
     }
 
+    public function medical_record() {
+        return $this->hasOne('App\MedicalRecord', 'patient_id', 'id');
+    }
+
     public function setNameAttribute($value) {
         $this->attributes['name'] = $value == null ? '-' : $value;
     }

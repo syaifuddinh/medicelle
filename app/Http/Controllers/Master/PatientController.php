@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use PDF;
 
 class PatientController extends Controller
 {
@@ -158,5 +159,26 @@ class PatientController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function exportSingleCard($id) {
+        Contact::findOrFail($id);
+        $params = [$id];
+        return $this->exportCards($params);
+    }
+
+    public function exportCards($params = []) {
+        if(count($params) > 0) {
+            $contacts = Contact::with('medical_record:id,code,patient_id')
+            ->whereIn('id', $params)
+            ->select('contacts.id', 'contacts.address', 'contacts.name', 'contacts.birth_date')
+            ->get();
+            $pdf = PDF::loadview('pdf/patient/kartu_pasien',['contacts'=>$contacts]);
+            return $pdf
+            ->setPaper('5cm x 8cm')
+            ->stream('Kartu pasien.pdf');
+        } else {
+            return Response::json(['message' => 'Tidak ada yang bisa dicetak'], 421);
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Price;
+use DB;
+use Exception;
 
 class Item extends Model
 {
@@ -37,12 +39,52 @@ class Item extends Model
         });
 
         static::creating(function(Item $item) {
+            if($item->is_cure == 1) {
+                $existing = DB::table('items')
+                ->whereCategoryId($item->category_id)
+                ->whereClassificationId($item->classification_id)
+                ->whereSubclassificationId($item->subclassification_id)
+                ->whereGenericId($item->generic_id)
+                ->whereCode($item->code)
+                ->count();
+                if($existing > 0) {
+                    $existingItem = DB::table('items')
+                    ->whereCategoryId($item->category_id)
+                    ->whereClassificationId($item->classification_id)
+                    ->whereSubclassificationId($item->subclassification_id)
+                    ->whereGenericId($item->generic_id)
+                    ->whereCode($item->code)
+                    ->first();
+                    throw new Exception('Kode obat sudah pernah digunakan pada ' . $existingItem->name);
+                }
+            }
             if(($item->is_medical_item == 1 || $item->is_cure == 1)){
                      $item->price = ($item->purchase_price ?? 0) * (100 + ($item->additional->margin ?? 0)) / 100;
              }
         });
 
         static::updating(function(Item $item) {
+            if($item->is_cure == 1) {
+                $existing = DB::table('items')
+                ->whereCategoryId($item->category_id)
+                ->whereClassificationId($item->classification_id)
+                ->whereSubclassificationId($item->subclassification_id)
+                ->whereGenericId($item->generic_id)
+                ->where('id', '!=', $item->id)
+                ->whereCode($item->code)
+                ->count();
+                if($existing > 0) {
+                    $existingItem = DB::table('items')
+                    ->whereCategoryId($item->category_id)
+                    ->whereClassificationId($item->classification_id)
+                    ->whereSubclassificationId($item->subclassification_id)
+                    ->whereGenericId($item->generic_id)
+                    ->whereCode($item->code)
+                    ->where('id', '!=', $item->id)
+                    ->first();
+                    throw new Exception('Kode obat sudah pernah digunakan pada ' . $existingItem->name);
+                }
+            }
             // Is Active a.k.a grup nota id
 
             if(($item->is_medical_item == 1 || $item->is_cure == 1) && $item->is_category == 0 && $item->category_id != null && $item->is_pharmacy > 0) {
@@ -82,6 +124,13 @@ class Item extends Model
 
     public function setAdditionalAttribute($value) {
         $this->attributes['additional'] = json_encode($value);    
+    }
+
+    public function setCodeAttribute($value) {
+        if($value) {
+            $value = preg_replace('/0*(.*)/', "$1", $value);
+            $this->attributes['code'] = $value;    
+        }
     }
 
 

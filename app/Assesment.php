@@ -32,6 +32,8 @@ class Assesment extends Model
             $registrationDetail = $registration->detail;
             foreach($registrationDetail as $unit) {
                 $unit->medical_record()->update([
+                    'main_complaint' => $assesment->main_complaint,
+                    'obgyn_main_complaint' => $assesment->main_complaint,
                     'general_condition' => $assesment->general_condition,
                     'long' => $assesment->long,
                     'weight' => $assesment->weight,

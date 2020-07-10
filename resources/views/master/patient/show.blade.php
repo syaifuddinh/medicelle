@@ -17,6 +17,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
+                            <button ng-click='exportSingleCard()' class="btn btn-primary btn-sm" >Export Kartu Pasien</button>
                             @if(Auth::user()->allow_access('master.patient.edit'))
                                 <a href='{{ route("patient.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
                             @endif

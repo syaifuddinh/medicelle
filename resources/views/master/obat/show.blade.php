@@ -174,7 +174,7 @@
                             <label class="col-md-3 col-sm-3 col-xs-12">Principal
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <% formData.additional.principal %>
+                                <% formData.principal_name %>
                             </div>
                         </div>
                         <div class="form-group">

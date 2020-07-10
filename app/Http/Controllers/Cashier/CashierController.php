@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Response;
 use DB;
 use PDF;
+use Exception;
 
 class CashierController extends Controller
 {
@@ -85,7 +86,11 @@ class CashierController extends Controller
         ->whereInvoiceId($id)
         ->whereIsItem(1)
         ->get();
-        $invoice_detail = $invoice_detail->groupBy('grup_nota.name');
+        if(count($invoice_detail) > 0) {
+            $invoice_detail = $invoice_detail->groupBy('grup_nota.name');
+        } else {
+            $invoice_detail = (object) [];
+        }
         $data = [
             'invoice' => $invoice,
             'invoice_detail' => $invoice_detail
@@ -114,31 +119,35 @@ class CashierController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        $invoice = Invoice::find($id);
-        $invoice->fill($request->all());
-        $invoice->discount_total_percentage = $request->massive_discount ?? 0;
-        $invoice->gross = 0;
-        $invoice->netto = 0;
-        $invoice->asuransi_value = 0;
-        $invoice->qty = 0;
-        $invoice->discount = 0;
-        $invoice->discount_total_value = 0;
-        $invoice->save();
-        InvoiceDetail::whereInvoiceId($invoice->id)->delete();
-        collect($request->invoice_detail)->each(function($val) use($invoice){
-            collect($val)->each(function($item) use ($invoice){
-                $invoiceDetail = new InvoiceDetail();
-                $invoiceDetail->invoice_id = $invoice->id;
-                $invoiceDetail->item_id = $item['item_id'];
-                $invoiceDetail->qty = $item['qty'];
-                $invoiceDetail->debet = $item['debet'];
-                $invoiceDetail->disc_percent = $item['disc_percent'] ?? 0;
-                $invoiceDetail->is_item = 1;
-                $invoiceDetail->save();
+        try {
+            $invoice = Invoice::find($id);
+            $invoice->fill($request->all());
+            $invoice->discount_total_percentage = $request->massive_discount ?? 0;
+            $invoice->gross = 0;
+            $invoice->netto = 0;
+            $invoice->asuransi_value = 0;
+            $invoice->qty = 0;
+            $invoice->discount = 0;
+            $invoice->discount_total_value = 0;
+            $invoice->save();
+            InvoiceDetail::whereInvoiceId($invoice->id)->delete();
+            collect($request->invoice_detail)->each(function($val) use($invoice){
+                collect($val)->each(function($item) use ($invoice){
+                    $invoiceDetail = new InvoiceDetail();
+                    $invoiceDetail->invoice_id = $invoice->id;
+                    $invoiceDetail->item_id = $item['item_id'];
+                    $invoiceDetail->qty = $item['qty'];
+                    $invoiceDetail->debet = $item['debet'];
+                    $invoiceDetail->disc_percent = $item['disc_percent'] ?? 0;
+                    $invoiceDetail->is_item = 1;
+                    $invoiceDetail->save();
+                });
             });
-        });
-        
-        DB::commit();
+            
+            DB::commit();
+        } catch (Exception $e) {
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
 
         return Response::json(['message' => 'Transaksi berhasil diupdate', 'invoice_id' => $id], 200);
     }

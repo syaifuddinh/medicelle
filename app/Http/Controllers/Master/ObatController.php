@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Exception;
+use App\Contact;
 
 class ObatController extends Controller
 {
@@ -146,11 +148,16 @@ class ObatController extends Controller
         ]);
 
         DB::beginTransaction();
-        $item->fill($request->all());
-        $item->is_cure = 1;
-        $item->is_pharmacy = $request->grup_nota_id ?? 0;
-        $item->save();
-        DB::commit();
+        try {
+            $item->fill($request->all());
+            $item->is_cure = 1;
+            $item->is_pharmacy = $request->grup_nota_id ?? 0;
+            $item->save();
+            DB::commit();
+        } catch(Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);            
+        }
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
 
@@ -163,6 +170,14 @@ class ObatController extends Controller
     public function show($id)
     {
         $x = Item::with('group:id,name,code','classification:id,name,code', 'subclassification:id,name,code', 'generic:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name', 'purchase_piece:id,name')->find($id);
+        $principal = Contact::select('name') 
+        ->find(($x->additional->principal ?? -1));
+        if($principal === null) {
+            $principal_name = ''; 
+        } else {
+            $principal_name = $principal->name;
+        }
+        $x->principal_name = $principal_name;
         return Response::json($x, 200);
     }
 
@@ -195,13 +210,18 @@ class ObatController extends Controller
         ]);
 
         DB::beginTransaction();
-        $item = Item::find($id);
-        $item->fill($request->all());
-        $item->price = $request->price ?? 0;
-        $item->is_cure = 1;
-        $item->is_pharmacy = $request->grup_nota_id ?? 0;
-        $item->save();
-        DB::commit();
+        try {
+            $item = Item::find($id);
+            $item->fill($request->all());
+            $item->price = $request->price ?? 0;
+            $item->is_cure = 1;
+            $item->is_pharmacy = $request->grup_nota_id ?? 0;
+            $item->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }

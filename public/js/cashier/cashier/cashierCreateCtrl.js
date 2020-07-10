@@ -1,7 +1,8 @@
 app.controller('cashierCreate', ['$scope', '$http', '$rootScope','$compile','$filter', function($scope, $http, $rootScope, $compile, $filter) {
 // $scope.title = 'Tambah1 Kasir';
 $scope.formData = {
-    payment_method : 'KREDIT'
+    payment_method : 'KREDIT',
+    invoice_detail : new Object()
 }
 $scope.promo_detail = {}
 $scope.registration = {}
@@ -256,7 +257,6 @@ $scope.updateItem = function(el) {
         }
     }
 
-    console.log(detail)
     if(details[grup_nota]) {
         $scope.formData.invoice_detail[grup_nota].push(detail) 
     } else {
@@ -264,7 +264,6 @@ $scope.updateItem = function(el) {
             detail
         ]
     }
-    
     invoice_detail_datatable.clear().draw()
     $scope.showInvoiceDetail()
     $scope.is_edit = false

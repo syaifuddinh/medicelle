@@ -1,5 +1,5 @@
 app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-    $scope.title = 'Detail Jenis Pemeriksaan Laborat3';
+    $scope.title = 'Detail Jenis Pemeriksaan Laboratorium';
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
