@@ -1,6 +1,7 @@
 app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Jenis Pemeriksaan Laboratorium';
     $scope.formData = {}
+    $scope.price = []
     var path = window.location.pathname;
     if(/edit/.test(path)) {
         $scope.title = 'Edit Jenis Pemeriksaan Laboratorium';
@@ -22,7 +23,7 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
         });
     }
 
-
+    counter = -1
 
     detail_datatable = $('#detail_datatable').DataTable({
        dom: 'rt',
@@ -37,24 +38,37 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
             data: null, 
             orderable : false,
             searchable : false,
+            render : function(resp) {
+                return '<input type="number" style="width:100%" value="' + (resp.price || '') + '" onchange="changePrice(this)" class="text-right form-control">'
+            }  
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
             className : 'text-center',
             render : resp =>  "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail($event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"
           },
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
-          $(row).find('input').focus()
         }
     });
 
   changeName = function(obj) {
       var name = $(obj).val()
-      console.log(name)
-      var input = {
-        'name' : name
-      }
       var row = $(obj).parents('tr')
-      detail_datatable.row(row).data(input).draw()
+      var data = detail_datatable.row(row).data()
+      data['name'] = name
+      detail_datatable.row(row).data(data).draw()
+  }
+
+  changePrice = function(obj) {
+      var price = $(obj).val()
+      var row = $(obj).parents('tr')
+      var data = detail_datatable.row(row).data()
+      data['price'] = price
+      detail_datatable.row(row).data(data).draw()
   }
 
     $scope.reset = function() {

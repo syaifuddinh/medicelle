@@ -1,4 +1,4 @@
-app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope, $filter) {
     $scope.title = 'Detail Jenis Pemeriksaan Laboratorium';
     $scope.formData = {}
     var path = window.location.pathname
@@ -10,7 +10,10 @@ app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', function(
 
             for(x in $scope.formData.laboratory_type_detail) {
                 unit = $scope.formData.laboratory_type_detail[x]
-                li = $('<li>' + unit.name + '</li>')
+                li = $('<li>' + unit.name + '<br></li>')
+                li.append(
+                    $("<div class='text-primary'>" + $filter("number")(unit.price) + "</div>")
+                )
                 $('#laboratory_type_detail_list').append(li)
             }
         }, function(error) {

@@ -40,6 +40,7 @@
                               <table class="table" id='detail_datatable'>
                                   <thead>
                                       <th>Nama</th>
+                                      <th>Harga</th>
                                       <th></th>
                                   </thead>
                                   <tbody>

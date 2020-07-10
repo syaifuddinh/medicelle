@@ -44,8 +44,9 @@ class LaboratoryTypeController extends Controller
     public function store(Request $request, LaboratoryType $laboratory_type)
     {
         $request->validate([
-            'name' => 'unique:permissions,name' 
+            'name' => 'required|unique:permissions,name' 
         ], [
+            'name.required' => 'Nama tidak boleh kosong',
             'name.unique' => 'Nama sudah digunakan'
         ]);
         DB::beginTransaction();
@@ -54,7 +55,8 @@ class LaboratoryTypeController extends Controller
         foreach ($request->detail as $value) {
             if( null != ($value['name'] ?? null) ) {
                 $laboratory_type->laboratory_type_detail()->create([
-                    'name' => $value['name']
+                    'name' => $value['name'],
+                    'price' => $value['price']
                 ]);
             }
         }
@@ -70,7 +72,7 @@ class LaboratoryTypeController extends Controller
      */
     public function show($id)
     {
-        $laboratory_type = LaboratoryType::with('laboratory_type_detail:laboratory_type_id,name')->find($id);
+        $laboratory_type = LaboratoryType::with('laboratory_type_detail:laboratory_type_id,name,price')->find($id);
         return Response::json($laboratory_type, 200);
     }
 
@@ -102,7 +104,8 @@ class LaboratoryTypeController extends Controller
         foreach ($request->detail as $value) {
             if( null != ($value['name'] ?? null)) {
                 $laboratory_type->laboratory_type_detail()->create([
-                    'name' => $value['name']
+                    'name' => $value['name'],
+                    'price' => $value['price']
                 ]);
             }
         }
