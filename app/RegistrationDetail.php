@@ -38,6 +38,7 @@ class RegistrationDetail extends Model
                     $invoice = new Invoice();
                     $invoice->is_nota_pemeriksaan = 1;
                     $invoice->payment_method = 'TUNAI';
+                    $invoice->date = Carbon::now()->format('Y-m-d');
                     if($registration->patient_type == 'ASURANSI SWASTA') {
                         $invoice->payment_type = 'ASURANSI SWASTA';                        
                     } else {
@@ -80,15 +81,41 @@ class RegistrationDetail extends Model
                     ]);
                 }
                 foreach($diagnostics as $value) {
-                    InvoiceDetail::create([
-                        'invoice_id' => $invoice->id,
-                        'item_id' => $value->item_id,
-                        'is_profit_sharing' => 1,
-                        'qty' => $value->qty,
-                        'is_item' => 1,
-                        'debet' => $value->item->price,
-                        'reduksi' => $value->reduksi
-                    ]);
+                    if($value->laboratory_pivot === null) {
+                        InvoiceDetail::create([
+                            'invoice_id' => $invoice->id,
+                            'item_id' => $value->item_id,
+                            'is_profit_sharing' => 1,
+                            'qty' => $value->qty,
+                            'is_item' => 1,
+                            'debet' => $value->item->price,
+                            'reduksi' => $value->reduksi
+                        ]);
+                    } else {
+                        $debet = 0;
+                        $additional = $value->laboratory_pivot->additional;
+                        if($additional->treatment) {
+                            if(count($additional->treatment) > 0) {
+                                foreach($additional->treatment as $t) {
+                                    $laboratory_type_detail = DB::table('laboratory_type_details')
+                                    ->whereId($t->id)
+                                    ->first();
+                                    if($laboratory_type_detail !== null) {
+                                        $debet += $laboratory_type_detail->price;
+                                    }
+                                }
+                            }
+                        }
+                        InvoiceDetail::create([
+                            'invoice_id' => $invoice->id,
+                            'item_id' => $value->item_id,
+                            'is_profit_sharing' => 1,
+                            'qty' => $value->qty,
+                            'is_item' => 1,
+                            'debet' => $debet,
+                            'reduksi' => $value->reduksi
+                        ]);                        
+                    }
                 }
                 foreach($bhp as $value) {
                     InvoiceDetail::create([

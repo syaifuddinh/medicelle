@@ -1755,6 +1755,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           var unit, subunit, tr, content
           $scope.pivotData = data.data.additional
           $scope.pivot_medical_record_id = data.data.id
+          laboratory_treatment_datatable.html('')
           for(x in $scope.pivotData.treatment) {
               unit = $scope.pivotData.treatment[x]
               tr = $("<div class='col-md-4'><b>" + unit.name + "</b><div class='ln_solid'></div></div>")
@@ -1902,9 +1903,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           laboratory_datatable.clear().draw();
       }
 
-
       if(path.indexOf('radiology') > -1) {
           radiology_datatable.clear().draw();
+      }
+
+      if(path.indexOf('diagnostic') > -1) {
+          diagnostic_datatable.clear().draw();
       }
 
       window.scrollTo(0, 0)
@@ -2347,9 +2351,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $http[method](url, data).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
-        setTimeout(function() {
-            location.reload()
-        }, 800)
+        $scope.show()
       }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {
