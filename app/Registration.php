@@ -12,6 +12,7 @@ use App\Invoice;
 use App\InvoiceDetail;
 use App\Price;
 use App\RegistrationDetail;
+use Carbon\Carbon;
 
 class Registration extends Model
 {
@@ -54,6 +55,15 @@ class Registration extends Model
         static::updating(function(Registration $registration) {
             $registration->updated_by = Auth::user()->id;
             if($registration->status == 2) {
+                $registration->attend_at = Carbon::now()->format('Y-m-d H:i:s');
+                $existing = DB::table('registrations')
+                ->whereNotNull('attend_at')
+                ->whereBetween("attend_at", [
+                    Carbon::now()->format('Y-m-d 01:00:00'),
+                    Carbon::now()->format('Y-m-d 23:00:00')
+                ])
+                ->count();
+                $registration->queue = $existing + 1;
                 DB::beginTransaction();
                 $invoice = Invoice::whereRegistrationId($registration->id)->first();
                 if($invoice == null) {

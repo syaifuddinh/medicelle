@@ -43,6 +43,7 @@
                           <% formData.code %>
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Nama
                         </label>
@@ -50,6 +51,7 @@
                           <% formData.name %>
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Status
                         </label>
@@ -57,6 +59,15 @@
                           <% formData.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kategori
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" style='text-transform:capitalize'>
+                          <% formData.supplier_category %>
+                        </div>
+                      </div>
+
                       <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Alamat
                         </label>
@@ -64,6 +75,7 @@
                           <% formData.address %>
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kota
                         </label>

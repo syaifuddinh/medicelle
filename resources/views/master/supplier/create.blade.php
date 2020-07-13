@@ -21,90 +21,115 @@
 
         <div class="col-md-12 col-sm-12 col-xs-12">
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <input type="text"  ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" autofocus>
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.code' required="required" class="form-control col-md-7 col-xs-12" autofocus>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama<span class="required">*</span>
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori<span class="required">*</span>
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <label class='radio-inline'>
+                            <input type="radio" ng-model='formData.supplier_category' ng-value='"principal"'> Principal
+                        </label>
+
+                        <label class='radio-inline'>
+                            <input type="radio" ng-model='formData.supplier_category' ng-value='"pbf"'> PBF
+                        </label>
+                        
+                        <label class='radio-inline'>
+                            <input type="radio" ng-model='formData.supplier_category' ng-value='"supplier"'> Supplier
+                        </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <textarea class='form-control' ng-model="formData.address" id="" cols="20" rows="10"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kota
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <select class="form-control" data-placeholder-text-single="'Pilih Kota'" required='required' chosen allow-single-deselect="false" ng-model="formData.city_id" ng-options="c.id as c.name group by c.province.name for c in data.city">
+                      </select>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Kode pos
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.postal_code' class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Email
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="email"  ng-model='formData.email' class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Telepon
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.phone' class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.fax' class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama kontak
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.contact_name' class="form-control col-md-7 col-xs-12">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Diskon(%)
+                    </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text"  ng-model='formData.supplier_disc_percent' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
+                    </div>
+                  </div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama<span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
 
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <textarea class='form-control' ng-model="formData.address" id="" cols="20" rows="10"></textarea>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kota
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Kota'" required='required' chosen allow-single-deselect="false" ng-model="formData.city_id" ng-options="c.id as c.name group by c.province.name for c in data.city">
-                </select>
-              </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Kode pos
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.postal_code' class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Email
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="email"  ng-model='formData.email' class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Telepon
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.phone' class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.fax' class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama kontak
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.contact_name' class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Diskon(%)
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text"  ng-model='formData.supplier_disc_percent' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
-                </div>
-              </div>
 
               <div class="ln_solid"></div>
               <div class="form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-1">
                   <div class="btn-group">
 
                     <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>

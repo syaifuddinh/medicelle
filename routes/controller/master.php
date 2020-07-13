@@ -28,6 +28,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('lokasi', 'LokasiController');
 
         Route::put('supplier/activate/{id}', 'SupplierController@activate');
+        Route::get('supplier/principal', 'SupplierController@principal');
         Route::resource('supplier', 'SupplierController');
 
         Route::put('agency/activate/{id}', 'AgencyController@activate');

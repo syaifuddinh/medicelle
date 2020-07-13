@@ -10,22 +10,21 @@ use DB;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $contact = Contact::supplier()->whereIsActive(1)->select('id', 'code', 'name')->get();
         return Response::json($contact, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function principal()
+    {
+        $contact = Contact::supplier()
+        ->whereIsActive(1)
+        ->whereSupplierCategory('principal')
+        ->select('id', 'code', 'name')->get();
+        return Response::json($contact, 200);
+    }
+
     public function create()
     {
         //
@@ -42,7 +41,9 @@ class SupplierController extends Controller
         $request->validate([
             'code' => 'required',
             'name' => 'required',
+            'supplier_category' => 'required',
         ], [
+            'supplier_category.required' => 'Kategori tidak boleh kosong',
             'name.required' => 'Nama tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
         ]);
@@ -95,9 +96,12 @@ class SupplierController extends Controller
         $request->validate([
             'name' => 'required',
             'code' => 'required',
+            'supplier_category' => 'required'
+
         ], [
             'name.required' => 'Nama tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
+            'supplier_category.required' => 'Kategori tidak boleh kosong'
         ]);
 
         DB::beginTransaction();

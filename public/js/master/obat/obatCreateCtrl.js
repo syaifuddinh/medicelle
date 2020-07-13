@@ -159,7 +159,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
 
 
     $scope.supplier = function() {
-        $http.get(baseUrl + '/controller/master/supplier').then(function(data) {
+        $http.get(baseUrl + '/controller/master/supplier/principal').then(function(data) {
             $scope.data.supplier = data.data
             $scope.show()
         }, function(error) {
