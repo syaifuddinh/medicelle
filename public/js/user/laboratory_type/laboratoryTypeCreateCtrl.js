@@ -27,9 +27,10 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
 
     detail_datatable = $('#detail_datatable').DataTable({
        dom: 'rt',
+	pageLength: 200,
         columns:[
           {
-            data: null, 
+            data: null,
             orderable : false,
             searchable : false,
             render : resp => '<input type="text" style="width:100%" value="' + (resp.name || '') + '" class="form-control" onchange="changeName(this)">'
