@@ -1,0 +1,856 @@
+{
+   "HEMATOLOGI": [
+      {
+         "name": "Darah Lengkap (CBC+DIFF)",
+         "price": 1000000
+      },
+      {
+         "name": "Darah Lengkap + LED",
+         "price": 0
+      },
+      {
+         "name": "Retikulosit",
+         "price": 0
+      },
+      {
+         "name": "Hapusan Darah Tepi",
+         "price": 0
+      },
+      {
+         "name": "Golongan Darah (ABO + Rh)",
+         "price": 850000
+      },
+      {
+         "name": "Faal Hemostasis",
+         "price": 6600000
+      },
+      {
+         "name": "PT (PPT)",
+         "price": 2950000
+      },
+      {
+         "name": "APTT",
+         "price": 1950000
+      },
+      {
+         "name": "Fibrinogen",
+         "price": 3050000
+      },
+      {
+         "name": "Tes Agregasi Trombosit (TAT)",
+         "price": 4400000
+      },
+      {
+         "name": "Viskositas Plasma (VP)",
+         "price": 1400000
+      },
+      {
+         "name": "Viskositas Darah (VD)",
+         "price": 1400000
+      },
+      {
+         "name": "Profil Iron (SI+TIBC+UIBC+Saturasi Transferin)",
+         "price": 0
+      },
+      {
+         "name": "Serum Iron (SI)",
+         "price": 1890000
+      },
+      {
+         "name": "SI + TIBC",
+         "price": 1950000
+      },
+      {
+         "name": "Transferin",
+         "price": 0
+      },
+      {
+         "name": "Ferritin",
+         "price": 3050000
+      },
+      {
+         "name": "Analisa Hb (HPLC)",
+         "price": 5940000
+      },
+      {
+         "name": "Analisa HB (mikrokapiler)",
+         "price": 0
+      },
+      {
+         "name": "HbH",
+         "price": 1900000
+      },
+      {
+         "name": "G6PD",
+         "price": 3200000
+      },
+      {
+         "name": "Coombs Test",
+         "price": 0
+      },
+      {
+         "name": "D-Dimer",
+         "price": 7450000
+      },
+      {
+         "name": "CD4",
+         "price": 0
+      }
+   ],
+   "URINALISIS": [
+      {
+         "name": "Urine Rutin",
+         "price": 650000
+      },
+      {
+         "name": "Protein Esbach (Urine 24 jam)",
+         "price": 1380000
+      },
+      {
+         "name": "Protein Bence Jones",
+         "price": 1200000
+      }
+   ],
+   "FAECES": [
+      {
+         "name": "Faeces Rutin",
+         "price": 990000
+      },
+      {
+         "name": "Darah samar (OB)",
+         "price": 1490000
+      },
+      {
+         "name": "Floating Test",
+         "price": 1320000
+      }
+   ],
+   "Screening Narkoba": [
+      {
+         "name": "Alkohol Saliva",
+         "price": 2000000
+      },
+      {
+         "name": "Alkohol Kuantitatif",
+         "price": 0
+      },
+      {
+         "name": "Amphetamin",
+         "price": 0
+      },
+      {
+         "name": "Metamphetamin",
+         "price": 0
+      },
+      {
+         "name": "Coccain",
+         "price": 0
+      },
+      {
+         "name": "Canabinoid",
+         "price": 0
+      },
+      {
+         "name": "Morfin/opiate",
+         "price": 0
+      },
+      {
+         "name": "Benzodiazepin",
+         "price": 0
+      },
+      {
+         "name": "Barbiturat",
+         "price": 0
+      }
+   ],
+   "Kehamilan0 Vitamin dan mikro0 dan nutrisi": [
+      {
+         "name": "HCG Urine (Testpack)",
+         "price": 0
+      },
+      {
+         "name": "Asam folat",
+         "price": 9540000
+      },
+      {
+         "name": "Vitamin B12",
+         "price": 0
+      },
+      {
+         "name": "Vitamin D 25-OH",
+         "price": 4000000
+      }
+   ],
+   "FAAL HATI & PANKREAS": [
+      {
+         "name": "SGOT",
+         "price": 550000
+      },
+      {
+         "name": "SGPT",
+         "price": 550000
+      },
+      {
+         "name": "Gamma GT",
+         "price": 1050000
+      },
+      {
+         "name": "Fosfatase Alkali (ALP)",
+         "price": 930000
+      },
+      {
+         "name": "Bilirubin",
+         "price": 1250000
+      },
+      {
+         "name": "Cholinesterase (CHE)",
+         "price": 1850000
+      },
+      {
+         "name": "Albumin",
+         "price": 850000
+      },
+      {
+         "name": "Globulin",
+         "price": 1800000
+      },
+      {
+         "name": "Total Protein",
+         "price": 850000
+      },
+      {
+         "name": "Serum Protein ELP (SPE)",
+         "price": 3990000
+      },
+      {
+         "name": "Amilase",
+         "price": 3250000
+      },
+      {
+         "name": "Lipase",
+         "price": 2650000
+      }
+   ],
+   "FAAL GINAL": [
+      {
+         "name": "BUN",
+         "price": 0
+      },
+      {
+         "name": "Serum Kreatinin (eGFR)",
+         "price": 600000
+      },
+      {
+         "name": "Klirens Kreatinin",
+         "price": 0
+      },
+      {
+         "name": "Cystatin C",
+         "price": 3680000
+      },
+      {
+         "name": "Mikro Albumin Urine (MAU)",
+         "price": 1680000
+      },
+      {
+         "name": "Asam Urat",
+         "price": 690000
+      }
+   ],
+   "ELEKTROLIT": [
+      {
+         "name": "Natrium",
+         "price": 1200000
+      },
+      {
+         "name": "Kalium",
+         "price": 1200000
+      },
+      {
+         "name": "Klorida",
+         "price": 1200000
+      },
+      {
+         "name": "Kalsium Total",
+         "price": 1200000
+      },
+      {
+         "name": "Kalsium Ion",
+         "price": 3150000
+      },
+      {
+         "name": "Fosfor",
+         "price": 1250000
+      },
+      {
+         "name": "Magnesium",
+         "price": 1300000
+      }
+   ],
+   "LEMAK": [
+      {
+         "name": "Kolesterol Total",
+         "price": 600000
+      },
+      {
+         "name": "Trigliserida",
+         "price": 650000
+      },
+      {
+         "name": "HDL Kolesterol",
+         "price": 800000
+      },
+      {
+         "name": "LDL Kolesterol",
+         "price": 1210000
+      },
+      {
+         "name": "Small Dense LDL",
+         "price": 0
+      },
+      {
+         "name": "Lp(a)",
+         "price": 4550000
+      },
+      {
+         "name": "Apo-A1",
+         "price": 3550000
+      },
+      {
+         "name": "Apo-B",
+         "price": 2360000
+      },
+      {
+         "name": "Adiponektin",
+         "price": 5900000
+      }
+   ],
+   "DIABETES MELITUS": [
+      {
+         "name": "Gula Darah Puasa",
+         "price": 500000
+      },
+      {
+         "name": "Gula Darah Acak",
+         "price": 500000
+      },
+      {
+         "name": "Gula Darah Acak Stick",
+         "price": 250000
+      },
+      {
+         "name": "TTGO",
+         "price": 0
+      },
+      {
+         "name": "Hba1c",
+         "price": 1950000
+      },
+      {
+         "name": "Insulin",
+         "price": 4250000
+      },
+      {
+         "name": "C-Peptide",
+         "price": 4850000
+      },
+      {
+         "name": "HOMA IR",
+         "price": 0
+      },
+      {
+         "name": "HOMA B",
+         "price": 0
+      },
+      {
+         "name": "Glycated Albumin",
+         "price": 1800000
+      }
+   ],
+   "JANTUNG": [
+      {
+         "name": "CK",
+         "price": 2050000
+      },
+      {
+         "name": "CKMB",
+         "price": 4750000
+      },
+      {
+         "name": "hs-CRP (ss-CRP)",
+         "price": 2950000
+      },
+      {
+         "name": "Troponin I (cTnl)",
+         "price": 4900000
+      },
+      {
+         "name": "Troponin T (cTnT)",
+         "price": 3900000
+      },
+      {
+         "name": "Homocysteine",
+         "price": 0
+      },
+      {
+         "name": "NT-ProBNP",
+         "price": 5500000
+      },
+      {
+         "name": "LDH",
+         "price": 1480000
+      }
+   ],
+   "FUNGSI TIROID": [
+      {
+         "name": "T3",
+         "price": 3200000
+      },
+      {
+         "name": "T4",
+         "price": 3200000
+      },
+      {
+         "name": "TSH-s",
+         "price": 2900000
+      },
+      {
+         "name": "Free T3",
+         "price": 4500000
+      },
+      {
+         "name": "Free T4",
+         "price": 3700000
+      },
+      {
+         "name": "Free T4 Index",
+         "price": 0
+      },
+      {
+         "name": "Tyroglobulin",
+         "price": 0
+      }
+   ],
+   "HEPATITIS": [
+      {
+         "name": "HBsAg Kualitatif",
+         "price": 1870000
+      },
+      {
+         "name": "HBsAg Kuantitatif",
+         "price": 5200000
+      },
+      {
+         "name": "Anti HBs",
+         "price": 2100000
+      },
+      {
+         "name": "Anti HBc",
+         "price": 4160000
+      },
+      {
+         "name": "IgM Anti HBc",
+         "price": 6450000
+      },
+      {
+         "name": "HBeAg",
+         "price": 5390000
+      },
+      {
+         "name": "Anti Hbe",
+         "price": 6700000
+      },
+      {
+         "name": "Anti HAV Total",
+         "price": 5040000
+      },
+      {
+         "name": "IgM Anti HAV",
+         "price": 4950000
+      },
+      {
+         "name": "IgC Anti HAV",
+         "price": 5380000
+      },
+      {
+         "name": "Anti HCV",
+         "price": 4950000
+      },
+      {
+         "name": "IgM Anti HCV",
+         "price": 0
+      }
+   ],
+   "TORCH": [
+      {
+         "name": "IgM Anti Toxoplasma",
+         "price": 3450000
+      },
+      {
+         "name": "IgG Anti Toxoplasma",
+         "price": 3450000
+      },
+      {
+         "name": "IgM Anti Toxoplasma Avidity",
+         "price": 5750000
+      },
+      {
+         "name": "IgM Anti Rubella",
+         "price": 4750000
+      },
+      {
+         "name": "IgG Anti Rubella",
+         "price": 3800000
+      },
+      {
+         "name": "IgM Anti CMV",
+         "price": 4800000
+      },
+      {
+         "name": "IgG Anti CMV",
+         "price": 3550000
+      },
+      {
+         "name": "IgG Anti CMV Avidity",
+         "price": 5540000
+      },
+      {
+         "name": "IgM Anti HSV 2",
+         "price": 3750000
+      },
+      {
+         "name": "IgG Anti HSV 2",
+         "price": 3750000
+      },
+      {
+         "name": "IgM Anti HSV 1",
+         "price": 4200000
+      },
+      {
+         "name": "IgG Anti HSV 1",
+         "price": 4200000
+      }
+   ],
+   "AUTOIMUN": [
+      {
+         "name": "Rheumatoid Factor",
+         "price": 1480000
+      },
+      {
+         "name": "Tes Rematik (RF + Anti MCV)",
+         "price": 5990000
+      },
+      {
+         "name": "ASTO",
+         "price": 1350000
+      },
+      {
+         "name": "ANA",
+         "price": 5750000
+      },
+      {
+         "name": "Anti ds-DNA",
+         "price": 5900000
+      },
+      {
+         "name": "IgM Anti ACA",
+         "price": 7900000
+      },
+      {
+         "name": "IgG Anti ACA",
+         "price": 7900000
+      },
+      {
+         "name": "C3 Komplemen",
+         "price": 6070000
+      },
+      {
+         "name": "C4 Komplemen",
+         "price": 6070000
+      },
+      {
+         "name": "Sel LE",
+         "price": 1700000
+      },
+      {
+         "name": "CRP",
+         "price": 2950000
+      },
+      {
+         "name": "IgM Total",
+         "price": 9350000
+      },
+      {
+         "name": "IgG Total",
+         "price": 9350000
+      },
+      {
+         "name": "IgA Total",
+         "price": 9350000
+      },
+      {
+         "name": "ANA Profile",
+         "price": 7900000
+      }
+   ],
+   "HORMON": [
+      {
+         "name": "LH",
+         "price": 4150000
+      },
+      {
+         "name": "FSH",
+         "price": 4150000
+      },
+      {
+         "name": "Prolaktin",
+         "price": 4100000
+      },
+      {
+         "name": "Testosteron",
+         "price": 4950000
+      },
+      {
+         "name": "Estradiol",
+         "price": 5100000
+      },
+      {
+         "name": "Progesteron",
+         "price": 5100000
+      },
+      {
+         "name": "Cortisol",
+         "price": 5650000
+      },
+      {
+         "name": "Beta HCG Kuantitatif",
+         "price": 5950000
+      },
+      {
+         "name": "Growth Hormon Basal",
+         "price": 0
+      },
+      {
+         "name": "Anti Mullerian Hormon (AMH)",
+         "price": 6850000
+      }
+   ],
+   "TUMOR MARKER": [
+      {
+         "name": "AFP",
+         "price": 3850000
+      },
+      {
+         "name": "CEA",
+         "price": 3650000
+      },
+      {
+         "name": "PSA Total",
+         "price": 4720000
+      },
+      {
+         "name": "Free PSA",
+         "price": 8500000
+      },
+      {
+         "name": "Ratio PSA",
+         "price": 0
+      },
+      {
+         "name": "NSE",
+         "price": 8500000
+      },
+      {
+         "name": "SCC",
+         "price": 7150000
+      },
+      {
+         "name": "CA 15-3",
+         "price": 6950000
+      },
+      {
+         "name": "CA 19-9",
+         "price": 7250000
+      },
+      {
+         "name": "CA 125",
+         "price": 7150000
+      },
+      {
+         "name": "Beta 2 Microglobulin",
+         "price": 8750000
+      }
+   ],
+   "INFEKSI": [
+      {
+         "name": "Procalcitonin",
+         "price": 101460000
+      },
+      {
+         "name": "IgM Anti Chlamydia",
+         "price": 7680000
+      },
+      {
+         "name": "IgG Anti Chlamydia",
+         "price": 7680000
+      },
+      {
+         "name": "TPHA",
+         "price": 1950000
+      },
+      {
+         "name": "VDRL",
+         "price": 1200000
+      },
+      {
+         "name": "HIV Ag/Ab",
+         "price": 4650000
+      },
+      {
+         "name": "HIV 3 Metode",
+         "price": 0
+      },
+      {
+         "name": "Paket Malaria",
+         "price": 0
+      },
+      {
+         "name": "Widal",
+         "price": 1600000
+      },
+      {
+         "name": "IgM Anti Salmonella Typhi",
+         "price": 3420000
+      },
+      {
+         "name": "Triple Dengue",
+         "price": 6500000
+      },
+      {
+         "name": "Dengue NS1 Ag",
+         "price": 3590000
+      },
+      {
+         "name": "IgG & IgM Anti Dengue (ICT)",
+         "price": 0
+      },
+      {
+         "name": "IgG & IgM Anti Dengue (Elisa)",
+         "price": 0
+      },
+      {
+         "name": "IgM Anti Chikungunya",
+         "price": 3550000
+      },
+      {
+         "name": "IgM Anti H.Pylori",
+         "price": 0
+      },
+      {
+         "name": "IgG Anti H.Pylori",
+         "price": 6900000
+      },
+      {
+         "name": "Mantoux Test",
+         "price": 0
+      },
+      {
+         "name": "IGRA Tb",
+         "price": 100450000
+      },
+      {
+         "name": "Adenosin Deaminase (ADA)",
+         "price": 0
+      }
+   ],
+   "KULTUR & SENSITIVITAS": [
+      {
+         "name": "Kultur Urine",
+         "price": 5770000
+      },
+      {
+         "name": "Kultur Darah",
+         "price": 4750000
+      },
+      {
+         "name": "Kultur Gall",
+         "price": 4660000
+      },
+      {
+         "name": "Kultur Faeces",
+         "price": 5770000
+      },
+      {
+         "name": "Kultur Pus",
+         "price": 5910000
+      },
+      {
+         "name": "Kultur Sputum",
+         "price": 5910000
+      },
+      {
+         "name": "Kultur Usap Tenggorok",
+         "price": 5910000
+      }
+   ],
+   "PCR": [
+      {
+         "name": "HBV DNA Kuantitatif",
+         "price": 109500000
+      },
+      {
+         "name": "HCV RNA Kuantitatif",
+         "price": 205600000
+      },
+      {
+         "name": "HCV RNA + Genotyping",
+         "price": 404210000
+      },
+      {
+         "name": "M.Tb Kualitatif",
+         "price": 4300000
+      },
+      {
+         "name": "S.Typhi Kualitatif",
+         "price": 4300000
+      },
+      {
+         "name": "HPV Genotyping + Papsmear (Liquid)",
+         "price": 0
+      }
+   ],
+   "SITOLOGI & ANALISIS LAIN": [
+      {
+         "name": "Sitologi Urine",
+         "price": 3500000
+      },
+      {
+         "name": "Sitologi Sputum",
+         "price": 3500000
+      },
+      {
+         "name": "Sitologi Pleura",
+         "price": 3500000
+      },
+      {
+         "name": "Sitologi Ascites",
+         "price": 3500000
+      },
+      {
+         "name": "Analisa Sperma",
+         "price": 0
+      },
+      {
+         "name": "Analisa Batu Ginjal",
+         "price": 0
+      },
+      {
+         "name": "Beta Crosslaps (Beta CTX)",
+         "price": 0
+      },
+      {
+         "name": "N-Mid Osteocalcin",
+         "price": 0
+      }
+   ]
+}
