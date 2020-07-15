@@ -259,8 +259,7 @@ class MasterApiController extends Controller
     public function obat(Request $request) {
         $x = Item::cure()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,name')
-        ->whereIsCategory(0)
-        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id', 'is_cure');
+        ->select('cures.id', 'cures.code', 'cures.name', 'cures.description', 'cures.is_active', 'cures.category_id', 'cures.classification_id', 'cures.subclassification_id', 'cures.generic_id', 'cures.is_cure');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

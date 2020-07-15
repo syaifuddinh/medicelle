@@ -211,11 +211,12 @@ class Item extends Model
     }
 
     public static function cure() {
-        return self::whereIsCure(1)
-        ->whereIsCategory(0)
-        ->whereIsClassification(0)
-        ->whereIsSubclassification(0)
-        ->whereIsGeneric(0);
+        return self::from('items as cures')
+        ->where('cures.is_cure', 1)
+        ->where('cures.is_category', 0)
+        ->where('cures.is_classification', 0)
+        ->where('cures.is_subclassification', 0)
+        ->where('cures.is_generic', 0);
     }
 
     public static function medical_item() {
