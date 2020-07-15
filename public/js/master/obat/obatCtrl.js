@@ -23,17 +23,16 @@ app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile
     columns:[
       {
         data:null, 
-        searchable : false, 
-        orderable : false,
+        name:'unique_code',
         render:resp => "<a href='" + baseUrl + "/obat/" + resp.id +  "' title='Detail'>" + resp.unique_code + "</a>"
       },
       {
         data:null, 
-        name:"cures.name",
+        name:"name",
         render:resp => "<a href='" + baseUrl + "/obat/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
-      {data:"group.name", name:"group.name", searchable:false},
-      {data:"price.grup_nota.name", orderable:false, searchable:false},
+      {data:"group.name", name:"group.name"},
+      {data:"price.grup_nota.name"},
       {
         data: null, 
         orderable : false,
