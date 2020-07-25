@@ -84,7 +84,7 @@
     <button  type='button' class="btn btn-md btn-success" id='printButton' ng-click='openPDF()'>
         <i class='fa fa-file-pdf-o'></i>
     </button>
-    
+    <button allow_update_medical_record type="button" id='submitButton' ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-success btn-md">Simpan</button>
     <a href="#menu_toggle" class="anchor-scroll btn btn-md btn-primary" data-class-to="this" data-on-scroll="blur-effect">
         <i class='fa fa-arrow-up'></i>
     </a>

@@ -1,4 +1,4 @@
-app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   $scope.formData = {}
   oTable = $('#listview').DataTable({
     processing: true,
@@ -33,6 +33,13 @@ app.controller('obat', ['$scope', '$compile', '$http', function($scope, $compile
       },
       {data:"group.name", name:"group.name"},
       {data:"price.grup_nota.name"},
+      {
+        data:null, 
+        searchable : false,
+        name:'qty',
+        className:'text-right',
+        render:resp => $filter('number')(resp.qty)
+      },
       {
         data: null, 
         orderable : false,

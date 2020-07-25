@@ -1,4 +1,4 @@
-app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', '$timeout', function($scope, $http, $rootScope, $filter, $compile, $timeout) {
     $scope.title = 'Form Rekam Medis';
     $scope.data = {}
     $scope.dot = '.............................................................................................................'
@@ -18,6 +18,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     if(path.indexOf('permintaan') > -1) {
         $('#printButton').show()
     } 
+
+    $timeout(function () {
+        $compile($("#submitButton"))($scope);
+    }, 800)
 
     $('#printButton').click(function(){
        if(path.indexOf('fnab') > -1) {

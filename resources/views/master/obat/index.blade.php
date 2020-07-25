@@ -60,6 +60,7 @@
                           <th>Nama</th>
                           <th>Kategori</th>
                           <th>Grup nota</th>
+                          <th>Stok</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

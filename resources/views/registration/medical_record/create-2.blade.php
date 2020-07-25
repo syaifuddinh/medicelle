@@ -523,9 +523,6 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="btn-group pull-right" allow_update_medical_record >
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan</button>
-                                </div>
                                 <div class="btn-group pull-left">
                                     <button class="btn btn-default btn-sm" ng-click="backtohome()" type="button">Batal</button>
                                     <button  allow_update_medical_record class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>

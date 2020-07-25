@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <table class="table" id='listview'>
+                  <table class="table table-hover grab" id='listview'>
                       <thead>
                         <tr>
                           <th>Judul</th>
