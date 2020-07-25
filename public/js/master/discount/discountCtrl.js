@@ -21,7 +21,17 @@ app.controller('discount', ['$scope', '$compile', '$http', '$filter', function($
     ],
 
     columns:[
-      {data:"code", name:"code"},
+      {
+          data:null, 
+          name:"code",
+          render:function(resp) {
+              if(roles['allow_show_discount'] == 1) {
+                  return "<a href='" + baseUrl + "/discount/" + resp.id +  "' title='Detail'>" + resp.code + "</a>"
+              } else {
+                  return resp.code
+              }
+          }
+      },
       {data:"name", name:"name"},
       {
         data:null, 

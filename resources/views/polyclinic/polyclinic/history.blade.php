@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="polyclinicHistory">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="polyclinicHistory">
           <!-- top tiles -->
           @include('polyclinic/polyclinic/index-navigation')
 

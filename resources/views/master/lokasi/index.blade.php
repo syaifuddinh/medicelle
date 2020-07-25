@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="lokasi">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="lokasi">
           <!-- top tiles -->
           
 

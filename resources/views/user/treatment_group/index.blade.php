@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="treatmentGroup">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="treatmentGroup">
           <!-- top tiles -->
           
 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Tarif</h3>
+                    <h3>Paket Tindakan</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">

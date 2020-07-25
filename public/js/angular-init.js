@@ -16,6 +16,17 @@ app.run(function($rootScope) {
   }
   $('[data-toggle="tooltip"]').tooltip();
 
+  $rootScope.getScope = function() {
+      var scopeContainer = $('#scopeContainer')
+      var scope = angular.element(scopeContainer).scope()
+
+      return scope
+  }
+
+  $rootScope.getFormData = function() {
+      return $rootScope.getScope().formData
+  }
+
   $rootScope.getBuffer = function() {
       var buffer = localStorage.getItem('buffer')
       if(buffer) {
@@ -32,8 +43,10 @@ app.run(function($rootScope) {
 
   $rootScope.insertBuffer = function() {
       var buffer = $rootScope.getBuffer()
+      var formData = $rootScope.getFormData()
       buffer.push({
-          'url' : window.location.pathname
+          'url' : window.location.pathname,
+          'formData' : formData
       })
       $rootScope.setBuffer(buffer)
   }
@@ -42,8 +55,6 @@ app.run(function($rootScope) {
       var index = buffer.length - 1
       if(index > -1) {
           var target = buffer[index]
-          buffer.splice(index, 1)
-          $rootScope.setBuffer(buffer)
           window.location.href = window.location.protocol + '//' + window.location.hostname + target.url
       }
   }
@@ -65,7 +76,23 @@ app.run(function($rootScope) {
       var pathname = window.location.pathname
       if(pathname.search('create') < 0) {
           $rootScope.emptyBuffer()
-      } 
+      }
+
+      var buffer = $rootScope.getBuffer()
+      var index = buffer.length - 1
+      var target, scope
+      if(index > -1) {
+          target = buffer[index]
+          if(target.url == pathname) {
+              setTimeout(function () {
+                  scope = $rootScope.getScope()
+                  scope.formData = target.formData
+                  scope.$apply()
+                  buffer.splice(index, 1)
+                  $rootScope.setBuffer(buffer)
+              }, 1000)
+          }
+      }
   }
   $rootScope.validateBuffer()
 

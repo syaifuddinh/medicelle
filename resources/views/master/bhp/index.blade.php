@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="bhp">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="bhp">
           <!-- top tiles -->
           @include('master/cure/index-navigation')
           

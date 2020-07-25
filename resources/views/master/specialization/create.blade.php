@@ -2,7 +2,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="specializationCreate">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="specializationCreate">
           <!-- top tiles -->
           
 

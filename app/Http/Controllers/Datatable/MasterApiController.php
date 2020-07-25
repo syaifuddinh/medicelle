@@ -260,7 +260,7 @@ class MasterApiController extends Controller
     public function obat(Request $request) {
         $stocks = DB::table('stocks')
         ->select('item_id', DB::raw('SUM(qty) AS qty'))
-        ->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) > -7")
+        ->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) < -7")
         ->groupBy('item_id');
 
         $x = Item::cure()

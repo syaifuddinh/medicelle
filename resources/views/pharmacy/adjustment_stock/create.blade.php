@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="adjustmentStockCreate" ng-cloak>
+<div class="right_col" role="main" id='scopeContainer' ng-controller="adjustmentStockCreate" ng-cloak>
     <!-- top tiles -->
 
 

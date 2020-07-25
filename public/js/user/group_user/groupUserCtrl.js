@@ -20,7 +20,17 @@ app.controller('groupUser', ['$scope', '$compile', '$http', function($scope, $co
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {
+          data:null, 
+          name:"name",
+          render:function(resp) {
+              if(roles['allow_show_group_user'] == 1) {
+                  return "<a href='" + baseUrl + "/group_user/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+              } else {
+                  return resp.name
+              }
+          }  
+      },
       {data:"description", name:"description"},
       {
         data: null, 

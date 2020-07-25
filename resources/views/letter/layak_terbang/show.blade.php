@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="layakTerbangShow">
+<div class="right_col" role="main" id='scopeContainer' ng-controller="layakTerbangShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">

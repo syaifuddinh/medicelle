@@ -988,7 +988,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       if( path.indexOf('drug') > -1 ) {
 
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
-            $scope.data.drug = data.data
+            var drugs = data.data.map(function(d){
+                d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
+                return d
+            })
+            $scope.data.drug = drugs
             $scope.signa()
           }, function(error) {
             $rootScope.disBtn=false;

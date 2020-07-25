@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="bhpCreate" ng-cloak>
+<div class="right_col" role="main" id='scopeContainer' ng-controller="bhpCreate" ng-cloak>
   <!-- top tiles -->
 
 

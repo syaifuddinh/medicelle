@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="administration">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="administration">
           <!-- top tiles -->
           @include('master/administration/index-navigation')
           

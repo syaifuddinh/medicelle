@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="nurseShow">
+<div class="right_col" role="main" id='scopeContainer' ng-controller="nurseShow">
     <!-- top tiles -->
 
 

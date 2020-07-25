@@ -21,7 +21,13 @@ app.controller('treatmentGroup', ['$scope', '$compile', '$http', '$filter', func
 
     columns:[
       {data:"grup_nota.slug", name:"grup_nota.slug"},
-      {data:"item.name", name:"item.name"},
+      {
+          data:null, 
+          name:"item.name",
+          render:function(resp) {
+              return "<a href='" + baseUrl + "/treatment_group/" + resp.id +  "' title='Detail'>" + resp.item.name + "</a>"
+          }
+      },
       {
         data:null, 
         name:"item.price",

@@ -29,7 +29,13 @@ app.controller('laboratoryType', ['$scope', '$compile', '$http', '$rootScope', f
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"name",
+        render:function(resp) {
+            return "<a href='" + baseUrl + "/laboratory_type/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+        }
+      },
       {
         data: null, 
         orderable : false,

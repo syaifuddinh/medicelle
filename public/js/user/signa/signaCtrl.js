@@ -26,7 +26,13 @@ app.controller('signa', ['$scope', '$compile', '$http', function($scope, $compil
         searchable:false,
         render : resp => resp.description == 'signa1' ? 'Signa 1' : 'Signa 2'
       },
-      {data:"name", name:"name"},
+      {
+        data:null, 
+        name:"name",
+        render:function(resp) {
+            return "<a href='" + baseUrl + "/signa/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+        }
+      },
       {
         data: null, 
         orderable : false,

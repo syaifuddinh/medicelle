@@ -79,7 +79,15 @@ class PriceController extends Controller
 
     public function drug()
     {
-        $item = Item::with('piece:id,name', 'generic:id,name')->select('id', 'name', 'piece_id', 'generic_id')
+        $stocks = DB::table('stocks')
+        ->select('item_id', DB::raw('SUM(qty) AS qty'))
+        ->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) < -7")
+        ->groupBy('item_id');
+        $item = Item::with('piece:id,name', 'generic:id,name')
+        ->leftJoinSub($stocks, 'stocks', function($join){
+            $join->on('stocks.item_id', 'items.id');
+        })
+        ->select('id', 'name', 'piece_id', 'generic_id', DB::raw('COALESCE(stocks.qty, 0) AS qty'))
         ->whereIsCategory(0)
         ->whereIsClassification(0)
         ->whereIsSubclassification(0)

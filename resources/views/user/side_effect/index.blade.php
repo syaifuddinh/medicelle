@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="sideEffect">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="sideEffect">
           <!-- top tiles -->
           
 

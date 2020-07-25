@@ -29,7 +29,13 @@ app.controller('radiologyType', ['$scope', '$compile', '$http', '$rootScope', fu
     ],
 
     columns:[
-      {data:"name", name:"name"},
+      {
+          data:null, 
+          name:"name",
+          render:function(resp) {
+              return "<a href='" + baseUrl + "/radiology_type/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
+          }
+      },
       {
         data: null, 
         orderable : false,

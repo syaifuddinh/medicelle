@@ -21,7 +21,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="polyclinicShow">
+<div class="right_col" role="main" id='scopeContainer' ng-controller="polyclinicShow">
     <!-- top tiles -->
 
 

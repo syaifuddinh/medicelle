@@ -3,7 +3,7 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main" ng-controller="rujukanPasienShow">
+<div class="right_col" role="main" id='scopeContainer' ng-controller="rujukanPasienShow">
     <!-- top tiles -->
     <div class="container-fluid">
         <ul class="nav nav-tabs">

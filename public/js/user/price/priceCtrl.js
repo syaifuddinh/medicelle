@@ -21,7 +21,17 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
 
     columns:[
       {data:"grup_nota.slug", name:"grup_nota.slug"},
-      {data:"service.name", name:"service.name"},
+      {
+          data:null, 
+          name:"service.name",
+          render:function(resp) {
+              if(roles['allow_show_price'] == 1) {
+                  return "<a href='" + baseUrl + "/price/" + resp.id +  "' title='Detail'>" + resp.service.name + "</a>"
+              } else {
+                  return resp.service.name
+              }
+          }
+      },
       {
         data:null, 
         name:'service.price',

@@ -20,7 +20,17 @@ app.controller('grupNota', ['$scope', '$compile', '$http', function($scope, $com
     ],
 
     columns:[
-      {data:"slug", name:"slug"},
+      {
+          data:null, 
+          name:"slug",
+          render:function(resp) {
+              if(roles['allow_show_grup_nota'] == 1) {
+                  return "<a href='" + baseUrl + "/grup_nota/" + resp.id +  "' title='Detail'>" + resp.slug + "</a>"
+              } else {
+                  return resp.slug
+              }
+          }
+      },
       {data:"name", name:"name"},
       {data:"description", name:"description"},
       {

@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="persetujuanTindakanMedisCreate">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="persetujuanTindakanMedisCreate">
           <!-- top tiles -->
           
 

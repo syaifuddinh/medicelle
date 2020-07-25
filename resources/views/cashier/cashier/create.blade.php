@@ -6,7 +6,7 @@
 <script>
     asuransi_rate_percentage = {{ Mod::finance()->asuransi_rate_percentage ?? 0 }}
 </script>
-<div class="right_col" role="main" ng-controller="cashierCreate" ng-cloak>
+<div class="right_col" role="main" id='scopeContainer' ng-controller="cashierCreate" ng-cloak>
     <!-- top tiles -->
 
 

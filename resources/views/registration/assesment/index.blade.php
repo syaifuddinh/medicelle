@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" ng-controller="assesment">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="assesment">
           <!-- top tiles -->
 
           <div class="row">
