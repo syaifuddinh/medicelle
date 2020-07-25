@@ -93,15 +93,6 @@
     <script src="{{ asset('') }}js/rzslider.min.js"></script>
     <script>
         datatableError = 200
-        // $.extend( $.fn.dataTable.defaults, {
-        //     ajax : {
-        //         'statusCode' : {
-        //               500 : function(s, r, t, u) {
-        //                   $.ajax(this)
-        //               }
-        //           }
-        //     }
-        // } );
         $(document).ready(function(){
             setTimeout(function(){
                 $('#listview').css('width', '100%')

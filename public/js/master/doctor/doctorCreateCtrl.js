@@ -77,7 +77,6 @@ app.controller('doctorCreate', ['$scope', '$http', '$rootScope', '$filter', func
       }
     });
 
-
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
       var url = baseUrl + '/controller/master/doctor';

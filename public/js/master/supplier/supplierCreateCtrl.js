@@ -1,6 +1,8 @@
 app.controller('supplierCreate', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.title = 'Tambah Distributor Farmasi';
-    $scope.formData = {}
+    $scope.formData = {
+        'supplier_category' : 'principal'
+    }
     $scope.data = {}
     var path = window.location.pathname;
     if(/edit/.test(path)) {
@@ -51,7 +53,11 @@ app.controller('supplierCreate', ['$scope', '$http', '$rootScope', function($sco
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/supplier'          
+          if($rootScope.hasBuffer()) {
+              $rootScope.accessBuffer()
+          } else {
+              window.location = baseUrl + '/supplier'          
+          }
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

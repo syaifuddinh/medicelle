@@ -8,23 +8,96 @@ app.run(function($rootScope) {
   $.fn.dataTable.ext.errMode = 'none';
   $rootScope.disBtn = false;
   $rootScope.backward = function(){
-    history.back();
+      if($rootScope.hasBuffer()) {
+          $rootScope.accessBuffer()
+      } else {
+          history.back();
+      }
   }
   $('[data-toggle="tooltip"]').tooltip();
-});
 
-app.filter('rupiah', function () {
-  return function (val) {
-    if (val!=null || !isNaN(val)) {
-      while (/(\d+)(\d{3})/.test(val.toString())){
-        val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+  $rootScope.getBuffer = function() {
+      var buffer = localStorage.getItem('buffer')
+      if(buffer) {
+          return JSON.parse(buffer)
+      } else {
+          return []
       }
-      var val = 'Rp ' + val;
-      return val;
-    } else {
-      return 'Rp. 0';
-    }
-  };
+  }
+
+  $rootScope.setBuffer = function(buffer) {
+      var bufferUpdated = JSON.stringify(buffer)
+      localStorage.setItem('buffer', bufferUpdated)
+  }
+
+  $rootScope.insertBuffer = function() {
+      var buffer = $rootScope.getBuffer()
+      buffer.push({
+          'url' : window.location.pathname
+      })
+      $rootScope.setBuffer(buffer)
+  }
+  $rootScope.accessBuffer = function() {
+      var buffer = $rootScope.getBuffer()
+      var index = buffer.length - 1
+      if(index > -1) {
+          var target = buffer[index]
+          buffer.splice(index, 1)
+          $rootScope.setBuffer(buffer)
+          window.location.href = window.location.protocol + '//' + window.location.hostname + target.url
+      }
+  }
+
+  $rootScope.emptyBuffer = function() {
+      $rootScope.setBuffer([])
+  }
+  $rootScope.hasBuffer = function() {
+      var resp = false
+      var buffer = $rootScope.getBuffer()
+      if(buffer.length > 0) {
+          resp = true
+      }
+
+      return resp
+  }
+
+  $rootScope.validateBuffer = function() {
+      var pathname = window.location.pathname
+      if(pathname.search('create') < 0) {
+          $rootScope.emptyBuffer()
+      } 
+  }
+  $rootScope.validateBuffer()
+
+  $rootScope.insertSpecialization = function() {
+      $rootScope.disBtn = true
+      $rootScope.insertBuffer()
+      location.href = baseUrl + '/specialization/create'
+  }
+
+  $rootScope.insertPolyclinic = function() {
+      $rootScope.disBtn = true
+      $rootScope.insertBuffer()
+      location.href = baseUrl + '/polyclinic/create'
+  }
+
+  $rootScope.insertGroupUser = function() {
+      $rootScope.disBtn = true
+      $rootScope.insertBuffer()
+      location.href = baseUrl + '/group_user/create'
+  }
+
+  $rootScope.insertPiece = function() {
+      $rootScope.disBtn = true
+      $rootScope.insertBuffer()
+      location.href = baseUrl + '/piece/create'
+  }
+
+  $rootScope.insertSupplier = function() {
+      $rootScope.disBtn = true
+      $rootScope.insertBuffer()
+      location.href = baseUrl + '/supplier/create'
+  }
 });
 
 app.filter('fullDate', function() {
@@ -43,7 +116,6 @@ app.filter('day', function() {
   return function(val) {
     var date = new Date(val);
     var day = date.getDay()
-    // var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nop','Des'];
     var readableDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
 
     return readableDays[day]
@@ -66,7 +138,6 @@ app.filter('minDate', function() {
 app.filter('fullDateTime', function() {
   return function(val) {
     var days = new Date(val);
-    // var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nop','Des'];
     var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
     return ('0'+days.getDate()).slice(-2)+' '+months[days.getMonth()]+' '+days.getFullYear()+' '+('0'+days.getHours()).slice(-2)+':'+('0'+days.getMinutes()).slice(-2);
   }

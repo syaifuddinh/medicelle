@@ -33,7 +33,11 @@ app.controller('polyclinicCreate', ['$scope', '$http', '$rootScope', function($s
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/polyclinic'          
+          if($rootScope.hasBuffer()) {
+              $rootScope.accessBuffer()
+          } else {
+              window.location = baseUrl + '/polyclinic'          
+          }
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

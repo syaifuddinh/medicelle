@@ -7,6 +7,13 @@
  .grab {
     cursor:grab;
  }
+ div .input-group-btn i.fa {
+    margin:1.3mm;
+ }
+ div .input-group .chosen-container .chosen-single {
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+ }
 .picker {
   font-size: 16px;
   text-align: left;

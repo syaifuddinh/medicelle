@@ -88,7 +88,11 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/group_user'          
+          if($rootScope.hasBuffer()) {
+              $rootScope.accessBuffer()
+          } else {
+              window.location = baseUrl + '/group_user'          
+          }
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

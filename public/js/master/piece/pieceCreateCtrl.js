@@ -33,7 +33,11 @@ app.controller('pieceCreate', ['$scope', '$http', '$rootScope', function($scope,
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/piece'          
+          if($rootScope.hasBuffer()) {
+              $rootScope.accessBuffer()
+          } else {
+            window.location = baseUrl + '/piece'          
+          }
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

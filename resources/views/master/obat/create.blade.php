@@ -109,9 +109,18 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan beli<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.purchase_piece_id" ng-options="c.id as c.name for c in data.piece">
-                  <option value=""></option>
-                </select>
+                    <div class="input-group">
+                        <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.purchase_piece_id" ng-options="c.id as c.name for c in data.piece">
+                          <option value=""></option>
+                        </select>
+                        @if(Auth::user()->allow_access('master.piece.create'))
+                            <div class="input-group-btn">
+                                <button type='button' class="btn btn-primary btn-sm" ng-click='insertPiece()' ng-disabled='disBtn'>
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
               </div>
               </div>
 			  
@@ -119,9 +128,18 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan jual<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
-                  <option value=""></option>
-                </select>
+                    <div class="input-group">
+                        <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
+                          <option value=""></option>
+                        </select>
+                        @if(Auth::user()->allow_access('master.piece.create'))
+                            <div class="input-group-btn">
+                                <button type='button' class="btn btn-primary btn-sm" ng-click='insertPiece()' ng-disabled='disBtn'>
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
               </div>
               </div>
 
@@ -202,9 +220,18 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Principal
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Principal'" chosen allow-single-deselect="true" ng-model="formData.additional.principal" ng-options="c.id as c.name for c in data.supplier">
-                  <option value=""></option>
-                </select>
+                    <div class="input-group">
+                        <select class="form-control" data-placeholder-text-single="'Pilih Principal'" chosen allow-single-deselect="true" ng-model="formData.additional.principal" ng-options="c.id as c.name for c in data.supplier">
+                          <option value=""></option>
+                        </select>
+                        @if(Auth::user()->allow_access('master.supplier.create'))
+                            <div class="input-group-btn">
+                                <button type='button' class="btn btn-primary btn-sm" ng-click='insertSupplier()' ng-disabled='disBtn'>
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
                   </div>
               </div>
 

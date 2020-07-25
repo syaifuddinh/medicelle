@@ -170,8 +170,13 @@ class ObatController extends Controller
     public function show($id)
     {
         $x = Item::with('group:id,name,code','classification:id,name,code', 'subclassification:id,name,code', 'generic:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name', 'purchase_piece:id,name')->find($id);
+        $principal_id = -1;
+        if(($x->additional->principal ?? -1) != -1) {
+            $principal_id = (integer) $x->additional->principal;
+
+        }
         $principal = Contact::select('name') 
-        ->find(($x->additional->principal ?? -1));
+        ->find($principal_id);
         if($principal === null) {
             $principal_name = ''; 
         } else {

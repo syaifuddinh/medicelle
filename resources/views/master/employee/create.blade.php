@@ -116,9 +116,18 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Dept<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <select class="form-control" data-placeholder-text-single="'Pilih Departemen'" required='required' chosen allow-single-deselect="false" ng-model="formData.group_user_id" ng-options="c.id as c.name for c in data.group_user">
-                    <option value=""></option>
-                  </select>
+                  <div class="input-group">
+                      <select class="form-control" data-placeholder-text-single="'Pilih Departemen'" required='required' chosen allow-single-deselect="false" ng-model="formData.group_user_id" ng-options="c.id as c.name for c in data.group_user">
+                        <option value=""></option>
+                      </select>
+                      @if(Auth::user()->allow_access('setting.group_user.create'))
+                          <div class="input-group-btn">
+                              <button type='button' class="btn btn-primary btn-sm" ng-click='insertGroupUser()' ng-disabled='disBtn'>
+                                  <i class="fa fa-plus"></i>
+                              </button>
+                          </div>
+                      @endif
+                  </div>
                 </div>
               </div>
 

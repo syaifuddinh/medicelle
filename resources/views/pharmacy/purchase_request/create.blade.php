@@ -64,7 +64,7 @@
                             <button type="button" class="btn btn-sm btn-primary" ng-click='insertItem()'>
                                 <i class="fa fa-plus"></i>
                             </button>
-                            <table class="table table-bordered" id='purchase_request_detail_datatable'>
+                            <table class="table table-bordered table-hover" id='purchase_request_detail_datatable'>
                                 <thead>
                                     <tr>
                                         <td>Barang</td>
@@ -111,7 +111,7 @@
             </div>
             <div class="modal-body">
 
-                <table class="table table-bordered" id='item_datatable' style='width:100%'>
+                <table class="table table-bordered table-hover" id='item_datatable' style='width:100%'>
                     <thead>
                         <tr>
                             <th></th>
@@ -135,7 +135,7 @@
             </div>
             <div class="modal-body">
 
-                    <table class="table table-bordered" id='supplier_datatable' style='width:100%'>
+                    <table class="table table-bordered table-hover" id='supplier_datatable' style='width:100%'>
                         <thead>
                             <tr>
                                 <th></th>

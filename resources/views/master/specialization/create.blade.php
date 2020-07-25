@@ -43,7 +43,7 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <div class="btn-group">
+                          <div class="btn-group" style='position:fixed;bottom: 7mm;right:9mm'>
                             
                             <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button>
                             <button class="btn btn-warning btn-sm" type="button" ng-click='formData = {}'>Reset</button>

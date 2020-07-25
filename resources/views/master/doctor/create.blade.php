@@ -61,9 +61,18 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Spesialisasi
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih Spesialisasi'" required='required' chosen allow-single-deselect="false" ng-model="formData.specialization_id" ng-options="c.id as c.name for c in data.specialization">
-                                            <option value=""></option>
-                                        </select>
+                                        <div class="input-group">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih Spesialisasi'" required='required' chosen allow-single-deselect="false" ng-model="formData.specialization_id" ng-options="c.id as c.name for c in data.specialization">
+                                                <option value=""></option>
+                                            </select>
+                                            @if(Auth::user()->allow_access('master.specialization.create'))
+                                                <div class="input-group-btn">
+                                                    <button type='button' class="btn btn-primary btn-sm" ng-click='insertSpecialization()' ng-disabled='disBtn'>
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
@@ -72,9 +81,18 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Poliklinik
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'" required='required' chosen allow-single-deselect="false" ng-model="formData.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic">
-                                            <option value=""></option>
-                                        </select>
+                                        <div class="input-group">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih Poliklinik'" required='required' chosen allow-single-deselect="false" ng-model="formData.polyclinic_id" ng-options="c.id as c.name for c in data.polyclinic">
+                                                <option value=""></option>
+                                            </select>
+                                            @if(Auth::user()->allow_access('master.polyclinic.create'))
+                                                <div class="input-group-btn">
+                                                    <button type='button' class="btn btn-primary btn-sm" ng-click='insertPolyclinic()' ng-disabled='disBtn'>
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
