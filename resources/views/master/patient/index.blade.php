@@ -45,6 +45,7 @@
                             @if(Auth::user()->allow_access('master.patient.create'))
                                 <a href="{{ route('patient.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                             @endif
+                            <button ng-show='params.length > 0' type='button' ng-click='exportCard()' class='btn btn-primary btn-sm'>Export Kartu Pasien</button>
                         </div>                    
                     </div>
                 </div>
@@ -53,6 +54,7 @@
                     <table class="table table-bordered" id='listview'>
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>No KTP/SIM</th>
                                 <th>Nama</th>
                                 <th>Telepon</th>

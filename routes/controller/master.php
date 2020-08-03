@@ -48,6 +48,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('patient/activate/{id}', 'PatientController@activate');
         Route::get('patient/{id}/card', 'PatientController@exportSingleCard');
+        Route::get('patient/card/multiple', 'PatientController@exportMultipleCard');
         Route::resource('patient', 'PatientController');
 
         Route::put('disease/activate/{id}', 'DiseaseController@activate');

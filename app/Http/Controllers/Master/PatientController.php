@@ -167,6 +167,14 @@ class PatientController extends Controller
         return $this->exportCards($params);
     }
 
+    public function exportMultipleCard(Request $request) {
+        $params = json_decode($request->params ?? '[]');
+        if(count($params) == 0) {
+            return Response::json(['message' => 'Export kartu pasien minimal 1 kartu'], 421);
+        }
+        return $this->exportCards($params);
+    }
+
     public function exportCards($params = []) {
         if(count($params) > 0) {
             $contacts = Contact::with('medical_record:id,code,patient_id')
@@ -175,7 +183,8 @@ class PatientController extends Controller
             ->get();
             $pdf = PDF::loadview('pdf/patient/kartu_pasien',['contacts'=>$contacts]);
             return $pdf
-            ->setPaper('5cm x 8cm')
+            ->setOption('page-height', '5cm')
+            ->setOption('page-width', '8cm')
             ->stream('Kartu pasien.pdf');
         } else {
             return Response::json(['message' => 'Tidak ada yang bisa dicetak'], 421);

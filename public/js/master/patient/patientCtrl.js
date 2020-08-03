@@ -1,5 +1,6 @@
-app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+app.controller('patient', ['$rootScope', '$scope', '$compile', '$http', '$filter', function($rootScope, $scope, $compile, $http, $filter) {
   $scope.data = {}
+  $scope.params = []
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
@@ -21,6 +22,14 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
     ],
 
     columns:[
+      {
+          data:null,
+          className:'text-center',
+          searchable:false,
+          orderable:false,
+          width:'10mm',
+          render:resp => "<input type='checkbox' ng-click='select($event.currentTarget)' ng-model='params" + resp.id + "' value='" + resp.id + "'>"
+      },
       {data:"civil_code", name:"civil_code"},
       {
         data:null, 
@@ -70,6 +79,21 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
   oTable.buttons().container().appendTo( '.export_button' );
 
 
+  $scope.select = function(e) {
+      var check =  $(e)
+      var value = check.attr('value')
+      if(check.prop('checked')) {
+          $scope.params.push(value)
+      } else {
+          var params = $scope.params
+          params = params.filter(function(x) {
+              return x != value
+          })
+          $scope.params = params
+      }
+      console.log($scope.params)
+  }
+
     $http.get(baseUrl + '/controller/master/polyclinic/').then(function(data) {
         $scope.data.polyclinic = data.data
 
@@ -103,6 +127,10 @@ app.controller('patient', ['$scope', '$compile', '$http', '$filter', function($s
       }
     });
 
+  $scope.exportCard = function() {
+        var url = baseUrl + '/controller/master/patient/card/multiple?params=' +  JSON.stringify($scope.params);
+        window.open(url, '_blank');
+    }
 
   $scope.filter = function() {
     oTable.ajax.reload()

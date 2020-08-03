@@ -44,12 +44,16 @@
             <tbody>
                 <tr>
                     <td>
-                        @foreach($contacts as $contact)
-                            <p>{{ $contact->medical_record->code }}</p>
-                            <h3>{{ $contact->name }}</h3>
-                            <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>
-                            <p>{{ $contact->address }}</p>
-                            <div class="page-break"></div>
+                        @foreach($contacts as $c => $contact)
+                            <div style='padding-top:19mm;'>
+                                <p>{{ $contact->medical_record->code }}</p>
+                                <h3>{{ $contact->name }}</h3>
+                                <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>
+                                <p>{{ $contact->address }}</p>
+                            </div>
+                            @if($c != count($contacts) - 1)
+                                <div class="page-break"></div>
+                            @endif
                         @endforeach
                     </td>
                 </tr>
