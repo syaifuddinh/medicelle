@@ -17,6 +17,12 @@ class Price extends Model
 
         static::creating(function(Price $price){
             $price->created_by = Auth::user()->id;
+            if($price->is_registration == null) {
+                $price->is_registration = 0;
+            }
+            if($price->is_registration == 0) {
+                $price->is_specialization = 0;
+            }
             if($price->is_specialization === null) {
                 $price->specialization_id = 0;
             }
@@ -30,6 +36,12 @@ class Price extends Model
         });
 
         static::updating(function(Price $price){
+            if($price->is_registration == null) {
+                $price->is_registration = 0;
+            }
+            if($price->is_registration == 0) {
+                $price->is_specialization = 0;
+            }
             if($price->is_specialization === null) {
                 $price->specialization_id = 0;
             }

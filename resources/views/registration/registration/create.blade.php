@@ -271,7 +271,7 @@
 
                                 <label>Dokter</label>
                                 <div class="input-group">
-                                    <select class="form-control" data-placeholder-text-single="'Pilih Dokter'"  chosen allow-single-deselect="false" ng-model="detail.doctor_id" ng-options="c.id as c.name for c in doctor">
+                                    <select class="form-control" data-placeholder-text-single="'Pilih Dokter'"  chosen allow-single-deselect="false" ng-model="detail.doctor_id" ng-options="c.id as c.name group by c.specialization.name for c in doctor">
                                         <option value=""></option>
                                     </select>
                                     <div class="input-group-btn">

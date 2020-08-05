@@ -100,7 +100,7 @@ class RegistrationController extends Controller
 
         $registration->fill($request->all());
         $registration->patient_id = $patient_id;
-        $registration->pic_id = $request->patient_type == 'UMUM'? $request->family['id'] : $request->agency_id;
+        $registration->pic_id = $request->patient_type == 'UMUM'? ($request->family['id'] ?? null) : $request->agency_id;
         $registration->save();
         $detail = collect($request->detail);
         $detail = $detail->each(function($val) use($registration){

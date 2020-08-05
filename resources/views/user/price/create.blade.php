@@ -67,7 +67,7 @@
                                   </div>
                               </div>
 
-                              <div class="form-group">
+                              <div class="form-group" ng-if='formData.is_registration == 1'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Apakah tarif ini untuk spesialis tertentu ?
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
@@ -80,7 +80,7 @@
                                   </div>
                               </div>
 
-                              <div class="form-group" ng-if='formData.is_specialization == 1'>
+                              <div class="form-group" ng-if='formData.is_specialization == 1 && formData.is_registration == 1'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Spesialis
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
