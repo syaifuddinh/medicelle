@@ -66,6 +66,29 @@
                                     </label>
                                   </div>
                               </div>
+
+                              <div class="form-group">
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Apakah tarif ini untuk spesialis tertentu ?
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                      <label class="radio-inline">
+                                          <input type="radio" ng-model='formData.is_specialization' ng-value='1'> Ya 
+                                      </label>
+                                      <label class="radio-inline">
+                                          <input type="radio" ng-model='formData.is_specialization' ng-value='0'> Tidak 
+                                      </label>
+                                  </div>
+                              </div>
+
+                              <div class="form-group" ng-if='formData.is_specialization == 1'>
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Spesialis
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                      <select class="form-control" data-placeholder-text-single="'Pilih Spesialisasi'" required='required' chosen allow-single-deselect="false" ng-model="formData.specialization_id" ng-options="c.id as c.name for c in data.specialization">
+                                          <option value=""></option>
+                                      </select>
+                                  </div>
+                              </div>
                           </div>
                                               
 

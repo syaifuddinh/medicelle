@@ -82,7 +82,7 @@ class Registration extends Model
                         $invoice->save();
                         $invoice_id = $invoice->id;
 
-                        $registrationItem = Price::whereIsRegistration(1)
+                        $registrationItem = Price::whereRaw("(is_registration = 1 OR is_specialization = 1)")
                         ->whereRaw("destination IN (SELECT destination FROM registration_details WHERE registration_id = " . $registration->id . ")")
                         ->whereIsActive(1)
                         ->get()

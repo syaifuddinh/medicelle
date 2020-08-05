@@ -11,6 +11,7 @@ use Response;
 use DB;
 use Str;
 use Auth;
+use Exception;
 
 class PriceController extends Controller
 {
@@ -127,26 +128,31 @@ class PriceController extends Controller
             'price.required' => 'Harga tidak boleh kosong'
         ]);
         DB::beginTransaction();
-        $price->fill($request->all());
-        $item = new Item();
-        $item->is_administration = 1;
-        $item->name = $request->name;
-        $item->piece_id = $request->piece_id;
-        $item->code = date('ym') . rand(1, 999);
-        $item->price = $request->price;
-        $item->save();
-        $price->item_id = $item->id;
-        $price->custom_price = $request->price;
-        $price->save();
-        foreach ($request->laboratory_types as $value) {
-            if(1 == ($value['is_active'] ?? null)) {
+        try {
+            $price->fill($request->all());
+            $item = new Item();
+            $item->is_administration = 1;
+            $item->name = $request->name;
+            $item->piece_id = $request->piece_id;
+            $item->code = date('ym') . rand(1, 999);
+            $item->price = $request->price;
+            $item->save();
+            $price->item_id = $item->id;
+            $price->custom_price = $request->price;
+            $price->save();
+            foreach ($request->laboratory_types as $value) {
+                if(1 == ($value['is_active'] ?? null)) {
 
-                $price->laboratory_treatment()->create([
-                    'laboratory_type_id' => $value['id']
-                ]);
+                    $price->laboratory_treatment()->create([
+                        'laboratory_type_id' => $value['id']
+                    ]);
+                }
             }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);
         }
-        DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
 
@@ -158,7 +164,7 @@ class PriceController extends Controller
      */
     public function show($id)
     {   
-        $price = Price::with('grup_nota:id,slug,name', 'radiology_type:id,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name');
+        $price = Price::with('grup_nota:id,slug,name', 'radiology_type:id,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name', 'specialization:id,name');
         return Response::json($price->find($id), 200);
     }
 
@@ -192,25 +198,30 @@ class PriceController extends Controller
             'price.required' => 'Harga tidak boleh kosong'
         ]);
         DB::beginTransaction();
-        $price = Price::find($id);
-        $price->fill($request->all());
-        $item = Item::find($price->item_id);
-        $item->name = $request->name;
-        $item->piece_id = $request->piece_id;
-        $item->price = $request->price;
-        $item->save();
-        $price->custom_price = $request->price;
-        $price->save();
-        $price->laboratory_treatment()->delete();
-        foreach ($request->laboratory_types as $value) {
-            if(1 === ($value['is_active'] ?? null)) {
+        try {
+            $price = Price::find($id);
+            $price->fill($request->all());
+            $item = Item::find($price->item_id);
+            $item->name = $request->name;
+            $item->piece_id = $request->piece_id;
+            $item->price = $request->price;
+            $item->save();
+            $price->custom_price = $request->price;
+            $price->save();
+            $price->laboratory_treatment()->delete();
+            foreach ($request->laboratory_types as $value) {
+                if(1 === ($value['is_active'] ?? null)) {
 
-                $price->laboratory_treatment()->create([
-                    'laboratory_type_id' => $value['id']
-                ]);
+                    $price->laboratory_treatment()->create([
+                        'laboratory_type_id' => $value['id']
+                    ]);
+                }
             }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);
         }
-        DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }

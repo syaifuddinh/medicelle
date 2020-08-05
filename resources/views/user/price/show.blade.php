@@ -86,8 +86,17 @@
                                   <label class="col-md-3 col-xs-12" for="last-name">Status
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.is_active == 1 ? "Aktif" : 'Tidak aktif' %>
+                                      <% formData.is_active == 1 ? "Aktif" : 'Tidak aktif' %>
                                   </div>
+                              </div>
+
+                              <div class="form-group" ng-if='formData.is_specialization == 1'>
+                                  <span>
+                                      <i class='fa fa-circle'></i> 
+                                      <b class='text-primary' style='display:inline-block;margin-left:1mm'>
+                                        Tarif ini hanya berlaku untuk pemeriksaan di dokter spesialis <% formData.specialization.name %>
+                                      </b>
+                                  </span>
                               </div>
                           </div>
                                               

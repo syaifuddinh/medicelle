@@ -33,6 +33,24 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', func
     }
     $scope.show()
 
+    $scope.showSpecialization = function() {
+        $http.get(baseUrl + '/controller/master/specialization/').then(function(data) {
+            $scope.data.specialization = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.showSpecialization()
+
     $scope.showLaboratoryType = function() {
         $http.get(baseUrl + '/controller/user/laboratory_type').then(function(data) {
             var units = data.data
