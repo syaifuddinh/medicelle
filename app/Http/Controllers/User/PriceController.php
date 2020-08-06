@@ -77,6 +77,11 @@ class PriceController extends Controller
         return Response::json($item, 200);
     }
 
+    public function destination() {
+        $destination = ['POLIKLINIK', 'MEDICAL CHECK-UP', 'LABORATORIUM', 'RADIOLOGI', 'KEMOTERAPI', 'RUANG TINDAKAN'];
+
+        return Response::json($destination);
+    }
 
     public function drug()
     {

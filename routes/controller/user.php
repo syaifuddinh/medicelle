@@ -20,6 +20,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('price/activate/{id}', 'PriceController@activate');
         Route::get('price/treatment', 'PriceController@treatment');
+        Route::get('price/destination', 'PriceController@destination');
         Route::get('price/diagnostic', 'PriceController@diagnostic');
         Route::get('price/drug', 'PriceController@drug');
         Route::resource('price', 'PriceController');

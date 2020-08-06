@@ -16,6 +16,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
+        "simplesoftwareio/simple-qrcode": "^3.0",
         "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {

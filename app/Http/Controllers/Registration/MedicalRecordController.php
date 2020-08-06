@@ -184,7 +184,7 @@ class MedicalRecordController extends Controller
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
             'diagnose_history:medical_record_id,disease_id,item_id,type,description',
 
-            'disease_history:medical_record_id,disease_name,cure,last_checkup_date',
+            'disease_history:medical_record_id,disease_name,cure,last_checkup_date,additional',
             'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
 
             'family_disease_history:medical_record_id,disease_name,description', 

@@ -6,7 +6,7 @@
                         <h2>Pemeriksaan kepala & leher</h2>
                         
                         <div id='role_layer' style="position:relative">
-                                @if(Specialization::readonly('head') == 1)
+                                @if(Specialization::readonly('kepala') == 1)
                                     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
                                 @endif
                                 <div class="row">

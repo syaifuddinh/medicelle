@@ -644,7 +644,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.submitDiseaseHistory = function() {
       disease_history_datatable.row.add($scope.disease_history).draw()
-      $scope.disease_history = {}
+      $scope.disease_history = {
+          additional : {}
+      }
   }
 
   $scope.submitBHP = function() {
@@ -912,6 +914,42 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           });
       }
   }
+  $scope.destination = function() {
+      if(path.indexOf('therapy/treatment') > -1 || path.indexOf('therapy/diagnostic') > -1) {
+          $http.get(baseUrl + '/controller/user/price/destination').then(function(data) {
+            $scope.data.destination = data.data
+          }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              $scope.destination()
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.destination()
+
+  $scope.changeTreatment = function() {
+      var treatments = $scope.all_treatment
+      if($scope.treatment.destination) {
+          treatments = treatments.filter(x => x.price.destination == $scope.treatment.destination)
+      }
+      $scope.data.treatment = treatments 
+  }
+
+  $scope.changeDiagnostic = function() {
+      var diagnostics = $scope.all_diagnostic
+      if($scope.diagnostic.destination) {
+          diagnostics = diagnostics.filter(x => x.price.destination == $scope.diagnostic.destination)
+      }
+      $scope.data.diagnostic = diagnostics 
+  }
 
   $scope.signa = function() {
       if(path.indexOf('drug') > -1) {
@@ -943,6 +981,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           $http.get(baseUrl + '/controller/user/price/treatment').then(function(data) {
             $scope.data.treatment = data.data
+            $scope.all_treatment = data.data
             $scope.show()
           }, function(error) {
             $rootScope.disBtn=false;
@@ -965,6 +1004,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       if(path.indexOf('diagnostic') > - 1) {
 
           $http.get(baseUrl + '/controller/user/price/diagnostic').then(function(data) {
+            $scope.all_diagnostic = data.data
             $scope.data.diagnostic = data.data
             $scope.show()
           }, function(error) {
@@ -1368,11 +1408,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         render : function(resp) {
 
-          return $scope.data.treatment.find(x => x.id == resp.item_id).name
+          return $scope.all_treatment.find(x => x.id == resp.item_id).name
           // return $scope.data.treatment.find(x => x.id == resp.item_id).name
         }
       },
-      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
       {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
 
       {
@@ -1508,9 +1547,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : resp => $scope.data.diagnostic.find(x => x.id == resp.item_id) ? $scope.data.diagnostic.find(x => x.id == resp.item_id).name : ''
+        render : resp => $scope.all_diagnostic.find(x => x.id == resp.item_id) ? $scope.all_diagnostic.find(x => x.id == resp.item_id).name : ''
       },
-      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
       {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
 
       {
@@ -1598,7 +1636,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {
       data : null,
       render : function(resp) {
-        return $filter('fullDate')(resp.last_checkup_date);
+        return resp.additional.last_checkup_date_description;
       }
     },
 
@@ -1812,6 +1850,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
       $scope.sewa_alkes = {        
         date : $scope.resume_date
+      }
+      $scope.disease_history = {        
+        additional : {}
       }
       setTimeout(function () {    
             $('[ng-model="sewa_alkes.date"]').val( $filter('fullDate')($scope.sewa_alkes.date))

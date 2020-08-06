@@ -15,15 +15,17 @@
                                             <label>Tanggal</label>
                                             <input type="text" class='form-control' ng-model="diagnostic.date"  datepick>
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Kelompok</label>
+                                            <select class="form-control" data-placeholder-text-single="'Pilih kelompok'" chosen allow-single-deselect="true" ng-model="diagnostic.destination" ng-options="c as c for c in data.destination" ng-change='changeDiagnostic()'>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
                                         <div class="form-group col-md-4">
                                             <label>Tindakan / jenis pemeriksaan</label>
                                             <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic">
                                                 <option value=""></option>
                                             </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label>Qty</label>
-                                            <input type="text" class='form-control' ng-model="diagnostic.qty" jnumber2 only-num>
                                         </div>
                                         <div class="form-group col-md-3">
 
@@ -47,7 +49,6 @@
                                                 <tr>
                                                     <td>Tanggal</td>
                                                     <td>Tindakan / jenis pemeriksaan</td>
-                                                    <td>Qty</td>
                                                     <td>Reduksi</td>
                                                     <td></td>
                                                 </tr>
