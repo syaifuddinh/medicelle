@@ -23,7 +23,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>     
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-xs-12">PB lahir
+                                            </label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <div class="input-group">
+                                                    <input type="text" ng-model='formData.additional.pb_lahir' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_lahir")' only-num>
+                                                    <div class="input-group-addon">
+                                                        CM
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>   
                                         
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-xs-12">BB sekarang
@@ -33,19 +46,6 @@
                                                     <input type="text" ng-model='formData.postbirth_weight'  ng-change='submitOne("postbirth_weight")' class="form-control col-md-7 col-xs-12" only-num>
                                                     <div class="input-group-addon">
                                                         KG
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-xs-12">PB lahir
-                                            </label>
-                                            <div class="col-md-8 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" ng-model='formData.additional.pb_lahir' class="form-control col-md-7 col-xs-12"  ng-change='submitOne("additional.pb_lahir")' only-num>
-                                                    <div class="input-group-addon">
-                                                        CM
                                                     </div>
                                                 </div>
                                             </div>

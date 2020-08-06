@@ -82,7 +82,7 @@ class Registration extends Model
                         $invoice->save();
                         $invoice_id = $invoice->id;
 
-                        $registrationItem = Price::whereRaw("(is_registration = 1 OR (is_specialization = 1 AND specialization_id IN (SELECT specialization_id FROM contacts JOIN registration_details ON registration_details.doctor_id = contacts.id WHERE registration_details.registration_id = {$registration->id} )))")
+                        $registrationItem = Price::whereRaw("((is_registration = 1 AND is_specialization = 0) OR (is_registration = 1 AND is_specialization = 1 AND specialization_id IN (SELECT specialization_id FROM contacts JOIN registration_details ON registration_details.doctor_id = contacts.id WHERE registration_details.registration_id = {$registration->id} )))")
                         ->whereRaw("destination IN (SELECT destination FROM registration_details WHERE registration_id = " . $registration->id . ")")
                         ->whereIsActive(1)
                         ->get()
