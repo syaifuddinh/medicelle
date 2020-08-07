@@ -45,7 +45,10 @@
                 <tr>
                     <td>
                         @foreach($contacts as $c => $contact)
-                            <div style='padding-top:19mm;'>
+                            <div>
+                                {!! QrCode::size(50)->generate($contact->medical_record->code); !!}
+                            </div>
+                            <div style='padding-top:15mm;'>
                                 <p>{{ $contact->medical_record->code }}</p>
                                 <h3>{{ $contact->name }}</h3>
                                 <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>

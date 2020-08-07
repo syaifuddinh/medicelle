@@ -35,7 +35,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="">Checklist Laboratorium</h4>
+                    <h4 class="modal-title pull-left">Checklist Laboratorium</h4>
+                    <div class='pull-right'>
+                        <div class="input-group">
+                              <input type="text" ng-model='checklistKeyword' ng-change='searchChecklist()' class="form-control" placeholder="Cari...">
+                              <div class="input-group-btn">
+                                    <button class='btn btn-md btn-default' disabled style='padding:1.2mm 1.6mm'>
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                              </div>
+                            </div>
+                    </div>
                 </div>
                 <div class="modal-body">
                     @include('polyclinic/polyclinic/radiology/laboratory_treatment')

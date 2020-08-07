@@ -3,6 +3,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.data = {}
     $scope.dot = '.............................................................................................................'
     $scope.shortDot = '..........'
+    checklistPromise = null
     $scope.priceSlider = 209
     path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
@@ -1797,26 +1798,47 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.showLaboratoryChecklist = function(pivot_medical_record_id) {
       $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
-          var laboratory_treatment_datatable = $('#laboratory_treatment_datatable')
-          var unit, subunit, tr, content
-          $scope.pivotData = data.data.additional
           $scope.pivot_medical_record_id = data.data.id
-          laboratory_treatment_datatable.html('')
-          for(x in $scope.pivotData.treatment) {
-              unit = $scope.pivotData.treatment[x]
-              tr = $("<div class='col-md-4'><b>" + unit.name + "</b><div class='ln_solid'></div></div>")
-              for(y in unit.detail) {
-                  subunit = unit.detail[y]
-                  content = $("<div><input type='checkbox' style='margin-right:4mm' ng-change='changeLaboratoryTreatment(" + x + ", " + y + ", " + data.data.id + ")' ng-model='pivotData.treatment[" + x +"].detail[" + y +"].is_active' ng-true-value='1' ng-false-value='0'>" + subunit.name + "</div><div class='ln_solid'></div>")
-                  tr.append(content)
-              }
-              laboratory_treatment_datatable.append(tr)
-          }
-
-          $compile(laboratory_treatment_datatable)($scope);
+          $scope.pivotData = data.data.additional
+          $scope.allPivotData = data.data.additional.treatment
+          $scope.gridLaboratoryChecklist($scope.pivotData.treatment)
       }, function(error) {
           console.log(error)
       });
+  }
+
+  $scope.searchChecklist = function() {
+      $timeout.cancel(checklistPromise)
+      checklistPromise = $timeout(function() {
+          $scope.showLaboratoryChecklist($scope.pivot_medical_record_id)
+      }, 300)
+  }
+
+  $scope.getAllPivotData = function() {
+      return $scope.allPivotData
+  }
+
+  $scope.gridLaboratoryChecklist = function(treatments) {
+      var laboratory_treatment_datatable = $('#laboratory_treatment_datatable')
+      var unit, subunit, tr, content
+      var keyword = null
+      if($scope.checklistKeyword) {
+          keyword = $scope.checklistKeyword.toLowerCase()
+      }
+      laboratory_treatment_datatable.html('')
+      for(x in treatments) {
+          unit = treatments[x]
+          tr = $("<div class='col-md-4'><b>" + unit.name + "</b><div class='ln_solid'></div></div>")
+          for(y in unit.detail) {
+              subunit = unit.detail[y]
+              if(!keyword || (keyword && subunit.name.toLowerCase().indexOf(keyword) > -1)) {
+                  content = $("<div class='checklist-item'><input type='checkbox' style='margin-right:4mm' ng-change='changeLaboratoryTreatment(" + x + ", " + y + ", " + $scope.pivot_medical_record_id + ")' ng-model='pivotData.treatment[" + x +"].detail[" + y +"].is_active' ng-true-value='1' ng-false-value='0'>" + subunit.name + "</div><div class='ln_solid'></div>")
+              }
+              tr.append(content)
+          }
+          laboratory_treatment_datatable.append(tr)
+      }
+      $compile(laboratory_treatment_datatable)($scope);
   }
 
   $scope.changeLaboratoryTreatment = function(x, y, pivot_medical_record_id) {

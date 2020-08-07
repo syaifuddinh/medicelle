@@ -185,6 +185,10 @@ class PatientController extends Controller
             return $pdf
             ->setOption('page-height', '5cm')
             ->setOption('page-width', '8cm')
+            ->setOption('margin-top', '3')
+            ->setOption('margin-bottom', '3')
+            ->setOption('margin-right', '3')
+            ->setOption('margin-left', '3')
             ->stream('Kartu pasien.pdf');
         } else {
             return Response::json(['message' => 'Tidak ada yang bisa dicetak'], 421);
