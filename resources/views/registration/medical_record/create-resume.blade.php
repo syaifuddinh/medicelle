@@ -13,12 +13,12 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <div class="input-daterange input-group" style="width:100%;">
-                                <input type="text" class="input-sm form-control" ng-model="formData.date_start" ng-change='filter()' datepick/>
+                                <input type="text" class="input-sm form-control" ng-model="filterData.date_start" ng-change='filter()' datepick/>
                                 <span class="input-group-addon">s/d</span>
-                                <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='filter()' datepick />
+                                <input type="text" class="input-sm form-control" ng-model="filterData.date_end" ng-change='filter()' datepick />
                               </div>
                               <div class="form-group">
-                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
+                                  <button type='button' class='btn btn-warning btn-sm' ng-click='filterData={};filter()'>Reset</button>
                               </div>
                             </div>
                         </div>
@@ -42,7 +42,8 @@
                           <th>Tujuan</th>
                           <th>Rangkuman</th>
                           <th>Dokter</th>
-                          <th></th>
+                          <th>Keterangan</th>
+                          <th style='width:60mm'></th>
                         </tr>
                       </thead>
                       <tbody>

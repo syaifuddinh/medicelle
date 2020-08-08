@@ -100,6 +100,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             medical_record_history = $('#medical_record_history').DataTable({
               processing: true,
               serverSide: true,
+              stateSave:true,
               ajax: {
                 url : medical_record_url  + $scope.formData.patient_id,
                 data : d => Object.assign(d, $scope.filterData)
@@ -135,10 +136,19 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 },
                 {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
                 {
+                    data:null, 
+                    searchable : false,
+                    orderable : false,
+                    render: function(r) {
+                        outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
+                        return outp
+                    }
+                },
+                {
                   data: null, 
                   orderable : false,
                   searchable : false,
-                  width : '15mm',
+                  width : '20mm',
                   className : 'text-center',
                   render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume()' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume()' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX()' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
                 },
@@ -153,6 +163,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               medical_record_history.ajax.reload();
             }
 
+            $scope.editResumeDescription = function(e) {
+                var td = $(e).parents('td')
+                var description = $('<textarea ng-model="description" class="form-control"></textarea>')
+                td.html('')
+                td.append(description)
+                $compile(td)($scope)
+            }
         }
     }
  

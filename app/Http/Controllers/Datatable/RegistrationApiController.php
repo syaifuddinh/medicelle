@@ -337,7 +337,15 @@ class RegistrationApiController extends Controller
         ->whereHas('medical_record', function(Builder $query) use($request, $patient_id){
             $query->wherePatientId($patient_id);
         })
-        ->select('pivot_medical_records.registration_detail_id', 'pivot_medical_records.medical_record_id');
+        ->whereHas('medical_record', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id',
+            'pivot_medical_records.medical_record_id',
+            'pivot_medical_records.additional'
+        );
 
         if(Auth::user()->is_admin != 1) {
             if(Auth::user()->doctor) {

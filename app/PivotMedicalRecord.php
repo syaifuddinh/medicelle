@@ -11,7 +11,7 @@ class PivotMedicalRecord extends Model
     public function getAdditionalAttribute() {
         if(array_key_exists('additional', $this->attributes)) {
             $additional = json_decode($this->attributes['additional']);
-            return $additional;
+            return (object) $additional;
         }
         return json_decode('{}');
     }
