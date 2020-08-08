@@ -204,6 +204,12 @@ app.directive('onlyNum', function($browser) {
                     event.preventDefault();
                 }
             });
+            element.bind("click", function(event) {
+                if (modelCtrl.$modelValue == 0) {
+                  modelCtrl.$setViewValue('');
+                  modelCtrl.$render();
+                }
+            });
         }
       }
   });

@@ -150,7 +150,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   searchable : false,
                   width : '20mm',
                   className : 'text-center',
-                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume()' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume()' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX()' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX()' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
                 },
               ],
               createdRow: function(row, data, dataIndex) {
@@ -165,11 +165,53 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
             $scope.editResumeDescription = function(e) {
                 var td = $(e).parents('td')
-                var description = $('<textarea ng-model="description" class="form-control"></textarea>')
+                var tr = td.parents('tr')
+                var data = medical_record_history.row(tr).data()
+                var description = $('<textarea class="form-control resumeDescription"></textarea>')
+                var buttons = $('<div class="btn-group pull-right" style="margin-top:1mm"></div>')
+                description.val( (data.additional.resume_description || '') )
+                buttons.append(
+                    $('<button type="button" ng-disabled="disBtn" ng-click="submitEditResume($event.currentTarget)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></button>')
+                )
+                buttons.append(
+                    $('<button ng-click="abortEditResume()" type="button" class="btn btn-sm btn-danger"><i class="fa fa-close"></i></button>')
+                )
                 td.html('')
                 td.append(description)
+                td.append(buttons)
                 $compile(td)($scope)
             }
+
+            $scope.submitEditResume = function(e) {
+                var tr = $(e).parents('tr')
+                var resumeDescription = tr.find('.resumeDescription')
+                var description = resumeDescription.val()
+                var data = medical_record_history.row(tr).data()
+                params = {
+                    'resume_description' : description
+                }
+                $rootScope.disBtn = true
+                $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + data.id + '/additional', params).then(function(data) {    
+                    $rootScope.disBtn = false
+                    toastr.success(data.data.message)
+                    medical_record_history.draw()
+                }, function(error) {
+                    $rootScope.disBtn = false
+                    if (error.status==422) {
+                      var det="";
+                      angular.forEach(error.data.errors,function(val,i) {
+                        det+="- "+val+"<br>";
+                      });
+                      toastr.warning(det,error.data.message);
+                    } else {
+                      toastr.error(error.data.message,"Error Has Found !");
+                    }
+                });
+            }
+        }
+
+        $scope.abortEditResume = function() {
+            medical_record_history.draw();
         }
     }
  
@@ -349,13 +391,17 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.showResume($scope.resume_date)
     }
 
-    $scope.previewResume = function(date) {
-        var source = baseUrl + '/controller/registration/medical_record/' + id + '/pdf'
+    $scope.previewResume = function(e) {
+        var tr = $(e).parents('tr')
+        var data = medical_record_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf'
         window.open(source)
     }
 
-    $scope.downloadResume = function(date) {
-        var source = baseUrl + '/controller/registration/medical_record/' + id + '/pdf/download'
+    $scope.downloadResume = function(e) {
+        var tr = $(e).parents('tr')
+        var data = medical_record_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf/download'
         window.open(source)
     }
 

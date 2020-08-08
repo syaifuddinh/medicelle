@@ -79,13 +79,20 @@
                    @endforeach
                 </ol>
                 <br>
-                <p>Terapi :</p>
-                <ol style='margin-top:3mm;margin-left:6mm'>
-                  @foreach($medicalRecord->drug as $unit)
-                        <li>{{ $unit->item->name }} sebanyak {{ $unit->qty . ' ' . $unit->item->piece->name }}</li>
-                   @endforeach
-                </ol>
-                <p style='margin-bottom:17mm;margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
+                <div style='margin-bottom:17mm'>
+                    <p>Terapi :</p>
+                    <ol style='margin-top:3mm;margin-left:6mm'>
+                      @foreach($medicalRecord->drug as $unit)
+                            <li>{{ $unit->item->name }} sebanyak {{ $unit->qty . ' ' . $unit->item->piece->name }}</li>
+                       @endforeach
+                    </ol>
+                    <p style='margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
+                    <br>
+                    <p>Keterangan :</p>
+                    <div style='margin-top:3mm;'>
+                        {{ $resume_description }}
+                    </div>
+                </div>
 
                 <p style='margin-bottom:14mm'>Surabaya, {{ Mod::fullDate($date) }}</p>
 

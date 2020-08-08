@@ -224,9 +224,17 @@ class MedicalRecordController extends Controller
 
     public function pdf(Request $request, $id, $flag = 'preview')
     {
-        $medicalRecord = $this->fetch($id);
+        $pivot = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = $this->fetch($pivot->id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
-        $pdf = PDF::loadview('pdf/medical_resume',['medicalRecord'=>$medicalRecord, 'date' => $date, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'medicalRecord'=>$medicalRecord, 
+            'resume_description' => $pivot->additional->resume_description,
+            'date' => $date, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $pdf = PDF::loadview('pdf/medical_resume',$params);
         if($flag == 'preview') {
             return $pdf->stream('resume-medis.pdf');
         } else {
@@ -240,10 +248,18 @@ class MedicalRecordController extends Controller
             "Content-type"=>"application/vnd.ms-word",
             "Content-Disposition"=>"attachment;Filename=resume.docx"
         );
-        $medicalRecord = $this->fetch($id);
+        $pivot = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = $this->fetch($pivot->id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
         // $docx= new PhpWord();
-        $content = view('pdf/medical_resume',['medicalRecord'=>$medicalRecord, 'date' => $date, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'medicalRecord'=>$medicalRecord, 
+            'resume_description' => $pivot->additional->resume_description ?? '',
+            'date' => $date, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $content = view('pdf/medical_resume',$params);
 
         return Response::make($content,200, $headers);
         
