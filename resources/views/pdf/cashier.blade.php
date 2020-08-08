@@ -36,33 +36,32 @@
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <div class="header">
                     <div style='text-align:center;display:inline-block;width:40%'></div>
-                    <div style='text-align:center;display:inline-block;width:20%'>
-                        
+                    <div style='text-align:center;display:inline-block;width:20%;margin-bottom:10mmd'>
                         <h3 style='font-weight:bold;'><span>KWITANSI <br>RAWAT JALAN</span></h3>
                     </div>
                     <div style='display:inline-block;width:40%;'>
-                        <div style='padding-left:13mm;margin-bottom:0.6mm'>
+                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>No. Nota</span>
                             <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $data['invoice']->code }}</span>
                         </div>
 
-                        <div style='padding-left:13mm;margin-bottom:0.6mm'>
+                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Tanggal</span>
                             <span style='display:inline-block'>: {{ Mod::fullDate($data['invoice']->date) }}</span>
                         </div>
 
-                        <div style='padding-left:13mm;margin-bottom:0.6mm'>
+                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Register</span>
                             <span style='display:inline-block'>: {{ $registration->code }}</span>
                         </div>
 
-                        <div style='padding-left:13mm;margin-bottom:0.6mm'>
+                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>No. RM</span>
                             <span style='display:inline-block'>: {{ $registration->medical_record->code }}</span>
                         </div>
 
 
-                        <div style='padding-left:13mm;margin-bottom:0.6mm'>
+                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Telp.</span>
                             <span style='display:inline-block'>: {{ $registration->patient->phone }}</span>
                         </div>

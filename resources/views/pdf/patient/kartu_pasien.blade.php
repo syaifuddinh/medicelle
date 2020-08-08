@@ -46,9 +46,33 @@
                     <td>
                         @foreach($contacts as $c => $contact)
                             <div>
-                                {!! QrCode::size(50)->generate($contact->medical_record->code); !!}
+                                @php
+                                    $bar = App::make('BarCode');
+                                    $barcodes = [
+                                        'text' => $contact->medical_record->code,
+                                        'size' => 30,
+                                        'orientation' => 'horizontal',
+                                        'code_type' => 'code39',
+                                        'print' => true,
+                                        'sizefactor' => 1,
+                                        'filename' => "barcodeKartuPasien{$c}.jpeg",
+
+                                    ];
+                                    $barImg = $bar->barcodeFactory()->renderBarcode(
+                                        $text=$barcodes["text"], 
+                                        $size=$barcodes['size'], 
+                                        $orientation=$barcodes['orientation'], 
+                                        $code_type=$barcodes['code_type'], // code_type : code128,code39,code128b,code128a,code25,codabar 
+                                        $print=$barcodes['print'], 
+                                        $sizefactor=$barcodes['sizefactor'],
+                                        $filename = $barcodes['filename'],
+                                    )->filename($barcodes['filename']);
+
+                                    $barImg = url($barImg);
+                                @endphp
+                                <img src="{{ $barImg }}" alt="barcode kartu pasien">
                             </div>
-                            <div style='padding-top:15mm;'>
+                            <div style='padding-top:15mm;margin-left:3mm'>
                                 <p>{{ $contact->medical_record->code }}</p>
                                 <h3>{{ $contact->name }}</h3>
                                 <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>

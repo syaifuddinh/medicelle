@@ -9,9 +9,6 @@
      .container {
         padding:7mm;
      }
-     li {
-        padding-left:10mm
-     }
  </style>
  <div class="container">
      
@@ -63,9 +60,10 @@
                         </div>
                     </div>
                 </div>
-                <p>Datang dengan keluhan utama {{ $medicalRecord->main_complaint ?? $dot }}, riwayat penyakit sekarang {{ $medicalRecord->current_disease ?? $dot }}.</p>
+
+                <p style='margin-top:3mm'>Datang dengan keluhan utama {{ $medicalRecord->main_complaint ?? $dot }}, riwayat penyakit sekarang {{ $medicalRecord->current_disease ?? $dot }}.</p>
                 <p>Penyakit dahulu :</p>
-                <ol>
+                <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
                         <li>{{ $unit->disease_name }}</li>
                    @endforeach
@@ -75,19 +73,19 @@
                 <p>Tensi : {{ $medicalRecord->blood_pressure ?? $shortDot }} mmHg, Nadi : {{ $medicalRecord->pulse ?? $shortDot }} x/menit, Suhu badan : {{ $medicalRecord->temperature ?? $shortDot }} <sup>o</sup>C, Nafas : {{ $medicalRecord->breath_frequency ?? $shortDot }} x/menit</p>
                 <br>
                 <p>Diagnosis :</p>
-                <ol>
+                <ol style='margin-top:3mm;margin-left:6mm'>
                     @foreach($medicalRecord->diagnose_history as $unit)
                         <li>{{ $unit->disease->name }}</li>
                    @endforeach
                 </ol>
                 <br>
                 <p>Terapi :</p>
-                <ol>
+                <ol style='margin-top:3mm;margin-left:6mm'>
                   @foreach($medicalRecord->drug as $unit)
                         <li>{{ $unit->item->name }} sebanyak {{ $unit->qty . ' ' . $unit->item->piece->name }}</li>
                    @endforeach
                 </ol>
-                <p style='margin-bottom:17mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
+                <p style='margin-bottom:17mm;margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
 
                 <p style='margin-bottom:14mm'>Surabaya, {{ Mod::fullDate($date) }}</p>
 

@@ -88,7 +88,6 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
                 }
             }
 
-            $compile(laboratory_treatment_datatable)($scope);
             $compile(laboratory_treatment_form)($scope);
         }
       }, function(error) {
