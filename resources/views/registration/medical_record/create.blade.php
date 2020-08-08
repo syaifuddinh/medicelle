@@ -38,6 +38,18 @@
 
                                     </div>
 
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Lain-lain
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <textarea class="form-control" ng-model='formData.additional.anamnesa_another' ng-change="submitOne('additional.anamnesa_another')"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                                 <div class="ln_solid"></div>
                                 <h2>Riwayat penyakit dahulu</h2>
