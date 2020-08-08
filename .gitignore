@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 .htaccess
 public/js/notification.js
+/public/barcode
