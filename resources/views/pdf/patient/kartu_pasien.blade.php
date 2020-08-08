@@ -65,7 +65,7 @@
                                         $code_type=$barcodes['code_type'], // code_type : code128,code39,code128b,code128a,code25,codabar 
                                         $print=$barcodes['print'], 
                                         $sizefactor=$barcodes['sizefactor'],
-                                        $filename = $barcodes['filename'],
+                                        $filename = $barcodes['filename']
                                     )->filename($barcodes['filename']);
 
                                     $barImg = url($barImg);
