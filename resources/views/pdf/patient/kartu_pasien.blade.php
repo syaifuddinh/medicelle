@@ -45,7 +45,7 @@
                 <tr>
                     <td>
                         @foreach($contacts as $c => $contact)
-                            <div>
+                            <div style='text-align:center;padding-top:18mm'>
                                 @php
                                     $bar = App::make('BarCode');
                                     $barcodes = [
@@ -72,8 +72,7 @@
                                 @endphp
                                 <img src="{{ $barImg }}" alt="barcode kartu pasien">
                             </div>
-                            <div style='padding-top:15mm;margin-left:3mm'>
-                                <p>{{ $contact->medical_record->code }}</p>
+                            <div style='padding-top:2mm;margin-left:1mm'>
                                 <h3>{{ $contact->name }}</h3>
                                 <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>
                                 <p>{{ $contact->address }}</p>
