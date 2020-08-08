@@ -6,8 +6,8 @@
                   @if(Auth::user()->allow_access('setting'))
                       <li><a><i class="fa fa-gear"></i> Setting & User <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                          @if(Auth::user()->allow_access('setting.company'))
-                              <li><a href="{{ route('setting.company') }}">Perusahaan</a></li>
+                          @if(Auth::user()->allow_access('setting.general'))
+                              <li><a href="{{ route('setting.general') }}">General</a></li>
                           @endif
 
                           @if(Auth::user()->allow_access('setting.finance'))
@@ -172,7 +172,7 @@
                             @if(Auth::user()->allow_access('surat.pengantar_mrs'))
                                 <li><a href="{{ route('surat.pengantar_mrs.index') }}">Surat Pengantar MRS</a></li>
                             @endif
-                            @if(Auth::user()->allow_access('surat.pengantar_mrs'))
+                            @if(Auth::user()->allow_access('surat.rujukan_pasien'))
                                 <li><a href="{{ route('surat.rujukan_pasien.index') }}">Surat Rujukan Pasien</a></li>
                             @endif
                             @if(Auth::user()->allow_access('surat.persetujuan_tindakan_medis'))

@@ -1,8 +1,10 @@
-app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
+app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', '$timeout', function($scope, $http, $rootScope, $compile, $timeout) {
     $scope.title = 'Tambah Departemen';
     $scope.formData = {
       roles : {}
     }
+    $scope.roleData = []
+    $scope.data = {}
 
     $compile(angular.element($('.compile')).contents())($scope);
     var path = window.location.pathname;
@@ -11,6 +13,99 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
     $scope.uncheckAll = function() {
       $scope.formData.roles = {}
     }
+
+    $scope.renderRoles = function(roles) {
+        var tr, level = {}, level2, level3
+        var roles_container = $('#roles_container tbody')
+        roles_container.html('')
+        var renderRow = function(padLeft = 0, name, slug, id, parent_id = '') {
+            var tr, col 
+            tr = $('<tr></tr>')
+            if(padLeft == 0) {
+                col = $('<th>')
+            } else {
+                col = $('<td>')              
+            }
+            col.html(name)
+            if(padLeft > 0) {
+                col.css('paddingLeft', padLeft + 'mm')
+            }
+            tr.attr('data-id', id)
+            tr.attr('data-parent-id', parent_id)
+            tr.append(
+                col
+            )
+
+            col = col.clone()
+            col.html('')
+            col.addClass('text-right')
+            col.append(
+                $('<label class="radio-inline"><input type="checkbox" ng-click=\'adjustParent($event.currentTarget, "' + slug + '")\' ng-model=\'formData.roles["' + slug + '"]\' ng-true-value=\'"1"\' ng-false-value=\'"0"\' ></label>')
+            )
+            tr.append(
+                col
+            )
+
+            return tr
+        }
+        for(r in roles) {
+            level['1'] = roles[r]
+            tr = renderRow(0, level['1']['name'], level['1']['slug'], level['1']['id'])
+            roles_container.append(tr)
+            roles[r]['tr'] = tr
+            level2 = level['1']['level2']
+            if( level2 !== null ) {
+                if(level2[0] !== null) {
+                    for(s in level2) {
+                        level['2'] = level2[s] 
+                        tr = renderRow(10, level['2']['name'], level['2']['slug'], level['2']['id'], level['2']['parent_id'])
+                        roles_container.append(tr)
+                        roles[r]['level2'][s]['tr'] = tr
+                        level3 = level['2']['level3']
+                        if( level3 !== null ) {
+                            if(level3[0] !== null) {
+                                for(t in level3) {
+                                    level['3'] = level3[t]
+                                    tr = renderRow(20, level['3']['name'], level['3']['slug'], level['3']['id'], level['3']['parent_id'])
+                                    roles_container.append(tr)
+                                    roles[r]['level2'][s]['level3'][t]['tr'] = tr
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $compile( $('#roles_container tbody') )($scope)
+    }
+
+    $scope.adjustParent = function(e, s) {
+        $timeout(function() {
+            v = $scope.formData.roles[s]
+            if(v == 1) {
+                var tr = $(e).parents('tr')
+                var parent_id = tr.attr('data-parent-id')
+                var related = $('[data-id="' + parent_id + '"]')
+                if(related.length > 0) {
+                    var parent = related.find('input[type="checkbox"]')
+                    var model = parent.attr('ng-model')
+                    var slug = model.replace(/.*\["(.+)"\].*/, '$1')
+                    $scope.formData.roles[slug] = '1'
+                    $scope.adjustParent(parent, slug)
+                }
+            }
+        }, 200)
+    } 
+
+    $scope.showRoles = function() {
+        $http.get(baseUrl + '/controller/user/roles').then(function(data) {
+          roles = data.data
+          $scope.renderRoles(roles)
+        }, function(error) {
+          $scope.showRoles()
+        });
+    }
+    $scope.showRoles()
 
     $scope.checkAll = function() {
       var roles = $('[ng-model*="formData.roles"]');
@@ -56,24 +151,61 @@ app.controller('groupUserCreate', ['$scope', '$http', '$rootScope', '$compile', 
         $scope.show()
     }
 
+    var searchTimeout = null
     $scope.searchRoles = function() {
-        var keyword = $scope.keyword.toLowerCase().trim()
-        var roles = $('tbody td:first-child, tbody th:first-child')
-        var role, x, currentRow, row, hasParent = 1
-        var roleName
-        for(x = 0;x < roles.length;x++ ) {
-            role = $(roles[x])
-            currentRow = role.parents('tr')
-            roleName = role.text().toLowerCase().trim()
-            if(roleName.indexOf(keyword) > -1) {
-                currentRow.show()
-            } else {
-              currentRow.hide()
-              
+        $timeout.cancel(searchTimeout)
+        $timeout(function() {
+            var y, z
+            var keyword = $scope.keyword.toLowerCase().trim()
+            var level = {}
+            for(r in roles) {
+                y = 0
+                z = 0
+                level['1'] = roles[r]
+                level2 = level['1']['level2']
+                if( level2 !== null ) {
+                    if(level2[0] !== null) {
+                        for(s in level2) {
+                            level['2'] = level2[s] 
+                            level3 = level['2']['level3']
+                            if( level3 !== null ) {
+                                if(level3[0] !== null) {
+                                    for(t in level3) {
+                                        level['3'] = level3[t]
+                                        if(level['3']['name'].toLowerCase().indexOf(keyword) > -1) {
+                                            z += 1
+                                            level['3']['tr'].show()
+                                        } else {
+                                            level['3']['tr'].hide()
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(level['2']['name'].toLowerCase().indexOf(keyword) > -1) {
+                                y += 1
+                                level['2']['tr'].show()
+                                $('[data-parent-id="' + level['2']['id'] + '"]').show()
+                            } else {
+                                level['2']['tr'].hide()
+                                if(z > 0) {                                
+                                    level['2']['tr'].show()
+                                }
+                            }
+                        }
+                    }
+                }
+                if(level['1']['name'].toLowerCase().indexOf(keyword) > -1) {
+                    level['1']['tr'].show()
+                    $('[data-parent-id="' + level['1']['id'] + '"]').show()
+                } else {
+                    level['1']['tr'].hide()
+                    if(y > 0) {                                
+                        level['1']['tr'].show()
+                    }
+                }
             }
-
-
-        }
+        }, 600)
     }
 
     $scope.submitForm=function() {

@@ -165,9 +165,9 @@ Route::name('treatment_group.')->prefix('treatment_group')->group(function(){
     })->name('show');
 });
 Route::name('setting.')->prefix('setting')->group(function(){
-    Route::get('/company', function (){
-        return view('user/setting/company');
-    })->name('company');
+    Route::get('/general', function (){
+        return view('user/setting/general');
+    })->name('general');
     Route::get('/finance', function (){
         return view('user/setting/finance');
     })->name('finance');

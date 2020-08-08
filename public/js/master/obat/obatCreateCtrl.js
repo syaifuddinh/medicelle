@@ -22,6 +22,10 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
         $scope.formData.price = parseInt($scope.formData.purchase_price) * ( 100 + parseInt($scope.formData.additional.margin)) / 100
     }
 
+    $scope.countMargin = function() {
+        $scope.formData.additional.margin = (parseInt($scope.formData.price) - parseInt($scope.formData.purchase_price)) / parseInt($scope.formData.purchase_price) * 100 
+    }
+
     $scope.show = function() {
         if(/edit/.test(path)) {
             $scope.title = 'Edit Obat';

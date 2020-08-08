@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'code', 'name', 'email', 'password', 'avatar', 'group_user_id', 'fullname', 'contact_id'
+        'username', 'code', 'name', 'email', 'password', 'avatar', 'group_user_id', 'fullname', 'contact_id', 'favorite_page_id'
     ];
 
     /**
@@ -54,9 +54,24 @@ class User extends Authenticatable
         }
     }
 
+    public function setFavoritePageIdAttribute($value) {
+        if($value == 'null') {
+            $this->attributes['favorite_page_id'] = null;
+        } else {
+            $this->attributes['favorite_page_id'] = $value;            
+        }
+    }
+
     public function group_user()
     {
           return $this->belongsTo('App\Permission','group_user_id','id');
+    }
+    public function role()
+    {
+          return $this->belongsTo('App\Role','favorite_page_id','id')
+          ->withDefault([
+                'name' => ''
+          ]);
     }
 
     public function contact()

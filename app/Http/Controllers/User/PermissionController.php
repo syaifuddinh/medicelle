@@ -59,8 +59,22 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission, $id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id)
+        ->only('id', 'name', 'is_active', 'description');
         return Response::json($permission, 200);
+    }
+
+    public function showRoles(Request $request, $id)
+    {
+        $permission = Permission::findOrFail($id);
+        $rolesController = new \App\Http\Controllers\User\RolesController();
+        $params = [
+            'group_user_id' => $id,
+            'hide_level' => json_decode($request->hide_level) ?? [],
+            'has_route' => true
+        ];
+        $roles = $rolesController->read($params);
+        return Response::json($roles, 200);
     }
 
     /**
