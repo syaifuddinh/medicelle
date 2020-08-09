@@ -2,10 +2,12 @@
 
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('user')->namespace('User')->group(function(){
+        Route::get('roles', 'RolesController@index');
         Route::get('notification/unread', 'NotificationController@unreadNotif');
         Route::resource('notification', 'NotificationController');
 
         Route::put('group_user/activate/{permission}', 'PermissionController@activate');
+        Route::get('group_user/{id}/roles', 'PermissionController@showRoles');
         Route::resource('group_user', 'PermissionController');
 
         Route::put('grup_nota/activate/{permission}', 'GrupNotaController@activate');

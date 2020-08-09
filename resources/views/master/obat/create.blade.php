@@ -177,7 +177,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price" jnumber2 only-num ng-change='countPrice()'>
+                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price"  ng-change='countPrice()' jnumber2 only-num>
                 </div>
               </div>
 			  
@@ -185,17 +185,15 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Margin(%)
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" maxlength='3' only-num  ng-change='countPrice()'>
+                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" ng-change='countPrice()' maxlength='3' only-num>
                 </div>
               </div>
 
               <div class="form-group" ng-show='formData.is_category != 1'>
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Jual
                 </label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                  <div class="pd-l2" style='padding-top:2mm;padding-right:13mm;text-align:right;font-size:14px'>
-                        <% formData.price | number  %>
-                    </div>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.price" ng-change='countMargin()' jnumber2 only-num>
                 </div>
               </div>
 

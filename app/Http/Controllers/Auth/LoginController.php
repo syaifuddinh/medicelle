@@ -27,7 +27,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    public function redirectTo() {
+        ob_flush();
+        ob_clean();
+        if(Auth::user()->favorite_page_id) {
+            return route(Auth::user()->role->route);
+        } else {
+            return '/';
+        }
+    }
 
     public function username()
     {

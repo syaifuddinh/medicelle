@@ -88,7 +88,11 @@ class Permission extends Model
 
     public function getRolesAttribute(){ 
         if(array_key_exists('roles', $this->attributes)) {
-            return json_decode($this->attributes['roles']);
+            if($this->attributes['roles'] == '[]') {
+                return json_decode('{}');
+            } else {
+                return json_decode($this->attributes['roles']);
+            }
         }
         return null;
     }

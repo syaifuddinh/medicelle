@@ -92,9 +92,25 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Departemen<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control" data-placeholder-text-single="'Pilih Departemen'" required='required' chosen allow-single-deselect="false" ng-model="formData.group_user_id" ng-options="c.id as c.name for c in data.group_user">
+                          <select class="form-control" data-placeholder-text-single="'Pilih Departemen'" required='required' chosen allow-single-deselect="false" ng-model="formData.group_user_id" ng-options="c.id as c.name for c in data.group_user" ng-change='emptyFavoritePage()'>
                             <option value=""></option>
                           </select>
+                        </div>
+                      </div>
+                      
+                        
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Halaman Favorit
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="input-group" ng-click='showRolesModal()'>
+                                <input type="text" ng-model='formData.favorite_page_name' class='form-control' readonly>
+                                <div class="input-group-btn">
+                                    <button type="button" class='btn btn-md btn-primary'>
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                       </div>
                       
@@ -122,7 +138,28 @@
 
         </div>
         <!-- /page content -->
+        <div class="modal fade" id="rolesModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal-dialog" style='width:80%'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="">Daftar Fitur</h4>
+            </div>
+            <div class="modal-body" id='roles_container'>
 
+                <table class="table table-hover" id='roles_datatable'  style='width:100%'>
+                    <thead>
+                        <tr>
+                            <th>Fitur</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->

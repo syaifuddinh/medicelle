@@ -75,7 +75,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return Response::json($user::with('group_user')->find($user->id), 200);
+        return Response::json($user::with('group_user:id,name', 'role:id,name')->find($user->id), 200);
     }
 
     /**
