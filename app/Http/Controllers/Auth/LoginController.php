@@ -31,10 +31,12 @@ class LoginController extends Controller
         ob_flush();
         ob_clean();
         if(Auth::user()->favorite_page_id) {
-            return route(Auth::user()->role->route);
-        } else {
-            return '/';
-        }
+            $route = Auth::user()->role->route;
+            if($route) {
+                return route($route);
+            }
+        } 
+        return '/';
     }
 
     public function username()
