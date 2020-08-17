@@ -15,22 +15,16 @@
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Status
                             </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-10 col-sm-10 col-xs-12">
                             <label class="radio-inline">
-                              <input type="radio" ng-model="formData.is_approve" ng-value='null' ng-change="filter()">
+                              <input type="radio" ng-model="formData.status" ng-value='null' ng-change="filter()">
                               <h5>Semua</h5>
                             </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.is_approve" ng-value='"0"' ng-change="filter()">
-                              <h5>Draft</h5>
+                            <label class="radio-inline" ng-repeat='s in statuses'>
+                              <input type="radio" ng-model="formData.status" ng-value='s.id' ng-change="filter()">
+                              <h5><% s.name %></h5>
                             </label>
-                            <label class="radio-inline">
-                              <input type="radio" ng-model="formData.is_approve" ng-value='"1"' ng-change="filter()">
-                              <h5>
-                              Disetujui  
-                              </h5>
-                            </label>
-                            </div>
+                        </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Periode

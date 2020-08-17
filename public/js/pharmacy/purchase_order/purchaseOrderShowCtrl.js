@@ -4,6 +4,8 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
+    var embedUrl = $('#embedUrl').attr('href')
+    $('#pdfDocument').attr('src', embedUrl)
 
     purchase_order_detail_datatable = $('#purchase_order_detail_datatable').DataTable({
        dom: 'rt',
@@ -56,9 +58,21 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].discount %>%"
             }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].subtotal | number %>"
+            }
           }
         ],
         createdRow: function(row, data, dataIndex) {
+            $compile($('tfoot'))($scope);
+          $compile($('[ng-click="backward()"]'))($scope);
           $compile(angular.element(row).contents())($scope);
           $(row).find('input').focus()
         }
@@ -95,16 +109,20 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
   $scope.show = function() {
       $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + id).then(function(data) {
           $scope.formData = data.data
+          var grandtotal = 0
+
           var detail = data.data.detail
           var unit
           $scope.receipt_url = baseUrl + '/pharmacy/receipt/purchase_order/' + id + '/create'
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
+              grandtotal += unit.subtotal
+
               $scope.insertItem(unit)
               $scope.checkStock(x, unit.item_id)
           }
-
+            $scope.formData.grandtotal = grandtotal
 
     }, function(error) {
       $rootScope.disBtn=false;

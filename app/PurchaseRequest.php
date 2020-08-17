@@ -10,7 +10,7 @@ use App\PurchaseRequestDetail;
 class PurchaseRequest extends Model
 {
     protected $fillable = ['date', 'date_start', 'date_end', 'description'];
-
+    protected $appends = ['status_name'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public static function boot() {
@@ -33,7 +33,7 @@ class PurchaseRequest extends Model
         });
 
         static::updating(function(PurchaseRequest $purchaseRequest) {   
-            if($purchaseRequest->is_approve == 1) {
+            if($purchaseRequest->status == 4) {
                 $existing_po = PurchaseOrder::wherePurchaseRequestId($purchaseRequest->id)
                 ->count('id');
 
@@ -81,6 +81,17 @@ class PurchaseRequest extends Model
             }
         });
     }
+
+    public function getStatusNameAttribute() {
+        $setting = \App\Http\Controllers\User\SettingController::fetch('purchase_request');
+        if(array_key_exists('status', $this->attributes)) {
+            $status = $setting->status ?? [];
+            $status = collect($status)->firstWhere('id', $this->attributes['status']);
+            return $status->name ?? '';
+        } else {
+            return '';
+        }
+    } 
 
     public function detail() {
         return $this->hasMany('App\PurchaseRequestDetail');

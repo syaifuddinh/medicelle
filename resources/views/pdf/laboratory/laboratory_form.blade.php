@@ -101,8 +101,8 @@
                         </p>
                     </div>
 
-                    <div style='display:inline-block;width:55%;padding-bottom:7mm'>
-                        <p style='margin-bottom:7mm'>
+                    <div style='display:inline-block;width:55%;padding-bottom:2mm;margin-top:2mm'>
+                        <p style='margin-bottom:3mm'>
                             DOKTER YANG MEMINTA :
                         </p>
                         <p style='margin-bottom:1mm'>
@@ -158,10 +158,10 @@
                 </div>
     
                 <div style='margin-top:10mm'>
-                    <div style='width:60%;display:inline-block'></div>
-                    <div style='width:40%;display:inline-block'>
+                    <div style='width:80%;display:inline-block'> </div>
+                    <div style='width:185%;display:inline-block'>
                         <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::today() }}</p>
-                        <p style='text-align:center;'>( {{ $medicalRecord->registration_detail->doctor->name }} )</p>
+                        <p style='text-align:center;'>( {{ $contact_name }} )</p>
                     </div>
                 </div>
 

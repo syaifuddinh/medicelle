@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PurchaseOrder;
 use Response;
+use PDF;
 
 class PurchaseOrderController extends Controller
 {
@@ -40,6 +41,11 @@ class PurchaseOrderController extends Controller
     {
     }
 
+    public function fetch($id) {
+        $purchaseOrder = PurchaseOrder::with('detail', 'detail.item:id,name', 'supplier:id,name,address', 'purchase_request:id,code')->findOrFail($id);
+
+        return $purchaseOrder;
+    }
     /**
      * Display the specified resource.
      *
@@ -48,8 +54,23 @@ class PurchaseOrderController extends Controller
      */
     public function show($id)
     {
-        $purchaseOrder = PurchaseOrder::with('detail', 'detail.item:id,name', 'supplier:id,name,address', 'purchase_request:id,code')->findOrFail($id);
+        $purchaseOrder = $this->fetch($id);
         return Response::json($purchaseOrder, 200);
+    }
+
+    public function pdf($id)
+    {
+        $purchaseOrder = $this->fetch($id);
+        $grandtotal = 0;
+        foreach ($purchaseOrder->detail as $d) {
+            $grandtotal += $d->subtotal;
+        }
+        $params = [
+            'purchaseOrder' => $purchaseOrder,
+            'grandtotal' => $grandtotal,
+        ];
+        $pdf = PDF::loadview('pdf/pharmacy/purchase_order', $params);
+        return $pdf->stream('Purchase order.pdf');
     }
 
     /**

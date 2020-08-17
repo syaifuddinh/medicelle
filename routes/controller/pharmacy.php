@@ -9,6 +9,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::get('formula/{id}/pdf', 'FormulaController@pdf')->name('formula.pdf');
         Route::put('formula/{id}/approve', 'FormulaController@approve')->name('formula.approve');
+        Route::put('formula/{id}/rollback', 'FormulaController@rollback')->name('formula.rollback');
         Route::resource('formula', 'FormulaController');
 
         Route::get('purchase_order/{id}/pdf', 'PurchaseOrderController@pdf')->name('purchase_order.pdf');

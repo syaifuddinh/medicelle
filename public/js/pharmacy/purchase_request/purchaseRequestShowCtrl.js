@@ -65,14 +65,28 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
                 var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].discount %>%"
             }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].subtotal | number %>"
+            }
           }
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
+          $compile($('tfoot'))($scope);
+          $compile($('[ng-click="backward()"]'))($scope);
           $(row).find('input').focus()
         }
     });
 
+    var embedUrl = $('#embedUrl').attr('href')
+    $('#pdfDocument').attr('src', embedUrl)
 
   $scope.approve = function(id) {
     is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
@@ -92,6 +106,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
           }
         });
   }
+
 
 
   $scope.delete = function(id) {
@@ -123,18 +138,20 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.show = function() {
       $http.get(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
-        $scope.formData = data.data
-        var detail = data.data.detail
-          var unit
+            $scope.formData = data.data
+            var grandtotal = 0
+            var detail = data.data.detail
+            var unit
 
-          for(x in detail) {
-              unit = detail[x]
-              detail[x].item_name = unit.item.name
-              detail[x].supplier_name = unit.supplier.name
-              $scope.insertItem(unit)
-              $scope.checkStock(x, unit.item_id)
-          }
-
+            for(x in detail) {
+                unit = detail[x]
+                detail[x].item_name = unit.item.name
+                detail[x].supplier_name = unit.supplier.name
+                grandtotal += unit.subtotal
+                $scope.insertItem(unit)
+                $scope.checkStock(x, unit.item_id)
+            }
+            $scope.formData.grandtotal = grandtotal
 
     }, function(error) {
       $rootScope.disBtn=false;

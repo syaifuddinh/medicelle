@@ -372,7 +372,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
     $scope.showNewResearch = function(medical_record_detail_id) {
         $scope.medical_record_detail_id = medical_record_detail_id
-        var research = $scope.formData.radiology.concat($scope.formData.laboratory)
+        var research = $scope.formData.radiology.concat($scope.formData.laboratory).concat($scope.laboratory_history)
         var sample = research.find(x => x.id == medical_record_detail_id)
         $scope.new_research = {
             'additional' : sample.additional
@@ -1543,6 +1543,27 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+  $scope.showRadiologyHistory = function() {
+        if(path.indexOf('/radiology') > -1) {
+            $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/radiology/history').then(function(data) {
+                radiology_datatable.rows.add(data.data).draw()
+            }, function(error) {
+                console.log(error)
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+           });
+        }
+  }
+  $scope.showRadiologyHistory()
       
   laboratory_datatable = $('#laboratory_datatable').DataTable({
     dom: 'rt',
@@ -1573,6 +1594,27 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+  $scope.showLaboratoryHistory = function() {
+        if(path.indexOf('/laboratory') > -1) {
+            $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/laboratory/history').then(function(data) {
+                $scope.laboratory_history = data.data
+                laboratory_datatable.rows.add(data.data).draw()
+            }, function(error) {
+                console.log(error)
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+           });
+        }
+  }
+  $scope.showLaboratoryHistory()
         
   pathology_datatable = $('#pathology_datatable').DataTable({
     dom: 'rt',
@@ -1601,6 +1643,26 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+  $scope.showPathologyHistory = function() {
+        if(path.indexOf('/pathology') > -1) {
+            $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/pathology/history').then(function(data) {
+                pathology_datatable.rows.add(data.data).draw()
+            }, function(error) {
+                console.log(error)
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+           });
+        }
+  }
+  $scope.showPathologyHistory()
     
   diagnostic_datatable = $('#diagnostic_datatable').DataTable({
     dom: 'rt',

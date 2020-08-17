@@ -46,6 +46,10 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::post('radiology_type/{id}', 'RadiologyTypeController@update');
         Route::resource('radiology_type', 'RadiologyTypeController');
 
+        Route::put('setting/pic/{flag}', 'SettingController@updatePic');
+        Route::get('setting/pic/show', 'SettingController@showPic');
+        Route::get('setting/pic', 'SettingController@pic');
+        Route::get('setting/purchase_request', 'SettingController@purchase_request');
         Route::get('setting/company', 'SettingController@company');
         Route::get('setting/laboratory', 'SettingController@laboratory');
         Route::put('setting/laboratory/grid', 'SettingController@store_grid');

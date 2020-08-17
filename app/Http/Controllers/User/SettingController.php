@@ -116,6 +116,48 @@ class SettingController extends Controller
         return Response::json($company, 200);
     }
 
+    public function pic()
+    {
+        $pic = $this->fetch('pic');
+        return Response::json($pic, 200);
+    }
+
+    public function purchase_request()
+    {
+        $purchase_request = $this->fetch('purchase_request');
+        return Response::json($purchase_request, 200);
+    }
+
+    public static function fetch($slug) {
+        $setting = Setting::whereName($slug)->first()->content;
+        return $setting;
+    }
+
+    public function updatePic(Request $request, $slug)
+    {
+        $request->validate([
+            'contact_id' => 'required'
+        ], [
+            'contact_id.required' => 'Tenaga medis tidak boleh kosong'
+        ]);
+
+        $pic = (array) Setting::whereName('pic')->first()->content;
+        $related = $pic[$slug];
+        if(in_array($request->contact_id, $related)) {
+            $key = array_search($request->contact_id, $related);
+            array_splice($related, $key, 1);
+        } else {
+            array_push($related, $request->contact_id);
+        }
+        $pic[$slug] = $related;
+        Setting::whereName('pic')
+        ->update([
+            'content' => json_encode($pic)
+        ]);
+        
+        return Response::json(['message' => 'Data berhasil disimpan'], 200);
+    }
+
     public function laboratory()
     {
         $laboratory = Setting::whereName('laboratory')->first()->content;
@@ -214,5 +256,40 @@ class SettingController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function showPic() {
+        $resp = [
+            [
+                'slug' => 'radiology',
+                'name' => 'Radiologi'
+            ],
+            [
+                'slug' => 'laboratory',
+                'name' => 'Laboratorium'
+            ],
+            [
+                'slug' => 'pathology',
+                'name' => 'Patologi & Anatomi'
+            ],
+            [
+                'slug' => 'chemoterapy',
+                'name' => 'Kemoterapi'
+            ],
+            [
+                'slug' => 'pharmacy',
+                'name' => 'Farmasi'
+            ],
+            [
+                'slug' => 'purchase_request_approval',
+                'name' => 'Approval Permintaan Pembelian'
+            ],
+            [
+                'slug' => 'purchase_order_approval',
+                'name' => 'Approval Order Pembelian'
+            ]
+        ];
+
+        return Response::json($resp);
     }
 }

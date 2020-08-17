@@ -9,7 +9,7 @@ use DB;
 class PurchaseRequestDetail extends Model
 {
     protected $fillable = ['item_id', 'supplier_id', 'qty', 'discount', 'purchase_price'];
-
+    protected $appends = ['subtotal'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public static function boot() {
@@ -60,11 +60,21 @@ class PurchaseRequestDetail extends Model
         $this->attributes['purchase_price'] = $value;
     }
 
-    public function  setDiscountAttribute($value) {
+    public function setDiscountAttribute($value) {
         if($value == null) {
             $value = 0;
         }
         $this->attributes['discount'] = $value;
+    }
+
+    public function getSubtotalAttribute() {
+        if(array_key_exists('purchase_price', $this->attributes)) {
+            $off = $this->attributes['purchase_price'] * ($this->attributes['discount'] ?? 0) / 100;
+            $subtotal = $this->attributes['purchase_price'] - $off;
+            return $subtotal;
+        }
+
+        return 0;
     }
 
     public function item() {
