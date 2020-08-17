@@ -9,6 +9,7 @@ use App\PurchaseRequest;
 use DB;
 use PDF;
 use Response;
+use Exception;
 
 class PurchaseRequestController extends Controller
 {
@@ -80,6 +81,12 @@ class PurchaseRequestController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
+    public function fetch($id) {
+        $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name')->findOrFail($id);
+
+        return $purchaseRequest;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -88,15 +95,23 @@ class PurchaseRequestController extends Controller
      */
     public function show($id)
     {
-        $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name')->findOrFail($id);
+        $purchaseRequest = $this->fetch($id);
         return Response::json($purchaseRequest, 200);
     }
 
     public function pdf($id)
     {
-        $purchaseRequest = PurchaseRequest::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
-        $pdf = PDF::loadview('pdf/cuti_hamil',['purchaseRequest'=>$purchaseRequest]);
-        return $pdf->stream('cuti-hamil.pdf');
+        $purchaseRequest = $this->fetch($id);
+        $grandtotal = 0;
+        foreach ($purchaseRequest->detail as $d) {
+            $grandtotal += $d->subtotal;
+        }
+        $params = [
+            'purchaseRequest' => $purchaseRequest,
+            'grandtotal' => $grandtotal,
+        ];
+        $pdf = PDF::loadview('pdf/pharmacy/purchase_request', $params);
+        return $pdf->stream('Purchase request.pdf');
     }
 
     /**
@@ -158,7 +173,11 @@ class PurchaseRequestController extends Controller
         //
         DB::beginTransaction();
         $purchaseRequest = PurchaseRequest::findOrFail($id);
-        $purchaseRequest->delete();
+        if($purchaseRequest->status < 2) {
+            $purchaseRequest->delete();
+        } else {
+            return Response::json(['message' => 'Transaksi yang sudah disetujui tidak dapat dihapus'], 421);
+        }
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);
@@ -166,11 +185,59 @@ class PurchaseRequestController extends Controller
 
     public function approve($id)
     {
-        //
         DB::beginTransaction();
         $purchaseRequest = PurchaseRequest::findOrFail($id);
-        $purchaseRequest->is_approve = 1;
-        $purchaseRequest->save();
+        try {
+            if($purchaseRequest->status < 4) {        
+                if(auth()->user()->is_admin != 1) {
+                    $contact_id = auth()->user()->contact_id;
+                    if($contact_id == null) {
+                        throw new Exception('Anda tidak diizinkan untuk melakukan approval');
+                    }
+                    $setting = \App\Http\Controllers\User\SettingController::fetch('pic');
+                    $status = $purchaseRequest->status;
+                    if($status == 1) {
+                        $pharmacy = $setting->pharmacy;
+                        if(!in_array($contact_id, $pharmacy)) {
+                            throw new Exception('Anda tidak diizinkan untuk melakukan approval');
+                        }
+                    } else if($status == 2) {
+                        $purchase_request_approval = $setting->purchase_request_approval;
+                        if(!in_array($contact_id, $purchase_request_approval)) {
+                            throw new Exception('Anda tidak diizinkan untuk melakukan approval');
+                        }
+                    } else if($status == 3) {
+                        $purchase_order_approval = $setting->purchase_order_approval;
+                        if(!in_array($contact_id, $purchase_order_approval)) {
+                            throw new Exception('Anda tidak diizinkan untuk melakukan approval');
+                        }
+                    }
+                }
+                $purchaseRequest->status += 1;
+                $purchaseRequest->save();
+                DB::commit();
+            } else {
+                throw new Exception('Status tidak dapat di-update lagi');
+            }
+
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
+
+        return Response::json(['message' => 'Data berhasil disetujui'], 200);
+    }
+
+    public function rollback($id)
+    {
+        DB::beginTransaction();
+        $purchaseRequest = PurchaseRequest::findOrFail($id);
+        if($purchaseRequest->status > 1) {        
+            $purchaseRequest->status -= 1;
+            $purchaseRequest->save();
+        } else {
+            return Response::json(['message' => 'Status tidak dapat di-update lagi'], 421);
+        }
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil disetujui'], 200);

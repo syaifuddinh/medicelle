@@ -70,6 +70,30 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function medical(Request $request) {
+        $x = Contact::where(function($d){
+            $d->where('is_doctor', 1)
+            ->orWhere('is_nurse', 1)
+            ->orWhere('is_nurse_helper', 1);
+        })
+        ->select('id', 'name');
+
+        if($request->filled('is_active')) {
+            $x->whereIsActive($request->is_active);
+        }
+
+        if($request->filled('slug')) {
+               $pic = \App\Setting::whereName('pic')->first()->content;
+               $pic = (array) $pic;
+               $x->whereIn('id', $pic[$request->slug] ?? [0]);
+        }
+
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function nurse(Request $request) {
         $x = Contact::nurse()->with('specialization', 'group_user', 'city')->select('id', 'code', 'name', 'specialization_id', 'city_id', 'group_user_id', 'phone', 'is_active');
 

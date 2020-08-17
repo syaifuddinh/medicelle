@@ -242,7 +242,7 @@
 
                             <div class="btn-group pull-right" ng-show='pivot.is_referenced == 1'>
 
-                                <button class="btn btn-primary btn-sm" ng-click="openPDF()" type="button" title='Buka dokumen PDF'>
+                                <button class="btn btn-primary btn-sm" ng-click="openPicModal()" type="button" title='Buka dokumen PDF'>
                                     <i class="fa fa-file-pdf-o"></i>
                                 </button>
                             </div>
@@ -270,6 +270,30 @@
 </div>
 
 </div>
+
+    <div class="modal fade" id="picModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Pilih Penanggung Jawab</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-striped" id='medical_datatable' style='width:100%'>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- /page content -->
 
 <!-- ============================================================== -->

@@ -58,9 +58,9 @@ class PharmacyApiController extends Controller
     public function purchase_request(Request $request) {
         $x = PurchaseRequest::where('date_start', '>=', $request->date_start)
         ->where('date_end', '<=', $request->date_end)
-        ->select('id', 'code', 'description', 'date', 'date_start', 'date_end', 'is_approve');
-        if($request->filled('is_approve'))
-            $x->whereIsApprove($request->is_approve);
+        ->select('id', 'code', 'description', 'date', 'date_start', 'date_end', 'status');
+        if($request->filled('status'))
+            $x->whereStatus($request->status);
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
 

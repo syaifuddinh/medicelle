@@ -7,6 +7,7 @@ Route::prefix('master')->group(function(){
     Route::get('piece', 'MasterApiController@piece');
     Route::get('lokasi', 'MasterApiController@lokasi');
     Route::get('doctor', 'MasterApiController@doctor');
+    Route::get('medical', 'MasterApiController@medical');
     Route::get('nurse', 'MasterApiController@nurse');
     Route::get('nurse_helper', 'MasterApiController@nurse_helper');
     Route::get('discount', 'MasterApiController@discount');

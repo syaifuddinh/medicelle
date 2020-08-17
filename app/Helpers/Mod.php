@@ -13,7 +13,7 @@ class Mod {
             $m = (int )self::calc('m', $time) - 1;
             $Y = self::calc('Y', $time);
             $months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            return $d . ' ' . $months[$m] . ' ' . $Y;
+            return ($d ?? '') . ' ' . ($months[$m] ?? '') . ' ' . ($Y ?? '');
         }
     }
 

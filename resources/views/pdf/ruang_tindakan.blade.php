@@ -127,9 +127,9 @@
                     <p>Keterangan : {{ $pivotMedicalRecord->additional->ruang_tindakan_description ?? '' }} </p>
                 </div>
                 
-                <div style='margin-top:10mm'>
+                <div style='margin-top:50mm;width:100%'>
                     <div style='width:60%;display:inline-block'></div>
-                    <div style='width:40%;display:inline-block'>
+                    <div style='width:170%;display:inline-block'>
                         <p style='text-align:center;margin-bottom:25mm'>................., ...............................</p>
                         <p style='text-align:center;'>(....................................)</p>
                     </div>

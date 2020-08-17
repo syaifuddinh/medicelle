@@ -1,5 +1,6 @@
 app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
   $scope.formData = {}
+  $scope.statuses = []
   var path = window.location.pathname;
 
   oTable = $('#listview').DataTable({
@@ -56,7 +57,7 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => resp.is_approve == 0 ? '<label class="label label-warning">Draft</label>' : '<label class="label label-success">Disetujui</label>'
+        render : resp => resp.status < 4 ? '<label class="label label-warning">' + resp.status_name + '</label>' : '<label class="label label-success">' + resp.status_name + '</label>'
       },
       {
         data: null, 
@@ -65,10 +66,10 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        ( resp.is_approve == 0 ? "<a allow_update_pharmacy_purchase_request class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/purchase_request/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
+        ( resp.status == 1 ? "<a allow_update_pharmacy_purchase_request class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/purchase_request/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
         "<a allow_show_pharmacy_purchase_request class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/purchase_request/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
-         (resp.is_approve == 0 ? "<button allow_approve_pharmacy_purchase_request type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
-         (resp.is_approve == 0 ? "<button type='button' allow_destroy_pharmacy_purchase_request class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 
+         (resp.status < 4 ? "<button allow_approve_pharmacy_purchase_request type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
+         (resp.status == 1 ? "<button type='button' allow_destroy_pharmacy_purchase_request class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 
          "</div>" 
       },
     ],
@@ -77,6 +78,25 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );
+
+      $scope.showPurchaseRequest = function() {
+        $http.get(baseUrl + '/controller/user/setting/purchase_request').then(function(data) {
+            $scope.statuses = data.data.status
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+          $scope.showPicSetting()
+        });
+    }
+    $scope.showPurchaseRequest()
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');

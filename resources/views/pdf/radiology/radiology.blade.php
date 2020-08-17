@@ -48,10 +48,12 @@
                 </div>
 
                 <div style='position:absolute;bottom:28mm'>
-                    <div style='width:60%;display:inline-block'></div>
-                    <div style='width:40%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) }}</p>
-                        <p style='text-align:center;'>( {{$medicalRecord->registration_detail->doctor->name}} )</p>
+                    <div style='width:100%;display:inline-block;position:relative'>
+                        <span style='display:inline-block;position:absolute;right:-190mm;bottom:10mm'>
+                            
+                            <p style='text-align:center;margin-bottom:25mm;width:210%'>{{ Mod::company()->city }}, {{ Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) }}</p>
+                            <p style='text-align:center;width:210%'>( {{$contact_name}} )</p>
+                        </span>
                     </div>
                 </div>
                 

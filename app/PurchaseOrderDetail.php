@@ -9,7 +9,7 @@ class PurchaseOrderDetail extends Model
 {
     
     protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'leftover_qty', 'received_qty'];
-
+    protected $appends = ['subtotal'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public static function boot() {
@@ -29,6 +29,16 @@ class PurchaseOrderDetail extends Model
                 ]);
             }
         });
+    }
+
+    public function getSubtotalAttribute() {
+        if(array_key_exists('purchase_price', $this->attributes)) {
+            $off = $this->attributes['purchase_price'] * ($this->attributes['discount'] ?? 0) / 100;
+            $subtotal = $this->attributes['purchase_price'] - $off;
+            return $subtotal;
+        }
+
+        return 0;
     }
 
     public function  setQtyAttribute($value) {

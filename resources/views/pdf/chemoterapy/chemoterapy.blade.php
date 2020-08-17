@@ -138,23 +138,17 @@
                     </table>
                 </div>
 
-                <div style='position:absolute;bottom:68mm'>
-                    <span style='width:49%;display:inline-block'>
-                        
-                    </span>
-                    <span style='width:49%;display:inline-block'>
-                        <p class='text-center'>Tanggal {{ Mod::today() }}, Jam {{ Carbon\Carbon::now()->format('H:i') }} WIB</p>
-                    </span>
-                    
-                </div>
-                <div style='position:absolute;bottom:28mm'>
+                <div style='position:absolute;bottom:28mm;width:100%;'>
                     <span style='width:49%;display:inline-block'>
                         <p style='text-align:center;margin-bottom:25mm'>Nama dan Tanda Tangan Petugas DPJP</p>
                         <p style='text-align:center;'>{{ $dot }}</p>
                     </span>
-                    <span style='width:49%;display:inline-block'>
+                    <span style='width:50%;display:inline-block'>
+                        <span style='width:100%;display:inline-block'>
+                            <p class='text-center'>Tanggal {{ Mod::today() }}, Jam {{ Carbon\Carbon::now()->format('H:i') }} WIB</p>
+                        </span>
                         <p style='text-align:center;margin-bottom:25mm'>Nama dan Tanda Tangan Petugas Kemoterapi</p>
-                        <p style='text-align:center;'>{{ $dot }}</p>
+                        <p style='text-align:center;'>{{ $contact_name }}</p>
                     </span>
                     
                 </div>

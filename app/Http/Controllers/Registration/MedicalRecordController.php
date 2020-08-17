@@ -215,6 +215,27 @@ class MedicalRecordController extends Controller
         return $resp;
     }
 
+    public function showReviewHistory($id, $flag) {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $resp = MedicalRecordDetail::join('medical_records', 'medical_records.id', 'medical_record_details.medical_record_id')
+        ->where('medical_records.patient_id', $medicalRecord->patient_id)
+        ->where('medical_record_details.medical_record_id', '!=', $id);
+        if($flag == 'radiology') {
+            $resp->whereIsRadiology(1);
+        } else if($flag == 'laboratory') {
+            $resp->whereIsLaboratory(1);
+        } else if($flag == 'pathology') {
+            $resp->whereIsPathology(1);
+        } else {
+            return Response::json(['message' => 'Halaman tidak ditemukan'], 404);
+        }
+
+        $resp = $resp->select('medical_record_details.id', 'medical_record_details.date', 'medical_record_details.result_date', 'medical_record_details.description', 'is_radiology', 'is_laboratory', 'is_pathology', 'medical_record_details.additional')
+        ->get();
+
+        return Response::json($resp);
+    }
+
     public function show($id)
     {
 
@@ -267,9 +288,16 @@ class MedicalRecordController extends Controller
 
     public function ruang_tindakan_pdf(Request $request, $id)
     {
+   
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
-        $pdf = PDF::loadview('pdf/ruang_tindakan',['pivotMedicalRecord' => $pivotMedicalRecord,'medicalRecord' => $medicalRecord, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'pivotMedicalRecord' => $pivotMedicalRecord,
+            'medicalRecord' => $medicalRecord, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $pdf = PDF::loadview('pdf/ruang_tindakan', $params);
         return $pdf->stream('ruang_tindakan.pdf');
     }
 
@@ -278,13 +306,13 @@ class MedicalRecordController extends Controller
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $laboratoryType = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name')->get(); 
-        $pdf = PDF::loadview('pdf/laboratory/laboratory',[
+        $params = [
                 'pivotMedicalRecord' => $pivotMedicalRecord,
                 'medicalRecord' => $medicalRecord, 
                 'laboratoryType' => $laboratoryType, 
                 'dot' => '.............................................................................................................', 
-                'shortDot' => '..........']
-        );
+                'shortDot' => '..........'];
+        $pdf = PDF::loadview('pdf/laboratory/laboratory', $params);
 
         return $pdf->stream('laboratory.pdf');
     }
@@ -329,8 +357,13 @@ class MedicalRecordController extends Controller
         return $pdf->stream('mammografi.pdf');
     }
 
-    public function radiology_pdf(Request $request, $id)
+    public function radiology_pdf(Request $request, $id, $cont)
     {
+        $contact_name = DB::table('contacts')
+            ->whereId($contact_id)
+            ->select('name')
+            ->first()
+            ->name ?? '';
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $price = DB::table('prices')
@@ -339,12 +372,25 @@ class MedicalRecordController extends Controller
         $radiologyType = DB::table('radiology_types')
         ->whereId($price->radiology_group)
         ->first();
-        $pdf = PDF::loadview('pdf/radiology/radiology',['pivotMedicalRecord' => $pivotMedicalRecord, 'medicalRecord' => $medicalRecord, 'radiologyType' => $radiologyType, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'contact_name' => $contact_name,
+            'pivotMedicalRecord' => $pivotMedicalRecord, 
+            'medicalRecord' => $medicalRecord, 
+            'radiologyType' => $radiologyType, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $pdf = PDF::loadview('pdf/radiology/radiology', $params);
         return $pdf->stream('radiology.pdf');
     }
 
-    public function chemoterapy_pdf(Request $request, $id)
+    public function chemoterapy_pdf(Request $request, $id, $contact_id)
     {
+        $contact_name = DB::table('contacts')
+        ->whereId($contact_id)
+        ->select('name')
+        ->first()
+        ->name ?? '';
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $price = DB::table('prices')
@@ -358,7 +404,16 @@ class MedicalRecordController extends Controller
         $sideEffects = SideEffect::with('detail:side_effect_id,name')
         ->select('id', 'name')
         ->get();
-        $pdf = PDF::loadview('pdf/chemoterapy/chemoterapy',['pivotMedicalRecord' => $pivotMedicalRecord, 'medicalRecord' => $medicalRecord, 'keadaanUmum' => $keadaanUmum, 'sideEffects' => $sideEffects, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'contact_name' => $contact_name,
+            'pivotMedicalRecord' => $pivotMedicalRecord, 
+            'medicalRecord' => $medicalRecord, 
+            'keadaanUmum' => $keadaanUmum, 
+            'sideEffects' => $sideEffects, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $pdf = PDF::loadview('pdf/chemoterapy/chemoterapy', $params);
         return $pdf->stream('radiology.pdf');
     }
 
@@ -377,12 +432,24 @@ class MedicalRecordController extends Controller
         return $pdf->stream('fnab.pdf');
     }
 
-    public function laboratory_form_pdf(Request $request, $pivot_medical_record_id)
+    public function laboratory_form_pdf(Request $request, $pivot_medical_record_id, $contact_id)
     {   
+        $contact_name = DB::table('contacts')
+            ->whereId($contact_id)
+            ->select('name')
+            ->first()
+            ->name ?? '';
         $pivot = PivotMedicalRecord::findOrFail($pivot_medical_record_id);
         $medicalRecordDetail = MedicalRecordDetail::find($pivot->medical_record_detail_id);
         $medicalRecord = $this->fetch($medicalRecordDetail->medical_record_id);
-        $pdf = PDF::loadview('pdf/laboratory/laboratory_form',['medicalRecord' => $medicalRecord, 'treatments' => $pivot->parent->additional->treatment, 'dot' => '.............................................................................................................', 'shortDot' => '..........']);
+        $params = [
+            'contact_name' => $contact_name,
+            'medicalRecord' => $medicalRecord, 
+            'treatments' => $pivot->parent->additional->treatment, 
+            'dot' => '.............................................................................................................', 
+            'shortDot' => '..........'
+        ];
+        $pdf = PDF::loadview('pdf/laboratory/laboratory_form', $params);
         return $pdf->stream('fnab.pdf');
     }
 
