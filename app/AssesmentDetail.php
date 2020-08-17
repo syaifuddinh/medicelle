@@ -75,6 +75,16 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
                 }    
+
+                if($assesmentDetail->is_allergy_history == 1) {
+                    $medicalRecordDetail = new MedicalRecordDetail();
+                    $medicalRecordDetail->medical_record_id = $r->medical_record_id;
+                    $medicalRecordDetail->cure = $assesmentDetail->cure;
+                    $medicalRecordDetail->side_effect = $assesmentDetail->side_effect;
+                    $medicalRecordDetail->is_allergy_history = 1;
+                    $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
+                    $medicalRecordDetail->save();
+                }    
             }
 
         });

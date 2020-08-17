@@ -71,7 +71,7 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
           }
         ],
         createdRow: function(row, data, dataIndex) {
-            $compile($('tfoot'))($scope);
+          $compile($('tfoot'))($scope);
           $compile($('[ng-click="backward()"]'))($scope);
           $compile(angular.element(row).contents())($scope);
           $(row).find('input').focus()

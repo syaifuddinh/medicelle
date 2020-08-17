@@ -69,8 +69,8 @@ class PurchaseRequestDetail extends Model
 
     public function getSubtotalAttribute() {
         if(array_key_exists('purchase_price', $this->attributes)) {
-            $off = $this->attributes['purchase_price'] * ($this->attributes['discount'] ?? 0) / 100;
-            $subtotal = $this->attributes['purchase_price'] - $off;
+            $off = ($this->attributes ['qty'] ?? 0) * $this->attributes['purchase_price'] * ($this->attributes['discount'] ?? 0) / 100;
+            $subtotal = ($this->attributes['qty'] ?? 0) * $this->attributes['purchase_price'] - $off;
             return $subtotal;
         }
 

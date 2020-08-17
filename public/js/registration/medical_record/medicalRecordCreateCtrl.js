@@ -563,6 +563,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               family_disease_history_datatable.rows.add(data.data.family_disease_history).draw()
               pain_history_datatable.rows.add(data.data.pain_history).draw()
               pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
+              allergy_history_datatable.rows.add(data.data.allergy_history).draw()
             } else if(step == 2) {
               obgyn_disease_history_datatable.rows.add(data.data.obgyn_disease_history).draw()
               obgyn_family_disease_history_datatable.rows.add(data.data.obgyn_family_disease_history).draw()
@@ -1754,6 +1755,26 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
 
+  allergy_history_datatable = $('#allergy_history_datatable').DataTable({
+
+    dom: 'rt',
+    'columns' : [
+    {
+      data : null,
+      render : resp => resp.is_unknown == 1 ? 'Tidak diketahui' : (resp.cure ? resp.cure : 'Tidak diketahui')
+    },
+    {data : 'side_effect'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteAllergyHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  })
+ 
   disease_history_datatable = $('#disease_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
@@ -2386,6 +2407,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
               $scope.formData.disease_history = disease_history_datatable.data().toArray()
               $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+              $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
           } else if(step == 2) {
               $scope.formData.kid_history = kid_history_datatable.data().toArray()
               $scope.formData.kb_history = kb_history_datatable.data().toArray()

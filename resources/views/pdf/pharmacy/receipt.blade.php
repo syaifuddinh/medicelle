@@ -46,37 +46,32 @@
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <div class="header">
                     <div style='text-align:center;display:inline-block;width:100%;margin-bottom:10mm;text-align:center;'>
-                        <h3 style='font-weight:bold;'><span>PURCHASE ORDER</span></h3>
+                        <h3 style='font-weight:bold;'><span>PENERIMAAN BARANG</span></h3>
                     </div>
                     <div style='display:inline-block;width:80%;'>
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>No. Purchase Order</span>
-                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $purchaseOrder->code }}</span>
+                            <span style='display:inline-block;width:45mm'>No. Penerimaan</span>
+                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $receipt->code }}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Tanggal</span>
-                            <span style='display:inline-block'>: {{ Mod::fullDate($purchaseOrder->date) }}</span>
+                            <span style='display:inline-block'>: {{ Mod::fullDate($receipt->date) }}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Supplier</span>
-                            <span style='display:inline-block'>: {{ $purchaseOrder->supplier->name ?? ''}}</span>
+                            <span style='display:inline-block'>: {{ $receipt->supplier->name ?? ''}}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Alamat</span>
-                            <span style='display:inline-block'>: {{ $purchaseOrder->supplier->address ?? '' }}</span>
-                        </div>
-
-                        <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>Periode</span>
-                            <span style='display:inline-block'>: {{  Mod::fullDate($purchaseOrder->date_start) }} s/d  {{ Mod::fullDate($purchaseOrder->date_end) }} </span>
+                            <span style='display:inline-block'>: {{ $receipt->supplier->address ?? '' }}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Keterangan</span>
-                            <span style='display:inline-block'>: {{ $purchaseOrder->description }}</span>
+                            <span style='display:inline-block'>: {{ $receipt->description }}</span>
                         </div>
                     </div>
                    
@@ -86,15 +81,18 @@
                     <thead>
                         <tr>        
                             <th>Barang</th>
-                            <th class='text-center' style='width:12mm'>Jumlah Permintaan</th>
-                            <th class='text-center' style='width:10mm'>Jumlah Terpakai</th>
+                            <th class='text-center' style='width:12mm'>Qty Diterima</th>
+                            <th class='text-center' style='width:10mm'>Qty PO</th>
+                            <th class='text-center' style='width:20mm'>Qty Sisa PO</th>
+                            <th class='text-center' style='width:10mm'>Tanggal Kadaluarsa</th>
                             <th style='width:40mm'>Harga Beli</th>
                             <th style='width:10mm'>Diskon</th>
                             <th style='width:40mm'>Subtotal</th>
+                            <th style='width:40mm'>HNA</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($purchaseOrder->detail as $i => $detail)
+                        @foreach($receipt->detail as $i => $detail)
                             <tr>
                                 <td>
                                     {{ $detail->item->name ?? '' }}
@@ -103,7 +101,13 @@
                                     {{ number_format($detail->qty ?? 0) }}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->used_qty ?? 0) }}
+                                    {{ number_format($detail->purchase_order_detail->qty ?? 0) }}
+                                </td>
+                                <td class="text-right">
+                                    {{ number_format($detail->purchase_order_detail->leftover_qty ?? 0) }}
+                                </td>
+                                <td>
+                                    {{ Mod::fullDate($detail->expired_date) }}
                                 </td>
                                 <td class="text-right">
                                     {{ number_format($detail->purchase_price ?? 0) }}
@@ -114,19 +118,18 @@
                                 <td class="text-right">
                                     {{ number_format($detail->subtotal ?? 0) }}
                                 </td>
+                                <td class="text-right">
+                                    {{ number_format($detail->hna ?? 0) }}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th colspan="5" style='text-align:left'>
-                                Grandtotal
-                            </th>
-                            <th class="text-right">
-                                {{  number_format($grandtotal ?? 0) }}
-                            </th>
-                        </tr>
+                        <th colspan='7'>Grandtotal</th>
+                        <th class='text-right'>{{ number_format($grandtotal) }}</th>
+                        <th class='text-right'>{{ number_format($hna_total) }}</th>
                     </tfoot>
+
                 </table>
         
                 @include('pdf/letter_footer')        

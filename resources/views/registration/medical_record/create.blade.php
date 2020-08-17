@@ -95,6 +95,54 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                <div class="ln_solid"></div>
+                        <h2>Alergi obat & reaksi efek samping</h2>
+                        <div class="row">
+                            <div class="col-md-12" style='display:flex'>
+                                
+                                <div class="form-group col-md-5 mg-r2">
+                                    
+                                    <label>Obat / makanan / lainnya</label>
+                                    <div class="input-group">
+                                        <input type="text" class='form-control' ng-model='allergy_history.cure' ng-show='!allergy_history.is_unknown'>
+                                        <input readonly type="text" class='form-control' value='Tidak diketahui'  ng-show='allergy_history.is_unknown'>
+                                        <div class="input-group-addon" ng-click='allergy_history.is_unknown = !allergy_history.is_unknown'>
+                                            <i class="fa fa-close" ng-show='!allergy_history.is_unknown'></i>
+                                            <i class="fa fa-pencil" ng-show='allergy_history.is_unknown'></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-7 mg-r2">
+
+                                    <label>Reaksi</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
+                                        <div class="input-group-btn">
+                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'><i class="fa fa-check"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id='allergy_history_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <td>Obat</td>
+                                            <td>Reaksi</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="row">
                                         <div class="col-md-12">
