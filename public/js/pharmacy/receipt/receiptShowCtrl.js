@@ -106,7 +106,7 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
     });
 
   var embedUrl = $('#embedUrl').attr('href')
-  \$('#pdfDocument').attr('src', embedUrl)
+  $('#pdfDocument').attr('src', embedUrl)
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
