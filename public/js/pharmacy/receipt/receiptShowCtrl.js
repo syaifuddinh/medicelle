@@ -83,16 +83,30 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].subtotal | number %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].hna | number %>"
             }
           }
         ],
         createdRow: function(row, data, dataIndex) {
+          $compile($('tfoot'))($scope);
+          $compile($('[ng-click="backward()"]'))($scope);
           $compile(angular.element(row).contents())($scope);
           $(row).find('input').focus()
         }
     });
 
+  var embedUrl = $('#embedUrl').attr('href')
+  \$('#pdfDocument').attr('src', embedUrl)
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
@@ -125,14 +139,18 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
       $http.get(baseUrl + '/controller/pharmacy/receipt/' + id).then(function(data) {
         $scope.formData = data.data
         var detail = data.data.detail
-          var unit
+        var unit
+        var grandtotal = 0, hna_total = 0
 
-          for(x in detail) {
-              unit = detail[x]
-              detail[x].item_name = unit.item.name
-              $scope.insertItem(unit)
-          }
-
+        for(x in detail) {
+            unit = detail[x]
+            detail[x].item_name = unit.item.name
+            grandtotal += unit.subtotal
+            hna_total += unit.hna
+            $scope.insertItem(unit)
+        }
+        $scope.formData.grandtotal = grandtotal
+        $scope.formData.hna_total = hna_total
 
     }, function(error) {
       $rootScope.disBtn=false;

@@ -37,7 +37,7 @@
                                 <a href='#' class="btn btn-outline-success btn-sm pull-right" ng-show='formData.status < 4'>
                                       <i class="fa fa-paperclip"></i> <% formData.status_name %>
                                   </a>
-                                <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.is_approve == 4'>
+                                <a href='#' class="btn btn-outline-primary btn-sm pull-right" ng-show='formData.status == 4'>
                                       <i class="fa fa-check"></i> <% formData.status_name %>
                                   </a>
                                 <a href='#' class="btn btn-outline-dark btn-sm pull-right" ng-show='formData.id'>

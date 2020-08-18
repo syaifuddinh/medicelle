@@ -13,6 +13,7 @@ use Exception;
 class ReceiptDetail extends Model
 {
     protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'purchase_order_detail_id', 'expired_date', 'hna'];
+    protected $appends = ['subtotal'];
 
     public static function boot() {
         parent::boot(); 
@@ -74,7 +75,17 @@ class ReceiptDetail extends Model
         });
     }
 
-    public function  setQtyAttribute($value) {
+    public function getSubtotalAttribute() {
+        if(array_key_exists('purchase_price', $this->attributes)) {
+            $off = ($this->attributes ['qty'] ?? 0) * $this->attributes['purchase_price'] * ($this->attributes['discount'] ?? 0) / 100;
+            $subtotal = ($this->attributes['qty'] ?? 0) * $this->attributes['purchase_price'] - $off;
+            return $subtotal;
+        }
+
+        return 0;
+    }
+
+    public function setQtyAttribute($value) {
         if($value == null) {
             $value = 0;
         }

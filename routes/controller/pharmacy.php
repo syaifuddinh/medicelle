@@ -16,6 +16,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('purchase_order/{id}/approve', 'PurchaseOrderController@approve')->name('purchase_order.approve');
         Route::resource('purchase_order', 'PurchaseOrderController');
 
+        Route::get('receipt/{id}/pdf', 'ReceiptController@pdf')->name('receipt.pdf');
         Route::resource('receipt', 'ReceiptController');
 
         Route::get('stock_transaction/check', 'StockTransactionController@check')

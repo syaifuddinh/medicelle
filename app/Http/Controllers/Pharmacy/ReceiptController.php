@@ -8,6 +8,7 @@ use App\Receipt;
 use Response;
 use DB;
 use Exception;
+use PDF;
 
 class ReceiptController extends Controller
 {
@@ -72,6 +73,11 @@ class ReceiptController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
+    public function fetch($id) {
+        $receipt = Receipt::with('detail', 'detail.item:id,name','detail.purchase_order_detail:id,leftover_qty,received_qty,qty', 'supplier:id,name,address', 'purchase_order:id,code')->findOrFail($id);
+
+        return $receipt;
+    }
     /**
      * Display the specified resource.
      *
@@ -80,8 +86,26 @@ class ReceiptController extends Controller
      */
     public function show($id)
     {
-        $receipt = Receipt::with('detail', 'detail.item:id,name','detail.purchase_order_detail:id,leftover_qty,received_qty,qty', 'supplier:id,name,address', 'purchase_order:id,code')->findOrFail($id);
+        $receipt = $this->fetch($id);
         return Response::json($receipt, 200);
+    }
+
+    public function pdf($id)
+    {
+        $receipt = $this->fetch($id);
+        $grandtotal = 0;
+        $hna_total = 0;
+        foreach ($receipt->detail as $d) {
+            $grandtotal += $d->subtotal;
+            $hna_total += $d->hna;
+        }
+        $params = [
+            'receipt' => $receipt,
+            'grandtotal' => $grandtotal,
+            'hna_total' => $hna_total
+        ];
+        $pdf = PDF::loadview('pdf/pharmacy/receipt', $params);
+        return $pdf->stream('Purchase order.pdf');
     }
 
     /**
