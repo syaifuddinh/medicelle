@@ -34,7 +34,7 @@ app.controller('companySetting', ['$scope', '$http', '$rootScope', '$compile', '
     }
 
     $scope.splitByType = function() {
-        if($scope.personPromise < 3 || !$scope.picSetting || !$scope.incharge) {
+        if($scope.personPromise < 4 || !$scope.picSetting || !$scope.incharge) {
             $timeout(function(){
                 $scope.splitByType()
             }, 1000)
@@ -65,6 +65,26 @@ app.controller('companySetting', ['$scope', '$http', '$rootScope', '$compile', '
         });
     }
     $scope.showDoctor()
+
+    $scope.showEmployee = function() {
+        $http.get(baseUrl + '/controller/master/employee').then(function(data) {
+            $scope.person = $scope.person.concat(data.data) 
+            $scope.personPromise += 1
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+          $scope.showEmployee()
+        });
+    }
+    $scope.showEmployee()
 
     $scope.showNurse = function() {
         $http.get(baseUrl + '/controller/master/nurse').then(function(data) {
@@ -276,6 +296,45 @@ app.controller('companySetting', ['$scope', '$http', '$rootScope', '$compile', '
         });
     }
     $scope.showPic()
+
+    $scope.showChildrenGrowth = function() {
+        $http.get(baseUrl + '/controller/user/setting/children_growth').then(function(data) {
+            $scope.children_growth = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+          $scope.showChildrenGrowth()
+        });
+    }
+    $scope.showChildrenGrowth()
+
+    $scope.storeChildrenGrowth = function(index) {
+        var params = {
+            'index' : index,
+            'value' : $scope.children_growth[index]
+        }
+        $http.put(baseUrl + '/controller/user/setting/children_growth', params).then(function(data) {
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
     
     $scope.submitForm=function() {
       $rootScope.disBtn=true;

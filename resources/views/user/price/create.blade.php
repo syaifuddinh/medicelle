@@ -42,31 +42,7 @@
                                     <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12" autofocus>
                                   </div>
                               </div>
-                              <div class="form-group">
-                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Jenis
-                                  </label>
-                                  <div class="col-md-7 col-sm-6 col-xs-12">
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_registration' ng-true-value='1' ng-false-value='0'> Administrasi
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_sewa_ruangan' ng-true-value='1' ng-false-value='0'> Sewa ruangan
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_treatment' ng-true-value='1' ng-false-value='0'> Tindakan
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_diagnostic' ng-true-value='1' ng-false-value='0'> Diagnostik
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_chemoterapy' ng-true-value='1' ng-false-value='0'> Kemoterapi
-                                    </label>
-                                  </div>
-                              </div>
-
+                              
                               <div class="form-group" ng-if='formData.is_registration == 1'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Apakah tarif ini untuk spesialis tertentu ?
                                   </label>
@@ -166,18 +142,6 @@
                           </div>
                       </div>
 
-                      <span ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
-                          
-                            <div class="ln_solid"></div>
-                            <h2>Kategori Laboratorium</h2>
-                            <div class="row">
-                              <div class="col-md-12">
-                                  <table class="table" id='laboratory_type_datatable'>
-                                      <tbody></tbody>
-                                  </table>
-                              </div>
-                            </div>
-                      </span>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12">

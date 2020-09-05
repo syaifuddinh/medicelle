@@ -1,10 +1,4 @@
 @include('registration/assesment/create-header')
-                         <ul class="nav nav-pills">
-                            <li><a href="{{ route('assesment.edit', ['id' => $id]) }}">Langkah 1</a></li>
-                            <li ><a href="{{ route('assesment.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
-                            <li class="active"><a href="#">Langkah 3</a></li>
-                            <li ><a href="{{ route('assesment.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
-                          </ul> 
                       </nav>
                         <div class="ln_solid"></div>
                         <h2>Maternitas</h2>
@@ -368,7 +362,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="btn-group pull-right">
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm">Selanjutnya</button>
+                                    <a  href='{{ route("assesment.edit.4", ["id" => $id]) }}' ng-disabled='disBtn' class="btn btn-success btn-sm">Selanjutnya</a>
                                 </div>
                                 <div class="btn-group pull-left">
                                     <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='back = 1'>Sebelumnya</button>

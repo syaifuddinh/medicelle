@@ -21,6 +21,7 @@
                 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#general">General</a></li>
     <li><a data-toggle="tab" href="#pic">Penanggung Jawab</a></li>
+    <li><a data-toggle="tab" href="#children_growth">Grafik Pertumbuhan Anak</a></li>
   </ul>
 
   <div class="tab-content">
@@ -141,6 +142,45 @@
                   </tr>
               </tbody>
           </table>
+    </div>
+
+    <div id="children_growth" class="tab-pane fade">
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Bulan</th>
+                    <th>Batas Bawah (kg)</th>
+                    <th>Batas Normal (kg)</th>
+                    <th style='border-right:1mm solid #2f3640;'>Batas Atas (kg)</th>
+                    <th>Batas Bawah (cm)</th>
+                    <th>Batas Normal (cm)</th>
+                    <th>Batas Atas (cm)</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat='(childrenIndex, unit) in children_growth'>
+                   <td><% childrenIndex + 1 %></td>
+                   <td>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].berat.batas_bawah' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+                   <td>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].berat.batas_normal' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+                   <td style='border-right:1mm solid #2f3640;'>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].berat.batas_atas' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+                   <td>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].panjang.batas_bawah' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+                   <td>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].panjang.batas_normal' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+                   <td>
+                        <input type="text" class='form-control' ng-model='children_growth[childrenIndex].panjang.batas_atas' ng-change='storeChildrenGrowth(childrenIndex)' only-num>
+                    </td>
+               </tr> 
+            </tbody>
+        </table>
     </div>
 </div>
 

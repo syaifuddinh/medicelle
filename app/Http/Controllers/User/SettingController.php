@@ -292,4 +292,24 @@ class SettingController extends Controller
 
         return Response::json($resp);
     }
+
+    public function showChildrenGrowth() {
+        $children_growth = Setting::whereName('children_growth')->first()->content;
+        
+        return Response::json($children_growth, 200);
+    }
+
+    public function storeChildrenGrowth(Request $request) {
+        $content = Setting::whereName('children_growth')->first()->content;
+        if($request->filled('index')) {
+            $content[$request->index] = $request->value;
+            Setting::whereName('children_growth')
+            ->update([
+                'content' => json_encode($content)
+            ]);
+            return Response::json(['message' => 'Data berhasil disimpan'], 200);
+        }
+        
+        return Response::json(['message' => 'Tidak ada data yang disimpan'], 421);
+    }
 }

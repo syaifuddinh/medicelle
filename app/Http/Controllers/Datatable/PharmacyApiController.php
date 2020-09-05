@@ -61,8 +61,6 @@ class PharmacyApiController extends Controller
         ->select('id', 'code', 'description', 'date', 'date_start', 'date_end', 'status');
         if($request->filled('status'))
             $x->whereStatus($request->status);
-        if($request->draw == 1)
-            $x->orderBy('id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -87,8 +85,6 @@ class PharmacyApiController extends Controller
                 $x = $x->whereIsReceiptCompleted(0);
             }
         }
-        if($request->draw == 1)
-            $x->orderBy('id', 'DESC');
 
         return Datatables::eloquent($x)->make(true);
     }

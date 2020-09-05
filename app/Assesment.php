@@ -47,6 +47,12 @@ class Assesment extends Model
         });
     }
 
+        
+    public function setJumlahPemakaianPembalutAttribute($value) { 
+        $this->attributes['jumlah_pemakaian_pembalut'] = $value ?? 0; 
+    }
+
+    
     public function setLongAttribute($value) {
         if($value == null) {
             $this->attributes['long'] = 0;

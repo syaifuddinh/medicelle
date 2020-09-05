@@ -40,13 +40,13 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Tarif</h3>
+                    <h3 style='text-transform: capitalize;'>Tarif <% subtitle %></h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
                           @if(Auth::user()->allow_access('setting.price.create'))
-                              <a href="{{ route('price.create') }}" class='btn btn-success btn-sm'>Tambah</a>
+                              <a href="" id='createButton' class='btn btn-success btn-sm'>Tambah</a>
                           @endif
                       </div>                    
                   </div>

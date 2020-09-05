@@ -5,6 +5,7 @@ app.controller('purchaseOrder', ['$scope', '$rootScope', '$compile', '$http', '$
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
+    order:[[0, 'desc']],
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl + '/datatable/pharmacy/purchase_order',

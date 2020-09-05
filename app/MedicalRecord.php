@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\RegistrationDetail;
 use Auth;
 use DB;
+use Exception;
 
 class MedicalRecord extends Model
 {
@@ -20,9 +21,15 @@ class MedicalRecord extends Model
             $medicalRecord->date = date('Y-m-d');
             $medicalRecord->created_by = Auth::user()->id;
             // Generate medical record code
-            $existingMedicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)->select('code')->first();
+            $existingMedicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)
+            ->select('code', 'postbirth_weight', 'prebirth_weight', 'additional')
+            ->orderBy('id', 'DESC')
+            ->first();
             if($existingMedicalRecord != null) {
                 $medicalRecord->code = $existingMedicalRecord->code;
+                $medicalRecord->postbirth_weight = $existingMedicalRecord->postbirth_weight;
+                $medicalRecord->prebirth_weight = $existingMedicalRecord->prebirth_weight;
+                $medicalRecord->additional = $existingMedicalRecord->additional;
             } else {
                 
                 $current_month = date('m');
@@ -175,6 +182,14 @@ class MedicalRecord extends Model
 
     public function setLongAttribute($value) { 
         $this->attributes['long'] = $value ?? 0; 
+    }
+
+    public function setPrebirthWeightAttribute($value) { 
+        $this->attributes['prebirth_weight'] = $value ?? 0; 
+    }
+    
+    public function setPostbirthWeightAttribute($value) { 
+        $this->attributes['postbirth_weight'] = $value ?? 0; 
     }
 
     public function setWeightAttribute($value) { 

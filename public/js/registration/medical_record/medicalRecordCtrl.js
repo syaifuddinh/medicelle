@@ -79,20 +79,19 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
 
   $scope.patient = function() {
         $http.get(baseUrl + '/controller/master/patient/' + patient_id).then(function(data) {
-                $scope.patient = data.data
-                
-            }, function(error) {
-              $rootScope.disBtn=false;
-              if (error.status==422) {
-                var det="";
-                angular.forEach(error.data.errors,function(val,i) {
-                  det+="- "+val+"<br>";
-                });
-                toastr.warning(det,error.data.message);
-              } else {
-                $scope.patient()
-                toastr.error(error.data.message,"Error Has Found !");
-              }
+            $scope.patient = data.data       
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            $scope.patient()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
         });
     }
     $scope.patient()

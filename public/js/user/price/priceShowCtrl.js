@@ -1,8 +1,13 @@
-app.controller('priceShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+app.controller('priceShow', ['$scope', '$http', '$rootScope', '$timeout', function($scope, $http, $rootScope, $timeout) {
     $scope.title = 'Detail Tarif';
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
+    var pathhead = path.replace(id, '')
+    $timeout(function () {
+          editUrl = baseUrl + pathhead  + 'edit/' + id 
+          $('#editButton').attr('href', editUrl)
+    }, 500)
     $http.get(baseUrl + '/controller/user/price/' + id).then(function(data) {
             $scope.formData = data.data
             var unit, li

@@ -139,15 +139,78 @@ Route::name('price.')->prefix('price')->group(function(){
     Route::get('/', function (){
         return view('user/price/index');
     })->name('index');
+    Route::get('/administration', function (){
+        return view('user/price/index');
+    })->name('administration.index');
+    Route::get('/sewa_alkes', function (){
+        return view('user/price/index');
+    })->name('sewa_alkes.index');
+    Route::get('/sewa_ruangan', function (){
+        return view('user/price/index');
+    })->name('sewa_ruangan.index');
+    Route::get('/treatment', function (){
+        return view('user/price/index');
+    })->name('treatment.index');
+    Route::get('/diagnostic', function (){
+        return view('user/price/index');
+    })->name('diagnostic.index');
+
     Route::get('/create', function (){
         return view('user/price/create');
     })->name('create');
+    Route::get('/administration/create', function (){
+        return view('user/price/create');
+    })->name('administration.create');
+    Route::get('/sewa_ruangan/create', function (){
+        return view('user/price/create');
+    })->name('sewa_ruangan.create');
+    Route::get('/sewa_alkes/create', function (){
+        return view('user/price/create');
+    })->name('sewa_alkes.create');
+    Route::get('/treatment/create', function (){
+        return view('user/price/create');
+    })->name('treatment.create');
+    Route::get('/diagnostic/create', function (){
+        return view('user/price/create');
+    })->name('diagnostic.create');
+
     Route::get('/edit/{id}', function ($id){
         return view('user/price/create');
     })->name('edit');
+    Route::get('/administration/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('administration.edit');
+    Route::get('/sewa_ruangan/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('sewa_ruangan.edit');
+    Route::get('/sewa_alkes/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('sewa_alkes.edit');
+    Route::get('/treatment/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('treatment.edit');
+    Route::get('/diagnostic/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('diagnostic.edit');
+
     Route::get('/{id}', function ($id){
         return view('user/price/show')->withId($id);
     })->name('show');
+    Route::get('/administration/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('administration.show');
+    Route::get('/sewa_ruangan/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('sewa_ruangan.show');
+    Route::get('/sewa_alkes/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('sewa_alkes.show');
+    Route::get('/treatment/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('treatment.show');
+    Route::get('/diagnostic/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('diagnostic.show');
 });
 
 Route::name('treatment_group.')->prefix('treatment_group')->group(function(){

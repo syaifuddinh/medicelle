@@ -188,6 +188,7 @@
                                             <option value="TT">TT</option>
                                             <option value="VISA">Visa</option>
                                             <option value="MASTER">Master</option>
+                                            <option value="DEBIT">Debit</option>
                                         </select>
                                     </div>
                                 </div>

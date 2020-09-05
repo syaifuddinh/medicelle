@@ -118,6 +118,30 @@ class UserApiController extends Controller
         ->select('prices.id', 'destination', 'prices.polyclinic_id', 'prices.is_registration', 'prices.is_sewa_ruangan', 'prices.is_sewa_alkes', 'prices.item_id', 'prices.grup_nota_id', 'prices.is_active');
         $x = $request->filled('is_active') ? $x->where('prices.is_active', $request->is_active) : $x;
 
+        if($request->filled('is_registration')) {
+            $x->where('is_registration', $request->is_registration);
+        }
+
+        if($request->filled('is_sewa_ruangan')) {
+            $x->where('is_sewa_ruangan', $request->is_sewa_ruangan);
+        }
+
+        if($request->filled('is_sewa_alkes')) {
+            $x->where('is_sewa_alkes', $request->is_sewa_alkes);
+        }
+
+        if($request->filled('is_treatment')) {
+            $x->where('is_treatment', $request->is_treatment);
+        }
+
+        if($request->filled('is_diagnostic')) {
+            $x->where('is_diagnostic', $request->is_diagnostic);
+        }
+
+        if($request->filled('is_chemoterapy')) {
+            $x->where('is_chemoterapy', $request->is_chemoterapy);
+        }
+
         if($request->draw == 1)
             $x->orderBy('prices.id', 'DESC');
 

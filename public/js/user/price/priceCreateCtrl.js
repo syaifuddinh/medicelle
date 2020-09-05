@@ -1,9 +1,16 @@
-app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
+app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$timeout', function($scope, $http, $rootScope, $compile, $timeout) {
     $scope.title = 'Tambah Tarif';
     $scope.formData = {}
     $scope.formData.laboratory_types = []
     $scope.data = {}
     var path = window.location.pathname;
+    var pathhead = path.replace('/create', '')
+    pathhead = pathhead.replace('price/', '')
+    pathhead = pathhead.replace('/', '')
+    if(pathhead == 'administration') {
+        pathhead = 'registration'
+    }
+    $scope.formData['is_' + pathhead] = 1 
     $scope.show = function() {
 
         if(/edit/.test(path)) {

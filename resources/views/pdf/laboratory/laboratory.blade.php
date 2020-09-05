@@ -130,45 +130,29 @@
                     </p>
 
                     <div style='margin:0'>
-                        <?php 
-                            $laboratoryType = $laboratoryType->chunk( Mod::laboratory()->grid_amount );
-                         ?>
-
                          <table cellspacing='0' cellpadding='8' style='width:100%'>
                             <tbody>
-                                @foreach($laboratoryType as $unit)
-                                    <tr>
-                                        @foreach($unit as $value)
-                                            <td>
-                                                <?php 
-                                                        $selected = [];
-                                                        foreach($pivotMedicalRecord->additional->treatment as $treatment) {
-                                                            if($treatment->id == $value->id) {
-                                                                $selected = $treatment->detail;
-                                                            }
+                                <tr>
+                                    @foreach($pivotMedicalRecord->additional->treatment as $treatment)
+                                        <td>
+                                            <p style='margin-bottom:2mm'>{{ $treatment->name }}</p>
+                                            @foreach($treatment->detail as $detail)
+                                                <p>
+                                                    <?php 
+                                                        $checked = '';
+                                                        if(($detail->is_active ?? 0) == 1) {
+                                                            $checked = 'checked';
                                                         }
-                                                 ?>
-                                                <p style='margin-bottom:2mm'>{{ $value->name }}</p>
-                                                @foreach($value->laboratory_type_detail as $detail)
-                                                    <p>
-                                                        <?php 
-                                                            $checked = '';
-                                                            foreach($selected as $unit) {
-                                                                if( (strtolower($unit->name) == strtolower($detail->name) || $unit->id == $detail->id) && 1 == ($unit->is_active ?? null)) {
-                                                                    $checked = 'checked';
-                                                                }
-                                                            }
-                                                         ?>
-                                                        <input type="checkbox" style='margin-right: 1mm' {{ $checked }}>
-                                                        <span style="display: inline-block;padding-bottom:1mm">
-                                                              {{ $detail->name }}
-                                                        </span>
-                                                    </p>
-                                                @endforeach
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                @endforeach
+                                                     ?>
+                                                    <input type="checkbox" style='margin-right: 1mm' {{ $checked }}>
+                                                    <span style="display: inline-block;padding-bottom:1mm">
+                                                          {{ $detail->name }}
+                                                    </span>
+                                                </p>
+                                            @endforeach
+                                        </td>  
+                                    @endforeach
+                                </tr>
                             </tbody>
                          </table>
                     </div>

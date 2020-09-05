@@ -1,11 +1,4 @@
 @include('registration/assesment/create-header')
-                         <ul class="nav nav-pills">
-                            <li><a href="{{ route('assesment.edit', ['id' => $id]) }}">Langkah 1</a></li>
-                            <li ><a href="{{ route('assesment.edit.2', ['id' => $id]) }}">Langkah 2</a></li>
-                            <li><a href="#">Langkah 3</a></li>
-                            <li ><a href="{{ route('assesment.edit.4', ['id' => $id]) }}">Langkah 4</a></li>
-                            <li class="active"><a href="{{ route('assesment.edit.history', ['id' => $id]) }}">Riwayat</a></li>
-                          </ul> 
                       </nav>
                         <div class="ln_solid"></div>
                         <h2>Riwayat assesment</h2>
