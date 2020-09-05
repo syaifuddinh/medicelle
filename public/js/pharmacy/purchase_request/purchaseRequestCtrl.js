@@ -7,6 +7,7 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
+    order:[[0, 'desc']],
     ajax: {
       url : baseUrl + '/datatable/pharmacy/purchase_request',
       data : d => Object.assign(d, $scope.formData)

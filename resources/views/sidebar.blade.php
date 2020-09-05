@@ -30,15 +30,13 @@
                               <li><a href="{{ route('discount.index') }}">Promo</a></li>
                           @endif
 
-                          @if(Auth::user()->allow_access('setting.signa'))
-                          <li><a href="{{ route('signa.index') }}">Signa</a></li>
-                          @endif
+                        @if(Auth::user()->allow_access('master.polyclinic'))
+                          <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
+                        @endif
 
-                          @if(Auth::user()->allow_access('setting.laboratory_type'))
-                          <li><a href="{{ route('laboratory_type.index') }}">Laboratorium</a></li>
-                          @endif
-                          
-                          <li><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
+                        @if(Auth::user()->allow_access('master.specialization'))
+                            <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
+                        @endif
                           
                           <li><a href="{{ route('keadaan_umum.index') }}">Keadaan Umum</a></li>
                           
@@ -63,17 +61,32 @@
                           <li><a href="{{ route('supplier.index') }}">Rekanan</a></li>
                         @endif
 
+                        @if(Auth::user()->allow_access('setting.signa'))
+                          <li><a href="{{ route('signa.index') }}">Signa</a></li>
+                          @endif
+
+
                         @if(Auth::user()->allow_access('master.medical_item'))
                             <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
                         @endif
                         
                         @if(Auth::user()->allow_access('setting.price'))
-                              <li><a href="{{ route('price.index') }}">Tarif</a></li>
-                          @endif
+                              <li><a href="">Tarif</a></li>
+                        
+                            <li style='padding-left:15mm'><a href="{{ route('price.administration.index') }}">Admin / Konsul</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('price.sewa_alkes.index') }}">Sewa Alkes</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('price.sewa_ruangan.index') }}">Sewa Ruangan</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('price.treatment.index') }}">Tindakan</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('price.diagnostic.index') }}">Diagnostik</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
 
-                        <li><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
 
+                            @if(Auth::user()->allow_access('setting.laboratory_type'))
+                            <li style='padding-left:15mm'><a href="{{ route('laboratory_type.index') }}">Laboratorium</a></li>
+                            @endif
 
+                            <li style='padding-left:15mm'><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
+                        @endif
                         @if(Auth::user()->allow_access('master.obat'))
                             <li><a href="{{ route('obat.index') }}">Obat</a></li>
                         @endif
@@ -88,14 +101,6 @@
 
                         @if(Auth::user()->allow_access('master.disease'))
                             <li><a href="{{ route('disease.index') }}">Penyakit(ICD-10)</a></li>
-                        @endif
-
-                        @if(Auth::user()->allow_access('master.specialization'))
-                        <li><a href="{{ route('specialization.index') }}">Spesialisasi</a></li>
-                        @endif
-
-                        @if(Auth::user()->allow_access('master.polyclinic'))
-                          <li><a href="{{ route('polyclinic.index') }}">Poliklinik</a></li>
                         @endif
                       </ul>
                     </li>

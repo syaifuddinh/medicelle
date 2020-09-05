@@ -74,6 +74,7 @@ class MasterApiController extends Controller
         $x = Contact::where(function($d){
             $d->where('is_doctor', 1)
             ->orWhere('is_nurse', 1)
+            ->orWhere('is_employee', 1)
             ->orWhere('is_nurse_helper', 1);
         })
         ->select('id', 'name');

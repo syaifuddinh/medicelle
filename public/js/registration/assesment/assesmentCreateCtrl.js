@@ -7,7 +7,23 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
     step = parseInt(step)
-
+  
+  $scope.updateDetail = function(params) {
+      $http.put(baseUrl + '/controller/registration/assesment/' + id + '/detail', params).then(function(data) {
+      }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            $scope.patient()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+  }
 
   $scope.assesmentHistory = function() {
       if(path.indexOf('history') > -1) {
@@ -162,6 +178,10 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   $scope.submitDiseaseHistory = function() {
       disease_history_datatable.row.add($scope.disease_history).draw()
       $scope.disease_history = {}
+      var params = {
+         'disease_history' : disease_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.changePainStatus = function() {
@@ -220,6 +240,10 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   $scope.submitFamilyDiseaseHistory = function() {
       family_disease_history_datatable.row.add($scope.family_disease_history).draw()
       $scope.family_disease_history = {}
+      var params = {
+         'family_disease_history' : family_disease_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
 
@@ -227,12 +251,20 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
       $scope.allergy_history.is_unknown = $scope.allergy_history.is_unknown ? '1' : '0';
       allergy_history_datatable.row.add($scope.allergy_history).draw()
       $scope.allergy_history = {}
+      var params = {
+         'allergy_history' : allergy_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.submitPainHistory = function() {
       $scope.pain_history.is_other_pain_type = $scope.pain_history.is_other_pain_type ? '1' : '0';
       pain_history_datatable.row.add($scope.pain_history).draw()
       $scope.pain_history = {}
+      var params = {
+         'pain_history' : pain_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.submitImunisasiHistory = function() {
@@ -240,6 +272,10 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
       $scope.imunisasi_history.is_imunisasi_month_age = $scope.imunisasi_history.is_imunisasi_month_age ? '1' : '0';
       imunisasi_history_datatable.row.add($scope.imunisasi_history).draw()
       $scope.imunisasi_history = {}
+      var params = {
+         'imunisasi_history' : imunisasi_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
 
@@ -247,12 +283,20 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
       $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? '1' : '0';
       kid_history_datatable.row.add($scope.kid_history).draw()
       $scope.kid_history = {}
+      var params = {
+         'kid_history' : kid_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.submitPainCureHistory = function() {
       $scope.pain_cure_history.is_other_pain_cure_type = $scope.pain_cure_history.is_other_pain_cure_type ? '1' : '0';
       pain_cure_history_datatable.row.add($scope.pain_cure_history).draw()
       $scope.pain_cure_history = {}
+      var params = {
+         'pain_cure_history' : pain_cure_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.disease = function() {
@@ -482,36 +526,64 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   $scope.deleteAllergyHistory = function(e) {
     var tr = $(e).parents('tr');
     allergy_history_datatable.row(tr).remove().draw()
+    var params = {
+         'allergy_history' : allergy_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
     
   $scope.deleteImunisasiHistory = function(e) {
     var tr = $(e).parents('tr');
     imunisasi_history_datatable.row(tr).remove().draw()
+    var params = {
+         'imunisasi_history' : imunisasi_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
   $scope.deletePainHistory = function(e) {
     var tr = $(e).parents('tr');
     pain_history_datatable.row(tr).remove().draw()
+    var params = {
+         'pain_history' : pain_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
     
   $scope.deleteKidHistory = function(e) {
     var tr = $(e).parents('tr');
     kid_history_datatable.row(tr).remove().draw()
+    var params = {
+         'kid_history' : kid_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
     
   $scope.deletePainCureHistory = function(e) {
     var tr = $(e).parents('tr');
     pain_cure_history_datatable.row(tr).remove().draw()
+    var params = {
+         'pain_cure_history' : pain_cure_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
     
   $scope.deleteDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
     disease_history_datatable.row(tr).remove().draw()
+    var params = {
+        'disease_history' : disease_history_datatable.data().toArray()
+    }
+    $scope.updateDetail(params)
   }
 
   $scope.deleteFamilyDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
     family_disease_history_datatable.row(tr).remove().draw()
+    var params = {
+         'family_disease_history' : family_disease_history_datatable.data().toArray()
+      }
+      $scope.updateDetail(params)
   }
 
     $scope.submitForm=function(is_massive = 1, key) {

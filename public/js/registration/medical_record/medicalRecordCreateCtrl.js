@@ -548,7 +548,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
-        $scope.finishedMedicalRecord($scope.formData.registration_detail.status)
         setTimeout(function () {    
               $('[ng-model="formData.hpht"]').val( $filter('fullDate')($scope.formData.hpht))
               $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
@@ -1040,6 +1039,157 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
   }
   $scope.disease()
+
+  $scope.children_growth_weight = function() {
+        var ctx = document.getElementById('grafikBerat').getContext('2d');
+        console.log($scope.children_growth_data.bb_sekarang)
+        var config = {
+            type: 'line',
+            data: {
+                labels: $scope.children_growth_data.month,
+                datasets: [
+                {
+                    label: 'Berat',
+                    borderColor: 'black',
+                    backgroundColor: 'transparent',
+                    data: $scope.children_growth_data.bb_sekarang,
+                },
+                {
+                    label: 'Batas Bawah',
+                    borderColor: 'yellow',
+                    backgroundColor: 'yellow',
+                    data: $scope.children_growth_data.berat.batas_bawah,
+                },
+                {
+                    label: 'Batas Normal',
+                    borderColor: 'green',
+                    backgroundColor: 'green',
+                    data: $scope.children_growth_data.berat.batas_normal,
+                },
+                {
+                    label: 'Batas Atas',
+                    borderColor: 'orange',
+                    backgroundColor: 'orange',
+                    data: $scope.children_growth_data.berat.batas_atas,
+                },
+               ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Grafik Pertumbuhan Berat Badan'
+                },
+                tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Bulan'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Berat Badan'
+                        }
+                    }]
+                }
+            }
+        };
+        var myChart = new Chart(ctx, config);
+  }
+
+  $scope.children_growth_tall = function() {
+        var ctx = document.getElementById('grafikPanjang').getContext('2d');
+        var config = {
+            type: 'line',
+            data: {
+                labels: $scope.children_growth_data.month,
+                datasets: [
+                    {
+                        label: 'Tinggi Badan',
+                        borderColor: 'black',
+                        backgroundColor: 'transparent',
+                        data: $scope.children_growth_data.pb_sekarang,
+                    },
+                    {
+                        label: 'Batas Bawah',
+                        borderColor: 'yellow',
+                        backgroundColor: 'yellow',
+                        data: $scope.children_growth_data.panjang.batas_bawah,
+                    },
+                    {
+                        label: 'Batas Normal',
+                        borderColor: 'green',
+                        backgroundColor: 'green',
+                        data: $scope.children_growth_data.panjang.batas_normal,
+                    },
+                    {
+                        label: 'Batas Atas',
+                        borderColor: 'orange',
+                        backgroundColor: 'orange',
+                        data: $scope.children_growth_data.panjang.batas_atas,
+                    },
+               ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Grafik Pertumbuhan Tinggi Badan'
+                },
+                tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Bulan'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Tinggi Badan'
+                        }
+                    }]
+                }
+            }
+        };
+        var myChart = new Chart(ctx, config);
+  }
+  $scope.children_growth = function() {
+      if(path.indexOf('children_growth') > -1) {
+
+          $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/children_growth').then(function(data) {
+             $scope.children_growth_data = data.data
+             $scope.children_growth_weight()
+             $scope.children_growth_tall()
+          }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+      }
+  }
+  $scope.children_growth()
 
   $scope.treatment_item = function() {
       if(path.indexOf('treatment') > - 1) {

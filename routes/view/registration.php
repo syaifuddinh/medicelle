@@ -22,8 +22,8 @@ Route::name('medical_record.')->prefix('medical_record')
 
     Route::get('/step/1/edit/{id}', function ($id){
         if(Specialization::allow_access('anamnesa') != 1) {
-            $alternative = ['anamnesa_obgyn', 'umum', 'children', 'surgical', 'kepala', 'breast', 'rectum', 'medical_checkup', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'fnab', 'histopatologi', 'papsmear', 'sitologi', 'jadwal_kontrol', 'resume_medis', 'assesment'];
-            $alternative_route = ['2', 'physique.general', 'physique.children', 'physique.surgical', 'physique.head', 'physique.breast', 'physique.rectum', 'medical_checkup', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'permintaan.fnab', 'permintaan.histopatologi', 'permintaan.papsmear', 'permintaan.sitologi', 'schedule', 'resume_medis', 'assesment'];
+            $alternative = ['anamnesa_obgyn', 'umum', 'children', 'surgical', 'kepala', 'breast', 'rectum', 'children_growth', 'medical_checkup', 'tindakan', 'diagnostik', 'obat', 'bhp', 'sewa_alkes', 'sewa_ruangan', 'radiologi', 'laboratorium', 'patologi', 'fnab', 'histopatologi', 'papsmear', 'sitologi', 'jadwal_kontrol', 'resume_medis', 'assesment'];
+            $alternative_route = ['2', 'physique.general', 'physique.children', 'physique.surgical', 'physique.head', 'physique.breast', 'physique.rectum', 'physique.children_growth', 'medical_checkup', 'therapy.treatment', 'therapy.diagnostic', 'therapy.drug', 'utilization.bhp', 'utilization.sewa_alkes', 'utilization.sewa_ruangan', 'radiology', 'laboratory', 'pathology', 'permintaan.fnab', 'permintaan.histopatologi', 'permintaan.papsmear', 'permintaan.sitologi', 'schedule', 'resume_medis', 'assesment'];
             foreach($alternative as $key => $role) {
                 if(Specialization::allow_access($role) == 1) {
                     return redirect()->route('medical_record.edit.' . $alternative_route[$key], ['id' => $id]);
@@ -72,6 +72,10 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/physique/rectum/{id}', function ($id){
         return view('registration/medical_record/create-physique-rectum')->withId($id);
     })->name('edit.physique.rectum');
+
+    Route::get('/physique/children_growth/{id}', function ($id){
+        return view('registration/medical_record/create-physique-children-growth')->withId($id);
+    })->name('edit.physique.children_growth');
 
     Route::get('/medical_checkup/{id}', function ($id){
         return view('registration/medical_record/create-medical_checkup')->withId($id);

@@ -43,6 +43,75 @@ class MedicalRecordController extends Controller
         return Response::json($pivot, 200);
     }
 
+    public function showChildrenGrowth($id)
+    {
+        $data = [];
+        $medicalRecord = DB::table('medical_records')
+        ->whereId($id)
+        ->first();
+        $medicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)
+        ->where('prebirth_weight', '>', 0)
+        ->orderBy('medical_records.created_at', 'DESC')
+        ->first();
+        $command = 'SELECT "month", COALESCE(postbirth_weight, 0) AS postbirth_weight, COALESCE(prebirth_weight, 0) AS prebirth_weight, additional FROM (SELECT generate_series(1, 36) AS "month") AS "months" LEFT JOIN (SELECT id, "age", patient_id, postbirth_weight, prebirth_weight, additional FROM (SELECT medical_records.id, patient_id, medical_records.additional, prebirth_weight, postbirth_weight, (DATE_PART(\'year\', NOW()::date) - DATE_PART(\'year\', contacts.birth_date::date)) * 12 +
+              (DATE_PART(\'month\', NOW()::date) - DATE_PART(\'month\', contacts.birth_date::DATE)) AS "age", ROW_NUMBER() OVER(partition BY TO_CHAR("date"::DATE, \'yyyy-mm\') ORDER BY "date" DESC) AS seqnum FROM medical_records JOIN contacts ON contacts.id = medical_records.patient_id WHERE medical_records.patient_id = ' . $medicalRecord->patient_id . ' ) AS medical_records WHERE seqnum = 1) AS patients ON patients.age = months.month';
+        $childrenGrowth = collect(DB::select($command));
+        $data['month'] = $childrenGrowth->map(function($c){
+            return $c->month;
+        });
+        $pb_lahir = $medicalRecord->additional->pb_lahir ?? 0;
+        $bb_lahir = $medicalRecord->prebirth_weight ?? 0;
+        $prevBB = $bb_lahir ;
+        $data['bb_sekarang'] = $childrenGrowth->map(function($c, $i) use ($bb_lahir, $prevBB){
+            $postbirth_weight = $c->postbirth_weight ?? 0;
+            if($i == 0) {
+                $postbirth_weight = $bb_lahir;
+            } else {
+                if($postbirth_weight == 0) {
+                    $postbirth_weight = $prevBB;
+                }
+            }
+            $prevBB = $postbirth_weight;
+            return $postbirth_weight;
+        });
+        $prevPB = $pb_lahir;
+        $data['pb_sekarang'] = $childrenGrowth->map(function($c, $i) use ($pb_lahir, $prevPB){
+            $additional = json_decode($c->additional ?? '{}');
+            $pb_sekarang = $additional->pb_sekarang ?? 0;
+            if($i == 0) {
+                $pb_sekarang = $pb_lahir;
+            } else {
+                if($pb_sekarang == 0) {
+                    $pb_sekarang = $prevPB;
+                }
+            }
+            $prevPB = $pb_sekarang;
+            return $pb_sekarang;
+        });
+
+        $setting = new \App\Http\Controllers\User\SettingController();
+        $settingArea = collect($setting->fetch('children_growth'));
+        $data['berat']['batas_atas'] = $settingArea->map(function($val){
+            return $val->berat->batas_atas;
+        });
+        $data['berat']['batas_normal'] = $settingArea->map(function($val){
+            return $val->berat->batas_normal;
+        });
+        $data['berat']['batas_bawah'] = $settingArea->map(function($val){
+            return $val->berat->batas_bawah;
+        });
+        $data['panjang']['batas_atas'] = $settingArea->map(function($val){
+            return $val->panjang->batas_atas;
+        });
+        $data['panjang']['batas_normal'] = $settingArea->map(function($val){
+            return $val->panjang->batas_normal;
+        });
+        $data['panjang']['batas_bawah'] = $settingArea->map(function($val){
+            return $val->panjang->batas_bawah;
+        });
+        return Response::json($data, 200);
+    }
+
     public function update_laboratory_form(Request $request, $pivot_medical_record_id)
     {
         $pivot = PivotMedicalRecord::findOrFail($pivot_medical_record_id);
@@ -309,7 +378,6 @@ class MedicalRecordController extends Controller
         $params = [
                 'pivotMedicalRecord' => $pivotMedicalRecord,
                 'medicalRecord' => $medicalRecord, 
-                'laboratoryType' => $laboratoryType, 
                 'dot' => '.............................................................................................................', 
                 'shortDot' => '..........'];
         $pdf = PDF::loadview('pdf/laboratory/laboratory', $params);

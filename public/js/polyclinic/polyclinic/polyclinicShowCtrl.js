@@ -1,4 +1,4 @@
-app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope,  $compile) {
+app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '$timeout', function($scope, $http, $rootScope,  $compile,  $timeout) {
     $scope.title = 'Detail Pasien';
     $scope.pivot = {}
     $scope.formData = {}
@@ -53,6 +53,28 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', f
               $compile(angular.element(row).contents())($scope);
             }
         });
+
+    $scope.generateInvoice = function() {
+            $rootScope.disBtn=true;
+            $http.post(baseUrl + '/controller/registration/registration/invoice/' + $scope.pivot.registration_detail_id).then(function(data) {
+                $rootScope.disBtn=false;
+                toastr.success(data.data.message);
+                $timeout(function(){
+                    window.location = baseUrl + '/cashier/pay/' + data.data.data.id
+                }, 700)
+            }, function(error) {
+                $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+            });
+    }
 
     $scope.openPicModal = function() {
         if(flag == 'ruang_tindakan') {

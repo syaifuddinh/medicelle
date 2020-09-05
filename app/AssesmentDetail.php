@@ -95,7 +95,7 @@ class AssesmentDetail extends Model
         });
 
     }
-
+    
     public function disease() {
         return $this->belongsTo('App\Item', 'disease_id', 'id')->whereIsDisease(1);
     }

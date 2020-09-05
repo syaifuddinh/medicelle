@@ -18,7 +18,7 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right">
                           @if(Auth::user()->allow_access('setting.price.edit'))
-                              <a href='{{ route("price.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                              <a href='' id='editButton' class="btn btn-warning btn-sm" >Edit</a>
                           @endif
 
                           @if(Auth::user()->allow_access('setting.price.destroy'))
@@ -52,36 +52,10 @@
                                   <label class="col-md-3 col-xs-12" for="first-name">Nama tarif
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
-<% formData.service.name %>
+                                        <% formData.service.name %>
                                   </div>
                               </div>
-                              <div class="form-group">
-                                  <label class="col-md-3 col-sm-3 col-xs-12" for="last-name">Jenis
-                                  </label>
-                                  <div class="col-md-6 col-sm-6 col-xs-12" style='position: relative'>
-                                    
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_registration' ng-true-value='1' ng-false-value='0'> Administrasi
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_sewa_ruangan' ng-true-value='1' ng-false-value='0'> Sewa ruangan
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_sewa_alkes' ng-true-value='1' ng-false-value='0'> Sewa alkes
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_treatment' ng-true-value='1' ng-false-value='0'> Tindakan
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_diagnostic' ng-true-value='1' ng-false-value='0'> Diagnostik
-                                    </label><br>
-                                    <label class="radio-inline">
-                                        <input type="checkbox" ng-model='formData.is_chemoterapy' ng-true-value='1' ng-false-value='0'> Kemoterapi
-                                    </label>
-                                    <div style='position:absolute;width:100%;height:100%;top:0;left:0'></div>
-                                  </div>
-                              </div>
-
+                              
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Status
                                   </label>

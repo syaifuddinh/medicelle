@@ -1,11 +1,45 @@
-app.controller('price', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
+app.controller('price', ['$scope', '$compile', '$http', '$filter', '$timeout', function($scope, $compile, $http, $filter, $timeout) {
+
+    $timeout(function () {
+          var path = location.pathname
+          createUrl = baseUrl + path + '/create'
+          $('#createButton').attr('href', createUrl)
+          path = path.replace('price/', '')
+          path = path.replace('/', '')
+          switch (path) {
+              case 'administration' :
+                $scope.subtitle = 'Admin / Konsul'
+                break
+              case 'sewa_alkes' :
+                $scope.subtitle = 'Sewa Alkes'
+                break
+              case 'sewa_ruangan' :
+                $scope.subtitle = 'Sewa Ruangan'
+                break
+              case 'treatment' :
+                $scope.subtitle = 'Tindakan'
+                break
+              case 'diagnostic' :
+                $scope.subtitle = 'Diagnostik'
+                break
+          }
+    }, 500)
+
   oTable = $('#listview').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl+'/datatable/user/price',
-      data : x => Object.assign(x, $scope.formData)
+      data : function(x) {
+          var path = location.pathname
+          path = path.replace('/price/', '')
+          if(path == 'administration') {
+            path = 'registration'
+          }
+          x['is_' + path] = 1
+          return Object.assign(x, $scope.formData)
+      }
     },
     buttons: [
       {
@@ -25,8 +59,9 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
           data:null, 
           name:"service.name",
           render:function(resp) {
+              var path = location.pathname
               if(roles['allow_show_price'] == 1) {
-                  return "<a href='" + baseUrl + "/price/" + resp.id +  "' title='Detail'>" + resp.service.name + "</a>"
+                  return "<a href='" + baseUrl + path + "/" + resp.id +  "' title='Detail'>" + resp.service.name + "</a>"
               } else {
                   return resp.service.name
               }
@@ -78,13 +113,16 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', function($sco
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => 
-        "<div class='btn-group'>" + 
-        ( 
-          resp.is_active == 1 ? "<button allow_destroy_price class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>"
-          : "<button allow_activate_price class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>"
-        ) +
-        "<a allow_edit_price class='btn btn-xs btn-success' href='" + baseUrl + "/price/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a allow_show_price class='btn btn-xs btn-default' href='" + baseUrl + "/price/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
+        render : function(resp) {
+            var path = location.pathname
+            var btn = ''
+            btn += (resp.is_active == 1 ? "<button allow_destroy_price class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")' title='Non-aktifkan'><i class='fa fa-trash-o'></i></button>" : '')
+            btn += (resp.is_active == 0 ? "<button allow_activate_price class='btn btn-xs btn-primary' ng-click='activate(" + resp.id + ")' title='Aktifkan'><i class='fa fa-check'></i></button>" : '')
+            btn += "<a allow_edit_price class='btn btn-xs btn-success' href='" + baseUrl + path + "/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a><a allow_show_price class='btn btn-xs btn-default' href='" + baseUrl + path + "/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a>"
+
+            btn = '<div class="btn-group">' + btn + '</div>'
+            return btn
+        }
       },
     ],
     createdRow: function(row, data, dataIndex) {

@@ -95,13 +95,32 @@ class AssesmentController extends Controller
             ->whereRaw("assesment_detail_id IN (SELECT id FROM assesment_details WHERE assesment_id = $id)")
             ->delete();
 
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
+
+        return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
+    }
+
+    public function deleteMedicalRecordDetail($id, $slug) {
+        DB::table('medical_record_details')
+        ->whereRaw("assesment_detail_id IN (SELECT id FROM assesment_details WHERE assesment_id = $id AND $slug = 1)")
+        ->delete();
+    }
+
+    public function updateDetail(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
             $assesment_detail = new AssesmentDetail();
             if(isset($request->kid_history)) {
-                $assesment_detail->kid_history()->whereAssesmentId($assesment->id)->delete();
+                $assesment_detail->kid_history()->whereAssesmentId($id)->delete();
                 $kid_history = collect($request->kid_history);
-                $kid_history = $kid_history->each(function($val) use($assesment){
+                $kid_history = $kid_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_kid_history = 1;
                     $assesment_detail->save();
@@ -110,11 +129,11 @@ class AssesmentController extends Controller
 
             $assesment_detail = new AssesmentDetail();
             if(isset($request->imunisasi_history)) {
-                $assesment_detail->imunisasi_history()->whereAssesmentId($assesment->id)->delete();
+                $assesment_detail->imunisasi_history()->whereAssesmentId($id)->delete();
                 $imunisasi_history = collect($request->imunisasi_history);
-                $imunisasi_history = $imunisasi_history->each(function($val) use($assesment){
+                $imunisasi_history = $imunisasi_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_imunisasi_history = 1;
                     $assesment_detail->save();
@@ -123,11 +142,11 @@ class AssesmentController extends Controller
 
             $assesment_detail = new AssesmentDetail();
             if(isset($request->pain_history)) {
-                $assesment_detail->pain_history()->whereAssesmentId($assesment->id)->delete();
+                $assesment_detail->pain_history()->whereAssesmentId($id)->delete();
                 $pain_history = collect($request->pain_history);
-                $pain_history = $pain_history->each(function($val) use($assesment){
+                $pain_history = $pain_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_pain_history = 1;
                     $assesment_detail->save();
@@ -136,11 +155,11 @@ class AssesmentController extends Controller
 
             $assesment_detail = new AssesmentDetail();
             if(isset($request->pain_cure_history)) {
-                $assesment_detail->pain_cure_history()->whereAssesmentId($assesment->id)->delete();
+                $assesment_detail->pain_cure_history()->whereAssesmentId($id)->delete();
                 $pain_cure_history = collect($request->pain_cure_history);
-                $pain_cure_history = $pain_cure_history->each(function($val) use($assesment){
+                $pain_cure_history = $pain_cure_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_pain_cure_history = 1;
                     $assesment_detail->save();
@@ -148,11 +167,12 @@ class AssesmentController extends Controller
             }
 
             if(isset($request->disease_history)) {
-                $assesment_detail->disease_history()->whereAssesmentId($assesment->id)->delete();
+                $this->deleteMedicalRecordDetail($id, 'is_disease_history');
+                $assesment_detail->disease_history()->whereAssesmentId($id)->delete();
                 $disease_history = collect($request->disease_history);
-                $disease_history = $disease_history->each(function($val) use($assesment){
+                $disease_history = $disease_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_disease_history = 1;
                     $assesment_detail->save();
@@ -160,11 +180,12 @@ class AssesmentController extends Controller
             }
 
             if(isset($request->family_disease_history)) {
-                $assesment_detail->family_disease_history()->whereAssesmentId($assesment->id)->delete();
+                $this->deleteMedicalRecordDetail($id, 'is_family_disease_history');
+                $assesment_detail->family_disease_history()->whereAssesmentId($id)->delete();
                 $family_disease_history = collect($request->family_disease_history);
-                $family_disease_history = $family_disease_history->each(function($val) use($assesment){
+                $family_disease_history = $family_disease_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_family_disease_history = 1;
                     $assesment_detail->save();
@@ -172,18 +193,21 @@ class AssesmentController extends Controller
             }
 
             if(isset($request->allergy_history)) {
-                $assesment_detail->allergy_history()->whereAssesmentId($assesment->id)->delete();
+                $this->deleteMedicalRecordDetail($id, 'is_allergy_history');
+                $assesment_detail->allergy_history()->whereAssesmentId($id)->delete();
                 $allergy_history = collect($request->allergy_history);
-                $allergy_history = $allergy_history->each(function($val) use($assesment){
+                $allergy_history = $allergy_history->each(function($val) use($id){
                     $assesment_detail = new AssesmentDetail();
-                    $val['assesment_id'] = $assesment->id;
+                    $val['assesment_id'] = $id;
                     $assesment_detail->fill($val);
                     $assesment_detail->is_allergy_history = 1;
                     $assesment_detail->save();
                 });
             }
+            
             DB::commit();
         } catch (Exception $e) {
+            dd($e);
             DB::rollback();
             return Response::json(['message' => $e->getMessage()], 421);
         }

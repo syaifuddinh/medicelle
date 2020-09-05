@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Registration;
 
 use App\Registration;
 use App\RegistrationDetail;
+use App\InvoiceDetail;
 use App\Contact;
 use App\Http\Controllers\Controller;
 use App\City;
@@ -14,6 +15,12 @@ use Exception;
 
 class RegistrationController extends Controller
 {
+    public function __construct(\App\Invoice $invoice, \App\PivotMedicalRecord $pivot_medical_record, \Carbon\Carbon $carbon, \App\Formula $formula) {
+        $this->invoice = $invoice;
+        $this->pivot_medical_record = $pivot_medical_record;
+        $this->carbon = $carbon;
+        $this->formula = $formula;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -240,10 +247,14 @@ class RegistrationController extends Controller
     public function attend($id)
     {
         DB::beginTransaction();
-        $registration = Registration::find($id);
-        $registration->status = 2;
-        $registration->save();
-        DB::commit();
+        try {
+            $registration = Registration::find($id);
+            $registration->status = 2;
+            $registration->save();
+            DB::commit();
+        } catch (Exception $e) {
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
 
         return Response::json(['message' => 'Status pasien saat ini adalah telah hadir'], 200);
     }
@@ -261,5 +272,162 @@ class RegistrationController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Pemeriksaan sudah selesai'], 200);
+    }
+
+    public function storeInvoice($registration_detail_id) {
+        $registrationDetail = RegistrationDetail::findOrFail($registration_detail_id);
+        
+                $medical_record = DB::table('medical_records')
+                ->whereRegistrationDetailId($registrationDetail->id)
+                ->first();
+                if($medical_record == null) {
+                    throw new Exception('Rekam medis tidak ditemukan');
+                } 
+                $this->pivot_medical_record->where('registration_detail_id', '!=', $registrationDetail->id)->whereMedicalRecordId($medical_record->id)->delete();
+                
+                    $registration = $registrationDetail->registration;
+                    $invoice = new $this->invoice();
+                    $invoice->is_nota_pemeriksaan = 1;
+                    $invoice->payment_method = 'TUNAI';
+                    $invoice->date = $this->carbon->now()->format('Y-m-d');
+                    if($registration->patient_type == 'ASURANSI SWASTA') {
+                        $invoice->payment_type = 'ASURANSI SWASTA';                        
+                    } else {
+                        $invoice->payment_type = 'BAYAR SENDIRI';                        
+                    }
+                    $invoice->registration_id = $registration->id;
+                    $invoice->save();
+                
+                $medicalRecord = $registrationDetail->medical_record;
+                $treatments = $medicalRecord->treatment;
+                $treatment_groups = $medicalRecord->treatment_group;
+                $diagnostics = $medicalRecord->diagnostic;
+                $bhp = $medicalRecord->bhp;
+                $sewa_ruangan = $medicalRecord->sewa_ruangan;
+                $sewa_alkes = $medicalRecord->sewa_alkes;
+                $drug = $medicalRecord->drug;
+                DB::beginTransaction();
+                foreach($treatments as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'is_profit_sharing' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($treatment_groups as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'is_profit_sharing' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($diagnostics as $value) {
+                    if($value->laboratory_pivot === null) {
+                        InvoiceDetail::create([
+                            'invoice_id' => $invoice->id,
+                            'item_id' => $value->item_id,
+                            'is_profit_sharing' => 1,
+                            'qty' => $value->qty,
+                            'is_item' => 1,
+                            'debet' => $value->item->price,
+                            'reduksi' => $value->reduksi
+                        ]);
+                    } else {
+                        $debet = 0;
+                        $additional = $value->laboratory_pivot->additional;
+                        if($additional->treatment) {
+                            if(count($additional->treatment) > 0) {
+                                foreach($additional->treatment as $t) {
+                                    $laboratory_type_detail = DB::table('laboratory_type_details')
+                                    ->whereId($t->id)
+                                    ->first();
+                                    if($laboratory_type_detail !== null) {
+                                        $debet += $laboratory_type_detail->price;
+                                    }
+                                }
+                            }
+                        }
+                        InvoiceDetail::create([
+                            'invoice_id' => $invoice->id,
+                            'item_id' => $value->item_id,
+                            'is_profit_sharing' => 1,
+                            'qty' => $value->qty,
+                            'is_item' => 1,
+                            'debet' => $debet,
+                            'reduksi' => $value->reduksi
+                        ]);                        
+                    }
+                }
+                foreach($bhp as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_ruangan as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_alkes as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+
+                // Generate resep obat 
+                if($medicalRecord->drug()->count('id') > 0) {
+                    $formula = $this->formula->create([
+                        'medical_record_id' => $medicalRecord->id,
+                        'registration_detail_id' => $registrationDetail->id,
+                        'date' => $this->carbon->now()->format('Y-m-d')
+
+                    ]);
+                    foreach($drug as $value) {
+                        $stock = DB::table('stocks')
+                        ->whereItemId($value->item_id)
+                        ->whereRaw('NOW() < expired_date')
+                        ->first();
+
+                        if($stock == null) {
+                            $item = DB::table('items')
+                            ->whereId($value->item_id)
+                            ->select('name')
+                            ->first();
+                            throw new Exception('Stok ' . $item->name . '  tidak tersedia');
+                        } else {
+                            $formula->detail()->create([
+                                'item_id' => $value->item_id,
+                                'qty' => $value->qty,
+                                'lokasi_id' => $stock->lokasi_id,
+                                'stock_id' => $stock->id,
+                            ]);
+                        }
+                    }
+                }
+                DB::commit();
+
+            
+
+        return Response::json(['message' => 'Invoice berhasil dibuat', 'data' => ['id' => $invoice->id]]);
     }
 }

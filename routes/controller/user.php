@@ -48,6 +48,8 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('setting/pic/{flag}', 'SettingController@updatePic');
         Route::get('setting/pic/show', 'SettingController@showPic');
+        Route::get('setting/children_growth', 'SettingController@showChildrenGrowth');
+        Route::put('setting/children_growth', 'SettingController@storeChildrenGrowth');
         Route::get('setting/pic', 'SettingController@pic');
         Route::get('setting/purchase_request', 'SettingController@purchase_request');
         Route::get('setting/company', 'SettingController@company');

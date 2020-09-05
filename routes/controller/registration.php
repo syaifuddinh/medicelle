@@ -4,6 +4,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
+        Route::post('registration/invoice/{registration_detail_id}', 'RegistrationController@storeInvoice');
         Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');
         Route::resource('registration', 'RegistrationController');
 
@@ -13,6 +14,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('medical_record/pivot/{pivot_medical_record_id}/laboratory_form', 'MedicalRecordController@update_laboratory_form');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory_form/pdf/{contact_id}', 'MedicalRecordController@laboratory_form_pdf');
 
+        Route::get('medical_record/{id}/children_growth', 'MedicalRecordController@showChildrenGrowth');
         Route::get('medical_record/{id}/{flag}/history', 'MedicalRecordController@showReviewHistory');
 
         Route::put('medical_record/pivot/{pivot_medical_record_id}/laboratory', 'MedicalRecordController@update_laboratory');
@@ -49,6 +51,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::resource('medical_record', 'MedicalRecordController');
 
         Route::put('assesment/{destination_id}/origin/{origin_id}', 'AssesmentController@clone');
+        Route::put('assesment/{id}/detail', 'AssesmentController@updateDetail');
         Route::resource('assesment', 'AssesmentController');
 
     });
