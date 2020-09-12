@@ -60,6 +60,7 @@ class LaboratoryTypeController extends Controller
                 ]);
             }
         }
+        $this->storePrice($laboratory_type->id, $request->price);
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
@@ -109,6 +110,7 @@ class LaboratoryTypeController extends Controller
                 ]);
             }
         }
+        $this->storePrice($laboratory_type->id, $request->price);
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -139,5 +141,35 @@ class LaboratoryTypeController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function storePrice($laboratory_type_id, $params = []) {
+        $laboratory_type = LaboratoryType::find($laboratory_type_id);
+        $totalPrice = DB::table('laboratory_type_details')
+        ->whereLaboratoryTypeId($laboratory_type_id)
+        ->sum('price');
+        $params = [
+            'name' => $laboratory_type->name,
+            'is_diagnostic' => 1,
+            'laboratory_group' => $laboratory_type_id,
+            'grup_nota_id' => $params['grup_nota_id'],
+            'piece_id' => $params['piece_id'],
+            'price' => $totalPrice,
+            'percentage' => $params['percentage'],
+            'laboratory_types' => [
+                [
+                    'id' => $laboratory_type_id,
+                    'is_active' => 1
+                ]
+            ]
+        ];
+        $price = new \App\Http\Controllers\User\PriceController();
+        if($laboratory_type->price_id == null) {
+            $price_id = $price->save(new Request($params));
+            $laboratory_type->price_id = $price_id;
+            $laboratory_type->save();
+        } else {
+            $price->put($laboratory_type->price_id, new Request($params));
+        }
     }
 }

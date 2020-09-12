@@ -59,7 +59,6 @@
                            <th>Grup nota</th>
                           <th>Nama</th>
                           <th>Harga</th>
-                          <th>Kategori</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

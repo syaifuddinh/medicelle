@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PriceInLaboratoryTypeDetail extends Migration
+class PriceIdInLaboratoryTypes extends Migration
 {
-    /**
+     /**
      * Run the migrations.
      *
      * @return void

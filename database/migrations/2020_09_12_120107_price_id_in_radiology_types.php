@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PriceInLaboratoryTypeDetail extends Migration
+class PriceIdInRadiologyTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class PriceInLaboratoryTypeDetail extends Migration
      */
     public function up()
     {
-        Schema::table('laboratory_types', function (Blueprint $table) {
+        Schema::table('radiology_types', function (Blueprint $table) {
             $table->unsignedInteger('price_id')
             ->nullable(true)
             ->index();
@@ -28,7 +28,7 @@ class PriceInLaboratoryTypeDetail extends Migration
      */
     public function down()
     {
-        Schema::table('laboratory_types', function (Blueprint $table) {
+        Schema::table('radiology_types', function (Blueprint $table) {
             $table->dropForeign(['price_id']);
             $table->dropColumn(['price_id']);
         });

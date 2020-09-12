@@ -21,13 +21,45 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Grup Nota<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.price.grup_nota_id" ng-options="c.id as c.slug + ' - ' + c.name for c in data.grup_nota">
+                                      <option value=""></option>
+                                  </select>
+                                </div>
+                              </div>
 
-                      <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Nama<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" ng-model='formData.name' class="form-control col-md-7 col-xs-12" autofocus>
-                        </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Nama<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="text" id="first-name" ng-model='formData.name' class="form-control col-md-7 col-xs-12" autofocus>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Satuan<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  chosen allow-single-deselect="false" ng-model="formData.price.piece_id" ng-options="c.id as c.name for c in data.piece">
+                                  </select>
+                                </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Persentase dokter(%)
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                      <input type="text" ng-model='formData.price.percentage' class="form-control" maxlength='3' ng-value='0' jnumber2 only-num>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
 
                       <div class="ln_solid"></div>

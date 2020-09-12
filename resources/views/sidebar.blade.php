@@ -76,8 +76,8 @@
                             <li style='padding-left:15mm'><a href="{{ route('price.administration.index') }}">Admin / Konsul</a></li>
                             <li style='padding-left:15mm'><a href="{{ route('price.sewa_alkes.index') }}">Sewa Alkes</a></li>
                             <li style='padding-left:15mm'><a href="{{ route('price.sewa_ruangan.index') }}">Sewa Ruangan</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('price.sewa_instrumen.index') }}">Sewa Instrumen</a></li>
                             <li style='padding-left:15mm'><a href="{{ route('price.treatment.index') }}">Tindakan</a></li>
-                            <li style='padding-left:15mm'><a href="{{ route('price.diagnostic.index') }}">Diagnostik</a></li>
                             <li style='padding-left:15mm'><a href="{{ route('treatment_group.index') }}">Paket Tindakan</a></li>
 
 
