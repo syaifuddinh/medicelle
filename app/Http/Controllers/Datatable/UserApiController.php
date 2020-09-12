@@ -142,6 +142,11 @@ class UserApiController extends Controller
             $x->where('is_chemoterapy', $request->is_chemoterapy);
         }
 
+
+        if($request->filled('is_sewa_instrumen')) {
+            $x->where('is_sewa_instrumen', $request->is_sewa_instrumen);
+        }
+
         if($request->draw == 1)
             $x->orderBy('prices.id', 'DESC');
 

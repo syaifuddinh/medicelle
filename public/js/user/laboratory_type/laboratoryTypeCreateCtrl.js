@@ -1,6 +1,9 @@
 app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Jenis Pemeriksaan Laboratorium';
-    $scope.formData = {}
+    $scope.data = {}
+    $scope.formData = {
+        'price' : {}
+    }
     $scope.price = []
     var path = window.location.pathname;
     if(/edit/.test(path)) {
@@ -22,6 +25,46 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
           }
         });
     }
+
+    $scope.grup_nota = function() {
+        $http.get(baseUrl + '/controller/user/grup_nota').then(function(data) {
+            $scope.data.grup_nota = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.grup_nota()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.grup_nota()
+
+    $scope.piece = function() {
+        $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
+            $scope.data.piece = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.piece()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.piece()
 
     counter = -1
 

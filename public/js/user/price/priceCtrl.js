@@ -22,6 +22,9 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', '$timeout', f
               case 'diagnostic' :
                 $scope.subtitle = 'Diagnostik'
                 break
+              case 'sewa_instrumen' :
+                $scope.subtitle = 'Sewa Instrumen'
+                break
           }
     }, 500)
 
@@ -73,33 +76,6 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', '$timeout', f
         searchable : false,
         className: 'text-right',
         render : resp => $filter('number')(resp.service.price)
-      },
-      {
-        data: null, 
-        orderable : false,
-        searchable : false,
-        className : 'text-center capitalize',
-        render : function(resp) {
-            if(resp.is_registration == 1 || resp.is_sewa_ruangan == 1 || resp.is_sewa_alkes == 1) {
-                var outp = []
-                if(resp.is_registration == 1) {
-                  outp.push('Administrasi')
-                } 
-                if(resp.is_sewa_ruangan == 1) {
-                  outp.push('Sewa ruangan')
-                } 
-                 if(resp.is_sewa_alkes == 1) {
-                  outp.push('Sewa alkes')
-                }
-                return outp.join(',');
-            } else {
-                if(resp.destination == 'POLIKLINIK') {
-                    return 'Poliklinik ' + resp.polyclinic.name
-                } else {
-                    return resp.destination ? resp.destination.toLowerCase() : ''
-                }
-            }
-        }
       },
       {
         data: null, 

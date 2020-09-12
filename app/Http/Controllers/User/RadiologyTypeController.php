@@ -56,6 +56,7 @@ class RadiologyTypeController extends Controller
                 ]);
             }
         }
+        $this->storePrice($radiology_type->id, $request->price);
         DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
@@ -68,7 +69,7 @@ class RadiologyTypeController extends Controller
      */
     public function show($id)
     {
-        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name')->find($id);
+        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name', 'price', 'price.grup_nota:id,name', 'price.service:id,piece_id', 'price.service.piece:id,name')->find($id);
         return Response::json($radiology_type, 200);
     }
 
@@ -104,6 +105,7 @@ class RadiologyTypeController extends Controller
                 ]);
             }
         }
+        $this->storePrice($radiology_type->id, $request->price);
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
@@ -134,5 +136,26 @@ class RadiologyTypeController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function storePrice($radiology_type_id, $params = []) {
+        $radiology_type = RadiologyType::find($radiology_type_id);
+        $params = [
+            'name' => $radiology_type->name,
+            'is_diagnostic' => 1,
+            'radiology_group' => $radiology_type_id,
+            'grup_nota_id' => $params['grup_nota_id'],
+            'piece_id' => $params['piece_id'],
+            'price' => $params['price'],
+            'percentage' => $params['percentage']
+        ];
+        $price = new \App\Http\Controllers\User\PriceController();
+        if($radiology_type->price_id == null) {
+            $price_id = $price->save(new Request($params));
+            $radiology_type->price_id = $price_id;
+            $radiology_type->save();
+        } else {
+            $price->put($radiology_type->price_id, new Request($params));
+        }
     }
 }

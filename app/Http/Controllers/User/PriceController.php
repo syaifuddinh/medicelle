@@ -115,13 +115,39 @@ class PriceController extends Controller
         
     }
 
+    public function save($request) {
+        $price = new Price();
+        $price->fill($request->all());
+        $item = new Item();
+        $item->is_administration = 1;
+        $item->name = $request->name;
+        $item->piece_id = $request->piece_id;
+        $item->code = date('ym') . rand(1, 999);
+        $item->price = $request->price;
+        $item->save();
+        $price->item_id = $item->id;
+        $price->custom_price = $request->price;
+        $price->save();
+        if($request->filled('laboratory_types')) {
+            foreach ($request->laboratory_types as $value) {
+                if(1 == ($value['is_active'] ?? null)) {
+
+                    $price->laboratory_treatment()->create([
+                        'laboratory_type_id' => $value['id']
+                    ]);
+                }
+            }
+        }
+
+        return $price->id;
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Price $price)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -134,25 +160,7 @@ class PriceController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $price->fill($request->all());
-            $item = new Item();
-            $item->is_administration = 1;
-            $item->name = $request->name;
-            $item->piece_id = $request->piece_id;
-            $item->code = date('ym') . rand(1, 999);
-            $item->price = $request->price;
-            $item->save();
-            $price->item_id = $item->id;
-            $price->custom_price = $request->price;
-            $price->save();
-            foreach ($request->laboratory_types as $value) {
-                if(1 == ($value['is_active'] ?? null)) {
-
-                    $price->laboratory_treatment()->create([
-                        'laboratory_type_id' => $value['id']
-                    ]);
-                }
-            }
+            $this->save($request);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -184,13 +192,29 @@ class PriceController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Price  $price
-     * @return \Illuminate\Http\Response
-     */
+    public function put($id, $request) {
+        $price = Price::find($id);
+        $price->fill($request->all());
+        $item = Item::find($price->item_id);
+        $item->name = $request->name;
+        $item->piece_id = $request->piece_id;
+        $item->price = $request->price;
+        $item->save();
+        $price->custom_price = $request->price;
+        $price->save();
+        if($request->filled('laboratory_types')) {
+            $price->laboratory_treatment()->delete();
+            foreach ($request->laboratory_types as $value) {
+                if(1 === ($value['is_active'] ?? null)) {
+
+                    $price->laboratory_treatment()->create([
+                        'laboratory_type_id' => $value['id']
+                    ]);
+                }
+            }
+        }
+    }
+
     public function update(Request $request, $id)
     {
          $request->validate([
@@ -204,24 +228,7 @@ class PriceController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $price = Price::find($id);
-            $price->fill($request->all());
-            $item = Item::find($price->item_id);
-            $item->name = $request->name;
-            $item->piece_id = $request->piece_id;
-            $item->price = $request->price;
-            $item->save();
-            $price->custom_price = $request->price;
-            $price->save();
-            $price->laboratory_treatment()->delete();
-            foreach ($request->laboratory_types as $value) {
-                if(1 === ($value['is_active'] ?? null)) {
-
-                    $price->laboratory_treatment()->create([
-                        'laboratory_type_id' => $value['id']
-                    ]);
-                }
-            }
+            $this->put($id, $request);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

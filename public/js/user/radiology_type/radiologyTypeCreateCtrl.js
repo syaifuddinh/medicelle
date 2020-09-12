@@ -1,12 +1,17 @@
 app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
     $scope.title = 'Tambah Jenis Pemeriksaan Radiologi';
-    $scope.formData = {}
+    $scope.data = {}
+    $scope.formData = {
+        price : {}
+    }
     var path = window.location.pathname;
     if(/edit/.test(path)) {
         $scope.title = 'Edit Jenis Pemeriksaan Radiologi';
         id = path.replace(/.+\/(\d+)/, '$1');
         $http.get(baseUrl + '/controller/user/radiology_type/' + id).then(function(data) {
             $scope.formData = data.data
+            $scope.formData.price.price = data.data.price.custom_price
+            $scope.formData.price.piece_id = data.data.price.service.piece_id
             detail_datatable.rows.add($scope.formData.radiology_type_detail).draw()
         }, function(error) {
           $rootScope.disBtn=false;
@@ -56,6 +61,46 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
       var row = $(obj).parents('tr')
       detail_datatable.row(row).data(input).draw()
   }
+
+      $scope.grup_nota = function() {
+        $http.get(baseUrl + '/controller/user/grup_nota').then(function(data) {
+            $scope.data.grup_nota = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.grup_nota()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.grup_nota()
+
+    $scope.piece = function() {
+        $http.get(baseUrl + '/controller/master/piece/actived').then(function(data) {
+            $scope.data.piece = data.data
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.piece()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.piece()
 
     $scope.reset = function() {
         $scope.formData = {}
