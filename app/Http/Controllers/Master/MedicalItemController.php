@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use App\Contact;
 
 class MedicalItemController extends Controller
 {
@@ -98,6 +99,19 @@ class MedicalItemController extends Controller
     public function show($id)
     {
         $x = Item::with('group:id,name,code', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug,name', 'piece:id,name')->find($id);
+        $principal_id = -1;
+        if(($x->additional->principal ?? -1) != -1) {
+            $principal_id = (integer) $x->additional->principal;
+
+        }
+        $principal = Contact::select('name') 
+        ->find($principal_id);
+        if($principal === null) {
+            $principal_name = ''; 
+        } else {
+            $principal_name = $principal->name;
+        }
+        $x->principal_name = $principal_name;
         return Response::json($x, 200);
     }
 

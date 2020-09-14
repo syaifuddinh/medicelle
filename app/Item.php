@@ -151,13 +151,22 @@ class Item extends Model
             if(array_key_exists('is_medical_item', $attr)) {
                 if($attr['is_medical_item'] == 1) {
                     $prefix .=  400;
-                    $prefix = $prefix . '.02.00.00';
+                    $prefix = $prefix . '.02.00.00.00';
                 }
             }
 
             if(array_key_exists('category_id', $attr)) {
                 if($attr['category_id'] != null) {
-                    $prefix .=  str_pad($this->group->code, 2, '0', STR_PAD_LEFT);
+                    if(array_key_exists('is_medical_item', $attr)) {
+                        if($attr['is_medical_item'] == 1) {
+                            $prefix .=  str_pad($this->group->code, 0, '0', STR_PAD_LEFT);
+                        }
+                    } 
+                    if(array_key_exists('is_cure', $attr)) {
+                        if($attr['is_cure'] == 1) {
+                            $prefix .=  str_pad($this->group->code, 2, '0', STR_PAD_LEFT);
+                        }
+                    } 
                     $prefix = $prefix . '.';
                 }
             }
