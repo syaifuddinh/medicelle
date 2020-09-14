@@ -66,8 +66,12 @@
                           @endif
 
 
+                        <li><a href="">Farmasi</a></li>
                         @if(Auth::user()->allow_access('master.medical_item'))
-                            <li><a href="{{ route('medical_item.index') }}">Item Medis</a></li>
+                            <li style='padding-left:15mm'><a href="{{ route('medical_item.index') }}">BMHP</a></li>
+                        @endif
+                        @if(Auth::user()->allow_access('master.obat'))
+                            <li style='padding-left:15mm'><a href="{{ route('obat.index') }}">Obat</a></li>
                         @endif
                         
                         @if(Auth::user()->allow_access('setting.price'))
@@ -86,9 +90,6 @@
                             @endif
 
                             <li style='padding-left:15mm'><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
-                        @endif
-                        @if(Auth::user()->allow_access('master.obat'))
-                            <li><a href="{{ route('obat.index') }}">Obat</a></li>
                         @endif
 
                         @if(Auth::user()->allow_access('master.lokasi'))

@@ -77,8 +77,14 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('medical_item/activate/{id}', 'MedicalItemController@activate');
         Route::get('medical_item/category', 'MedicalItemController@category');
+
         Route::get('medical_item/category/actived', 'MedicalItemController@actived_category');
+        Route::post('medical_item/category', 'MedicalItemController@store_jenis_administrasi');
+
         Route::get('medical_item/actived', 'MedicalItemController@actived');
+
+        Route::get('medical_item/classification/actived', 'MedicalItemController@actived_classification');
+        Route::post('medical_item/classification', 'MedicalItemController@store_classification');
         Route::resource('medical_item', 'MedicalItemController');
 
 

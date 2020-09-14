@@ -22,28 +22,34 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
             <div class="col-md-6">
-                <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Apakah kategori ?
-              </label>
-              <div class="col-md-8 col-sm-8 col-xs-12">
-                  <label class="radio-inline">
-                      <input type="radio" ng-model='formData.is_category' ng-value="1" ng-change='emptyCategory()'> Ya
-                  </label>
-                  <label class="radio-inline">
-                      <input type="radio" ng-model='formData.is_category' ng-value="0" ng-change='emptyCategory()'> Tidak
-                  </label>
+<div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok<span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <div class="input-group">
+                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();changeClassification()'>
+                      <option value=""></option>
+                    </select>
+                    <div class="input-group-addon" ng-click='insert("category")'>
+                        <i class='fa fa-pencil'></i>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="form-group" ng-show='formData.is_category != 1'>
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori<span class="required">*</span>
-              </label>
-              <div class="col-md-8 col-sm-8 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Kategori'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode()'>
-                  <option value=""></option>
-                </select>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis<span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="input-group">
+                    <select class="form-control" data-placeholder-text-single="'Pilih Jenis'" chosen allow-single-deselect="false" ng-model="formData.classification_id" ng-options="c.id as c.code + ' - ' + c.name for c in classification" ng-change='changeSampleCode()'>
+                      <option value=""></option>
+                    </select>
+                    <div class="input-group-addon" ng-click='insert("classification")'>
+                        <i class='fa fa-pencil'></i>
+                    </div>
+                </div>
+                </div>
               </div>
-            </div>
 
             <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
@@ -108,104 +114,57 @@
             </div>
 
             <div class="col-md-6">
+              <div class="form-group" ng-show='formData.is_category != 1'>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price"  ng-change='countPrice()' jnumber2 only-num>
+                </div>
+              </div>
+              
+              <div class="form-group" ng-show='formData.is_category != 1'>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Margin(%)
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" ng-change='countPrice()' maxlength='3' only-num>
+                </div>
+              </div>
 
-                <div class="form-group" ng-show='formData.is_category != 1'> 
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
-                  </label>
-                  <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price" ng-change='countPrice()' jnumber2 only-num>
-                    </div>
-                      
-                  </div>
+              <div class="form-group" ng-show='formData.is_category != 1'>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Jual
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                      <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.price" ng-change='countMargin()' jnumber2 only-num>
                 </div>
-                
-                <div class="form-group" ng-show='formData.is_category != 1'> 
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga jual<span class="required">*</span>
-                  </label>
-                  <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="pd-l2">
-                        <p><% formData.price | number %></p>
-                    </div>
-                      
-                  </div>
-                </div>
+              </div>
 
-                <div class="form-group" ng-show='formData.is_category != 1'> 
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Margin
-                  </label>
-                  <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1' ng-model="formData.additional.margin" ng-change='countPrice()' jnumber2 only-num>
-                    </div>
-                      
-                  </div>
+              <div class="form-group" ng-show='formData.is_category != 1'>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Eceran Tertinggi
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="text" ng-model='formData.additional.harga_eceran_tertinggi' jnumber2 only-num class="form-control col-md-7 col-xs-12">
                 </div>
-                
-                <div class="form-group" ng-show='formData.is_category != 1'> 
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli supplier
-                  </label>
-                  <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div class="pd-l2">
-                        <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.supplier_price" ng-change='countPrice ()' jnumber2 only-num>
-                    </div>
-                      
-                  </div>
-                </div>
-                
-                <div class="form-group"  ng-show='formData.is_category != 1'>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Komposisi
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <div class="pd-l2">
-                        
-                          <textarea ng-model='formData.additional.ingredient' class="form-control col-md-7 col-xs-12"></textarea>
-                      </div>
-                    </div>
-                </div>
-                <div class="form-group"  ng-show='formData.is_category != 1'>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis barang
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <div class='col-md-7'>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_alkes_disposible' ng-true-value='1' ng-false-value='0'> Alkes disposible 
-                          </div><br>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_alkes_non_disposible' ng-true-value='1' ng-false-value='0'> Alkes non-disposible 
-                          </div><br>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_inventaris' ng-true-value='1' ng-false-value='0'> Inventaris 
-                          </div><br>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_umum' ng-true-value='1' ng-false-value='0'> Umum 
-                          </div>
-                      </div>
-                      <div class='col-md-5'>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_cure' ng-true-value='1' ng-false-value='0'> Generik 
-                          </div>
-                          <br>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_non_cure' ng-true-value='1' ng-false-value='0'> Non-Generik 
-                          </div><br>
-                          <div class="radio-inline">
-                              <input type="checkbox" ng-model='formData.is_bhp' ng-true-value='1' ng-false-value='0'> BHP 
-                          </div>
-                      </div>
-                    </div>
-                </div>
+              </div>
 
-                <div class="form-group"  ng-show='formData.is_category != 1'>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Stok minimal
-                    </label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                      <div class="pd-l2">
-                        
-                          <input type="text" class='form-control' ng-model='formData.minimal_stock' maxlength="3" only-num>
-                      </div>
+              <div class="form-group" ng-show='formData.is_category != 1'>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Principal
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="input-group">
+                        <select class="form-control" data-placeholder-text-single="'Pilih Principal'" chosen allow-single-deselect="true" ng-model="formData.additional.principal" ng-options="c.id as c.name for c in data.supplier">
+                          <option value=""></option>
+                        </select>
+                        @if(Auth::user()->allow_access('master.supplier.create'))
+                            <div class="input-group-btn">
+                                <button type='button' class="btn btn-primary btn-sm" ng-click='insertSupplier()' ng-disabled='disBtn'>
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        @endif
                     </div>
-                </div>
+                  </div>
+              </div>
+
             </div>
             
 
@@ -230,6 +189,40 @@
 
     </div>
 
+    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal-dialog" style='width:50%'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                  <% insert_title %>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group" style='padding-bottom:8mm'>
+                        <label class='col-md-4'>Kode</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model='insertData.code' class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group"  style='padding-bottom:8mm'>
+                        <label class='col-md-4'>Nama</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model='insertData.name' class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button class='btn btn-sm btn-success pull-right' ng-disabled='disBtn' ng-click="submitComponent()">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
   </div>
   <!-- /page content -->
 
