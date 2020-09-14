@@ -22,7 +22,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
             <div class="col-md-6">
-<div class="form-group">
+               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">

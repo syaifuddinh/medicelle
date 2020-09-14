@@ -1,5 +1,5 @@
 app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope) {
-    $scope.title = 'Detail Obat';
+    $scope.title = 'Detail BMHP';
     $scope.formData = {}
     $scope.data = {}
     var path = window.location.pathname
@@ -51,10 +51,17 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
         var code = '';
         if($scope.formData.code) {
           
-            if($scope.formData.is_category == 0 && $scope.formData.category_id) {
-                console.log($scope.data.category)
-                prefix = $scope.data.category.find(x => parseInt(x.id) == parseInt($scope.formData.category_id)).code
-                prefix = prefix.padStart(3, 0) + '.'
+            if($scope.formData.category_id && $scope.formData.classification_id && $scope.formData.subclassification_id && $scope.formData.generic_id) {
+                category_code = $scope.data.category.find(x => x.id == $scope.formData.category_id).code
+                category_code = category_code.padStart(2, 0)
+                classification_code = $scope.data.classification.find(x => x.id == $scope.formData.classification_id).code
+                classification_code = classification_code.padStart(2, 0)
+                subclassification_code = $scope.data.subclassification.find(x => x.id == $scope.formData.subclassification_id).code
+                subclassification_code = subclassification_code.padStart(2, 0)
+                generic_code = $scope.data.generic.find(x => x.id == $scope.formData.generic_id).code
+                generic_code = generic_code.padStart(3, 0)
+
+                prefix = '400.01.' + category_code + '.' + classification_code + '.' + subclassification_code + '.' + generic_code + '.'
             }
 
             var code = $scope.formData.code.padStart(3, 0)
