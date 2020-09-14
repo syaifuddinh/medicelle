@@ -1,5 +1,6 @@
 app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', function($scope, $http, $rootScope, $filter) {
-    $scope.title = 'Tambah Item Medis';
+    $scope.title = 'Tambah BMHP';
+    $scope.insertData = {}
     $scope.formData = {
         is_category : 0,
         additional : {}
@@ -12,6 +13,106 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
         $scope.formData.price = parseInt($scope.formData.purchase_price) * ( 100 + parseInt($scope.formData.additional.margin)) / 100
     }
 
+    $scope.supplier = function() {
+        $http.get(baseUrl + '/controller/master/supplier/principal').then(function(data) {
+            $scope.data.supplier = data.data
+            $scope.show()
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.supplier()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.supplier()
+
+    $scope.insert = function(flag) {
+      var label
+      switch (flag) {
+        case 'category' :
+          label = 'Kelompok'
+          break
+        case 'classification' :
+          label = 'Jenis'
+          $scope.insertData.category_id = $scope.formData.category_id
+          break
+        case 'subclassification' :
+          label = 'Sub-Kelas'
+          $scope.insertData.classification_id = $scope.formData.classification_id
+          break
+        case 'generic' :
+          label = 'Generic'
+          $scope.insertData.subclassification_id = $scope.formData.subclassification_id
+          break
+      }
+      $scope.insert_title = 'Tambah ' + label
+      $scope.componentState = flag
+      if(flag != 'category') {
+          if(flag == 'classification' && !$scope.formData.category_id) {
+              toastr.warning("Kelompok tidak boleh kosong")
+          } else {
+            $('#insertModal').modal()
+          }
+      } else {
+            $('#insertModal').modal()        
+      }
+    }
+
+    $scope.changeClassification = function() {
+        if($scope.formData.category_id) {
+            classification = $scope.data.classification.filter(x => x.category_id == $scope.formData.category_id)
+            $scope.classification = classification
+        }
+    }
+
+    $scope.showClassification = function() {
+        $http.get(baseUrl + '/controller/master/medical_item/classification/actived').then(function(data) {
+            $scope.data.classification = data.data
+            $scope.changeClassification()
+        }, function(error) {
+          $rootScope.disBtn=false;
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            
+            $scope.showClassification()
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+    }
+    $scope.showClassification()
+
+    $scope.changeSampleCode = function() {
+        var prefix = '';
+        var code = '';
+        if($scope.formData.code) {
+          
+            if($scope.formData.category_id && $scope.formData.classification_id) {
+                category_code = $scope.data.category.find(x => x.id == $scope.formData.category_id).code
+                category_code = category_code.padStart(2, 0)
+                classification_code = $scope.data.classification.find(x => x.id == $scope.formData.classification_id).code
+                classification_code = classification_code.padStart(2, 0)
+
+                prefix = '400.02.00.' + category_code + '.' + classification_code + '.'
+            }
+
+            var code = $scope.formData.code.padStart(3, 0)
+        }
+        $scope.sample_code = prefix +  code
+    }
+
     $scope.show = function() {
         if(/edit/.test(path)) {
             $scope.title = 'Edit Item Medis';
@@ -22,6 +123,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
                 $scope.formData.price = data.data.rate
                 $scope.changeSampleCode()
                 $scope.countPrice()
+                $scope.changeClassification()
             }, function(error) {
               $rootScope.disBtn=false;
               if (error.status==422) {
@@ -58,6 +160,41 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
         });
     }
     $scope.grup_nota()
+
+    $scope.submitComponent=function() {
+      $rootScope.disBtn=true;
+      var url = baseUrl + '/controller/master/medical_item/' + $scope.componentState;
+      var method = 'post';
+      $http[method](url, $scope.insertData).then(function(data) {
+        $rootScope.disBtn = false
+        toastr.success("Data Berhasil Disimpan !");
+        $scope.category()
+        if($scope.componentState == 'classification') {
+            $scope.showClassification()
+        } else if($scope.componentState == 'subclassification') {
+            $scope.showSubclassification()
+        } else if($scope.componentState == 'generic') {
+            $scope.showGeneric()
+        } else if($scope.componentState == 'category') {
+            $scope.category()
+        }
+
+        $scope.insertData = {}
+        $('#insertModal').modal('hide')
+      }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+          });
+          toastr.warning(det,error.data.message);
+        } else {
+          toastr.error(error.data.message,"Error Has Found !");
+        }
+      });
+      
+    }
 
     $scope.emptyCategory = function() {
         $scope.formData.category_id = null
@@ -106,21 +243,6 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
         });
     }
     $scope.piece()
-
-    $scope.changeSampleCode = function() {
-        var prefix = '';
-        var code = '';
-        if($scope.formData.code) {
-          
-            if($scope.formData.is_category == 0 && $scope.formData.category_id) {
-                prefix = $scope.data.category.find(x => x.id == $scope.formData.category_id).code
-                prefix = prefix.padStart(3, 0) + '.'
-            }
-
-            var code = $scope.formData.code.padStart(3, 0)
-        }
-        $scope.sample_code = prefix +  code
-    }
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;

@@ -46,6 +46,16 @@ class MedicalItemController extends Controller
         return Response::json($item, 200);
     }
 
+    public function actived_classification()
+    {
+        $item = Item::whereIsClassification(1)
+        ->whereIsMedicalItem(1)
+        ->whereIsActive(1)
+        ->select('id', 'code', 'name', 'category_id')
+        ->get();
+        return Response::json($item, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -155,5 +165,28 @@ class MedicalItemController extends Controller
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil diaktifkan'], 200);
+    }
+
+    public function store_jenis_administrasi(Request $request) {
+        DB::table('items')->insert([
+            'code' => $request->code,
+            'name' => $request->name,
+            'is_medical_item' => 1,
+            'is_category' => 1
+        ]);
+
+        return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
+    }
+
+    public function store_classification(Request $request) {
+        DB::table('items')->insert([
+            'code' => $request->code,
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'is_medical_item' => 1,
+            'is_classification' => 1
+        ]);
+
+        return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
 }

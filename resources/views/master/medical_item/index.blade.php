@@ -40,7 +40,7 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Item Medis</h3>
+                    <h3>BMHP</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
@@ -58,7 +58,7 @@
                         <tr>
                           <th>Kode</th>
                           <th>Nama</th>
-                          <th>Kategori</th>
+                          <th>Kelompok</th>
                           <th>Grup nota</th>
                           <th>Status</th>
                           <th></th>
