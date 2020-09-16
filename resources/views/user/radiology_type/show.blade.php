@@ -32,6 +32,8 @@
                   </div>
                 </div>
 
+
+
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                       <div class="form-group">
@@ -73,9 +75,31 @@
                           <% formData.price.percentage %>
                         </div>
                       </div>
+
+
                       
 
-                      <div class="ln_solid"></div>
+                      
+
+                    </form>
+                </div>
+
+                <div class="col-md-12">
+                  <table class="table" id='detail_datatable'>
+                      <thead>
+                          <th>Nama</th>
+                          <th>Harga</th>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                      <tfoot>
+                          <th>Total</th>
+                          <th class='text-right' id='grandtotal'></th>
+                      </tfoot>
+                  </table>
+
+                  <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 ">
                           <div class="btn-group pull-left">
@@ -84,9 +108,9 @@
                           </div>
                         </div>
                       </div>
+             </div>
 
-                    </form>
-                </div>
+
 
                 <div class="clearfix"></div>
               </div>

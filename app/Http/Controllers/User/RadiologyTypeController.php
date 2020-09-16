@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Exception;
 
 class RadiologyTypeController extends Controller
 {
@@ -47,17 +48,27 @@ class RadiologyTypeController extends Controller
             'name.unique' => 'Nama sudah digunakan'
         ]);
         DB::beginTransaction();
-        $radiology_type->fill($request->all());
-        $radiology_type->save();
-        foreach ($request->detail as $value) {
-            if( null != ($value['name'] ?? null) ) {
-                $radiology_type->radiology_type_detail()->create([
-                    'name' => $value['name']
-                ]);
+        try {
+            $radiology_type->fill($request->all());
+            $radiology_type->save();
+            $rate = 0;
+            foreach ($request->detail as $value) {
+                if( null != ($value['name'] ?? null) ) {
+                    $rate += ($value['price'] ?? 0);
+                    $radiology_type->radiology_type_detail()->create([
+                        'name' => $value['name'],
+                        'price' => $value['price'] ?? 0
+                    ]);
+                }
             }
+            $params = (array) $request->price;
+            $params['price'] = $rate;
+            $this->storePrice($radiology_type->id, $params);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => $e->getMessage()], 421);
         }
-        $this->storePrice($radiology_type->id, $request->price);
-        DB::commit();
         return Response::json(['message' => 'Transaksi berhasil diinput'], 200);
     }
 
@@ -69,7 +80,7 @@ class RadiologyTypeController extends Controller
      */
     public function show($id)
     {
-        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name', 'price', 'price.grup_nota:id,name', 'price.service:id,piece_id', 'price.service.piece:id,name')->find($id);
+        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name,price', 'price', 'price.grup_nota:id,name', 'price.service:id,piece_id', 'price.service.piece:id,name')->find($id);
         return Response::json($radiology_type, 200);
     }
 
@@ -98,13 +109,17 @@ class RadiologyTypeController extends Controller
         $radiology_type->fill($request->all());
         $radiology_type->save();
         $radiology_type->radiology_type_detail()->delete();
+        $rate = 0;
         foreach ($request->detail as $value) {
             if( null != ($value['name'] ?? null)) {
+                $rate += ($value['price'] ?? 0);
                 $radiology_type->radiology_type_detail()->create([
-                    'name' => $value['name']
+                    'name' => $value['name'],
+                    'price' => $value['price'] ?? 0
                 ]);
             }
         }
+        $request->price['price'] = $rate;
         $this->storePrice($radiology_type->id, $request->price);
         DB::commit();
 

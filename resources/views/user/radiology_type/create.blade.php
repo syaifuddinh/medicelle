@@ -41,15 +41,6 @@
                                   <input type="text" id="first-name" ng-model='formData.name' class="form-control col-md-7 col-xs-12" autofocus>
                                 </div>
                               </div>
-
-                              <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Harga<span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="first-name" ng-model='formData.price.price' class="form-control col-md-7 col-xs-12" jnumber2 only-num>
-                                </div>
-                              </div>
-
                           </div>
                           <div class="col-md-6">
                               <div class="form-group">
@@ -74,6 +65,31 @@
                       </div>
 
                       <div class="ln_solid"></div>
+
+                       <div class="row">
+                         <div class="col-md-12">
+                            <button type="button" class="btn btn-sm btn-primary pull-right" ng-click='addDetail()'>Tambah</button>
+                         </div>
+                         <div class="col-md-12">
+                              <table class="table" id='detail_datatable'>
+                                  <thead>
+                                      <th>Nama</th>
+                                      <th>Harga</th>
+                                      <th></th>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                                  <tfoot>
+                                      <th>Total</th>
+                                      <th class='text-right' id='grandtotal'></th>
+                                  </tfoot>
+                              </table>
+                         </div>
+                       </div>
+
+                      <div class="ln_solid"></div>
+
                       <div class="row">
                         <div class="col-md-12">
                           

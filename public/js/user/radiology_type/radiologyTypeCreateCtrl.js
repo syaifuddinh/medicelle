@@ -1,10 +1,22 @@
-app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compile', function($scope, $http, $rootScope, $compile) {
+app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compile', '$timeout', '$filter', function($scope, $http, $rootScope, $compile, $timeout, $filter) {
     $scope.title = 'Tambah Jenis Pemeriksaan Radiologi';
     $scope.data = {}
     $scope.formData = {
         price : {}
     }
     var path = window.location.pathname;
+    $scope.countGrandtotal = function() {
+      var price_text = $('.price-text')
+      var grandtotal = 0;
+      if(price_text.length > 0) {
+        for(p = 0;p < price_text.length;p++) {
+            grandtotal += parseInt($(price_text[p]).val() || 0)
+        }
+      }
+
+      grandtotal = $filter('number')(grandtotal)
+      $('#grandtotal').text(grandtotal) 
+  }
     if(/edit/.test(path)) {
         $scope.title = 'Edit Jenis Pemeriksaan Radiologi';
         id = path.replace(/.+\/(\d+)/, '$1');
@@ -13,6 +25,7 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
             $scope.formData.price.price = data.data.price.custom_price
             $scope.formData.price.piece_id = data.data.price.service.piece_id
             detail_datatable.rows.add($scope.formData.radiology_type_detail).draw()
+            $scope.countGrandtotal()
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -27,16 +40,50 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
         });
     }
 
+    $scope.deleteDetail = function(obj) {
+        var row = $(obj).parents('tr')
+        detail_datatable.row(row).remove().draw()
+        $scope.countGrandtotal()
+    } 
 
+    $scope.addDetail = function() {
+        detail_datatable.row.add({}).draw()
+    }
+
+    changeName = function(obj) {
+      var name = $(obj).val()
+      var row = $(obj).parents('tr')
+      var data = detail_datatable.row(row).data()
+      data['name'] = name
+      detail_datatable.row(row).data(data).draw()
+  }
+
+  changePrice = function(obj) {
+      var price = $(obj).val()
+      var row = $(obj).parents('tr')
+      var data = detail_datatable.row(row).data()
+      data['price'] = price
+      detail_datatable.row(row).data(data).draw()
+      $(obj).val(price)
+      $scope.countGrandtotal()
+  }
 
     detail_datatable = $('#detail_datatable').DataTable({
        dom: 'rt',
         columns:[
           {
-            data: null, 
+            data: null,
             orderable : false,
             searchable : false,
             render : resp => '<input type="text" style="width:100%" value="' + (resp.name || '') + '" class="form-control" onchange="changeName(this)">'
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                return '<input type="number" style="width:100%" value="' + (resp.price || '') + '" onchange="changePrice(this)" class="text-right form-control price-text">'
+            }  
           },
           {
             data: null, 
@@ -48,13 +95,16 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
+          $compile($('tfoot'))($scope);
           $(row).find('input').focus()
         }
     });
+    $timeout(function() {
+        $compile($('tfoot'))($scope);
+    }, 1000)
 
   changeName = function(obj) {
       var name = $(obj).val()
-      console.log(name)
       var input = {
         'name' : name
       }

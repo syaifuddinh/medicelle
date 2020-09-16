@@ -1,18 +1,40 @@
-app.controller('radiologyTypeShow', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-    $scope.title = 'Detail Jenis Pemeriksaan Laborat3';
+app.controller('radiologyTypeShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+    $scope.title = 'Detail Jenis Pemeriksaan Radiologi';
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
+
+    detail_datatable = $('#detail_datatable').DataTable({
+       dom: 'rt',
+        columns:[
+          {
+            data: 'name',
+          },
+          {
+            data: null, 
+            orderable : false,
+            className : 'text-right',
+            render : function(resp) {
+                return $filter('number')(resp.price)
+            }  
+          }
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
     $http.get(baseUrl + '/controller/user/radiology_type/' + id).then(function(data) {
             var unit, li
             var radiology_type_detail_list = $('#radiology_type_detail_list') 
             $scope.formData = data.data
-
-            for(x in $scope.formData.radiology_type_detail) {
-                unit = $scope.formData.radiology_type_detail[x]
-                li = $('<li>' + unit.name + '</li>')
-                $('#radiology_type_detail_list').append(li)
+            detail_datatable.rows.add($scope.formData.radiology_type_detail).draw()
+            var grandtotal = 0 
+            for(r in data.data.radiology_type_detail) {
+                grandtotal = parseInt(data.data.radiology_type_detail[r].price)
             }
+            grandtotal = $filter('number')(grandtotal)
+            $('#grandtotal').text(grandtotal)
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

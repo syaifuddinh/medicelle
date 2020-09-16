@@ -113,6 +113,7 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
       var data = detail_datatable.row(row).data()
       data['price'] = price
       detail_datatable.row(row).data(data).draw()
+      
   }
 
     $scope.reset = function() {
