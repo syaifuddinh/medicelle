@@ -119,8 +119,9 @@ class RadiologyTypeController extends Controller
                 ]);
             }
         }
-        $request->price['price'] = $rate;
-        $this->storePrice($radiology_type->id, $request->price);
+        $params = (array) $request->price;
+        $params['price'] = $rate;
+        $this->storePrice($radiology_type->id, $params);
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
