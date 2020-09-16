@@ -37,6 +37,16 @@ class PurchaseRequest extends Model
             $existing = DB::table('purchase_request_logs')
             ->wherePurchaseRequestId($purchaseRequest->id)
             ->whereStatus($purchaseRequest->status)
+            ->count('id');
+            if($existing == 0) {
+                $params = [];
+                $params['created_by'] = auth()->user()->id;
+                $params['purchase_request_id'] = $purchaseRequest->id;
+                $params['status'] = $purchaseRequest->status;
+                $params['created_at'] = date('Y-m-d');
+                DB::table('purchase_request_logs')
+                ->insert($params);
+            }
         });
 
         static::updating(function(PurchaseRequest $purchaseRequest) {   
