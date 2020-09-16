@@ -85,7 +85,7 @@
                                   </div>
                               </div>
 
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes && !formData.is_sewa_instrumen'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Kelompok radiologi
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">

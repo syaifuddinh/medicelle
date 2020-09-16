@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\PurchaseOrder;
 use App\PurchaseRequestDetail;
+use DB;
 
 class PurchaseRequest extends Model
 {
@@ -30,6 +31,12 @@ class PurchaseRequest extends Model
             $code = 'PP-' . date('ym') . '-' .  $id;
 
             $purchaseRequest->code = $code;
+        });
+
+        static::created(function(PurchaseRequest $purchaseRequest) {   
+            $existing = DB::table('purchase_request_logs')
+            ->wherePurchaseRequestId($purchaseRequest->id)
+            ->whereStatus($purchaseRequest->status)
         });
 
         static::updating(function(PurchaseRequest $purchaseRequest) {   
