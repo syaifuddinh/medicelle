@@ -13,6 +13,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
     $scope.generic = []
     $scope.data = {}
     var path = window.location.pathname;
+    var x;
 
     $scope.backward = function() {
       location.href = baseUrl + '/obat'
@@ -23,7 +24,11 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
     }
 
     $scope.countMargin = function() {
-        $scope.formData.additional.margin = (parseInt($scope.formData.price) - parseInt($scope.formData.purchase_price)) / parseInt($scope.formData.purchase_price) * 100 
+        x = (parseInt($scope.formData.price) - parseInt($scope.formData.purchase_price)) / parseInt($scope.formData.purchase_price) * 100 
+        $scope.formData.additional.margin = +(Math.round(x + "e+0")  + "e-0")
+        //$scope.formData.additional.margin = round(x)
+
+        //$scope.formData.additional.margin = round(parseInt($scope.formData.price) - parseInt($scope.formData.purchase_price)) / parseInt($scope.formData.purchase_price) * 100 
     }
 
     $scope.show = function() {
@@ -41,6 +46,7 @@ app.controller('obatCreate', ['$scope', '$http', '$rootScope', '$filter', functi
                 $scope.changeSubclassification()
                 $scope.changeGeneric()
                 $scope.countPrice()
+                $scope.countMargin()
                 $scope.changeSampleCode()
             }, function(error) {
               $rootScope.disBtn=false;
