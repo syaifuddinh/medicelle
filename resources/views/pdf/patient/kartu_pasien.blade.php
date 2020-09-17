@@ -14,7 +14,7 @@
          }
 
          p, span, li, td, th, div {
-            font-size:11px;
+            font-size:14px;
          }
 
          th, td {
@@ -26,7 +26,7 @@
          }
 
          .w30 {
-            width:30mm;
+            width:36mm;
          }
          .inline-block {
             display:inline-block;
@@ -50,7 +50,7 @@
                                     $bar = App::make('BarCode');
                                     $barcodes = [
                                         'text' => $contact->medical_record->code,
-                                        'size' => 30,
+                                        'size' => 36,
                                         'orientation' => 'horizontal',
                                         'code_type' => 'code39',
                                         'print' => true,
