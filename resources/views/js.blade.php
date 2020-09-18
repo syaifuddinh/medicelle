@@ -13,7 +13,7 @@
         })
 
         requireScript('jquery', '1.0', '{{ asset('') }}vendors/jquery/dist/jquery.min.js', function(){        
-            @if(Auth::user())
+            @if(strpos(url()->current(), "login") == null)
                 requireScript('notification', '1.0', "{{asset('js/notification.js')}}")
             @endif
             requireScript('bootstrap', '1.0', "{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js")
@@ -83,7 +83,7 @@
                 });
             })
 
-                @if(Auth::user())
+                @if(strpos(url()->current(), "login") == null)
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -117,7 +117,7 @@
 
             $(document).ready(function(){
             roles = {}
-            @if(Auth::user())
+            @if(strpos(url()->current(), "login") == null)
                 roles = {
                     'is_nurse' : {!! Auth::user()->contact == null ? 1 : (Auth::user()->contact->is_nurse == 0 ? Auth::user()->contact->is_nurse_helper : Auth::user()->contact->is_nurse)  !!},
 
@@ -280,21 +280,21 @@
                     'allow_destroy_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.destroy') !!},
                     'allow_approve_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.approve') !!},
                 }
+                setInterval(function(){
+                    for(key in roles) {
+                        value = roles[key]
+                        var el = $('[' + key + ']')
+                        if(el.length > 0) {
+                            el.each(function(){
+                                if(value == 0) {
+                                    $(el).remove()
+                                }
+                            })
+                        }
+                    }
+                }, 2000)
             @endif
 
-            setInterval(function(){
-                for(key in roles) {
-                    value = roles[key]
-                    var el = $('[' + key + ']')
-                    if(el.length > 0) {
-                        el.each(function(){
-                            if(value == 0) {
-                                $(el).remove()
-                            }
-                        })
-                    }
-                }
-            }, 2000)
 
         })
         })
