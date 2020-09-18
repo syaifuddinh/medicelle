@@ -592,6 +592,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
         if(path.indexOf('therapy/drug') > -1) {
               drug_datatable.rows.add(data.data.drug).draw()
+              allergy_history_datatable_drug.rows.add(data.data.allergy_history).draw()
         }
 
         if(path.indexOf('therapy/treatment_group') > -1) {
@@ -1926,10 +1927,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
       },
-      {data : 'qty', className : 'text-right', width:'10%', orderable:false},
       { 
         data : null,
-        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).piece.name
+        className : 'text-right',
+        render : resp => resp.qty + ' ' + $scope.data.drug.find(x => x.id == resp.item_id).piece.name
       },
       { 
         data : null,
@@ -2000,6 +2001,27 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   })
+ 
+
+  $scope.showAllergyHistoryDatatableDrug = function() {
+      if(path.indexOf('therapy/drug') > -1) {
+          allergy_history_datatable_drug = $('#allergy_history_datatable_drug').DataTable({
+
+            dom: 'rt',
+            'columns' : [
+            {
+              data : null,
+              render : resp => resp.is_unknown == 1 ? 'Tidak diketahui' : (resp.cure ? resp.cure : 'Tidak diketahui')
+            },
+            {data : 'side_effect'},
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          })
+      } 
+  }
+  $scope.showAllergyHistoryDatatableDrug()
  
   disease_history_datatable = $('#disease_history_datatable').DataTable({
     dom: 'rt',
@@ -2311,12 +2333,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.komplikasi_kb_history = {}
       $scope.ginekologi_history = {}
       $scope.pain_cure_history = {}
-      $scope.allergy_history = {}
+      $scope.allergy_history = {
+         'is_allergy_history' : 1
+      }
       $scope.kid_history = {}
       $scope.imunisasi_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'
 
       if(step == 1) {
+          allergy_history_datatable.clear().draw();
           disease_history_datatable.clear().draw();
           family_disease_history_datatable.clear().draw();
           pain_history_datatable.clear().draw();
@@ -2380,7 +2405,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   $scope.deleteAllergyHistory = function(e) {
     var tr = $(e).parents('tr');
-    allergy_history_datatable.row(tr).remove().draw()
+    var data = allergy_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
     
   $scope.deleteImunisasiHistory = function(e) {

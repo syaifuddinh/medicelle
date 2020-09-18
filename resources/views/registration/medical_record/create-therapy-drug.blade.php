@@ -74,17 +74,29 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <h5>Detail Obat</h5>
                                         <table class="table table-bordered" id='drug_datatable'>
                                             <thead>
                                                 <tr>
                                                     <td>Tanggal</td>
                                                     <td>Obat</td>
                                                     <td>Qty</td>
-                                                    <td>Satuan</td>
                                                     <td>Signa 1</td>
                                                     <td>Signa 2</td>
                                                     <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4" style='padding-left:1mm'>
+                                        <h5>Alergi</h5>
+                                        <table class="table table-bordered" id='allergy_history_datatable_drug'>
+                                            <thead>
+                                                <tr>
+                                                    <td>Obat / Makanan</td>
+                                                    <td>Reaksi</td>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>

@@ -119,7 +119,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitAllergyHistory()' ng-disabled='!allergy_history.side_effect'><i class="fa fa-check"></i></button>
+                                            <button type='button' class='btn btn-success' ng-click='storeDetail(allergy_history)' ng-disabled='!allergy_history.side_effect'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -133,7 +133,7 @@
                                 <table class="table table-bordered" id='allergy_history_datatable'>
                                     <thead>
                                         <tr>
-                                            <td>Obat</td>
+                                            <td>Obat / Makanan</td>
                                             <td>Reaksi</td>
                                             <td></td>
                                         </tr>

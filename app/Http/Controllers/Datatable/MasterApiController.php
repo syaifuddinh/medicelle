@@ -316,6 +316,8 @@ class MasterApiController extends Controller
     public function medical_item(Request $request) {
         $x = Item::medical_item()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug')
+        ->whereNotNull('items.category_id')
+        ->whereNotNull('items.classification_id')
         ->select('items.id', 'items.is_medical_item', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)

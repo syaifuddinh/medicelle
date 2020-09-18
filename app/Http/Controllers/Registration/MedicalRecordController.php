@@ -276,8 +276,8 @@ class MedicalRecordController extends Controller
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
-            'allergy_history:medical_record_id,cure,side_effect', 
-            'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
+            'allergy_history:id,medical_record_id,cure,side_effect', 
+            'pain_history:id,medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
             'imunisasi_history:medical_record_id,is_other_imunisasi,imunisasi_year_age,imunisasi_month_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
@@ -875,6 +875,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_treatment'] = 1;
                 $medicalRecord->treatment()->create($input);
+            } if($request->is_allergy_history == 1) {
+                $input = $request->all();
+                $input['is_allergy_history'] = 1;
+                $medicalRecord->allergy_history()->create($input);
             } if($request->is_sewa_instrumen == 1) {
                 $input = $request->all();
                 $input['is_sewa_instrumen'] = 1;

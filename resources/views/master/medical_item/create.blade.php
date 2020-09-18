@@ -27,7 +27,7 @@
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
                   <div class="input-group">
-                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();changeClassification()'>
+                    <select class="form-control" data-placeholder-text-single="'Pilih Kelompok'"  chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.category" ng-change='changeSampleCode();changeClassification()'>
                       <option value=""></option>
                     </select>
                     <div class="input-group-addon" ng-click='insert("category")'>
@@ -72,31 +72,31 @@
               </div>
             </div>
 
-            <div class="form-group" ng-show='formData.is_category != 1'> 
+            <div class="form-group"> 
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan jual<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
+                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  chosen allow-single-deselect="false" ng-model="formData.piece_id" ng-options="c.id as c.name for c in data.piece">
                   <option value=""></option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group" ng-show='formData.is_category != 1'> 
+            <div class="form-group"> 
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Satuan beli<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
-                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'" ng-required='formData.is_category != 1' chosen allow-single-deselect="false" ng-model="formData.purchase_piece_id" ng-options="c.id as c.name for c in data.piece">
+                <select class="form-control" data-placeholder-text-single="'Pilih Satuan'"  chosen allow-single-deselect="false" ng-model="formData.purchase_piece_id" ng-options="c.id as c.name for c in data.piece">
                   <option value=""></option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group"  ng-show='formData.is_category != 1'>
+            <div class="form-group" >
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Grup nota<span class="required">*</span>
               </label>
               <div class="col-md-8 col-sm-8 col-xs-12">
-                <select  ng-required='formData.is_category != 1' class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.grup_nota_id" ng-options="c.id as c.name for c in data.grup_nota">
+                <select   class="form-control" data-placeholder-text-single="'Pilih Grup Nota'" required='required' chosen allow-single-deselect="false" ng-model="formData.grup_nota_id" ng-options="c.id as c.name for c in data.grup_nota">
                   <option value=""></option>
                 </select>
               </div>
@@ -114,31 +114,31 @@
             </div>
 
             <div class="col-md-6">
-              <div class="form-group" ng-show='formData.is_category != 1'>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga beli
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.purchase_price"  ng-change='countPrice()' jnumber2 only-num>
+                  <input type="text" class="form-control"   ng-model="formData.purchase_price"  ng-change='countPrice()' jnumber2 only-num>
                 </div>
               </div>
               
-              <div class="form-group" ng-show='formData.is_category != 1'>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Margin(%)
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.additional.margin" ng-change='countPrice()' maxlength='3' only-num>
+                  <input type="text" class="form-control"   ng-model="formData.additional.margin" ng-change='countPrice()' maxlength='3' only-num>
                 </div>
               </div>
 
-              <div class="form-group" ng-show='formData.is_category != 1'>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Jual
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                      <input type="text" class="form-control" ng-required='formData.is_category != 1'  ng-model="formData.price" ng-change='countMargin()' jnumber2 only-num>
+                      <input type="text" class="form-control"   ng-model="formData.price" ng-change='countMargin()' jnumber2 only-num>
                 </div>
               </div>
 
-              <div class="form-group" ng-show='formData.is_category != 1'>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Harga Eceran Tertinggi
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
@@ -146,7 +146,7 @@
                 </div>
               </div>
 
-              <div class="form-group" ng-show='formData.is_category != 1'>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Principal
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
