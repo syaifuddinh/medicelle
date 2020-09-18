@@ -28,7 +28,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
       },
       {
         data:null, 
-        name:"items.name",
+        name:"name",
         render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
       {data:"group.name", name:"group.name"},
