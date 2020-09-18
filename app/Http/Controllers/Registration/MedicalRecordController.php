@@ -898,7 +898,7 @@ class MedicalRecordController extends Controller
             } else if($request->is_drug == 1) {
                 $input = $request->all();
                 $input['is_drug'] = 1;
-                $medicalRecord->diagnostic()->create($input);
+                $medicalRecord->drug()->create($input);
             } else if($request->is_treatment_group == 1) {
                 $input = $request->all();
                 $input['is_treatment_group'] = 1;

@@ -25,8 +25,9 @@ app.controller('formula', ['$scope', '$rootScope', '$compile', '$http', '$filter
     columns:[
       {
         data:null, 
-        orderable:false,
-        name:'date',
+        orderable:true,
+        searchable : false,
+        name:'formulas.date',
         render:resp => $filter('fullDate')(resp.date)
       },
       {

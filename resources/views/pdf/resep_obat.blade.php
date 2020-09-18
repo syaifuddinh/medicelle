@@ -90,15 +90,15 @@
                 
                 <div style='margin-bottom:25mm;margin-top:10mm'>
                     @foreach($formula->detail as $detail)
-                        <div style='font-style:italic;width:100%'>
+                        <div style='font-style:italic;width:100%;margin-bottom:2.5mm'>
                             <div class="inline-block" style='font-size:101%'>
                                 R / 
                             </div>
                             <div class="inline-block"  style='font-size:101%'>{{ $detail->item->name }}</div>
-                            <div  class="inline-block" style='font-size:101%'>{{ number_format($detail->stock->qty) }}</div>
+                            <div  class="inline-block" style='font-size:101%'>{{ number_format($detail->qty) }}</div>
                             <div class="inline-block"  style='font-size:101%'>{{ $detail->item->piece->name }}</div>
                             <div style='display:flex;position:relative'>
-                                <div style='position:absolute;left:0;top:1.5mm;border-bottom:1px solid black;height:1mm;width:96%'></div>
+                                <div style='position:absolute;left:0;top:0.2mm;border-bottom:1px solid black;height:1mm;width:96%'></div>
                                 <div style="float:right;font-size:101%;">
                                     det
                                 </div>
@@ -108,8 +108,7 @@
                 </div>
 
                 <div style='margin-top:10mm'>
-                    <div style='width:60%;display:inline-block'></div>
-                    <div style='width:40%;display:inline-block'>
+                    <div style='width:30%;display:inline-block'>
                         <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::today() }}</p>
                         <p style='text-align:center;'>( {{ $formula->contributor->name }} )</p>
                     </div>

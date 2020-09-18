@@ -40,7 +40,7 @@ app.controller('purchaseOrder', ['$scope', '$rootScope', '$compile', '$http', '$
 
       {
         data:null, 
-        orderable:false,
+        name:'purchase_orders.date',
         searchable:false,
         render:resp => $filter('fullDate')(resp.date)
       },

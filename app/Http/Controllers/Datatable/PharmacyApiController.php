@@ -32,7 +32,7 @@ class PharmacyApiController extends Controller
 
     public function formula(Request $request) {
         $x = Formula::with('medical_record:id,code', 'registration_detail:id,registration_id', 'registration_detail.registration:id,patient_id,code', 'registration_detail.registration.patient:id,name')
-        ->whereBetween('date', [$request->date_start, $request->date_end])
+        ->whereBetween('formulas.date', [$request->date_start, $request->date_end])
         ->select('formulas.id', 'formulas.date', 'formulas.medical_record_id', 'formulas.registration_detail_id', 'formulas.is_approve');
 
         if($request->draw == 1)
@@ -67,9 +67,9 @@ class PharmacyApiController extends Controller
 
     public function purchase_order(Request $request) {
         $x = PurchaseOrder::with('purchase_request:id,code', 'supplier:id,name')
-        ->where('date_start', '>=', $request->date_start)
-        ->where('date_end', '<=', $request->date_end)
-        ->select('id', 'code', 'supplier_id', 'purchase_request_id', 'date', 'date_start', 'date_end', 'is_receipt_completed', 'is_used');
+        ->where('purchase_orders.date_start', '>=', $request->date_start)
+        ->where('purchase_orders.date_end', '<=', $request->date_end)
+        ->select('purchase_orders.id', 'purchase_orders.code', 'purchase_orders.supplier_id', 'purchase_orders.purchase_request_id', 'purchase_orders.date', 'purchase_orders.date_start', 'purchase_orders.date_end', 'purchase_orders.is_receipt_completed', 'purchase_orders.is_used');
 
         if($request->filled('status')) {
             if($request->status == 1) {
@@ -91,8 +91,8 @@ class PharmacyApiController extends Controller
 
     public function receipt(Request $request) {
         $x = Receipt::with('purchase_order:id,code', 'supplier:id,name')
-        ->where('date_start', '>=', $request->date_start)
-        ->where('date_end', '<=', $request->date_end)
+        ->where('receipts.date_start', '>=', $request->date_start)
+        ->where('receipts.date_end', '<=', $request->date_end)
         ->select('receipts.id', 'receipts.code', 'receipts.supplier_id', 'receipts.purchase_order_id', 'receipts.date', 'receipts.date_start', 'receipts.date_end');
 
         if($request->draw == 1)

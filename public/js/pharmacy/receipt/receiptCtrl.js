@@ -39,7 +39,7 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
       {
         data:null, 
-        orderable:false,
+        name:'receipts.date',
         searchable:false,
         render:resp => $filter('fullDate')(resp.date)
       },

@@ -73,7 +73,7 @@ class LaboratoryTypeController extends Controller
      */
     public function show($id)
     {
-        $laboratory_type = LaboratoryType::with('laboratory_type_detail:laboratory_type_id,name,price')->find($id);
+        $laboratory_type = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name,price')->find($id);
         return Response::json($laboratory_type, 200);
     }
 

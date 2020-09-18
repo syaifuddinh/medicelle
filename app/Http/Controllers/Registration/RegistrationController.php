@@ -346,13 +346,14 @@ class RegistrationController extends Controller
                         $additional = $value->laboratory_pivot->additional;
                         if($additional->treatment) {
                             if(count($additional->treatment) > 0) {
-                                dd($additional->treatment);
                                 foreach($additional->treatment as $t) {
-                                    $laboratory_type_detail = DB::table('laboratory_type_details')
-                                    ->whereId($t->id)
-                                    ->first();
-                                    if($laboratory_type_detail !== null) {
-                                        $debet += $laboratory_type_detail->price;
+                                    foreach ($t->detail as $recover) {
+                                        $laboratory_type_detail = DB::table('laboratory_type_details')
+                                        ->whereId($recover->id)
+                                        ->first();
+                                        if($laboratory_type_detail != null) {
+                                            $debet += $laboratory_type_detail->price;
+                                        }
                                     }
                                 }
                             }
