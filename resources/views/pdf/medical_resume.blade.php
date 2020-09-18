@@ -83,7 +83,7 @@
                     <p>Terapi :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
-                            <li>{{ $unit->item->name }} sebanyak {{ $unit->qty . ' ' . $unit->item->piece->name }}</li>
+                            <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}</li>
                        @endforeach
                     </ol>
                     <p style='margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
