@@ -70,7 +70,7 @@ function _loadScript(url, name, version, callback) {
 }
 
 function _loadCSS(url, name, version, callback) {
-  var s = document.createElement('style');
+  var s = document.createElement('link');
 
   if (s.readyState) { //IE
     s.onreadystatechange = function() {
@@ -88,6 +88,7 @@ function _loadCSS(url, name, version, callback) {
   }
 
   s.setAttribute("href", url);
+  s.setAttribute("rel", 'stylesheet');
   document.getElementsByTagName("head")[0].appendChild(s)
 }
 
