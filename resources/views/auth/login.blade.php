@@ -25,7 +25,15 @@
     <!-- Custom Theme Style -->
     <link href="{{ asset('') }}build/css/custom.min.css" rel="stylesheet">
     <link href="{{ asset('') }}css/classic.css" rel="stylesheet">
-
+    <script>
+        baseUrl = '{{ url('') }}'
+        function submitLogin(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById('loginButton').click()
+            }
+        } 
+    </script>
   </head>
 
   <body class="login">
@@ -54,10 +62,10 @@
                 <input type="text" class="form-control" name='username' placeholder="Username" required="" autofocus />
               </div>
               <div>
-                <input type="password" class="form-control" name='password' placeholder="Password" required="" />
+                <input type="password" class="form-control" name='password' id='passwordField' placeholder="Password" onkeyup='submitLogin(event)' required="" />
               </div>
               <div>
-                <button class="btn btn-default submit">Log in</button>
+                <button class="btn btn-default submit" id='loginButton'>Log in</button>
                 <!--<a class="reset_pass" href="#">Lost your password?</a>-->
 
               </div>
@@ -92,7 +100,7 @@
                 <input type="email" class="form-control" placeholder="Email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="Password" id='passwordField' required="" onkeyup='submitLogin()' />
               </div>
               <div>
                 <a class="btn btn-default submit" href="index.html">Submit</a>
@@ -119,19 +127,6 @@
       </div>
     </div>
     <link rel='stylesheet' id='norebro-global-fonts-css'  href='//fonts.googleapis.com/css?family=Rubik%3A900i%2C900%2C700i%2C700%2C500i%2C500%2C400i%2C400%2C300i%2C300%7CPoppins%3A700%2C600%2C500%2C400%2C300%26subset%3Dcyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Clatin-ext%2Cdevanagari%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew%2Ccyrillic%2Clatin-ext%2Chebrew&#038;ver=1.0.0' type='text/css' media='all' />
-    <script>
-        $(document).ready(function(){
-
-            var inputs = $(':input').keypress(function(e){ 
-                if (e.which == 13) {
-                   e.preventDefault();
-                   var nextInput = inputs.get(inputs.index(this) + 1);
-                   if (nextInput) {
-                      nextInput.focus();
-                   }
-                }
-            });
-        });
-    </script>
+    @include('js')
   </body>
 </html>
