@@ -75,7 +75,7 @@
                 <p>Diagnosis :</p>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                     @foreach($medicalRecord->diagnose_history as $unit)
-                        <li>{{ $unit->disease->name }}</li>
+                        <li>{{ $unit->disease->name ?? '' }}</li>
                    @endforeach
                 </ol>
                 <br>
