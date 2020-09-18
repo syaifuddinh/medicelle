@@ -875,6 +875,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_treatment'] = 1;
                 $medicalRecord->treatment()->create($input);
+            } if($request->is_family_disease_history == 1) {
+                $input = $request->all();
+                $input['is_family_disease_history'] = 1;
+                $medicalRecord->family_disease_history()->create($input);
             } if($request->is_allergy_history == 1) {
                 $input = $request->all();
                 $input['is_allergy_history'] = 1;

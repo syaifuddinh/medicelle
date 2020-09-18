@@ -23,8 +23,7 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
     columns:[
       {
         data:null, 
-        searchable : false, 
-        orderable : false,
+        name:'unique_code',
         render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.unique_code + "</a>"
       },
       {

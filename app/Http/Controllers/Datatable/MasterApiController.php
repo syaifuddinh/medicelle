@@ -322,8 +322,8 @@ class MasterApiController extends Controller
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
-
-        return Datatables::eloquent($x)->make(true);
+        $x = $x->get();
+        return Datatables::of($x)->make(true);
     }
 
     public function bhp(Request $request, $flag = '') {

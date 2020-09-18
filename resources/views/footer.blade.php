@@ -12,9 +12,6 @@
 
     <!-- jQuery -->
     <script src="{{ asset('') }}vendors/jquery/dist/jquery.min.js"></script>
-    <script src="{{asset('js/jSignature.js')}}"></script>
-    <script src="{{asset('js/jSignature.CompressorBase30.js')}}"></script>
-    <script src="{{asset('js/jSignature.CompressorSVG.js')}}"></script>
     <script src="{{asset('js/notification.js')}}"></script>
     <script>
 
@@ -50,20 +47,6 @@
     </script>
     <!-- Bootstrap -->
     <script src="{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="{{ asset('') }}vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="{{ asset('') }}vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js -->
-    <script src="{{ asset('') }}vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="{{ asset('') }}vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="{{ asset('') }}vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="{{ asset('') }}vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons -->
-    <script src="{{ asset('') }}vendors/skycons/skycons.js"></script>
     <!-- PickADate -->
     <script src="{{ asset('') }}js/picker.js"></script>
     <script src="{{ asset('') }}js/picker.date.js"></script>

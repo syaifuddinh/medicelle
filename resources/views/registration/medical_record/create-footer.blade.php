@@ -100,5 +100,9 @@
     </a>
 </div>
 @include('footer')
+<script src="{{asset('js/jSignature.js')}}"></script>
+<script src="{{asset('js/jSignature.CompressorBase30.js')}}"></script>
+<script src="{{asset('js/jSignature.CompressorSVG.js')}}"></script>
+<script src="{{ asset('') }}vendors/Chart.js/dist/Chart.min.js"></script>
 <script src="{{ asset('') }}js/registration/medical_record/medicalRecordCreateCtrl.js"></script>
 

@@ -2325,7 +2325,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }, 300)
       $scope.diagnose_history = { is_other : 1 }
       $scope.disease_history = {}
-      $scope.family_disease_history = {}
+      $scope.family_disease_history = {
+         'is_family_disease_history' : 1
+      }
       $scope.obgyn_disease_history = {}
       $scope.obgyn_family_disease_history = {}
       $scope.pain_history = {}
@@ -2400,7 +2402,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           bhp_datatable.clear().draw();
       }
 
-      window.scrollTo(0, 0)
   }
     
   $scope.deleteAllergyHistory = function(e) {
@@ -2572,7 +2573,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.deleteFamilyDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
-    family_disease_history_datatable.row(tr).remove().draw()
+    var data = family_disease_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     

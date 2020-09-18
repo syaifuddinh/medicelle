@@ -174,7 +174,7 @@
                                             <div class="input-group">
                                                 <input type="text" class='form-control' ng-model='family_disease_history.description'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_name'><i class='fa fa-check'></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(family_disease_history)' ng-disabled='!family_disease_history.disease_name'><i class='fa fa-check'></i></button>
                                                 </div>
                                             </div>
                                         </div>

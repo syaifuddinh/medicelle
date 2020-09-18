@@ -1,5 +1,6 @@
 @include('registration/assesment/create-header')
                       </nav>
+                        <link href="{{ asset('') }}css/rzslider.min.css" rel="stylesheet">
                         <div class="ln_solid"></div>
                         <div class="row">
                             <div class="col-md-12">

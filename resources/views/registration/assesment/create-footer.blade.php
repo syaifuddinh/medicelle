@@ -40,5 +40,6 @@
 <!-- ============================================================== -->
 
 @include('footer')
+
 <script src="{{ asset('') }}js/registration/assesment/assesmentCreateCtrl.js"></script>
 

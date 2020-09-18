@@ -45,8 +45,8 @@ app.controller('patient', ['$rootScope', '$scope', '$compile', '$http', '$filter
       {data:"phone", name:"phone"},
       {
         data:null, 
+        name:'contacts.birth_date',
         searchable:false,
-        orderable:false,
         render : resp => $filter('fullDate')(resp.birth_date)
       },
       {data:"age", name:"age", className:"text-right"},

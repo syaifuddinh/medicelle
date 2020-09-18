@@ -51,4 +51,5 @@
 
                     </form>
                 </div>
+
 @include('registration/medical_record/create-footer')
