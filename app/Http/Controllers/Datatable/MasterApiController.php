@@ -157,7 +157,7 @@ class MasterApiController extends Controller
     public function supplier(Request $request) {
         $x = Contact::supplier()->with('city', 'contact:id,name')->select('contacts.id', 'contacts.code', 'contacts.name', 'contacts.city_id', 'contacts.phone', 'contacts.contact_id', 'contacts.fax', 'contacts.is_active');
 
-        // die($request->is_active);
+        $x = $request->filled('supplier_category') ? $x->whereSupplierCategory($request->supplier_category) : $x;
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

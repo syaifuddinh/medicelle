@@ -74,8 +74,7 @@ class ReceiptController extends Controller
     }
 
     public function fetch($id) {
-        $receipt = Receipt::with('detail', 'detail.item:id,name','detail.purchase_order_detail:id,leftover_qty,received_qty,qty', 'supplier:id,name,address', 'purchase_order:id,code')->findOrFail($id);
-
+        $receipt = Receipt::with('detail', 'detail.item:id,name','detail.purchase_order_detail:id,leftover_qty,received_qty,qty', 'supplier:id,name,address', 'purchase_order:id,code,purchase_request_id','purchase_order.purchase_request', 'purchase_order.purchase_request.approved', 'purchase_order.purchase_request.approved.user:id,name')->findOrFail($id);
         return $receipt;
     }
     /**
@@ -102,7 +101,8 @@ class ReceiptController extends Controller
         $params = [
             'receipt' => $receipt,
             'grandtotal' => $grandtotal,
-            'hna_total' => $hna_total
+            'hna_total' => $hna_total,
+            'dot' => '.......................'
         ];
         $pdf = PDF::loadview('pdf/pharmacy/receipt', $params);
         return $pdf->stream('Purchase order.pdf');

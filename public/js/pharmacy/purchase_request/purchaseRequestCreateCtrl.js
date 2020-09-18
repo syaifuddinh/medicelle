@@ -154,6 +154,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
       data : function(d) {
         d.length = 6
         d.is_active = 1
+        d.supplier_category = 'supplier'
 
         return d
       }

@@ -122,6 +122,36 @@
                         </tr>
                     </tfoot>
                 </table>
+
+                <div style='position:absolute;bottom:28mm'>
+                    <div style='display:inline-block;position:relative'>
+                        <span style='display:inline-block;'>
+                            
+                            <p style='text-align:center;margin-bottom:25mm;width:210%'>Petugas</p>
+                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->draft->user->name ?? $dot}} )</p>
+                        </span>
+                    </div>
+                </div>
+        
+                <div style='position:absolute;bottom:28mm;left:90mm'>
+                    <div style='display:inline-block;position:relative'>
+                        <span style='display:inline-block;'>
+                            
+                            <p style='text-align:center;margin-bottom:25mm;width:210%'>APJ</p>
+                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->apj->user->name ?? $dot}} )</p>
+                        </span>
+                    </div>
+                </div>
+        
+                <div style='position:absolute;bottom:28mm;left:180mm'>
+                    <div style='display:inline-block;position:relative'>
+                        <span style='display:inline-block;'>
+                            
+                            <p style='text-align:center;margin-bottom:25mm;width:210%'>Disetujui Oleh</p>
+                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->direktur->user->name ?? $dot}} )</p>
+                        </span>
+                    </div>
+                </div>
         
                 @include('pdf/letter_footer')        
             </div>

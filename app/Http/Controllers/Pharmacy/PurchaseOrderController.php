@@ -42,7 +42,7 @@ class PurchaseOrderController extends Controller
     }
 
     public function fetch($id) {
-        $purchaseOrder = PurchaseOrder::with('detail', 'detail.item:id,name', 'supplier:id,name,address', 'purchase_request:id,code')->findOrFail($id);
+        $purchaseOrder = PurchaseOrder::with('detail', 'detail.item:id,name', 'supplier:id,name,address', 'purchase_request:id,code', 'purchase_request.approved', 'purchase_request.approved.user:id,name')->findOrFail($id);
 
         return $purchaseOrder;
     }
@@ -68,6 +68,7 @@ class PurchaseOrderController extends Controller
         $params = [
             'purchaseOrder' => $purchaseOrder,
             'grandtotal' => $grandtotal,
+            'dot' => '.......................'
         ];
         $pdf = PDF::loadview('pdf/pharmacy/purchase_order', $params);
         return $pdf->stream('Purchase order.pdf');

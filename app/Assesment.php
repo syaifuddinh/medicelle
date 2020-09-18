@@ -9,8 +9,9 @@ use App\Registration;
 
 class Assesment extends Model
 {
+    protected $appends = ['additional'];
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['step', 'date', 'registration_id', 'patient_id', 'created_by', 'updated_by', 'is_disturb','pain_score','main_complaint','pain_description','fallen','fallen_description','secondary_diagnose','secondary_diagnose_description','helper','helper_description','infus','infus_description','walking','walking_description','mental','mental_description','risk_level','risk_level_status','risk_level_description','menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan','general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia'];
+    protected $fillable = ['step', 'date', 'registration_id', 'patient_id', 'created_by', 'updated_by', 'is_disturb','pain_score','main_complaint','pain_description','fallen','fallen_description','secondary_diagnose','secondary_diagnose_description','helper','helper_description','infus','infus_description','walking','walking_description','mental','mental_description','risk_level','risk_level_status','risk_level_description','menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan','general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia', 'additional'];
 
     public static function boot() {
         parent::boot();
@@ -31,7 +32,7 @@ class Assesment extends Model
             $registration = Registration::find($assesment->registration_id);
             $registrationDetail = $registration->detail;
             foreach($registrationDetail as $unit) {
-                $unit->medical_record()->update([
+                $params = [
                     'main_complaint' => $assesment->main_complaint,
                     'obgyn_main_complaint' => $assesment->main_complaint,
                     'general_condition' => $assesment->general_condition,
@@ -42,7 +43,11 @@ class Assesment extends Model
                     'temperature' => $assesment->temperature,
                     'breath_frequency' => $assesment->breath_frequency,
                     'postbirth_weight' => $assesment->postbirth_weight
-                ]);
+                ];
+                if(!$unit->medical_record->current_disease) {
+                    $params['current_disease'] = $assesment->additional->riwayat_penyakit_sekarang ?? '';
+                }
+                $unit->medical_record()->update($params);
             }
         });
     }
@@ -128,6 +133,19 @@ class Assesment extends Model
         }
     }
 
+    public function setAdditionalAttribute($value) {
+        $json = $value;
+        $additional = $this->additional;
+        foreach($json as $key => $unit) {
+            $additional->{$key} = $unit;
+        } 
+        foreach($additional as $key => $unit) {
+            $base_url = asset('files') . '/';
+            $input = str_replace($base_url, '', $unit);
+            $additional->{$key} = $input;
+        } 
+        $this->attributes['additional'] = json_encode($additional); 
+    }
 
     public function setArmSizeAttribute($value) {
         if($value == null) {
@@ -237,5 +255,13 @@ class Assesment extends Model
 
     public function imunisasi_history() {
         return $this->hasMany('App\AssesmentDetail')->whereIsImunisasiHistory(1);
+    }
+
+    public function getAdditionalAttribute() {
+        if(array_key_exists('additional', $this->attributes)) {
+            $additional = json_decode($this->attributes['additional']);
+            return $additional;
+        }
+        return json_decode('{}');
     }
 }

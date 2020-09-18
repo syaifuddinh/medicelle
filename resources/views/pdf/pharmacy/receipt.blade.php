@@ -131,6 +131,16 @@
                     </tfoot>
 
                 </table>
+
+                <div style='position:absolute;bottom:28mm'>
+                    <div style='display:inline-block;position:relative'>
+                        <span style='display:inline-block;'>
+                            
+                            <p style='text-align:center;margin-bottom:25mm;width:210%'>Disetujui Oleh</p>
+                            <p style='text-align:center;width:210%'>( {{$receipt->purchase_order->purchase_request->approved->user->name ?? $dot}} )</p>
+                        </span>
+                    </div>
+                </div>
         
                 @include('pdf/letter_footer')        
             </div>

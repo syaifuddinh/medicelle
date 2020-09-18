@@ -7,6 +7,7 @@ use Auth;
 use App\PurchaseOrder;
 use App\PurchaseRequestDetail;
 use DB;
+use Carbon\Carbon;
 
 class PurchaseRequest extends Model
 {
@@ -43,7 +44,7 @@ class PurchaseRequest extends Model
                 $params['created_by'] = auth()->user()->id;
                 $params['purchase_request_id'] = $purchaseRequest->id;
                 $params['status'] = $purchaseRequest->status;
-                $params['created_at'] = date('Y-m-d');
+                $params['created_at'] = Carbon::now()->format('Y-m-d h:i:s');
                 DB::table('purchase_request_logs')
                 ->insert($params);
             }
@@ -96,6 +97,20 @@ class PurchaseRequest extends Model
 
                 }
             }
+
+            $existing = DB::table('purchase_request_logs')
+            ->wherePurchaseRequestId($purchaseRequest->id)
+            ->whereStatus($purchaseRequest->status)
+            ->count('id');
+            if($existing == 0) {
+                $params = [];
+                $params['created_by'] = auth()->user()->id;
+                $params['purchase_request_id'] = $purchaseRequest->id;
+                $params['status'] = $purchaseRequest->status;
+                $params['created_at'] = Carbon::now()->format('Y-m-d h:i:s');
+                DB::table('purchase_request_logs')
+                ->insert($params);
+            }
         });
     }
 
@@ -115,5 +130,25 @@ class PurchaseRequest extends Model
     } 
     public function purchase_order() {
         return $this->hasMany('App\PurchaseOrder');
+    } 
+
+    public function draft() {
+        return $this->hasOne('App\PurchaseRequestLog')
+        ->whereStatus(1);
+    } 
+
+    public function apj() {
+        return $this->hasOne('App\PurchaseRequestLog')
+        ->whereStatus(2);
+    } 
+
+    public function direktur() {
+        return $this->hasOne('App\PurchaseRequestLog')
+        ->whereStatus(3);
+    } 
+
+    public function approved() {
+        return $this->hasOne('App\PurchaseRequestLog')
+        ->whereStatus(4);
     } 
 }

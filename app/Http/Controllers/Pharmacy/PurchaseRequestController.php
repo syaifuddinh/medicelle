@@ -58,6 +58,7 @@ class PurchaseRequestController extends Controller
         try {
             $purchaseRequest = new PurchaseRequest();
             $purchaseRequest->fill($request->all());
+            $purchaseRequest->status = 1;
             $purchaseRequest->save();
 
             $entries = 0;
@@ -82,7 +83,7 @@ class PurchaseRequestController extends Controller
     }
 
     public function fetch($id) {
-        $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name')->findOrFail($id);
+        $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name', 'draft', 'draft.user:id,name', 'apj', 'apj.user:id,name', 'direktur', 'direktur.user:id,name')->findOrFail($id);
 
         return $purchaseRequest;
     }
@@ -109,6 +110,7 @@ class PurchaseRequestController extends Controller
         $params = [
             'purchaseRequest' => $purchaseRequest,
             'grandtotal' => $grandtotal,
+            'dot' => '.......................'
         ];
         $pdf = PDF::loadview('pdf/pharmacy/purchase_request', $params);
         return $pdf->stream('Purchase request.pdf');

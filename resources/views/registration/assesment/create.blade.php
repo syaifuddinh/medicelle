@@ -12,6 +12,24 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                            
+                                    <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <textarea class="form-control" ng-model='formData.additional.riwayat_penyakit_sekarang' ng-change='submitOne("additional.riwayat_penyakit_sekarang")'></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                            
+                                    <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit dahulu<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <textarea class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></textarea>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
