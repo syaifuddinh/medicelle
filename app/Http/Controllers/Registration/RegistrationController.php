@@ -305,6 +305,7 @@ class RegistrationController extends Controller
                 $bhp = $medicalRecord->bhp;
                 $sewa_ruangan = $medicalRecord->sewa_ruangan;
                 $sewa_alkes = $medicalRecord->sewa_alkes;
+                $sewa_instrumen = $medicalRecord->sewa_instrumen;
                 $drug = $medicalRecord->drug;
                 DB::beginTransaction();
                 foreach($treatments as $value) {
@@ -385,6 +386,15 @@ class RegistrationController extends Controller
                     ]);
                 }
                 foreach($sewa_alkes as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_instrumen as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,

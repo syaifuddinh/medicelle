@@ -16,4 +16,7 @@
             <a href='{{ strpos(url()->current(), "sewa_ruangan") == null ? route("medical_record.edit.utilization.sewa_ruangan", ["id" => $id]) : "#" }}'>Sewa ruangan</a>
         </li>
     @endif
+    <li class='{{ strpos(url()->current(), "sewa_instrumen") != null ? "active" : "" }}'>
+        <a href='{{ strpos(url()->current(), "sewa_instrumen") == null ? route("medical_record.edit.utilization.sewa_instrumen", ["id" => $id]) : "#" }}'>Sewa instrumen</a>
+    </li>
 </ul>

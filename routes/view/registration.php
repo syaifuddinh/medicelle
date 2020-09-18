@@ -120,6 +120,9 @@ Route::name('medical_record.')->prefix('medical_record')
     Route::get('/utilization/sewa_alkes/{id}', function ($id){
         return view('registration/medical_record/create-utilization-sewa_alkes')->withId($id);
     })->name('edit.utilization.sewa_alkes');
+    Route::get('/utilization/sewa_instrumen/{id}', function ($id){
+        return view('registration/medical_record/create-utilization-sewa-instrumen')->withId($id);
+    })->name('edit.utilization.sewa_instrumen');
     Route::get('/utilization/sewa_ruangan/{id}', function ($id){
         return view('registration/medical_record/create-utilization-sewa_ruangan')->withId($id);
     })->name('edit.utilization.sewa_ruangan');

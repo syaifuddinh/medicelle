@@ -279,6 +279,10 @@ class MedicalRecord extends Model
         return $this->hasMany('App\MedicalRecordDetail')->whereIsDiagnostic(1);
     }
 
+    public function sewa_instrumen() {
+        return $this->hasMany('App\MedicalRecordDetail')->whereIsSewaInstrumen(1);
+    }
+
     public function drug() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsDrug(1);
     }

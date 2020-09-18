@@ -2,6 +2,7 @@
 
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
+        Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
         Route::post('registration/invoice/{registration_detail_id}', 'RegistrationController@storeInvoice');
@@ -41,7 +42,6 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/{id}/refer_doctor/{doctor_id}', 'MedicalRecordController@refer_doctor');
         Route::get('medical_record/{id}/doctor', 'MedicalRecordController@doctor');
         Route::post('medical_record/{id}/store_signature/{flag}', 'MedicalRecordController@store_signature');
-        Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
         Route::get('medical_record/{id}/docx', 'MedicalRecordController@docx');
         Route::post('medical_record/submit_research/{id}/{flag?}', 'MedicalRecordController@submit_research');
         Route::post('medical_record/update_research/{medical_record_detail_id}/', 'MedicalRecordController@update_research');

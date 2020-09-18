@@ -161,6 +161,7 @@ class RadiologyTypeController extends Controller
             'is_diagnostic' => 1,
             'radiology_group' => $radiology_type_id,
             'grup_nota_id' => $params['grup_nota_id'],
+            'destination' => 'RADIOLOGI',
             'piece_id' => $params['piece_id'],
             'price' => $params['price'],
             'percentage' => $params['percentage']

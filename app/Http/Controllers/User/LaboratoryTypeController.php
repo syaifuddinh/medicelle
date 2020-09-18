@@ -152,10 +152,11 @@ class LaboratoryTypeController extends Controller
             'name' => $laboratory_type->name,
             'is_diagnostic' => 1,
             'laboratory_group' => $laboratory_type_id,
+            'destination' => 'LABORATORIUM',
             'grup_nota_id' => $params['grup_nota_id'],
-            'piece_id' => $params['piece_id'],
+            'piece_id' => $params['piece_id'] ?? null,
             'price' => $totalPrice,
-            'percentage' => $params['percentage'],
+            'percentage' => $params['percentage'] ?? 0,
             'laboratory_types' => [
                 [
                     'id' => $laboratory_type_id,

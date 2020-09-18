@@ -79,7 +79,7 @@
                    @endforeach
                 </ol>
                 <br>
-                <div style='margin-bottom:17mm'>
+                <div style='margin-bottom:7mm'>
                     <p>Terapi :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)

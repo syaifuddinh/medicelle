@@ -121,6 +121,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 },
                 {
                   data:null, 
+                  orderable : false,
+                  searchable : false,
                   className : 'capitalize',
                   render:function(resp) {
                       var destination = resp.registration_detail.destination.toLowerCase()
@@ -617,6 +619,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         if(path.indexOf('sewa_ruangan') > -1) {
               sewa_ruangan_datatable.rows.add(data.data.sewa_ruangan).draw()
         }
+
+        if(path.indexOf('sewa_instrumen') > -1) {
+              sewa_instrumen_datatable.rows.add(data.data.sewa_instrumen).draw()
+        }
         if(path.indexOf('assesment') > -1) {
               $scope.assesmentHistory()
         }
@@ -739,6 +745,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.sewa_alkes.lokasi = lokasi
       sewa_alkes_datatable.row.add($scope.sewa_alkes).draw()
       $scope.sewa_alkes = {
+          'is_sewa_alkes' : 1,
           date : $scope.resume_date
       }
       setTimeout(function () {    
@@ -756,6 +763,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $scope.sewa_ruangan.lokasi = lokasi
       sewa_ruangan_datatable.row.add($scope.sewa_ruangan).draw()
       $scope.sewa_ruangan = {
+          'is_sewa_instrumen' : 1,
           date : $scope.resume_date
       }
       setTimeout(function () {    
@@ -1318,6 +1326,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $('#BHPModal').modal()
   }
 
+  $scope.showSewaInstrumen = function() {
+    browse_sewa_instrumen_datatable.ajax.reload()
+    $('#sewaInstrumenModal').modal()
+  }
+
   $scope.showSewaAlkes = function() {
     browse_sewa_alkes_datatable.ajax.reload()
     $('#sewaAlkesModal').modal()
@@ -1354,6 +1367,31 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }    
   }
   $scope.bhp_datatable()
+
+  $scope.sewa_instrumen_datatable = function() {
+      if( path.indexOf('sewa_instrumen') > -1 ) {
+          sewa_instrumen_datatable = $('#sewa_instrumen_datatable').DataTable({
+            dom: 'rt',
+            'columns' : [
+            {
+              data : null,
+              render : resp => $filter('fullDate')(resp.date)
+            },
+            {data : 'item.name'},
+            {data : 'qty'},
+            {
+              data : null,
+              className : 'text-center',
+              render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteSewaInstrumen($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+            },
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.sewa_instrumen_datatable()
 
   $scope.sewa_alkes_datatable = function() {
       if( path.indexOf('sewa_alkes') > -1 ) {
@@ -1443,6 +1481,42 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }    
   }
   $scope.browse_bhp()
+    
+
+  $scope.browse_sewa_instrumen = function() {
+      if( path.indexOf('sewa_instrumen') > -1 ) {
+          browse_sewa_instrumen_datatable = $('#browse_sewa_instrumen_datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+              url : baseUrl+'/datatable/master/sewa_instrumen/actived',
+            },
+            'columns' : [
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              className : 'text-center',
+              render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaInstrumen($event.currentTarget)'>Pilih</button>"
+            },
+            {data : 'name'},
+            {
+              data:null, 
+              name:null,
+              searchable:false,
+              orderable:false,
+              render : resp => "<input type='text' class='form-control' ng-model='qty' id='qty' maxlength='3' jnumber2 only-num>"
+            },
+            {data : 'piece.name'},
+            ],
+            createdRow: function(row, data, dataIndex) {
+              $compile(angular.element(row).contents())($scope);
+            }
+          });
+      }    
+  }
+  $scope.browse_sewa_instrumen()
     
   $scope.browse_sewa_alkes = function() {
       if( path.indexOf('sewa_alkes') > -1 ) {
@@ -2167,6 +2241,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         additional : {}
       }
       $scope.sewa_alkes = {        
+        is_sewa_alkes : 1,
         date : $scope.resume_date
       }
       $scope.disease_history = {        
@@ -2176,6 +2251,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="sewa_alkes.date"]').val( $filter('fullDate')($scope.sewa_alkes.date))
       }, 300)
       $scope.sewa_ruangan = {        
+        is_sewa_ruangan : 1,
         date : $scope.resume_date
       }
       setTimeout(function () {    
@@ -2188,6 +2264,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       setTimeout(function () {    
             $('[ng-model="bhp.date"]').val( $filter('fullDate')($scope.bhp.date))
       }, 300)
+      $scope.sewa_instrumen = {
+        'is_sewa_instrumen' : 1
+      }
       $scope.schedule = {}
       $scope.research = {}
       $scope.diagnostic = {
@@ -2278,6 +2357,22 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           diagnostic_datatable.clear().draw();
       }
 
+      if(path.indexOf('sewa_instrumen') > -1) {
+          sewa_instrumen_datatable.clear().draw();
+      }
+
+      if(path.indexOf('sewa_ruangan') > -1) {
+          sewa_ruangan_datatable.clear().draw();
+      }
+
+      if(path.indexOf('sewa_alkes') > -1) {
+          sewa_alkes_datatable.clear().draw();
+      }
+
+      if(path.indexOf('bhp') > -1) {
+          bhp_datatable.clear().draw();
+      }
+
       window.scrollTo(0, 0)
   }
     
@@ -2317,16 +2412,24 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.destroyDetail(data.id)
   }
 
+  $scope.deleteSewaInstrumen = function(e) {
+    var tr = $(e).parents('tr');
+    var data = sewa_instrumen_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
+  }
+
 
   $scope.deleteSewaAlkes = function(e) {
     var tr = $(e).parents('tr');
-    sewa_alkes_datatable.row(tr).remove().draw()
+    var data = sewa_alkes_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
 
   $scope.deleteSewaRuangan = function(e) {
     var tr = $(e).parents('tr');
-    sewa_ruangan_datatable.row(tr).remove().draw()
+    var data = sewa_ruangan_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     
@@ -2528,6 +2631,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.sewa_alkes.qty = tr.find('#qty').val()
         $scope.sewa_alkes.piece = sewa_alkes.piece
         $('#sewaAlkesModal').modal('hide')
+    }
+
+    $scope.selectSewaInstrumen = function(e) {
+        var tr = $(e).parents('tr')
+        var sewa_instrumen = browse_sewa_instrumen_datatable.row(tr).data()
+        $scope.sewa_instrumen.item_id = sewa_instrumen.id
+        $scope.sewa_instrumen.name = sewa_instrumen.name
+        $scope.sewa_instrumen.qty = tr.find('#qty').val()
+        $scope.sewa_instrumen.piece = sewa_instrumen.piece
+        $('#sewaInstrumenModal').modal('hide')
     }
 
     $scope.selectSewaRuangan = function(e) {

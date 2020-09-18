@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="form-group col-md-1" style='margin-top:1.2mm;margin-right:2mm'>
                                             <br>
-                                            <button type='button' class='btn btn-success' ng-click='submitSewaAlkes()' ng-disabled='!sewa_alkes.item_id || !sewa_alkes.qty || !sewa_alkes.lokasi_id'><i class="fa fa-check"></i></button>
+                                            <button type='button' class='btn btn-success' ng-click='storeDetail(sewa_alkes)' ng-disabled='!sewa_alkes.item_id || !sewa_alkes.qty || !sewa_alkes.lokasi_id'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
                                     

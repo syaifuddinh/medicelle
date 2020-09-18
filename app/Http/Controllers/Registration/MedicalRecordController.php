@@ -240,11 +240,13 @@ class MedicalRecordController extends Controller
             'bhp.item:id,name,piece_id',
             'bhp.item.piece:id,name',
             'bhp.lokasi:id,name',
-            'sewa_alkes:medical_record_id,item_id,qty,date,lokasi_id',
+            'sewa_instrumen:id,medical_record_id,item_id,qty,date,lokasi_id',
+            'sewa_instrumen.item:id,name',
+            'sewa_alkes:id,medical_record_id,item_id,qty,date,lokasi_id',
             'sewa_alkes.item:id,name,piece_id',
             'sewa_alkes.item.piece:id,name',
             'sewa_alkes.lokasi:id,name',
-            'sewa_ruangan:medical_record_id,item_id,qty,date,lokasi_id',
+            'sewa_ruangan:id,medical_record_id,item_id,qty,date,lokasi_id',
             'sewa_ruangan.item:id,name,piece_id',
             'sewa_ruangan.item.piece:id,name',
             'sewa_ruangan.lokasi:id,name',
@@ -315,11 +317,11 @@ class MedicalRecordController extends Controller
     public function pdf(Request $request, $id, $flag = 'preview')
     {
         $pivot = PivotMedicalRecord::findOrFail($id);
-        $medicalRecord = $this->fetch($pivot->id);
+        $medicalRecord = $this->fetch($pivot->medical_record_id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
         $params = [
             'medicalRecord'=>$medicalRecord, 
-            'resume_description' => $pivot->additional->resume_description,
+            'resume_description' => $pivot->additional->resume_description ?? '',
             'date' => $date, 
             'dot' => '.............................................................................................................', 
             'shortDot' => '..........'
@@ -697,6 +699,18 @@ class MedicalRecordController extends Controller
             });
         }
 
+        if(isset($request->sewa_instrumen)) {
+            $medical_record_detail->sewa_instrumen()->whereMedicalRecordId($medical_record->id)->delete();
+            $sewa_ruangan = collect($request->sewa_ruangan);
+            $sewa_ruangan = $sewa_ruangan->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_sewa_instrumen = 1;
+                $medical_record_detail->save();
+            });
+        }
+
 
         if(isset($request->sewa_alkes)) {
             $medical_record_detail->sewa_alkes()->whereMedicalRecordId($medical_record->id)->delete();
@@ -861,6 +875,22 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_treatment'] = 1;
                 $medicalRecord->treatment()->create($input);
+            } if($request->is_sewa_instrumen == 1) {
+                $input = $request->all();
+                $input['is_sewa_instrumen'] = 1;
+                $medicalRecord->sewa_instrumen()->create($input);
+            } if($request->is_sewa_ruangan == 1) {
+                $input = $request->all();
+                $input['is_sewa_ruangan'] = 1;
+                $medicalRecord->sewa_instrumen()->create($input);
+            } if($request->is_sewa_alkes == 1) {
+                $input = $request->all();
+                $input['is_sewa_alkes'] = 1;
+                $medicalRecord->sewa_instrumen()->create($input);
+            } if($request->is_bhp == 1) {
+                $input = $request->all();
+                $input['is_bhp'] = 1;
+                $medicalRecord->sewa_instrumen()->create($input);
             } else if($request->is_diagnostic == 1) {
                 $input = $request->all();
                 $input['is_diagnostic'] = 1;
@@ -874,11 +904,11 @@ class MedicalRecordController extends Controller
                 $input['is_treatment_group'] = 1;
                 $medicalRecord->treatment_group()->create($input);
             } 
+            DB::commit();
         } catch(Exception $e) {
 
             return Response::json(['message' => $e->getMessage()], 422);
         }
-        DB::commit();
 
         return Response::json(['message' => 'Detail berhasil disimpan']);
     }

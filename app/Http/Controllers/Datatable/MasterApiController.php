@@ -354,6 +354,22 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 
+    public function sewa_instrumen(Request $request, $flag = '') {
+        $x = Item::with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')
+        ->whereHas('price', function(Builder $query) use($request){
+            $query->whereIsSewaInstrumen(1);
+        })
+        ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id');
+        $x = $request->filled('items.is_active') ? $x->whereIsActive($request->is_active) : $x;
+        if($request->draw == 1)
+            $x->orderBy('id', 'DESC');
+        if($flag == 'actived') {
+            $x->whereIsCategory(0)->whereIsActive(1);
+        }
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
     public function sewa_ruangan(Request $request, $flag = '') {
         $x = Item::with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')
         ->whereHas('price', function(Builder $query) use($request){
