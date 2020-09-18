@@ -70,11 +70,6 @@
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>Periode</span>
-                            <span style='display:inline-block'>: {{  Mod::fullDate($purchaseOrder->date_start) }} s/d  {{ Mod::fullDate($purchaseOrder->date_end) }} </span>
-                        </div>
-
-                        <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Keterangan</span>
                             <span style='display:inline-block'>: {{ $purchaseOrder->description }}</span>
                         </div>
@@ -87,7 +82,6 @@
                         <tr>        
                             <th>Barang</th>
                             <th class='text-center' style='width:12mm'>Jumlah Permintaan</th>
-                            <th class='text-center' style='width:10mm'>Jumlah Terpakai</th>
                             <th style='width:40mm'>Harga Beli</th>
                             <th style='width:10mm'>Diskon</th>
                             <th style='width:40mm'>Subtotal</th>
@@ -103,9 +97,6 @@
                                     {{ number_format($detail->qty ?? 0) }}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->used_qty ?? 0) }}
-                                </td>
-                                <td class="text-right">
                                     {{ number_format($detail->purchase_price ?? 0) }}
                                 </td>
                                 <td class="text-right">
@@ -119,7 +110,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="5" style='text-align:left'>
+                            <th colspan="4" style='text-align:left'>
                                 Grandtotal
                             </th>
                             <th class="text-right">

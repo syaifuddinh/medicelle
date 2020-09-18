@@ -35,6 +35,7 @@ class ObatController extends Controller
         ->whereNull('category_id')
 	->whereIsCategory(1)
         ->select('id', 'code', 'name')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
@@ -45,6 +46,7 @@ class ObatController extends Controller
         ->whereIsActive(1)
 	->whereIsCategory(1)
         ->select('id', 'code', 'name')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
@@ -54,6 +56,7 @@ class ObatController extends Controller
         $item = Item::whereIsClassification(1)
         ->whereIsActive(1)
         ->select('id', 'code', 'name', 'category_id')
+        ->orderBy('category_id')
         ->get();
         return Response::json($item, 200);
     }
@@ -63,6 +66,7 @@ class ObatController extends Controller
         $item = Item::whereIsSubclassification(1)
         ->whereIsActive(1)
         ->select('id', 'code', 'name', 'classification_id')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
@@ -73,6 +77,7 @@ class ObatController extends Controller
         $item = Item::whereIsGeneric(1)
         ->whereIsActive(1)
         ->select('id', 'code', 'name', 'subclassification_id')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
