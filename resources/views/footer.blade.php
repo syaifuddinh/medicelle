@@ -13,111 +13,105 @@
     <!-- jQuery -->
     <script src="{{ asset('') }}js/cached.js"></script>
     <script>
-        requireScript('jquery', '1', '{{ asset('') }}vendors/jquery/dist/jquery.min.js', function(){        
-            requireScript('notification', '1', "{{asset('js/notification.js')}}")
-            requireScript('bootstrap', '1', "{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js")
-            requireScript('picker', '1', "{{ asset('') }}js/picker.js")
-            requireScript('picker.date', '1', "{{ asset('') }}js/picker.date.js")
-            requireScript('picker.time', '1', "{{ asset('') }}js/picker.time.js")
-            requireScript('dataTables.bootStrap', '1', "{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
-        })
-    </script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('button').on('focus', function(){
-                var button_title = $(this).text().toLowerCase();
-                if( $(this).attr('type') == 'submit' || button_title == 'tambah') {
-
-                    $(this).on('keypress', function(e){
-                        if (e.which == 13) {
-                           $(this).trigger('click')
-                        }
-
-                    });
-                }
+        requireScript('jquery', '1.0', '{{ asset('') }}vendors/jquery/dist/jquery.min.js', function(){        
+            requireScript('notification', '1.0', "{{asset('js/notification.js')}}")
+            requireScript('bootstrap', '1.0', "{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js")
+            requireScript('picker', '1.0', "{{ asset('') }}js/picker.js")
+            requireScript('picker.date', '1.0', "{{ asset('') }}js/picker.date.js")
+            requireScript('picker.time', '1.0', "{{ asset('') }}js/picker.time.js")
+            requireScript('dataTables.bootStrap', '1.0', "{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
+            requireScript('moment', '1.0', "{{ asset('') }}vendors/moment/min/moment.min.js")
+            requireScript('parsley', '1.0', "{{ asset('') }}vendors/parsleyjs/dist/parsley.min.js", function(){
+                requireScript('build', '1.0', "{{ asset('') }}build/js/custom.min.js")
             })
-            inputs = $(':input').on('keypress', function(e){ 
-                if (e.which == 13) {
-                   e.preventDefault();
-                   var nextInput = inputs.get(inputs.index(this) + 1);
-                   console.log(nextInput);
-                   if (nextInput) {
-                      nextInput.focus();
-                   }
+            requireScript('select2', '1.0', "{{ asset('') }}vendors/select2/dist/js/select2.min.js")
+            requireScript('toastr', '1.0', "{{ asset('') }}js/toastr.min.js")
+            requireScript('chosen.jquery', '1.0', "{{ asset('') }}js/chosen.jquery.js")
+            requireScript('jquery.anchor-scroll', '1.0', "{{ asset('') }}js/jquery.anchor-scroll.min.js", function(){
+                $(document).ready(function(){
+                setTimeout(function(){
+                    $('#listview').css('width', '100%')
+                    $('[id*="_datatable"]').css('width', '100%')
+                }, 500);
+
+                $('.anchor-scroll').anchorScroll({
+                    scrollSpeed: 800, // scroll speed
+                    offsetTop: 0, // offset for fixed top bars (defaults to 0)
+                    onScroll: function () { 
+                      // callback on scroll start
+                    },
+                    scrollEnd: function () { 
+                      // callback on scroll end
+                    }
+                 });
+                $(window).bind('keydown', function(e){
+                    if(e.ctrlKey && e.which == 32) {
+                        createButton = $('[href*="create"]')
+                        if(createButton.length > 0) 
+                            window.location = createButton.attr('href')
+                    } else if(e.ctrlKey && e.which == 191) {
+                        filterButton = $('[ng-click="isFilter = !isFilter"]')
+                        if(filterButton.length > 0) 
+                            filterButton.trigger('click')
+                    } else if(e.ctrlKey && e.which == 69) {
+                        exportExcelButton = $('.buttons-excel')
+                        if(exportExcelButton.length > 0) 
+                            exportExcelButton.trigger('click')
+                    } else if(e.ctrlKey && e.shiftKey) {
+                        var key = parseInt( String.fromCharCode(e.which) )
+                        var dt = window['oTable']
+                        if(dt && (key > -1 && key < 10)) {
+                            key -= 1;
+                            key = key == -1 ? 9 : key
+                            dt = $(dt.table().node()).find('tbody')
+                            var dt_row = dt.find('tr:eq(' + key + ')')
+                            var i = dt_row.find('.fa-file-text-o')
+                            var a = i.parents('a')
+                            window.location = a.attr('href')
+                        }
+                    }
+                })
+            });
+            })
+
+            requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
+                requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
+                requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
+                requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
+            });
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    </script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="{{ asset('') }}vendors/moment/min/moment.min.js"></script>
-    <script src="{{ asset('') }}vendors/parsleyjs/dist/parsley.min.js"></script>
-    <script src="{{ asset('') }}vendors/select2/dist/js/select2.min.js"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script src="{{ asset('') }}build/js/custom.min.js"></script>
+            $('button').on('focus', function(){
+                    var button_title = $(this).text().toLowerCase();
+                    if( $(this).attr('type') == 'submit' || button_title == 'tambah') {
 
-    <script src="{{ asset('') }}js/toastr.min.js"></script>
-    <script src="{{ asset('') }}js/chosen.jquery.js"></script>
-    <script src="{{ asset('') }}js/jquery.anchor-scroll.min.js"></script>
-    
-    <!-- Angular -->
-    <script src="{{ asset('') }}bower_components/angular/angular.min.js"></script>
-    <script src="{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js"></script>
-    <script src="{{ asset('') }}js/angular-init.js"></script>
-    <script src="{{ asset('') }}js/custom_directive.js"></script>
-    <script src="{{ asset('') }}js/rzslider.min.js"></script>
-    <script>
-        datatableError = 200
-        $(document).ready(function(){
-            setTimeout(function(){
-                $('#listview').css('width', '100%')
-                $('[id*="_datatable"]').css('width', '100%')
-            }, 500);
+                        $(this).on('keypress', function(e){
+                            if (e.which == 13) {
+                               $(this).trigger('click')
+                            }
 
-            $('.anchor-scroll').anchorScroll({
-                scrollSpeed: 800, // scroll speed
-                offsetTop: 0, // offset for fixed top bars (defaults to 0)
-                onScroll: function () { 
-                  // callback on scroll start
-                },
-                scrollEnd: function () { 
-                  // callback on scroll end
-                }
-             });
-            $(window).bind('keydown', function(e){
-                if(e.ctrlKey && e.which == 32) {
-                    createButton = $('[href*="create"]')
-                    if(createButton.length > 0) 
-                        window.location = createButton.attr('href')
-                } else if(e.ctrlKey && e.which == 191) {
-                    filterButton = $('[ng-click="isFilter = !isFilter"]')
-                    if(filterButton.length > 0) 
-                        filterButton.trigger('click')
-                } else if(e.ctrlKey && e.which == 69) {
-                    exportExcelButton = $('.buttons-excel')
-                    if(exportExcelButton.length > 0) 
-                        exportExcelButton.trigger('click')
-                } else if(e.ctrlKey && e.shiftKey) {
-                    var key = parseInt( String.fromCharCode(e.which) )
-                    var dt = window['oTable']
-                    if(dt && (key > -1 && key < 10)) {
-                        key -= 1;
-                        key = key == -1 ? 9 : key
-                        dt = $(dt.table().node()).find('tbody')
-                        var dt_row = dt.find('tr:eq(' + key + ')')
-                        var i = dt_row.find('.fa-file-text-o')
-                        var a = i.parents('a')
-                        window.location = a.attr('href')
+                        });
                     }
-                }
-            })
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
+                })
+                inputs = $(':input').on('keypress', function(e){ 
+                    if (e.which == 13) {
+                       e.preventDefault();
+                       var nextInput = inputs.get(inputs.index(this) + 1);
+                       console.log(nextInput);
+                       if (nextInput) {
+                          nextInput.focus();
+                       }
+                    }
+                });
+            datatableError = 200
+
+            $(document).ready(function(){
             roles = {
                 'is_nurse' : {!! Auth::user()->contact == null ? 1 : (Auth::user()->contact->is_nurse == 0 ? Auth::user()->contact->is_nurse_helper : Auth::user()->contact->is_nurse)  !!},
 
@@ -296,7 +290,10 @@
             }, 1000)
 
         })
+        })
     </script>
+    <!-- bootstrap-daterangepicker -->
+
     <link rel='stylesheet' id='norebro-global-fonts-css'  href='{{asset("css/font-google.css")}}' type='text/css' media='all' />
     
   </body>
