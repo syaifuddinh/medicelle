@@ -11,11 +11,17 @@
     </div>
 
     <!-- jQuery -->
-    <script src="{{ asset('') }}vendors/jquery/dist/jquery.min.js"></script>
-    <script src="{{asset('js/notification.js')}}"></script>
+    <script src="{{ asset('') }}js/cached.js"></script>
     <script>
-
-
+        requireScript('jquery', '1', '{{ asset('') }}vendors/jquery/dist/jquery.min.js', function(){        
+            requireScript('notification', '1', "{{asset('js/notification.js')}}")
+            requireScript('bootstrap', '1', "{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js")
+            requireScript('picker', '1', "{{ asset('') }}js/picker.js")
+            requireScript('picker.date', '1', "{{ asset('') }}js/picker.date.js")
+            requireScript('picker.time', '1', "{{ asset('') }}js/picker.time.js")
+            requireScript('dataTables.bootStrap', '1', "{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
+        })
+    </script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -45,16 +51,8 @@
                 }
             });
     </script>
-    <!-- Bootstrap -->
-    <script src="{{ asset('') }}vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- PickADate -->
-    <script src="{{ asset('') }}js/picker.js"></script>
-    <script src="{{ asset('') }}js/picker.date.js"></script>
-    <script src="{{ asset('') }}js/picker.time.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('') }}vendors/moment/min/moment.min.js"></script>
-
-    <script src="{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="{{ asset('') }}vendors/parsleyjs/dist/parsley.min.js"></script>
     <script src="{{ asset('') }}vendors/select2/dist/js/select2.min.js"></script>
 
