@@ -19,11 +19,18 @@
             requireScript('picker', '1.0', "{{ asset('') }}js/picker.js")
             requireScript('picker.date', '1.0', "{{ asset('') }}js/picker.date.js")
             requireScript('picker.time', '1.0', "{{ asset('') }}js/picker.time.js")
-            requireScript('dataTables.bootStrap', '1.0', "{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js")
-            requireScript('moment', '1.0', "{{ asset('') }}vendors/moment/min/moment.min.js")
-            requireScript('parsley', '1.0', "{{ asset('') }}vendors/parsleyjs/dist/parsley.min.js", function(){
-                requireScript('build', '1.0', "{{ asset('') }}build/js/custom.min.js")
+            requireScript('dataTables.bootStrap', '1.0', "{{ asset('') }}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js", function(){
+                requireScript('parsley', '1.0', "{{ asset('') }}vendors/parsleyjs/dist/parsley.min.js", function(){
+                    requireScript('custom', '1.0', "{{ asset('') }}build/js/custom.min.js")
+                })
+                requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
+                    requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
+                    requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
+                    requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                    requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
+                });
             })
+            requireScript('moment', '1.0', "{{ asset('') }}vendors/moment/min/moment.min.js")
             requireScript('select2', '1.0', "{{ asset('') }}vendors/select2/dist/js/select2.min.js")
             requireScript('toastr', '1.0', "{{ asset('') }}js/toastr.min.js")
             requireScript('chosen.jquery', '1.0', "{{ asset('') }}js/chosen.jquery.js")
@@ -73,13 +80,6 @@
                 })
             });
             })
-
-            requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
-                requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
-                requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
-                requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
-                requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
-            });
 
             $.ajaxSetup({
                 headers: {
@@ -287,7 +287,7 @@
                         })
                     }
                 }
-            }, 1000)
+            }, 2000)
 
         })
         })
