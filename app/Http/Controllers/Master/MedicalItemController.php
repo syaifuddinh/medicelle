@@ -33,6 +33,7 @@ class MedicalItemController extends Controller
         $item = Item::medical_item()
         ->whereNull('category_id')
         ->select('id', 'code', 'name')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
@@ -43,6 +44,7 @@ class MedicalItemController extends Controller
         ->whereNull('category_id')
         ->whereIsActive(1)
         ->select('id', 'code', 'name')
+        ->orderBy('id')
         ->get();
         return Response::json($item, 200);
     }
@@ -53,6 +55,7 @@ class MedicalItemController extends Controller
         ->whereIsMedicalItem(1)
         ->whereIsActive(1)
         ->select('id', 'code', 'name', 'category_id')
+        ->orderBy('category_id')
         ->get();
         return Response::json($item, 200);
     }

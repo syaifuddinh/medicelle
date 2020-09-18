@@ -103,8 +103,7 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
                 category_code = $scope.data.category.find(x => x.id == $scope.formData.category_id).code
                 category_code = category_code.padStart(2, 0)
                 classification_code = $scope.data.classification.find(x => x.id == $scope.formData.classification_id).code
-                classification_code = classification_code.padStart(2, 0)
-
+                classification_code = classification_code.padStart(3, 0)
                 prefix = '400.02.00.00.' + category_code + '.' + classification_code + '.'
             }
 
