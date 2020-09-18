@@ -10,26 +10,9 @@
     <title>{{ Mod::company()->name }}</title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('') }}vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="{{ asset('') }}css/classic.css" rel="stylesheet">
-    <link href="{{ asset('') }}css/classic.date.css" rel="stylesheet">
-    <link href="{{ asset('') }}css/classic.time.css" rel="stylesheet">
-
 
     <!-- Font Awesome -->
-    <link href="{{ asset('') }}vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <!-- iCheck -->
-
-    <link href="{{ asset('') }}css/toastr.css" rel="stylesheet">
-    
-    <link href="{{ asset('') }}css/bootstrap-chosen.css" rel="stylesheet">
-    
     <!-- Custom Theme Style -->
-    <link href="{{ asset('') }}build/css/custom.min.css" rel="stylesheet">
-    <link href="{{ asset('') }}vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('') }}vendors/select2/dist/css/select2.min.css" rel="stylesheet">
 
     <script>
         baseUrl = '{{ url('') }}'

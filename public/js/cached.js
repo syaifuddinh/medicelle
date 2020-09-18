@@ -69,6 +69,28 @@ function _loadScript(url, name, version, callback) {
   document.getElementsByTagName("head")[0].appendChild(s)
 }
 
+function _loadCSS(url, name, version, callback) {
+  var s = document.createElement('style');
+
+  if (s.readyState) { //IE
+    s.onreadystatechange = function() {
+      if (s.readyState == "loaded" || s.readyState == "complete") {
+        s.onreadystatechange = null;
+        _cacheScript(name, version, url);
+        if (callback) callback();
+      }
+    };
+  } else { //Others
+    s.onload = function() {
+      _cacheScript(name, version, url);
+      if (callback) callback();
+    };
+  }
+
+  s.setAttribute("href", url);
+  document.getElementsByTagName("head")[0].appendChild(s)
+}
+
 /**
  * ##_injectScript
  * Injects a script loaded from localStorage into the DOM.
@@ -94,6 +116,21 @@ function _injectScript(content, url, name, version, callback) {
   if (callback) callback();
 }
 
+function _injectCSS(content, url, name, version, callback) {
+  var c = JSON.parse(content);
+  // cached version is not the request version, clear the cache, this will trigger a reload next time
+  if (c.version != version) {
+    localStorage.removeItem(name);
+    _loadScript(url, name, version, callback);
+    return;
+  }
+  var s = document.createElement('style');
+  var scriptContent = document.createTextNode(c.content);
+  s.appendChild(scriptContent);
+  document.getElementsByTagName("head")[0].appendChild(s);
+  if (callback) callback();
+}
+
 /**
  * ##requireScript
  * If the requested script is not available in the localStorage it will be loaded from the provided url (see `_loadScript`).
@@ -109,5 +146,14 @@ function requireScript(name, version, url, callback) {
     _loadScript(url, name, version, callback);
   } else {
     _injectScript(c, url, name, version, callback);
+  }
+}
+
+function requireCSS(name, version, url, callback) {
+  var c = localStorage.getItem(name);
+  if (c == null) {
+    _loadCSS(url, name, version, callback);
+  } else {
+    _injectCSS(c, url, name, version, callback);
   }
 }
