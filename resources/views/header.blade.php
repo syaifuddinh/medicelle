@@ -23,7 +23,7 @@
     <!-- iCheck -->
 
     <link href="{{ asset('') }}css/toastr.css" rel="stylesheet">
-    <link href="{{ asset('') }}css/easy-autocomplete.min.css" rel="stylesheet">
+    
     <link href="{{ asset('') }}css/bootstrap-chosen.css" rel="stylesheet">
     
     <!-- Custom Theme Style -->

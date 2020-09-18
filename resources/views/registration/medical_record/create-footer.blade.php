@@ -100,6 +100,7 @@
     </a>
 </div>
 @include('footer')
+<script src="{{ asset('') }}js/jquery.easy-autocomplete.min.js"></script>
 <script src="{{asset('js/jSignature.js')}}"></script>
 <script src="{{asset('js/jSignature.CompressorBase30.js')}}"></script>
 <script src="{{asset('js/jSignature.CompressorSVG.js')}}"></script>

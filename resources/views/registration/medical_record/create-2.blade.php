@@ -1,4 +1,5 @@
 @include('registration/medical_record/create-header')
+                         <link href="{{ asset('') }}css/easy-autocomplete.min.css" rel="stylesheet">
                          <ul class="nav nav-pills">
                             @if(Specialization::allow_access('anamnesa') == 1)
                                 <li><a href="{{ route('medical_record.edit', ['id' => $id]) }}">Anamnesa</a></li>
@@ -532,4 +533,5 @@
 
                     </form>
                 </div>
+                
 @include('registration/medical_record/create-footer')
