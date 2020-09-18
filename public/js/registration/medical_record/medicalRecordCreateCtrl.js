@@ -152,7 +152,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   searchable : false,
                   width : '20mm',
                   className : 'text-center',
-                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX()' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX($event.currentTarget)' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
                 },
               ],
               createdRow: function(row, data, dataIndex) {
@@ -407,8 +407,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         window.open(source)
     }
 
-    $scope.downloadResumeDOCX = function(date) {
-        var source = baseUrl + '/controller/registration/medical_record/' + id + '/docx'
+    $scope.downloadResumeDOCX = function(e) {
+        tr = $(e).parents('tr')
+        var data = medical_record_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/docx'
         window.open(source)
     }
 

@@ -341,7 +341,7 @@ class MedicalRecordController extends Controller
             "Content-Disposition"=>"attachment;Filename=resume.docx"
         );
         $pivot = PivotMedicalRecord::findOrFail($id);
-        $medicalRecord = $this->fetch($pivot->id);
+        $medicalRecord = $this->fetch($pivot->medical_record_id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
         // $docx= new PhpWord();
         $params = [
