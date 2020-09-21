@@ -8,7 +8,6 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
     $scope.show = function() {
       $http.get(baseUrl + '/controller/master/medical_item/' + id).then(function(data) {
             $scope.formData = data.data
-            $scope.formData = data.data
             $scope.changeSampleCode()
         }, function(error) {
           $rootScope.disBtn=false;
@@ -56,7 +55,7 @@ app.controller('cureShow', ['$scope', '$http', '$rootScope', '$filter', function
                 category_code = category_code.padStart(2, 0)
                 classification_code = $scope.data.classification.find(x => x.id == $scope.formData.classification_id).code
                 classification_code = classification_code.padStart(3, 0)
-                prefix = '400.02.00.00.' + category_code + '.' + classification_code + '.' 
+                prefix = '400.02.00.00.' + category_code + '.' + classification_code + '.'
             }
 
             var code = $scope.formData.code.padStart(3, 0)
