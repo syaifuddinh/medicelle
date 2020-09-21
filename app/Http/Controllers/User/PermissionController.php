@@ -60,7 +60,7 @@ class PermissionController extends Controller
     public function show(Permission $permission, $id)
     {
         $permission = Permission::findOrFail($id)
-        ->only('id', 'name', 'is_active', 'description');
+        ->only('id', 'name', 'is_active', 'description', 'roles');
         return Response::json($permission, 200);
     }
 
