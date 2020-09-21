@@ -4,7 +4,7 @@
             requireCSS('css.classic', '1.0', "{{ asset('') }}css/classic.css")
             requireCSS('css.classic.date', '1.0', "{{ asset('') }}css/classic.date.css")
             requireCSS('css.classic.time', '1.0', "{{ asset('') }}css/classic.time.css")
-            requireCSS('css.font-awesome', '1.0', "{{ asset('') }}vendors/font-awesome/css/font-awesome.min.css")
+            requireCSS('css.font-awesome', '1.1', "{{ asset('') }}vendors/font-awesome/css/font-awesome.min.css")
             requireCSS('css.toastr', '1.0', "{{ asset('') }}css/toastr.css")
             requireCSS('css.bootstrap-chosen', '1.0', "{{ asset('') }}css/bootstrap-chosen.css")
             requireCSS('css.custom', '1.0', "{{ asset('') }}build/css/custom.min.css")
@@ -280,7 +280,8 @@
                     'allow_destroy_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.destroy') !!},
                     'allow_approve_pharmacy_purchase_request' : {!! Auth::user()->allow_access('pharmacy.purchase_request.approve') !!},
                 }
-                setInterval(function(){
+
+                function checkRoles() {
                     for(key in roles) {
                         value = roles[key]
                         var el = $('[' + key + ']')
@@ -292,7 +293,14 @@
                             })
                         }
                     }
-                }, 2000)
+                }
+
+                setTimeout(function(){
+                    checkRoles()
+                    setTimeout(function(){
+                        checkRoles()
+                    }, 1500)
+                }, 500)
             @endif
 
 
