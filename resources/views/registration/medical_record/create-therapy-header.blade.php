@@ -5,7 +5,7 @@
     @endif
 
     @if( Specialization::allow_access('diagnostik') == 1)
-        <li class='{{  ? "active" : "" }}'><a href='{{ strpos(url()->current(), "diagnostic") == null ? route("medical_record.edit.therapy.diagnostic", ["id" => $id]) : "#" }}'>Diagnostik</a>
+        <li class='{{ strpos(url()->current(), "diagnostic") != null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "diagnostic") == null ? route("medical_record.edit.therapy.diagnostic", ["id" => $id]) : "#" }}'>Diagnostik</a>
         </li>
     @endif
 
