@@ -20,6 +20,11 @@
   </head>
 
   <body class="nav-md" ng-app='klinikApp' ng-cloak>
+    <div id='main-loading-layer' style='position:fixed;background:white;width:100%;height:100%;z-index:2000'>
+        <div style='display:flex;justify-content:center;align-content:center;align-items:center;height:100%'>
+            <img src="{{ Mod::company()->logo }}" class="img-responsive" alt="">
+        </div>
+    </div>
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -97,3 +102,10 @@
             </nav>
           </div>
         </div>
+
+        <script>
+            var l = document.getElementById('main-loading-layer')
+            setTimeout(function(){
+                l.remove()
+            }, 1300)
+        </script>

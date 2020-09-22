@@ -1908,7 +1908,14 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       {
         data : null,
         className : 'text-center',
-        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button><button type="button" class="btn btn-sm btn-primary" title="Checklist Laboratorium" ng-click="showLaboratoryChecklistModal($event.currentTarget)"><i class="fa fa-code-fork"></i></button></div>'
+        render : function(resp) {
+            var outp = '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-disabled="disBtn" ng-click="deleteDiagnostic($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+            if(resp.laboratory_pivot !== null) {
+                outp += '<button type="button" class="btn btn-sm btn-primary" title="Checklist Laboratorium" ng-click="showLaboratoryChecklistModal($event.currentTarget)"><i class="fa fa-code-fork"></i></button>'
+            }
+            outp = '<div class="btn-group">' + outp + '</div>'
+            return outp
+        }
       }
     ],
     createdRow: function(row, data, dataIndex) {
@@ -2178,6 +2185,126 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
+
+  $scope.showInternalRadiology = function() {
+      if(path.indexOf('/radiology') > -1) {
+          $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_radiology').then(function(data) {
+              var detail = data.data
+              internal_radiology_datatable = $('#internal_radiology_datatable').DataTable({
+                'data' : detail,
+                dom: 'rt',
+                'columns' : [
+                {
+                  data : null,
+                  render : function(resp) {
+
+                    return $filter('fullDate')(resp.date);
+                  }
+                },
+                {data : 'name'},
+                {data : 'description'},
+
+                ],
+                createdRow: function(row, data, dataIndex) {
+                  $compile(angular.element(row).contents())($scope);
+                }
+              });
+          }, function(error) {
+              console.log(error)
+          });
+      }
+  }
+  $scope.showInternalRadiology()
+
+
+  $scope.showInternalLaboratory = function() {
+      if(path.indexOf('/laboratory') > -1) {
+          $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_laboratory').then(function(data) {
+              var detail = data.data
+              internal_laboratory_datatable = $('#internal_laboratory_datatable').DataTable({
+                'data' : detail,
+                dom: 'rt',
+                'columns' : [
+                {
+                  data : null,
+                  render : function(resp) {
+
+                    return $filter('fullDate')(resp.date);
+                  }
+                },
+                {data : 'name'},
+                {
+                    data : null,
+                    class : 'regular',
+                    render : function(resp) {
+                        var table = $('<table class="table table-bordered"></table>')
+                        var unit, tr, td
+                        for(r in resp.details) {
+                            unit = resp.details[r]
+
+                            tr = $('<tr />')
+                            td = $('<th />')
+                            td.text('Nama')
+                            tr.append(td)
+                            td = $('<td />')
+                            td.text(unit.name)
+                            tr.append(td)
+                            table.append(tr)
+
+                            tr = $('<tr />')
+                            td = $('<th />')
+                            td.text('Hasil')
+                            tr.append(td)
+                            td = $('<td />')
+                            td.text(unit.hasil)
+                            tr.append(td)
+                            table.append(tr)
+                            
+                            tr = $('<tr />')
+                            td = $('<th />')
+                            td.text('Satuan')
+                            tr.append(td)
+                            td = $('<td />')
+                            td.text(unit.satuan)
+                            tr.append(td)
+                            table.append(tr)
+                            
+                            tr = $('<tr />')
+                            td = $('<th />')
+                            td.text('Nilai normal')
+                            tr.append(td)
+                            td = $('<td />')
+                            td.text(unit.nilai_normal)
+                            tr.append(td)
+                            table.append(tr)
+                            
+                            tr = $('<tr />')
+                            td = $('<th />')
+                            td.text('Keterangan')
+                            tr.append(td)
+                            td = $('<td />')
+                            td.text(unit.keterangan)
+                            tr.append(td)
+                            tr.css('borderBottom', '1.1mm solid #337ab7')
+
+                            table.append(tr)
+                        }
+
+                        return table.prop('outerHTML')
+                    }
+                },
+
+                ],
+                createdRow: function(row, data, dataIndex) {
+                  $compile(angular.element(row).contents())($scope);
+                }
+              });
+          }, function(error) {
+              console.log(error)
+          });
+      }
+  }
+  $scope.showInternalLaboratory()
 
   $scope.showLaboratoryChecklistModal = function(obj) {
       var tr = $(obj).parents('tr')

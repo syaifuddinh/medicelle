@@ -67,7 +67,7 @@ app.controller('purchaseRequest', ['$scope', '$rootScope', '$compile', '$http', 
         className : 'text-center',
         render : resp => 
         "<div class='btn-group'>" + 
-        ( resp.status == 1 ? "<a allow_update_pharmacy_purchase_request class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/purchase_request/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" : "") + 
+        "<a allow_update_pharmacy_purchase_request class='btn btn-xs btn-success' href='" + baseUrl +"/pharmacy/purchase_request/edit/" + resp.id + "' title='Edit'><i class='fa fa-pencil'></i></a>" + 
         "<a allow_show_pharmacy_purchase_request class='btn btn-xs btn-default' href='" + baseUrl +"/pharmacy/purchase_request/" + resp.id + "' title='Detail'><i class='fa fa-file-text-o'></i></a>" +
          (resp.status < 4 ? "<button allow_approve_pharmacy_purchase_request type='button' class='btn btn-xs btn-primary' ng-click='approve(" + resp.id + ")'><i class='fa fa-check'></i></button>" : "" ) + 
          (resp.status == 1 ? "<button type='button' allow_destroy_pharmacy_purchase_request class='btn btn-xs btn-danger' ng-click='delete(" + resp.id + ")'><i class='fa fa-trash-o'></i></button>" : "" ) + 

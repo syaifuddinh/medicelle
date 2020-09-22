@@ -155,11 +155,15 @@ class PurchaseRequestController extends Controller
                     $purchaseRequest->detail()->create($detail);
                 }
             }
+            if($purchaseRequest->status == 4) {
+                PurchaseRequest::createPurchaseOrder($purchaseRequest);
+            }
+            DB::commit();
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
         }
         
-        DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);
     }
