@@ -24,7 +24,7 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
-                        <div class="row">
+                        <div class="row" style='position: relative;'>
                             <div class="col-md-8">
 
                                 <div class="form-group">
@@ -53,9 +53,12 @@
                                         <textarea class='form-control' ng-model='formData.description'></textarea>
                                     </div>
                                 </div>
+                                <div ng-if='formData.status && formData.status != 1' style='position:absolute;width:100%;height:100%;z-index:1000;top:0;left:0;'></div>
+                                <p ng-if='formData.status && formData.status != 1' style='margin-left:11mm'>
+                                    <i>* Catatan di header tidak dapat diubah karena permintaan pembelian sudah disetujui</i>
+                                </p>
                             </div>
-
-                    </div>
+                        </div>
                     <div class="ln_solid"></div>
                     <h2>Detail Barang</h2>
                     

@@ -16,6 +16,8 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory_form/pdf/{contact_id}', 'MedicalRecordController@laboratory_form_pdf');
 
         Route::get('medical_record/{id}/children_growth', 'MedicalRecordController@showChildrenGrowth');
+        Route::get('medical_record/{id}/internal_radiology', 'MedicalRecordController@showInternalRadiology');
+        Route::get('medical_record/{id}/internal_laboratory', 'MedicalRecordController@showInternalLaboratory');
         Route::get('medical_record/{id}/{flag}/history', 'MedicalRecordController@showReviewHistory');
 
         Route::put('medical_record/pivot/{pivot_medical_record_id}/laboratory', 'MedicalRecordController@update_laboratory');

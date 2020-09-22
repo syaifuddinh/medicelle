@@ -6,7 +6,15 @@
                                 @if(Specialization::readonly('radiologi') == 1)
                                     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
                                 @endif
-                                <div class="row">
+                                <ul class="nav nav-tabs">
+                                  <li class="active"><a data-toggle="tab" href="#eksternal">Eksternal</a></li>
+                                  <li><a data-toggle="tab" href="#internal">Internal</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                  <div id="eksternal" class="tab-pane fade in active">
+                                     <div class="" style='padding-top:10mm'>
+                                         <div class="row">
                                     <div class="col-md-12" style='display:flex'>
                                         <div class="form-group col-md-6">
                                             
@@ -48,16 +56,30 @@
                                             </thead>
                                             <tbody></tbody>
                                         </table>
-                                    </div>
+                                    </div>      if(path.indexOf('/radiology') > -1) {
+
+                                </div>
+                                     </div>    
+                                  </div>
+                                  <div id="internal" class="tab-pane fade">
+                                        <div style='padding-top:10mm'>
+                                            <table class="table table-bordered" id='internal_radiology_datatable'>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Tanggal pemeriksaan</td>
+                                                        <td>Jenis pemeriksaan</td>
+                                                        <td>Keterangan</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                  </div>
                                 </div>
                         </div>
                         
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="btn-group pull-right">
-                                    <button type="submit" ng-disabled='disBtn' class="btn btn-success btn-sm" ng-click='finished = 1'>Simpan</button>
-                                </div>
                                 <div class="btn-group pull-left">
                                     <button class="btn btn-default btn-sm" ng-click="backtohome()" type="button">Batal</button>
                                     <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>

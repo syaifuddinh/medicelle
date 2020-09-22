@@ -32,7 +32,7 @@
                     <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
+                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name ?? '' }}</b>
                     <p>{{ $company->address }}</p>
                     <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
                 </div>
@@ -40,10 +40,10 @@
 
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <p style='text-align:center;font-weight:bold;font-size:101%;'>HASIL BACAAN </p>
-                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>{{ strtoupper($radiologyType->name) }}</p>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>{{ strtoupper($radiologyType->name ?? '') }}</p>
                 
                 <div style='margin-bottom:4mm'>
-                    <p>TS. Yth, berikut saya sampaikan hasil {{ $radiologyType->name }}</p>
+                    <p>TS. Yth, berikut saya sampaikan hasil {{ $radiologyType->name ?? '' }}</p>
                     <p class='indent mt-5'>{{ $pivotMedicalRecord->additional->radiology_description ?? ''}}</p>
                 </div>
 

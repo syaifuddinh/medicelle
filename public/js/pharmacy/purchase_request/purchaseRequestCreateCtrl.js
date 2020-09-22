@@ -22,7 +22,6 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
           }
 
           $scope.formData = data.data
-          console.log($scope.formData)
           $scope.formData.detail = detail
 
           setTimeout(function () {
@@ -30,11 +29,15 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
                 $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
                 $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
                 $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+
             }, 300)
 
           for(x in detail) {
               $scope.checkStock(x, detail[x].item_id)
           }
+          setTimeout(function () {
+                $('#itemModal').modal('hide')
+            }, 401)
       }, function(error) {
             $scope.show()
       });

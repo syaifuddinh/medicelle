@@ -56,45 +56,7 @@ class PurchaseRequest extends Model
                 ->count('id');
 
                 if($existing_po == 0) {
-                    $details = PurchaseRequestDetail::wherePurchaseRequestId($purchaseRequest->id)
-                    ->get();
-                    foreach ($details as $detail) {
-                        $existing_po = PurchaseOrder::wherePurchaseRequestId($purchaseRequest->id)
-                        ->whereSupplierId($detail->supplier_id);
-
-                        if($existing_po->count('id') < 1) {
-                            $purchaseOrder = new PurchaseOrder();
-                            $purchaseOrder->purchase_request_id = $purchaseRequest->id;
-                            $purchaseOrder->description = $purchaseRequest->description;
-                            $purchaseOrder->date = date('Y-m-d');
-                            $purchaseOrder->date_start = $purchaseRequest->date_start;
-                            $purchaseOrder->date_end = $purchaseRequest->date_end;
-                            $purchaseOrder->supplier_id = $detail->supplier_id;
-                            $purchaseOrder->save();
-
-                            $purchaseOrder->detail()->create([
-                                'item_id' => $detail->item_id,
-                                'qty' => $detail->qty,
-                                'leftover_qty' => $detail->qty,
-                                'purchase_price' => $detail->purchase_price,
-                                'discount' => $detail->discount
-                            ]);
-                        } else {
-                            $existing_po = PurchaseOrder::wherePurchaseRequestId($purchaseRequest->id)
-                            ->whereSupplierId($detail->supplier_id);
-                            $id = $existing_po->first()->id;
-                            $purchaseOrder = PurchaseOrder::find($id);
-                            $purchaseOrder->detail()->create([
-                                'item_id' => $detail->item_id,
-                                'qty' => $detail->qty,
-                                'leftover_qty' => $detail->qty,
-                                'purchase_price' => $detail->purchase_price,
-                                'discount' => $detail->discount
-                            ]);
-                        }
-                    }
-
-
+                    PurchaseRequest::createPurchaseOrder($purchaseRequest);
                 }
             }
 
@@ -124,6 +86,29 @@ class PurchaseRequest extends Model
             return '';
         }
     } 
+
+    public static function createPurchaseOrder($purchaseRequest) {
+        $details = PurchaseRequestDetail::wherePurchaseRequestId($purchaseRequest->id)
+                    ->get();
+        foreach ($details as $detail) {
+                $purchaseOrder = new PurchaseOrder();
+                $purchaseOrder->purchase_request_id = $purchaseRequest->id;
+                $purchaseOrder->description = $purchaseRequest->description;
+                $purchaseOrder->date = date('Y-m-d');
+                $purchaseOrder->date_start = $purchaseRequest->date_start;
+                $purchaseOrder->date_end = $purchaseRequest->date_end;
+                $purchaseOrder->supplier_id = $detail->supplier_id;
+                $purchaseOrder->save();
+
+                $purchaseOrder->detail()->create([
+                    'item_id' => $detail->item_id,
+                    'qty' => $detail->qty,
+                    'leftover_qty' => $detail->qty,
+                    'purchase_price' => $detail->purchase_price,
+                    'discount' => $detail->discount
+                ]);
+        }
+    }
 
     public function detail() {
         return $this->hasMany('App\PurchaseRequestDetail');
