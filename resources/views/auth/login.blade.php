@@ -139,6 +139,7 @@
         setTimeout(function(){
             bannerImage = document.getElementById('logo');
             imgData = getBase64Image(bannerImage);
+            localStorage.removeItem("imgLogo");
             localStorage.setItem("imgLogo", imgData);
         }, 2000)
     </script>
