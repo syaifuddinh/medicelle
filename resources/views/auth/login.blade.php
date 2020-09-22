@@ -77,7 +77,7 @@
                 <br />
 
                 <div>
-                  <img class="img-responsive" id='logo' alt="">
+                  <img src="{{ Mod::company()->logo }}" class="img-responsive" id='logo' alt="">
                   <p style='margin-top:2mm'>©2016 All Rights Reserved, Medicelle Clinic. Privacy and Terms</p>
                 </div>
               </div>
