@@ -56,7 +56,7 @@
                                             </thead>
                                             <tbody></tbody>
                                         </table>
-                                    </div>      if(path.indexOf('/radiology') > -1) {
+                                    </div>  
 
                                 </div>
                                      </div>    
