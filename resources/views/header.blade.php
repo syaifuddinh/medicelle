@@ -107,7 +107,7 @@
             var l = document.getElementById('main-loading-layer')
             var dataImage = localStorage.getItem('imgLogo');
             bannerImg = document.getElementById('loading-logo');
-            bannerImg.src = "data:image/png;base64," + dataImage;
+            bannerImg.src = dataImage;
             setTimeout(function(){
                 l.remove()
             }, 1400)
