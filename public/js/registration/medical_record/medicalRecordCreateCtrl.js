@@ -408,7 +408,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
 
     $scope.downloadResumeDOCX = function(e) {
-        tr = $(e).parents('tr')
+        var tr = $(e).parents('tr')
         var data = medical_record_history.row(tr).data()
         var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/docx'
         window.open(source)
