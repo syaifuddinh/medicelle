@@ -125,8 +125,8 @@
     <script>
         function getBase64Image(img) {
             var canvas = document.createElement("canvas");
-            canvas.width = 200;
-            canvas.height = 150;
+            canvas.width = 500;
+            canvas.height = 300;
 
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0);
