@@ -22,7 +22,7 @@
   <body class="nav-md" ng-app='klinikApp' ng-cloak>
     <div id='main-loading-layer' style='position:fixed;background:white;width:100%;height:100%;z-index:2000'>
         <div style='display:flex;justify-content:center;align-content:center;align-items:center;height:100%'>
-            <img src="{{ Mod::company()->logo }}" class="img-responsive" alt="">
+            <img src="" id='loading-logo'  style='width:30%' class="img-responsive" alt="">
         </div>
     </div>
     <div class="container body">
@@ -105,7 +105,10 @@
 
         <script>
             var l = document.getElementById('main-loading-layer')
+            var dataImage = localStorage.getItem('imgLogo');
+            bannerImg = document.getElementById('loading-logo');
+            bannerImg.src = "data:image/png;base64," + dataImage;
             setTimeout(function(){
                 l.remove()
-            }, 1300)
+            }, 1400)
         </script>
