@@ -83,6 +83,15 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
             searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].post_discount' maxlength='3' style='width:12mm' only-num>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].hna' style='width:40mm' only-num jnumber2>"
             }
           },

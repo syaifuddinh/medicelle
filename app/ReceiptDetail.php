@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\StockTransaction;
-use App\PurchaseOrderDetail;
 use App\Item;
+use App\Payable;
+use App\PurchaseOrderDetail;
 use Carbon\Carbon;
 use DB;
 use Exception;
 
 class ReceiptDetail extends Model
 {
-    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'purchase_order_detail_id', 'expired_date', 'hna'];
+    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'post_discount', 'purchase_order_detail_id', 'expired_date', 'hna'];
     protected $appends = ['subtotal'];
 
     public static function boot() {
@@ -72,6 +73,18 @@ class ReceiptDetail extends Model
             ]);
 
             $receiptDetail->stock_transaction_id = $stockTransaction->id;
+        });
+        static::created(function(ReceiptDetail $receiptDetail) {   
+            // Input ke hutang
+            $purchaseOrderDetail = PurchaseOrderDetail::find($receiptDetail->purchase_order_detail_id);
+            $payable = new Payable();
+            $payable->contact_id = $purchaseOrderDetail->purchase_order->supplier_id;
+            $payable->qty = $receiptDetail->qty;
+            $payable->price = $receiptDetail->purchase_price;
+            $payable->discount = $receiptDetail->post_discount;
+            $payable->date = Carbon::now()->format('Y-m-d');
+            $payable->receipt_detail_id = $receiptDetail->id;
+            $payable->save();
         });
     }
 

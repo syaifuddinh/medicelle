@@ -95,6 +95,10 @@ Route::name('pharmacy.')->prefix('pharmacy')
     Route::name('report.')->prefix('report')
     ->group(function(){
 
+        Route::get('/discount_off', function (){
+            return view('pharmacy/report/discount_off');
+        })->name('discount_off');
+
         Route::get('/distribution', function (){
             return view('pharmacy/report/distribution');
         })->name('distribution');

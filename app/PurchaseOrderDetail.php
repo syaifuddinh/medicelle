@@ -65,4 +65,8 @@ class PurchaseOrderDetail extends Model
     public function item() {
         return $this->belongsTo('App\Item');
     }
+
+    public function purchase_order() {
+        return $this->belongsTo('App\PurchaseOrder');
+    }
 }

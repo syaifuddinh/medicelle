@@ -8,6 +8,7 @@ Route::prefix('pharmacy')->group(function(){
     Route::get('adjustment_stock', 'PharmacyApiController@adjustment_stock');    
     Route::get('formula', 'PharmacyApiController@formula');    
     Route::get('distribution', 'PharmacyApiController@distribution');    
+    Route::get('discount_off', 'PharmacyApiController@discount_off');    
     Route::get('history', 'PharmacyApiController@history');    
 });
 

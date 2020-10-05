@@ -90,14 +90,15 @@
                                             <th style='width:10mm'>Qty Sisa PO</th>
                                             <th style='width:40mm'>Tanggal Kadaluarsa</th>
                                             <th style='width:30mm'>Harga Beli</th>
-                                            <th style='width:10mm'>Diskon</th>
+                                            <th style='width:10mm'>Diskon On</th>
+                                            <th style='width:10mm'>Diskon Off</th>
                                             <th style='width:30mm'>Subtotal</th>
                                             <th style='width:30mm'>HNA</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
                                     <tfoot>
-                                        <th colspan='7' style='text-align:left'>Grandtotal</th>
+                                        <th colspan='8' style='text-align:left'>Grandtotal</th>
                                         <th class='text-right'><% formData.grandtotal | number %></th>
                                         <th class='text-right'><% formData.hna_total | number %></th>
                                     </tfoot>

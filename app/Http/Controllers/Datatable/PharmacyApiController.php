@@ -10,6 +10,7 @@ use App\PurchaseOrder;
 use App\Movement;
 use App\AdjustmentStock;
 use App\Receipt;
+use App\Payable;
 use App\Formula;
 use App\Stock;
 use Carbon\Carbon;
@@ -132,6 +133,21 @@ class PharmacyApiController extends Controller
         );
         if($request->draw == 1)
             $x->orderBy('stocks.id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function discount_off(Request $request) {
+        $x = Payable::with('contact:id,name', 'receipt_detail:id,purchase_order_detail_id,item_id', 'receipt_detail.item:id,name', 'receipt_detail.purchase_order_detail:id,purchase_order_id', 'receipt_detail.purchase_order_detail.purchase_order:id,supplier_id,purchase_request_id', 'receipt_detail.purchase_order_detail.purchase_order.purchase_request:id,code,date')
+        ->whereHas('receipt_detail.purchase_order_detail.purchase_order.purchase_request', function(Builder $query) use ($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+        ->select('payables.id', 'payables.contact_id', 'payables.receipt_detail_id', 'payables.discount', 'payables.total_discount_value', 'payables.is_paid');
+
+        if($request->filled('contact_id')) {
+            $x->whereContactId($request->contact_id);
+        }
+
 
         return Datatables::eloquent($x)->make(true);
     }
