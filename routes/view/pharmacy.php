@@ -20,6 +20,24 @@ Route::name('pharmacy.')->prefix('pharmacy')
         })->name('show');
     });
     
+    
+    Route::name('discount_off_payment.')->prefix('discount_off_payment')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('pharmacy/discount_off_payment/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('pharmacy/discount_off_payment/create');
+        })->name('create');
+        Route::get('/edit/{id}', function ($id){
+            return view('pharmacy/discount_off_payment/create')->withId($id);
+        })->name('edit');
+        Route::get('/{id}', function ($id){
+            return view('pharmacy/discount_off_payment/show')->withId($id);
+        })->name('show');
+    });
+    
     Route::name('formula.')->prefix('formula')
     ->group(function(){
 
