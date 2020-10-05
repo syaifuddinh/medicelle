@@ -210,6 +210,7 @@
                                     <li><a href="{{ route('pharmacy.adjustment_stock.index') }}">Stok Opname</a></li>
                                     <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
                                     <li><a href="{{ route('pharmacy.report.distribution') }}">Laporan distribusi</a></li>
+                                    <li><a href="{{ route('pharmacy.report.discount_off') }}">Diskon Off</a></li>
                               </ul>
                       </li>
                   @endif             

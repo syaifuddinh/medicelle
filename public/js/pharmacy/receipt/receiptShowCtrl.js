@@ -83,6 +83,16 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].post_discount %>%"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].subtotal | number %>"
             }
           },
