@@ -1,7 +1,7 @@
 <?php
 
 Route::prefix('pharmacy')->group(function(){
-    Route::get('purchase_request', 'PharmacyApiController@purchase_request');    
+    Route::get('discount_off_payment', 'PharmacyApiController@discount_off_payment');    
     Route::get('purchase_order', 'PharmacyApiController@purchase_order');    
     Route::get('receipt', 'PharmacyApiController@receipt');    
     Route::get('movement', 'PharmacyApiController@movement');    

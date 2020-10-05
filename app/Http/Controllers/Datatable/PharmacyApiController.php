@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Datatable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use App\Payment;
 use App\PurchaseRequest;
 use App\PurchaseOrder;
 use App\Movement;
@@ -143,6 +144,24 @@ class PharmacyApiController extends Controller
             $query->whereBetween('date', [$request->date_start, $request->date_end]);
         })
         ->select('payables.id', 'payables.contact_id', 'payables.receipt_detail_id', 'payables.discount', 'payables.total_discount_value', 'payables.is_paid');
+
+        if($request->filled('contact_id')) {
+            $x->whereContactId($request->contact_id);
+        }
+
+        if($request->filled('is_paid')) {
+            $x->whereContactId($request->is_paid);
+        }
+
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function discount_off_payment(Request $request) {
+        $x = Payment::with('contact:id,name')
+        ->whereIsDiscountOff(1)
+        ->whereBetween('payments.date', [$request->date_start, $request->date_end])
+        ->select('payments.id', 'payments.date', 'payments.contact_id', 'payments.debet', 'payments.credit', 'payments.leftover');
 
         if($request->filled('contact_id')) {
             $x->whereContactId($request->contact_id);

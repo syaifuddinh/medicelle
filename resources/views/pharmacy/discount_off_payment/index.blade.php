@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" id='scopeContainer' ng-controller="discountOff">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="discountOffPayment">
           <!-- top tiles -->
           
 
@@ -20,7 +20,7 @@
                                         <select class="form-control" data-placeholder-text-single="'Pilih principal'" chosen allow-single-deselect="false" ng-model="formData.contact_id" ng-options="c.id as c.name for c in data.principal" ng-change='filter()'>
                                                 <option value=""></option>
                                             </select>
-                                        </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -41,11 +41,12 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Laporan Discount Off</h3>
+                    <h3>Pembayaran Diskon Off</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
+                          <a href="{{ route('pharmacy.discount_off_payment.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                       </div>                    
                   </div>
                 </div>
@@ -54,13 +55,12 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>Tanggal PP</th>
-                          <th>No PP</th>
-                          <th>Principal</th>
-                          <th>Barang</th>
-                          <th>Diskon Off (%)</th>
-                          <th>Nominal Diskon</th>
-                          <th>Status</th>
+                          <th style='width:14%'>Principal</th>
+                          <th style='width:14%'>Tanggal</th>
+                          <th style='width:16%'>Tagihan</th>
+                          <th style='width:16%'>Terbayar</th>
+                          <th style='width:16%'>Sisa</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -83,5 +83,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/pharmacy/report/discountOffCtrl.js"></script>
+    <script src="{{ asset('') }}js/pharmacy/discount_off_payment/discountOffPaymentCtrl.js"></script>
 
