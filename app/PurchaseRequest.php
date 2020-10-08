@@ -105,7 +105,8 @@ class PurchaseRequest extends Model
                     'qty' => $detail->qty,
                     'leftover_qty' => $detail->qty,
                     'purchase_price' => $detail->purchase_price,
-                    'discount' => $detail->discount
+                    'discount' => $detail->discount,
+                    'discount_off' => $detail->discount_off
                 ]);
         }
     }

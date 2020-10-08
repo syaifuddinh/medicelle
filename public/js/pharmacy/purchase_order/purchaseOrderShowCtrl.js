@@ -66,6 +66,16 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].discount_off %>%"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].subtotal | number %>"
             }
           }
