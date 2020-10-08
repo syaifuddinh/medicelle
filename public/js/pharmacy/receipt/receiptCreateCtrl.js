@@ -123,6 +123,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
               detail[x].item_name = unit.item.name
               detail[x].qty_po = unit.qty
               detail[x].qty = unit.leftover_qty
+              detail[x].post_discount = unit.discount_off
               detail[x].purchase_order_detail_id = unit.id
               $scope.insertItem(unit)
           }

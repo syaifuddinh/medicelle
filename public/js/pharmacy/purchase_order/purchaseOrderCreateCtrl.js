@@ -18,6 +18,7 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
               unit = detail[x]
               detail[x].item_name = unit.item.name
               detail[x].supplier_name = unit.supplier.name
+              detail[x].post_discount = unit.discount_off
               $scope.insertItem(unit)
           }
 

@@ -8,7 +8,7 @@ use DB;
 class PurchaseOrderDetail extends Model
 {
     
-    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'leftover_qty', 'received_qty'];
+    protected $fillable = ['item_id', 'qty',  'purchase_price', 'discount', 'discount_off', 'leftover_qty', 'received_qty'];
     protected $appends = ['subtotal'];
     protected $hidden = ['created_at', 'updated_at'];
 
