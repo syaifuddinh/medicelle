@@ -76,6 +76,7 @@
                                         <td style='width:10mm'>Jumlah Terpakai</td>
                                         <td style='width:40mm'>Harga Beli</td>
                                         <td style='width:10mm'>Diskon</td>
+                                        <td style='width:10mm'>Diskon Off</td>
                                         <td></td>
                                     </tr>
                                 </thead>

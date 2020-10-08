@@ -94,13 +94,14 @@
                                                 <th style='width:10mm'>Jumlah Terpakai</th>
                                                 <th style='width:40mm'>Harga Beli</th>
                                                 <th style='width:10mm'>Diskon</th>
+                                                <th style='width:10mm'>Diskon Off</th>
                                                 <th style='width:40mm'>Subtotal</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="6" style='text-align:left'>Grandtotal</th>
+                                                <th colspan="7" style='text-align:left'>Grandtotal</th>
                                                 <th><% formData.grandtotal | number %></th>
                                             </tr>
                                         </tfoot>

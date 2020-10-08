@@ -101,9 +101,28 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         $scope.pay()
     })
 
+    cashier_payment_datatable = $('#cashier_payment_datatable').DataTable({
+        dom : 'rt',
+        columns : [
+        {
+            data: 'method', 
+          },
+        {
+            data : null, 
+            className : 'text-right',
+            render : function(resp) {
+                return $filter('number')(resp.price)
+            }
+        },
+        ],
+        createdRow: function(row, data, dataIndex) {
+            $compile(angular.element(row).contents())($scope);
+        }
+    })
     $scope.show = function() {
         $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
             $scope.formData = data.data.invoice
+            cashier_payment_datatable.rows.add(data.data.invoice.payment).draw()
             $scope.formData.invoice_detail = data.data.invoice_detail 
             if($scope.formData.promo != null) {
               $scope.promo = $scope.formData.promo.total_credit 

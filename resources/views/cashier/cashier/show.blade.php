@@ -142,14 +142,6 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>Dibayar</th>
-                                            <th class='text-right' title='Nominal yang terbayar'>
-                    <% formData.paid | number %>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
                                             <th  colspan='2' class='text-right'>Sisa</th>
                                             <th class='text-right' title='Sisa'>
                                                 <%  (grandtotal - formData.paid) | number%>
@@ -177,36 +169,32 @@
                                     <label class="col-md-12 col-xs-12" for="first-name">Jenis
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                <% formData.payment_type %>
+                                        <% formData.payment_type %>
                                     </div>
                                 </div>
-
-
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Cara bayar
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                <% formData.payment_method %>
-
-
-
-
-
-
-                                        
-                                    </div>
-                                </div>
-
-
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" ng-show='formData.discount_id'>
                                     <label class="col-md-12 col-xs-12">Keterangan promo
                                     </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">                                        
-                            <% formData.promo_description %>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">                    
+                                        <% formData.promo_description %>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <table class='table' id='cashier_payment_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <th>Cara Bayar</th>
+                                            <th>Nominal</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <th>Terbayar</th>
+                                        <th id='paid'><% formData.paid | number %></th>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
 
