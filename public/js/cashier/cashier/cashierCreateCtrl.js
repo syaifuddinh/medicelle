@@ -135,11 +135,9 @@ $scope.insertPayment = function() {
 }
 $scope.deletePayment = function(e, index) {
     var tr = $(e).parents('tr')
-    cashier_payment_datatable.row(tr).remove().draw()
-    var target = $scope.formData.payment.findIndex(x => x.index != index)
-    $scope.formData.payment[target] = {
-        price : 0
-    }
+    tr.addClass('hidden')
+    var target = $scope.formData.payment.findIndex(x => x.index == index)
+    $scope.formData.payment[target].price = 0
     $scope.countPaid()
 }
 
@@ -198,7 +196,10 @@ $scope.show = function() {
     $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
         $scope.formData = data.data.invoice
         $scope.formData.invoice_detail = data.data.invoice_detail 
-        $scope.formData.payment = [] 
+        $scope.formData.payment = data.data.invoice.payment.map(function(p){
+            p.index = p.id
+            return p
+        })
         if($scope.formData.promo != null) {
             $scope.promo = $scope.formData.promo.total_credit 
         }
@@ -216,6 +217,8 @@ $scope.show = function() {
         }, 300)
         if($scope.formData.payment.length == 0) {
             $scope.insertPayment()
+        } else {
+            cashier_payment_datatable.rows.add($scope.formData.payment).draw()
         }
         $compile(angular.element($('#formFooter')).contents())($scope);
     }, function(error) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cashier;
 
 use App\Invoice;
 use App\InvoiceDetail;
+use App\InvoicePayment;
 use App\Registration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -71,6 +72,7 @@ class CashierController extends Controller
             'promo_info:id,code,name,disc_value,disc_percent', 
             'massive_discount:invoice_id,total_credit',
             'teller:id,name',
+            'payment',
             'amandemen_to:id,invoice_amandemen_id,code',
             'amandemen_by:id,code'
         )->find($id);
@@ -116,6 +118,20 @@ class CashierController extends Controller
      * @param  \App\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
+    public function storePayment($payments, $invoice_id) {
+        $invoice = Invoice::find($invoice_id);
+        $invoice->payment()->delete();
+        collect($payments)->each(function($val) use($invoice){
+            if(($val['price'] ?? 0) > 0) {
+                $invoicePayment = new InvoicePayment();
+                $invoicePayment->invoice_id = $invoice->id;
+                $invoicePayment->method = $val['method'];
+                $invoicePayment->price = $val['price'];
+                $invoicePayment->save();
+            }
+        });
+    }
+
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -143,7 +159,7 @@ class CashierController extends Controller
                     $invoiceDetail->save();
                 });
             });
-            
+            $this->storePayment($request->payment, $id);       
             DB::commit();
         } catch (Exception $e) {
             return Response::json(['message' => $e->getMessage()], 421);
@@ -217,6 +233,7 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
+        $this->storePayment($request->payment, $id);
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil terbayar', 'invoice_id' => $id], 200);

@@ -106,6 +106,9 @@ class Invoice extends Model
     public function detail() {
         return $this->hasMany('App\InvoiceDetail')->whereIsItem(1);
     }
+    public function payment() {
+        return $this->hasMany('App\InvoicePayment');
+    }
     public function child() {
         return $this->hasMany('App\InvoiceDetail');
     }
