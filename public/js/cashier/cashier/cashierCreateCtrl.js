@@ -68,6 +68,81 @@ price_datatable = $('#price_datatable').DataTable({
     }
   });
 
+cashier_payment_datatable = $('#cashier_payment_datatable').DataTable({
+    dom : 'rt',
+    columns : [
+    {
+        data:null, 
+        width:'8%',
+        searchable:false,
+        orderable:false,
+        className : 'text-center',
+        render:function(resp) {
+            var index = resp.index
+            return "<button class='btn btn-sm btn-danger' type='button' ng-click='deletePayment($event.currentTarget, \"" + index +  "\")'><i class='fa fa-trash-o'></i></button>"
+        }
+    },
+    {
+        data: null, 
+        orderable : false,
+        searchable : false,
+        render : function(resp) {
+            var index = resp.index
+            var i = $scope.formData.payment.findIndex(x => x.index == index)
+            outp = '<select class="form-control" data-placeholder-text-single="\'Pilih jenis\'" chosen allow-single-deselect="false" ng-model="formData.payment[' + i + '].method"><option value=""></option><option value="TUNAI">Tunai</option><option value="KREDIT">Kredit</option><option value="TT">TT</option><option value="VISA">Visa</option><option value="MASTER">Master</option><option value="DEBIT">Debit</option></select>'
+            return outp
+        }
+      },
+    {
+        data : null, 
+        width:'8%',
+        orderable:false,
+        render : function(resp) {
+            var index = resp.index
+            var i = $scope.formData.payment.findIndex(x => x.index == index)
+            outp = '<input type="text" class="form-control" ng-change="countPaid()" ng-model="formData.payment[' + i + '].price" jnumber2 only-num>'
+            return outp
+        }
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+        $compile(angular.element(row).contents())($scope);
+    }
+})
+
+$scope.countPaid = function() {
+    var paid = 0
+    for(p in $scope.formData.payment) {
+        paid += parseInt($scope.formData.payment[p].price || 0)
+    }
+    $('#paid').html($filter('number')(paid))
+    $scope.formData.paid = paid
+    $scope.countTotal()
+}
+
+$scope.insertPayment = function() {
+    var index = Math.ceil(Math.random() * 1000000000)
+    var params = {
+        'index' : index,
+        'method' : 'TUNAI',
+        'price' : 0
+    }
+    var exist = $scope.formData.payment.findIndex(x => x.index == index)
+    if(exist < 0) {
+        $scope.formData.payment.push(params)
+        cashier_payment_datatable.row.add(params).draw()
+    }
+}
+$scope.deletePayment = function(e, index) {
+    var tr = $(e).parents('tr')
+    cashier_payment_datatable.row(tr).remove().draw()
+    var target = $scope.formData.payment.findIndex(x => x.index != index)
+    $scope.formData.payment[target] = {
+        price : 0
+    }
+    $scope.countPaid()
+}
+
 discount_datatable = $('#discount_datatable').DataTable({
     dom : 'rt',
     processing: true,
@@ -123,6 +198,7 @@ $scope.show = function() {
     $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
         $scope.formData = data.data.invoice
         $scope.formData.invoice_detail = data.data.invoice_detail 
+        $scope.formData.payment = [] 
         if($scope.formData.promo != null) {
             $scope.promo = $scope.formData.promo.total_credit 
         }
@@ -138,6 +214,9 @@ $scope.show = function() {
         setTimeout(function () {    
             $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
         }, 300)
+        if($scope.formData.payment.length == 0) {
+            $scope.insertPayment()
+        }
         $compile(angular.element($('#formFooter')).contents())($scope);
     }, function(error) {
         $rootScope.disBtn=false;

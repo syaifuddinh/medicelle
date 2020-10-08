@@ -132,14 +132,6 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>Dibayar</th>
-                                            <th class='text-right' title='Nominal yang terbayar'>
-                                                <input type="text" class='form-control text-right' ng-model='formData.paid' jnumber2 only-num>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
                                             <th  colspan='2' class='text-right'>Sisa</th>
                                             <th class='text-right' title='Sisa'>
                                                 <%  (grandtotal - formData.paid) | number%>
@@ -177,25 +169,8 @@
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label class="col-md-12 col-xs-12" for="first-name">Cara bayar<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih jenis'" chosen allow-single-deselect="false" ng-model="formData.payment_method">
-                                            <option value=""></option>
-                                            <option value="TUNAI">Tunai</option>
-                                            <option value="KREDIT">Kredit</option>
-                                            <option value="TT">TT</option>
-                                            <option value="VISA">Visa</option>
-                                            <option value="MASTER">Master</option>
-                                            <option value="DEBIT">Debit</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group" ng-show='formData.discount_id'>
                                     <label class="col-md-12 col-xs-12">Keterangan promo
                                     </label>
@@ -203,6 +178,28 @@
                                         <textarea class='form-control' ng-model='formData.promo_description'></textarea>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <h2>
+                                    Metode pembayaran
+                                    <button type='button' class='btn btn-sm btn-primary' ng-click='insertPayment()' style='float:right'>
+                                        <i class='fa fa-plus'></i>
+                                    </button>
+                                </h2>
+                                <table class='table' id='cashier_payment_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Cara Bayar</th>
+                                            <th>Nominal</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <th colspan='2'>Terbayar</th>
+                                        <th id='paid'></th>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
 
