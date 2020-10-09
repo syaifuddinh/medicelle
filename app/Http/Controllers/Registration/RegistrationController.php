@@ -281,7 +281,13 @@ class RegistrationController extends Controller
                 ->whereRegistrationDetailId($registrationDetail->id)
                 ->first();
                 if($medical_record == null) {
-                    throw new Exception('Rekam medis tidak ditemukan');
+                    $medical_record = DB::table('medical_records')
+                    ->whereRegistrationDetailId($registrationDetail->medical_record_refer_id)
+                    ->first();                    
+                    $registrationDetail->id = $registrationDetail->medical_record_refer_id;
+                    if($medical_record == null) {
+                        throw new Exception('Rekam medis tidak ditemukan');
+                    }
                 } 
                 $this->pivot_medical_record->where('registration_detail_id', '!=', $registrationDetail->id)->whereMedicalRecordId($medical_record->id)->delete();
                 
