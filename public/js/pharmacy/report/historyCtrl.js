@@ -24,41 +24,6 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
-<<<<<<< HEAD
-        data:'item.group.name', 
-        name:'item.group.name',
-        "width": "10%" 
-      },
-      {
-        data:'item.classification.name', 
-        name:'item.classification.name',
-        "width": "10%" 
-      },
-      {
-        data:'item.subclassification.name', 
-        name:'item.subclassification.name',
-        "width": "10%"
-      },
-      {
-        data:'item.generic.name', 
-        name:'item.generic.name',
-        "width": "10%"
-      },
-      {
-        data:'item.name', 
-        name:'item.name',
-        "width": "10%" 
-      },
-      {
-        data:'item.piece.name', 
-        name:'item.piece.name',
-        "width": "46%" 
-      },
-      {
-        data:'lokasi.name', 
-        name:'lokasi.name',
-        "width": "8%" 
-=======
         data:'category_name', 
         name:'categories.name' 
       },
@@ -85,7 +50,6 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
       {
         data:'lokasi_name', 
         name:'permissions.name' 
->>>>>>> 53b273a786d504517415fdaba51e667226906c2e
       },
       {
         data:null, 
