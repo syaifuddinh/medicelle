@@ -121,7 +121,7 @@
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#bhp">BHP</a></li>
+                  <li class="active"><a data-toggle="tab" href="#bhp">BMHP</a></li>
                   <li><a data-toggle="tab" href="#price">Tindakan</a></li>
                 </ul>
 

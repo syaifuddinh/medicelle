@@ -117,12 +117,11 @@ class NotificationController extends Controller
      * @param  \App\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Notification $notification, $id)
+    public function destroy($id)
     {
         DB::beginTransaction();
-        $notification = $notification->find($id);
-        $notification->is_active = 0;
-        $notification->save();
+        $notification = Notification::find($id);
+        $notification->delete();
         DB::commit();
 
         return Response::json(['message' => 'Data berhasil dinon-aktifkan'], 200);

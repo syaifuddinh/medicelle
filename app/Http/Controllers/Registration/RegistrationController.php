@@ -266,7 +266,9 @@ class RegistrationController extends Controller
             $registration = RegistrationDetail::findOrFail($registration_detail_id);
             $registration->status = 1;
             $registration->save();
+            $this->storeFormula($registration_detail_id);
         } catch (Exception $e) {
+            dd($e);
             return Response::json(['message' => $e->getMessage()], 421);
         }
         DB::commit();
@@ -412,6 +414,32 @@ class RegistrationController extends Controller
                     ]);
                 }
 
+                DB::commit();
+
+            
+
+        return Response::json(['message' => 'Invoice berhasil dibuat', 'data' => ['id' => $invoice->id]]);
+    }
+
+    public function storeFormula($registration_detail_id) {
+        $registrationDetail = RegistrationDetail::findOrFail($registration_detail_id);
+        
+                $medical_record = DB::table('medical_records')
+                ->whereRegistrationDetailId($registrationDetail->id)
+                ->first();
+                if($medical_record == null) {
+                    $medical_record = DB::table('medical_records')
+                    ->whereRegistrationDetailId($registrationDetail->medical_record_refer_id)
+                    ->first();                    
+                    $registrationDetail->id = $registrationDetail->medical_record_refer_id;
+                    if($medical_record == null) {
+                        throw new Exception('Rekam medis tidak ditemukan');
+                    }
+                } 
+                
+                $medicalRecord = $registrationDetail->medical_record;
+                $drug = $medicalRecord->drug;
+                DB::beginTransaction();
                 // Generate resep obat 
                 if($medicalRecord->drug()->count('id') > 0) {
                     $formula = $this->formula->create([

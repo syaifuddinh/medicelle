@@ -56,6 +56,7 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
       data : function(d) {
         d.length = 6
         d.is_active = 1
+        d.is_treatment = 1
 
         return d
       }
@@ -88,7 +89,7 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
     processing: true,
     serverSide: true,
     ajax: {
-      url : baseUrl+'/datatable/master/bhp',
+      url : baseUrl+'/datatable/master/medical_item',
       data : function(d) {
         d.length = 6
         d.is_active = 1

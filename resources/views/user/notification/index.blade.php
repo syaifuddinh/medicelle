@@ -53,6 +53,7 @@
                           <th>Judul</th>
                           <th>Keterangan</th>
                           <th>Status</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
