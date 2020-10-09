@@ -48,7 +48,9 @@ class PatientController extends Controller
 
         DB::beginTransaction();
         $family = new Contact();
-        $family->fill($request->family);
+        $familyData = $request->family;
+        $familyData['name'] = $familyData['name'] ?? '-'; 
+        $family->fill($familyData);
         $family->is_contact = 1;
         $family->is_family = 1;
         $family->save();
