@@ -25,51 +25,62 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
     columns:[
       {
         data:'item.group.name', 
-        name:'item.group.name' 
+        name:'item.group.name',
+        "width": "10%" 
       },
       {
         data:'item.classification.name', 
-        name:'item.classification.name' 
+        name:'item.classification.name',
+        "width": "10%" 
       },
       {
         data:'item.subclassification.name', 
-        name:'item.subclassification.name' 
+        name:'item.subclassification.name',
+        "width": "10%"
       },
       {
         data:'item.generic.name', 
-        name:'item.generic.name' 
+        name:'item.generic.name',
+        "width": "10%"
       },
       {
         data:'item.name', 
-        name:'item.name' 
+        name:'item.name',
+        "width": "10%" 
       },
       {
         data:'item.piece.name', 
-        name:'item.piece.name' 
+        name:'item.piece.name',
+        "width": "46%" 
       },
       {
         data:'lokasi.name', 
-        name:'lokasi.name' 
+        name:'lokasi.name',
+        "width": "8%" 
       },
       {
         data:null, 
         name:'expired_date', 
         searchable:false,
-        render:resp => $filter('fullDate')(resp.expired_date)
+        render:resp => $filter('fullDate')(resp.expired_date),
+        "width": "8%"
       },
       {
         data:'early_stock', 
         className : 'text-right',
         orderable : false,
-        searchable: false
+        searchable: false,
+        "width": "4%"
       },
       {
         data:'latest_stock', 
         className : 'text-right',
         orderable : false,
-        searchable: false
+        searchable: false,
+        "width": "4%"
       },
     ],
+    "autoWidth": false,
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
     }
