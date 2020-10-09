@@ -106,7 +106,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         columns : [
         {
             data: 'method', 
-          },
+        },
         {
             data : null, 
             className : 'text-right',
@@ -114,6 +114,9 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
                 return $filter('number')(resp.price)
             }
         },
+        {
+            data: 'description', 
+        }
         ],
         createdRow: function(row, data, dataIndex) {
             $compile(angular.element(row).contents())($scope);

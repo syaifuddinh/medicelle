@@ -188,11 +188,13 @@
                                         <tr>
                                             <th>Cara Bayar</th>
                                             <th>Nominal</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <th>Terbayar</th>
                                         <th id='paid'><% formData.paid | number %></th>
+                                        <th></th>
                                     </tfoot>
                                 </table>
                             </div>

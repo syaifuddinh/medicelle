@@ -103,7 +103,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
     if(is_approve)
         $http.put(baseUrl + '/controller/pharmacy/purchase_request/' + id + '/approve').then(function(data) {
             toastr.success("Data berhasil disetujui");
-            location.reload()
+            $scope.show()
         }, function(error) {
           if (error.status==422) {
             var det="";

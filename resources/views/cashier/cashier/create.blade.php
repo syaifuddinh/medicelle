@@ -193,6 +193,7 @@
                                             <th></th>
                                             <th>Cara Bayar</th>
                                             <th>Nominal</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tfoot>

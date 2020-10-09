@@ -13,12 +13,16 @@ class Payment extends Model
         parent::boot(); 
 
         static::creating(function(Payment $payment) {   
-            $payment->created_at = auth()->user()->id;
+            $payment->created_by = auth()->user()->id;
             $payment->leftover = $payment->debet - $payment->credit;
         });
         static::updating(function(Payment $payment) {   
             $payment->leftover = $payment->debet - $payment->credit;
         });
+    }
+
+    public function detail() {
+        return $this->belongsTo('App\PaymentDetail');
     }
 
     public function contact() {

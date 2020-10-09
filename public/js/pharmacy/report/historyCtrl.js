@@ -24,32 +24,32 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
-        data:'item.group.name', 
-        name:'item.group.name' 
+        data:'category_name', 
+        name:'categories.name' 
       },
       {
-        data:'item.classification.name', 
-        name:'item.classification.name' 
+        data:'classification_name', 
+        name:'classifications.name' 
       },
       {
-        data:'item.subclassification.name', 
-        name:'item.subclassification.name' 
+        data:'subclassification_name', 
+        name:'subclassifications.name' 
       },
       {
-        data:'item.generic.name', 
-        name:'item.generic.name' 
+        data:'generic_name', 
+        name:'generics.name' 
       },
       {
-        data:'item.name', 
-        name:'item.name' 
+        data:'item_name', 
+        name:'items.name' 
       },
       {
-        data:'item.piece.name', 
-        name:'item.piece.name' 
+        data:'piece_name', 
+        name:'pieces.name' 
       },
       {
-        data:'lokasi.name', 
-        name:'lokasi.name' 
+        data:'lokasi_name', 
+        name:'permissions.name' 
       },
       {
         data:null, 
