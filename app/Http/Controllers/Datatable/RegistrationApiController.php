@@ -44,8 +44,12 @@ class RegistrationApiController extends Controller
             ->whereStatus(2);
         })
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
-            $query->whereStatus($status)
-            ->whereDestination('POLIKLINIK');
+            if($status == 0) {
+                $query->whereStatus($status);
+            } else if($status == 1) {
+                $query->whereRaw('status = 1 OR status IS NULL');
+            }
+            $query->whereDestination('POLIKLINIK');
         })
         ->where('is_referenced', 0)
         ->select(
