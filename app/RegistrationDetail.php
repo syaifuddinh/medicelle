@@ -16,7 +16,7 @@ use Auth;
 
 class RegistrationDetail extends Model
 {
-    protected $fillable = ['registration_id', 'destination', 'polyclinic_id', 'time', 'doctor_id', 'medical_record_refer_id'];
+    protected $fillable = ['registration_id', 'destination', 'polyclinic_id', 'time', 'doctor_id', 'medical_record_refer_id', 'status'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['status_name', 'visiting_room'];
 

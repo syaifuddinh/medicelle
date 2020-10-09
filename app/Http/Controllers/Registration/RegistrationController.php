@@ -267,11 +267,12 @@ class RegistrationController extends Controller
             $registration->status = 1;
             $registration->save();
             $this->storeFormula($registration_detail_id);
+            DB::commit();
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return Response::json(['message' => $e->getMessage()], 421);
         }
-        DB::commit();
 
         return Response::json(['message' => 'Pemeriksaan sudah selesai'], 200);
     }
@@ -439,7 +440,6 @@ class RegistrationController extends Controller
                 
                 $medicalRecord = $registrationDetail->medical_record;
                 $drug = $medicalRecord->drug;
-                DB::beginTransaction();
                 // Generate resep obat 
                 if($medicalRecord->drug()->count('id') > 0) {
                     $formula = $this->formula->create([
@@ -470,10 +470,5 @@ class RegistrationController extends Controller
                         }
                     }
                 }
-                DB::commit();
-
-            
-
-        return Response::json(['message' => 'Invoice berhasil dibuat', 'data' => ['id' => $invoice->id]]);
     }
 }
