@@ -127,6 +127,7 @@ class CashierController extends Controller
                 $invoicePayment->invoice_id = $invoice->id;
                 $invoicePayment->method = $val['method'];
                 $invoicePayment->price = $val['price'];
+                $invoicePayment->description = $val['description'] ?? null;
                 $invoicePayment->save();
             }
         });

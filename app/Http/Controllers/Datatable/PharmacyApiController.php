@@ -108,11 +108,23 @@ class PharmacyApiController extends Controller
         $month = $month == 0 ? 12 : $month;
         $year = Carbon::parse($request->date_start)->format('Y') ;
         $year  = $month == 0 ? $year - 1 : $year;
-        $x = Stock::with('item:id,name,category_id,classification_id,subclassification_id,generic_id,piece_id', 'item.piece:id,name', 'item.group:id,name', 'item.classification:id,name', 'item.subclassification:id,name', 'item.generic:id,name', 'lokasi:id,name')
+        $x = DB::table('stocks')
+        ->leftJoin('permissions', 'permissions.id', 'stocks.lokasi_id')
+        ->leftJoin('items', 'items.id', 'stocks.item_id')
+        ->leftJoin('items AS categories', 'items.category_id', 'categories.id')
+        ->leftJoin('items AS classifications', 'items.classification_id', 'classifications.id')
+        ->leftJoin('items AS subclassifications', 'items.subclassification_id', 'subclassifications.id')
+        ->leftJoin('items AS generics', 'items.generic_id', 'generics.id')
+        ->leftJoin('pieces', 'pieces.id', 'items.piece_id')
         ->select(
             'stocks.id', 
-            'stocks.item_id', 
-            'stocks.lokasi_id', 
+            'items.name AS item_name', 
+            'categories.name AS category_name', 
+            'classifications.name AS classification_name', 
+            'subclassifications.name AS subclassification_name', 
+            'generics.name AS generic_name', 
+            'pieces.name AS piece_name', 
+            'permissions.name AS lokasi_name', 
             'stocks.expired_date', 
             DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock"),
             DB::raw("COALESCE((SELECT gross FROM periodical_stocks WHERE stock_id = stocks.id AND year = $year AND month = $month ), 0) AS early_stock")
@@ -120,7 +132,7 @@ class PharmacyApiController extends Controller
         if($request->draw == 1)
             $x->orderBy('stocks.id', 'DESC');
 
-        return Datatables::eloquent($x)->make(true);
+        return Datatables::query($x)->make(true);
     }
 
     public function distribution(Request $request) {
@@ -150,7 +162,7 @@ class PharmacyApiController extends Controller
         }
 
         if($request->filled('is_paid')) {
-            $x->whereContactId($request->is_paid);
+            $x->whereIsPaid($request->is_paid);
         }
 
 

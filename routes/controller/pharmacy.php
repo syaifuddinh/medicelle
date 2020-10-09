@@ -7,6 +7,8 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('purchase_request/{id}/approve', 'PurchaseRequestController@approve')->name('purchase_request.approve');
         Route::resource('purchase_request', 'PurchaseRequestController');
 
+        Route::resource('discount_off_payment', 'DiscountOffPaymentController');
+
         Route::get('formula/{id}/pdf', 'FormulaController@pdf')->name('formula.pdf');
         Route::put('formula/{id}/approve', 'FormulaController@approve')->name('formula.approve');
         Route::put('formula/{id}/rollback', 'FormulaController@rollback')->name('formula.rollback');

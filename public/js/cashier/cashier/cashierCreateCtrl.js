@@ -104,6 +104,17 @@ cashier_payment_datatable = $('#cashier_payment_datatable').DataTable({
             return outp
         }
     },
+    {
+        data : null, 
+        width:'8%',
+        orderable:false,
+        render : function(resp) {
+            var index = resp.index
+            var i = $scope.formData.payment.findIndex(x => x.index == index)
+            outp = '<textarea class="form-control" ng-model="formData.payment[' + i + '].description"></textarea>'
+            return outp
+        }
+    }
     ],
     createdRow: function(row, data, dataIndex) {
         $compile(angular.element(row).contents())($scope);

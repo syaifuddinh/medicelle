@@ -115,8 +115,8 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
       url : baseUrl+'/datatable/pharmacy/discount_off',
       data : function(d) {
         d.length = 6
-        d.is_paid = 1
-        d.contact_id = $scope.formData.principal_id
+        d.is_paid = 0
+        d.contact_id = $scope.formData.contact_id
 
         return d
       }
@@ -130,8 +130,28 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
       className : 'text-center',
       render : resp => "<button ng-disabled='disBtn' type='button' class='btn btn-xs btn-primary' ng-click='selectItem($event.currentTarget)'>Pilih</button>"
     },
-    {data:"unique_code", orderable:false,searchable:false},
-    {data:"name", name:"name"},
+    {
+        data:'receipt_detail.purchase_order_detail.purchase_order.purchase_request.code', 
+        name:'receipt_detail.purchase_order_detail.purchase_order.purchase_request.code' 
+    },
+    {
+        data:'receipt_detail.item.name', 
+        name:'receipt_detail.item.name' 
+    },
+    {
+        data:null, 
+        searchable:false,
+        className:'text-right',
+        name:'discount', 
+        render : x => $filter('number')(x.discount)
+      },
+      {
+        data:null, 
+        searchable:false,
+        className:'text-right',
+        name:'total_discount_value', 
+        render : x => $filter('number')(x.total_discount_value)
+      }
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
@@ -186,7 +206,7 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
     }
 
     $scope.showDiscountOffModal = function(index) {
-        if(!$scope.formData.principal_id) {
+        if(!$scope.formData.contact_id) {
             toastr.error('Isi principal terlebih dahulu')
         } else {
             discount_off_datatable.ajax.reload()
@@ -205,14 +225,10 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
     $scope.selectItem = function(obj) {
         $rootScope.disBtn=true;
         var tr = $(obj).parents('tr')
-        var data = item_datatable.row(tr).data()
-        $scope.formData.detail[$scope.currentIndex].item_name= data.name
-        $scope.formData.detail[$scope.currentIndex].item_id= data.id
-        $('#itemModal').modal('hide')
-        $scope.showSupplierModal($scope.currentIndex)
-
-        $scope.checkStock($scope.currentIndex, data.id)
-      
+        var data = discount_off_datatable.row(tr).data()
+        discount_off_payment_detail_datatable.row.add(data).draw()
+        $rootScope.disBtn=false;
+        $('#discountOffModal').modal('hide')
     }
 
     $scope.checkStock = function(index, item_id) {
@@ -288,6 +304,7 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
+      $scope.formData.detail = discount_off_payment_detail_datatable.data().toArray()
       var url = baseUrl + '/controller/pharmacy/discount_off_payment';
       var method = 'post';
       if($scope.formData.id) {
