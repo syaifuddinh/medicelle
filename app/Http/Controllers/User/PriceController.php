@@ -124,6 +124,7 @@ class PriceController extends Controller
         $item->piece_id = $request->piece_id;
         $item->code = date('ym') . rand(1, 999);
         $item->price = $request->price;
+        $item->service_price = $request->service_price;
         $item->save();
         $price->item_id = $item->id;
         $price->custom_price = $request->price;
@@ -177,7 +178,7 @@ class PriceController extends Controller
      */
     public function show($id)
     {   
-        $price = Price::with('grup_nota:id,slug,name', 'radiology_type:id,name', 'service:id,name,price,piece_id', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name', 'specialization:id,name');
+        $price = Price::with('grup_nota:id,slug,name', 'radiology_type:id,name', 'service:id,name,price,piece_id,service_price', 'service.piece:id,name', 'polyclinic:id,name', 'laboratory_treatment', 'laboratory_treatment.laboratory_type:id,name', 'specialization:id,name');
         return Response::json($price->find($id), 200);
     }
 
@@ -199,6 +200,7 @@ class PriceController extends Controller
         $item->name = $request->name;
         $item->piece_id = $request->piece_id;
         $item->price = $request->price;
+        $item->service_price = $request->service_price;
         $item->save();
         $price->custom_price = $request->price;
         $price->save();

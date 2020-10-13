@@ -42,6 +42,14 @@
                                     <input type="text" id="first-name" ng-model='formData.name' required="required" class="form-control col-md-7 col-xs-12" autofocus>
                                   </div>
                               </div>
+
+                              <div class="form-group">
+                                  <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Nominal jasa dokter<span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                    <input type="text" ng-model='formData.service_price' required="required" class="form-control col-md-7 col-xs-12" jnumber2 only-num>
+                                  </div>
+                              </div>
                               
                               <div class="form-group" ng-if='formData.is_registration == 1'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Apakah tarif ini untuk spesialis tertentu ?

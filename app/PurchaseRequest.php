@@ -8,6 +8,8 @@ use App\PurchaseOrder;
 use App\PurchaseRequestDetail;
 use DB;
 use Carbon\Carbon;
+use App\Notification;
+use Mod;
 
 class PurchaseRequest extends Model
 {
@@ -47,6 +49,15 @@ class PurchaseRequest extends Model
                 $params['created_at'] = Carbon::now()->format('Y-m-d h:i:s');
                 DB::table('purchase_request_logs')
                 ->insert($params);
+
+                // Buat notifikasi
+                $n = new Notification();
+                $n->user_id = auth()->user()->id;
+                $n->title = 'Permintaan pembelian #' . $purchaseRequest->code . ' baru dibuat';
+                $n->description = 'Permintaan pembelian #' . $purchaseRequest->code . ' telah dibuat pada Tanggal ' . Mod::fullDate($purchaseRequest->created_at);
+                $n->route = 'pharmacy.purchase_request.show';
+                $n->param = '{"id" : ' . $purchaseRequest->id . '}';
+                $n->save();
             }
         });
 

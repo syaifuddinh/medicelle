@@ -45,7 +45,7 @@ app.controller('notification', ['$scope', '$compile', '$http', function($scope, 
   oTable.buttons().container().appendTo( '.export_button' );
 
   $scope.delete = function(id) {
-    is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');
+    is_delete = confirm('Apakah anda ingin menghapus data ini ?');
     if(is_delete)
         $http.delete(baseUrl + '/controller/user/notification/' + id).then(function(data) {
             oTable.ajax.reload();

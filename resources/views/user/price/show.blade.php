@@ -113,12 +113,19 @@
                                   </div>
                               </div>
                             
-                              
                               <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Harga
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
                                       <% formData.service.price | number %>
+                                  </div>
+                              </div>
+                            
+                              <div class="form-group">
+                                  <label class="col-md-3 col-xs-12" for="last-name">Nominal jasa dokter
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                                      <% formData.service.service_price | number %>
                                   </div>
                               </div>
                               

@@ -18,7 +18,16 @@ class Notification extends Model
 
     public function getRouteLinkAttribute() {
         if(array_key_exists('route', $this->attributes)) {
-            return route($this->attributes['route']);
+            $p = [];
+            $r = '';
+            if(array_key_exists('param', $this->attributes)) {
+                $param = json_decode($this->attributes['param']);
+                if(($param->id ?? '') != '') {
+                    $p = ['id' => $param->id];
+                }
+                $r = route($this->attributes['route'], $p);
+            }
+            return $r;
         }
     }
 

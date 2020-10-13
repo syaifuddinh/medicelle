@@ -13,17 +13,6 @@
                 <div class="row x_title" ng-show='!isFilter'>
                     <form action="" class='form-horizontal form-label-left'>
                         <div class="form-group">
-                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Principal
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="col-md-10 col-xs-12">
-                                        <select class="form-control" data-placeholder-text-single="'Pilih principal'" chosen allow-single-deselect="false" ng-model="formData.contact_id" ng-options="c.id as c.name for c in data.principal" ng-change='filter()'>
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Periode
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -41,7 +30,7 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Laporan Discount Off</h3>
+                    <h3>Laporan Medical Bill</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">

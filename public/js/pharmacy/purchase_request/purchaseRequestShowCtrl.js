@@ -5,6 +5,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
     id = path.replace(/.+\/(\d+)/, '$1');
 
 
+          
     purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
        dom: 'rt',
         columns:[
@@ -148,6 +149,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.show = function() {
       $http.get(baseUrl + '/controller/pharmacy/purchase_request/' + id).then(function(data) {
+            purchase_request_detail_datatable.clear().draw()
             $scope.formData = data.data
             var grandtotal = 0
             var detail = data.data.detail

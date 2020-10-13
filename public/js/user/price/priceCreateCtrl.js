@@ -20,6 +20,7 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$ti
                 $scope.formData = data.data
                 $scope.formData.name = data.data.service.name
                 $scope.formData.price = data.data.service.rate
+                $scope.formData.service_price = data.data.service.service_price
                 $scope.formData.piece_id = data.data.service.piece_id
                 $scope.formData.laboratory_types = []
                 $scope.showLaboratoryType()

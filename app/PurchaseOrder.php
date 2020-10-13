@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use App\Notification;
+use Mod;
 
 class PurchaseOrder extends Model
 {
@@ -26,6 +28,17 @@ class PurchaseOrder extends Model
             $code = 'PO-' . date('ym') . '-' .  $id;
 
             $purchaseOrder->code = $code;
+        });
+
+        static::created(function(PurchaseOrder $purchaseOrder) {   
+            // Buat notifikasi
+                $n = new Notification();
+                $n->user_id = auth()->user()->id;
+                $n->title = 'Order pembelian #' . $purchaseOrder->code . ' baru dibuat';
+                $n->description = 'Order pembelian #' . $purchaseOrder->code . ' telah dibuat pada Tanggal ' . Mod::fullDate($purchaseOrder->created_at);
+                $n->route = 'pharmacy.purchase_order.show';
+                $n->param = '{"id" : ' . $purchaseOrder->id . '}';
+                $n->save();
         });
     }
 

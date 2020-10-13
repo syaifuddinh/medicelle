@@ -214,7 +214,12 @@
                                     <li><a href="{{ route('pharmacy.discount_off_payment.index') }}">Pembayaran Diskon Off</a></li>
                               </ul>
                       </li>
-                  @endif             
+                  @endif     
+
+                  <li><a><i class="fa fa-briefcase"></i>Laporan<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li><a href="{{ route('report.medical_bill') }}">Tagihan Pemeriksaan</a></li>
+                  </li>
                  
                 </ul>
               </div>

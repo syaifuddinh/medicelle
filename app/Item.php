@@ -9,7 +9,7 @@ use Exception;
 
 class Item extends Model
 {
-    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'purchase_price', 'supplier_price', 'piece_id', 'purchase_piece_id', 'minimal_stock', 'ratio', 'additional', 'is_cure', 'is_non_cure', 'is_umum', 'is_alkes_disposible', 'is_alkes_non_disposible', 'is_inventaris', 'is_bhp', 'classification_id', 'subclassification_id', 'generic_id'];
+    protected $fillable = ['name', 'code', 'category_id', 'is_category', 'description', 'price', 'service_price', 'purchase_price', 'supplier_price', 'piece_id', 'purchase_piece_id', 'minimal_stock', 'ratio', 'additional', 'is_cure', 'is_non_cure', 'is_umum', 'is_alkes_disposible', 'is_alkes_non_disposible', 'is_inventaris', 'is_bhp', 'classification_id', 'subclassification_id', 'generic_id'];
     protected $hidden = ['created_at', 'updated_at'];
     protected $appends = ['unique_code', 'rate'];
 
