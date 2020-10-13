@@ -52,7 +52,7 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
     })
     oTable = $('#listview').DataTable({
     processing: true,
-    order:[[1, 'desc']],
+    order:[[2, 'desc']],
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {

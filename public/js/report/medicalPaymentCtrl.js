@@ -84,7 +84,7 @@ app.controller('medicalPayment', ['$scope', '$rootScope', '$compile', '$http', '
     })
     oTable = $('#listview').DataTable({
     processing: true,
-    order:[[1, 'desc']],
+    order:[[2, 'desc']],
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
