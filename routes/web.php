@@ -40,6 +40,7 @@ Route::group(
             require(base_path('routes/datatable/cashier.php'));
             require(base_path('routes/datatable/letter.php'));
             require(base_path('routes/datatable/pharmacy.php'));
+            require(base_path('routes/datatable/report.php'));
         });
 });
 Route::get('/logout', 'Auth\LoginController@logout');

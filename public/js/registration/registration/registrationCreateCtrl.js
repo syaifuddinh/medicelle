@@ -16,7 +16,6 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
   } 
 
   $scope.city = function() {
-
       $http.get(baseUrl + '/controller/master/city').then(function(data) {
         $scope.data.city = data.data
       }, function(error) {

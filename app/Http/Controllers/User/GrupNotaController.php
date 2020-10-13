@@ -20,6 +20,7 @@ class GrupNotaController extends Controller
         $permission = Permission::select('id', 'name', 'slug')
         ->whereIsActive(1)
         ->whereIsGrupNota(1)
+        ->orderBy('id', 'ASC')
         ->get();
         return Response::json($permission, 200);
     }
