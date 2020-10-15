@@ -11,6 +11,7 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
 
     treatment_group_detail_datatable = $('#treatment_group_detail_datatable').DataTable({
        dom: 'rt',
+       pageLength: 200,
         columns:[
           {
             data: null, 

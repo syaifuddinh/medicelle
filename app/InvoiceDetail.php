@@ -77,7 +77,8 @@ class InvoiceDetail extends Model
                 }
 
                 $percentage = $price->percentage ?? 0;
-                $doctor_allocation = $total_debet * $percentage / 100;
+                //$doctor_allocation = $total_debet * $percentage / 100;
+                $doctor_allocation = $current_item->service_price * $percentage / 100;
                 $owner_allocation = $total_debet * (100 - $percentage) / 100;
                 $reduksi_value = $doctor_allocation * $invoiceDetail->reduksi / 100;
                 $reduksi_charge = $reduksi_value;

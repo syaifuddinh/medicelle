@@ -1691,6 +1691,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   treatment_datatable = $('#treatment_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1719,6 +1720,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         
   schedule_datatable = $('#schedule_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1743,6 +1745,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       
   radiology_datatable = $('#radiology_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1795,6 +1798,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       
   laboratory_datatable = $('#laboratory_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1846,6 +1850,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         
   pathology_datatable = $('#pathology_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1894,6 +1899,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   diagnostic_datatable = $('#diagnostic_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1925,6 +1931,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   drug_datatable = $('#drug_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -1967,6 +1974,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
    
   treatment_group_datatable = $('#treatment_group_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
       {
           data : null,
@@ -2056,6 +2064,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   diagnose_history_datatable = $('#diagnose_history_datatable').DataTable({
     dom: 'rt',
+    pageLength: 200,
     'columns' : [
     { 
         data : null,

@@ -70,6 +70,7 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
 
     detail_datatable = $('#detail_datatable').DataTable({
        dom: 'rt',
+       pageLength: 200,
         columns:[
           {
             data: null,
