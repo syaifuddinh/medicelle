@@ -181,6 +181,10 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         $scope.promo_name = resp.code + ' - ' + resp.name
 
         var grosstotal = $scope.grosstotal;
+        var netto = $scope.netto;
+        //if(grosstotal <> netto){
+	//	grosstotal = netto;
+	//}
         var disc_value = parseInt(resp.disc_value)
         var percent_disc_value = grosstotal * (parseInt(resp.disc_percent) / 100)
         console.log({grosstotal, disc_value, percent_disc_value})
