@@ -333,6 +333,7 @@
                     <thead>
                         <tr>
                             <th></th>
+                            <th>No Rekam Medis</th>
                             <th>Pasien</th>
                             <th>Umur</th>
                             <th>Kota</th>

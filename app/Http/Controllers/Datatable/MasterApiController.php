@@ -12,6 +12,7 @@ use App\Discount;
 use App\Contact;
 use App\Item;
 use App\Permission;
+use App\MedicalRecord;
 use DataTables;
 use DB;
 
@@ -192,7 +193,7 @@ class MasterApiController extends Controller
     public function patient(Request $request) {
         if($request->filled('is_display_all')) {
             if($request->is_display_all == 1) {
-                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job');
+                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job','medical_record:patient_id,code');
             }
         } else {
             $x = Contact::patient()->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');

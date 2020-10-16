@@ -62,7 +62,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       url : baseUrl+'/datatable/master/patient',
       data : function(d) {
         d.is_display_all = 1
-        d.length = 6
+        d.length = 10
         d.is_active = 1
 
         return d
@@ -77,6 +77,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
       className : 'text-center',
       render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectPatient($event.currentTarget)'>Pilih</button>"
     },
+    {data:"medical_record.code", name:"medical_record.code"},
     {data:"name", name:"name"},
     {data:"age", name:"age"},
     {data:"city.name", name:"city.name"},

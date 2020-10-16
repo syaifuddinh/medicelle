@@ -43,7 +43,7 @@
                                   </div>
                               </div>
 
-                              <div class="form-group">
+                              <div class="form-group" ng-show='!formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="first-name">Nominal jasa dokter<span class="required">*</span>
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
@@ -140,7 +140,7 @@
                               </div>
                             
                             
-                              <div class="form-group">
+                              <div class="form-group" ng-show='!formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Persentase dokter(%)
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
