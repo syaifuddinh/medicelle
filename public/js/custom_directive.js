@@ -128,8 +128,10 @@ app.directive('clockpick', function() {
     link: function(scope, el, attr, ngModel) {
       // console.log(ngModel);
       var time = $(el).pickatime({
-          'interval' : 15,
+          'interval' : 20,
           'format' : 'H:i'
+          //'format' : 'H:i',
+	  //'editable' : true
       });
       var p = time.pickatime('picker')
     }
