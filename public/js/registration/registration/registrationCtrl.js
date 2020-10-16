@@ -44,6 +44,7 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
         orderable:false,
         render:resp => $filter('fullDate')(resp.date),
       },
+      {data:"registration_detail.time", name:"registration_detail.time", orderable:false, searchable:false},
       {
         data:null, 
         name:"patient.name", 

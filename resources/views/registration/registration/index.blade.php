@@ -75,6 +75,7 @@
                           <th  style='width:14%'>No. Registrasi</th>
                           <th style='width:16%'>No. Rekam Medis</th>
                           <th style='width:16%'>Tanggal</th>
+                          <th style='width:10%'>Jam</th>
                           <th>Pasien</th>
                           <th>No. Telepon</th>
                           <th>Status</th>

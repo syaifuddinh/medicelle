@@ -2,10 +2,13 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
   var currentDate = new Date()
   var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
   $scope.formData = {
-      'date_end' : date 
+      'date_end' : date,
+      'date_start' : date,
+ 
   }
   setTimeout(function () {    
         $('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+        $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
   }, 300)
   
   oTable = $('#listview').DataTable({
