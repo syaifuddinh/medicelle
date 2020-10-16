@@ -1,4 +1,12 @@
 @include('header')
+<style type="text/css">
+    div table tr td.regular {
+        padding:0;
+    }
+    div table tr td.regular table {
+        margin:0;
+    }
+</style>
  
         <!-- /top navigation -->
 

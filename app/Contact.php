@@ -150,7 +150,9 @@ class Contact extends Model
     }
 
     public function medical_record() {
-        return $this->hasOne('App\MedicalRecord', 'patient_id', 'id');
+        return $this->hasOne('App\MedicalRecord', 'patient_id', 'id')->withDefault([
+            'code' => ''
+        ]);
     }
 
     public function setNameAttribute($value) {
