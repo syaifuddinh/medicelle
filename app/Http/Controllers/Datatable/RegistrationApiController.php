@@ -17,7 +17,7 @@ use DB;
 class RegistrationApiController extends Controller
 {
     public function registration(Request $request) {
-        $x = Registration::with('medical_record', 'patient:id,name,phone','registration_detail:id,registration_id,time')->select('registrations.id', 'registrations.code', 'registrations.medical_record_id', 'registrations.patient_id', 'registrations.date', 'registration_detail.time', 'registrations.status')
+        $x = Registration::with('patient:id,name,phone', 'patient.medical_record:id,patient_id,code', 'detail:registration_id,time')->select('registrations.id', 'registrations.code', 'registrations.medical_record_id', 'registrations.patient_id', 'registrations.date', 'registrations.status')
         ->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
 
         if($request->filled('status')) {

@@ -37,14 +37,31 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
             return "<a href='" + url +  "'>" + resp.code + "</a>"
         } 
       },
-      {data:"medical_record.code", name:"medical_record.code", orderable:false, searchable:false},
+      {data:"patient.medical_record.code", name:"patient.medical_record.code", orderable:false, searchable:false},
       {
         data:null, 
         searchable:false,
         orderable:false,
         render:resp => $filter('fullDate')(resp.date),
       },
-      {data:"registration_detail.time", name:"registration_detail.time", orderable:false, searchable:false},
+      {
+        data:null, 
+        searchable:false,
+        orderable:false,
+        className : 'regular',
+        render:function(resp) {
+            var table = $("<table class='table table-bordered'><tbody></tbody></table>")
+            var tr, td;
+            for(x in resp.detail) {
+                tr = $('<tr></tr>')
+                td = $('<td></td>')
+                td.text(resp.detail[x].time)
+                tr.append(td)
+                table.append(tr)
+            }
+            return table.prop('outerHTML')
+        }
+      },
       {
         data:null, 
         name:"patient.name", 
