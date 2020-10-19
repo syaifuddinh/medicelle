@@ -124,7 +124,7 @@
                                         <div class="col-md-5">
                                             <div class="input-group">
                                                 <div class="input-group-addon">TD</div>
-                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.td'>
+                                                <input type="text" class="form-control" jnumber2 ng-model='formData.additional.td'>
                                             </div>
                                         </div>          
                                         <div class="col-md-5">

@@ -60,6 +60,7 @@
                 </p>
                 <p>Diagnosa kerja : {{ $letter->additional->diagnose }}</p>
                 <p>Terapi yang diberikan : {{ $letter->additional->therapy }}</p><br>
+                <p>{{ $letter->description }}</p><br>
 
                 <p>Terima kasih atas bantuan dan kerjasama yang diberikan.</p>
                 <br><br>

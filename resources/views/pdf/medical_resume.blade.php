@@ -71,6 +71,7 @@
                 <br>
                 <p>Pemeriksaan fisik didapatkan :</p>
                 <p>Tensi : {{ $medicalRecord->blood_pressure ?? $shortDot }} mmHg, Nadi : {{ $medicalRecord->pulse ?? $shortDot }} x/menit, Suhu badan : {{ $medicalRecord->temperature ?? $shortDot }} <sup>o</sup>C, Nafas : {{ $medicalRecord->breath_frequency ?? $shortDot }} x/menit</p>
+                <p>Keterangan : {{ $medicalRecord->physique }}</p>
                 <br>
                 <p>Diagnosis :</p>
                 <ol style='margin-top:3mm;margin-left:6mm'>
