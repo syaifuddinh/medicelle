@@ -1,4 +1,4 @@
-app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
   $scope.formData = {}
   $scope.data = {}
   var path = window.location.pathname;
@@ -6,25 +6,53 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
   $scope.showTable = function() {
     var columns = [
           {
-            data:'code', 
-            name:'invoices.code' 
+            data:null, 
+            name:'invoices.date', 
+            searchable : false,
+            render : x => $filter('fullDate')(x.date)
           },
           {
             data:'patient_name', 
             name:'contacts.name' 
           },
           {
-            data:null, 
-            searchable : false,
-            name:'invoices.date',
-            render : x => $filter('fullDate')(x.date)
+            data:'item_name', 
+            name:'items.name' 
           },
           {
             data:null, 
             className : 'text-right',
+            orderable : false,
             searchable:false,
-            name : 'invoices.netto',
-            render : x => $filter('number')(x.netto)
+            render : x => ''
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => ''
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => ''
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => ''
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => ''
           }
     ]
     
