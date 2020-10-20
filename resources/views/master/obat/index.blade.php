@@ -61,6 +61,7 @@
                           <th>Kategori</th>
                           <th>Grup nota</th>
                           <th>Stok</th>
+                          <th>Exp Date</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

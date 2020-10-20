@@ -20,7 +20,7 @@
                                             <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
                                                 <option value=""></option>
                                             </select>
-                                            <p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>
+                                            <!--<p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>-->
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Qty</label>
@@ -81,6 +81,7 @@
                                                 <tr>
                                                     <td>Tanggal</td>
                                                     <td>Obat</td>
+                                                    <td>Exp Date</td>
                                                     <td>Qty</td>
                                                     <td>Signa 1</td>
                                                     <td>Signa 2</td>
