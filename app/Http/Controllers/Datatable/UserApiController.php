@@ -92,7 +92,7 @@ class UserApiController extends Controller
     }
 
     public function radiology_type(Request $request) {
-        $x = RadiologyType::select('id', 'name', 'is_active');
+        $x = RadiologyType::with('price:id,item_id')->select('radiology_types.id', 'radiology_types.name', 'radiology_types.is_active', 'radiology_types.price_id');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

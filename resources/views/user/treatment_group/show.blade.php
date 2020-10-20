@@ -74,7 +74,7 @@
                               </div>
                              
 
-                              <div class="form-group">
+                              <div class="form-group hidden">
                                   <label class="col-md-3 col-xs-12" for="last-name">Persentase dokter
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">

@@ -1,4 +1,4 @@
-app.controller('treatmentGroupShow', ['$scope', '$http', '$rootScope','$compile', function($scope, $http, $rootScope, $compile, $filter) {
+app.controller('treatmentGroupShow', ['$scope', '$http', '$rootScope','$compile','$timeout', function($scope, $http, $rootScope, $compile, $filter, $timeout) {
     $scope.title = 'Detail Paket Tindakan';
     $scope.formData = {
         detail : []
@@ -9,11 +9,6 @@ app.controller('treatmentGroupShow', ['$scope', '$http', '$rootScope','$compile'
     $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
         treatment_group_detail_datatable.row.add(data).draw()
-        if($scope.is_init != 1) {
-            $timeout(function () {
-                $scope.showItemModal($scope.formData.detail.length - 1)
-            }, 400)
-        }
     }
 
     $scope.show = function() {

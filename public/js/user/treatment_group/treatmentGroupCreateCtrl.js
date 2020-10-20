@@ -50,34 +50,63 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
     });
 
     price_datatable = $('#price_datatable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url : baseUrl+'/datatable/user/price',
-      data : function(d) {
-        d.length = 6
-        d.is_active = 1
-        d.is_treatment = 1
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url : baseUrl+'/datatable/user/price',
+          data : function(d) {
+            d.length = 6
+            d.is_active = 1
+            d.is_treatment = 1
 
-        return d
-      }
-    },
-    columns:[
-    {
-      data:null, 
-      name:null,
-      searchable:false,
-      orderable:false,
-      className : 'text-center',
-      render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectPrice($event.currentTarget)'>Pilih</button>"
-    },
-    {data:"grup_nota.slug",name:"grup_nota.slug"},
-    {data:"service.name", name:"service.name"},
-    ],
-    createdRow: function(row, data, dataIndex) {
-      $compile(angular.element(row).contents())($scope);
-    }
-  });
+            return d
+          }
+        },
+        columns:[
+        {
+          data:null, 
+          name:null,
+          searchable:false,
+          orderable:false,
+          className : 'text-center',
+          render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectPrice($event.currentTarget)'>Pilih</button>"
+        },
+        {data:"grup_nota.slug",name:"grup_nota.slug"},
+        {data:"service.name", name:"service.name"},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+    radiology_type_datatable = $('#radiology_type_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url : baseUrl+'/datatable/user/radiology_type',
+          data : function(d) {
+            d.length = 10
+            d.is_active = 1
+            d.is_treatment = 1
+
+            return d
+          }
+        },
+        columns:[
+        {
+          data:null, 
+          name:null,
+          searchable:false,
+          orderable:false,
+          className : 'text-center',
+          render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectRadiologyType($event.currentTarget)'>Pilih</button>"
+        },
+        {data:"name", name:"name"},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
 
 
     $scope.deleteDetail = function(index, obj) {
@@ -132,6 +161,14 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
         $('#itemModal').modal('hide')
     }
 
+    $scope.selectRadiologyType = function(obj) {
+        var tr = $(obj).parents('tr')
+        var data = radiology_type_datatable.row(tr).data()
+        $scope.formData.detail[$scope.currentIndex].item_name= data.name
+        $scope.formData.detail[$scope.currentIndex].item_id= data.price.item_id
+        $('#itemModal').modal('hide')
+    }
+
   $scope.insertItem = function(data = {}) {
         $scope.formData.detail.push(data)
         treatment_group_detail_datatable.row.add(data).draw()
@@ -142,7 +179,7 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
         }
     }
 
-  $scope.showItemModal = function(index) {
+    $scope.showItemModal = function(index) {
         item_datatable.ajax.reload()
         $scope.currentIndex = index
         $('#itemModal').modal()

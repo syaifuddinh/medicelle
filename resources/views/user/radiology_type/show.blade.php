@@ -60,6 +60,15 @@
                         </div>
                       </div>
                       
+
+                      <div class="form-group">
+                        <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Nominal Jasa Dokter
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                          <% formData.price.service.service_price | number %>
+                        </div>
+                      </div>
+                      
                       <div class="form-group">
                         <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Satuan
                         </label>
@@ -88,15 +97,11 @@
                   <table class="table" id='detail_datatable'>
                       <thead>
                           <th>Nama</th>
-                          <th>Harga</th>
+                          <th>Qty</th>
                       </thead>
                       <tbody>
                         
                       </tbody>
-                      <tfoot>
-                          <th>Total</th>
-                          <th class='text-right' id='grandtotal'></th>
-                      </tfoot>
                   </table>
 
                   <div class="ln_solid"></div>

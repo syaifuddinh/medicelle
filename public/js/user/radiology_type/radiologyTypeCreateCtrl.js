@@ -2,7 +2,8 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
     $scope.title = 'Tambah Jenis Pemeriksaan Radiologi';
     $scope.data = {}
     $scope.formData = {
-        price : {}
+        price : {},
+        detail : []
     }
     var path = window.location.pathname;
     $scope.countGrandtotal = function() {
@@ -21,11 +22,20 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
         $scope.title = 'Edit Jenis Pemeriksaan Radiologi';
         id = path.replace(/.+\/(\d+)/, '$1');
         $http.get(baseUrl + '/controller/user/radiology_type/' + id).then(function(data) {
+            $scope.is_init = 1
             $scope.formData = data.data
             $scope.formData.price.price = data.data.price.custom_price
+            $scope.formData.price.service_price = data.data.price.service.service_price
             $scope.formData.price.piece_id = data.data.price.service.piece_id
-            detail_datatable.rows.add($scope.formData.radiology_type_detail).draw()
-            $scope.countGrandtotal()
+            var detail = data.data.radiology_type_detail
+            var unit
+            $scope.formData.detail = []
+            for(x in detail) {
+                unit = detail[x]
+                detail[x].item_name = unit.name
+                $scope.insertItem(unit)
+            }
+            $scope.is_init = 0
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {
@@ -38,6 +48,30 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
             toastr.error(error.data.message,"Error Has Found !");
           }
         });
+    }
+
+    $scope.insertItem = function(data = {}) {
+        $scope.formData.detail.push(data)
+        radiology_type_detail_datatable.row.add(data).draw()
+        if($scope.is_init != 1) {
+            $timeout(function () {
+                $scope.showItemModal($scope.formData.detail.length - 1)
+            }, 400)
+        }
+    }
+
+    $scope.selectItem = function(obj) {
+        var tr = $(obj).parents('tr')
+        var data = item_datatable.row(tr).data()
+        $scope.formData.detail[$scope.currentIndex].item_name= data.name
+        $scope.formData.detail[$scope.currentIndex].item_id= data.id
+        $('#itemModal').modal('hide')
+    }
+
+    $scope.showItemModal = function(index) {
+        item_datatable.ajax.reload()
+        $scope.currentIndex = index
+        $('#itemModal').modal()
     }
 
     $scope.deleteDetail = function(obj) {
@@ -68,41 +102,74 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
       $scope.countGrandtotal()
   }
 
-    detail_datatable = $('#detail_datatable').DataTable({
+  radiology_type_detail_datatable = $('#radiology_type_detail_datatable').DataTable({
        dom: 'rt',
        pageLength: 200,
         columns:[
           {
-            data: null,
+            data: null, 
             orderable : false,
             searchable : false,
-            render : resp => '<input type="text" style="width:100%" value="' + (resp.name || '') + '" class="form-control" onchange="changeName(this)">'
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<div style='height:9mm' ng-click='showItemModal(" + index + ")'><% formData.detail[" + index + "].item_name %></div>"
+            }
           },
           {
             data: null, 
             orderable : false,
             searchable : false,
             render : function(resp) {
-                return '<input type="number" style="width:100%" value="' + (resp.price || '') + '" onchange="changePrice(this)" class="text-right form-control price-text">'
-            }  
+                var index = $scope.formData.detail.length - 1
+                return "<input type='text' class='form-control' ng-model='formData.detail[" + index + "].qty' style='width:16mm' jnumber2 only-num>"
+            }
           },
           {
             data: null, 
             orderable : false,
             searchable : false,
+            width : '15mm',
             className : 'text-center',
-            render : resp =>  "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail($event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"
+            render :function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail(" + index + ", $event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"  
+            }  
           },
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
-          $compile($('tfoot'))($scope);
           $(row).find('input').focus()
         }
     });
-    $timeout(function() {
-        $compile($('tfoot'))($scope);
-    }, 1000)
+
+  item_datatable = $('#item_datatable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+      url : baseUrl+'/datatable/master/medical_item',
+      data : function(d) {
+        d.length = 6
+        d.is_active = 1
+
+        return d
+      }
+    },
+    columns:[
+    {
+      data:null, 
+      name:null,
+      searchable:false,
+      orderable:false,
+      className : 'text-center',
+      render : resp => "<button ng-disabled='disBtn' type='button' class='btn btn-xs btn-primary' ng-click='selectItem($event.currentTarget)'>Pilih</button>"
+    },
+    {data:"unique_code", orderable:false,searchable:false},
+    {data:"name", name:"name"},
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
 
   changeName = function(obj) {
       var name = $(obj).val()
@@ -175,7 +242,6 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
           var url = baseUrl + '/controller/user/radiology_type/' + id;
           var method = 'put';
       } 
-      $scope.formData.detail = detail_datatable.data().toArray()
       $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");

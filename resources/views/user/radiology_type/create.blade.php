@@ -52,6 +52,20 @@
                                 </div>
                               </div>
 
+                              <div class="form-group">
+                                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Harga
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                      <input type="text" ng-model='formData.price.price' class="form-control" ng-value='0' jnumber2 only-num>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Nominal Jasa Dokter
+                                  </label>
+                                  <div class="col-md-7 col-sm-6 col-xs-12">
+                                      <input type="text" ng-model='formData.price.service_price' class="form-control" ng-value='0' jnumber2 only-num>
+                                  </div>
+                              </div>
 
                               <div class="form-group">
                                   <label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">Persentase dokter(%)
@@ -64,29 +78,26 @@
                           </div>
                       </div>
 
-                      <div class="ln_solid"></div>
+                        <div class="ln_solid"></div>
+                            <h2>Detail Tindakan</h2>
 
-                       <div class="row">
-                         <div class="col-md-12">
-                            <button type="button" class="btn btn-sm btn-primary pull-right" ng-click='addDetail()'>Tambah</button>
-                         </div>
-                         <div class="col-md-12">
-                              <table class="table" id='detail_datatable'>
-                                  <thead>
-                                      <th>Nama</th>
-                                      <th>Harga</th>
-                                      <th></th>
-                                  </thead>
-                                  <tbody>
-                                    
-                                  </tbody>
-                                  <tfoot>
-                                      <th>Total</th>
-                                      <th class='text-right' id='grandtotal'></th>
-                                  </tfoot>
-                              </table>
-                         </div>
-                       </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                  <button type="button" class="btn btn-sm btn-primary" ng-click='insertItem({qty:1})'>
+                                      <i class="fa fa-plus"></i>
+                                  </button>
+                                  <table class="table" id='radiology_type_detail_datatable'>
+                                      <thead>
+                                          <tr>
+                                              <th>Item</th>
+                                              <th>Qty</th>
+                                              <th></th>
+                                          </tr>
+                                      </thead>
+                                      <tbody></tbody>
+                                  </table>
+                              </div>
+                        </div>
 
                       <div class="ln_solid"></div>
 
@@ -120,6 +131,62 @@
         </div>
         <!-- /page content -->
 
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal-dialog" style='width:80%'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="">Daftar BMHP</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#bhp">BMHP</a></li>
+                </ul>
+
+                <div class="tab-content">
+                  <div id="bhp" class="tab-pane fade in active" style='padding-top:6mm'>
+                    
+                    <table class="table table-bordered" id='item_datatable' style='width:100%'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Kode</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                  </div>
+                  <div id="price" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='price_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Grup Nota</th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>                  
+
+                  <div id="radiology_type" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='radiology_type_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->

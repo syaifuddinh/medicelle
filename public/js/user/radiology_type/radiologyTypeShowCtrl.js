@@ -15,7 +15,7 @@ app.controller('radiologyTypeShow', ['$scope', '$http', '$rootScope', '$filter',
             orderable : false,
             className : 'text-right',
             render : function(resp) {
-                return $filter('number')(resp.price)
+                return $filter('number')(resp.qty)
             }  
           }
         ],

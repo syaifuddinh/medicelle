@@ -53,11 +53,11 @@ class RadiologyTypeController extends Controller
             $radiology_type->save();
             $rate = 0;
             foreach ($request->detail as $value) {
-                if( null != ($value['name'] ?? null) ) {
-                    $rate += ($value['price'] ?? 0);
+                if( null != ($value['item_id'] ?? null) ) {
                     $radiology_type->radiology_type_detail()->create([
-                        'name' => $value['name'],
-                        'price' => $value['price'] ?? 0
+                        'name' => $value['item_name'],
+                        'item_id' => $value['item_id'],
+                        'qty' => $value['qty'] ?? 1
                     ]);
                 }
             }
@@ -80,7 +80,7 @@ class RadiologyTypeController extends Controller
      */
     public function show($id)
     {
-        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name,price', 'price', 'price.grup_nota:id,name', 'price.service:id,piece_id', 'price.service.piece:id,name')->find($id);
+        $radiology_type = RadiologyType::with('radiology_type_detail:radiology_type_id,name,price,item_id,qty', 'price', 'price.grup_nota:id,name', 'price.service:id,piece_id,service_price', 'price.service.piece:id,name')->find($id);
         return Response::json($radiology_type, 200);
     }
 
@@ -111,16 +111,15 @@ class RadiologyTypeController extends Controller
         $radiology_type->radiology_type_detail()->delete();
         $rate = 0;
         foreach ($request->detail as $value) {
-            if( null != ($value['name'] ?? null)) {
-                $rate += ($value['price'] ?? 0);
+            if( null != ($value['item_id'] ?? null)) {
                 $radiology_type->radiology_type_detail()->create([
-                    'name' => $value['name'],
-                    'price' => $value['price'] ?? 0
+                    'name' => $value['item_name'],
+                    'item_id' => $value['item_id'],
+                    'qty' => $value['qty'] ?? 1
                 ]);
             }
         }
         $params = (array) $request->price;
-        $params['price'] = $rate;
         $this->storePrice($radiology_type->id, $params);
         DB::commit();
 
@@ -163,8 +162,9 @@ class RadiologyTypeController extends Controller
             'grup_nota_id' => $params['grup_nota_id'],
             'destination' => 'RADIOLOGI',
             'piece_id' => $params['piece_id'],
+            'service_price' => $params['service_price'],
             'price' => $params['price'],
-            'percentage' => $params['percentage']
+            'percentage' => $params['percentage'] ?? 0
         ];
         $price = new \App\Http\Controllers\User\PriceController();
         if($radiology_type->price_id == null) {

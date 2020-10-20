@@ -55,7 +55,7 @@
                                   </div>
                               </div>
 
-                              <div class="form-group">
+                              <div class="form-group hidden">
                                   <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Persentase dokter(%)
                                   </label>
                                   <div class="col-md-7 col-sm-6 col-xs-12">
@@ -123,6 +123,7 @@
                 <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#bhp">BMHP</a></li>
                   <li><a data-toggle="tab" href="#price">Tindakan</a></li>
+                  <li><a data-toggle="tab" href="#radiology_type">Radiologi</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -140,16 +141,28 @@
                     </table>
                   </div>
                   <div id="price" class="tab-pane fade" style='padding-top:6mm'>
-                    <table class="table table-bordered" id='price_datatable' style='width:100%'>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Grup Nota</th>
-                                <th>Nama</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                        <table class="table table-bordered" id='price_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Grup Nota</th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>                  
+
+                  <div id="radiology_type" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='radiology_type_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                   </div>
                 </div>
 
