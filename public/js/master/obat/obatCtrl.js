@@ -8,6 +8,7 @@ app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scop
       url : baseUrl+'/datatable/master/obat',
       data : x => Object.assign(x, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',
@@ -16,7 +17,15 @@ app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scop
         'className' : 'btn btn-default btn-sm',
         'filename' : 'Obat - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Obat'
+        'title' : 'Obat',
+            exportOptions : {
+                modifier : {
+                    // DataTables core
+                    order : 'current',  // 'current', 'applied', 'index',  'original'
+                    page : 'all',      // 'all',     'current'
+                    search : 'none'     // 'none',    'applied', 'removed'
+                }
+            }
       },
     ],
 

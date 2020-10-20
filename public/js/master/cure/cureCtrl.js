@@ -8,15 +8,16 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
       url : baseUrl+'/datatable/master/medical_item',
       data : x => Object.assign(x, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',
         'enabled' : true,
         'text' : '<span class="fa fa-file-excel-o"></span> Export Excel',
         'className' : 'btn btn-default btn-sm',
-        'filename' : 'Obat - '+new Date(),
+        'filename' : 'BMHP - '+new Date(),
         'sheetName' : 'Data',
-        'title' : 'Obat'
+        'title' : 'BMHP'
       },
     ],
 

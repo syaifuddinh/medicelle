@@ -830,7 +830,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.submitDiagnoseHistory = function() {
       $scope.diagnose_history.is_other = !$scope.diagnose_history.is_other ? 0 : 1 
-      if($scope.diagnose_history.disease_id && $scope.diagnose_history.item_id) {
+      if($scope.diagnose_history.disease_id || $scope.diagnose_history.item_id) {
 
           diagnose_history_datatable.row.add($scope.diagnose_history).draw()
           $scope.diagnose_history = {is_other : 1}
