@@ -1255,7 +1255,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
             var drugs = data.data.map(function(d){
-                d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
+                //d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
+                d.label = d.name + ' - (' + $filter('fullDate')(d.expired_date) + ') ( ' + $filter('number')(d.qty) + ' )'
                 return d
             })
             $scope.data.drug = drugs
