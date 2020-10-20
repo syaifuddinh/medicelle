@@ -12,7 +12,7 @@ use Exception;
 class InvoiceDetail extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'is_profit_sharing', 'reduksi', 'is_asuransi'];
+    protected $fillable = ['invoice_id', 'item_id', 'qty', 'debet', 'credit', 'disc_percent', 'is_item', 'is_profit_sharing', 'reduksi', 'is_asuransi', 'service_price', 'percentage_doctor'];
 
     public static function boot() {
         parent::boot();
@@ -25,6 +25,15 @@ class InvoiceDetail extends Model
             $invoiceDetail->total_credit = $total_credit;
             $invoiceDetail->grandtotal = $grandtotal;
             $invoice = Invoice::find($invoiceDetail->invoice_id);
+            if($invoiceDetail->is_item == 1) {
+                $item = DB::table('items')
+                ->join('prices', 'prices.item_id', 'items.id')
+                ->where('items.id', $invoiceDetail->item_id)
+                ->select('service_price', 'prices.percentage')
+                ->first();
+                $invoiceDetail->percentage_doctor = $item->percentage ?? 0;
+                $invoiceDetail->service_price = $item->service_price ?? 0;
+            }
             if($invoiceDetail->is_discount == 1) {
                 $invoice->increment('discount', -$grandtotal);                
             } 

@@ -10,6 +10,7 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$ti
     if(pathhead == 'administration') {
         pathhead = 'registration'
     }
+    $scope.pathhead = pathhead
     $scope.formData['is_' + pathhead] = 1 
     $scope.show = function() {
 
@@ -195,7 +196,7 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$ti
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/price'          
+          window.location = baseUrl + '/price/' + $scope.pathhead          
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;
