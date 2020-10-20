@@ -28,35 +28,13 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
           }
     ]
     
-    $scope.data.grup_nota.reverse()
-    for(g in $scope.data.grup_nota) {
-        columns.push({
-            data:'col' + $scope.data.grup_nota[g].id, 
-            className : 'text-right additional',
-            searchable:false,
-            orderable:false,
-        })
-    }
-
-    columns.push({
-        data:null, 
-        className : 'text-right',
-        searchable:false,
-        name : 'invoices.paid',
-        render : x => $filter('number')(x.paid)
-    })
-    columns.push({
-        data:'status', 
-        searchable:false,
-        orderable:false
-    })
     oTable = $('#listview').DataTable({
     processing: true,
     order:[[2, 'desc']],
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
-      url : baseUrl + '/datatable/report/medical_bill',
+      url : baseUrl + '/datatable/report/doctor_service',
       data : d => Object.assign(d, $scope.formData)
     },
     buttons: [

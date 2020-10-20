@@ -43,12 +43,14 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No Pembayaran</th>
-                          <th>Nama Pasien</th>
                           <th>Tanggal</th>
-                          <th class='bill_col'>Jumlah Tagihan</th>
-                          <th>Jumlah Pembayaran</th>
-                          <th>Status Tagihan</th>
+                          <th>Nama Pasien</th>
+                          <th>Keterangan</th>
+                          <th>Jasa Dokter</th>
+                          <th>Dokter</th>
+                          <th>Klinik</th>
+                          <th>Promo</th>
+                          <th>Keterangan</th>
                         </tr>
                       </thead>
                       <tbody>
