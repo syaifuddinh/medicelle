@@ -76,28 +76,28 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
 
     $scope.deleteDetail = function(obj) {
         var row = $(obj).parents('tr')
-        detail_datatable.row(row).remove().draw()
+        radiology_type_detail_datatable.row(row).remove().draw()
         $scope.countGrandtotal()
     } 
 
     $scope.addDetail = function() {
-        detail_datatable.row.add({}).draw()
+        radiology_type_detail_datatable.row.add({}).draw()
     }
 
     changeName = function(obj) {
       var name = $(obj).val()
       var row = $(obj).parents('tr')
-      var data = detail_datatable.row(row).data()
+      var data = radiology_type_detail_datatable.row(row).data()
       data['name'] = name
-      detail_datatable.row(row).data(data).draw()
+      radiology_type_detail_datatable.row(row).data(data).draw()
   }
 
   changePrice = function(obj) {
       var price = $(obj).val()
       var row = $(obj).parents('tr')
-      var data = detail_datatable.row(row).data()
+      var data = radiology_type_detail_datatable.row(row).data()
       data['price'] = price
-      detail_datatable.row(row).data(data).draw()
+      radiology_type_detail_datatable.row(row).data(data).draw()
       $(obj).val(price)
       $scope.countGrandtotal()
   }
@@ -132,7 +132,7 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
             className : 'text-center',
             render :function(resp) {
                 var index = $scope.formData.detail.length - 1
-                return "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail(" + index + ", $event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"  
+                return "<button  class='btn btn-xs btn-danger' ng-click='deleteDetail($event.currentTarget)' title='Hapus'><i class='fa fa-trash-o'></i></button>"  
             }  
           },
         ],
@@ -177,7 +177,7 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
         'name' : name
       }
       var row = $(obj).parents('tr')
-      detail_datatable.row(row).data(input).draw()
+      radiology_type_detail_datatable.row(row).data(input).draw()
   }
 
       $scope.grup_nota = function() {
@@ -222,16 +222,16 @@ app.controller('radiologyTypeCreate', ['$scope', '$http', '$rootScope', '$compil
 
     $scope.reset = function() {
         $scope.formData = {}
-        detail_datatable.clear().draw()
+        radiology_type_detail_datatable.clear().draw()
     }
 
     $scope.deleteDetail = function(obj) {
         var row = $(obj).parents('tr')
-        detail_datatable.row(row).remove().draw()
+        radiology_type_detail_datatable.row(row).remove().draw()
     } 
 
     $scope.addDetail = function() {
-        detail_datatable.row.add({}).draw()
+        radiology_type_detail_datatable.row.add({}).draw()
     }
 
     $scope.submitForm=function() {
