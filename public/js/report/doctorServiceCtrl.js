@@ -24,28 +24,28 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
             className : 'text-right',
             orderable : false,
             searchable:false,
-            render : x => ''
+            render : x => $filter('number')(x.service_price)
           },
           {
             data:null, 
             className : 'text-right',
             orderable : false,
             searchable:false,
-            render : x => ''
+            render : x => $filter('number')(x.doctor_fee)
           },
           {
             data:null, 
             className : 'text-right',
             orderable : false,
             searchable:false,
-            render : x => ''
+            render : x => $filter('number')(x.clinic_fee)
           },
           {
             data:null, 
             className : 'text-right',
             orderable : false,
             searchable:false,
-            render : x => ''
+            render : x => $filter('number')(x.promo_price)
           },
           {
             data:null, 

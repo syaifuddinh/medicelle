@@ -124,6 +124,9 @@
                   <li class="active"><a data-toggle="tab" href="#bhp">BMHP</a></li>
                   <li><a data-toggle="tab" href="#price">Tindakan</a></li>
                   <li><a data-toggle="tab" href="#radiology_type">Radiologi</a></li>
+                  <li><a data-toggle="tab" href="#sewa_ruangan">Sewa Ruangan</a></li>
+                  <li><a data-toggle="tab" href="#sewa_instrumen">Sewa Instrumen</a></li>
+                  <li><a data-toggle="tab" href="#sewa_alkes">Sewa Alkes</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -155,6 +158,42 @@
 
                   <div id="radiology_type" class="tab-pane fade" style='padding-top:6mm'>
                         <table class="table table-bordered" id='radiology_type_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>
+
+                  <div id="sewa_ruangan" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='sewa_ruangan_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>
+
+                  <div id="sewa_instrumen" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='sewa_instrumen_datatable' style='width:100%'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                  </div>
+
+                  <div id="sewa_alkes" class="tab-pane fade" style='padding-top:6mm'>
+                        <table class="table table-bordered" id='sewa_alkes_datatable' style='width:100%'>
                             <thead>
                                 <tr>
                                     <th></th>

@@ -75,6 +75,28 @@ class Formula extends Model
                     }
                     $formula->invoice_id = $invoice->id;
                 }
+            } else if($formula->is_approve == 0) {
+                if($formula->invoice_id != null) {
+                    $invoice = Invoice::find($formula->invoice_id);
+                    if($invoice->paid > 0) {
+                        throw new Exception('Pembatalan tidak dapat dilakukan karena pembayaran sudah dilakukan');
+                    }
+                    $formulaUnit = Formula::find($formula->id);
+                    $details = $formulaUnit->detail;
+                    foreach($details as $detail) {
+                        $id = $detail->id;
+                        $stock_transaction_id = $detail->stock_transaction_id;
+                        DB::table('formula_details')
+                        ->whereId($detail->id)
+                        ->update([
+                            'stock_transaction_id' => null
+                        ]);
+                        StockTransaction::find($stock_transaction_id)->delete();
+
+                    }
+                    $formula->invoice_id = null;
+                    $invoice->delete();
+                }
             }
         });
     }

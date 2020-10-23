@@ -108,6 +108,93 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
         }
     });
 
+    sewa_ruangan_datatable = $('#sewa_ruangan_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url : baseUrl+'/datatable/user/price',
+          data : function(d) {
+            d.length = 10
+            d.is_active = 1
+            d.is_sewa_ruangan = 1
+
+            return d
+          }
+        },
+        columns:[
+        {
+          data:null, 
+          name:null,
+          searchable:false,
+          orderable:false,
+          className : 'text-center',
+          render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaRuangan($event.currentTarget)'>Pilih</button>"
+        },
+        {data:"service.name", name:"service.name"},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+    sewa_instrumen_datatable = $('#sewa_instrumen_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url : baseUrl+'/datatable/user/price',
+          data : function(d) {
+            d.length = 10
+            d.is_active = 1
+            d.is_sewa_instrumen = 1
+
+            return d
+          }
+        },
+        columns:[
+        {
+          data:null, 
+          name:null,
+          searchable:false,
+          orderable:false,
+          className : 'text-center',
+          render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaInstrumen($event.currentTarget)'>Pilih</button>"
+        },
+        {data:"service.name", name:"service.name"},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+
+    sewa_alkes_datatable = $('#sewa_alkes_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url : baseUrl+'/datatable/user/price',
+          data : function(d) {
+            d.length = 10
+            d.is_active = 1
+            d.is_sewa_alkes = 1
+
+            return d
+          }
+        },
+        columns:[
+        {
+          data:null, 
+          name:null,
+          searchable:false,
+          orderable:false,
+          className : 'text-center',
+          render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectSewaAlkes($event.currentTarget)'>Pilih</button>"
+        },
+        {data:"service.name", name:"service.name"},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
 
     $scope.deleteDetail = function(index, obj) {
         $scope.formData.detail[index] = {}
@@ -166,6 +253,30 @@ app.controller('treatmentGroupCreate', ['$scope', '$http', '$rootScope', '$compi
         var data = radiology_type_datatable.row(tr).data()
         $scope.formData.detail[$scope.currentIndex].item_name= data.name
         $scope.formData.detail[$scope.currentIndex].item_id= data.price.item_id
+        $('#itemModal').modal('hide')
+    }
+
+    $scope.selectSewaRuangan = function(obj) {
+        var tr = $(obj).parents('tr')
+        var data = sewa_ruangan_datatable.row(tr).data()
+        $scope.formData.detail[$scope.currentIndex].item_name= data.service.name
+        $scope.formData.detail[$scope.currentIndex].item_id= data.item_id
+        $('#itemModal').modal('hide')
+    }
+
+    $scope.selectSewaInstrumen = function(obj) {
+        var tr = $(obj).parents('tr')
+        var data = sewa_instrumen_datatable.row(tr).data()
+        $scope.formData.detail[$scope.currentIndex].item_name= data.service.name
+        $scope.formData.detail[$scope.currentIndex].item_id= data.item_id
+        $('#itemModal').modal('hide')
+    }
+
+    $scope.selectSewaAlkes = function(obj) {
+        var tr = $(obj).parents('tr')
+        var data = sewa_alkes_datatable.row(tr).data()
+        $scope.formData.detail[$scope.currentIndex].item_name= data.service.name
+        $scope.formData.detail[$scope.currentIndex].item_id= data.item_id
         $('#itemModal').modal('hide')
     }
 

@@ -83,7 +83,7 @@ class FormulaController extends Controller
      */
     public function show($id)
     {
-        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code', 'contributor:id,name')->findOrFail($id);
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code', 'contributor:id,name', 'invoice:id,code')->findOrFail($id);
         return Response::json($formula, 200);
     }
 
@@ -168,6 +168,23 @@ class FormulaController extends Controller
         $formula->is_approve = 1;
         $formula->save();
         DB::commit();
+
+        return Response::json(['message' => 'Data berhasil disetujui'], 200);
+    }
+
+    public function reject($id)
+    {
+        //
+        DB::beginTransaction();
+        try{
+            $formula = Formula::findOrFail($id);
+            $formula->is_approve = 0;
+            $formula->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
         return Response::json(['message' => 'Data berhasil disetujui'], 200);
     }

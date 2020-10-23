@@ -1,4 +1,4 @@
-app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
+app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', '$timeout', function($scope, $http, $rootScope, $filter, $compile, $timeout) {
     $scope.title = 'Detail Resep Obat';
     $scope.data = {}
     $scope.registration = {}
@@ -106,25 +106,48 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
         });
     }
 
-$scope.approve = function(id) {
-    is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
-    if(is_approve)
-        var id = $scope.formData.id
-        $http.put(baseUrl + '/controller/pharmacy/formula/' + id + '/approve').then(function(data) {
-            toastr.success("Data berhasil disetujui");
-            $scope.show()
-        }, function(error) {
-          if (error.status==422) {
-            var det="";
-            angular.forEach(error.data.errors,function(val,i) {
-              det+="- "+val+"<br>";
+    $scope.approve = function(id) {
+        is_approve = confirm('Apakah anda yakin transaksi ini disetujui ?');
+        if(is_approve)
+            var id = $scope.formData.id
+            $http.put(baseUrl + '/controller/pharmacy/formula/' + id + '/approve').then(function(data) {
+                toastr.success("Data berhasil disetujui");
+                $scope.show()
+            }, function(error) {
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
             });
-            toastr.warning(det,error.data.message);
-          } else {
-            toastr.error(error.data.message,"Error Has Found !");
-          }
-        });
-  }
+    }
+
+    $scope.reject = function(id) {
+        is_approve = confirm('Apakah anda yakin transaksi ini dibatalkan ?');
+        if(is_approve)
+            var id = $scope.formData.id
+            $rootScope.disBtn = true
+            $http.put(baseUrl + '/controller/pharmacy/formula/' + id + '/reject').then(function(data) {
+                $rootScope.disBtn = false
+                toastr.success("Data berhasil dibatalkan");
+                $scope.show()
+            }, function(error) {
+                $rootScope.disBtn = false
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+            });
+    }
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
@@ -172,6 +195,9 @@ $scope.approve = function(id) {
 
           $scope.formData.detail = detail
           $scope.showRegistration()
+          $timeout(function () {
+              $('.invoice-link').attr('href', baseUrl + '/cashier/' + $scope.formData.invoice.id )
+          }, 500)
     }, function(error) {
       $rootScope.disBtn=false;
       if (error.status==422) {

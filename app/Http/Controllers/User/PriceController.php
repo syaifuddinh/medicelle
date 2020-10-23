@@ -126,7 +126,7 @@ class PriceController extends Controller
         $item->piece_id = $request->piece_id;
         $item->code = date('ym') . rand(1, 999);
         $item->price = $request->price;
-        $item->service_price = $request->service_price;
+        $item->service_price = $request->service_price ?? 0;
         $item->save();
         $price->item_id = $item->id;
         $price->custom_price = $request->price;

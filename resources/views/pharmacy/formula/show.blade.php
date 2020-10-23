@@ -19,6 +19,10 @@
                         <button type="button" ng-show='formData.is_approve == 0' ng-click='approve()' class="btn btn-primary btn-sm pull-right">
                             Setujui
                         </button>
+
+                        <button type="button" ng-show='formData.is_approve == 1' ng-disabled='disBtn' ng-click='reject()' class="btn btn-danger btn-sm pull-right">
+                            Batalkan
+                        </button>
                        
                         <a href='#' class="btn btn-outline-primary btn-sm pull-right">
                               <i class="fa fa-tag"></i> <% registration.code %>
@@ -67,6 +71,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Jenis Pasien
                                     </label>
@@ -77,6 +82,15 @@
                             </div>
 
                             <div class="col-md-6">
+                                <div class="form-group" ng-if='formData.is_approve == 1'>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">No Kasir
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <a class='invoice-link'>
+                                                <% formData.invoice.code  %>
+                                            </a>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Jenis Kelamin

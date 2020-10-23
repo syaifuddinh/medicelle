@@ -162,6 +162,108 @@ class StockTransaction extends Model
                 'has_stock' => 1
             ]);
         });
+        static::deleting(function(StockTransaction $stockTransaction) {
+            $item = DB::table('items')
+            ->whereId($stockTransaction->item_id)
+            ->first();
+           
+            $qty = $stockTransaction->in_qty - $stockTransaction->out_qty;
+
+            if($stockTransaction->expired_date == null) {
+
+                $stock_count = Stock::whereItemId($stockTransaction->item_id)
+                ->whereLokasiId($stockTransaction->lokasi_id)
+                ->whereNull('expired_date')
+                ->count('id');
+            } else {
+                if($stockTransaction->is_adjustment == 1) {
+                    $stock_count = Stock::whereItemId($stockTransaction->item_id)
+                    ->whereLokasiId($stockTransaction->lokasi_id)
+                    ->count('id');                
+                } else {
+                    $stock_count = Stock::whereItemId($stockTransaction->item_id)
+                    ->whereLokasiId($stockTransaction->lokasi_id)
+                    ->whereExpiredDate($stockTransaction->expired_date)
+                    ->count('id');                
+                }
+            }
+
+            if($stock_count == 0) {
+                throw new Exception('Kartu stok tidak ditemukan');
+            } else {
+                $stock = Stock::whereItemId($stockTransaction->item_id)
+                ->whereLokasiId($stockTransaction->lokasi_id);
+
+                $stock = $stock->first();
+                $stock_id = $stock->id;
+                if($stock->qty - $qty < 0) {
+                    throw new Exception("Stok tidak boleh minus");
+                }
+
+                $stock = Stock::whereItemId($stockTransaction->item_id)
+                ->whereLokasiId($stockTransaction->lokasi_id);
+
+                $stock->decrement('qty', $qty);
+            }
+
+            $date = Carbon::parse($stockTransaction->date);
+            $year = $date->format('Y');
+            $month = $date->format('m');
+            $periodical_stock_count = DB::table('periodical_stocks')
+            ->where('year', $year)
+            ->where('month', $month)
+            ->whereItemId($stockTransaction->item_id)
+            ->whereLokasiId($stockTransaction->lokasi_id);
+            if($stockTransaction->expired_date == null) {
+                $periodical_stock_count = $periodical_stock_count->whereNull('expired_date');                    
+            } else {
+                $periodical_stock_count = $periodical_stock_count->whereExpiredDate($stockTransaction->expired_date);
+            }
+
+            if($periodical_stock_count->count('id') == 0) {
+                throw new Exception('Kartu stok periodis tidak detemukan');
+            } else {
+                $periodical_stock = DB::table('periodical_stocks')
+                ->where('year', $year)
+                ->where('month', $month)
+                ->whereItemId($stockTransaction->item_id)
+                ->whereLokasiId($stockTransaction->lokasi_id);
+
+                if($stockTransaction->expired_date == null) {
+                    $periodical_stock = $periodical_stock->whereNull('expired_date');                    
+                } else {
+                    $periodical_stock = $periodical_stock->whereExpiredDate($stockTransaction->expired_date);
+                }
+
+                $periodical_stock->decrement('gross', $stockTransaction->in_qty);
+                $periodical_stock->decrement('netto', $qty);
+            }
+            $last_stock = 0;
+            $latest_stock_id = StockTransaction::whereItemId($stockTransaction->item_id)
+            ->whereLokasiId($stockTransaction->lokasi_id);
+            if($stockTransaction->expired_date == null) {
+                $latest_stock_id = $latest_stock_id->whereNull('expired_date');                    
+            } else {
+                $latest_stock_id = $latest_stock_id->whereExpiredDate($stockTransaction->expired_date);
+            }
+
+            $latest_stock_id = $latest_stock_id->max('id');
+
+            if(null != ($latest_stock_id ?? null)) {
+                $latestStock = StockTransaction::find($latest_stock_id);
+                $last_stock = $latestStock->amount;
+            }
+
+            $last_stock += $qty;
+            $stockTransaction->amount = $last_stock;
+
+            $item = DB::table('items') 
+            ->whereId($stockTransaction->item_id);
+            $item->decrement('current_stock', $qty);
+            $item->update([
+                'has_stock' => 1
+            ]);
+        });
     }
 
     public function stock() {
