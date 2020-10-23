@@ -79,7 +79,7 @@
                       </div>
 
                         <div class="ln_solid"></div>
-                            <h2>Detail Tindakan</h2>
+                            <h2>Detail BMHP</h2>
 
                             <div class="row">
                               <div class="col-md-12">
