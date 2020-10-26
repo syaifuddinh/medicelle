@@ -302,7 +302,7 @@ class MedicalRecordController extends Controller
             'radiology:id,medical_record_id,date,result_date,name,description,is_radiology,saran,kesimpulan,kanan,kiri',
             'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,additional',
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
-            'diagnose_history:medical_record_id,disease_id,item_id,type,description',
+            'diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
             'diagnose_history.disease:id,name',
 
             'disease_history:medical_record_id,disease_name,cure,last_checkup_date,additional',
