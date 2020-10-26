@@ -2103,7 +2103,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     {
       data : null,
       className : 'text-center',
-      render : resp => '<button class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnoseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnoseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
     },
     ],
     createdRow: function(row, data, dataIndex) {
