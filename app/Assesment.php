@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\Contact;
 use App\Registration;
+use App\MedicalRecord;
+use DB;
 
 class Assesment extends Model
 {
@@ -19,6 +21,7 @@ class Assesment extends Model
         static::creating(function(Assesment $assesment){
             $assesment->date = date('Y-m-d');
             $assesment->created_by = Auth::user()->id;
+
         });
 
         static::created(function(Assesment $assesment){
@@ -31,6 +34,18 @@ class Assesment extends Model
             $assesment->updated_by = Auth::user()->id;
             $registration = Registration::find($assesment->registration_id);
             $registrationDetail = $registration->detail;
+            $additional = $assesment->additional;
+            $params = [
+                'riwayat_penyakit_dahulu' => $additional->riwayat_penyakit_dahulu
+            ];
+            $params = (object) $params;
+            $m = MedicalRecord::whereRegistrationId($assesment->registration_id) 
+            ->first();
+            if($m) {
+                $medicalRecord = MedicalRecord::find($m->id);
+                $medicalRecord->additional = $params;
+                $medicalRecord->save();
+            }
             foreach($registrationDetail as $unit) {
                 $params = [
                     'main_complaint' => $assesment->main_complaint,

@@ -90,11 +90,19 @@ class PriceController extends Controller
         //->select('item_id', DB::raw('SUM(qty) AS qty'))
         //->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) < -7")
         //->groupBy('item_id');
+        $nonApproved = DB::table('formula_details')
+        ->select('item_id', DB::raw('SUM(qty) AS qty'))
+        ->join('formulas', 'formulas.id', 'formula_details.formula_id')
+        ->whereIsApprove(0)
+        ->groupBy('item_id');
         $item = Item::with('piece:id,name', 'generic:id,name')
         ->leftJoinSub($stocks, 'stocks', function($join){
             $join->on('stocks.item_id', 'items.id');
         })
-        ->select('id', 'name', 'piece_id', 'generic_id', 'stocks.qty','stocks.expired_date')
+        ->leftJoinSub($nonApproved, 'non_approved', function($join){
+            $join->on('non_approved.item_id', 'items.id');
+        })
+        ->select('id', 'name', 'piece_id', 'generic_id', DB::raw('stocks.qty - COALESCE(non_approved.qty, 0) AS qty'),'stocks.expired_date')
         //->select('id', 'name', 'piece_id', 'generic_id', DB::raw('COALESCE(stocks.qty, 0) AS qty'))
         ->whereIsCategory(0)
         ->whereIsClassification(0)

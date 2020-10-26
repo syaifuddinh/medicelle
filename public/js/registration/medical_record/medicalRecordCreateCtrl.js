@@ -2069,11 +2069,35 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     'columns' : [
     { 
         data : null,
-        render : resp => resp.is_other != 1 ? $scope.data.disease.find(x => x.id == resp.disease_id).name : resp.disease_id
+        render : function(resp) {
+            var disease
+            var is_int = /^([0-9]+)$/
+            if(is_int.test(resp.disease_id)) {
+                disease = $scope.data.disease.find(x => x.id == resp.disease_id)
+                if(disease) {
+                    return disease.name
+                } else {
+                    if(resp.disease) {
+                        return resp.disease.name
+                    } else {
+                        return '' 
+                    }
+                }
+            } else {
+               return resp.disease_id
+            }
+        }
     },
     { 
         data : null,
-        render : resp => "<b>" + $scope.data.disease.find(x => x.id == resp.item_id).unique_code + " / </b>" + $scope.data.disease.find(x => x.id == resp.item_id).name
+        render : function(resp) {
+            var disease = $scope.data.disease.find(x => x.id == resp.item_id)
+            if(disease) {
+                return "<b>" + disease.unique_code + " / </b>" + disease.name
+            } else {
+                return ''
+            }
+        }
     },
     {data : 'description'},
     {
@@ -2460,7 +2484,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       setTimeout(function () {    
             $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
       }, 300)
-      $scope.diagnose_history = { is_other : 1 }
+      $scope.diagnose_history = { 
+        is_other : 1,
+        is_diagnose_history : 1 
+      }
       $scope.disease_history = {}
       $scope.family_disease_history = {
          'is_family_disease_history' : 1
@@ -2493,6 +2520,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           obgyn_family_disease_history_datatable.clear().draw();
       } else if(step == 3) {
           kid_history_datatable.clear().draw();
+      }
+
+      if(path.indexOf('physique/general') > -1) {
+          diagnose_history_datatable.clear().draw();
       }
 
       if(path.indexOf('therapy/treatment') > -1) {
@@ -2602,7 +2633,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteTreatment = function(e) {
     var tr = $(e).parents('tr');
     var data = treatment_datatable.row(tr).data()
-    $scope.destroyDetail(data.id)  }
+    $scope.destroyDetail(data.id)  
+  }
     
   $scope.deleteRadiology = function(e) {
     var tr = $(e).parents('tr');
@@ -2688,7 +2720,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     
   $scope.deleteDiagnoseHistory = function(e) {
     var tr = $(e).parents('tr');
-    diagnose_history_datatable.row(tr).remove().draw()
+    var data = diagnose_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     
