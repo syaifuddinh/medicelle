@@ -125,7 +125,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                          <div class="form-group">
-                                            <label class="col-md-4 col-xs-12">Hasil USG
+                                            <label class="col-md-4 col-xs-12">Hasil Pemeriksaan Penunjang
                                             </label>
                                             <div class="col-md-12 col-xs-12">
                                                 <textarea class="form-control" ng-model='formData.usg' ng-change='submitOne("usg")'></textarea>
