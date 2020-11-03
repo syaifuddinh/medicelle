@@ -13,11 +13,11 @@
  <div class="container">
      
         <div class="row" style='margin-top:4mm;'>
-            <div style='border-bottom:1px solid black;margin-bottom:6mm'>
+            <div style='border-bottom:1px solid black;margin-bottom:6mm;width:auto'>
                 <div style='display:inline-block'>
                     <img src="{{ $company->logo2 }}" style='width:auto;height:20mm;' alt="">
                 </div>
-                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:120mm'>
                     <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
                     <p>{{ $company->address }}</p>
                     <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
@@ -80,7 +80,7 @@
                    @endforeach
                 </ol>
                 <br>
-                <div style='margin-bottom:7mm'>
+                <div style='margin-bottom:5mm'>
                     <p>Terapi :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
@@ -94,7 +94,13 @@
                         {{ $resume_description }}
                     </div>
                 </div>
-
+                <div style='margin-top:1mm'>
+                    <p>Visual :</p>
+                    <div style='margin-top:1mm'>
+                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual }}"></img>
+                    </div>
+                </div>
+                <div style='margin-top:1mm'>
                 <p style='margin-bottom:14mm'>Surabaya, {{ Mod::fullDate($date) }}</p>
 
                 <p style='font-weight:bold;'>
@@ -103,8 +109,9 @@
                     </span>
                 </p>
                 <p >SPESIALIS {{ strtoupper($medicalRecord->registration_detail->doctor->specialization->name ?? '') }}</p>
-                <br>
-                @include('pdf/letter_footer')   
+                </div>
+                <br><br>
+               @include('pdf/letter_footer')    
             </div>
         </div>
  </div>

@@ -1944,6 +1944,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
+        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).expired_date
+      },
+      { 
+        data : null,
         className : 'text-right',
         render : resp => resp.qty + ' ' + $scope.data.drug.find(x => x.id == resp.item_id).piece.name
       },
