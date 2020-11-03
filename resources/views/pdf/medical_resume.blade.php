@@ -97,7 +97,7 @@
                 <div style='margin-top:1mm'>
                     <p>Visual :</p>
                     <div style='margin-top:1mm'>
-                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual }}"></img>
+                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual ?? ''}}"></img>
                     </div>
                 </div>
                 <div style='margin-top:1mm'>
