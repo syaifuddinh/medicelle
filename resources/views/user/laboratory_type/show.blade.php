@@ -35,18 +35,42 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
                       <div class="form-group">
-                        <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Nama
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
-                          <% formData.name %>
-                        </div>
+                            <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Grup nota
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                              <% formData.price.grup_nota.name %>
+                            </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Detail
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <ol id='laboratory_type_detail_list'></ol>
-                        </div>
+                            <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Nama
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                              <% formData.name %>
+                            </div>
+                      </div>
+
+                      <div class="form-group">
+                            <label class="col-md-1 col-sm-1 col-xs-12" for="first-name">Satuan
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
+                              <% formData.price.service.piece.name %>
+                            </div>
+                      </div>
+                      <div>
+                          <b style='margin-left:2mm'>Detail</b>
+                      </div>
+                      <div>
+                          <table class="table" id='detail_datatable'>
+                                  <thead>
+                                      <th>Nama</th>
+                                      <th>Harga</th>
+                                      <th>Service Dokter</th>
+                                      <th>Persentase Dokter(%)</th>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                              </table>
                       </div>
                       
 

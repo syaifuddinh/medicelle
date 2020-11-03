@@ -210,7 +210,7 @@ class PriceController extends Controller
         $item->name = $request->name;
         $item->piece_id = $request->piece_id;
         $item->price = $request->price;
-        $item->service_price = $request->service_price;
+        $item->service_price = $request->service_price ?? 0;
         $item->save();
         $price->custom_price = $request->price;
         $price->save();

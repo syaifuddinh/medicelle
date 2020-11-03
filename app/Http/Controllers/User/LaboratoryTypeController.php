@@ -56,6 +56,8 @@ class LaboratoryTypeController extends Controller
             if( null != ($value['name'] ?? null) ) {
                 $laboratory_type->laboratory_type_detail()->create([
                     'name' => $value['name'],
+                    'service_price' => $value['service_price'] ?? 0,
+                    'percentage' => $value['percentage'] ?? 0,
                     'price' => $value['price']
                 ]);
             }
@@ -73,7 +75,7 @@ class LaboratoryTypeController extends Controller
      */
     public function show($id)
     {
-        $laboratory_type = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name,price')->find($id);
+        $laboratory_type = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name,price,service_price,percentage', 'price:id,grup_nota_id,item_id', 'price.service:id,piece_id', 'price.service.piece:id,name', 'price.grup_nota:id,name')->find($id);
         return Response::json($laboratory_type, 200);
     }
 
@@ -106,6 +108,8 @@ class LaboratoryTypeController extends Controller
             if( null != ($value['name'] ?? null)) {
                 $laboratory_type->laboratory_type_detail()->create([
                     'name' => $value['name'],
+                    'service_price' => $value['service_price'] ?? 0,
+                    'percentage' => $value['percentage'] ?? 0,
                     'price' => $value['price']
                 ]);
             }

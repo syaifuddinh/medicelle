@@ -11,6 +11,8 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
         id = path.replace(/.+\/(\d+)/, '$1');
         $http.get(baseUrl + '/controller/user/laboratory_type/' + id).then(function(data) {
             $scope.formData = data.data
+            $scope.formData.grup_nota_id = data.data.price.grup_nota_id
+            $scope.formData.price.piece_id = data.data.price.service.piece_id
             detail_datatable.rows.add($scope.formData.laboratory_type_detail).draw()
         }, function(error) {
           $rootScope.disBtn=false;
@@ -69,8 +71,8 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
     counter = -1
 
     detail_datatable = $('#detail_datatable').DataTable({
-       dom: 'rt',
-	pageLength: 200,
+        dom: 'rt',
+    	pageLength: 200,
         columns:[
           {
             data: null,
@@ -84,6 +86,22 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
             searchable : false,
             render : function(resp) {
                 return '<input type="number" style="width:100%" value="' + (resp.price || '') + '" onchange="changePrice(this)" class="text-right form-control">'
+            }  
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                return '<input type="number" style="width:100%" value="' + (resp.service_price || '') + '" onchange="changeServicePrice(this)" class="text-right form-control">'
+            }  
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            render : function(resp) {
+                return '<input type="number" style="width:100%" value="' + (resp.percentage || '') + '" onchange="changePercentage(this)" class="text-right form-control">'
             }  
           },
           {
@@ -112,6 +130,24 @@ app.controller('laboratoryTypeCreate', ['$scope', '$http', '$rootScope', '$compi
       var row = $(obj).parents('tr')
       var data = detail_datatable.row(row).data()
       data['price'] = price
+      detail_datatable.row(row).data(data).draw()
+      
+  }
+
+  changeServicePrice = function(obj) {
+      var service_price = $(obj).val()
+      var row = $(obj).parents('tr')
+      var data = detail_datatable.row(row).data()
+      data['service_price'] = service_price
+      detail_datatable.row(row).data(data).draw()
+      
+  }
+
+  changePercentage = function(obj) {
+      var percentage = $(obj).val()
+      var row = $(obj).parents('tr')
+      var data = detail_datatable.row(row).data()
+      data['percentage'] = percentage
       detail_datatable.row(row).data(data).draw()
       
   }

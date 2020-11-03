@@ -1,21 +1,43 @@
-app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', '$filter', function($scope, $http, $rootScope, $filter) {
+app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
     $scope.title = 'Detail Jenis Pemeriksaan Laboratorium';
     $scope.formData = {}
     var path = window.location.pathname
     id = path.replace(/.+\/(\d+)/, '$1');
+    detail_datatable = $('#detail_datatable').DataTable({
+        dom: 'rt',
+        columns:[
+            {
+                data: 'name',
+            },
+            {
+                data: null, 
+                orderable : false,
+                searchable : false,
+                className : 'text-right',
+                render : r => $filter('number')(r.price)  
+            },
+            {
+                data: null, 
+                orderable : false,
+                searchable : false,
+                className : 'text-right',
+                render : r => $filter('number')(r.service_price)  
+            },
+            {
+                data: null, 
+                orderable : false,
+                searchable : false,
+                className : 'text-right',
+                render : r => $filter('number')(r.percentage)  
+            },
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
     $http.get(baseUrl + '/controller/user/laboratory_type/' + id).then(function(data) {
-            var unit, li
-            var laboratory_type_detail_list = $('#laboratory_type_detail_list') 
             $scope.formData = data.data
-
-            for(x in $scope.formData.laboratory_type_detail) {
-                unit = $scope.formData.laboratory_type_detail[x]
-                li = $('<li>' + unit.name + '<br></li>')
-                li.append(
-                    $("<div class='text-primary'>" + $filter("number")(unit.price) + "</div>")
-                )
-                $('#laboratory_type_detail_list').append(li)
-            }
+            detail_datatable.rows.add($scope.formData.laboratory_type_detail).draw()
         }, function(error) {
           $rootScope.disBtn=false;
           if (error.status==422) {

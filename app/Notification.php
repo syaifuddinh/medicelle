@@ -37,7 +37,7 @@ class Notification extends Model
         $unreadStock = DB::table('stocks')
         ->whereRaw('id NOT IN (SELECT stock_id FROM notifications WHERE user_id = ' . $user_id .  ' AND DATE_PART(\'doy\', notifications.created_at) - DATE_PART(\'doy\', \'' . $today . '\'::timestamp) = 0 )')
         ->whereNotNull('expired_date')
-        ->selectRaw('stocks.*, DATE_PART(\'doy\', stocks.expired_date) - DATE_PART(\'doy\', \'' . $today . '\'::timestamp) AS batas_kadaluarsa')
+        ->selectRaw('stocks.*, DATE_PART(\'day\', stocks.expired_date - \'' . $today . '\'::timestamp) AS batas_kadaluarsa')
         ->get();
         DB::beginTransaction();
         foreach ($unreadStock as $stock) {
