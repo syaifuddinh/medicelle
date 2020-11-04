@@ -123,6 +123,50 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         } 
       },
       {
+        data:null, 
+        orderable:false,
+        searchable:false,
+        className : 'regular ' + ($scope.flag != 'polyclinic' ? '' : 'hidden'),
+        render : function(resp) {
+            var r = ''
+            var table = $("<table class='table table-bordered'><tbody></tbody></table>")
+            var tr, td;
+            var unit
+            if($scope.flag == 'laboratory') {
+                if(resp.parent) {
+                    if(resp.parent.additional.treatment) {
+                        for(x in resp.parent.additional.treatment) {
+                            for(y in resp.parent.additional.treatment[x].detail) {
+                                unit = resp.parent.additional.treatment[x].detail[y]
+                                if(unit.is_active && unit.is_active == 1) {
+                                    tr = $('<tr></tr>')
+                                    td = $('<td></td>')
+                                    td.text(unit.name)
+                                    tr.append(td)
+                                    table.append(tr)
+                                }
+                            }
+                        }
+
+                        r = table.prop('outerHTML')
+                    }
+                }
+            } else if($scope.flag == 'radiology') {
+                r = '<div style="padding-left:3mm;padding-top:3mm;">' + resp.radiology_type_name + '</div>'
+            }
+
+            return r
+        } 
+      },
+      {
+        data: null, 
+        orderable : false,
+        searchable : false,
+        className : 'text-center',
+        className : ($scope.flag == 'radiology' || $scope.flag == 'laboratory' ? '' : 'hidden'),
+        render : resp => resp.is_tested == 1 ? '<label class="label label-primary">Sudah Diperiksa</label>' : '<label class="label label-warning">Belum diperiksa</label>'
+      },
+      {
         data: null,
         width:'14%', 
         orderable : false,

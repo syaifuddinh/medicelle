@@ -340,16 +340,48 @@ class RegistrationController extends Controller
                     ]);
                 }
                 foreach($diagnostics as $value) {
-                    if($value->laboratory_pivot === null) {
-                        InvoiceDetail::create([
-                            'invoice_id' => $invoice->id,
-                            'item_id' => $value->item_id,
-                            'is_profit_sharing' => 1,
-                            'qty' => $value->qty,
-                            'is_item' => 1,
-                            'debet' => $value->item->price,
-                            'reduksi' => $value->reduksi
-                        ]);
+                    if($value->laboratory_pivot !== null) {
+                        $price = 0;
+                        $service_price = 0;
+                        $item_id = null;
+                        foreach($value->laboratory_pivot->additional->treatment as $treatment) {                        
+                            foreach($treatment->detail as $detail) {
+                                $laboratoryTypeDetail = DB::table('laboratory_type_details')
+                                ->whereId($detail->id)
+                                ->first();
+                                if($laboratoryTypeDetail) {
+                                    if(!$laboratoryTypeDetail->item_id) {
+                                        $item_id = DB::table('items')
+                                        ->insertGetId([
+                                            'code' => 'LABORATORYTYPEDETAIL' . date('YmdHis'),
+                                            'name' => $laboratoryTypeDetail->name,
+                                            'price' => $laboratoryTypeDetail->price,
+                                            'service_price' => $laboratoryTypeDetail->service_price,
+                                            'is_laboratory_type_detail' => 1
+                                        ]);
+                                        DB::table('laboratory_type_details')
+                                        ->whereId($detail->id)
+                                        ->update([
+                                            'item_id' => $item_id
+                                        ]);
+                                    } else {
+                                        $item_id = $laboratoryTypeDetail->item_id; 
+                                    }
+                                    $price = $laboratoryTypeDetail->price;
+                                    $service_price = $laboratoryTypeDetail->service_price;
+                                    InvoiceDetail::create([
+                                        'invoice_id' => $invoice->id,
+                                        'item_id' => $item_id,
+                                        'is_profit_sharing' => 1,
+                                        'qty' => $value->qty,
+                                        'is_item' => 1,
+                                        'debet' => $price,
+                                        'reduksi' => $value->reduksi,
+                                        'service_price' => $service_price
+                                    ]);
+                                }
+                            }
+                        }
                     } else {
                         $debet = 0;
                         $additional = $value->laboratory_pivot->additional;

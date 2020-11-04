@@ -76,6 +76,11 @@ class RegistrationApiController extends Controller
 
     public function radiology_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
+        $radiologies = DB::table('medical_record_details')
+        ->join('items', 'items.id', 'medical_record_details.item_id')
+        ->join('prices', 'prices.item_id', 'items.id')
+        ->join('radiology_types', 'prices.radiology_group', 'radiology_types.id')
+        ->select('medical_record_details.id AS medical_record_detail_id', 'radiology_types.name AS radiology_type_name');
         $x = PivotMedicalRecord::with(
             'registration_detail:id,registration_id,doctor_id,polyclinic_id',
             'registration_detail.registration:id,code,patient_id,date',
@@ -84,6 +89,9 @@ class RegistrationApiController extends Controller
             'registration_detail.polyclinic:id,name',
             'registration_detail.doctor:id,name'
         )
+        ->leftJoinSub($radiologies, 'radiologies', function($query) {   
+            $query->on('radiologies.medical_record_detail_id', 'pivot_medical_records.medical_record_detail_id');
+        })
         ->whereHas('registration_detail.registration', function(Builder $query) use($request){
             $query->whereBetween('date', [$request->date_start, $request->date_end])
             ->whereStatus(2);
@@ -98,10 +106,12 @@ class RegistrationApiController extends Controller
         ->orWhere('is_radiology', 1)
         ->select(
             'pivot_medical_records.id',
+            DB::raw("COALESCE(radiology_type_name, '') AS radiology_type_name"),
             'pivot_medical_records.registration_detail_id', 
             'pivot_medical_records.is_referenced', 
             'pivot_medical_records.is_laboratory_treatment', 
             'pivot_medical_records.is_radiology', 
+            'pivot_medical_records.is_tested', 
             'pivot_medical_records.medical_record_id'
         );
 
@@ -126,6 +136,7 @@ class RegistrationApiController extends Controller
         $status = $flag == 'finish' ? 1 : 0;
         DB::enableQueryLog();
         $x = PivotMedicalRecord::with(
+            'parent:id,additional',
             'registration_detail:id,registration_id,doctor_id,polyclinic_id',
             'registration_detail.registration:id,code,patient_id,date',
             'medical_record:id,code,registration_id,registration_detail_id', 
@@ -147,6 +158,8 @@ class RegistrationApiController extends Controller
         })
         ->select(
             'pivot_medical_records.id',
+            'pivot_medical_records.parent_id',
+            'pivot_medical_records.is_tested',
             'pivot_medical_records.registration_detail_id',
             'pivot_medical_records.is_referenced',
             'pivot_medical_records.is_laboratory_treatment',

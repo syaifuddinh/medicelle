@@ -432,16 +432,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               className : 'text-center',
               render : resp => '<button class="btn btn-sm btn-primary" ng-disabled="disBtn" ng-click="cloneMedicalRecord($event.currentTarget)">Pilih</button>'
             },
-            {data:"code", name:"code", width : '35mm' },
+            {data:"medical_record.code", name:"medical_record.code", width : '35mm' },
             {
               data:null, 
               orderable:false,
               searchable:false,
               width : '45mm',
-              render:resp => $filter('fullDate')(resp.date)
+              render:resp => $filter('fullDate')(resp.medical_record.date)
             },
-            {data:"main_complaint", name:"main_complaint", orderable:false, searchable:false},
-            {data:"doctor.name", name:"doctor.name", orderable:false, searchable:false},
+            {data:"medical_record.main_complaint", name:"medical_record.main_complaint", orderable:false, searchable:false},
+            {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name", orderable:false, searchable:false},
           ],
           createdRow: function(row, data, dataIndex) {
             $compile(angular.element(row).contents())($scope);
@@ -484,7 +484,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $rootScope.disBtn = true
       var tr = $(e).parents('tr')
       var origin = medical_record_datatable.row(tr).data()
-      $http.put(baseUrl + '/controller/registration/medical_record/' + id + '/origin/' + origin.id).then(function(data) {
+      $http.put(baseUrl + '/controller/registration/medical_record/' + id + '/origin/' + origin.medical_record.id).then(function(data) {
           $scope.reset();
           $scope.show();
           toastr.success('Rekam medis berhasil disalin');

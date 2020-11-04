@@ -65,7 +65,9 @@
                 <p>Penyakit dahulu :</p>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
-                        <li>{{ $unit->disease_name }}</li>
+                        @if($unit->disease_name)
+                            <li>{{ $unit->disease_name }}</li>
+                        @endif
                    @endforeach
                 </ol>
                 <br>
@@ -97,7 +99,7 @@
                 <div style='margin-top:1mm'>
                     <p>Visual :</p>
                     <div style='margin-top:1mm'>
-                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual }}"></img>
+                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual ?? '' }}"></img>
                     </div>
                 </div>
                 <div style='margin-top:1mm'>

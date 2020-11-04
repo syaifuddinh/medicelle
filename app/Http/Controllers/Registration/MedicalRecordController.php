@@ -168,6 +168,24 @@ class MedicalRecordController extends Controller
         $additional->treatment[$request->row]->detail[$request->column]->{$request->key} = $request->value;
         $pivot->additional = json_encode($additional);
         $pivot->save();
+        $is_tested = 0;
+        foreach ($pivot->additional->treatment as $treatment) {
+            foreach ($treatment->detail as $detail) {
+                if(($detail->is_active ?? null)) {                
+                    if($detail->is_active == 1) {
+                        if(($detail->hasil ?? null) || ($detail->satuan ?? null) || ($detail->nilai_normal ?? null) || ($detail->keterangan ?? null)) {
+                            $is_tested = 1;
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+        DB::table('pivot_medical_records')
+        ->whereParentId($pivot_medical_record_id)
+        ->update([
+            'is_tested' => $is_tested
+        ]);
         return Response::json(['message' => 'Data berhasil di-update'], 200);
     }
 
@@ -189,6 +207,11 @@ class MedicalRecordController extends Controller
         $pivot_medical_record = PivotMedicalRecord::findOrFail($id);
         $additional = $pivot_medical_record->additional;
         $inputs = $request->all();
+        if($request->radiology_description) {
+            $pivot_medical_record->is_tested = 1;
+        } else {
+            $pivot_medical_record->is_tested = 0;
+        }
         foreach ($inputs as $key => $input) {
             $additional->{$key} = $input;
         }
@@ -387,54 +410,98 @@ class MedicalRecordController extends Controller
     public function docx(Request $request, $id)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $pivot = PivotMedicalRecord::findOrFail($id);
+        $medicalRecord = $this->fetch($pivot->medical_record_id);
+        $resume_description = $pivot->additional->resume_description ?? '';
+        $date = $request->filled('date') ? $request->date : date('Y-m-d');
+        $dot = '....................................................';
+        $shortDot = '...............';
+        // Adding an empty Section to the document...
+        $section = $phpWord->addSection('RESUME MEDIS');
+        $header = $section->addHeader();
+        $company = Mod::company();
+        $phpWord->addFontStyle('textHeader', array('bold'=>true, 'size' => 14));
+        $header->addText($company->name, 'textHeader');
+        $header->addText($company->address, 'textHeader');
+        $header->addText('Telp : ' . $company->phone_number, 'textHeader');
+        $header->addText($company->fax, 'textHeader');
+        // Adding Text element to the Section having font styled by default...
+        $phpWord->addFontStyle('textBold', array('bold'=>true));
+        $phpWord->addParagraphStyle('subtitle', array('align'=>'center', 'spaceAfter' => 300));
+        $phpWord->addParagraphStyle('textCenter', array('align'=>'center'));
+        $phpWord->addParagraphStyle('spaceGeneral', array('spaceAfter'=>40));
+        $phpWord->addParagraphStyle('spaceMedium', array('spaceAfter'=>350));
+        $section->addText( "", '', 'spaceMedium');
+        $section->addText( "RESUME MEDIS\n\n\n\n", 'textBold', 'subtitle');
+
+        $section->addText(
+            "No Rekam Medis\t : " . $medicalRecord->code, '', 'spaceGeneral'
+        );
+        $section->addText(
+            "Nama\t\t\t : " . $medicalRecord->registration->patient->patient_type . ' ' . $medicalRecord->registration->patient->name, '', 'spaceGeneral'
+        );
+        $section->addText(
+            "Tanggal lahir\t\t : " . Mod::fullDate($medicalRecord->registration->patient->birth_date), '', 'spaceGeneral'
+        );
+
+        $section->addText(
+            "Alamat\t\t\t : " . $medicalRecord->registration->patient->address, '', 'spaceGeneral'
+        );
+        $section->addText(
+            '', '', 'spaceGeneral'
+        );
+
+        // Adding Text element with font customized using named font style...
+        $section->addText(
+            "\tDatang dengan keluhan utama " . ($medicalRecord->main_complaint ?? $dot) . ", riwayat penyakit sekarang " . ($medicalRecord->current_disease ?? $dot) . '. Penyakit dahulu'
+            );
+        foreach($medicalRecord->disease_history as $unit) {
+            if($unit->disease_name) {
+                $section->addListItem($unit->disease_name, 0);
+            }
+        }
 
 
-// Adding an empty Section to the document...
-$section = $phpWord->addSection('RESUME MEDIS');
-// Adding Text element to the Section having font styled by default...
-$section->addText(
-    'No Rekam Medis'
-);
+        $section->addText('' , '', 'spaceGeneral');
+        $section->addText('Pemeriksaan fisik didapatkan :' , '', 'spaceGeneral');
+        $section->addText('Tensi : ' . ($medicalRecord->blood_pressure ?? $shortDot) . ' mmHg, Nadi : ' . $medicalRecord->pulse ?? $shortDot . ' x/menit, Suhu badan : ' . ($medicalRecord->temperature ?? $shortDot) . ' oC, Nafas : ' . ($medicalRecord->breath_frequency ?? $shortDot) . ' x/menit');
+        $section->addText('' , '', 'spaceGeneral');
+        $section->addText('Diagnosis : ' , '', 'spaceGeneral');
+        foreach($medicalRecord->diagnose_history as $unit) {
+            $section->addListItem($unit->disease->name, 0);
+        }
+        $section->addText('' , '', 'spaceGeneral');
+        $section->addText('Terapi : ' , '', 'spaceGeneral');
+        foreach($medicalRecord->drug as $unit) {
+            $section->addListItem($unit->item->name ?? '' . ' sebanyak ' . $unit->qty . ' ' . ($unit->item->piece->name ?? ''), 0);
+        }
 
-/*
- * Note: it's possible to customize font style of the Text element you add in three ways:
- * - inline;
- * - using named font style (new font style object will be implicitly created);
- * - using explicitly created font style object.
- */
+        $section->addText('Jadwal kontrol selanjutnya pada hari ' . ($medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot) . ', tanggal ' . $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot , '', 'spaceGeneral');
+        $section->addText('' , '', 'spaceGeneral');
+        $section->addText('Jadwal kontrol selanjutnya pada hari ' . ($medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot)  . ', tanggal ' . ($medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot), '', 'spaceGeneral');
 
-// Adding Text element with font customized inline...
-$section->addText(
-    '"Great achievement is usually born of great sacrifice, '
-        . 'and is never the result of selfishness." '
-        . '(Napoleon Hill)',
-    array('name' => 'Tahoma', 'size' => 10)
-);
+        $section->addText('Keterangan' , '', 'spaceGeneral');
+        $section->addText($resume_description , '', 'spaceGeneral');
+        $section->addText('' , '', 'spaceGeneral');
+        $section->addText('Visual' , '', 'spaceGeneral');
+        $section->addText('' , '', 'spaceMedium');
+        $section->addText('Surabaya, '  . Mod::fullDate($date));
+        $section->addText('');
+        $section->addText('');
+        $section->addText('');
+        $section->addText('');
+        $section->addText('');
+        $section->addText('');
+        $section->addText($medicalRecord->registration_detail->doctor->name);
+        $section->addText('SPESIALIS ' .  strtoupper($medicalRecord->registration_detail->doctor->specialization->name ?? ''), 'textBold');
+        $footer = $section->addFooter();
+        $footer->addText( ($company->phone_number ?? '') . "\t" . ($company->whatsapp_number ?? '') . "\t" . ($company->website ?? '') . "\t" . ($company->email ?? '') , '', 'textCenter');
+        $filename = 'medical_resume.docx';  
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($filename);        
+        $file= public_path(). "\\" . $filename;
 
-// Adding Text element with font customized using named font style...
-$fontStyleName = 'oneUserDefinedStyle';
-$phpWord->addFontStyle(
-    $fontStyleName,
-    array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
-);
-$section->addText(
-    '"The greatest accomplishment is not in never falling, '
-        . 'but in rising again after you fall." '
-        . '(Vince Lombardi)',
-    $fontStyleName
-);
-
-// Adding Text element with font customized using explicitly created font style object...
-$fontStyle = new \PhpOffice\PhpWord\Style\Font();
-$fontStyle->setBold(true);
-$fontStyle->setName('Tahoma');
-$fontStyle->setSize(13);
-$myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
-$myTextElement->setFontStyle($fontStyle);
-
-// Saving the document as OOXML file...
-$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-   $objWriter->save('helloWorld.docx');        
+        return response()->download($file);
     }
 
     public function ruang_tindakan_pdf(Request $request, $id)

@@ -1,5 +1,12 @@
 @include('header')
- 
+<style type="text/css">
+    div table tr td.regular {
+        padding:0;
+    }
+    div table tr td.regular table {
+        margin:0;
+    }
+</style> 
         <!-- /top navigation -->
 
         <!-- page content -->
@@ -53,6 +60,8 @@
                           <th>Poliklinik</th>
                           <th>Dokter</th>
                           <th>Jenis</th>
+                          <th ng-show="$scope.flag != 'polyclinic'">Pemeriksaan</th>
+                          <th ng-show="$scope.flag == 'laboratory' && $scope.flag == 'radiology'">Status Pemeriksaan</th>
                           <th></th>
                         </tr>
                       </thead>
