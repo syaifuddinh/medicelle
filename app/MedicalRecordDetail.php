@@ -301,6 +301,14 @@ class MedicalRecordDetail extends Model
         return $this->belongsTo('App\Permission');
     }
 
+    public function s1() {
+        return $this->belongsTo('App\Permission','signa1','id');
+    }
+
+    public function s2() {
+        return $this->belongsTo('App\Permission','signa2','id');
+    }
+
     public function medical_record() {
         return $this->belongsTo('App\MedicalRecord');
     }

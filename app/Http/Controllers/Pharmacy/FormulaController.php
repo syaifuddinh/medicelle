@@ -89,7 +89,7 @@ class FormulaController extends Controller
 
     public function pdf($id)
     {
-        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'medical_record:id,code')->findOrFail($id);
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'medical_record:id,code,patient_id','medical_record.patient:id,name')->findOrFail($id);
         $pdf = PDF::loadview('pdf/resep_obat',['formula'=>$formula]);
         return $pdf
         ->setPaper('A4')
