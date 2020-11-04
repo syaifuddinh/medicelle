@@ -62,7 +62,8 @@
                 </div>
 
                 <p style='margin-top:3mm'>Datang dengan keluhan utama {{ $medicalRecord->main_complaint ?? $dot }}, riwayat penyakit sekarang {{ $medicalRecord->current_disease ?? $dot }}.</p>
-                <p>Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint ?? $dot }}</p>
+                <?php if($medicalRecord->obgyn_main_complaint) { ?>
+                <p>Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint ?? $dot }}</p><?php }?>
                 <p>Penyakit dahulu :</p>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
@@ -87,7 +88,7 @@
                     <p>Terapi :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
-                            <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}</li>
+                            <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
                        @endforeach
                     </ol>
                     <p style='margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>

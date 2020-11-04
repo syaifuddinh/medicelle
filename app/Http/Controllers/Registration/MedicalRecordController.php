@@ -322,6 +322,8 @@ class MedicalRecordController extends Controller
             'diagnostic.laboratory_pivot:id,medical_record_detail_id', 
             'drug:id,medical_record_id,item_id,date,qty,signa1,signa2', 
             'drug.item:id,name,piece_id',
+            'drug.s1:id,name',
+            'drug.s2:id,name',
             'drug.item.piece:id,name',
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
