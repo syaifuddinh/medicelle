@@ -62,6 +62,7 @@
                 </div>
 
                 <p style='margin-top:3mm'>Datang dengan keluhan utama {{ $medicalRecord->main_complaint ?? $dot }}, riwayat penyakit sekarang {{ $medicalRecord->current_disease ?? $dot }}.</p>
+                <p>Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint ?? $dot }}</p>
                 <p>Penyakit dahulu :</p>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
@@ -79,6 +80,8 @@
                         <li>{{ $unit->disease->name ?? '' }}</li>
                    @endforeach
                 </ol>
+                <br>
+                <p>{{ $medicalRecord->usg ?? '' }}</p>
                 <br>
                 <div style='margin-bottom:5mm'>
                     <p>Terapi :</p>

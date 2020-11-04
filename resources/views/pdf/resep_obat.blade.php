@@ -29,6 +29,11 @@
      .w30 {
         width:30mm;
      }
+
+     .w70 {
+        width:70mm;
+     }
+
      .inline-block {
         display:inline-block;
      }
@@ -73,7 +78,7 @@
                         Dari Dokter
                     </div>
                     <div class="inline-block"> : </div>
-                    <div class="inline-block">
+                    <div class="inline-block w70">
                         {{ $formula->registration_detail->doctor->name }}
                     </div>
                 </div>
@@ -83,8 +88,8 @@
                         Untuk
                     </div>
                     <div class="inline-block"> : </div>
-                    <div class="inline-block">
-                        {{ $formula->registration_detail->doctor->name }}
+                    <div class="inline-block w70">
+                        {{ $formula->medical_record->patient->name }}
                     </div>
                 </div>
                 
