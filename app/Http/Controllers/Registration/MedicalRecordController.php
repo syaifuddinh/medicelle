@@ -501,7 +501,7 @@ class MedicalRecordController extends Controller
         $filename = 'medical_resume.docx';  
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save($filename);        
-        $file= public_path(). "\\" . $filename;
+        $file= public_path(). "/" . $filename;
 
         return response()->download($file);
     }
