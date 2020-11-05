@@ -386,7 +386,7 @@ class RegistrationController extends Controller
                         }
                     } else {
                         $debet = 0;
-                        $additional = $value->laboratory_pivot->additional;
+                        $additional = $value->laboratory_pivot->additional ?? (object) [];
                         if(($additional->treatment ?? null)) {
                             if(count($additional->treatment) > 0) {
                                 foreach($additional->treatment as $t) {
