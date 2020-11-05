@@ -387,7 +387,7 @@ class RegistrationController extends Controller
                     } else {
                         $debet = 0;
                         $additional = $value->laboratory_pivot->additional;
-                        if($additional->treatment) {
+                        if(($additional->treatment ?? null)) {
                             if(count($additional->treatment) > 0) {
                                 foreach($additional->treatment as $t) {
                                     foreach ($t->detail as $recover) {
