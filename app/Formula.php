@@ -95,6 +95,8 @@ class Formula extends Model
 
                     }
                     $formula->invoice_id = null;
+                    $invoice->payment()->delete();
+                    $invoice->detail()->delete();
                     $invoice->delete();
                 }
             }

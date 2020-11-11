@@ -135,24 +135,39 @@
                                 </div>
 
                                 <div class="ln_solid"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div style='position:relative;'>
+                                            <div style="position:absolute;top:0;left:0;width:100%;height:100%;" ng-show='!is_fill_signature'></div>      
+                                            <div class="signature"  ng-show='is_fill_signature' style='width:20mm'></div>
+                                            <img src="<% formData.additional.general_visual %>" ng-show='!is_fill_signature && formData.additional.general_visual' alt="">
+                                            <img src="{{ asset('images/general.bmp') }}" ng-show='!is_fill_signature && !formData.additional.general_visual' alt="">
+                                        </div>
+                                        <div class="form-group" style='padding-bottom:7mm'>
+                                            <div class="btn-group">
+                                                
+                                                <button type='button' class='btn btn-sm btn-danger' ng-click='resetSignature();is_fill_signature = 0' ng-show='is_fill_signature'>Batal</button>
+                                                <button type='button' class='btn btn-sm btn-success' ng-click='resetSignature();is_fill_signature = !is_fill_signature' ng-show='!is_fill_signature'>Ubah</button>
+                                                <button type='button' class='btn btn-sm btn-primary submitButton' ng-click='storeSignature();' ng-show='is_fill_signature'>Simpan</button>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="col-md-4 col-xs-12">Keterangan
+                                            </label>
+                                            <div class="col-md-12 col-xs-12">
+                                                <textarea class="form-control" ng-model='formData.additional.surgical_description' ng-change='submitOne("additional.surgical_description")'></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
                                 <h2>Assesment</h2>
                                 <div class="row">
                                     <div class="col-md-12" style='display:flex'>
                                         <div class="form-group col-md-3 mg-r2">
                                             
                                             <label>Diagnosa</label>
-                                            <div class="input-group">
-                                                <span ng-show='!diagnose_history.is_other'>
-                                                    <select class="form-control" data-placeholder-text-single="'Pilih penyakit'" chosen allow-single-deselect="false" ng-model="diagnose_history.disease_id" ng-options="c.id as ( c.code ? c.code + ' - ' : '') + c.name for c in data.disease">
-                                                        <option value=""></option>
-                                                    </select>
-                                                </span>
-                                                <input type="text" class='form-control' ng-model="diagnose_history.disease_id" ng-show='diagnose_history.is_other'>
-                                                <span class="input-group-addon" ng-click='diagnose_history.is_other = !diagnose_history.is_other;diagnose_history.disease_id = null'> 
-                                                    <i class="fa fa-pencil" ng-show='!diagnose_history.is_other'></i>
-                                                    <i class="fa fa-close" ng-show='diagnose_history.is_other'></i>
-                                                </span>
-                                            </div>
+                                            <input type="text" class='form-control' ng-model="diagnose_history.disease_id" ng-show='diagnose_history.is_other'>
                                         </div>
 
                                         <div class="form-group col-md-3 mg-r2">

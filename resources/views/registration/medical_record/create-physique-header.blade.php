@@ -7,10 +7,6 @@
         <li class='{{ strpos(url()->current(), "physique/children/") != null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "physique/children/") == null ? route("medical_record.edit.physique.children", ["id" => $id]) : "#" }}'>Anak</a></li>
     @endif
 
-    @if( Specialization::allow_access('surgical') == 1)
-        <li class='{{ strpos(url()->current(), "surgical") != null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "surgical") == null ? route("medical_record.edit.physique.surgical", ["id" => $id]) : "#" }}'>Bedah</a></li>
-    @endif
-
     @if( Specialization::allow_access('kepala') == 1)
         <li  class='{{ strpos(url()->current(), "head") != null ? "active" : "" }}'><a href='{{ strpos(url()->current(), "head") == null ? route("medical_record.edit.physique.head", ["id" => $id]) : "#" }}'>Kepala & leher</a></li>
     @endif

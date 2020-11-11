@@ -127,6 +127,12 @@ class FormulaController extends Controller
         try {
             $formula = Formula::findOrFail($id);
             $formula->fill($request->all());
+            $is_approve = $formula->is_approve;
+            if($formula->is_approve == 1) {
+                $this->reject($id);
+                $formula->invoice_id = null;
+                $formula->is_approve = 0;
+            }
             $formula->save();
             $formula->detail()->delete();
             foreach($request->detail as $detail) {
@@ -134,8 +140,11 @@ class FormulaController extends Controller
                     $formula->detail()->create($detail);
                 }
             }
+            if($is_approve == 1) {
+                $this->approve($id);
+            }
         } catch (Exception $e) {
-            dd($e);
+            return response()->json(['message' => $e->getMessage()], 421);
         }
         
         DB::commit();

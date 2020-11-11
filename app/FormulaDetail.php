@@ -9,7 +9,7 @@ use App\StockTransaction;
 
 class FormulaDetail extends Model
 {
-    protected $fillable = ['item_id', 'lokasi_id', 'qty', 'stock_id', 'stock_transaction_id'];
+    protected $fillable = ['item_id', 'lokasi_id', 'qty'];
     protected $hidden = ['created_at', 'updated_at'];
 
 
