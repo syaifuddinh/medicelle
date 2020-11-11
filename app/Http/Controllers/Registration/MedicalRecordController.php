@@ -327,6 +327,9 @@ class MedicalRecordController extends Controller
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
             'diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
             'diagnose_history.disease:id,name',
+            
+            'children_diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
+            'children_diagnose_history.disease:id,name',
 
             'disease_history:medical_record_id,disease_name,cure,last_checkup_date,additional',
             'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
@@ -1064,6 +1067,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_diagnose_history'] = 1;
                 $medicalRecord->diagnose_history()->create($input);
+            } else if($request->is_children_diagnose_history == 1) {
+                $input = $request->all();
+                $input['is_children_diagnose_history'] = 1;
+                $medicalRecord->children_diagnose_history()->create($input);
             } 
             DB::commit();
         } catch(Exception $e) {

@@ -117,7 +117,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Bacaan EKG
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.ekg'></textarea>
+                                                <textarea class="form-control" ng-model='formData.ekg' ng-change='submitOne("ekg")'></textarea>
                                             </div>
                                         </div>
                                     </div>

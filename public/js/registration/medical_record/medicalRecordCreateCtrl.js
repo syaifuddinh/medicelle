@@ -581,6 +581,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               diagnose_history_datatable.rows.add(data.data.diagnose_history).draw()
         }
 
+        if(path.indexOf('physique/children') > -1) {
+              children_diagnose_history_datatable.rows.add(data.data.children_diagnose_history).draw()
+        }
+
         if(path.indexOf('therapy/treatment') > -1) {
               treatment_datatable.rows.add(data.data.treatment).draw()
         }
@@ -834,6 +838,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           diagnose_history_datatable.row.add($scope.diagnose_history).draw()
           $scope.diagnose_history = {is_other : 1}
+      }
+  }
+
+  $scope.submitChildrenDiagnoseHistory = function() {
+      $scope.children_diagnose_history.is_other = !$scope.children_diagnose_history.is_other ? 0 : 1 
+      if($scope.children_diagnose_history.disease_id || $scope.children_diagnose_history.item_id) {
+
+          children_diagnose_history_datatable.row.add($scope.children_diagnose_history).draw()
+          $scope.children_diagnose_history = {is_other : 1}
       }
   }
 
@@ -2065,8 +2078,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $compile(angular.element(row).contents())($scope);
     }
   });
-    
-    
+      
   diagnose_history_datatable = $('#diagnose_history_datatable').DataTable({
     dom: 'rt',
     pageLength: 200,
@@ -2108,6 +2120,54 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       data : null,
       className : 'text-center',
       render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteDiagnoseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
+    },
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
+      
+  children_diagnose_history_datatable = $('#children_diagnose_history_datatable').DataTable({
+    dom: 'rt',
+    pageLength: 200,
+    'columns' : [
+    { 
+        data : null,
+        render : function(resp) {
+            var disease
+            var is_int = /^([0-9]+)$/
+            if(is_int.test(resp.disease_id)) {
+                disease = $scope.data.disease.find(x => x.id == resp.disease_id)
+                if(disease) {
+                    return disease.name
+                } else {
+                    if(resp.disease) {
+                        return resp.disease.name
+                    } else {
+                        return '' 
+                    }
+                }
+            } else {
+               return resp.disease_id
+            }
+        }
+    },
+    { 
+        data : null,
+        render : function(resp) {
+            var disease = $scope.data.disease.find(x => x.id == resp.item_id)
+            if(disease) {
+                return "<b>" + disease.unique_code + " / </b>" + disease.name
+            } else {
+                return ''
+            }
+        }
+    },
+    {data : 'description'},
+    {
+      data : null,
+      className : 'text-center',
+      render : resp => '<button type="button" class="btn btn-sm btn-danger" title="Hapus" ng-click="deleteChildrenDiagnoseHistory($event.currentTarget)"><i class="fa fa-trash-o"></i></button>'
     },
     ],
     createdRow: function(row, data, dataIndex) {
@@ -2492,6 +2552,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         is_other : 1,
         is_diagnose_history : 1 
       }
+      $scope.children_diagnose_history = { 
+        is_other : 1,
+        is_children_diagnose_history : 1 
+      }
       $scope.disease_history = {}
       $scope.family_disease_history = {
          'is_family_disease_history' : 1
@@ -2725,6 +2789,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.deleteDiagnoseHistory = function(e) {
     var tr = $(e).parents('tr');
     var data = diagnose_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
+  }
+
+    
+  $scope.deleteChildrenDiagnoseHistory = function(e) {
+    var tr = $(e).parents('tr');
+    var data = children_diagnose_history_datatable.row(tr).data()
     $scope.destroyDetail(data.id)
   }
 
