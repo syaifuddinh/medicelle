@@ -346,7 +346,7 @@ class MedicalRecordController extends Controller
             'treatment_group:id,medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic:id,medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic.laboratory_pivot:id,medical_record_detail_id', 
-            'drug:id,medical_record_id,item_id,date,qty,signa1,signa2', 
+            'drug:id,medical_record_id,item_id,date,qty,signa1,signa2,stock_id', 
             'drug.item:id,name,piece_id',
             'drug.s1:id,name',
             'drug.s2:id,name',

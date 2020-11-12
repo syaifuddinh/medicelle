@@ -1953,16 +1953,40 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
+        render : function(resp) {
+            var r = ''
+            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
+            if(drug) {
+                r = drug.name
+            }
+
+            return r
+        } 
       },
       { 
         data : null,
-        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).expired_date
+        render : function(resp) {
+            var r = ''
+            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
+            if(drug) {
+                r = drug.expired_date
+            }
+
+            return r
+        } 
       },
       { 
         data : null,
         className : 'text-right',
-        render : resp => resp.qty + ' ' + $scope.data.drug.find(x => x.id == resp.item_id).piece.name
+        render : function(resp) {
+            var piece_name = ''
+            var drug = $scope.data.drug.find(x => x.id == resp.item_id)
+            if(drug) {
+                piece_name = drug.piece.name
+            }
+            var r =  resp.qty + ' ' + piece_name
+            return r
+        } 
       },
       { 
         data : null,
@@ -3099,6 +3123,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
 
     $scope.storeDetail=function(data) {
+      if(data.is_drug == 1) {
+         var drug = $scope.data.drug.find(d => d.id == data.stock_id)
+         if(drug) {
+             data.item_id = drug.item_id
+         }
+      }
       $rootScope.disBtn= true
       var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
       var method = 'post';

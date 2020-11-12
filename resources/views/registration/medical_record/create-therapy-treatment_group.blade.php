@@ -23,9 +23,9 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Qty</label>
-                                            <div class="input-group">
+                                            <div style='display:flex'>
                                                 <input type="text" class='form-control' ng-model="treatment_group.qty" maxlength="4" jnumber2 only-num>
-                                                <div class="input-group-btn">
+                                                <div style="margin-left:1mm">
                                                     <button type='button' class='btn btn-success' ng-click='storeDetail(treatment_group)' ng-disabled='!treatment_group.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>

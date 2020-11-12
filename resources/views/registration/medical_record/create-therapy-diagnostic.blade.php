@@ -23,18 +23,20 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Tindakan / jenis pemeriksaan</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic">
-                                                <option value=""></option>
-                                            </select>
+                                            <div style='display:flex'>
+                                                <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic">
+                                                    <option value=""></option>
+                                                </select>
+                                                <div>
+                                                    <button type='button' class='btn btn-success' style='margin-left:1mm' ng-click='storeDetail(diagnostic)' ng-disabled='!diagnostic.item_id || disBtn'><i class="fa fa-check"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group col-md-3">
 
                                             <label>Reduksi(%)</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" ng-model='diagnostic.reduksi' maxlength='3' only-num>
-                                                <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(diagnostic)' ng-disabled='!diagnostic.item_id || disBtn'><i class="fa fa-check"></i></button>
-                                                </div>
                                             </div>
 
                                         </div>

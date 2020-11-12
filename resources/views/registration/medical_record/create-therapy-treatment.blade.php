@@ -23,19 +23,24 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Tindakan / jenis pemeriksaan</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="treatment.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-3 mg-r2">
-
-                                            <label>Reduksi(%)</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" ng-model='treatment.reduksi' maxlength='3' only-num>
-                                                <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(treatment)' ng-disabled='!treatment.item_id || disBtn'><i class="fa fa-check"></i></button>
+                                            <div>
+                                                <div style='display:flex'>
+                                                    
+                                                    <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="treatment.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.treatment" style='display:inline-block'>
+                                                        <option value=""></option>
+                                                    </select>
+                                                    <div>
+                                                        
+                                                        <button type='button' class='btn btn-success' style='margin-left:1mm;display:inline-block' ng-click='storeDetail(treatment)' ng-disabled='!treatment.item_id || disBtn'><i class="fa fa-check"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <div class="form-group col-md-3">
+
+                                            <label>Reduksi(%)</label>
+                                                <input type="text" class="form-control" ng-model='treatment.reduksi' maxlength='3' only-num>
 
                                         </div>
                                     </div>
