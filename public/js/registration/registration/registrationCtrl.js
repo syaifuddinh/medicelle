@@ -87,6 +87,8 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
             className = 'success';
           } else if(resp.status == 3) {
             className = 'danger';
+          } else if(resp.status == 4) {
+            className = 'primary';
           }
           return "<span class='label label-" + className + "'>" + resp.status_name + "</span>";
         },
@@ -149,6 +151,25 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
           $http.put(baseUrl + '/controller/registration/registration/attend/' + id).then(function(data) {
               toastr.success("Kehadiran pasien berhasil disetujui !");
               oTable.ajax.reload();
+          }, function(error) {
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+    }
+
+  $scope.generate_invoice = function(id) {
+    is_activate = confirm('Apakah anda yakin ?');
+      if(is_activate)
+          $http.put(baseUrl + '/controller/registration/registration/' + id + '/invoice').then(function(data) {
+              toastr.success(data.data.message);
+              location.href = baseUrl + "/cashier/pay/" + data.data.id 
           }, function(error) {
             if (error.status==422) {
               var det="";

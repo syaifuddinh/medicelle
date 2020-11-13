@@ -277,6 +277,175 @@ class RegistrationController extends Controller
         return Response::json(['message' => 'Pemeriksaan sudah selesai'], 200);
     }
 
+    public function generateInvoice($registration_id) {
+        $registration = Registration::findOrFail($registration_id);
+        DB::beginTransaction();
+        try {
+            $registration->status = 4;
+            $registration->save();
+            $invoice = new $this->invoice();
+            $invoice->is_nota_pemeriksaan = 1;
+            $invoice->payment_method = 'TUNAI';
+            $invoice->date = $this->carbon->now()->format('Y-m-d');
+            if($registration->patient_type == 'ASURANSI SWASTA') {
+                $invoice->payment_type = 'ASURANSI SWASTA';                        
+            } else {
+                $invoice->payment_type = 'BAYAR SENDIRI';                        
+            }
+            $invoice->registration_id = $registration->id;
+            $invoice->save();
+            foreach($registration->detail as $registrationDetail) {
+                $medicalRecord = $registrationDetail->medical_record;
+                $treatments = $medicalRecord->treatment;
+                $treatment_groups = $medicalRecord->treatment_group;
+                $diagnostics = $medicalRecord->diagnostic;
+                $bhp = $medicalRecord->bhp;
+                $sewa_ruangan = $medicalRecord->sewa_ruangan;
+                $sewa_alkes = $medicalRecord->sewa_alkes;
+                $sewa_instrumen = $medicalRecord->sewa_instrumen;
+                $drug = $medicalRecord->drug;
+                foreach($treatments as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'is_profit_sharing' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($treatment_groups as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'is_profit_sharing' => 1,
+                        'debet' => $value->item->price,
+                        'reduksi' => $value->reduksi
+                    ]);
+                }
+                foreach($diagnostics as $value) {
+                    if($value->laboratory_pivot !== null) {
+                        $price = 0;
+                        $service_price = 0;
+                        $item_id = null;
+                        if(($value->laboratory_pivot->additional ?? null)) {
+                            foreach($value->laboratory_pivot->additional->treatment as $treatment) {                        
+                                foreach($treatment->detail as $detail) {
+                                    $laboratoryTypeDetail = DB::table('laboratory_type_details')
+                                    ->whereId($detail->id)
+                                    ->first();
+                                    if($laboratoryTypeDetail) {
+                                        if(!$laboratoryTypeDetail->item_id) {
+                                            $item_id = DB::table('items')
+                                            ->insertGetId([
+                                                'code' => 'LABORATORYTYPEDETAIL' . date('YmdHis'),
+                                                'name' => $laboratoryTypeDetail->name,
+                                                'price' => $laboratoryTypeDetail->price,
+                                                'service_price' => $laboratoryTypeDetail->service_price,
+                                                'is_laboratory_type_detail' => 1
+                                            ]);
+                                            DB::table('laboratory_type_details')
+                                            ->whereId($detail->id)
+                                            ->update([
+                                                'item_id' => $item_id
+                                            ]);
+                                        } else {
+                                            $item_id = $laboratoryTypeDetail->item_id; 
+                                        }
+                                        $price = $laboratoryTypeDetail->price;
+                                        $service_price = $laboratoryTypeDetail->service_price;
+                                        InvoiceDetail::create([
+                                            'invoice_id' => $invoice->id,
+                                            'item_id' => $item_id,
+                                            'is_profit_sharing' => 1,
+                                            'qty' => $value->qty,
+                                            'is_item' => 1,
+                                            'debet' => $price,
+                                            'reduksi' => $value->reduksi,
+                                            'service_price' => $service_price
+                                        ]);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        $debet = 0;
+                        $additional = $value->laboratory_pivot->additional ?? (object) [];
+                        if(($additional->treatment ?? null)) {
+                            if(count($additional->treatment) > 0) {
+                                foreach($additional->treatment as $t) {
+                                    foreach ($t->detail as $recover) {
+                                        $laboratory_type_detail = DB::table('laboratory_type_details')
+                                        ->whereId($recover->id)
+                                        ->first();
+                                        if($laboratory_type_detail != null) {
+                                            $debet += $laboratory_type_detail->price;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        InvoiceDetail::create([
+                            'invoice_id' => $invoice->id,
+                            'item_id' => $value->item_id,
+                            'is_profit_sharing' => 1,
+                            'qty' => $value->qty,
+                            'is_item' => 1,
+                            'debet' => $debet,
+                            'reduksi' => $value->reduksi
+                        ]);                        
+                    }
+                }
+                foreach($bhp as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_ruangan as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_alkes as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+                foreach($sewa_instrumen as $value) {
+                    InvoiceDetail::create([
+                        'invoice_id' => $invoice->id,
+                        'item_id' => $value->item_id,
+                        'qty' => $value->qty,
+                        'is_item' => 1,
+                        'debet' => $value->item->price,
+                    ]);
+                }
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
+
+        return Response::json(['message' => 'Invoice berhasil dibuat', 'id' => $invoice->id]);
+    }
+
     public function storeInvoice($registration_detail_id) {
         $registrationDetail = RegistrationDetail::findOrFail($registration_detail_id);
         

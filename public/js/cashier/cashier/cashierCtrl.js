@@ -92,8 +92,8 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
     is_date = /\d+-\d+-\d+/
     if(is_date.test($scope.formData.date_start) || is_date.test($scope.formData.date_end)) {
       
-      oTable.ajax.reload()
     }
+  oTable.ajax.reload()
   }
 
   $scope.delete = function(id) {

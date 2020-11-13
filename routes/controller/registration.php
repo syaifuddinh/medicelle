@@ -4,6 +4,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
         Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
+        Route::put('registration/{id}/invoice', 'RegistrationController@generateInvoice');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
         Route::post('registration/invoice/{registration_detail_id}', 'RegistrationController@storeInvoice');
         Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');

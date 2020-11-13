@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="btn-group pull-right">
-                            <button class='btn btn-sm btn-success' ng-click='generateInvoice()'>Generate Invoice</button>
+                            <!-- <button class='btn btn-sm btn-success' ng-click='generateInvoice()'>Generate Invoice</button> -->
                         </div>
                     </div>
                     <div class="col-md-6 hidden">
@@ -257,7 +257,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="col-xs-12">Kiri
+                                    <label class="col-xs-12">Saran
                                     </label>
                                     <div class="col-xs-12">
                                         <textarea class="form-control" ng-model='pivotData.saran' ng-change='updatePivot()' rows='7'></textarea>
