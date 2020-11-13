@@ -23,6 +23,9 @@
      .mt-5 {
         margin-top:5mm;
      }
+     .mt-2 {
+        margin-top:2mm;
+     }
  </style>
  <div class="container">
      
@@ -44,7 +47,21 @@
                 
                 <div style='margin-bottom:4mm'>
                     <p>TS. Yth, berikut saya sampaikan hasil {{ $radiologyType->name ?? '' }}</p>
-                    <p class='indent mt-5'>{{ $pivotMedicalRecord->additional->radiology_description ?? ''}}</p>
+                    <p class='indent mt-5'>
+                        Kanan : {{ $pivotMedicalRecord->additional->kanan ?? ''}}
+                    </p>
+                    <p class='indent mt-2'>
+                        Kiri : {{ $pivotMedicalRecord->additional->kiri ?? ''}}
+                    </p>
+                    <p class='indent mt-2'>
+                        Kesimpulan : {{ $pivotMedicalRecord->additional->kesimpulan ?? ''}}
+                    </p>
+                    <p class='indent mt-2'>
+                        Saran : {{ $pivotMedicalRecord->additional->saran ?? ''}}
+                    </p>
+                    <p class='indent mt-2'>
+                        Keterangan : {{ $pivotMedicalRecord->additional->radiology_description ?? ''}}
+                    </p>
                 </div>
 
                 <div style='position:absolute;bottom:28mm'>

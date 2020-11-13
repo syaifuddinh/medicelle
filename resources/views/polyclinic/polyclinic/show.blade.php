@@ -222,17 +222,60 @@
                                 </div>
                             </span>
                         </div>
-                        <div class="col-md-12"  ng-show='pivot.is_radiology == 1 && pivot.is_referenced == 1'>
+                        <span ng-show='pivot.is_radiology == 1 && pivot.is_referenced == 1'>
                             <hr>
-                            <div class="form-group">
-                                <label class="col-xs-12">Keterangan
-                                </label>
-                                <div class="col-xs-12">
-                                    <textarea class="form-control" ng-model='pivotData.radiology_description' ng-change='updatePivot()' rows='7'></textarea>
-                                    
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Kanan
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.kanan' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Kiri
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.kiri' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Kesimpulan
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.kesimpulan' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Kiri
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.saran' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Keterangan
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.radiology_description' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
                     </div>
                     
                     @include('polyclinic/polyclinic/laboratory/laboratory_treatment_description')

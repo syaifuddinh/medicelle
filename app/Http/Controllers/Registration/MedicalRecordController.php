@@ -124,7 +124,15 @@ class MedicalRecordController extends Controller
         ->leftJoin('prices', 'medical_record_details.item_id', 'prices.item_id')
         ->leftJoin('radiology_types', 'radiology_types.id', 'prices.radiology_group')
         ->orderBy('medical_records.created_at', 'DESC')
-        ->select(DB::raw('pivot_medical_records.additional ->> \'radiology_description\' AS description'), 'radiology_types.name', 'medical_records.date')
+        ->select(
+            DB::raw('pivot_medical_records.additional ->> \'radiology_description\' AS description'), 
+            DB::raw('pivot_medical_records.additional ->> \'kanan\' AS kanan'), 
+            DB::raw('pivot_medical_records.additional ->> \'kiri\' AS kiri'), 
+            DB::raw('pivot_medical_records.additional ->> \'saran\' AS saran'), 
+            DB::raw('pivot_medical_records.additional ->> \'kesimpulan\' AS kesimpulan'), 
+            'radiology_types.name', 
+            'medical_records.date'
+        )
         ->get();
 
         return Response::json($medicalRecord, 200);

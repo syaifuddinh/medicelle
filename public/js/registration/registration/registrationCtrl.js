@@ -102,6 +102,10 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
           resp.status == 1 ? "<button class='btn btn-xs btn-danger' allow_destroy_registration ng-click='delete(" + resp.id + ")' title='Batalkan'><i class='fa fa-trash-o'></i></button><button class='btn btn-xs btn-primary' allow_attend_registration ng-click='attend(" + resp.id + ")' title='Hadir'><i class='fa fa-check'></i></button><a allow_edit_registration class='btn btn-xs btn-success' href='" + baseUrl + "/registration/edit/" + resp.id +  "' title='Edit'><i class='fa fa-pencil'></i></a>"
           : ""
         ) +
+        ( 
+          resp.status == 2 ? "<button class='btn btn-xs btn-primary' allow_attend_registration ng-click='generate_invoice(" + resp.id + ")' title='Terbitkan Invoice'><i class='fa fa-location-arrow'></i></button>"
+          : ""
+        ) +
         "<a allow_show_registration class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
       },
     ],

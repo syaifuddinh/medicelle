@@ -50,6 +50,10 @@
                                                     <td>Tanggal pemeriksaan</td>
                                                     <td>Jenis pemeriksaan</td>
                                                     <td>Tanggal hasil</td>
+                                                    <td>Kanan</td>
+                                                    <td>Kiri</td>
+                                                    <td>Kesimpulan</td>
+                                                    <td>Saran</td>
                                                     <td>File</td>
                                                     <td></td>
                                                 </tr>
@@ -68,6 +72,10 @@
                                                     <tr>
                                                         <td>Tanggal pemeriksaan</td>
                                                         <td>Jenis pemeriksaan</td>
+                                                        <td>Kanan</td>
+                                                        <td>Kiri</td>
+                                                        <td>Kesimpulan</td>
+                                                        <td>Saran</td>
                                                         <td>Keterangan</td>
                                                     </tr>
                                                 </thead>

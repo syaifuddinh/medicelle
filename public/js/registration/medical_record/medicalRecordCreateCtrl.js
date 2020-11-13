@@ -376,9 +376,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         $scope.medical_record_detail_id = medical_record_detail_id
         var research = $scope.formData.radiology.concat($scope.formData.laboratory).concat($scope.laboratory_history)
         var sample = research.find(x => x.id == medical_record_detail_id)
-        $scope.new_research = {
-            'additional' : sample.additional
-        }        
+        console.log(sample)
+        $scope.new_research = sample       
         $('#newResearchModal').modal()
     }
 
@@ -1772,6 +1771,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           width : '15%',
           render : resp => $filter('fullDate')(resp.result_date)
       },
+      {data:'kanan'},
+      {data:'kiri'},
+      {data:'kesimpulan'},
+      {data:'saran'},
       {
           data : null,
           render : resp => '<a href="' + resp.filename + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
@@ -2324,6 +2327,10 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   }
                 },
                 {data : 'name'},
+                {data : 'kanan'},
+                {data : 'kiri'},
+                {data : 'kesimpulan'},
+                {data : 'saran'},
                 {data : 'description'},
 
                 ],

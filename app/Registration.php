@@ -153,6 +153,8 @@ class Registration extends Model
                 return 'Hadir';
             } else if($this->attributes['status'] == 3) {
                 return 'Batal';
+            } else if($this->attributes['status'] == 4) {
+                return 'Pulang';
             } else {
                 return null;
             }
