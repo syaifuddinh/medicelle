@@ -39,7 +39,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12" style="overflow-x:auto;">
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>

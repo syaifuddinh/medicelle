@@ -35,7 +35,7 @@
                             : {{ $medicalRecord->code }}
                         </div>
                     </div>
-                    <div>
+                    <div class="col-md-12">
                         <div style="display:inline-block;width:45mm">
                             <b>Nama</b>
                         </div>
@@ -61,10 +61,10 @@
                     </div>
                 </div>
 
-                <p style='margin-top:3mm'>Datang dengan keluhan utama {{ $medicalRecord->main_complaint ?? $dot }}, riwayat penyakit sekarang {{ $medicalRecord->current_disease ?? $dot }}.</p>
+                <p style='margin-top:3mm'>Datang dengan keluhan utama : {{ $medicalRecord->main_complaint }}<br> Riwayat penyakit sekarang : {{ $medicalRecord->current_disease }}.
                 <?php if($medicalRecord->obgyn_main_complaint) { ?>
-                <p>Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint ?? $dot }}</p><?php }?>
-                <p>Penyakit dahulu :</p>
+                Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint }}<?php }?><br>
+                Penyakit dahulu : <br>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
                         @if($unit->disease_name)
@@ -73,26 +73,27 @@
                    @endforeach
                 </ol>
                 <br>
-                <p>Pemeriksaan fisik didapatkan :</p>
-                <p>Tensi : {{ $medicalRecord->blood_pressure ?? $shortDot }} mmHg, Nadi : {{ $medicalRecord->pulse ?? $shortDot }} x/menit, Suhu badan : {{ $medicalRecord->temperature ?? $shortDot }} <sup>o</sup>C, Nafas : {{ $medicalRecord->breath_frequency ?? $shortDot }} x/menit</p>
-                <p>Keterangan : {{ $medicalRecord->physique }}</p>
+                <p>Hasil pemeriksaan didapatkan :</p>
+                <p style='margin-left:5mm'>TB : {{ $medicalRecord->long }} cm, Tensi : {{ $medicalRecord->blood_pressure }} mmHg, Suhu badan : {{ $medicalRecord->temperature }} <sup>o</sup>C</p>
+                <p style='margin-left:5mm'>BB : {{ $medicalRecord->weight }} kg, Nadi : {{ $medicalRecord->pulse }} x/menit, Nafas : {{ $medicalRecord->breath_frequency}} x/menit</p><br>
+                <p>Pemeriksaan fisik : {{ $medicalRecord->physique }}</p>
                 <br>
-                <p>Diagnosis :</p>
-                <ol style='margin-top:3mm;margin-left:6mm'>
-                    @foreach($medicalRecord->diagnose_history as $unit)
-                        <li>{{ $unit->disease->name ?? '' }}</li>
-                   @endforeach
-                </ol>
-                <br>
-                <p>{{ $medicalRecord->usg ?? '' }}</p>
-                <br>
-                <div style='margin-bottom:5mm'>
+                <div style='margin-bottom:2mm'>
                     <p>Terapi :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
                             <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
                        @endforeach
                     </ol>
+                    <p>Diagnosis :</p>
+                    <ol style='margin-top:3mm;margin-left:6mm'>
+                     @foreach($medicalRecord->diagnose_history as $unit)
+                        <li>{{ $unit->disease->name ?? '' }}</li>
+                     @endforeach
+                    </ol>
+                    <br>
+                    <p>{{ $medicalRecord->usg ?? '' }}</p>
+                    <br>
                     <p style='margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {{ $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot }}, tanggal {{ $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot }}</p>
                     <br>
                     <p>Keterangan :</p>
@@ -101,7 +102,7 @@
                     </div>
                 </div>
                 <div style='margin-top:1mm'>
-                    <p>Visual :</p>
+                    <!--<p>Visual :</p>-->
                     <div style='margin-top:1mm'>
                         <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual ?? ''}}"></img>
                     </div>
