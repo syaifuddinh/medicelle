@@ -221,7 +221,6 @@ class MasterApiController extends Controller
 
     public function disease(Request $request) {
         $x = Item::disease()
-        ->has('category')
         ->with('category:id,code,name')
         ->select('items.id', 'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id');
         // die($request->is_active);
@@ -287,18 +286,12 @@ class MasterApiController extends Controller
         $stocks = DB::table('stocks')
         ->select('item_id', 'qty','expired_date');
 
-        //->select('item_id', DB::raw('SUM(qty) AS qty'))
-        //->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) < -7")
-        //->groupBy('item_id');
-
-
         $x = Item::cure()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,name')
         ->leftJoinSub($stocks, 'stocks', function($join){
             $join->on('stocks.item_id', 'cures.id');
         })
         ->select('cures.id', 'cures.code', 'cures.name', 'cures.description', 'cures.is_active', 'cures.category_id', 'cures.classification_id', 'cures.subclassification_id', 'cures.generic_id', 'cures.is_cure', 'stocks.expired_date','stocks.qty');
-        //->select('cures.id', 'cures.code', 'cures.name', 'cures.description', 'cures.is_active', 'cures.category_id', 'cures.classification_id', 'cures.subclassification_id', 'cures.generic_id', 'cures.is_cure', DB::raw('COALESCE(stocks.qty, 0) AS qty'));
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

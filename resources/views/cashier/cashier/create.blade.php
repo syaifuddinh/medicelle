@@ -208,11 +208,11 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-1">
-                                <div class="btn-group">
+                                <div class="btn-group" id='button-container'>
 
                                     <a class="btn btn-default btn-sm" href='{{ route("cashier.index") }}'>Batal</a>
                                     <button type="button" id='draftButton' ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Draft</button>
-                                    <button type="button"  id='payButton' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
+                                    <button type="button"  id='payButton' ng-disabled='grandtotal != formData.paid || grandtotal == 0' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
                                 </div>
                             </div>
                         </div>

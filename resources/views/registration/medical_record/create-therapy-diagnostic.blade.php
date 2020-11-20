@@ -32,14 +32,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-3">
-
-                                            <label>Reduksi(%)</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" ng-model='diagnostic.reduksi' maxlength='3' only-num>
-                                            </div>
-
-                                        </div>
                                     </div>
                                     
                                 </div>

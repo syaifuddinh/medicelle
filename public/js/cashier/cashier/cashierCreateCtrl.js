@@ -232,6 +232,7 @@ $scope.show = function() {
             cashier_payment_datatable.rows.add($scope.formData.payment).draw()
         }
         $compile(angular.element($('#formFooter')).contents())($scope);
+        $compile(angular.element($('#button-container')).contents())($scope);
     }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {

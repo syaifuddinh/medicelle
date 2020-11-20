@@ -36,7 +36,7 @@ class Assesment extends Model
             $registrationDetail = $registration->detail;
             $additional = $assesment->additional;
             $params = [
-                'riwayat_penyakit_dahulu' => $additional->riwayat_penyakit_dahulu
+                'riwayat_penyakit_dahulu' => $additional->riwayat_penyakit_dahulu ?? ''
             ];
             $params = (object) $params;
             $m = MedicalRecord::whereRegistrationId($assesment->registration_id) 
@@ -48,6 +48,7 @@ class Assesment extends Model
             }
             foreach($registrationDetail as $unit) {
                 $params = [
+                    'current_disease' => $additional->riwayat_penyakit_sekarang ?? '',
                     'main_complaint' => $assesment->main_complaint,
                     'obgyn_main_complaint' => $assesment->main_complaint,
                     'general_condition' => $assesment->general_condition,
