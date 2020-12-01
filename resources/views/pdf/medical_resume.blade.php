@@ -9,6 +9,10 @@
      .container {
         padding:7mm;
      }
+
+    .page-break {
+        page-break-after: always;
+    }
  </style>
  <div class="container">
      
@@ -85,7 +89,7 @@
                             <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
                        @endforeach
                     </ol>
-                    <p>Diagnosis :</p>
+                    <p style='margin-top:2mm'>Diagnosis :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                      @foreach($medicalRecord->diagnose_history as $unit)
                         <li>{{ $unit->disease->name ?? '' }}</li>
@@ -101,12 +105,7 @@
                         {{ $resume_description }}
                     </div>
                 </div>
-                <div style='margin-top:1mm'>
-                    <!--<p>Visual :</p>-->
-                    <div style='margin-top:1mm'>
-                        <img style='width:auto;height:100mm;' src="{{ $medicalRecord->additional->breast_visual ?? ''}}"></img>
-                    </div>
-                </div>
+                
                 <div style='margin-top:1mm'>
                 <p style='margin-bottom:14mm'>Surabaya, {{ Mod::fullDate($date) }}</p>
 
@@ -118,7 +117,61 @@
                 <p >SPESIALIS {{ strtoupper($medicalRecord->registration_detail->doctor->specialization->name ?? '') }}</p>
                 </div>
                 <br><br>
-               @include('pdf/letter_footer')    
+
+                <div style='position:relative;margin-top:45mm'>   
+                        @include('pdf/letter_footer')    
+                </div>
+
+
             </div>
         </div>
+
+        @if(($medicalRecord->additional->general_visual ?? false) OR ($medicalRecord->additional->head_visual ?? false) OR ($medicalRecord->additional->breast_visual ?? false) OR ($medicalRecord->additional->rectum_visual ?? false))
+
+            <div class="page-break"></div>
+
+            <div style='border-bottom:1px solid black;margin-bottom:6mm;width:auto'>
+                <div style='display:inline-block'>
+                    <img src="{{ $company->logo2 }}" style='width:auto;height:20mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:120mm'>
+                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
+                    <p>{{ $company->address }}</p>
+                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                </div>
+            </div>
+
+            @if($medicalRecord->additional->general_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Umum :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{{ $medicalRecord->additional->general_visual ?? ''}}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->head_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Kepala & Leher :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{{ $medicalRecord->additional->head_visual ?? ''}}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->breast_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Payudara :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{{ $medicalRecord->additional->breast_visual ?? ''}}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->rectum_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Rectum & Anal Canal :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{{ $medicalRecord->additional->rectum_visual ?? ''}}"></img>
+                    </div>
+                </div>
+            @endif
+        @endif
  </div>

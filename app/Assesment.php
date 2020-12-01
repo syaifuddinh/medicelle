@@ -58,7 +58,15 @@ class Assesment extends Model
                     'pulse' => $assesment->pulse,
                     'temperature' => $assesment->temperature,
                     'breath_frequency' => $assesment->breath_frequency,
-                    'postbirth_weight' => $assesment->postbirth_weight
+                    'postbirth_weight' => $assesment->postbirth_weight,
+                    'menarche_age' => $assesment->menarche_age,
+                    'siklus_haid' => $assesment->siklus_haid,
+                    'jumlah_pemakaian_pembalut' => $assesment->jumlah_pemakaian_pembalut,
+                    'lama_pemakaian_pembalut' => $assesment->lama_pemakaian_pembalut,
+                    'lama_pemakaian_pembalut' => $assesment->lama_pemakaian_pembalut,
+                    'is_tidy' => $assesment->is_tidy,
+                    'hpht' => $assesment->hpht,
+                    'haid_complaint' => $assesment->haid_complaint
                 ];
                 if(!$unit->medical_record->current_disease) {
                     $params['current_disease'] = $assesment->additional->riwayat_penyakit_sekarang ?? '';
@@ -193,6 +201,22 @@ class Assesment extends Model
             $this->attributes['merangkak_usia'] = 0;
         } else {
             $this->attributes['merangkak_usia'] = $value;            
+        }
+    }
+
+    public function setMenarcheAgeAttribute($value) {
+        if($value == null) {
+            $this->attributes['menarche_age'] = 0;
+        } else {
+            $this->attributes['menarche_age'] = $value;            
+        }
+    }
+
+    public function setSiklusHaidAttribute($value) {
+        if($value == null) {
+            $this->attributes['siklus_haid'] = 0;
+        } else {
+            $this->attributes['siklus_haid'] = $value;            
         }
     }
 
