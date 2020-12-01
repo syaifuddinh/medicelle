@@ -44,6 +44,21 @@ app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scop
       {data:"price.grup_nota.name"},
       {
         data:null, 
+        orderable:false,
+        searchable:false,
+        render:function(resp) {
+            var lokasi = []
+            for(l in resp.stock) {
+                if(!lokasi.find(x => x == resp.stock[l].lokasi.name)) {
+                    lokasi.push(resp.stock[l].lokasi.name)
+                }
+            }
+
+            return lokasi.join(', ')
+        }
+      },
+      {
+        data:null, 
         searchable : false,
         name:'qty',
         className:'text-right',

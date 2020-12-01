@@ -9,7 +9,7 @@
             
              <ul class="nav nav-pills">
                 <li class="active"><a href="{{ route('disease.index') }}">Penyakit</a></li>
-                <li><a href="{{ route('disease_category.index') }}">Kategori penyakit</a></li>
+                <!-- <li><a href="{{ route('disease_category.index') }}">Kategori penyakit</a></li> -->
               </ul> 
           </nav>
           
@@ -67,7 +67,6 @@
                           <th>Kode</th>
                           <th>Nama</th>
                           <th>Keterangan</th>
-                          <th>Kategori penyakit</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

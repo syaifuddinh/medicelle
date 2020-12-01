@@ -7,16 +7,16 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
     var columns = [
           {
             data:'code', 
-            name:'invoices.code' 
+            name:'code' 
           },
           {
             data:'patient_name', 
-            name:'contacts.name' 
+            name:'patient_name' 
           },
           {
             data:null, 
             searchable : false,
-            name:'invoices.date',
+            name:'date',
             render : x => $filter('fullDate')(x.date)
           },
           {

@@ -31,7 +31,6 @@ app.controller('disease', ['$scope', '$compile', '$http', function($scope, $comp
         searchable :false,
         orderable :false,
       },
-      {data:"category.name", orderable:false, searchable:false},
       {
         data: null, 
         orderable : false,

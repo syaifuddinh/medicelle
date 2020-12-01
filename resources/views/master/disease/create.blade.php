@@ -22,16 +22,6 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
             <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kategori penyakit<span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                      <select class="form-control" data-placeholder-text-single="'Pilih Kategori Penyakit'" required='required' chosen allow-single-deselect="false" ng-model="formData.category_id" ng-options="c.id as c.code + ' - ' + c.name for c in data.disease_category">
-                          <option value=""></option>
-                      </select>
-                  </div>
-              </div>
-            
-            <div class="form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kode<span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
