@@ -25,15 +25,20 @@ class ReportApiController extends Controller
                 $slug .= ', ';
                 $col .= ', ';
             }
-            $slug .= 'col' . $nota->id . ' INT';
-            $col .= 'COALESCE(col' . $nota->id . ', 0) AS col' . $nota->id;
+            $slug .= 'col' . $nota->id . ' FLOAT';
+            $col .= 'COALESCE(MAX(col' . $nota->id . '), 0) AS col' . $nota->id;
         }
-        $payments = DB::raw('(SELECT * FROM crosstab(\'SELECT invoice_id, grup_nota_id, SUM(grandtotal) AS grandtotal FROM invoice_details JOIN items ON items.id = invoice_details.item_id JOIN prices ON prices.item_id = items.id WHERE invoice_details.is_item = 1 GROUP BY invoice_id, grup_nota_id ORDER BY invoice_details.invoice_id\', \'SELECT id FROM permissions WHERE is_grup_nota = 1 AND is_active = 1 ORDER BY id ASC\') AS ct(invoice_id INT, ' . $slug . ')) AS payments');
+        $payments = DB::raw('(SELECT * FROM crosstab(\'SELECT registration_id, grup_nota_id, SUM(grandtotal) AS grandtotal FROM invoice_details JOIN items ON items.id = invoice_details.item_id JOIN prices ON prices.item_id = items.id JOIN invoices ON invoices.id = invoice_details.invoice_id WHERE invoice_details.is_item = 1 GROUP BY registration_id, grup_nota_id ORDER BY invoices.registration_id\', \'SELECT id FROM permissions WHERE is_grup_nota = 1 AND is_active = 1 ORDER BY id ASC\') AS ct(registration_id INT, ' . $slug . ')) AS payments');
+
+
         $dt = DB::table('invoices')
         ->join('registrations', 'registrations.id', 'invoices.registration_id')
         ->join('contacts', 'contacts.id', 'registrations.patient_id')
-        ->leftJoin($payments, 'payments.invoice_id', 'invoices.id')
-        ->select('contacts.name AS patient_name', 'invoices.date', 'invoices.code', 'invoices.netto', 'invoices.paid', DB::raw("CASE WHEN invoices.balance = 0 AND invoices.netto > 0 THEN 'Lunas' ELSE 'Belum Lunas' END AS status"));
+        ->leftJoin($payments, 'payments.registration_id', 'invoices.registration_id')
+        ->select('invoices.registration_id', DB::raw('MAX(contacts.name) AS patient_name'), DB::raw('MAX(invoices.date) AS date'), DB::raw('MAX(invoices.code) AS code'), DB::raw('MAX(invoices.netto) AS netto'), DB::raw('MAX(invoices.paid) AS paid'), DB::raw("CASE WHEN MAX(invoices.balance) = 0 AND MAX(invoices.netto) > 0 THEN 'Lunas' ELSE 'Belum Lunas' END AS status"))
+        ->groupBy('invoices.registration_id');
+
+
         if(count($grup_nota) > 0) {
             $dt->addSelect(DB::raw($col));
         }
@@ -41,10 +46,9 @@ class ReportApiController extends Controller
     }
 
     public function medical_bill(Request $request) {
-        $x = $this->fetch_medical_bill();
-        $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
-
-        return Datatables::query($x)->make(true);
+        $x = $this->fetch_medical_bill()->get();
+        // $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
+        return Datatables::of($x)->make(true);
     }    
 
     public function fetch_medical_payment() {

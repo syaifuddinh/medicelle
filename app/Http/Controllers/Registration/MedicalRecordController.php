@@ -434,10 +434,22 @@ class MedicalRecordController extends Controller
         $header = $section->addHeader();
         $company = Mod::company();
         $phpWord->addFontStyle('textHeader', array('bold'=>true, 'size' => 14));
-        $header->addText($company->name, 'textHeader');
-        $header->addText($company->address, 'textHeader');
-        $header->addText('Telp : ' . $company->phone_number, 'textHeader');
-        $header->addText($company->fax, 'textHeader');
+        $phpWord->addFontStyle('textSubheader', array('bold'=>true, 'size' => 13));
+        $header->addImage($company->logo2, [
+            'width' => 60,
+            'height' => 60,
+            'wrappingStyle' => 'inline',
+            'positioning' => 'absolute'
+        ]);
+        $textBox = $header->addTextBox([
+            'width' => 350,
+            'height' => 70,
+            'borderColor' => 'white',
+            'positioning' => 'relative'
+        ]);
+        $textBox->addText("\t    " . $company->name , 'textHeader');
+        $textBox->addText("\t      " . $company->address);
+        $textBox->addText("\t      " . 'Telp : ' . $company->phone_number . ' Fax : ' . $company->fax);
         // Adding Text element to the Section having font styled by default...
         $phpWord->addFontStyle('textBold', array('bold'=>true));
         $phpWord->addParagraphStyle('subtitle', array('align'=>'center', 'spaceAfter' => 300));
@@ -477,6 +489,7 @@ class MedicalRecordController extends Controller
 
         $section->addText('' , '', 'spaceGeneral');
         $section->addText('Pemeriksaan fisik didapatkan :' , '', 'spaceGeneral');
+        $section->addText('');
         $section->addText('Tensi : ' . ($medicalRecord->blood_pressure ?? $shortDot) . ' mmHg, Nadi : ' . $medicalRecord->pulse ?? $shortDot . ' x/menit, Suhu badan : ' . ($medicalRecord->temperature ?? $shortDot) . ' oC, Nafas : ' . ($medicalRecord->breath_frequency ?? $shortDot) . ' x/menit');
         $section->addText('' , '', 'spaceGeneral');
         $section->addText('Diagnosis : ' , '', 'spaceGeneral');
@@ -499,9 +512,6 @@ class MedicalRecordController extends Controller
         $section->addText('Visual' , '', 'spaceGeneral');
         $section->addText('' , '', 'spaceMedium');
         $section->addText('Surabaya, '  . Mod::fullDate($date));
-        $section->addText('');
-        $section->addText('');
-        $section->addText('');
         $section->addText('');
         $section->addText('');
         $section->addText('');

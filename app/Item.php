@@ -289,6 +289,10 @@ class Item extends Model
         ]);
     }
 
+    public function stock() {
+        return $this->hasMany('App\Stock');
+    }
+
     public function grup_nota_obat() {
         return $this->belongsTo('App\Permission', 'is_pharmacy', 'id');
     }

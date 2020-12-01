@@ -37,13 +37,6 @@
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit='submitForm()'>
 
                       <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kategori penyakit
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <% formData.category.name %>
-                        </div>
-                      </div>
-                      <div class="form-group">
                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Kode
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

@@ -287,7 +287,7 @@ class MasterApiController extends Controller
         ->select('item_id', 'qty','expired_date');
 
         $x = Item::cure()
-        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,name')
+        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,name', 'stock:item_id,lokasi_id', 'stock.lokasi:id,name')
         ->leftJoinSub($stocks, 'stocks', function($join){
             $join->on('stocks.item_id', 'cures.id');
         })
