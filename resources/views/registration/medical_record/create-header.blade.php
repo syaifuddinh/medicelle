@@ -27,7 +27,7 @@
 
                     @if( Specialization::allow_access('tindakan') == 1 || Specialization::allow_access('diagnostik') == 1 || Specialization::allow_access('obat') == 1)
                         <li class='{{ strpos(url()->current(), "therapy") != null ? "active" : "" }}'>
-                            <a href="{{ route('medical_record.edit.therapy.treatment', ['id' => $id]) }}">Terapi</a>
+                            <a href="{{ route('medical_record.edit.therapy.diagnostic', ['id' => $id]) }}">Terapi</a>
                         </li>
                     @endif
                     
