@@ -1,3 +1,4 @@
+
 @include('registration/medical_record/create-header')
                          <ul class="nav nav-pills">
                             @if(Specialization::allow_access('anamnesa') == 1)

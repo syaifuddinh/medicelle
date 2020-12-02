@@ -167,7 +167,7 @@
                                         <div class="form-group col-md-3 mg-r2">
                                             
                                             <label>Diagnosa</label>
-                                            <input type="text" class='form-control' ng-model="diagnose_history.disease_id" ng-show='diagnose_history.is_other'>
+                                            <input type="text" class='form-control' ng-model="diagnose_history.additional.diagnose_name" ng-show='diagnose_history.is_other'>
                                         </div>
 
                                         <div class="form-group col-md-3 mg-r2">
@@ -184,7 +184,7 @@
                                             <div class="input-group">
                                                 <input type="text" class="form-control" ng-model='diagnose_history.description'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(diagnose_history)' ng-disabled='!diagnose_history.disease_id || disBtn'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(diagnose_history)' ng-disabled='!diagnose_history.additional.diagnose_name || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
 
