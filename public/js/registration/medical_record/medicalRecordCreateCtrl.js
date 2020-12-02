@@ -833,10 +833,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
   $scope.submitDiagnoseHistory = function() {
       $scope.diagnose_history.is_other = !$scope.diagnose_history.is_other ? 0 : 1 
-      if($scope.diagnose_history.disease_id || $scope.diagnose_history.item_id) {
+      if($scope.diagnose_history.additional.diagnose_name || $scope.diagnose_history.item_id) {
 
           diagnose_history_datatable.row.add($scope.diagnose_history).draw()
-          $scope.diagnose_history = {is_other : 1}
+          $scope.diagnose_history = {
+            additional : {},
+            is_other : 1
+          }
       }
   }
 
@@ -1926,7 +1929,46 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         render : resp => $scope.all_diagnostic.find(x => x.id == resp.item_id) ? $scope.all_diagnostic.find(x => x.id == resp.item_id).name : ''
       },
-      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
+
+      {
+        data : null,
+        className : 'regular',
+        render : function(resp) {
+            var exist = false
+            var rows, cells, unit, tbody
+            if(resp.laboratory_pivot !== null) {
+                if(resp.laboratory_pivot.additional) {                
+                    if(resp.laboratory_pivot.additional.treatment) {
+                        tbody = $('<tbody></tbody>')
+                        for(x in resp.laboratory_pivot.additional.treatment) {
+                            unit = resp.laboratory_pivot.additional.treatment[x]
+                            cells = []
+                            if(unit.detail) {
+                                for(i in unit.detail) {
+                                    if(unit.detail[i].is_active) {
+                                        cells.push(unit.detail[i].name)
+                                    }
+                                }
+                            }
+                            if(cells.length > 0) {
+                                rows = $('<tr></tr>')
+                                rows.append( $('<td><b>' + unit.name + '</b></td>') )
+                                rows.append( $('<td>' + cells.join(', ') + '</td>') )
+                                tbody.append(rows)
+                            }   
+                        }
+
+                        if(tbody.find('tr').length > 0) {
+                            var table = $('<table class="table table-bordered"></table>')
+                            table.append(tbody)
+                            return table.prop('outerHTML')
+                        }
+                    }
+                }
+            } 
+            return ''
+        }
+      },
 
       {
         data : null,
@@ -2113,22 +2155,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     { 
         data : null,
         render : function(resp) {
-            var disease
-            var is_int = /^([0-9]+)$/
-            if(is_int.test(resp.disease_id)) {
-                disease = $scope.data.disease.find(x => x.id == resp.disease_id)
-                if(disease) {
-                    return disease.name
-                } else {
-                    if(resp.disease) {
-                        return resp.disease.name
-                    } else {
-                        return '' 
-                    }
-                }
-            } else {
-               return resp.disease_id
-            }
+           return resp.additional.diagnose_name
         }
     },
     { 
@@ -2499,6 +2526,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       }
 
       $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
+            $scope.show()
       }, function(error) {
         if (error.status==422) {
           var det="";
@@ -2580,6 +2608,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $('[ng-model="drug.date"]').val( $filter('fullDate')($scope.drug.date))
       }, 300)
       $scope.diagnose_history = { 
+        additional : {},
         is_other : 1,
         is_diagnose_history : 1 
       }

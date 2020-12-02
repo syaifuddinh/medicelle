@@ -333,7 +333,7 @@ class MedicalRecordController extends Controller
             'radiology:id,medical_record_id,date,result_date,name,description,is_radiology,saran,kesimpulan,kanan,kiri',
             'laboratory:id,medical_record_id,date,result_date,name,description,is_laboratory,additional',
             'pathology:id,medical_record_id,date,result_date,name,description,is_pathology',
-            'diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
+            'diagnose_history:id,medical_record_id,disease_id,item_id,type,description,additional',
             'diagnose_history.disease:id,name',
             
             'children_diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
@@ -353,7 +353,7 @@ class MedicalRecordController extends Controller
             'treatment:id,medical_record_id,item_id,date,qty,reduksi', 
             'treatment_group:id,medical_record_id,item_id,date,qty,reduksi', 
             'diagnostic:id,medical_record_id,item_id,date,qty,reduksi', 
-            'diagnostic.laboratory_pivot:id,medical_record_detail_id', 
+            'diagnostic.laboratory_pivot:id,medical_record_detail_id,additional', 
             'drug:id,medical_record_id,item_id,date,qty,signa1,signa2,stock_id', 
             'drug.item:id,name,piece_id',
             'drug.s1:id,name',

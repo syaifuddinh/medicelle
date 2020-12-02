@@ -1,3 +1,11 @@
+<style type="text/css">
+    div table tr td.regular {
+        padding:0;
+    }
+    div table tr td.regular table {
+        margin:0;
+    }
+</style>
 @include('registration/medical_record/create-header')
 @include('registration/medical_record/create-therapy-header')
                           
@@ -43,7 +51,7 @@
                                                 <tr>
                                                     <td>Tanggal</td>
                                                     <td>Tindakan / jenis pemeriksaan</td>
-                                                    <td>Reduksi</td>
+                                                    <td style='padding:2mm'>Pemeriksaan</td>
                                                     <td></td>
                                                 </tr>
                                             </thead>

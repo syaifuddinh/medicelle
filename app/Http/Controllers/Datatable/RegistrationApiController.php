@@ -357,6 +357,7 @@ class RegistrationApiController extends Controller
         ->whereHas('medical_record', function(Builder $query) use($request){
             $query->whereBetween('date', [$request->date_start, $request->date_end]);
         })
+        ->where('pivot_medical_records.is_referenced', 0)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
