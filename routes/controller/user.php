@@ -36,6 +36,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
 
         Route::put('laboratory_type/activate/{id}', 'LaboratoryTypeController@activate');
         Route::post('laboratory_type/{id}', 'LaboratoryTypeController@update');
+        Route::get('laboratory_type/item/{id}', 'LaboratoryTypeController@showByItem');
         Route::resource('laboratory_type', 'LaboratoryTypeController');
 
         Route::put('side_effect/activate/{id}', 'SideEffectController@activate');

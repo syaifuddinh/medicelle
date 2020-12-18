@@ -116,30 +116,35 @@ class MedicalRecordDetail extends Model
 
                     $price = Price::find($price->id);
                     if($price->laboratory_treatment()->count('id') > 0) {
-                           $checklist = [];
-                           $laboratory_treatment = $price->laboratory_treatment;
-                           foreach($laboratory_treatment as $treatment) {
-                                $laboratory_type = DB::table('laboratory_types')
-                                ->whereId($treatment->laboratory_type_id)
-                                ->first();
-                                $laboratory_type_detail = DB::table('laboratory_type_details')
-                                ->whereLaboratoryTypeId($treatment->laboratory_type_id)
-                                ->get();
-                                $checklist_detail = [];
-                                foreach($laboratory_type_detail as $detail) {
-                                    array_push($checklist_detail, [
-                                        'id' => $detail->id,
-                                        'name' => $detail->name,
+                           if($medicalRecordDetail->additional->pivot ?? null) {
+                              $additional = json_encode($medicalRecordDetail->additonal->pivot);
+                           } else {
+                               $checklist = [];
+                               $laboratory_treatment = $price->laboratory_treatment;
+                               foreach($laboratory_treatment as $treatment) {
+                                    $laboratory_type = DB::table('laboratory_types')
+                                    ->whereId($treatment->laboratory_type_id)
+                                    ->first();
+                                    $laboratory_type_detail = DB::table('laboratory_type_details')
+                                    ->whereLaboratoryTypeId($treatment->laboratory_type_id)
+                                    ->get();
+                                    $checklist_detail = [];
+                                    foreach($laboratory_type_detail as $detail) {
+                                        array_push($checklist_detail, [
+                                            'id' => $detail->id,
+                                            'name' => $detail->name,
+                                        ]);
+                                    }
+                                    array_push($checklist, [
+                                        'id' => $laboratory_type->id,
+                                        'name' => $laboratory_type->name,
+                                        'detail' => $checklist_detail
                                     ]);
-                                }
-                                array_push($checklist, [
-                                    'id' => $laboratory_type->id,
-                                    'name' => $laboratory_type->name,
-                                    'detail' => $checklist_detail
-                                ]);
+                               }
+                               $checklist = json_encode($checklist);
+                               $additional = '{"treatment":' . $checklist . '}';
                            }
 
-                           $checklist = json_encode($checklist);
                            $laboratory_id = DB::table('pivot_medical_records')
                             ->insertGetId([
                                 'medical_record_id' => $medicalRecordDetail->medical_record_id,
@@ -147,7 +152,7 @@ class MedicalRecordDetail extends Model
                                 'is_referenced' => 1,
                                 'is_laboratory' => 1,
                                 'medical_record_detail_id' => $medicalRecordDetail->id,
-                                'additional' => '{"treatment":' . $checklist . '}'
+                                'additional' => $additional
                             ]);
 
                             DB::table('pivot_medical_records')

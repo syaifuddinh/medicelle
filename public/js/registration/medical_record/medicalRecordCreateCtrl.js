@@ -1004,6 +1004,16 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           });
       }
   }
+
+  $scope.changeDiagnosticDestination = function() {
+      var item = $scope.data.diagnostic.find(x => x.id == $scope.diagnostic.item_id)
+      if(item) {
+         if(item.price) {
+            $scope.diagnostic.destination = item.price.destination
+         }
+      }
+  }
+
   $scope.destination = function() {
       if(path.indexOf('therapy/treatment') > -1 || path.indexOf('therapy/diagnostic') > -1) {
           $http.get(baseUrl + '/controller/user/price/destination').then(function(data) {
@@ -2469,19 +2479,49 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $('#laboratoryChecklistModal').modal()
   }
 
+  $scope.editLaboratoryChecklist = function() {
+      $scope.showLaboratoryChecklist($scope.diagnostic.item_id, true)
+      $('#laboratoryChecklistModal').modal()
+  }
+
   $scope.openLaboratoryChecklistPDF =  function() {
       window.open( baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot_medical_record_id + '/laboratory/pdf')
   }
 
-  $scope.showLaboratoryChecklist = function(pivot_medical_record_id) {
-      $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
-          $scope.pivot_medical_record_id = data.data.id
-          $scope.pivotData = data.data.additional
-          $scope.allPivotData = data.data.additional.treatment
-          $scope.gridLaboratoryChecklist($scope.pivotData.treatment)
-      }, function(error) {
-          console.log(error)
-      });
+  $scope.printLaboratory =  function() {
+      window.open( baseUrl + '/controller/registration/medical_record/pivot/' + id + '/laboratory/pdf/multiple')
+  }
+  $scope.pivotData = {}
+  $scope.showLaboratoryChecklist = function(pivot_medical_record_id, is_new = false) {
+      if(!is_new) {
+          $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
+              $scope.pivot_medical_record_id = data.data.id
+              $scope.pivotData = data.data.additional
+              $scope.allPivotData = data.data.additional.treatment
+              $scope.gridLaboratoryChecklist($scope.pivotData.treatment)
+          }, function(error) {
+              console.log(error)
+          });
+      } else {
+          if(!$scope.pivotData.item_id || ($scope.pivotData.item_id && $scope.pivotData.item_id != $scope.diagnostic.item_id)) {
+              $http.get(baseUrl + '/controller/user/laboratory_type/item/' + pivot_medical_record_id).then(function(data) {
+                  $scope.pivot_medical_record_id = null
+                  var detail = data.data.laboratory_type_detail
+                  $scope.pivotData = {
+                    'item_id' : $scope.diagnostic.id,
+                    'treatment' : [
+                        {
+                            'name' : data.data.name,
+                            'detail' : detail
+                        }
+                    ]
+                  }
+                  $scope.gridLaboratoryChecklist($scope.pivotData.treatment)
+              }, function(error) {
+                  console.log(error)
+              });        
+          }
+      }
   }
 
   $scope.searchChecklist = function() {
@@ -2525,19 +2565,21 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           "is_active" : $scope.pivotData.treatment[x].detail[y].is_active
       }
 
-      $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
-            $scope.show()
-      }, function(error) {
-        if (error.status==422) {
-          var det="";
-          angular.forEach(error.data.errors,function(val,i) {
-            det+="- "+val+"<br>";
+      if(pivot_medical_record_id) {
+          $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory', data).then(function(data) {
+                $scope.show()
+          }, function(error) {
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
           });
-          toastr.warning(det,error.data.message);
-        } else {
-          toastr.error(error.data.message,"Error Has Found !");
-        }
-      });
+      }
   }
 
   $scope.reset = function() {
@@ -3164,6 +3206,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
          if(drug) {
              data.item_id = drug.item_id
          }
+      }
+      if(data.is_diagnostic) {
+         data.additional = {
+            'pivot' : $scope.pivotData
+         };
       }
       $rootScope.disBtn= true
       var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
