@@ -1,5 +1,5 @@
 <?php 
-    $company = Mod::company()
+    $company = Mod::company();
  ?>
  <style>
      * {
@@ -132,27 +132,37 @@
                     <div style='margin:0'>
                          <table cellspacing='0' cellpadding='8' style='width:100%'>
                             <tbody>
-                                <tr>
-                                    @foreach($pivotMedicalRecord->additional->treatment as $treatment)
-                                        <td>
-                                            <p style='margin-bottom:2mm'>{{ $treatment->name }}</p>
-                                            @foreach($treatment->detail as $detail)
-                                                <p>
-                                                    <?php 
-                                                        $checked = '';
-                                                        if(($detail->is_active ?? 0) == 1) {
-                                                            $checked = 'checked';
-                                                        }
-                                                     ?>
-                                                    <input type="checkbox" style='margin-right: 1mm' {{ $checked }}>
-                                                    <span style="display: inline-block;padding-bottom:1mm">
-                                                          {{ $detail->name }}
-                                                    </span>
-                                                </p>
-                                            @endforeach
-                                        </td>  
-                                    @endforeach
-                                </tr>
+                                @foreach($treatments as $units)
+                                    <tr>
+                                        @foreach($units as $treatment)
+                                            <td style='vertical-align:top'>
+                                                <p style='margin-bottom:5mm'>{{ $treatment->name }}</p>
+                                                @foreach($treatment->detail as $detail)
+                                                    <p>
+                                                        <?php 
+                                                            $checked = '';
+                                                            if(($detail->is_active ?? 0) == 1) {
+                                                                $checked = 'checked';
+                                                            }
+                                                         ?>
+                                                        <input type="checkbox" style='margin-right: 1mm' {{ $checked }}>
+                                                        <span style="display: inline-block;padding-bottom:1mm">
+                                                              {{ $detail->name }}
+                                                        </span>
+                                                    </p>
+                                                @endforeach
+                                            </td>  
+                                        @endforeach
+                                        @php
+                                            $leftover = 4 - count($units);
+                                            if(count($treatments) > 1 && $leftover > 1 && $leftover < 4) {
+                                                for($i = 0;$i < $leftover;$i++) {
+                                                    echo '<td></td>';
+                                                }
+                                            }  
+                                        @endphp
+                                    </tr>
+                                @endforeach
                             </tbody>
                          </table>
                     </div>
@@ -160,7 +170,7 @@
                 <div style='margin-top:10mm'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:40%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) }}</p>
+                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::fullDate(\Carbon\Carbon::now()) }}</p>
                         <p style='text-align:center;'>( {{$medicalRecord->registration_detail->doctor->name}} )</p>
                     </div>
                 </div>

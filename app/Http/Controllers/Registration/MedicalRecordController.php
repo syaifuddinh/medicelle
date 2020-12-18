@@ -542,13 +542,30 @@ class MedicalRecordController extends Controller
         return $pdf->stream('ruang_tindakan.pdf');
     }
 
-    public function laboratory_pdf(Request $request, $id)
+    public function laboratory_pdf(Request $request, $id, $type = 'single')
     {
-        $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
-        $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        if($type == 'single') {
+            $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
+            $medics = [$pivotMedicalRecord];
+            $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
+        } else if($type == 'multiple') {
+            $medicalRecord = MedicalRecord::find($id);
+            $medics = PivotMedicalRecord::whereMedicalRecordId($id)
+            ->whereIsLaboratory(1)
+            ->get();
+        }
+        $treatments = [];
+        foreach ($medics as $medic) {
+            foreach($medic->additional->treatment as $treatment) {
+                $treatments[] = $treatment;
+            }
+        }
+
+        $treatments = collect($treatments)->chunk(4);
+
         $laboratoryType = LaboratoryType::with('laboratory_type_detail:id,laboratory_type_id,name')->get(); 
         $params = [
-                'pivotMedicalRecord' => $pivotMedicalRecord,
+                'treatments' => $treatments,
                 'medicalRecord' => $medicalRecord, 
                 'dot' => '.............................................................................................................', 
                 'shortDot' => '..........'];

@@ -79,6 +79,20 @@ class LaboratoryTypeController extends Controller
         return Response::json($laboratory_type, 200);
     }
 
+    public function showByItem($item_id)
+    {
+        $price = DB::table('prices')
+        ->join('laboratory_treatments', 'laboratory_treatments.price_id', 'prices.id')
+        ->whereItemId($item_id)
+        ->first();
+        if($price) {
+            return $this->show($price->laboratory_type_id);
+        } else {
+            $data = (object) [];
+        }
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -11,32 +11,48 @@
                           
                       </nav>
                         <div class="ln_solid"></div>
-                        <h2>Daftar diagnostik</h2>
+                        <div style='margin-bottom:5mm'>
+                            <h2 style='display:inline-block'>Daftar diagnostik</h2>
+                            <button style='margin-top:10mm' class="btn btn-sm btn-primary pull-right" type="button" ng-click='printLaboratory()'>Cetak Laporan Laboratorium</button>
+                        </div>
                         <div id='role_layer' style="position:relative">
                                 @if(Specialization::readonly('diagnostik') == 1)
                                     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000"></div>
                                 @endif
                                 <div class="row">
                                     <div class="col-md-12" style='display:flex'>
-                                        <div class="form-group col-md-4">
-                                            
+                                        <div class="form-group col-md-3">
                                             <label>Tanggal</label>
                                             <input type="text" class='form-control' ng-model="diagnostic.date"  datepick>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div style='margin-left:2mm' class="form-group col-md-3">
                                             <label>Kelompok</label>
                                             <select class="form-control" data-placeholder-text-single="'Pilih kelompok'" chosen allow-single-deselect="true" ng-model="diagnostic.destination" ng-options="c as c for c in data.destination" ng-change='changeDiagnostic()'>
                                                 <option value=""></option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div style='margin-left:2mm' class="form-group col-md-3">
                                             <label>Tindakan / jenis pemeriksaan</label>
                                             <div style='display:flex'>
-                                                <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic">
+                                                <select class="form-control" data-placeholder-text-single="'Pilih tindakan / jenis pemeriksaan'" chosen allow-single-deselect="false" ng-model="diagnostic.item_id" ng-options="c.id as c.name group by c.price.destination for c in data.diagnostic" ng-change='changeDiagnosticDestination()'>
                                                     <option value=""></option>
                                                 </select>
-                                                <div>
-                                                    <button type='button' class='btn btn-success' style='margin-left:1mm' ng-click='storeDetail(diagnostic)' ng-disabled='!diagnostic.item_id || disBtn'><i class="fa fa-check"></i></button>
+                                            </div>
+                                        </div>
+                                        <div style='margin-left:2mm' class="form-group col-md-3">
+                                            <label>
+                                                &nbsp;
+                                                <span ng-if='diagnostic.destination == "LABORATORIUM"'>
+                                                    
+                                                    Checklist Laboratorium
+                                                </span>
+                                            </label>
+                                            <div style='display:flex'>
+                                                <div class="btn-group">
+                                                    <button ng-if='diagnostic.destination == "LABORATORIUM"' type='button' ng-disabled='!diagnostic.item_id' class="btn-sm btn btn-primary" ng-click='editLaboratoryChecklist()'>
+                                                        <i class="fa fa-pencil"></i> Isi disini
+                                                    </button>
+                                                    <button type='button' class='btn btn-success btn-md' style='padding:1.85mm 3mm' ng-click='storeDetail(diagnostic)' ng-disabled='!diagnostic.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
                                         </div>
