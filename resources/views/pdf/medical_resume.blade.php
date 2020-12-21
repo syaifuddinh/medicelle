@@ -89,7 +89,7 @@
                       @foreach($medicalRecord->drug as $unit)
                             <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
                        @endforeach
-                    </ol>
+                    </ol><br>
                     <?php } else { ?>
                     <p>(tidak ada obat yang diberikan)</p>
                     <?php } ?>
@@ -99,9 +99,39 @@
                       @foreach($medicalRecord->bhp as $unit2)
                             <li>{{ $unit2->item->name ?? '' }} sebanyak {{ $unit2->qty . ' ' . ($unit2->item->piece->name ?? '') }}</li>
                        @endforeach
-                    </ol>
+                    </ol><br>
                     <?php } else { ?>
                     <p>(tidak ada BHP yang diberikan)</p>
+                    <?php } ?>
+                    <p>Terapi (Tindakan) :</p>
+                    <?php if($medicalRecord->treatment) { ?>
+                    <ol style='margin-top:3mm;margin-left:6mm'>
+                      @foreach($medicalRecord->treatment as $unit3)
+                            <li>{{ $unit3->item->name ?? '' }}</li>
+                       @endforeach
+                    </ol><br>
+                    <?php } else { ?>
+                    <p>(tidak ada tindakan yang dilakukan)</p>
+                    <?php } ?>
+                    <p>Terapi (Diagnostic) :</p>
+                    <?php if($medicalRecord->diagnostic) { ?>
+                    <ol style='margin-top:3mm;margin-left:6mm'>
+                      @foreach($medicalRecord->diagnostic as $unit4)
+                            <li>{{ $unit4->item->name ?? '' }}</li>
+                       @endforeach
+                    </ol><br>
+                    <?php } else { ?>
+                    <p>(tidak ada diagnostik yang diminta)</p>
+                    <?php } ?>
+                    <p>Terapi (Paket Tindakan) :</p>
+                    <?php if($medicalRecord->treatment_group) { ?>
+                    <ol style='margin-top:3mm;margin-left:6mm'>
+                      @foreach($medicalRecord->treatment_group as $unit5)
+                            <li>{{ $unit5->item->name ?? '' }}</li>
+                       @endforeach
+                    </ol><br>
+                    <?php } else { ?>
+                    <p>(tidak ada paket tindakan yang dilakukan)</p>
                     <?php } ?>
                     <p style='margin-top:2mm'>Diagnosis :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
