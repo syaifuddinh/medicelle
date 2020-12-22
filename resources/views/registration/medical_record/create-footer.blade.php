@@ -50,9 +50,10 @@
                 <div class="modal-body">
                     @include('polyclinic/polyclinic/radiology/laboratory_treatment')
                 </div>
+		<!--
                 <div class="modal-footer">
                     <button type="button" class='btn btn-primary btn-sm' ng-click='openLaboratoryChecklistPDF()'>Cetak</button>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
