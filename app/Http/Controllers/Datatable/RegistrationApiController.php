@@ -39,15 +39,20 @@ class RegistrationApiController extends Controller
             'registration_detail.polyclinic:id,name',
             'registration_detail.doctor:id,name'
         )
-        ->whereHas('registration_detail.registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end])
-            ->whereStatus(2);
+        ->whereHas('registration_detail.registration', function(Builder $query) use($request, $status){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            if($status == 0) {
+                $query->whereStatus(2);
+            } else if($status == 1) {
+                $query->whereStatus(4);
+            }
         })
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             if($status == 0) {
                 $query->whereStatus($status);
             } else if($status == 1) {
-                $query->whereRaw('status = 1 OR status IS NULL');
+                //$query->whereRaw('status = 1 or status is null');
+                $query->whereRaw('status in (0,1)');
             }
             $query->whereDestination('POLIKLINIK');
         })
