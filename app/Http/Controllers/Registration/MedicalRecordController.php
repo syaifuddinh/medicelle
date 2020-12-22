@@ -1109,7 +1109,7 @@ class MedicalRecordController extends Controller
             } 
             DB::commit();
         } catch(Exception $e) {
-
+            dd($e);
             return Response::json(['message' => $e->getMessage()], 422);
         }
 

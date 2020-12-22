@@ -117,7 +117,7 @@ class MedicalRecordDetail extends Model
                     $price = Price::find($price->id);
                     if($price->laboratory_treatment()->count('id') > 0) {
                            if($medicalRecordDetail->additional->pivot ?? null) {
-                              $additional = json_encode($medicalRecordDetail->additonal->pivot);
+                              $additional = json_encode($medicalRecordDetail->additional->pivot);
                            } else {
                                $checklist = [];
                                $laboratory_treatment = $price->laboratory_treatment;
