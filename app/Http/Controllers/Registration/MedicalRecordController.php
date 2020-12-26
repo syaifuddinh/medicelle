@@ -125,6 +125,8 @@ class MedicalRecordController extends Controller
         ->leftJoin('radiology_types', 'radiology_types.id', 'prices.radiology_group')
         ->orderBy('medical_records.created_at', 'DESC')
         ->select(
+            'medical_record_details.id',
+            'medical_record_details.reduksi',
             DB::raw('pivot_medical_records.additional ->> \'radiology_description\' AS description'), 
             DB::raw('pivot_medical_records.additional ->> \'kanan\' AS kanan'), 
             DB::raw('pivot_medical_records.additional ->> \'kiri\' AS kiri'), 
@@ -435,12 +437,14 @@ class MedicalRecordController extends Controller
         $company = Mod::company();
         $phpWord->addFontStyle('textHeader', array('bold'=>true, 'size' => 14));
         $phpWord->addFontStyle('textSubheader', array('bold'=>true, 'size' => 13));
-        $header->addImage($company->logo2, [
-            'width' => 60,
-            'height' => 60,
-            'wrappingStyle' => 'inline',
-            'positioning' => 'absolute'
-        ]);
+        if(file_exists(public_path().'/files/' . $company->logo2_name)) {
+            $header->addImage($company->logo2, [
+                'width' => 60,
+                'height' => 60,
+                'wrappingStyle' => 'inline',
+                'positioning' => 'absolute'
+            ]);
+        }
         $textBox = $header->addTextBox([
             'width' => 350,
             'height' => 70,
@@ -499,7 +503,7 @@ class MedicalRecordController extends Controller
         $section->addText('' , '', 'spaceGeneral');
         $section->addText('Terapi : ' , '', 'spaceGeneral');
         foreach($medicalRecord->drug as $unit) {
-            $section->addListItem($unit->item->name ?? '' . ' sebanyak ' . $unit->qty . ' ' . ($unit->item->piece->name ?? ''), 0);
+            $section->addListItem(($unit->item->name ?? ($unit->stock->item->name ??'')) . ' sebanyak ' . $unit->qty . ' ' . ($unit->item->piece->name ?? ''), 0);
         }
 
         $section->addText('Jadwal kontrol selanjutnya pada hari ' . ($medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot) . ', tanggal ' . $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot , '', 'spaceGeneral');
@@ -1110,6 +1114,22 @@ class MedicalRecordController extends Controller
             DB::commit();
         } catch(Exception $e) {
             dd($e);
+            return Response::json(['message' => $e->getMessage()], 422);
+        }
+
+        return Response::json(['message' => 'Detail berhasil disimpan']);
+    }
+
+    public function update_detail(Request $request, $medical_record_id, $id) {
+
+        DB::beginTransaction();
+        try {
+            MedicalRecord::findOrFail($medical_record_id);
+            $medicalRecordDetail = MedicalRecordDetail::findOrFail($id);
+            $medicalRecordDetail->fill($request->all());
+            $medicalRecordDetail->save();
+            DB::commit();
+        } catch(Exception $e) {
             return Response::json(['message' => $e->getMessage()], 422);
         }
 

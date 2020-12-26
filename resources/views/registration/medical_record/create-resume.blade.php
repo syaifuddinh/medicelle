@@ -34,22 +34,50 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <table class="table table-bordered" id='medical_record_history'>
-                      <thead>
-                        <tr>
-                          <th>No. Registrasi</th>
-                          <th>Tanggal</th>
-                          <th>Tujuan</th>
-                          <th>Rangkuman</th>
-                          <th>Dokter</th>
-                          <th>Keterangan</th>
-                          <th style='width:60mm'></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        
-                      </tbody>
-                    </table>
+                  <ul class="nav nav-tabs" style='margin-bottom:3mm'>
+                    <li class="active"><a data-toggle="tab" href="#utama">Utama</a></li>
+                    <li><a data-toggle="tab" href="#riwayat">Riwayat</a></li>
+                  </ul>
+
+                  <div class="tab-content">
+                        <div id="utama" class="tab-pane fade in active">
+                              <table class="table table-bordered" id='medical_record_self_history'>
+                                  <thead>
+                                    <tr>
+                                      <th>No. Registrasi</th>
+                                      <th>Tanggal</th>
+                                      <th>Tujuan</th>
+                                      <th>Rangkuman</th>
+                                      <th>Dokter</th>
+                                      <th>Keterangan</th>
+                                      <th style='width:60mm'></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                              </table>
+                        </div>
+                        <div id="riwayat" class="tab-pane fade">
+                              <table class="table table-bordered" id='medical_record_history' style='width:100%'>
+                                  <thead>
+                                    <tr>
+                                      <th>No. Registrasi</th>
+                                      <th>Tanggal</th>
+                                      <th>Tujuan</th>
+                                      <th>Rangkuman</th>
+                                      <th>Dokter</th>
+                                      <th>Keterangan</th>
+                                      <th style='width:60mm'></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                              </table>
+                        </div>
+                  </div>
+                  
                 </div>
 
                 <div class="clearfix"></div>

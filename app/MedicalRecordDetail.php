@@ -242,6 +242,10 @@ class MedicalRecordDetail extends Model
         }
     }
 
+    public function setReduksiAttribute($value) {
+        $this->attributes['reduksi'] = $value ?? 0;
+    }
+
     public function setSigna1Attribute($value) {
         if($value != null) {
             $is_number = preg_match('/^(\d+)$/', $value);
@@ -289,12 +293,16 @@ class MedicalRecordDetail extends Model
 
     public function laboratory_pivot() {
         return $this->hasOne('App\PivotMedicalRecord', 'medical_record_detail_id', 'id')
-        ->whereIsReferenced(1)
+    ->whereIsReferenced(1)
         ->whereIsLaboratory(1);
     }
 
     public function disease() {
         return $this->belongsTo('App\Item', 'disease_id', 'id')->whereIsDisease(1);
+    }
+
+    public function stock() {
+        return $this->belongsTo('App\Stock', 'stock_id', 'id');
     }
 
     public function item() {

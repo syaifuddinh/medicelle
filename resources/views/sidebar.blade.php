@@ -90,6 +90,8 @@
                             @endif
 
                             <li style='padding-left:15mm'><a href="{{ route('radiology_type.index') }}">Radiologi</a></li>
+
+                            <li style='padding-left:15mm'><a href="{{ route('price.pathology.index') }}">Patologi</a></li>
                         @endif
 
                         @if(Auth::user()->allow_access('master.lokasi'))

@@ -24,6 +24,10 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
 
     columns:[
       {
+        data:'no_batch', 
+        name:'no_batch' 
+      },
+      {
         data:null, 
         name:'code',
         render : resp => "<a href='" + baseUrl +"/pharmacy/receipt/" + resp.id + "'>" + resp.code + "</a>"  

@@ -84,7 +84,7 @@
                                   </div>
                               </div>
                             
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes && !formData.is_pathology'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Kelompok Radiologi
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize" style='padding-left:9.6mm'>
@@ -92,7 +92,7 @@
                                   </div>
                               </div>
                             
-                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes'>
+                              <div class="form-group" ng-show='!formData.is_registration && !formData.is_sewa_ruangan && !formData.is_sewa_alkes && !formData.is_pathology'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Kategori Laboratorium
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12 capitalize">
@@ -103,13 +103,11 @@
                               </div>
                             
                             
-                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK")'>
+                              <div class="form-group" ng-show='formData.destination == "POLIKLINIK"'>
                                   <label class="col-md-3 col-xs-12" for="last-name">Poliklinik
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12" style='padding-left:9.6mm'>
-<% formData.polyclinic.name %>
-
-
+                                        <% formData.polyclinic.name %>
                                   </div>
                               </div>
                             

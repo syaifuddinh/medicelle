@@ -158,6 +158,10 @@ Route::name('price.')->prefix('price')->group(function(){
         return view('user/price/index');
     })->name('sewa_instrumen.index');
 
+    Route::get('/pathology', function (){
+        return view('user/price/index');
+    })->name('pathology.index');
+
     Route::get('/create', function (){
         return view('user/price/create');
     })->name('create');
@@ -179,6 +183,9 @@ Route::name('price.')->prefix('price')->group(function(){
     Route::get('/sewa_instrumen/create', function (){
         return view('user/price/create');
     })->name('sewa_instrumen.create');
+    Route::get('/pathology/create', function (){
+        return view('user/price/create');
+    })->name('pathology.create');
 
     Route::get('/edit/{id}', function ($id){
         return view('user/price/create');
@@ -202,6 +209,10 @@ Route::name('price.')->prefix('price')->group(function(){
         return view('user/price/create');
     })->name('sewa_instrumen.edit');
 
+    Route::get('/pathology/edit/{id}', function ($id){
+        return view('user/price/create');
+    })->name('pathology.edit');
+
     Route::get('/{id}', function ($id){
         return view('user/price/show')->withId($id);
     })->name('show');
@@ -223,6 +234,9 @@ Route::name('price.')->prefix('price')->group(function(){
     Route::get('/sewa_instrumen/{id}', function ($id){
         return view('user/price/show')->withId($id);
     })->name('sewa_instrumen.show');
+    Route::get('/pathology/{id}', function ($id){
+        return view('user/price/show')->withId($id);
+    })->name('pathology.show');
 });
 
 Route::name('treatment_group.')->prefix('treatment_group')->group(function(){

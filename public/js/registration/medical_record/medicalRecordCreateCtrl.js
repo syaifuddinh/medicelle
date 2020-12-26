@@ -103,7 +103,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
               stateSave:true,
               ajax: {
                 url : medical_record_url  + $scope.formData.patient_id,
-                data : d => Object.assign(d, $scope.filterData)
+                data : d => Object.assign(Object.assign(d, {except_medical_record_id:id}), $scope.filterData)
               },
               columns:[
 
@@ -159,10 +159,74 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 $compile(angular.element(row).contents())($scope);
               }
             });
-            medical_record_history.buttons().container().appendTo( '.export_button' );
+
+
+            medical_record_self_history = $('#medical_record_self_history').DataTable({
+              processing: true,
+              serverSide: true,
+              stateSave:true,
+              ajax: {
+                url : medical_record_url  + $scope.formData.patient_id,
+                data : d => Object.assign(Object.assign(d, {medical_record_id:id}), $scope.filterData)
+              },
+              columns:[
+
+                {
+                  data:'registration_detail.registration.code', 
+                  name:'registration_detail.registration.code',
+                  width : '18mm',
+                },
+                {
+                  data:null, 
+                  orderable:false,
+                  searchable:false,
+                  width : '30mm',
+                  render:resp => $filter('fullDate')(resp.medical_record.date)
+                },
+                {
+                  data:null, 
+                  orderable : false,
+                  searchable : false,
+                  className : 'capitalize',
+                  render:function(resp) {
+                      var destination = resp.registration_detail.destination.toLowerCase()
+                      return destination
+                  }
+                },
+                {
+                  data:null, 
+                  render:function(resp) {
+                      var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      return summary
+                  }
+                },
+                {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
+                {
+                    data:null, 
+                    searchable : false,
+                    orderable : false,
+                    render: function(r) {
+                        outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
+                        return outp
+                    }
+                },
+                {
+                  data: null, 
+                  orderable : false,
+                  searchable : false,
+                  width : '20mm',
+                  className : 'text-center',
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX($event.currentTarget)' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
+                },
+              ],
+              createdRow: function(row, data, dataIndex) {
+                $compile(angular.element(row).contents())($scope);
+              }
+            });
 
             $scope.filter = function() {
               medical_record_history.ajax.reload();
+              medical_record_self_history.ajax.reload();
             }
 
             $scope.editResumeDescription = function(e) {
@@ -2369,6 +2433,14 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 {data : 'kesimpulan'},
                 {data : 'saran'},
                 {data : 'description'},
+                {
+                    data : null,
+                    width:'6px',
+                    render: function(resp) {
+                        var r = '<input type="number" ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
+                        return r
+                    }
+                }
 
                 ],
                 createdRow: function(row, data, dataIndex) {
@@ -2382,6 +2454,25 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
   $scope.showInternalRadiology()
 
+  $scope.changeReduksiRadiology = function(medical_record_detail_id, e) {
+        console.log(e)
+        var value = $(e).val()
+        var params = {
+            reduksi : value
+        }
+        $http.put(baseUrl + '/controller/registration/medical_record/' + id + '/detail/' + medical_record_detail_id, params).then(function(data) {
+        }, function(error) {
+          if (error.status==422) {
+            var det="";
+            angular.forEach(error.data.errors,function(val,i) {
+              det+="- "+val+"<br>";
+            });
+            toastr.warning(det,error.data.message);
+          } else {
+            toastr.error(error.data.message,"Error Has Found !");
+          }
+        });
+  }
 
   $scope.showInternalLaboratory = function() {
       if(path.indexOf('/laboratory') > -1) {

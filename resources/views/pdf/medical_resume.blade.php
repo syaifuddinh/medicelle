@@ -87,7 +87,7 @@
                     <?php if($medicalRecord->drug) { ?>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
-                            <li>{{ $unit->item->name ?? '' }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
+                            <li>{{ $unit->item->name ?? ($unit->stock->item->name ?? '') }} sebanyak {{ $unit->qty . ' ' . ($unit->item->piece->name ?? '') }}, dosis : {{ $unit->s1->name .', '.$unit->s2->name }}</li>
                        @endforeach
                     </ol><br>
                     <?php } else { ?>

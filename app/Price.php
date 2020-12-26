@@ -10,7 +10,7 @@ class Price extends Model
 {
     //
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['grup_nota_id', 'destination', 'polyclinic_id', 'is_registration', 'is_sewa_ruangan','is_sewa_alkes', 'qty', 'percentage', 'radiology_group', 'laboratory_group', 'is_treatment', 'is_diagnostic', 'is_chemoterapy', 'is_specialization', 'is_sewa_instrumen', 'specialization_id'];
+    protected $fillable = ['grup_nota_id', 'destination', 'polyclinic_id', 'is_registration', 'is_sewa_ruangan','is_sewa_alkes', 'qty', 'percentage', 'radiology_group', 'laboratory_group', 'is_treatment', 'is_diagnostic', 'is_chemoterapy', 'is_specialization', 'is_sewa_instrumen', 'is_pathology', 'specialization_id'];
 
     public static function boot() {
         parent::boot();

@@ -377,6 +377,15 @@ class RegistrationApiController extends Controller
                 });
             }
         }
+
+        if($request->filled('medical_record_id')) {
+            $x->where('pivot_medical_records.medical_record_id', $request->medical_record_id);
+        }
+
+        if($request->filled('except_medical_record_id')) {
+            $x->where('pivot_medical_records.medical_record_id', '!=', $request->except_medical_record_id);
+        }
+
         if($request->draw == 1)
             $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
 

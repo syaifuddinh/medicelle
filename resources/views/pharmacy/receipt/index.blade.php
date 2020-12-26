@@ -27,6 +27,7 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
+                          <th style='width:14%'>No. Batch</th>
                           <th style='width:14%'>No. Penerimaan</th>
                           <th style='width:14%'>No. Order</th>
                           <th style='width:14%'>Supplier</th>

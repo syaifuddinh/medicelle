@@ -116,15 +116,24 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
 
       $http.get(baseUrl + '/controller/pharmacy/purchase_order/' + purchase_order_id).then(function(data) {
           var detail = data.data.detail
-          var unit
+          var previous_receipts = data.data.previous_receipts
+          var unit, prev
 
           for(x in detail) {
               unit = detail[x]
               detail[x].item_name = unit.item.name
               detail[x].qty_po = unit.qty
               detail[x].qty = unit.leftover_qty
-              detail[x].post_discount = unit.discount_off
               detail[x].purchase_order_detail_id = unit.id
+              prev = previous_receipts.find(x => x.item_id == unit.item_id)
+              if(prev) {
+                  detail[x].discount = prev.discount
+                  detail[x].purchase_price = prev.purchase_price
+                  detail[x].post_discount = prev.discount_off
+              } else {
+                  detail[x].post_discount = unit.discount_off
+              }
+
               $scope.insertItem(unit)
           }
 

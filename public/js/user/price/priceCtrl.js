@@ -25,6 +25,10 @@ app.controller('price', ['$scope', '$compile', '$http', '$filter', '$timeout', f
               case 'sewa_instrumen' :
                 $scope.subtitle = 'Sewa Instrumen'
                 break
+
+              case 'pathology' :
+                $scope.subtitle = 'Patologi'
+                break
           }
     }, 500)
 

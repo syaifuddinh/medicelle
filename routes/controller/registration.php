@@ -3,6 +3,7 @@
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
         Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
+        Route::put('medical_record/{medical_record_id}/detail/{id}', 'MedicalRecordController@update_detail');
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
         Route::put('registration/{id}/invoice', 'RegistrationController@generateInvoice');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');

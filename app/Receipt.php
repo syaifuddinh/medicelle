@@ -8,7 +8,7 @@ use DB;
 
 class Receipt extends Model
 {
-    protected $fillable = ['date', 'date_start', 'date_end', 'description', 'purchase_order_id', 'supplier_id'];
+    protected $fillable = ['date', 'date_start', 'date_end', 'description', 'purchase_order_id', 'supplier_id', 'no_batch'];
 
     protected $hidden = ['created_at', 'updated_at'];
 

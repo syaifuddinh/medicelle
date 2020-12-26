@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\PurchaseOrder;
 use Response;
 use PDF;
+use DB;
 
 class PurchaseOrderController extends Controller
 {
@@ -55,6 +56,20 @@ class PurchaseOrderController extends Controller
     public function show($id)
     {
         $purchaseOrder = $this->fetch($id);
+        $items = collect($purchaseOrder->detail)->pluck('item_id')->toArray();
+        $previous_receipts = [];
+        foreach ($items as $i) {
+            $r = DB::table('receipt_details')
+            ->whereItemId($i)
+            ->orderBy('id', 'DESC')
+            ->first();
+            if($r) {
+                $previous_receipts[] = $r;
+            } else {
+                $previous_receipts[] = (object) [];
+            }
+        }
+        $purchaseOrder->previous_receipts = $previous_receipts;
         return Response::json($purchaseOrder, 200);
     }
 

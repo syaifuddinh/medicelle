@@ -95,7 +95,7 @@ class PharmacyApiController extends Controller
         $x = Receipt::with('purchase_order:id,code', 'supplier:id,name')
         ->where('receipts.date_start', '>=', $request->date_start)
         ->where('receipts.date_end', '<=', $request->date_end)
-        ->select('receipts.id', 'receipts.code', 'receipts.supplier_id', 'receipts.purchase_order_id', 'receipts.date', 'receipts.date_start', 'receipts.date_end');
+        ->select('receipts.id', 'receipts.code', 'receipts.no_batch', 'receipts.supplier_id', 'receipts.purchase_order_id', 'receipts.date', 'receipts.date_start', 'receipts.date_end');
 
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

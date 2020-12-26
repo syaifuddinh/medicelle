@@ -17,6 +17,7 @@ class Setting extends Model
             }
             $has_logo2 = $content->logo2 ?? null;
             if($has_logo2) {
+                $content->logo2_name = $content->logo2 ?? null;
                 $content->logo2 = isset($content->logo2) ? asset('files/' . $content->logo2) : asset('');
             }
             return $content;

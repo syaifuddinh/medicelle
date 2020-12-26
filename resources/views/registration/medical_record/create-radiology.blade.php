@@ -77,6 +77,7 @@
                                                         <td>Kesimpulan</td>
                                                         <td>Saran</td>
                                                         <td>Keterangan</td>
+                                                        <td style='width:5px!important'>Reduksi</td>
                                                     </tr>
                                                 </thead>
                                             </table>

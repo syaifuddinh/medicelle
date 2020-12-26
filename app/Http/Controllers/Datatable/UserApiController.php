@@ -142,6 +142,10 @@ class UserApiController extends Controller
             $x->where('is_chemoterapy', $request->is_chemoterapy);
         }
 
+        if($request->filled('is_pathology')) {
+            $x->where('is_pathology', $request->is_pathology);
+        }
+
 
         if($request->filled('is_sewa_instrumen')) {
             $x->where('is_sewa_instrumen', $request->is_sewa_instrumen);
