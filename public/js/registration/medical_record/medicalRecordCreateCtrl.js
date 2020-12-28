@@ -232,7 +232,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $scope.editResumeSelfDescription = function(e) {
                 var td = $(e).parents('td')
                 var tr = td.parents('tr')
-                var data = medical_record_history.row(tr).data()
+                var data = medical_record_self_history.row(tr).data()
                 var description = $('<textarea class="form-control resumeDescription"></textarea>')
                 var buttons = $('<div class="btn-group pull-right" style="margin-top:1mm"></div>')
                 description.val( (data.additional.resume_description || '') )
