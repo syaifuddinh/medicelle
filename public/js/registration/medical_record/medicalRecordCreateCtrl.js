@@ -206,7 +206,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                     searchable : false,
                     orderable : false,
                     render: function(r) {
-                        outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
+                        outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeSelfDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
                         return outp
                     }
                 },
@@ -216,7 +216,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   searchable : false,
                   width : '20mm',
                   className : 'text-center',
-                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResume($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResume($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCX($event.currentTarget)' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
+                  render : resp => "<div class='btn-group'><a class='btn btn-xs btn-default' href='#' ng-click='previewResumeSelf($event.currentTarget)' title='Preview'><i class='fa fa-file-text-o'></i></a><a class='btn btn-xs btn-success' href='#' ng-click='downloadResumeSelf($event.currentTarget)' title='Download'><i class='fa fa-download'></i></a><a class='btn btn-xs btn-primary' href='#' ng-click='downloadResumeDOCXSelf($event.currentTarget)' title='Download dengan format ms. word'><i class='fa fa-file-word-o'></i></a></div>"
                 },
               ],
               createdRow: function(row, data, dataIndex) {
@@ -227,6 +227,25 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $scope.filter = function() {
               medical_record_history.ajax.reload();
               medical_record_self_history.ajax.reload();
+            }
+
+            $scope.editResumeSelfDescription = function(e) {
+                var td = $(e).parents('td')
+                var tr = td.parents('tr')
+                var data = medical_record_history.row(tr).data()
+                var description = $('<textarea class="form-control resumeDescription"></textarea>')
+                var buttons = $('<div class="btn-group pull-right" style="margin-top:1mm"></div>')
+                description.val( (data.additional.resume_description || '') )
+                buttons.append(
+                    $('<button type="button" ng-disabled="disBtn" ng-click="submitEditSelfResume($event.currentTarget)" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></button>')
+                )
+                buttons.append(
+                    $('<button ng-click="abortEditResume()" type="button" class="btn btn-sm btn-danger"><i class="fa fa-close"></i></button>')
+                )
+                td.html('')
+                td.append(description)
+                td.append(buttons)
+                $compile(td)($scope)
             }
 
             $scope.editResumeDescription = function(e) {
@@ -261,6 +280,33 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                     $rootScope.disBtn = false
                     toastr.success(data.data.message)
                     medical_record_history.draw()
+                }, function(error) {
+                    $rootScope.disBtn = false
+                    if (error.status==422) {
+                      var det="";
+                      angular.forEach(error.data.errors,function(val,i) {
+                        det+="- "+val+"<br>";
+                      });
+                      toastr.warning(det,error.data.message);
+                    } else {
+                      toastr.error(error.data.message,"Error Has Found !");
+                    }
+                });
+            }
+
+            $scope.submitEditSelfResume = function(e) {
+                var tr = $(e).parents('tr')
+                var resumeDescription = tr.find('.resumeDescription')
+                var description = resumeDescription.val()
+                var data = medical_record_self_history.row(tr).data()
+                params = {
+                    'resume_description' : description
+                }
+                $rootScope.disBtn = true
+                $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + data.id + '/additional', params).then(function(data) {    
+                    $rootScope.disBtn = false
+                    toastr.success(data.data.message)
+                    medical_record_self_history.draw()
                 }, function(error) {
                     $rootScope.disBtn = false
                     if (error.status==422) {
@@ -473,6 +519,27 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.downloadResumeDOCX = function(e) {
         var tr = $(e).parents('tr')
         var data = medical_record_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/docx'
+        window.open(source)
+    }
+
+    $scope.previewResumeSelf = function(e) {
+        var tr = $(e).parents('tr')
+        var data = medical_record_self_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf'
+        window.open(source)
+    }
+
+    $scope.downloadResumeSelf = function(e) {
+        var tr = $(e).parents('tr')
+        var data = medical_record_self_history.row(tr).data()
+        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf/download'
+        window.open(source)
+    }
+
+    $scope.downloadResumeDOCXSelf = function(e) {
+        var tr = $(e).parents('tr')
+        var data = medical_record_self_history.row(tr).data()
         var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/docx'
         window.open(source)
     }
