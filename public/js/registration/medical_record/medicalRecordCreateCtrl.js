@@ -132,7 +132,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 {
                   data:null, 
                   render:function(resp) {
-                      var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      var summary = "Keluhan : " + (resp.medical_record.main_complaint  || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') 
                       return summary
                   }
                 },
@@ -196,7 +197,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 {
                   data:null, 
                   render:function(resp) {
-                      var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
+                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-')
                       return summary
                   }
                 },
@@ -232,7 +234,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
             $scope.editResumeSelfDescription = function(e) {
                 var td = $(e).parents('td')
                 var tr = td.parents('tr')
-                var data = medical_record_history.row(tr).data()
+                var data = medical_record_self_history.row(tr).data()
                 var description = $('<textarea class="form-control resumeDescription"></textarea>')
                 var buttons = $('<div class="btn-group pull-right" style="margin-top:1mm"></div>')
                 description.val( (data.additional.resume_description || '') )
