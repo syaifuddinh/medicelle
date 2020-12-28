@@ -1411,8 +1411,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
             var drugs = data.data.map(function(d){
-                //d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
-                d.label = d.name + ' - (' + $filter('fullDate')(d.expired_date) + ') ( ' + $filter('number')(d.qty) + ' )'
+                d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
+                //d.label = d.name + ' - (' + $filter('fullDate')(d.expired_date) + ') ( ' + $filter('number')(d.qty) + ' )'
                 return d
             })
             $scope.data.drug = drugs
@@ -2129,7 +2129,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
   });
     
-  drug_datatable = $('#drug_datatable').DataTable({
+drug_datatable = $('#drug_datatable').DataTable({
     dom: 'rt',
     pageLength: 200,
     'columns' : [
@@ -2139,40 +2139,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       },
       { 
         data : null,
-        render : function(resp) {
-            var r = ''
-            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
-            if(drug) {
-                r = drug.name
-            }
-
-            return r
-        } 
-      },
-      { 
-        data : null,
-        render : function(resp) {
-            var r = ''
-            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
-            if(drug) {
-                r = drug.expired_date
-            }
-
-            return r
-        } 
+        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
       },
       { 
         data : null,
         className : 'text-right',
-        render : function(resp) {
-            var piece_name = ''
-            var drug = $scope.data.drug.find(x => x.id == resp.item_id)
-            if(drug) {
-                piece_name = drug.piece.name
-            }
-            var r =  resp.qty + ' ' + piece_name
-            return r
-        } 
+        render : resp => resp.qty + ' ' + $scope.data.drug.find(x => x.id == resp.item_id).piece.name
       },
       { 
         data : null,
@@ -3359,12 +3331,13 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }
 
     $scope.storeDetail=function(data) {
-      if(data.is_drug == 1) {
-         var drug = $scope.data.drug.find(d => d.id == data.stock_id)
-         if(drug) {
-             data.item_id = drug.item_id
-         }
-      }
+      //if(data.is_drug == 1) {
+      //   var drug = $scope.data.drug.find(d => d.id == data.item_id)
+      //   if(drug) {
+      //       data.item_id = drug.item_id
+      //   }
+      //}
+      //data.item_id = drug.item_id
       if(data.is_diagnostic) {
          data.additional = {
             'pivot' : $scope.pivotData
