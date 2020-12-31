@@ -27,10 +27,17 @@ class MedicalRecordDetail extends Model
         static::creating(function(MedicalRecordDetail $medicalRecordDetail){
             if($medicalRecordDetail->is_drug == 1) {
                 $stock = DB::table('stocks')
-                ->whereId($medicalRecordDetail->stock_id)
+                ->whereItemId($medicalRecordDetail->item_id)
+                ->whereRaw('NOW()::date - stocks.expired_date::date < 0')
                 ->sum('qty');
 
-                if($medicalRecordDetail->qty > $stock) {
+                $nonApproved = DB::table('formula_details')
+                ->join('formulas', 'formulas.id', 'formula_details.formula_id')
+                ->whereItemId($medicalRecordDetail->item_id)
+                ->whereIsApprove(0)
+                ->sum('qty');
+
+                if($medicalRecordDetail->qty > $stock - $nonApproved) {
                     throw new Exception('Stok tidak mencukupi !');
                 }
             }
@@ -278,6 +285,10 @@ class MedicalRecordDetail extends Model
                 $this->attributes['signa2'] = $signa->id;
             }
         }
+    }
+
+    public function setQtyAttribute($value) {
+        $this->attributes['qty'] = (int) $value;
     }
 
     public function getFilenameAttribute() {

@@ -17,7 +17,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Obat</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.stock_id" ng-options="c.stock_id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
+                                            <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
                                                 <option value=""></option>
                                             </select>
                                             <!--<p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>-->
@@ -66,7 +66,7 @@
                                                 </span>
                                                 <input type="text" class="form-control" ng-model='drug.signa2' ng-show='drug.is_new_signa2'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(drug)' ng-disabled='!drug.stock_id || disBtn'><i class="fa fa-check"></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(drug)' ng-disabled='!drug.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +81,6 @@
                                                 <tr>
                                                     <td>Tanggal</td>
                                                     <td>Obat</td>
-                                                    <td>Exp Date</td>
                                                     <td>Qty</td>
                                                     <td>Signa 1</td>
                                                     <td>Signa 2</td>

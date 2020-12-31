@@ -1414,7 +1414,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
             var drugs = data.data.map(function(d){
                 //d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
-                d.label = d.name + ' - (' + $filter('fullDate')(d.expired_date) + ') ( ' + $filter('number')(d.qty) + ' )'
+                d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
                 return d
             })
             $scope.data.drug = drugs
@@ -2143,21 +2143,9 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
         data : null,
         render : function(resp) {
             var r = ''
-            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
+            var drug = $scope.data.drug.find(x => x.id == resp.item_id)
             if(drug) {
                 r = drug.name
-            }
-
-            return r
-        } 
-      },
-      { 
-        data : null,
-        render : function(resp) {
-            var r = ''
-            var drug = $scope.data.drug.find(x => x.stock_id == resp.stock_id)
-            if(drug) {
-                r = drug.expired_date
             }
 
             return r
@@ -3405,9 +3393,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
       $http[method](url).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Dihapuss !");
-        setTimeout(function() {
-            location.reload()
-        }, 800)
+        $scope.show()
       }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {
