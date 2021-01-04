@@ -17,12 +17,8 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Obat</label>
-<<<<<<< HEAD
-                                            <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>                                                <option value=""></option>
-=======
                                             <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
                                                 <option value=""></option>
->>>>>>> ca31f45ed44a8ada055f8706468ad5beb80a8bfe
                                             </select>
                                             <!--<p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>-->
                                         </div>

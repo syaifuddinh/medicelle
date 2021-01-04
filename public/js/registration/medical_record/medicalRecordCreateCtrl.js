@@ -1413,13 +1413,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
           $http.get(baseUrl + '/controller/user/price/drug').then(function(data) {
             var drugs = data.data.map(function(d){
-<<<<<<< HEAD
-                d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
-                //d.label = d.name + ' - (' + $filter('fullDate')(d.expired_date) + ') ( ' + $filter('number')(d.qty) + ' )'
-=======
                 //d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
                 d.label = d.name + ' ( ' + $filter('number')(d.qty) + ' )'
->>>>>>> ca31f45ed44a8ada055f8706468ad5beb80a8bfe
                 return d
             })
             $scope.data.drug = drugs
@@ -2146,9 +2141,6 @@ drug_datatable = $('#drug_datatable').DataTable({
       },
       { 
         data : null,
-<<<<<<< HEAD
-        render : resp => $scope.data.drug.find(x => x.id == resp.item_id).name
-=======
         render : function(resp) {
             var r = ''
             var drug = $scope.data.drug.find(x => x.id == resp.item_id)
@@ -2158,7 +2150,6 @@ drug_datatable = $('#drug_datatable').DataTable({
 
             return r
         } 
->>>>>>> ca31f45ed44a8ada055f8706468ad5beb80a8bfe
       },
       { 
         data : null,
