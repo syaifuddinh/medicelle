@@ -92,7 +92,7 @@ class PriceController extends Controller
 
         //->select('item_id', DB::raw('SUM(qty) AS qty'))
         //->whereRaw("(DATE_PART('DAY', NOW() - expired_date)) < -7")
-        //->groupBy('item_id');
+        ->groupBy('item_id');
         $nonApproved = DB::table('formula_details')
         ->select('item_id', DB::raw('SUM(qty) AS qty'))
         ->join('formulas', 'formulas.id', 'formula_details.formula_id')
