@@ -17,7 +17,12 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Obat</label>
+<<<<<<< HEAD
                                             <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>                                                <option value=""></option>
+=======
+                                            <select class="form-control" data-placeholder-text-single="'Pilih obat'" chosen allow-single-deselect="false" ng-model="drug.item_id" ng-options="c.id as c.label group by c.generic.name  for c in data.drug" ng-change='changeDrugPiece()'>
+                                                <option value=""></option>
+>>>>>>> ca31f45ed44a8ada055f8706468ad5beb80a8bfe
                                             </select>
                                             <!--<p ng-show='drug.item_id'>Memiliki stok sebanyak <% stock %></p>-->
                                         </div>
@@ -65,7 +70,10 @@
                                                 </span>
                                                 <input type="text" class="form-control" ng-model='drug.signa2' ng-show='drug.is_new_signa2'>
                                                 <div class="input-group-btn">
+<<<<<<< HEAD
                                                     <!--<button type='button' class='btn btn-success' ng-click='storeDetail(drug)' ng-disabled='!drug.stock_id || disBtn'><i class="fa fa-check"></i></button>-->
+=======
+>>>>>>> ca31f45ed44a8ada055f8706468ad5beb80a8bfe
                                                     <button type='button' class='btn btn-success' ng-click='storeDetail(drug)' ng-disabled='!drug.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
                                             </div>
