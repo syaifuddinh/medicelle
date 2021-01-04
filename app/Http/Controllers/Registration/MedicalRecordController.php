@@ -128,6 +128,8 @@ class MedicalRecordController extends Controller
             'medical_record_details.id',
             'medical_record_details.reduksi',
             DB::raw('pivot_medical_records.additional ->> \'radiology_description\' AS description'), 
+            DB::raw('pivot_medical_records.additional ->> \'hasil_pemeriksaan\' AS hasil_pemeriksaan'), 
+            DB::raw('pivot_medical_records.additional ->> \'klinis\' AS klinis'), 
             DB::raw('pivot_medical_records.additional ->> \'kanan\' AS kanan'), 
             DB::raw('pivot_medical_records.additional ->> \'kiri\' AS kiri'), 
             DB::raw('pivot_medical_records.additional ->> \'saran\' AS saran'), 

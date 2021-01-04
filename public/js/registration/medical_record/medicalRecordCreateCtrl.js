@@ -2485,8 +2485,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   }
                 },
                 {data : 'name'},
-                {data : 'kanan'},
-                {data : 'kiri'},
+                {data : 'hasil_pemeriksaan'},
+                {data : 'klinis'},
                 {data : 'kesimpulan'},
                 {data : 'saran'},
                 {data : 'description'},

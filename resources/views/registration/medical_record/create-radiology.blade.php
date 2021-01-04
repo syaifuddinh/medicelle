@@ -72,8 +72,8 @@
                                                     <tr>
                                                         <td>Tanggal pemeriksaan</td>
                                                         <td>Jenis pemeriksaan</td>
-                                                        <td>Kanan</td>
-                                                        <td>Kiri</td>
+                                                        <td>Hasil Pemeriksaan</td>
+                                                        <td>Klinis</td>
                                                         <td>Kesimpulan</td>
                                                         <td>Saran</td>
                                                         <td>Keterangan</td>

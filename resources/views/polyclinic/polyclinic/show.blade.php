@@ -224,7 +224,7 @@
                         </div>
                         <span ng-show='pivot.is_radiology == 1 && pivot.is_referenced == 1'>
                             <hr>
-                            
+                            <!-- 
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-xs-12">Kanan
@@ -244,7 +244,30 @@
                                         
                                     </div>
                                 </div>
+                            </div> -->
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Hasil Pemeriksaan
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.hasil_pemeriksaan' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Klinis
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" ng-model='pivotData.klinis' ng-change='updatePivot()' rows='7'></textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-xs-12">Kesimpulan

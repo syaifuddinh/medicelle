@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Payment;
 use App\PurchaseRequest;
+use App\Equipment;
 use App\PurchaseOrder;
 use App\Movement;
 use App\AdjustmentStock;
@@ -63,6 +64,22 @@ class PharmacyApiController extends Controller
         ->select('id', 'code', 'description', 'date', 'date_start', 'date_end', 'status');
         if($request->filled('status'))
             $x->whereStatus($request->status);
+
+        return Datatables::eloquent($x)->make(true);
+    }
+
+    public function equipment(Request $request) {
+        $items = DB::table('equipment_details')
+        ->selectRaw('count(id) AS approved, equipment_id')
+        ->whereIsApprove(1)
+        ->groupBy('equipment_id');
+        $x = Equipment::with('user:id,name')
+        ->leftJoinSub($items, 'items', function($join){
+            $join->on('items.equipment_id', 'equipments.id');
+        })
+        ->where('date', '>=', $request->date_start)
+        ->where('date', '<=', $request->date_end)
+        ->select('id', 'date', 'description', 'created_by', DB::raw('COALESCE(items.approved, 0) AS approved'));
 
         return Datatables::eloquent($x)->make(true);
     }

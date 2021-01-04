@@ -305,6 +305,11 @@ class MasterApiController extends Controller
         ->select('items.id', 'items.code', 'items.name', 'items.category_id', 'items.classification_id', 'items.subclassification_id', 'items.generic_id', 'items.price', 'items.piece_id');
 
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
+
+        if($request->is_exists) {
+            $x->whereRaw('items.id IN (SELECT item_id FROM stocks LEFT JOIN (SELECT stock_id, SUM(qty) AS qty FROM formula_details  GROUP BY stock_id) AS formula_details ON formula_details.stock_id = stocks.id WHERE stocks.qty - COALESCE(formula_details.qty, 0) > 0 AND (expired_date IS NULL OR NOW()::date - expired_date::date < 0))');
+        }
+
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');
 

@@ -3,6 +3,11 @@
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('pharmacy')->name('pharmacy.')->namespace('Pharmacy')->group(function(){
 
+        Route::resource('equipment', 'EquipmentController');
+        Route::get('equipment/{id}/pdf', 'EquipmentController@pdf')->name('equipment.pdf');
+        Route::resource('equipment/{equipment_id}/detail', 'EquipmentDetailController');
+        Route::put('equipment/{equipment_id}/detail/{id}/approve', 'EquipmentDetailController@approve');
+
         Route::get('purchase_request/{id}/pdf', 'PurchaseRequestController@pdf')->name('purchase_request.pdf');
         Route::put('purchase_request/{id}/approve', 'PurchaseRequestController@approve')->name('purchase_request.approve');
         Route::resource('purchase_request', 'PurchaseRequestController');

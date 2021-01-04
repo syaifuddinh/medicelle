@@ -3,6 +3,23 @@
 Route::name('pharmacy.')->prefix('pharmacy')
 ->group(function(){
     
+    Route::name('equipment.')->prefix('equipment')
+    ->group(function(){
+
+        Route::get('/', function (){
+            return view('pharmacy/equipment/index');
+        })->name('index');
+        Route::get('/create', function (){
+            return view('pharmacy/equipment/create');
+        })->name('create');
+        Route::get('/edit/{id}', function ($id){
+            return view('pharmacy/equipment/create')->withId($id);
+        })->name('edit');
+        Route::get('/{id}', function ($id){
+            return view('pharmacy/equipment/show')->withId($id);
+        })->name('show');
+    });
+    
     Route::name('purchase_request.')->prefix('purchase_request')
     ->group(function(){
 
