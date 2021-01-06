@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" id='scopeContainer' ng-controller="outgoingStock">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="medicalPayment">
           <!-- top tiles -->
           
 
@@ -77,5 +77,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/report/outgoingStockCtrl.js"></script>
+    <script src="{{ asset('') }}js/report/medicalPaymentCtrl.js"></script>
 

@@ -224,6 +224,7 @@
                               <li><a href="{{ route('report.doctor_service') }}">Jasa Dokter</a></li>
                               <li><a href="{{ route('report.medical_bill') }}">Tagihan Pemeriksaan</a></li>
                               <li><a href="{{ route('report.medical_payment') }}">Pembayaran</a></li>
+                              <li><a href="{{ route('report.outgoing_stock') }}">Pengeluaran Barang</a></li>
                   </li>
                  
                 </ul>

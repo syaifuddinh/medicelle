@@ -11,4 +11,7 @@ Route::name('report.')->prefix('report')
     Route::get('/medical_payment', function (){
             return view('report/medical_payment/index');
     })->name('medical_payment');
+    Route::get('/outgoing_stock', function (){
+            return view('report/outgoing_stock/index');
+    })->name('outgoing_stock');
 });
