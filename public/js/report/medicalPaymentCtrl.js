@@ -1,4 +1,4 @@
-app.controller('medicalPayment', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+app.controller('outgoingStock', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
   $scope.formData = {}
   $scope.data = {}
   var path = window.location.pathname;

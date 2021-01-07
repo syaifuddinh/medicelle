@@ -281,8 +281,6 @@ class RegistrationController extends Controller
         $registration = Registration::findOrFail($registration_id);
         DB::beginTransaction();
         try {
-            $registration->status = 4;
-            $registration->save();
             $invoice = new $this->invoice();
             $invoice->is_nota_pemeriksaan = 1;
             $invoice->payment_method = 'TUNAI';
@@ -444,6 +442,22 @@ class RegistrationController extends Controller
         }
 
         return Response::json(['message' => 'Invoice berhasil dibuat', 'id' => $invoice->id]);
+    }
+
+    public function done($registration_id) {
+        $registration = Registration::findOrFail($registration_id);
+        DB::beginTransaction();
+        try {
+            $registration->status = 4;
+            $registration->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
+
+        return Response::json(['message' => 'Data berhasil diupdate']);
     }
 
     public function storeInvoice($registration_detail_id) {

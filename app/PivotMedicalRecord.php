@@ -32,4 +32,8 @@ class PivotMedicalRecord extends Model
     public function parent() {
         return $this->belongsTo('App\PivotMedicalRecord', 'parent_id', 'id');
     }
+
+    public function files() {
+        return $this->hasMany('App\PivotMedicalRecordFile');
+    }
 }

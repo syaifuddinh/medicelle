@@ -25,6 +25,7 @@ class Item extends Model
 
                     $price = Price::find($price->id);
                     $price->grup_nota_id = $item->is_pharmacy;
+                    $price->is_pharmacy = 1;
                     $price->save();
                 } else {
                         $price = new Price();

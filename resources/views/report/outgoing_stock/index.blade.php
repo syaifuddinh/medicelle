@@ -3,7 +3,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" id='scopeContainer' ng-controller="medicalPayment">
+        <div class="right_col" role="main" id='scopeContainer' ng-controller="outgoingStock">
           <!-- top tiles -->
           
 
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Laporan Pembayaran</h3>
+                    <h3>Laporan Penggunaan Barang</h3>
                   </div>
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
@@ -43,18 +43,10 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th>No Pembayaran</th>
-                          <th>Nama Pasien</th>
                           <th>Tanggal</th>
-                          <th class='bill_col'>Jumlah Tagihan</th>
-                          <th>Kredit</th>
-                          <th>Debit</th>
-                          <th>Master</th>
-                          <th>TT</th>
-                          <th>Tunai</th>
-                          <th>Visa</th>
-                          <th>Jumlah Pembayaran</th>
-                          <th>Status Tagihan</th>
+                          <th>Barang</th>
+                          <th>Qty Keluar</th>
+                          <th>Keterangan</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -77,5 +69,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/report/medicalPaymentCtrl.js"></script>
+    <script src="{{ asset('') }}js/report/outgoingStockCtrl.js"></script>
 

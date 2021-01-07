@@ -108,4 +108,20 @@ class ReportApiController extends Controller
 
         return Datatables::query($x)->make(true);
     }
+
+    public function fetch_outgoing_stock() {
+        $dt = DB::table('stock_transactions')
+        ->where('stock_transactions.out_qty' , '>', 0)
+        ->join('items', 'items.id', 'stock_transactions.item_id')
+        ->select('stock_transactions.id', 'items.name AS item_name', 'out_qty', 'stock_transactions.description', 'stock_transactions.date');
+
+        return $dt;
+    }
+
+    public function outgoing_stock(Request $request) {
+        $x = $this->fetch_outgoing_stock();
+        $x->whereBetween('stock_transactions.date', [$request->date_start, $request->date_end]);
+
+        return Datatables::query($x)->make(true);
+    }
 }

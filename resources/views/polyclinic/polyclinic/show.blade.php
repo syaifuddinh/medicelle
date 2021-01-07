@@ -298,6 +298,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class='col-md-12' style='margin-top:4mm'>
+                                <div>
+                                    <label for='file' class="pull-right btn-sm btn-primary btn"><i class="fa fa-plus"></i></label>
+                                    <input type="file" id="file" class='hidden'>
+                                </div>
+                                <table class="table table-bordered" id='pivot_medical_record_file_datatable'>
+                                <thead>
+                                    <tr>
+                                        <td>File</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            </div>
                         </span>
                     </div>
                     

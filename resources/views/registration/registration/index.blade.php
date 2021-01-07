@@ -80,14 +80,14 @@
                   <table class="table table-bordered" id='listview'>
                       <thead>
                         <tr>
-                          <th  style='width:14%'>No. Registrasi</th>
-                          <th style='width:16%'>No. Rekam Medis</th>
+                          <th  style='width:10%'>No. Registrasi</th>
+                          <th style='width:13%'>No. Rekam Medis</th>
                           <th style='width:16%'>Tanggal</th>
                           <th style='width:10%'>Jam</th>
                           <th>Pasien</th>
-                          <th>No. Telepon</th>
-                          <th>Status</th>
-                          <th></th>
+                          <th style='width:10%'>No. Telepon</th>
+                          <th style='width:8%'>Status</th>
+                          <th style='width:40mm'></th>
                         </tr>
                       </thead>
                       <tbody>

@@ -105,7 +105,11 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
           : ""
         ) +
         ( 
-          resp.status == 2 ? "<button class='btn btn-xs btn-primary' allow_attend_registration ng-click='generate_invoice(" + resp.id + ")' title='Terbitkan Invoice'><i class='fa fa-location-arrow'></i></button>"
+          resp.status < 4 && resp.status > 1 ? "<button class='btn btn-xs btn-primary' allow_attend_registration ng-click='generate_invoice(" + resp.id + ")' title='Terbitkan Invoice'><i class='fa fa-location-arrow'></i></button>"
+          : ""
+        ) +
+        ( 
+          resp.status < 4 && resp.status > 1 ? "<button class='btn btn-xs btn-success' allow_attend_registration ng-click='done(" + resp.id + ")' title='Pulangkan'><small>Pulangkan</small></button>"
           : ""
         ) +
         "<a allow_show_registration class='btn btn-xs btn-default' href='" + baseUrl + "/registration/" + resp.id +  "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"
@@ -164,12 +168,31 @@ app.controller('registration', ['$scope', '$compile', '$http', '$filter', functi
           });
     }
 
-  $scope.generate_invoice = function(id) {
-    is_activate = confirm('Apakah anda yakin ?');
-      if(is_activate)
+    $scope.generate_invoice = function(id) {
+      is_confirm = confirm('Apakah anda yakin ?');
+      if(is_confirm)
           $http.put(baseUrl + '/controller/registration/registration/' + id + '/invoice').then(function(data) {
               toastr.success(data.data.message);
               location.href = baseUrl + "/cashier/pay/" + data.data.id 
+          }, function(error) {
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+    }
+
+    $scope.done = function(id) {
+      is_confirm = confirm('Apakah anda yakin ?');
+      if(is_confirm)
+          $http.put(baseUrl + '/controller/registration/registration/' + id + '/done').then(function(data) {
+              toastr.success(data.data.message);
+              oTable.ajax.reload()
           }, function(error) {
             if (error.status==422) {
               var det="";

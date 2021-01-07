@@ -23,36 +23,154 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
     $scope.edit_role = 'allow_edit_' + flag + '_medical_record' 
     $scope.flag = flag
 
-            medical_datatable = $('#medical_datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            dom: 'frtip',
-            ajax: {
-              url : baseUrl+'/datatable/master/medical',
-              data : function(d) {
-                d.is_display_all = 1
-                d.is_active = 1
-                d.slug = flag
-                return d
-              }
+    medical_datatable = $('#medical_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        dom: 'frtip',
+        ajax: {
+          url : baseUrl+'/datatable/master/medical',
+          data : function(d) {
+            d.is_display_all = 1
+            d.is_active = 1
+            d.slug = flag
+            return d
+          }
+        },
+        columns:[
+            {data:"name", name:"name"},
+            {
+                data:null, 
+                searchable:false,
+                orderable:false,
+                className : 'text-right',
+                render:function(r){
+                    input = "<button type='button' ng-click='openPDF($event.currentTarget)' class='btn btn-sm btn-primary'>Pilih</button"
+                    return input
+                } 
             },
-            columns:[
-                {data:"name", name:"name"},
-                {
-                    data:null, 
-                    searchable:false,
-                    orderable:false,
-                    className : 'text-right',
-                    render:function(r){
-                        input = "<button type='button' ng-click='openPDF($event.currentTarget)' class='btn btn-sm btn-primary'>Pilih</button"
-                        return input
-                    } 
-                },
-            ],
-            createdRow: function(row, data, dataIndex) {
-              $compile(angular.element(row).contents())($scope);
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+    pivot_medical_record_file_datatable = $('#pivot_medical_record_file_datatable').DataTable({
+        dom: 'frtip',
+        columns:[
+            {
+                data:null, 
+                render:function(resp) {
+                    var r = '<a href="' + resp.url + '">' + resp.name + '</a>'
+
+                    return r
+                }
+            },
+            {
+                data:null, 
+                className : 'text-center',
+                render:function(r){
+                    input = "<button type='button' ng-click='destroyFile(" + r.id + ")' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button"
+                    return input
+                } 
+            },
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          var file = $('#file')[0].files[0];
+          var fd = new FormData();
+          fd.append('file', file)
+          $scope.storeFile(fd)
+        }
+        
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
+    }
+
+    $("#file").change(function() {
+      readURL(this);
+    });
+
+    $scope.storeFile = function(fd) {
+        var url = baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot.id + '/files'
+        var method = 'POST'
+
+        $.ajax({
+            'url':url,
+            contentType : false,
+            processData : false,
+            'type' : method,
+            data : fd,
+            success:function(data) {
+              toastr.success(data.message);
+              $scope.showRadiologyFiles()
+            },
+            error : function(xhr) {
+              var resp = JSON.parse(xhr.responseText);
+                if (xhr.status==422) {
+                  var det="";
+                  angular.forEach(resp.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,resp.message);
+                } else {
+
+                   toastr.error(resp.message,"Error Has Found !");
+                }
+               $('.submitButton').removeAttr('disabled');
             }
-        });
+          });
+    }
+
+    $scope.showRadiologyFiles = function() {
+            $rootScope.disBtn=true;
+            $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot.id + '/files').then(function(data) {
+                $rootScope.disBtn=false;
+                var radiology_files = data.data;
+                pivot_medical_record_file_datatable.clear().draw()
+                pivot_medical_record_file_datatable.rows.add(radiology_files).draw()
+            }, function(error) {
+                $rootScope.disBtn=false;
+              if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                  det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+              } else {
+                toastr.error(error.data.message,"Error Has Found !");
+              }
+            });
+    }
+
+    $scope.destroyFile = function(id) {
+            var is_confirm = confirm('Apakah anda yakin')
+            if(is_confirm) {
+                $rootScope.disBtn=true;
+                $http.delete(baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot.id + '/files/' + id).then(function(data) {
+                    toastr.success(data.data.message)
+                    $scope.showRadiologyFiles()
+                }, function(error) {
+                    $rootScope.disBtn=false;
+                  if (error.status==422) {
+                    var det="";
+                    angular.forEach(error.data.errors,function(val,i) {
+                      det+="- "+val+"<br>";
+                    });
+                    toastr.warning(det,error.data.message);
+                  } else {
+                    toastr.error(error.data.message,"Error Has Found !");
+                  }
+                });
+            }
+    }
 
     $scope.generateInvoice = function() {
             $rootScope.disBtn=true;
@@ -135,6 +253,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
 
     $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
     $scope.pivot = data.data
+    $scope.showRadiologyFiles()
     $scope.pivotData = $scope.pivot.additional;
     if($scope.pivot.is_laboratory_treatment == 1) {
         var laboratory_treatment_form = $('#laboratory_treatment_form')

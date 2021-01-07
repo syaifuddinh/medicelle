@@ -6,6 +6,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('medical_record/{medical_record_id}/detail/{id}', 'MedicalRecordController@update_detail');
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
         Route::put('registration/{id}/invoice', 'RegistrationController@generateInvoice');
+        Route::put('registration/{id}/done', 'RegistrationController@done');
         Route::put('registration/finish/{registration_detail_id}', 'RegistrationController@finish');
         Route::post('registration/invoice/{registration_detail_id}', 'RegistrationController@storeInvoice');
         Route::get('registration/{registration_id}/{registration_detail_id}', 'RegistrationController@detail');
@@ -26,6 +27,10 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('medical_record/pivot/{pivot_medical_record_id}/additional', 'MedicalRecordController@update_additional_pivot');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/ruang_tindakan/pdf', 'MedicalRecordController@ruang_tindakan_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory/pdf', 'MedicalRecordController@laboratory_pdf');
+
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/files', 'PivotMedicalRecordController@showFiles');
+        Route::delete('medical_record/pivot/{pivot_medical_record_id}/files/{id}', 'PivotMedicalRecordController@destroyFiles');
+        Route::post('medical_record/pivot/{pivot_medical_record_id}/files', 'PivotMedicalRecordController@storeFiles');
 
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory/pdf/{type}', 'MedicalRecordController@laboratory_pdf');
 
