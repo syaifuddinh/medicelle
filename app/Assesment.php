@@ -71,7 +71,17 @@ class Assesment extends Model
                 if(!$unit->medical_record->current_disease) {
                     $params['current_disease'] = $assesment->additional->riwayat_penyakit_sekarang ?? '';
                 }
-                $unit->medical_record()->update($params);
+				$params['marriage_status'] = $assesment->marriage_status ?? '';
+				$params['marriage_duration'] = $assesment->marriage_duration ?? '';
+				$unit->medical_record()->update($params);
+				$params = (object) $params;
+				/*
+				if($assesment->is_pernah_kb==1){
+				$params['is_kb_history'] = 1;
+				$params['name'] = $assesment->kb_item ?? '';
+				$params['duration'] = $assesment->kb_start_time ?? '';                
+				}
+				$unit->medical_record_detail()->update($params);*/
             }
         });
     }

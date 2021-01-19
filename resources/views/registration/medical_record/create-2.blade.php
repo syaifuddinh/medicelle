@@ -127,41 +127,28 @@
                             <h2>Riwayat perkawinan</h2>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    
-                                    <div class="form-group">
-                                        <label class="col-md-4 col-sm-4 col-xs-12">Status
-                                        </label>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"KAWIN"' ng-change='submitOne("marriage_status")'> Kawin
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"BELUM KAWIN"' ng-change='submitOne("marriage_status")'> Belum Kawin
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" ng-model='formData.marriage_status' ng-value='"JANDA"' ng-change='submitOne("marriage_status")'> Janda
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-md-6">
-                                    
-                                    <div class="form-group">
-                                        <label class="col-md-12 col-sm-12 col-xs-12">Lama menikah
-                                        </label>
-                                        <div class="col-md-5 col-sm-5 col-xs-12">
-                                            <div class="input-group">
-                                                <input type="text" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12" ng-change='submitOne("marriage_duration")' max-length="2" only-num>
-                                                <div class="input-group-addon">
-                                                    Tahun
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+								<div class="col-md-6">
+									
+									<div class="form-group">
+										<label class="control-label col-md-4 col-sm-4 col-xs-12">Status
+										</label>
+										<div class="col-md-8 col-sm-8 col-xs-12">
+											<textarea  ng-model='formData.marriage_status'  ng-change="submitOne('marriage_status')" class="form-control col-md-7 col-xs-12"></textarea>
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-md-6">
+									
+									<div class="form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12">Lama menikah
+										</label>
+										<div class="col-md-8 col-sm-8 col-xs-12">
+											<textarea ng-change="submitOne('marriage_status')" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
 
                             <div class="ln_solid"></div>
                              <h2>Riwayat kehamilan, persalinan, dan nifas</h2>
@@ -444,80 +431,59 @@
 
                             
                             <div class="ln_solid"></div>
-                            <h2>Riwayat KB</h2>
-                            <div class="row" allow_update_medical_record>
-                                <div class="col-md-12" style='display:flex'>
-                                    <div class="form-group col-md-3">
-                                        
-                                        <label>KB yang pernah digunakan</label>
-                                        <input type="text" class='form-control' ng-model="kb_history.name">
-                                            
-                                    </div>
-                                    <div class="form-group col-md-4 mg-r2">
+							<h2>Riwayat KB</h2>
 
-                                        <label>Lama</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" ng-model='kb_history.duration' maxlength="2" only-num >
-                                            <div class="input-group-addon"> 
-                                                Tahun
-                                            </div>  
-                                            <div class="input-group-btn">
-                                                <button type='button' class='btn btn-success' ng-click='submitKbHistory()' ng-disabled='!kb_history.name || !kb_history.duration'><i class="fa fa-check"></i></button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row disease">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered" id='kb_history_datatable'>
-                                        <thead>
-                                            <tr>
-                                                <td>Jenis KB</td>
-                                                <td>Lama( Tahun )</td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
+							<div class="row">
+								<div class="col-md-6">
+									
+									<div class="form-group">
+										<label class="col-md-12 col-xs-12">Pernah KB ?
+										</label>
+										<div class="col-md-8 col-sm-8 col-xs-12">
+											<label class="radio-inline">
+												<input type="radio" ng-model='formData.is_pernah_kb' ng-change="submitOne('is_pernah_kb')" ng-value='1'>
+												Ya
+											</label>
+											<label class="radio-inline">
+												<input type="radio" ng-model='formData.is_pernah_kb' ng-change="submitOne('is_pernah_kb')" ng-value='0'>
+												Tidak
+											</label>
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-md-6"  ng-show='formData.is_pernah_kb == 1'>
+									
+									<div class="form-group">
+										<label class="col-md-12 col-xs-12">KB yang digunakan
+										</label>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<input type="text" ng-model='formData.kb_item' ng-change="submitOne('kb_item')" class="form-control col-md-7 col-xs-12">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6"  ng-show='formData.is_pernah_kb == 1'>
+									
+									<div class="form-group">
+										<label class="col-md-12 col-xs-12">Sejak kapan menggunakan KB ?
+										</label>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<input type="text"  ng-model='formData.kb_start_time' class="form-control col-md-7 col-xs-12"  ng-change="submitOne('kb_start_time')">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6"  ng-show='formData.is_pernah_kb == 1'>
+									
+									<div class="form-group">
+										<label class="col-md-12 col-xs-12">Keluhan selama menggunakan KB
+										</label>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<textarea  ng-model='formData.kb_complaint'  ng-change="submitOne('kb_complaint')" class="form-control col-md-7 col-xs-12"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>                            
                             
-                            <div class="ln_solid"></div>
-                            <h2>Riwayat Komplikasi KB</h2>
-                            <div class="row disease" allow_update_medical_record >
-                                <div class="col-md-12" style='display:flex'>
-                                    <div class="form-group col-md-6">
-                                        
-                                        <label>Jenis komplikasi</label>
-
-                                        <div class="input-group">
-                                            <input type="text" class='form-control' ng-model="komplikasi_kb_history.name">
-                                            <div class="input-group-btn">
-                                                <button type='button' class='btn btn-success' ng-click='submitKomplikasiKbHistory()' ng-disabled='!komplikasi_kb_history.name'><i class="fa fa-check"></i></button>
-                                            </div>        
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
-                            </div>
-
-                            <div class="row disease">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered" id='komplikasi_kb_history_datatable'>
-                                        <thead>
-                                            <tr>
-                                                <td>Jenis komplikasi</td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
 
 
