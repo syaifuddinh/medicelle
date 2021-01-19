@@ -19,7 +19,7 @@
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
                     <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{{ $company->address }}</p>
+                    <p style='margin-left:18mm;font-size:85%'><span style='display:inline-block;width:200mm'>{{ $company->address }}</span></p>
                 </div>
             </div>
 
@@ -29,17 +29,23 @@
                     <h4 style='font-weight:bold;'>{{ $letter->code }}</h4>
                 </div>
                 <br>
-                <p>
-                    <span style='display:inline-block;padding-right:8mm'>Kepada</span>
-                    <span style='display:inline-block;padding-right:2mm'>:</span>
-                    <span>Bagian pendaftaran<br>{{ $letter->additional->hospital ?? '' }}</span>
-                </p><br>
-                <p>
-                    <span style='display:inline-block;padding-right:8mm'>Mohon</span>
-                    <span style='display:inline-block;padding-right:2mm'>:</span>
-                    <span>{{ $letter->additional->type ?? '' }}</span>
-                </p><br>
-
+                <table>
+                    <tr>
+                    <td width=80>Kepada</td>
+                    <td width=10>:</td>
+                    <td>Bagian Pendaftaran</td>
+                    </tr>
+                    <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>{{ $letter->additional->hospital ?? '' }}</td>
+                    </tr>
+                    <tr>
+                    <td>Perihal</td>
+                    <td>:</td>
+                    <td>{{ $letter->additional->type ?? '' }}</td>
+                    </tr>
+                </table><br><br>
                 <p style=''><span style='display:inline-block;width:35mm'>Nama</span> <span style='display:inline-block;font-weight:bold'>: {{ $letter->medical_record->patient->name }}</span></p>
 
                 <p style=''><span style='display:inline-block;width:35mm'>Umur</span> <span style='display:inline-block;'>: {{ $letter->medical_record->patient->age }} Tahun, {{ strtolower($letter->medical_record->patient->gender) }}</span></p>
@@ -54,9 +60,17 @@
 
                 <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Pukul</span> <span style='display:inline-block;'>: {{ $letter->additional->time ?? '' }}</span></p><br>
 
-                 <p style=''><span style='display:inline-block;width:35mm'>Tindakan operasi</span> <span style='display:inline-block;'>: {{ $letter->additional->operation_treatment }}</span></p><br>
+                 <p style=''><span style='display:inline-block;width:100mm'>Tindakan operasi :</span></p><br>
 
-                 <p style=''><span style='display:inline-block;width:35mm'>Jenis operasi</span> <span style='display:inline-block;'>: {{ $letter->additional->operation_type }}</span></p><br><br><br><br>
+                 <p style='padding-left:8mm'>{{ $letter->additional->operation_treatment }}</span></p><br>
+
+                 <p style=''><span style='display:inline-block;width:100mm'>Jenis operasi :</span></p><br>
+
+                 <p style='padding-left:8mm'>{{ $letter->additional->operation_type }}</span></p><br>
+
+                 <p style=''><span style='display:inline-block;width:100mm'>Keterangan :</span></p><br>
+
+                 <p style='padding-left:8mm'>{{ $letter->description }}</span></p><br><br><br><br>
 
                     <span style='float:right;text-align:center;display:inline-block;display:inline-block'>
                         {{ $company->city . ', '. Mod::fullDate(date('Y-m-d'))  }}<br>
