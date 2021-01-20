@@ -391,6 +391,54 @@ class RegistrationApiController extends Controller
 
         return Datatables::eloquent($x)->make(true);
     }
+	
+	public function resume_record(Request $request, $patient_id) {
+        $x = PivotMedicalRecord::with(
+            'registration_detail:id,registration_id,doctor_id,destination',
+            'registration_detail.doctor:id,name,registration_id', 
+            'medical_record',
+            'registration_detail.registration:id,code',
+            'registration_detail.registration.invoice:id,registration_id,status'
+        )
+        ->whereHas('medical_record', function(Builder $query) use($request, $patient_id){
+            $query->wherePatientId($patient_id);
+        })
+        ->whereHas('medical_record', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        })
+		->leftJoin('medical_record_details','pivot_medical_records.medical_record_id','medical_record_details.medical_record_id' )
+        ->where('pivot_medical_records.is_referenced', 0)
+		->where('medical_record_details.is_diagnose_history', 1)
+        ->select(
+            'pivot_medical_records.id',
+            'pivot_medical_records.registration_detail_id',
+            'pivot_medical_records.medical_record_id',
+            'pivot_medical_records.additional',
+			'medical_record_details.description',
+			'medical_record_details.additional as medadd');
+        //->get();
+
+        if(Auth::user()->is_admin != 1) {
+            if(Auth::user()->doctor) {
+                $x->whereHas('registration_detail', function(Builder $query){
+                    $query->whereDoctorId(Auth::user()->contact_id);
+                });
+            }
+        }
+
+        if($request->filled('medical_record_id')) {
+            $x->where('pivot_medical_records.medical_record_id', $request->medical_record_id);
+        }
+
+        if($request->filled('except_medical_record_id')) {
+            $x->where('pivot_medical_records.medical_record_id', '!=', $request->except_medical_record_id);
+        }
+
+        if($request->draw == 1)
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+
+        return Datatables::eloquent($x)->make(true);
+    }
 
     public function polyclinic_medical_record(Request $request, $patient_id) {
         $x = PivotMedicalRecord::with(

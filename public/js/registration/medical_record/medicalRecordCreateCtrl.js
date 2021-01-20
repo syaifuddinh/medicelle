@@ -94,7 +94,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.medicalRecordHistory = function() {
 
         if(path.indexOf('resume') > -1) {
-            var medical_record_url = baseUrl + '/datatable/registration/medical_records/'
+            //var medical_record_url = baseUrl + '/datatable/registration/medical_records/'
+			var medical_record_url = baseUrl + '/datatable/registration/resume_record/'
             $scope.filterData = {}            
 
             medical_record_history = $('#medical_record_history').DataTable({
@@ -133,7 +134,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   data:null, 
                   render:function(resp) {
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-                      var summary = "Keluhan : " + (resp.medical_record.main_complaint  || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') 
+                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
                       return summary
                   }
                 },
@@ -197,9 +198,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 {
                   data:null, 
                   render:function(resp) {
+					  var textresp=resp.medadd.replace(/&quot;/g, '"');
+					  var obj = JSON.parse(textresp);
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-')
-                      return summary
+					  var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
+	                  return summary
                   }
                 },
                 {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
