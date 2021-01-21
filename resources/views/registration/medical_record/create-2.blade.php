@@ -28,6 +28,28 @@
                                     </div>
 
                                 </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <textarea class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit dahulu<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <textarea class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
                             </div>
                             <div class="ln_solid"></div>
                             <h2>Maternitas</h2>
@@ -274,21 +296,6 @@
                             </div>
 
                             <div class="ln_solid"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                                
-                                        <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="ln_solid"></div>
                             <h2>Riwayat penyakit dahulu</h2>
                             <div class="row disease" allow_update_medical_record>
                                 <div class="col-md-12" style='display:flex'>
@@ -332,6 +339,39 @@
                                     </table>
                                 </div>
                             </div>
+                                <div class="ln_solid"></div>
+                        <h2>Alergi obat & reaksi efek samping</h2>
+                        <div class="row">
+                            <div class="col-md-12" style='display:flex'>
+                                
+                                <div class="form-group col-md-5 mg-r2">
+                                    
+                                    <label>Obat / makanan / lainnya</label>
+                                    <div class="input-group">
+                                        <input type="text" class='form-control' ng-model='allergy_history.cure' ng-show='!allergy_history.is_unknown'>
+                                        <input readonly type="text" class='form-control' value='Tidak diketahui'  ng-show='allergy_history.is_unknown'>
+                                        <div class="input-group-addon" ng-click='allergy_history.is_unknown = !allergy_history.is_unknown'>
+                                            <i class="fa fa-close" ng-show='!allergy_history.is_unknown'></i>
+                                            <i class="fa fa-pencil" ng-show='allergy_history.is_unknown'></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-7 mg-r2">
+
+                                    <label>Reaksi</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model='allergy_history.side_effect'>
+                                        <div class="input-group-btn">
+                                            <button type='button' class='btn btn-success' ng-click='storeDetail(allergy_history)' ng-disabled='!allergy_history.side_effect'><i class="fa fa-check"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
                             <div class="ln_solid"></div>
                             <div class="row">
                                     <div class="col-md-12">
