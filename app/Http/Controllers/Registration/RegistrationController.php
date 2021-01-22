@@ -332,6 +332,7 @@ class RegistrationController extends Controller
                         if(($value->laboratory_pivot->additional ?? null)) {
                             foreach($value->laboratory_pivot->additional->treatment as $treatment) {                        
                                 foreach($treatment->detail as $detail) {
+					if(array_key_exists("is_active",$detail)) {
                                     $laboratoryTypeDetail = DB::table('laboratory_type_details')
                                     ->whereId($detail->id)
                                     ->first();
@@ -339,7 +340,7 @@ class RegistrationController extends Controller
                                         if(!$laboratoryTypeDetail->item_id) {
                                             $item_id = DB::table('items')
                                             ->insertGetId([
-                                                'code' => 'LABORATORYTYPEDETAIL' . date('YmdHis'),
+                                                'code' => 'LABCHECK' . date('YmdHis'),
                                                 'name' => $laboratoryTypeDetail->name,
                                                 'price' => $laboratoryTypeDetail->price,
                                                 'service_price' => $laboratoryTypeDetail->service_price,
@@ -366,6 +367,7 @@ class RegistrationController extends Controller
                                             'service_price' => $service_price
                                         ]);
                                     }
+					}
                                 }
                             }
                         }
@@ -530,6 +532,7 @@ class RegistrationController extends Controller
                         if(($value->laboratory_pivot->additional ?? null)) {
                             foreach($value->laboratory_pivot->additional->treatment as $treatment) {                        
                                 foreach($treatment->detail as $detail) {
+					if(array_key_exists("is_active",$detail)) {
                                     $laboratoryTypeDetail = DB::table('laboratory_type_details')
                                     ->whereId($detail->id)
                                     ->first();
@@ -537,7 +540,7 @@ class RegistrationController extends Controller
                                         if(!$laboratoryTypeDetail->item_id) {
                                             $item_id = DB::table('items')
                                             ->insertGetId([
-                                                'code' => 'LABORATORYTYPEDETAIL' . date('YmdHis'),
+                                                'code' => 'LABCHECK' . date('YmdHis'),
                                                 'name' => $laboratoryTypeDetail->name,
                                                 'price' => $laboratoryTypeDetail->price,
                                                 'service_price' => $laboratoryTypeDetail->service_price,
@@ -564,6 +567,7 @@ class RegistrationController extends Controller
                                             'service_price' => $service_price
                                         ]);
                                     }
+					}
                                 }
                             }
                         }
