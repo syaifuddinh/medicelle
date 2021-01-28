@@ -437,12 +437,12 @@ $scope.countTotal = function() {
             gross = unit.qty * unit.debet;
             gross += (gross * (increase_rate/100))
             disc_value = gross * ((unit.disc_percent || 0) / 100) 
-            grosstotal += gross
+            grosstotal += gross - disc_value
             netto = gross - disc_value
             $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
             grandtotal += parseInt(netto)
             discount_total += parseInt(disc_value)
-            $scope.formData.invoice_detail[grup_nota][index].subtotal = gross
+            $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
         }
     }
 
