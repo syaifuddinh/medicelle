@@ -20,7 +20,7 @@ class AssesmentDetail extends Model
             ->whereId($assesmentDetail->assesment_id)
             ->first();
             $registrationDetails = DB::table('registration_details')
-            ->join('pivot_medical_records', 'pivot_medical_records.registration_detail_id', 'registration_detail_id')
+            ->join('pivot_medical_records', 'pivot_medical_records.registration_detail_id', 'registration_details.id')
             ->where('registration_details.registration_id', $assesment->registration_id)
             ->select('pivot_medical_records.medical_record_id')
             ->groupBy('pivot_medical_records.medical_record_id')
@@ -62,7 +62,9 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->medical_record_id = $r->medical_record_id;
                     $medicalRecordDetail->disease_name = $disease_name;
                     $medicalRecordDetail->is_family_disease_history = 1;
-                    $medicalRecordDetail->description = 'Obat yang pernah diminum adalah ' . $assesmentDetail->cure . '. Tanggal kontrol terakhir adalah ' . $assesmentDetail->last_checkup_date;
+                    $medicalRecordDetail->cure = $assesmentDetail->cure;//cure disini adalah keluarga yg menderita penyakit
+                    $medicalRecordDetail->description = $assesmentDetail->side_effect;//side effect disini adalah status dari isian tsb
+                    //$medicalRecordDetail->description = 'Obat yang pernah diminum adalah ' . $assesmentDetail->cure . '. Tanggal kontrol terakhir adalah ' . $assesmentDetail->last_checkup_date;
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
 
@@ -71,7 +73,8 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->is_obgyn_family_disease_history = 1;
                     $medicalRecordDetail->disease_name = $disease_name;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
-                    $medicalRecordDetail->last_checkup_date = $assesmentDetail->last_checkup_date;
+                    $medicalRecordDetail->description = $assesmentDetail->side_effect;//side effect disini adalah status dari isian tsb
+                    //$medicalRecordDetail->last_checkup_date = $assesmentDetail->last_checkup_date;
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
                 }    
