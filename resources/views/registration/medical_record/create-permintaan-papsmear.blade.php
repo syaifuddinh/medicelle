@@ -24,7 +24,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat vaksinasi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.riwayat_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.riwayat_vaksinasi")'></textarea>
+                                                <textarea  ng-model='formData.additional.riwayat_vaksinasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.riwayat_vaksinasi")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -33,7 +33,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat kontrasepsi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_kontrasepsi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_kontrasepsi")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_kontrasepsi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_kontrasepsi")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -41,7 +41,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Riwayat papsmear(Tanggal & Hasil)
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.obgyn_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.obgyn_papsmear")'></textarea>
+                                                <textarea  ng-model='formData.additional.obgyn_papsmear' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.obgyn_papsmear")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -49,7 +49,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Keluhan saat ini
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_keluhan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_keluhan")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_keluhan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_keluhan")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -69,7 +69,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Jumlah slide papsmear
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_jumlah_slide' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_jumlah_slide")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_jumlah_slide' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_jumlah_slide")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -78,7 +78,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Lokasi pengambilan
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_lokasi")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_lokasi")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -86,7 +86,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Gambaran portio cervix / vagina
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_cervix' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_cervix")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_cervix' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_cervix")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -94,7 +94,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Informasi klinis
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.papsmear_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_description")'></textarea>
+                                                <textarea  ng-model='formData.additional.papsmear_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.papsmear_description")'></wysiwyg>
                                             </div>
                                         </div>
                                         

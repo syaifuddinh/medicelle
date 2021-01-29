@@ -76,10 +76,13 @@
                     requireScript('custom', '1.0', "{{ asset('') }}build/js/custom.min.js")
                 })
                 requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
-                    requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
-                    requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
-                    requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
-                    requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                    requireScript('trix', '1.1', "{{ asset('') }}js/trix.js", function(){
+                        
+                        requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
+                        requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
+                        requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
+                        requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                    })
                 });
             })
 

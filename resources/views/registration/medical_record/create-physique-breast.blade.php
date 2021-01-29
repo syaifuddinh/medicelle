@@ -29,7 +29,7 @@
                                             <label class="col-md-4 col-xs-12">Keterangan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.breast_description' ng-change='submitOne("breast_description")'></textarea>
+                                                <wysiwyg ng-model='formData.breast_description' ng-change='submitOne("breast_description")'></wysiwyg>
                                             </div>
                                         </div>
                                     </div>

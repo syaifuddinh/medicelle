@@ -14,7 +14,6 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     setTimeout(function () {    
           $('[ng-model="resume_date"]').val( $filter('fullDate')($scope.resume_date))
     }, 300)
-
     $('#printButton').hide()
     if(path.indexOf('permintaan') > -1) {
         $('#printButton').show()

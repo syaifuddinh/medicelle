@@ -16,7 +16,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12"></textarea>
+                                        <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12"></wysiwyg>
                                     </div>
                                 </div>
                                 <div class="form-group">

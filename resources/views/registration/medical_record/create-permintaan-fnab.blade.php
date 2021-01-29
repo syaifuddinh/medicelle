@@ -16,7 +16,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.fnab_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.fnab_diagnose")'></textarea>
+                                                <textarea  ng-model='formData.additional.fnab_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.fnab_diagnose")'></wysiwyg>
                                             </div>
                                         </div>
                                         
@@ -50,7 +50,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Informasi klinis
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.fnab_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.fnab_description")'></textarea>
+                                                <textarea  ng-model='formData.additional.fnab_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.fnab_description")'></wysiwyg>
                                             </div>
                                         </div>
                                         

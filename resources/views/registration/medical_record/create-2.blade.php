@@ -23,7 +23,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.obgyn_main_complaint'  ng-change="submitOne('obgyn_main_complaint')"></textarea>
+                                            <wysiwyg ng-model='formData.obgyn_main_complaint'  ng-change="submitOne('obgyn_main_complaint')"></wysiwyg>
                                         </div>
                                     </div>
 
@@ -77,7 +77,7 @@
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Riwayat vaksinasi
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea ng-model='formData.additional.riwayat_vaksinasi' ng-change='submitOne("additional.riwayat_vaksinasi")' class="form-control"></textarea>
+                                                <textarea ng-model='formData.additional.riwayat_vaksinasi' ng-change='submitOne("additional.riwayat_vaksinasi")' class="form-control"></wysiwyg>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Keluhan haid
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.haid_complaint' ng-change='submitOne("haid_complaint")' class="form-control"></textarea>   
+                                            <textarea ng-model='formData.haid_complaint' ng-change='submitOne("haid_complaint")' class="form-control"></wysiwyg>   
                                         </div>
                                     </div>
                                     
@@ -116,7 +116,7 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Papsmear
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.additional.obgyn_papsmear' class="form-control" ng-change='submitOne("additional.obgyn_papsmear")'></textarea>   
+                                            <textarea ng-model='formData.additional.obgyn_papsmear' class="form-control" ng-change='submitOne("additional.obgyn_papsmear")'></wysiwyg>   
                                         </div>
                                     </div>
                                     
@@ -294,7 +294,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit<span class="required">*</span>
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></textarea>
+                                            <wysiwyg ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></wysiwyg>
                                         </div>
                                     </div>
 
@@ -353,7 +353,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.obgyn_operasi'  ng-change="submitOne('additional.obgyn_operasi')"></textarea>
+                                                <wysiwyg ng-model='formData.additional.obgyn_operasi'  ng-change="submitOne('additional.obgyn_operasi')"></wysiwyg>
                                             </div>
                                         </div>
 

@@ -21,7 +21,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.main_complaint' ng-change="submitOne('main_complaint')"></textarea>
+                                                <wysiwyg ng-model='formData.main_complaint' ng-change="submitOne('main_complaint')"></wysiwyg>
                                             </div>
                                         </div>
 
@@ -33,7 +33,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.current_disease'  ng-change="submitOne('current_disease')"></textarea>
+                                                <wysiwyg ng-model='formData.current_disease'  ng-change="submitOne('current_disease')"></wysiwyg>
                                             </div>
                                         </div>
 
@@ -45,7 +45,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit dahulu<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></textarea>
+                                                <wysiwyg ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></wysiwyg>
                                             </div>
                                         </div>
 
@@ -58,7 +58,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Lain-lain
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.anamnesa_another' ng-change="submitOne('additional.anamnesa_another')"></textarea>
+                                                <wysiwyg ng-model='formData.additional.anamnesa_another' ng-change="submitOne('additional.anamnesa_another')"></wysiwyg>
                                             </div>
                                         </div>
 
@@ -165,7 +165,7 @@
                                                 <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
                                                 </label>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <textarea class="form-control" ng-model='formData.operasi'  ng-change="submitOne('operasi')"></textarea>
+                                                    <wysiwyg ng-model='formData.operasi'  ng-change="submitOne('operasi')"></wysiwyg>
                                                 </div>
                                             </div>
 
@@ -335,7 +335,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></textarea>
+                                                <wysiwyg ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></wysiwyg>
                                             </div>
                                         </div>
 

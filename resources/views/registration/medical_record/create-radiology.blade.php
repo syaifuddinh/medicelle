@@ -112,28 +112,28 @@
                         <label class="col-md-12 col-xs-12">Kanan
                         </label>
                         <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                            <textarea ng-model="new_research.kanan" class="form-control"></textarea>
+                            <textarea ng-model="new_research.kanan" class="form-control"></wysiwyg>
                         </div>
                     </div>
                     <div class="form-group" style='padding-bottom:7mm'>
                         <label class="col-md-12 col-xs-12">Kiri
                         </label>
                         <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                            <textarea ng-model="new_research.kiri" class="form-control"></textarea>
+                            <textarea ng-model="new_research.kiri" class="form-control"></wysiwyg>
                         </div>
                     </div>
                     <div class="form-group" style='padding-bottom:7mm'>
                         <label class="col-md-12 col-xs-12">Kesimpulan
                         </label>
                         <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                            <textarea ng-model="new_research.kesimpulan" class="form-control"></textarea>
+                            <textarea ng-model="new_research.kesimpulan" class="form-control"></wysiwyg>
                         </div>
                     </div>
                     <div class="form-group" style='padding-bottom:7mm'>
                         <label class="col-md-12 col-xs-12">Saran
                         </label>
                         <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                            <textarea ng-model="new_research.saran" class="form-control"></textarea>
+                            <textarea ng-model="new_research.saran" class="form-control"></wysiwyg>
                         </div>
                     </div>
                     <div class="form-group col-md-12">

@@ -16,7 +16,7 @@
                                             <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12" ng-change='submitOne("general_condition")'></textarea>
+                                                <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12" ng-change='submitOne("general_condition")'></wysiwyg>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -65,7 +65,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Pemeriksaan fisik
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.physique'  ng-change='submitOne("physique")'></textarea>
+                                                <wysiwyg ng-model='formData.physique'  ng-change='submitOne("physique")'></wysiwyg>
                                             </div>
                                         </div>
 
@@ -117,7 +117,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Bacaan EKG
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.ekg' ng-change='submitOne("ekg")'></textarea>
+                                                <wysiwyg ng-model='formData.ekg' ng-change='submitOne("ekg")'></wysiwyg>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
                                             <label class="col-md-4 col-xs-12">Hasil Pemeriksaan Penunjang
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.usg' ng-change='submitOne("usg")'></textarea>
+                                                <wysiwyg ng-model='formData.usg' ng-change='submitOne("usg")'></wysiwyg>
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                             <label class="col-md-4 col-xs-12">Keterangan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.surgical_description' ng-change='submitOne("additional.surgical_description")'></textarea>
+                                                <wysiwyg ng-model='formData.additional.surgical_description' ng-change='submitOne("additional.surgical_description")'></wysiwyg>
                                             </div>
                                         </div>
                                     </div>
