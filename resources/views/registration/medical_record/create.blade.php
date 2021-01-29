@@ -76,16 +76,16 @@
                                         </div>
                                         <div class="form-group col-md-4 mg-r2">
                                             
-                                            <label>Obat yang pernah diminum</label>
+                                            <label>Obat yang diminum</label>
                                             <input type="text" class='form-control' ng-model='disease_history.cure'>
                                         </div>
                                         <div class="form-group col-md-4 mg-r2">
 
-                                            <label>Kontrol terakhir</label>
+                                            <label>Terakhir kontrol</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" ng-model='disease_history.additional.last_checkup_date_description'>
+                                                <input type="text" class="form-control" ng-model='disease_history.description'>
                                                 <div class="input-group-btn">
-                                                    <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_name'><i class='fa fa-check'></i></button>
+                                                    <button type='button' class='btn btn-success' ng-click='storeDetail(disease_history)' ng-disabled='!disease_history.disease_name'><i class='fa fa-check'></i></button>
                                                 </div>
                                             </div>
 
@@ -100,8 +100,8 @@
                                             <thead>
                                                 <tr>
                                                     <td>Penyakit</td>
-                                                    <td>Obat yang pernah diminum</td>
-                                                    <td>Terakhir control</td>
+                                                    <td>Obat yang diminum</td>
+                                                    <td>Terakhir kontrol</td>
                                                     <td></td>
                                                 </tr>
                                             </thead>
@@ -184,7 +184,13 @@
                                         </div>
                                         <div class="form-group col-md-4 mg-r2">
                                             
-                                            <label>Keterangan</label>
+                                            <label>Keluarga yang menderita</label>
+                                            <input type="text" class='form-control' ng-model="family_disease_history.cure">
+                                                
+                                        </div>
+                                        <div class="form-group col-md-4 mg-r2">
+                                            
+                                            <label>Status</label>
                                             <div class="input-group">
                                                 <input type="text" class='form-control' ng-model='family_disease_history.description'>
                                                 <div class="input-group-btn">
@@ -202,7 +208,8 @@
                                             <thead>
                                                 <tr>
                                                     <td>Penyakit</td>
-                                                    <td>Keterangan</td>
+                                                    <td>Keluarga yang menderita</td>
+                                                    <td>Status</td>
                                                     <td></td>
                                                 </tr>
                                             </thead>

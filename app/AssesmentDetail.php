@@ -44,7 +44,7 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->is_disease_history = 1;
                     $medicalRecordDetail->disease_name = $disease_name;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
-                    $medicalRecordDetail->last_checkup_date = $assesmentDetail->last_checkup_date;
+                    $medicalRecordDetail->description = $assesmentDetail->side_effect; //pake side_effect utk menyimpan textbased terakhir kontrol
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
 
@@ -53,7 +53,7 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->is_obgyn_disease_history = 1;
                     $medicalRecordDetail->disease_name = $disease_name;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
-                    $medicalRecordDetail->last_checkup_date = $assesmentDetail->last_checkup_date;
+                    $medicalRecordDetail->description = $assesmentDetail->side_effect; //pake side_effect utk menyimpan textbased terakhir kontrol
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
                 }    
@@ -74,7 +74,6 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->disease_name = $disease_name;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
                     $medicalRecordDetail->description = $assesmentDetail->side_effect;//side effect disini adalah status dari isian tsb
-                    //$medicalRecordDetail->last_checkup_date = $assesmentDetail->last_checkup_date;
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
                 }    

@@ -343,11 +343,11 @@ class MedicalRecordController extends Controller
             'children_diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
             'children_diagnose_history.disease:id,name',
 
-            'disease_history:medical_record_id,disease_name,cure,last_checkup_date,additional',
-            'obgyn_disease_history:medical_record_id,disease_name,cure,last_checkup_date',
+            'disease_history:id,medical_record_id,disease_name,cure,description',
+            'obgyn_disease_history:id,medical_record_id,disease_name,cure,description',
 
-            'family_disease_history:medical_record_id,disease_name,description', 
-            'obgyn_family_disease_history:medical_record_id,disease_name,cure,last_checkup_date', 
+            'family_disease_history:id,medical_record_id,disease_name,cure,description', 
+            'obgyn_family_disease_history:id,medical_record_id,disease_name,cure,description', 
 
             'kb_history:medical_record_id,name,duration', 
             'komplikasi_kb_history:medical_record_id,name', 
@@ -1068,6 +1068,10 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_treatment'] = 1;
                 $medicalRecord->treatment()->create($input);
+            } if($request->is_disease_history == 1) {
+                $input = $request->all();
+                $input['is_disease_history'] = 1;
+                $medicalRecord->disease_history()->create($input);
             } if($request->is_family_disease_history == 1) {
                 $input = $request->all();
                 $input['is_family_disease_history'] = 1;

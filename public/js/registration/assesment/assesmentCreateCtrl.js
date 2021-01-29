@@ -447,13 +447,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
       }
     },
     {data : 'cure'},
-    {
-      data : null,
-      render : function(resp) {
-        return $filter('fullDate')(resp.last_checkup_date);
-      }
-    },
-
+    {data : 'side_effect'},
     {
       data : null,
       className : 'text-center',

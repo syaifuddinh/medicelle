@@ -54,7 +54,7 @@
 
                                     <label>Kontrol terakhir</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='disease_history.last_checkup_date' datepick>
+                                        <input type="text" class="form-control" ng-model='disease_history.side_effect'>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'><i class="fa fa-check"></i></button>
                                         </div>
