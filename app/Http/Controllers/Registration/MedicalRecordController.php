@@ -868,7 +868,6 @@ class MedicalRecordController extends Controller
             });
         }
 
-        $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->disease_history)) {
             $medical_record_detail->disease_history()->whereMedicalRecordId($medical_record->id)->delete();
             $disease_history = collect($request->disease_history);
@@ -950,7 +949,7 @@ class MedicalRecordController extends Controller
                 $val['medical_record_id'] = $medical_record->id;
                 $medical_record_detail->fill($val);
                 $medical_record_detail->is_obgyn_family_disease_history = 1;
-                //$medical_record_detail->save();
+                $medical_record_detail->save();
             });
         }
 
@@ -1077,14 +1076,6 @@ class MedicalRecordController extends Controller
                 $input = $request->all();
                 $input['is_family_disease_history'] = 1;
                 $medicalRecord->family_disease_history()->create($input);
-            } if($request->is_obgyn_disease_history == 1) {
-                $input = $request->all();
-                $input['is_obgyn_disease_history'] = 1;
-                $medicalRecord->obgyn_disease_history()->create($input);
-            } if($request->is_obgyn_family_disease_history == 1) {
-                $input = $request->all();
-                $input['is_obgyn_family_disease_history'] = 1;
-                $medicalRecord->obgyn_family_disease_history()->create($input);
             } if($request->is_allergy_history == 1) {
                 $input = $request->all();
                 $input['is_allergy_history'] = 1;
