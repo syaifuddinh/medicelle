@@ -54,7 +54,7 @@
 
                                     <label>Kontrol terakhir</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='disease_history.last_checkup_date' datepick>
+                                        <input type="text" class="form-control" ng-model='disease_history.side_effect'>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'><i class="fa fa-check"></i></button>
                                         </div>
@@ -94,14 +94,14 @@
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
                                     
-                                    <label>Obat yang pernah diminum</label>
+                                    <label>Keluarga yang menderita</label>
                                     <input type="text" class='form-control' ng-model='family_disease_history.cure'>
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
 
-                                    <label>Kontrol terakhir</label>
+                                    <label>Status</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model='family_disease_history.last_checkup_date' datepick>
+                                        <input type="text" class="form-control" ng-model='family_disease_history.side_effect'>
                                         <div class="input-group-btn">
                                             <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'><i class="fa fa-check"></i></button>
                                         </div>
@@ -118,8 +118,8 @@
                                     <thead>
                                         <tr>
                                             <td>Penyakit</td>
-                                            <td>Obat yang pernah diminum</td>
-                                            <td>Terakhir control</td>
+                                            <td>Keluarga yang menderita</td>
+                                            <td>Status</td>
                                             <td></td>
                                         </tr>
                                     </thead>

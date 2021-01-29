@@ -236,12 +236,7 @@ app.controller('medicalRecordShow', ['$scope', '$http', '$rootScope', '$filter',
       }
     },
     {data : 'cure'},
-    {
-      data : null,
-      render : function(resp) {
-        return $filter('fullDate')(resp.last_checkup_date);
-      }
-    },
+    {data : 'description'},
 
    
     ],
@@ -261,14 +256,7 @@ app.controller('medicalRecordShow', ['$scope', '$http', '$rootScope', '$filter',
       }
     },
     {data : 'cure'},
-    {
-      data : null,
-      render : function(resp) {
-        return $filter('fullDate')(resp.last_checkup_date);
-      }
-    },
-
-    
+    {data : 'description'},    
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);

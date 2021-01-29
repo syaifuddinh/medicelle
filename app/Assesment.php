@@ -66,12 +66,23 @@ class Assesment extends Model
                     'lama_pemakaian_pembalut' => $assesment->lama_pemakaian_pembalut,
                     'is_tidy' => $assesment->is_tidy,
                     'hpht' => $assesment->hpht,
-                    'haid_complaint' => $assesment->haid_complaint
+                    'haid_complaint' => $assesment->haid_complaint,
+                    'obgyn_current_disease' => $assesment->additional->riwayat_penyakit_sekarang
                 ];
                 if(!$unit->medical_record->current_disease) {
                     $params['current_disease'] = $assesment->additional->riwayat_penyakit_sekarang ?? '';
                 }
-                $unit->medical_record()->update($params);
+				$params['marriage_status'] = $assesment->marriage_status ?? '';
+				$params['marriage_duration'] = $assesment->marriage_duration ?? '';
+				$unit->medical_record()->update($params);
+				$params = (object) $params;
+				/*
+				if($assesment->is_pernah_kb==1){
+				$params['is_kb_history'] = 1;
+				$params['name'] = $assesment->kb_item ?? '';
+				$params['duration'] = $assesment->kb_start_time ?? '';                
+				}
+				$unit->medical_record_detail()->update($params);*/
             }
         });
     }

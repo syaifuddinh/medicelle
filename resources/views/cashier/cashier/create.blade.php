@@ -212,7 +212,7 @@
 
                                     <a class="btn btn-default btn-sm" href='{{ route("cashier.index") }}'>Batal</a>
                                     <button type="button" id='draftButton' ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Draft</button>
-                                    <button type="button"  id='payButton' ng-disabled='grandtotal != formData.paid || grandtotal == 0' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
+                                    <button type="button"  id='payButton' ng-disabled='grandtotal > formData.paid || grandtotal == 0' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
                                 </div>
                             </div>
                         </div>
