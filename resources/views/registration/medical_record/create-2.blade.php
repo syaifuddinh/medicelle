@@ -313,9 +313,9 @@
 
                                         <label>Kontrol terakhir</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" ng-model='obgyn_disease_history.last_checkup_date' datepick>
+                                            <input type="text" class="form-control" ng-model='obgyn_disease_history.description'>
                                             <div class="input-group-btn">
-                                                <button type='button' class='btn btn-success' ng-click='submitObgynDiseaseHistory()' ng-disabled='!obgyn_disease_history.disease_name'><i class="fa fa-check"></i></button>
+                                                <button type='button' class='btn btn-success' ng-click='storeDetail(obgyn_disease_history)' ng-disabled='!obgyn_disease_history.disease_name'><i class="fa fa-check"></i></button>
                                             </div>
                                         </div>
 
@@ -408,7 +408,7 @@
                                         <div class="input-group">
                                             <input type="text" class="form-control" ng-model='obgyn_family_disease_history.description'>
                                             <div class="input-group-btn">
-                                                <button type='button' class='btn btn-success' ng-click='submitObgynFamilyDiseaseHistory()' ng-disabled='!obgyn_family_disease_history.disease_name'><i class="fa fa-check"></i></button>
+                                                <button type='button' class='btn btn-success' ng-click='storeDetail(obgyn_family_disease_history)' ng-disabled='!obgyn_family_disease_history.disease_name'><i class="fa fa-check"></i></button>
                                             </div>
                                         </div>
 

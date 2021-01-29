@@ -236,7 +236,7 @@ app.controller('medicalRecordShow', ['$scope', '$http', '$rootScope', '$filter',
       }
     },
     {data : 'cure'},
-    {data : 'cure'},,
+    {data : 'description'},
 
    
     ],
@@ -256,7 +256,7 @@ app.controller('medicalRecordShow', ['$scope', '$http', '$rootScope', '$filter',
       }
     },
     {data : 'cure'},
-    {data : 'last_checkup_date_description'},    
+    {data : 'description'},    
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);

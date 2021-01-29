@@ -855,8 +855,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   $scope.schedule_item()
 
   $scope.submitDiseaseHistory = function() {
+      $scope.disease_history.is_disease_history = 1
       disease_history_datatable.row.add($scope.disease_history).draw()
-      $scope.disease_history = {}
+      $scope.disease_history = { 
+        'is_disease_history' : 1
+      }
   }
 
   $scope.submitBHP = function() {
@@ -1012,8 +1015,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
   }
 
   $scope.submitObgynDiseaseHistory = function() {
+      $scope.obgyn_disease_history.is_obgyn_disease_history = 1
       obgyn_disease_history_datatable.row.add($scope.obgyn_disease_history).draw()
-      $scope.obgyn_disease_history = {}
+      $scope.obgyn_disease_history = { 
+        'is_obgyn_disease_history' : 1
+      }
   }
 
   $scope.changeDrugPiece = function() {
@@ -1080,8 +1086,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
 
   $scope.submitObgynFamilyDiseaseHistory = function() {
+      $scope.obgyn_family_disease_history.is_obgyn_family_disease_history = 1
       obgyn_family_disease_history_datatable.row.add($scope.obgyn_family_disease_history).draw()
-      $scope.obgyn_family_disease_history = {}
+      $scope.disease_history = { 
+        'is_obgyn_family_disease_history' : 1
+      }
   }
 
 
@@ -2779,12 +2788,18 @@ drug_datatable = $('#drug_datatable').DataTable({
         is_other : 1,
         is_children_diagnose_history : 1 
       }
-      $scope.disease_history = {}
+      $scope.disease_history = {
+         'is_disease_history' : 1
+      }
       $scope.family_disease_history = {
          'is_family_disease_history' : 1
       }
-      $scope.obgyn_disease_history = {}
-      $scope.obgyn_family_disease_history = {}
+      $scope.obgyn_disease_history = {
+         'is_obgyn_disease_history' : 1
+      }
+      $scope.obgyn_family_disease_history = {
+         'is_obgyn_family_disease_history' : 1
+      }
       $scope.pain_history = {}
       $scope.kb_history = {}
       $scope.komplikasi_kb_history = {}
@@ -3051,14 +3066,17 @@ drug_datatable = $('#drug_datatable').DataTable({
     
   $scope.deleteObgynDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
+    var data = obgyn_disease_history_datatable.row(tr).data()
     obgyn_disease_history_datatable.row(tr).remove().draw()
+    $scope.destroyDetail(data.id)
+
   }
 
   $scope.deleteObgynFamilyDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
-    //var data = obgyn_family_disease_history_datatable.row(tr).data()
+    var data = obgyn_family_disease_history_datatable.row(tr).data()
     obgyn_family_disease_history_datatable.row(tr).remove().draw()
-    //$scope.destroyDetail(data.id)
+    $scope.destroyDetail(data.id)
   }
 
     $scope.submitSchedule=function() {
@@ -3339,6 +3357,7 @@ drug_datatable = $('#drug_datatable').DataTable({
             'pivot' : $scope.pivotData
          };
       }
+
       $rootScope.disBtn= true
       var url = baseUrl + '/controller/registration/medical_record/' + id + '/detail';
       var method = 'post';
@@ -3346,7 +3365,12 @@ drug_datatable = $('#drug_datatable').DataTable({
 
       $http[method](url, data).then(function(data) {
         $rootScope.disBtn = false
-        toastr.success("Data Berhasil Disimpan !");
+        if(data.is_disease_history) {
+            	toastr.success("Disease History !");
+        }
+        else{
+		toastr.success("Data Berhasil Disimpan !");
+	}
         $scope.show()
       }, function(error) {
         $rootScope.disBtn=false;
