@@ -18,3 +18,4 @@
     
   </body>
 </html>
+    @include('script')

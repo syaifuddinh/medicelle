@@ -20,12 +20,12 @@
   </head>
 
   <body class="nav-md" ng-app='klinikApp' ng-cloak>
-    <div id='main-loading-layer' style='position:fixed;background:white;width:100%;height:100%;z-index:2000'>
+<!--     <div id='main-loading-layer' style='position:fixed;background:white;width:100%;height:100%;z-index:2000'>
         <div style='display:flex;justify-content:center;align-content:center;align-items:center;height:100%'>
             <img src="" id='loading-logo'  style='width:25%' class="img-responsive" alt="">
         </div>
     </div>
-    <div class="container body">
+ -->    <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
@@ -102,7 +102,7 @@
             </nav>
           </div>
         </div>
-
+<!-- 
         <script>
             var l = document.getElementById('main-loading-layer')
             var dataImage = localStorage.getItem('imgLogo');
@@ -111,4 +111,4 @@
             setTimeout(function(){
                 l.remove()
             }, 1400)
-        </script>
+        </script> -->
