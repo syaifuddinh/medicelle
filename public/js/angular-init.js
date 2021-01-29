@@ -5,7 +5,7 @@ var app = angular.module('klinikApp', ['localytics.directives', 'rzSlider', 'wys
 
 app.run(function($rootScope) {
 
-  $.fn.dataTable.ext.errMode = 'none';
+  // $.fn.dataTable.ext.errMode = 'none';
   $rootScope.disBtn = false;
   $rootScope.backward = function(){
       if($rootScope.hasBuffer()) {
