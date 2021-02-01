@@ -350,10 +350,10 @@ class MedicalRecordController extends Controller
             'family_disease_history:id,medical_record_id,disease_name,cure,description', 
             'obgyn_family_disease_history:id,medical_record_id,disease_name,cure,description', 
 
-            'kb_history:medical_record_id,name,duration', 
-            'komplikasi_kb_history:medical_record_id,name', 
+            'kb_history:id,medical_record_id,name,duration', 
+            'komplikasi_kb_history:id,medical_record_id,name', 
 
-            'ginekologi_history:medical_record_id,name', 
+            'ginekologi_history:id,medical_record_id,name', 
 
             'treatment:id,medical_record_id,item_id,date,qty,reduksi', 
             'treatment_group:id,medical_record_id,item_id,date,qty,reduksi', 
@@ -410,6 +410,7 @@ class MedicalRecordController extends Controller
         $medicalRecord = $this->fetch($pivot->medical_record_id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
         $params = [
+            'company' => Mod::company(),
             'medicalRecord'=>$medicalRecord, 
             'resume_description' => $pivot->additional->resume_description ?? '',
             'date' => $date, 
@@ -422,7 +423,12 @@ class MedicalRecordController extends Controller
 
     public function medical_resume_template(Request $request, $id) {
         $params = $this->fetch_medical_resume($request, $id);
-        $dt = (String) View::make('pdf/medical_resume', $params);
+        $dt = (string)View::make('pdf/medical_resume_body', $params);
+        $dt = str_replace("\t", '', $dt);
+        $dt = str_replace("\r", '', $dt);
+        $dt = str_replace("\n", '', $dt);
+        $dt = str_replace("\"", '"', $dt);
+        $dt = str_replace("\"", "'", $dt);
         $data['data'] = $dt;
         return response()->json($data);
     }
@@ -1078,59 +1084,81 @@ class MedicalRecordController extends Controller
         DB::beginTransaction();
         try {
             $medicalRecord = MedicalRecord::findOrFail($id);
-            if($request->is_treatment == 1) {
-                $input = $request->all();
-                $input['is_treatment'] = 1;
-                $medicalRecord->treatment()->create($input);
-            } if($request->is_disease_history == 1) {
-                $input = $request->all();
-                $input['is_disease_history'] = 1;
-                $medicalRecord->disease_history()->create($input);
-            } if($request->is_family_disease_history == 1) {
-                $input = $request->all();
-                $input['is_family_disease_history'] = 1;
-                $medicalRecord->family_disease_history()->create($input);
-            } if($request->is_allergy_history == 1) {
-                $input = $request->all();
-                $input['is_allergy_history'] = 1;
-                $medicalRecord->allergy_history()->create($input);
-            } if($request->is_sewa_instrumen == 1) {
-                $input = $request->all();
-                $input['is_sewa_instrumen'] = 1;
-                $medicalRecord->sewa_instrumen()->create($input);
-            } if($request->is_sewa_ruangan == 1) {
-                $input = $request->all();
-                $input['is_sewa_ruangan'] = 1;
-                $medicalRecord->sewa_instrumen()->create($input);
-            } if($request->is_sewa_alkes == 1) {
-                $input = $request->all();
-                $input['is_sewa_alkes'] = 1;
-                $medicalRecord->sewa_instrumen()->create($input);
-            } if($request->is_bhp == 1) {
-                $input = $request->all();
-                $input['is_bhp'] = 1;
-                $medicalRecord->sewa_instrumen()->create($input);
-            } else if($request->is_diagnostic == 1) {
-                $input = $request->all();
-                $input['is_diagnostic'] = 1;
-                $medicalRecord->diagnostic()->create($input);
-            } else if($request->is_drug == 1) {
-                $input = $request->all();
-                $input['is_drug'] = 1;
-                $medicalRecord->drug()->create($input);
-            } else if($request->is_treatment_group == 1) {
-                $input = $request->all();
-                $input['is_treatment_group'] = 1;
-                $medicalRecord->treatment_group()->create($input);
-            } else if($request->is_diagnose_history == 1) {
-                $input = $request->all();
-                $input['is_diagnose_history'] = 1;
-                $medicalRecord->diagnose_history()->create($input);
-            } else if($request->is_children_diagnose_history == 1) {
-                $input = $request->all();
-                $input['is_children_diagnose_history'] = 1;
-                $medicalRecord->children_diagnose_history()->create($input);
-            } 
+            $input = $request->all();
+
+            $exist = DB::table('medical_record_details')
+            ->whereMedicalRecordId($id);
+
+            foreach ($input as $i => $v) {
+                $exist = $exist->where($i, $v);
+            }
+            if($exist->count('id') == 0) {
+                if($request->is_treatment == 1) {
+                    $input = $request->all();
+                    $input['is_treatment'] = 1;
+                    $medicalRecord->treatment()->create($input);
+                } else if($request->is_disease_history == 1) {
+                    $input = $request->all();
+                    $input['is_disease_history'] = 1;
+                    $medicalRecord->disease_history()->create($input);
+                } else if($request->is_family_disease_history == 1) {
+                    $input = $request->all();
+                    $input['is_family_disease_history'] = 1;
+                    $medicalRecord->family_disease_history()->create($input);
+                } else if($request->is_allergy_history == 1) {
+                    $input = $request->all();
+                    $input['is_allergy_history'] = 1;
+                    $medicalRecord->allergy_history()->create($input);
+                } else if($request->is_sewa_instrumen == 1) {
+                    $input = $request->all();
+                    $input['is_sewa_instrumen'] = 1;
+                    $medicalRecord->sewa_instrumen()->create($input);
+                } else if($request->is_sewa_ruangan == 1) {
+                    $input = $request->all();
+                    $input['is_sewa_ruangan'] = 1;
+                    $medicalRecord->sewa_instrumen()->create($input);
+                } else if($request->is_sewa_alkes == 1) {
+                    $input = $request->all();
+                    $input['is_sewa_alkes'] = 1;
+                    $medicalRecord->sewa_instrumen()->create($input);
+                } else if($request->is_bhp == 1) {
+                    $input = $request->all();
+                    $input['is_bhp'] = 1;
+                    $medicalRecord->sewa_instrumen()->create($input);
+                } else if($request->is_diagnostic == 1) {
+                    $input = $request->all();
+                    $input['is_diagnostic'] = 1;
+                    $medicalRecord->diagnostic()->create($input);
+                } else if($request->is_drug == 1) {
+                    $input = $request->all();
+                    $input['is_drug'] = 1;
+                    $medicalRecord->drug()->create($input);
+                } else if($request->is_treatment_group == 1) {
+                    $input = $request->all();
+                    $input['is_treatment_group'] = 1;
+                    $medicalRecord->treatment_group()->create($input);
+                } else if($request->is_diagnose_history == 1) {
+                    $input = $request->all();
+                    $input['is_diagnose_history'] = 1;
+                    $medicalRecord->diagnose_history()->create($input);
+                } else if($request->is_children_diagnose_history == 1) {
+                    $input = $request->all();
+                    $input['is_children_diagnose_history'] = 1;
+                    $medicalRecord->children_diagnose_history()->create($input);
+                } else if($request->is_obgyn_family_disease_history == 1) {
+                    
+                    $input['is_obgyn_family_disease_history'] = 1;
+                    $medicalRecord->obgyn_family_disease_history()->create($input);
+                } else if($request->is_ginekologi_history == 1) {
+                    
+                    $input['is_ginekologi_history'] = 1;
+                    $medicalRecord->ginekologi_history()->create($input);
+                } else if($request->is_obgyn_disease_history == 1) {
+                    
+                    $input['is_obgyn_disease_history'] = 1;
+                    $medicalRecord->obgyn_disease_history()->create($input);
+                } 
+            }
             DB::commit();
         } catch(Exception $e) {
             return Response::json(['message' => $e->getMessage()], 422);

@@ -78,8 +78,8 @@
                 })
                 requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
                     requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
-                    requireScript('trix-core', '1.6', "{{ asset('') }}js/trix-core.js")
-                    requireScript('trix', '1.6', "{{ asset('') }}js/trix.js")
+                    requireScript('trix-core', '1.1', "{{ asset('') }}js/trix-core.js")
+                    requireScript('trix', '1.1', "{{ asset('') }}js/trix.js")
                     requireScript('angular-trix', '1.3', "{{ asset('') }}js/angular-trix.js")
                     requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js", function(){
                         requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
