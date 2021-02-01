@@ -16,7 +16,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12"></textarea>
+                                        <trix-editor angular-trix  ng-model='formData.general_condition' class="form-control col-md-7 col-xs-12"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group">

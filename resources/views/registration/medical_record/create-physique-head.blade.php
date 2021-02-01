@@ -29,7 +29,7 @@
                                             <label class="col-md-4 col-xs-12">Keterangan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.head_description' ng-change='submitOne("head_description")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.head_description' ng-change='submitOne("head_description")'></trix-editor>
                                             </div>
                                         </div>
                                     </div>

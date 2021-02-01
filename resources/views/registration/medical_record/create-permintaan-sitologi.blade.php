@@ -16,7 +16,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa klinik
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.sitologi_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_diagnose")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.sitologi_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_diagnose")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -24,7 +24,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Lokasi pengambilan
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.sitologi_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_lokasi")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.sitologi_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_lokasi")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -36,7 +36,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Jumlah volume (CC)
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.sitologi_volume' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_volume")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.sitologi_volume' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_volume")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -44,7 +44,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Informasi klinis
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.sitologi_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_description")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.sitologi_description' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.sitologi_description")'></trix-editor>
                                             </div>
                                         </div>
                                         

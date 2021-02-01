@@ -14,7 +14,7 @@
                                             <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.medical_checkup_general_condition' class="form-control col-md-12 col-xs-12" ng-change='submitOne("additional.medical_checkup_general_condition")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.medical_checkup_general_condition' class="form-control col-md-12 col-xs-12" ng-change='submitOne("additional.medical_checkup_general_condition")'></trix-editor>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -185,7 +185,7 @@
                                             <label class="col-md-4 col-xs-12">Keterangan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.medical_checkup_pemeriksaan_penunjang' ng-change='submitOne("additional.medical_checkup_pemeriksaan_penunjang")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.medical_checkup_pemeriksaan_penunjang' ng-change='submitOne("additional.medical_checkup_pemeriksaan_penunjang")'></trix-editor>
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@
                                             <label class="col-md-4 col-xs-12">Kesimpulan
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.medical_checkup_kesimpulan' ng-change='submitOne("additional.medical_checkup_kesimpulan")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.medical_checkup_kesimpulan' ng-change='submitOne("additional.medical_checkup_kesimpulan")'></trix-editor>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@
                                             <label class="col-md-4 col-xs-12">Saran-saran
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.medical_checkup_saran' ng-change='submitOne("additional.medical_checkup_saran")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.medical_checkup_saran' ng-change='submitOne("additional.medical_checkup_saran")'></trix-editor>
                                             </div>
                                         </div>
                                     </div>

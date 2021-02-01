@@ -16,7 +16,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Bahan sediaan
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_bahan_sediaan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_bahan_sediaan")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_bahan_sediaan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_bahan_sediaan")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -24,7 +24,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Diagnosa
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_diagnose")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_diagnose' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_diagnose")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -34,7 +34,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Lokasi Pengambilan
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_lokasi_pengambilan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_lokasi_pengambilan")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_lokasi_pengambilan' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_lokasi_pengambilan")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -54,7 +54,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Anamnesa
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.current_disease' class="form-control col-md-7 col-xs-12" ng-change='submitOne("current_disease")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.current_disease' class="form-control col-md-7 col-xs-12" ng-change='submitOne("current_disease")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -63,7 +63,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Status Lokasi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_status_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_status_lokasi")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_status_lokasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_status_lokasi")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -71,7 +71,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Keadaan kelenjar regional
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_keadaan_kelenjar_regional' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_keadaan_kelenjar_regional")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_keadaan_kelenjar_regional' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_keadaan_kelenjar_regional")'></trix-editor>
                                             </div>
                                         </div>
                                                                                 
@@ -80,7 +80,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Metastasis
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_metastasis' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_metastasis")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_metastasis' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_metastasis")'></trix-editor>
                                             </div>
                                         </div>
                                                                                 
@@ -92,7 +92,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Rontgen foto
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_rontgen_foto' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_rontgen_foto")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_rontgen_foto' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_rontgen_foto")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -101,7 +101,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Radiasi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_radiasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_radiasi")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_radiasi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_radiasi")'></trix-editor>
                                             </div>
                                         </div>
                                         
@@ -109,7 +109,7 @@
                                             <label class="col-md-12 col-sm-12 col-xs-12">Terapi
                                             </label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <textarea  ng-model='formData.additional.histopatologi_terapi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_terapi")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.histopatologi_terapi' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.histopatologi_terapi")'></trix-editor>
                                             </div>
                                         </div>
                                                                                 

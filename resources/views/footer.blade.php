@@ -17,4 +17,4 @@
     <link rel='stylesheet' id='norebro-global-fonts-css'  href='{{asset("css/font-google.css")}}' type='text/css' media='all' />
     
   </body>
-</html>
+</html> 

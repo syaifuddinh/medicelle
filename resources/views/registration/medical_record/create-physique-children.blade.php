@@ -74,7 +74,7 @@
                                             <label class="control-label col-md-4 col-sm-4 col-xs-12">Keadaan umum
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea  ng-model='formData.additional.children_general_condition' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.children_general_condition")'></textarea>
+                                                <trix-editor angular-trix  ng-model='formData.additional.children_general_condition' class="form-control col-md-7 col-xs-12" ng-change='submitOne("additional.children_general_condition")'></trix-editor>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -122,7 +122,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Pemeriksaan fisik
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.children_physique'  ng-change='submitOne("additional.children_physique")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.children_physique'  ng-change='submitOne("additional.children_physique")'></trix-editor>
                                             </div>
                                         </div>
 
@@ -174,7 +174,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Bacaan EKG
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.children_ekg' ng-change='submitOne("additional.children_ekg")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.children_ekg' ng-change='submitOne("additional.children_ekg")'></trix-editor>
                                             </div>
                                         </div>
 
@@ -193,7 +193,7 @@
                                             <label class="col-md-4 col-xs-12">Hasil Pemeriksaan Penunjang
                                             </label>
                                             <div class="col-md-12 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.children_usg' ng-change='submitOne("additional.children_usg")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.children_usg' ng-change='submitOne("additional.children_usg")'></trix-editor>
                                             </div>
                                         </div>
                                     </div>

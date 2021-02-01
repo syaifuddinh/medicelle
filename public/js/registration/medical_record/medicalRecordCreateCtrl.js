@@ -3158,7 +3158,9 @@ drug_datatable = $('#drug_datatable').DataTable({
 
     $scope.submitOne = function(key) {
         $scope.silent = 1
-        $scope.submitForm(0, key)
+        $timeout(function() {
+            $scope.submitForm(0, key)
+        }, 500)
     }
 
     $scope.submitForm=function(is_massive = 1, key) {

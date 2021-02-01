@@ -1,6 +1,7 @@
 <script src="{{ asset('') }}js/cached.js"></script>
 <script>
         requireCSS('css.bootstrap', '1.0', '{{ asset('') }}vendors/bootstrap/dist/css/bootstrap.min.css', function(){
+            requireCSS('css.trix', '1.0', "{{ asset('') }}css/trix.css")
             requireCSS('css.classic', '1.0', "{{ asset('') }}css/classic.css")
             requireCSS('css.classic.date', '1.0', "{{ asset('') }}css/classic.date.css")
             requireCSS('css.classic.time', '1.0', "{{ asset('') }}css/classic.time.css")
@@ -77,9 +78,13 @@
                 })
                 requireScript('angular', '1.0', "{{ asset('') }}bower_components/angular/angular.min.js", function(){
                     requireScript('angular-chosen', '1.0', "{{ asset('') }}bower_components/angular-chosen/dist/angular-chosen.min.js")
-                    requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js")
-                    requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
-                    requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                    requireScript('trix-core', '1.5', "{{ asset('') }}js/trix-core.js")
+                    requireScript('trix', '1.5', "{{ asset('') }}js/trix.js")
+                    requireScript('angular-trix', '1.3', "{{ asset('') }}js/angular-trix.js")
+                    requireScript('rzslider', '1.0', "{{ asset('') }}js/rzslider.min.js", function(){
+                        requireScript('angular-init', '1.0', "{{ asset('') }}js/angular-init.js")
+                        requireScript('custom_directive', '1.0', "{{ asset('') }}js/custom_directive.js")
+                    })
                 });
             })
 

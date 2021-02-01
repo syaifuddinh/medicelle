@@ -73,7 +73,7 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">Keluhan haid
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea ng-model='formData.haid_complaint' class="form-control"></textarea>   
+                                        <trix-editor angular-trix ng-model='formData.haid_complaint' class="form-control"></trix-editor>   
                                     </div>
                                 </div>
                                 
@@ -130,7 +130,7 @@
                                     <label class="col-md-12 col-xs-12">Keluhan selama menggunakan KB
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <textarea  ng-model='formData.kb_complaint' class="form-control col-md-7 col-xs-12"></textarea>
+                                        <trix-editor angular-trix  ng-model='formData.kb_complaint' class="form-control col-md-7 col-xs-12"></trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -199,8 +199,8 @@
                                     <label class="col-md-12 col-xs-12">Riwayat pemakaian obat saat kehamilan
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <textarea  ng-model='formData.pemakaian_obat_saat_kehamilan' class="form-control col-md-7 col-xs-12">
-                                        </textarea>
+                                        <trix-editor angular-trix  ng-model='formData.pemakaian_obat_saat_kehamilan' class="form-control col-md-7 col-xs-12">
+                                        </trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -210,8 +210,8 @@
                                     <label class="col-md-12 col-xs-12">Keluhan saat kehamilan
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <textarea  ng-model='formData.keluhan_saat_kehamilan' class="form-control col-md-7 col-xs-12">
-                                        </textarea>
+                                        <trix-editor angular-trix  ng-model='formData.keluhan_saat_kehamilan' class="form-control col-md-7 col-xs-12">
+                                        </trix-editor>
                                     </div>
                                 </div>
                             </div>

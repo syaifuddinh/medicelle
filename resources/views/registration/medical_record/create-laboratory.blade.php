@@ -120,28 +120,28 @@
                                     <label class="col-md-12 col-xs-12">Hasil
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.hasil_hematologi" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.hasil_hematologi" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Satuan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.satuan_hematologi" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.satuan_hematologi" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Nilai normal
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.nilai_normal_hematologi" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.nilai_normal_hematologi" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Keterangan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.keterangan_hematologi" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.keterangan_hematologi" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                           </div>
@@ -151,28 +151,28 @@
                                     <label class="col-md-12 col-xs-12">Hasil
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.hasil_darah_lengkap" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.hasil_darah_lengkap" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Satuan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.satuan_darah_lengkap" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.satuan_darah_lengkap" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Nilai normal
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.nilai_normal_darah_lengkap" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.nilai_normal_darah_lengkap" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Keterangan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.keterangan_darah_lengkap" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.keterangan_darah_lengkap" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                           </div>
@@ -182,28 +182,28 @@
                                     <label class="col-md-12 col-xs-12">Hasil
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.hasil_kimia_klinik" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.hasil_kimia_klinik" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Satuan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.satuan_kimia_klinik" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.satuan_kimia_klinik" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Nilai normal
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.nilai_normal_kimia_klinik" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.nilai_normal_kimia_klinik" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Keterangan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.keterangan_kimia_klinik" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.keterangan_kimia_klinik" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                           </div>
@@ -213,28 +213,28 @@
                                     <label class="col-md-12 col-xs-12">Hasil
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.hasil_umuno" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.hasil_umuno" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Satuan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.satuan_umuno" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.satuan_umuno" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Nilai normal
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.nilai_normal_umuno" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.nilai_normal_umuno" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                                 <div class="form-group" style='padding-bottom:7mm'>
                                     <label class="col-md-12 col-xs-12">Keterangan
                                     </label>
                                     <div class="col-md-12 col-xs-12" style='padding-bottom:4mm'>
-                                        <textarea ng-model="new_research.additional.keterangan_umuno" class="form-control"></textarea>
+                                        <trix-editor angular-trix ng-model="new_research.additional.keterangan_umuno" class="form-control"></trix-editor>
                                     </div>
                                 </div>
                           </div>

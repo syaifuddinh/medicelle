@@ -23,7 +23,7 @@
                                         <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea class="form-control" ng-model='formData.obgyn_main_complaint'  ng-change="submitOne('obgyn_main_complaint')"></textarea>
+                                            <trix-editor angular-trix class="form-control" ng-model='formData.obgyn_main_complaint'  ng-change="submitOne('obgyn_main_complaint')"></trix-editor>
                                         </div>
                                     </div>
 
@@ -34,7 +34,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.obgyn_current_disease'  ng-change="submitOne('obgyn_current_disease')"></trix-editor>
                                             </div>
                                         </div>
 
@@ -45,7 +45,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit dahulu<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></trix-editor>
                                             </div>
                                         </div>
 
@@ -99,7 +99,7 @@
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Riwayat vaksinasi
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea ng-model='formData.additional.riwayat_vaksinasi' ng-change='submitOne("additional.riwayat_vaksinasi")' class="form-control"></textarea>
+                                                <trix-editor angular-trix ng-model='formData.additional.riwayat_vaksinasi' ng-change='submitOne("additional.riwayat_vaksinasi")' class="form-control"></trix-editor>
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +130,7 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Keluhan haid
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.haid_complaint' ng-change='submitOne("haid_complaint")' class="form-control"></textarea>   
+                                            <trix-editor angular-trix ng-model='formData.haid_complaint' ng-change='submitOne("haid_complaint")' class="form-control"></trix-editor>   
                                         </div>
                                     </div>
                                     
@@ -138,7 +138,7 @@
                                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Papsmear
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <textarea ng-model='formData.additional.obgyn_papsmear' class="form-control" ng-change='submitOne("additional.obgyn_papsmear")'></textarea>   
+                                            <trix-editor angular-trix ng-model='formData.additional.obgyn_papsmear' class="form-control" ng-change='submitOne("additional.obgyn_papsmear")'></trix-editor>   
                                         </div>
                                     </div>
                                     
@@ -155,7 +155,7 @@
 										<label class="control-label col-md-4 col-sm-4 col-xs-12">Status
 										</label>
 										<div class="col-md-8 col-sm-8 col-xs-12">
-											<textarea  ng-model='formData.marriage_status'  ng-change="submitOne('marriage_status')" class="form-control col-md-7 col-xs-12"></textarea>
+											<trix-editor angular-trix  ng-model='formData.marriage_status'  ng-change="submitOne('marriage_status')" class="form-control col-md-7 col-xs-12"></trix-editor>
 										</div>
 									</div>
 									
@@ -166,7 +166,7 @@
 										<label class="control-label col-md-2 col-sm-2 col-xs-12">Lama menikah
 										</label>
 										<div class="col-md-8 col-sm-8 col-xs-12">
-											<textarea ng-change="submitOne('marriage_status')" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12"></textarea>
+											<trix-editor angular-trix ng-change="submitOne('marriage_status')" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12"></trix-editor>
 										</div>
 									</div>
 								</div>
@@ -380,7 +380,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat operasi
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <textarea class="form-control" ng-model='formData.additional.obgyn_operasi'  ng-change="submitOne('additional.obgyn_operasi')"></textarea>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.obgyn_operasi'  ng-change="submitOne('additional.obgyn_operasi')"></trix-editor>
                                             </div>
                                         </div>
 
@@ -518,7 +518,7 @@
 										<label class="col-md-12 col-xs-12">Keluhan selama menggunakan KB
 										</label>
 										<div class="col-md-12 col-sm-12 col-xs-12">
-											<textarea  ng-model='formData.kb_complaint'  ng-change="submitOne('kb_complaint')" class="form-control col-md-7 col-xs-12"></textarea>
+											<trix-editor angular-trix  ng-model='formData.kb_complaint'  ng-change="submitOne('kb_complaint')" class="form-control col-md-7 col-xs-12"></trix-editor>
 										</div>
 									</div>
 								</div>
