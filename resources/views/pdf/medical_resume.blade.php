@@ -65,9 +65,9 @@
                     </div>
                 </div>
 
-                <p style='margin-top:3mm'>Datang dengan keluhan utama : {{ $medicalRecord->main_complaint }}<br> Riwayat penyakit sekarang : {{ $medicalRecord->current_disease }}.
-                <?php if($medicalRecord->obgyn_main_complaint) { ?>
-                Keluhan (obgyn) : {{ $medicalRecord->obgyn_main_complaint }}<?php }?><br>
+                <p style='margin-top:3mm'>Datang dengan keluhan utama : {{ strip_tags($medicalRecord->main_complaint) }}<br> Riwayat penyakit sekarang : {{ strip_tags($medicalRecord->current_disease) }}.
+                <?php if($medicalRecord->obgyn_main_complaint) { ?><br>
+                Keluhan (obgyn) : {{ strip_tags($medicalRecord->obgyn_main_complaint) }}<?php }?><br>
                 Penyakit dahulu : <br>
                 <ol style='margin-top:3mm;margin-left:6mm'>
                    @foreach($medicalRecord->disease_history as $unit)
@@ -80,7 +80,7 @@
                 <p>Hasil pemeriksaan didapatkan :</p>
                 <p style='margin-left:5mm'>TB : {{ $medicalRecord->long }} cm, Tensi : {{ $medicalRecord->blood_pressure }} mmHg, Suhu badan : {{ $medicalRecord->temperature }} <sup>o</sup>C</p>
                 <p style='margin-left:5mm'>BB : {{ $medicalRecord->weight }} kg, Nadi : {{ $medicalRecord->pulse }} x/menit, Nafas : {{ $medicalRecord->breath_frequency}} x/menit</p><br>
-                <p>Pemeriksaan fisik : {{ $medicalRecord->physique }}</p>
+                <p>Pemeriksaan fisik : {{ strip_tags($medicalRecord->physique) }}</p>
                 <br>
                 <div style='margin-bottom:2mm'>
                     <p>Pemeriksaan tambahan :</p>
