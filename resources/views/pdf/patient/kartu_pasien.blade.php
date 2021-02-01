@@ -70,12 +70,12 @@
 
                                     $barImg = url($barImg);
                                 @endphp
-                                <img src="{{ $barImg }}" alt="barcode kartu pasien">
+                                <img src="{!! $barImg !!}" alt="barcode kartu pasien">
                             </div>
                             <div style='padding-top:2mm;margin-left:1mm'>
-                                <h3>{{ $contact->name }}</h3>
-                                <p>{{ $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' }}</p>
-                                <p>{{ $contact->address }}</p>
+                                <h3>{!! $contact->name !!}</h3>
+                                <p>{!! $contact->birth_date ? Mod::fullDate($contact->birth_date) : '' !!}</p>
+                                <p>{!! $contact->address !!}</p>
                             </div>
                             @if($c != count($contacts) - 1)
                                 <div class="page-break"></div>

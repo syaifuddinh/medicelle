@@ -22,12 +22,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
-                    <p>{{ $company->address }}</p>
-                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -35,14 +35,14 @@
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>HASIL BACAAN ULTRASONOGRAPHY ( USG )</p>
 
                 <div style='margin-bottom:4mm'>
-                    <p>TS. Yth, berikut saya sampaikan hasil Thorax / wrist / manus {{ $pivotMedicalRecord->additional->xray_thorax ?? $dot }}</p>
+                    <p>TS. Yth, berikut saya sampaikan hasil Thorax / wrist / manus {!! $pivotMedicalRecord->additional->xray_thorax ?? $dot !!}</p>
                 </div>
 
                 <div>
                     <span style="display:inline-block;width:22mm">KESIMPULAN</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->xray_kesimpulan ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->xray_kesimpulan ?? $dot !!}
                     </span>
                 </div>
 
@@ -50,15 +50,15 @@
                     <span style="display:inline-block;width:22mm">SARAN</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->xray_saran ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->xray_saran ?? $dot !!}
                     </span>
                 </div>
                 
                 <div style='position:absolute;bottom:28mm'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:40%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) }}</p>
-                        <p style='text-align:center;'>( {{$medicalRecord->registration_detail->doctor->name}} )</p>
+                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!}</p>
+                        <p style='text-align:center;'>( {!!$medicalRecord->registration_detail->doctor->name!!} )</p>
                     </div>
                 </div>
 

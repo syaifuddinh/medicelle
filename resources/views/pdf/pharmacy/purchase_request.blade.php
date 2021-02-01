@@ -38,8 +38,8 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{{ $company->address }}</p>
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
+                    <p style='font-size:85%'>{!! $company->address !!}</p>
                 </div>
             </div>
 
@@ -51,22 +51,22 @@
                     <div style='display:inline-block;width:80%;'>
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>No. Purchase Request</span>
-                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $purchaseRequest->code }}</span>
+                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $purchaseRequest->code !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Tanggal</span>
-                            <span style='display:inline-block'>: {{ Mod::fullDate($purchaseRequest->date) }}</span>
+                            <span style='display:inline-block'>: {!! Mod::fullDate($purchaseRequest->date) !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Periode</span>
-                            <span style='display:inline-block'>: {{  Mod::fullDate($purchaseRequest->date_start) }} s/d  {{ Mod::fullDate($purchaseRequest->date_end) }} </span>
+                            <span style='display:inline-block'>: {!!  Mod::fullDate($purchaseRequest->date_start) !!} s/d  {!! Mod::fullDate($purchaseRequest->date_end) !!} </span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Keterangan</span>
-                            <span style='display:inline-block'>: {{ $purchaseRequest->description }}</span>
+                            <span style='display:inline-block'>: {!! $purchaseRequest->description !!}</span>
                         </div>
                     </div>
                    
@@ -88,25 +88,25 @@
                         @foreach($purchaseRequest->detail as $i => $detail)
                             <tr>
                                 <td>
-                                    {{ $detail->item->name ?? '' }}
+                                    {!! $detail->item->name ?? '' !!}
                                 </td>
                                 <td>
-                                    {{ $detail->supplier->name ?? '' }}
+                                    {!! $detail->supplier->name ?? '' !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->qty ?? 0) }}
+                                    {!! number_format($detail->qty ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->used_qty ?? 0) }}
+                                    {!! number_format($detail->used_qty ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->purchase_price ?? 0) }}
+                                    {!! number_format($detail->purchase_price ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ $detail->discount ?? 0 }}%
+                                    {!! $detail->discount ?? 0 !!}%
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->subtotal ?? 0) }}
+                                    {!! number_format($detail->subtotal ?? 0) !!}
                                 </td>
                             </tr>
                         @endforeach
@@ -117,7 +117,7 @@
                                 Grandtotal
                             </th>
                             <th class="text-right">
-                                {{  number_format($grandtotal ?? 0) }}
+                                {!!  number_format($grandtotal ?? 0) !!}
                             </th>
                         </tr>
                     </tfoot>
@@ -128,7 +128,7 @@
                         <span style='display:inline-block;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>Petugas</p>
-                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->draft->user->name ?? $dot}} )</p>
+                            <p style='text-align:center;width:210%'>( {!!$purchaseRequest->draft->user->name ?? $dot!!} )</p>
                         </span>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                         <span style='display:inline-block;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>APJ</p>
-                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->apj->user->name ?? $dot}} )</p>
+                            <p style='text-align:center;width:210%'>( {!!$purchaseRequest->apj->user->name ?? $dot!!} )</p>
                         </span>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                         <span style='display:inline-block;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>Disetujui Oleh</p>
-                            <p style='text-align:center;width:210%'>( {{$purchaseRequest->direktur->user->name ?? $dot}} )</p>
+                            <p style='text-align:center;width:210%'>( {!!$purchaseRequest->direktur->user->name ?? $dot!!} )</p>
                         </span>
                     </div>
                 </div>

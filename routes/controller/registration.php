@@ -2,6 +2,7 @@
 
 Route::prefix('controller')->name('controller.')->group(function(){
     Route::prefix('registration')->namespace('Registration')->group(function(){
+        Route::get('medical_record/{id}/template', 'MedicalRecordController@medical_resume_template');
         Route::get('medical_record/{id}/pdf/{flag?}', 'MedicalRecordController@pdf');
         Route::put('medical_record/{medical_record_id}/detail/{id}', 'MedicalRecordController@update_detail');
         Route::put('registration/attend/{id}', 'RegistrationController@attend');
@@ -29,6 +30,9 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory/pdf', 'MedicalRecordController@laboratory_pdf');
 
         Route::get('medical_record/pivot/{pivot_medical_record_id}/files', 'PivotMedicalRecordController@showFiles');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/content/pdf', 'PivotMedicalRecordController@printContent');
+        Route::put('medical_record/pivot/{pivot_medical_record_id}/content', 'PivotMedicalRecordController@storeContent');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/content', 'PivotMedicalRecordController@showContent');
         Route::delete('medical_record/pivot/{pivot_medical_record_id}/files/{id}', 'PivotMedicalRecordController@destroyFiles');
         Route::post('medical_record/pivot/{pivot_medical_record_id}/files', 'PivotMedicalRecordController@storeFiles');
 

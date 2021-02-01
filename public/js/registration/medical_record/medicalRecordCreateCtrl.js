@@ -5,6 +5,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $scope.shortDot = '..........'
     checklistPromise = null
     $scope.priceSlider = 209
+    $scope.medical_resume = {}
     path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
     step = path.replace(/.*step\/(\d+)\/.*/, '$1')
@@ -35,6 +36,80 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
           window.open( baseUrl + '/controller/registration/medical_record/' + id + '/sitologi/pdf'  )
        }
     })
+
+    $scope.bukaCetakan = function(id) {
+        $scope.medical_resume.pivot_medical_record_id = id
+        $scope.showMedicalResumeContent()
+        $('#medicalResumeModal').modal()
+    }
+
+    $scope.tarikTemplate = function() {
+        var id = $scope.medical_resume.pivot_medical_record_id
+        $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/template').then(function(resp) {
+            $scope.medical_resume.content = resp.data.data
+          }, function(error) {
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+          });
+    }
+
+    $scope.storeMedicalResumeContent = function() {
+        $timeout(function() {
+            var id = $scope.medical_resume.pivot_medical_record_id
+            if(id) {
+                $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + id + '/content', $scope.medical_resume).then(function(resp) {
+                  }, function(error) {
+                        $rootScope.disBtn=false;
+                        if (error.status==422) {
+                          var det="";
+                          angular.forEach(error.data.errors,function(val,i) {
+                            det+="- "+val+"<br>";
+                          });
+                          toastr.warning(det,error.data.message);
+                        } else {
+                          toastr.error(error.data.message,"Error Has Found !");
+                        }
+                  });
+            }
+        }, 400)
+    }
+
+    $scope.showMedicalResumeContent = function() {
+        var id = $scope.medical_resume.pivot_medical_record_id
+        if(id) {
+            $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + id + '/content', $scope.medical_resume).then(function(resp) {
+                $timeout(function() {
+                    $scope.medical_resume.content = resp.data.data
+                }, 400)
+              }, function(error) {
+                    $rootScope.disBtn=false;
+                    if (error.status==422) {
+                      var det="";
+                      angular.forEach(error.data.errors,function(val,i) {
+                        det+="- "+val+"<br>";
+                      });
+                      toastr.warning(det,error.data.message);
+                    } else {
+                      toastr.error(error.data.message,"Error Has Found !");
+                    }
+              });
+        }
+    }
+
+
+    $scope.cetakTemplate = function() {
+        var id = $scope.medical_resume.pivot_medical_record_id
+        var url = baseUrl + '/controller/registration/medical_record/pivot/' + id + '/content/pdf'
+        window.open(url, '_blank')
+    }
 
     $scope.finishedMedicalRecord = function(is_finish) {
         if(is_finish == 1) {
@@ -134,7 +209,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   data:null, 
                   render:function(resp) {
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
+                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (resp.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
                       return summary
                   }
                 },
@@ -145,6 +220,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                     orderable : false,
                     render: function(r) {
                         outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
+                        return outp
+                    }
+                },
+                {
+                    data:null, 
+                    searchable : false,
+                    orderable : false,
+                    render: function(r) {
+                        outp = "<a ng-click='bukaCetakan(" + r.id + ")'>Buka Cetakan</a>"
                         return outp
                     }
                 },
@@ -197,6 +281,8 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                 },
                 {
                   data:null, 
+                  orderable : false,
+                  searchable : false,
                   render:function(resp) {
 					  var textresp=resp.medadd.replace(/&quot;/g, '"');
 					  var obj = JSON.parse(textresp);
@@ -212,6 +298,15 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                     orderable : false,
                     render: function(r) {
                         outp = "<div style='width:100%;min-height:18mm;cursor:text;display:inline-block' ng-click='editResumeSelfDescription($event.currentTarget)' title='Edit Keterangan'>" + (r.additional.resume_description || '') + "</div>"
+                        return outp
+                    }
+                },
+                {
+                    data:null, 
+                    searchable : false,
+                    orderable : false,
+                    render: function(r) {
+                        outp = "<a ng-click='bukaCetakan(" + r.id + ")'>Buka Cetakan</a>"
                         return outp
                     }
                 },
