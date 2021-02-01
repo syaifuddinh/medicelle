@@ -21,12 +21,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
-                    <p>{{ $company->address }}</p>
-                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->name !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -50,7 +50,7 @@
                                 ALAMAT
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->address }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->address !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -58,7 +58,7 @@
                                 UMUR
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->age }} Tahun</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -66,7 +66,7 @@
                                 KELAMIN
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->gender }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->gender !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -74,7 +74,7 @@
                                 NOMOR RM
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->code }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->code !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -82,7 +82,7 @@
                                 NO. TLP
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->phone }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->phone !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -90,7 +90,7 @@
                                 STATUS
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->marriage_status }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->marriage_status !!}</span>
                         </p>
                     </div>
 
@@ -103,21 +103,21 @@
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
                         </p>
                         <p style='margin-bottom:1mm'>
                             <span style='display:inline-block;width:40mm'>
                                 POLI / RUANGAN
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->polyclinic->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                         </p>
                         <p style='margin-bottom:1mm'>
                             <span style='display:inline-block;width:40mm'>
                                 NO. TELP
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->phone }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->phone !!}</span>
                         </p>
                     </div>
                 
@@ -125,14 +125,14 @@
                     <span style="display:inline-block;width:77mm">DIAGNOSA KLINIK</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->sitologi_diagnose ?? $dot }}
+                        {!! $medicalRecord->additional->sitologi_diagnose ?? $dot !!}
                     </span>                    
                 </div>
                 <div>
                     <span style="display:inline-block;width:77mm">LOKASI PENGAMBILAN</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->sitologi_lokasi ?? $dot }}
+                        {!! $medicalRecord->additional->sitologi_lokasi ?? $dot !!}
                     </span>
                 </div>
                 <div>
@@ -141,7 +141,7 @@
                     </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->sitologi_volume ?? $dot }}
+                        {!! $medicalRecord->additional->sitologi_volume ?? $dot !!}
                     </span>
                           
                 </div>
@@ -150,14 +150,14 @@
                     <span style="display:inline-block;width:77mm">INFORMASI KLINIS LAIN </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->sitologi_description ?? $dot }}
+                        {!! $medicalRecord->additional->sitologi_description ?? $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:77mm">TANGGAL & WAKTU PENGAMBILAN BAHAN <b>(WAJIB DIISI)</b>  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->sitologi_date ? Mod::fullDate($medicalRecord->additional->sitologi_date) : $dot }}
+                        {!! $medicalRecord->additional->sitologi_date ? Mod::fullDate($medicalRecord->additional->sitologi_date) : $dot !!}
                     </span>
                 </div>
                 

@@ -50,6 +50,7 @@
                                       <th>Rangkuman</th>
                                       <th>Dokter</th>
                                       <th>Keterangan</th>
+                                      <th>Cetakan</th>
                                       <th style='width:60mm'></th>
                                     </tr>
                                   </thead>
@@ -68,6 +69,7 @@
                                       <th>Rangkuman</th>
                                       <th>Dokter</th>
                                       <th>Keterangan</th>
+                                      <th>Cetakan</th>
                                       <th style='width:60mm'></th>
                                     </tr>
                                   </thead>
@@ -100,4 +102,23 @@
 
                     </form>
                 </div>
+
+                <div class="modal fade" id="medicalResumeModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+    <div class="modal-dialog" style='width:80%'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="">Custom Cetakan</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    
+                    <button type='button' class='btn btn-sm btn-primary' ng-click='tarikTemplate()'>Tarik Template</button>
+                    <button type='button' class='btn btn-sm btn-success' ng-click='cetakTemplate()'>Cetak</button>
+                </div>
+                <trix-editor angular-trix ng-model='medical_resume.content' ng-change='storeMedicalResumeContent()'></trix-editor>
+            </div>
+        </div>
+    </div>
+</div>
 @include('registration/medical_record/create-footer')

@@ -437,7 +437,9 @@ class RegistrationApiController extends Controller
         if($request->draw == 1)
             $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
 
-        return Datatables::eloquent($x)->make(true);
+        return Datatables::eloquent($x)
+        ->rawColumns(['medical_record.main_complaint', 'medical_record.current_disease', 'medical_record.diagnose_name'])
+        ->make(true);
     }
 
     public function polyclinic_medical_record(Request $request, $patient_id) {

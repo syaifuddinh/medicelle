@@ -18,6 +18,7 @@ use PDF;
 use PhpOffice\PhpWord\PhpWord;
 use Image;
 use Exception;
+use View;
 
 class MedicalRecordController extends Controller
 {
@@ -404,8 +405,7 @@ class MedicalRecordController extends Controller
         return Response::json($x, 200);
     }
 
-    public function pdf(Request $request, $id, $flag = 'preview')
-    {
+    public function fetch_medical_resume(Request $request, $id) {
         $pivot = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = $this->fetch($pivot->medical_record_id);
         $date = $request->filled('date') ? $request->date : date('Y-m-d');
@@ -416,6 +416,20 @@ class MedicalRecordController extends Controller
             'dot' => '.............................................................................................................', 
             'shortDot' => '..........'
         ];
+
+        return $params;
+    }
+
+    public function medical_resume_template(Request $request, $id) {
+        $params = $this->fetch_medical_resume($request, $id);
+        $dt = (String) View::make('pdf/medical_resume', $params);
+        $data['data'] = $dt;
+        return response()->json($data);
+    }
+
+    public function pdf(Request $request, $id, $flag = 'preview')
+    {
+        $params = $this->fetch_medical_resume($request, $id);
         $pdf = PDF::loadview('pdf/medical_resume',$params);
         if($flag == 'preview') {
             return $pdf->stream('resume-medis.pdf');

@@ -47,12 +47,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
-                    <p>{{ $company->address }}</p>
-                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -65,11 +65,11 @@
                     </div>
                     <div class="inline-block"> : </div>
                     <div class="inline-block">
-                        {{ $formula->medical_record->code }}
+                        {!! $formula->medical_record->code !!}
                     </div>
 
                     <div style='position: absolute;right:0mm'>
-                        Tanggal : {{ Mod::now() }}
+                        Tanggal : {!! Mod::now() !!}
                     </div>
                 </div>
             
@@ -79,7 +79,7 @@
                     </div>
                     <div class="inline-block"> : </div>
                     <div class="inline-block w70">
-                        {{ $formula->registration_detail->doctor->name }}
+                        {!! $formula->registration_detail->doctor->name !!}
                     </div>
                 </div>
             
@@ -89,7 +89,7 @@
                     </div>
                     <div class="inline-block"> : </div>
                     <div class="inline-block w70">
-                        {{ $formula->medical_record->patient->name }}
+                        {!! $formula->medical_record->patient->name !!}
                     </div>
                 </div>
                 
@@ -99,9 +99,9 @@
                             <div class="inline-block" style='font-size:101%'>
                                 R / 
                             </div>
-                            <div class="inline-block"  style='font-size:101%'>{{ $detail->item->name }}</div>
-                            <div  class="inline-block" style='font-size:101%'>{{ number_format($detail->qty) }}</div>
-                            <div class="inline-block"  style='font-size:101%'>{{ $detail->item->piece->name }}</div>
+                            <div class="inline-block"  style='font-size:101%'>{!! $detail->item->name !!}</div>
+                            <div  class="inline-block" style='font-size:101%'>{!! number_format($detail->qty) !!}</div>
+                            <div class="inline-block"  style='font-size:101%'>{!! $detail->item->piece->name !!}</div>
                             <div style='display:flex;position:relative'>
                                 <div style='position:absolute;left:0;top:0.2mm;border-bottom:1px solid black;height:1mm;width:96%'></div>
                                 <div style="float:right;font-size:101%;">
@@ -114,8 +114,8 @@
 
                 <div style='margin-top:10mm'>
                     <div style='width:30%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::today() }}</p>
-                        <p style='text-align:center;'>( {{ $formula->contributor->name }} )</p>
+                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::today() !!}</p>
+                        <p style='text-align:center;'>( {!! $formula->contributor->name !!} )</p>
                     </div>
                 </div>
 

@@ -38,8 +38,8 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{{ $company->address }}</p>
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
+                    <p style='font-size:85%'>{!! $company->address !!}</p>
                 </div>
             </div>
 
@@ -51,27 +51,27 @@
                     <div style='display:inline-block;width:80%;'>
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>No. Penerimaan</span>
-                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $receipt->code }}</span>
+                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $receipt->code !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Tanggal</span>
-                            <span style='display:inline-block'>: {{ Mod::fullDate($receipt->date) }}</span>
+                            <span style='display:inline-block'>: {!! Mod::fullDate($receipt->date) !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Supplier</span>
-                            <span style='display:inline-block'>: {{ $receipt->supplier->name ?? ''}}</span>
+                            <span style='display:inline-block'>: {!! $receipt->supplier->name ?? ''!!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Alamat</span>
-                            <span style='display:inline-block'>: {{ $receipt->supplier->address ?? '' }}</span>
+                            <span style='display:inline-block'>: {!! $receipt->supplier->address ?? '' !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:45mm'>Keterangan</span>
-                            <span style='display:inline-block'>: {{ $receipt->description }}</span>
+                            <span style='display:inline-block'>: {!! $receipt->description !!}</span>
                         </div>
                     </div>
                    
@@ -95,39 +95,39 @@
                         @foreach($receipt->detail as $i => $detail)
                             <tr>
                                 <td>
-                                    {{ $detail->item->name ?? '' }}
+                                    {!! $detail->item->name ?? '' !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->qty ?? 0) }}
+                                    {!! number_format($detail->qty ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->purchase_order_detail->qty ?? 0) }}
+                                    {!! number_format($detail->purchase_order_detail->qty ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->purchase_order_detail->leftover_qty ?? 0) }}
+                                    {!! number_format($detail->purchase_order_detail->leftover_qty ?? 0) !!}
                                 </td>
                                 <td>
-                                    {{ Mod::fullDate($detail->expired_date) }}
+                                    {!! Mod::fullDate($detail->expired_date) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->purchase_price ?? 0) }}
+                                    {!! number_format($detail->purchase_price ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ $detail->discount ?? 0 }}%
+                                    {!! $detail->discount ?? 0 !!}%
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->subtotal ?? 0) }}
+                                    {!! number_format($detail->subtotal ?? 0) !!}
                                 </td>
                                 <td class="text-right">
-                                    {{ number_format($detail->hna ?? 0) }}
+                                    {!! number_format($detail->hna ?? 0) !!}
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <th colspan='7'>Grandtotal</th>
-                        <th class='text-right'>{{ number_format($grandtotal) }}</th>
-                        <th class='text-right'>{{ number_format($hna_total) }}</th>
+                        <th class='text-right'>{!! number_format($grandtotal) !!}</th>
+                        <th class='text-right'>{!! number_format($hna_total) !!}</th>
                     </tfoot>
 
                 </table>
@@ -137,7 +137,7 @@
                         <span style='display:inline-block;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>Disetujui Oleh</p>
-                            <p style='text-align:center;width:210%'>( {{$receipt->purchase_order->purchase_request->approved->user->name ?? $dot}} )</p>
+                            <p style='text-align:center;width:210%'>( {!!$receipt->purchase_order->purchase_request->approved->user->name ?? $dot!!} )</p>
                         </span>
                     </div>
                 </div>

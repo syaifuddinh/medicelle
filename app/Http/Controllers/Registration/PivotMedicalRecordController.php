@@ -67,4 +67,52 @@ class PivotMedicalRecordController extends Controller
 
         return response()->json(['message' => 'Data berhasil disimpan']);
     }
+
+    public function storeContent(Request $request, $id) {
+        $dt = DB::table('pivot_medical_records')
+        ->whereId($id)
+        ->first();
+
+        if(!$dt) {
+            return response()->json(['message' => 'Data tidak ditemukan']);
+        }
+
+        DB::table('pivot_medical_records')
+        ->whereId($id)
+        ->update([
+            'content' => $request->content
+        ]);
+
+        return response()->json(['message' => 'Data berhasil disimpan']);
+    }
+
+    public function showContent(Request $request, $id) {
+        $dt = DB::table('pivot_medical_records')
+        ->whereId($id)
+        ->first();
+
+        if(!$dt) {
+            return response()->json(['message' => 'Data tidak ditemukan']);
+        }
+
+        return response()->json(['message' => 'Data berhasil disimpan', 'data' => $dt->content]);
+    }
+
+    public function printContent($id) {
+        $dt = DB::table('pivot_medical_records')
+        ->whereId($id)
+        ->first();
+
+
+        if(!$dt) {
+            return response()->json(['message' => 'Data tidak ditemukan']);
+        }
+        $params['content'] = $dt->content;
+
+        $pdf = PDF::loadview('pdf/medical_resume_template',$params);
+        return $pdf->stream('resume-medis.pdf');
+
+    }
+
+
 }

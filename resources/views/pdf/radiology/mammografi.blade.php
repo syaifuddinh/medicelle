@@ -22,12 +22,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
-                    <p>{{ $company->address }}</p>
-                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@
                     <span style="display:inline-block;width:22mm">CC Kanan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_cc_kanan ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_cc_kanan ?? $dot !!}
                     </span>
                 </div>
 
@@ -51,7 +51,7 @@
                     <span style="display:inline-block;width:22mm">MLO Kanan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kanan ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_mlo_kanan ?? $dot !!}
                     </span>
                 </div>
 
@@ -59,7 +59,7 @@
                     <span style="display:inline-block;width:22mm">CC Kiri</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_cc_kiri ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_cc_kiri ?? $dot !!}
                     </span>
                 </div>
 
@@ -67,7 +67,7 @@
                     <span style="display:inline-block;width:22mm">MLO Kiri</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_mlo_kiri ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_mlo_kiri ?? $dot !!}
                     </span>
                 </div>
 
@@ -75,7 +75,7 @@
                     <span style="display:inline-block;width:22mm">Kesimpulan</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_kesimpulan ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_kesimpulan ?? $dot !!}
                     </span>
                 </div>
 
@@ -83,15 +83,15 @@
                     <span style="display:inline-block;width:22mm">Saran</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-right:2mm">
-                        {{ $pivotMedicalRecord->additional->mammografi_saran ?? $dot }}
+                        {!! $pivotMedicalRecord->additional->mammografi_saran ?? $dot !!}
                     </span>
                 </div>
                 
                 <div style='position:absolute;bottom:28mm'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:40%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{{ Mod::company()->city }}, {{ Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) }}</p>
-                        <p style='text-align:center;'>( {{$medicalRecord->registration_detail->doctor->name}} )</p>
+                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!}</p>
+                        <p style='text-align:center;'>( {!!$medicalRecord->registration_detail->doctor->name!!} )</p>
                     </div>
                 </div>
 

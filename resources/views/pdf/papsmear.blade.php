@@ -21,12 +21,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
                 </div>
                 <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm'>
-                    <b style='font-size:106%;text-transform:uppercase'>{{ $company->name }}</b>
-                    <p>{{ $company->address }}</p>
-                    <p>Telp : {{ $company->phone_number }} Fax : {{ $company->fax }}</p>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->name !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -50,7 +50,7 @@
                                 ALAMAT
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->address }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->address !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -58,7 +58,7 @@
                                 UMUR
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->age }} Tahun</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -66,7 +66,7 @@
                                 KELAMIN
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->gender }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->gender !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -74,7 +74,7 @@
                                 NOMOR RM
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->code }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->code !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -82,7 +82,7 @@
                                 NO. TLP
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->phone }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->phone !!}</span>
                         </p>
 
                         <p style='margin-bottom:1mm'>
@@ -90,7 +90,7 @@
                                 STATUS
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->patient->marriage_status }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->marriage_status !!}</span>
                         </p>
                     </div>
 
@@ -103,21 +103,21 @@
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
                         </p>
                         <p style='margin-bottom:1mm'>
                             <span style='display:inline-block;width:40mm'>
                                 POLI / RUANGAN
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->polyclinic->name }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                         </p>
                         <p style='margin-bottom:1mm'>
                             <span style='display:inline-block;width:40mm'>
                                 NO. TELP
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{{ $medicalRecord->registration_detail->doctor->phone }}</span>
+                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->phone !!}</span>
                         </p>
                     </div>
                 
@@ -125,21 +125,21 @@
                     <span style="display:inline-block;margin-right:1mm">HARI PERTAMA HAID TERAKHIR / MENOPAUSE</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                         {{ Mod::fullDate($medicalRecord->hpht) ?? $dot }}
+                         {!! Mod::fullDate($medicalRecord->hpht) ?? $dot !!}
                     </span>                    
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">RIWAYAT KONTRASEPSI</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_kontrasepsi ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_kontrasepsi ?? $dot !!}
                     </span>                    
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">RIWAYAT VAKSINASI</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->riwayat_vaksinasi ?? $dot }}
+                        {!! $medicalRecord->additional->riwayat_vaksinasi ?? $dot !!}
                     </span>
                 </div>
                 <div>
@@ -148,7 +148,7 @@
                     </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->obgyn_papsmear ?? $dot }}
+                        {!! $medicalRecord->additional->obgyn_papsmear ?? $dot !!}
                     </span>
                           
                 </div>
@@ -157,42 +157,42 @@
                     <span style="display:inline-block;width:54mm">KELUHAN SAAT INI</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_keluhan ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_keluhan ?? $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">TANGGAL PENGAMBILAN PAPSMEAR  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ null != ($medicalRecord->additional->papsmear_date ?? null) ? Mod::fullDate($medicalRecord->additional->papsmear_date) : $dot }}
+                        {!! null != ($medicalRecord->additional->papsmear_date ?? null) ? Mod::fullDate($medicalRecord->additional->papsmear_date) : $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">JUMLAH SLIDE PAPSMEAR  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_jumlah_slide ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_jumlah_slide ?? $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">LOKASI PENGAMBILAN  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_lokasi ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_lokasi ?? $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">GAMBARAN PORTIO CERVIX / VAGINA  </span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_cervix ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_cervix ?? $dot !!}
                     </span>
                 </div>
                 <div>
                     <span style="display:inline-block;width:54mm">INFORMASI KLINIS LAIN</span>
                     <span style="display:inline-block;">:</span>
                     <span style="display:inline-block;margin-left:1mm">
-                        {{ $medicalRecord->additional->papsmear_description ?? $dot }}
+                        {!! $medicalRecord->additional->papsmear_description ?? $dot !!}
                     </span>
                 </div>
 

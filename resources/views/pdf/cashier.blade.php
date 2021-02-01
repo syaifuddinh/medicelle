@@ -28,8 +28,8 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{{ $company->logo }}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{{ $company->address }}</p>
+                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
+                    <p style='font-size:85%'>{!! $company->address !!}</p>
                 </div>
             </div>
 
@@ -42,28 +42,28 @@
                     <div style='display:inline-block;width:40%;'>
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>No. Nota</span>
-                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {{ $data['invoice']->code }}</span>
+                            <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $data['invoice']->code !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Tanggal</span>
-                            <span style='display:inline-block'>: {{ Mod::fullDate($data['invoice']->date) }}</span>
+                            <span style='display:inline-block'>: {!! Mod::fullDate($data['invoice']->date) !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Register</span>
-                            <span style='display:inline-block'>: {{ $registration->code }}</span>
+                            <span style='display:inline-block'>: {!! $registration->code !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>No. RM</span>
-                            <span style='display:inline-block'>: {{ $registration->medical_record->code }}</span>
+                            <span style='display:inline-block'>: {!! $registration->medical_record->code !!}</span>
                         </div>
 
 
                         <div style='margin-bottom:0.6mm'>
                             <span style='display:inline-block;width:17mm'>Telp.</span>
-                            <span style='display:inline-block'>: {{ $registration->patient->phone }}</span>
+                            <span style='display:inline-block'>: {!! $registration->patient->phone !!}</span>
                         </div>
                     </div>
                    
@@ -85,18 +85,18 @@
                                 <?php $subtotal = 0; ?>
                                 <tr>
                                     <td colspan="6">
-                                        <b>{{ $grup_nota }}</b>
+                                        <b>{!! $grup_nota !!}</b>
                                     </td>
                                 </tr>
                                 @foreach($payment as $detail)
                                     <?php $subtotal += $detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet; ?>
                                     <tr>
-                                        <td>{{ $detail->item->unique_code }}</td>
-                                        <td>{{ $detail->item->name }}</td>
-                                        <td style='text-align: right'>{{ $detail->qty }}</td>
-                                        <td>{{ $detail->item->piece->name ?? '-' }}</td>
-                                        <td style='text-align: right'>{{ number_format($detail->debet - $detail->reduksi_reference->credit - $detail->discount_reference->credit) }}</td>
-                                        <td style='text-align: right'>{{ number_format($detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet) }}</td>
+                                        <td>{!! $detail->item->unique_code !!}</td>
+                                        <td>{!! $detail->item->name !!}</td>
+                                        <td style='text-align: right'>{!! $detail->qty !!}</td>
+                                        <td>{!! $detail->item->piece->name ?? '-' !!}</td>
+                                        <td style='text-align: right'>{!! number_format($detail->debet - $detail->reduksi_reference->credit - $detail->discount_reference->credit) !!}</td>
+                                        <td style='text-align: right'>{!! number_format($detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet) !!}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
@@ -108,15 +108,15 @@
                     </tbody>
                 </table>
                 <div style='position:relative;margin-top:2mm;padding-bottom:1mm;border-bottom:1px solid black'>
-                    <p>Terbilang : # {{ Mod::readMoney($data['invoice']->netto) }} rupiah #</p>
+                    <p>Terbilang : # {!! Mod::readMoney($data['invoice']->netto) !!} rupiah #</p>
                     <div style='margin-top:9mm'>
                         <span style='width:30%;display:inline-block'>
                             <p style='margin-bottom:13mm;text-align:center'>Kasir Customer Service</p>
-                            <p style='text-align:center'>( {{$data['invoice']->teller->name}} )</p>
+                            <p style='text-align:center'>( {!!$data['invoice']->teller->name!!} )</p>
                         </span>
                         <span style='width:30%;display:inline-block'>
                             <p style='margin-bottom:13mm;text-align:center'>Pasien</p>
-                            <p style='text-align:center'>( {{$registration->patient->name}} {{ $registration->patient->patient_type ? ', ' . $registration->patient->patient_type : ''  }}  )</p>
+                            <p style='text-align:center'>( {!!$registration->patient->name!!} {!! $registration->patient->patient_type ? ', ' . $registration->patient->patient_type : ''  !!}  )</p>
                         </span>
                     </div>
                     <div style='border:1px solid black;padding:2mm 4mm;display:inline-block;font-size:90%'>
@@ -129,7 +129,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->gross - $data['invoice']->reduksi + $data['invoice']->asuransi_value) }}</b>
+                                <b>{!! number_format($data['invoice']->gross - $data['invoice']->reduksi + $data['invoice']->asuransi_value) !!}</b>
                             </span>
                         </div>
                         <div style='padding-bottom:2mm;padding-top:1mm;border-bottom:1px solid black'>
@@ -138,7 +138,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->discount + $data['invoice']->massive_discount->total_credit + $data['invoice']->promo->total_credit) }}</b>
+                                <b>{!! number_format($data['invoice']->discount + $data['invoice']->massive_discount->total_credit + $data['invoice']->promo->total_credit) !!}</b>
                             </span>
                         </div>
                         <div style='padding-top:3mm'>
@@ -147,7 +147,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->netto) }}</b>
+                                <b>{!! number_format($data['invoice']->netto) !!}</b>
                             </span>
                         </div>
                         <div  style='padding-bottom:2mm;padding-top:1mm;border-bottom:1px solid black'>
@@ -156,7 +156,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->paid) }}</b>
+                                <b>{!! number_format($data['invoice']->paid) !!}</b>
                             </span>
                         </div>
                         <div  style='padding-top:3mm'>
@@ -165,12 +165,12 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{{ number_format($data['invoice']->paid - $data['invoice']->netto) }}</b>
+                                <b>{!! number_format($data['invoice']->paid - $data['invoice']->netto) !!}</b>
                             </span>
                         </div>
                     </div>
                 </div>
-                <p style='margin-top:1mm'>Tanggal : {{ Mod::now() }}</p>
+                <p style='margin-top:1mm'>Tanggal : {!! Mod::now() !!}</p>
         
                 @include('pdf/letter_footer')        
             </div>
