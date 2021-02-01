@@ -1,5 +1,6 @@
 app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter', '$compile', '$timeout', function($scope, $http, $rootScope, $filter, $compile, $timeout) {
     $scope.title = 'Form Rekam Medis';
+    $scope.input_history = []
     $scope.data = {}
     $scope.dot = '.............................................................................................................'
     $scope.shortDot = '..........'
@@ -804,7 +805,9 @@ function strip_tags(str) {
               pain_cure_history_datatable.rows.add(data.data.pain_cure_history).draw()
               allergy_history_datatable.rows.add(data.data.allergy_history).draw()
             } else if(step == 2) {
+              obgyn_disease_history_datatable.clear().draw()
               obgyn_disease_history_datatable.rows.add(data.data.obgyn_disease_history).draw()
+              obgyn_family_disease_history_datatable.clear().draw()
               obgyn_family_disease_history_datatable.rows.add(data.data.obgyn_family_disease_history).draw()
               ginekologi_history_datatable.rows.add(data.data.ginekologi_history).draw()
               kb_history_datatable.rows.add(data.data.kb_history).draw()
@@ -1107,13 +1110,15 @@ function strip_tags(str) {
 
   $scope.submitGinekologiHistory = function() {
       if($scope.ginekologi_history.name) {
-          ginekologi_history_datatable.row.add($scope.ginekologi_history).draw()
+          $scope.ginekologi_history.is_ginekologi_history = 1
+          $scope.storeDetail($scope.ginekologi_history)
           $scope.ginekologi_history = {}
       }
   }
 
   $scope.submitObgynDiseaseHistory = function() {
-      obgyn_disease_history_datatable.row.add($scope.obgyn_disease_history).draw()
+      $scope.obgyn_disease_history.is_obgyn_disease_history = 1
+      $scope.storeDetail($scope.obgyn_disease_history)
       $scope.obgyn_disease_history = {}
   }
 
@@ -1181,8 +1186,8 @@ function strip_tags(str) {
 
 
   $scope.submitObgynFamilyDiseaseHistory = function() {
-      obgyn_family_disease_history_datatable.row.add($scope.obgyn_family_disease_history).draw()
-      $scope.obgyn_family_disease_history = {}
+      $scope.obgyn_family_disease_history.is_obgyn_family_disease_history = 1
+      $scope.storeDetail($scope.obgyn_family_disease_history)
   }
 
 
@@ -3139,7 +3144,8 @@ drug_datatable = $('#drug_datatable').DataTable({
 
   $scope.deleteGinekologiHistory = function(e) {
     var tr = $(e).parents('tr');
-    ginekologi_history_datatable.row(tr).remove().draw()
+    var data = ginekologi_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
   $scope.deleteFamilyDiseaseHistory = function(e) {
@@ -3152,14 +3158,14 @@ drug_datatable = $('#drug_datatable').DataTable({
     
   $scope.deleteObgynDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
-    obgyn_disease_history_datatable.row(tr).remove().draw()
+    var data = obgyn_disease_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
   $scope.deleteObgynFamilyDiseaseHistory = function(e) {
     var tr = $(e).parents('tr');
-    //var data = obgyn_family_disease_history_datatable.row(tr).data()
-    obgyn_family_disease_history_datatable.row(tr).remove().draw()
-    //$scope.destroyDetail(data.id)
+    var data = obgyn_family_disease_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
 
     $scope.submitSchedule=function() {
@@ -3437,6 +3443,14 @@ drug_datatable = $('#drug_datatable').DataTable({
       //   }
       //}
       //data.item_id = drug.item_id
+      var index
+      if($scope.input_history.length > 0) {
+            index = $scope.input_history.findIndex(x => JSON.stringify(x) == JSON.stringify(data))
+            if(index > -1) {
+                return false
+            }
+      }
+      $scope.input_history.push(data)
       if(data.is_diagnostic) {
          data.additional = {
             'pivot' : $scope.pivotData
