@@ -422,7 +422,7 @@ class MedicalRecordController extends Controller
 
     public function medical_resume_template(Request $request, $id) {
         $params = $this->fetch_medical_resume($request, $id);
-        $dt = (String) View::make('pdf/medical_resume', $params);
+        $dt = (String) View::make('pdf/medical_resume_content', $params);
         $data['data'] = $dt;
         return response()->json($data);
     }

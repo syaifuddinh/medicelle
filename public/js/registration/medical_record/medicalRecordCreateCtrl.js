@@ -17,6 +17,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }, 300)
 
     $('#printButton').hide()
+    $('#submitButton').hide()
     if(path.indexOf('permintaan') > -1) {
         $('#printButton').show()
     } 
@@ -24,6 +25,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     $timeout(function () {
         $compile($("#submitButton"))($scope);
     }, 800)
+
+function strip_tags(str) {
+    str = str.toString();
+    return str.replace(/<\/?[^>]+>/gi, '');
+}
 
     $('#printButton').click(function(){
        if(path.indexOf('fnab') > -1) {
@@ -209,7 +215,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
                   data:null, 
                   render:function(resp) {
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-                      var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (resp.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
+                      var summary = "Keluhan : " + (strip_tags(resp.medical_record.main_complaint) || '-') + " , Penyakit Sekarang : " + (strip_tags(resp.medical_record.current_disease) || '-') + " , Diagnosa : " + (resp.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
                       return summary
                   }
                 },
@@ -287,7 +293,7 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 					  var textresp=resp.medadd.replace(/&quot;/g, '"');
 					  var obj = JSON.parse(textresp);
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-					  var summary = "Keluhan : " + (resp.medical_record.main_complaint || '-') + " , Penyakit Sekarang : " + (resp.medical_record.current_disease || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
+					  var summary = "Keluhan : " + (strip_tags(resp.medical_record.main_complaint) || '-') + " , Penyakit Sekarang : " + (strip_tags(resp.medical_record.current_disease) || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
 	                  return summary
                   }
                 },
