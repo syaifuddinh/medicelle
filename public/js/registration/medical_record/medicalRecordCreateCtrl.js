@@ -3451,6 +3451,7 @@ drug_datatable = $('#drug_datatable').DataTable({
             }
       }
       $scope.input_history.push(data)
+      
       if(data.is_diagnostic) {
          data.additional = {
             'pivot' : $scope.pivotData
@@ -3461,11 +3462,12 @@ drug_datatable = $('#drug_datatable').DataTable({
       var method = 'post';
 
 
-      $http[method](url, data).then(function(data) {
+      $http[method](url, data).then(function(resp) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         $scope.show()
       }, function(error) {
+        $scope.input_history.pop()
         $rootScope.disBtn=false;
         if (error.status==422) {
           var det="";

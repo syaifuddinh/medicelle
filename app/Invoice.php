@@ -10,7 +10,7 @@ use DB;
 class Invoice extends Model
 {
     protected $hidden = ['updated_at'];
-    protected $fillable = ['discount_id', 'code', 'registration_id', 'date', 'description', 'promo_description', 'payment_method', 'payment_type', 'paid', 'invoice_amandemen_id', 'status'];
+    protected $fillable = ['discount_id', 'code', 'registration_id', 'date', 'description', 'promo_description', 'payment_method', 'payment_type', 'paid', 'invoice_amandemen_id', 'status', 'reduksi'];
     protected $appends = ['status_name'];
 
     public static function boot() {

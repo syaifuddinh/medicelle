@@ -144,4 +144,21 @@ class RegistrationDetail extends Model
     public function registration() {
         return $this->belongsTo('App\Registration');
     }
+
+    public static function amademenConsultationInvoice($id) {
+        $dt = self::whereId($registration_detail_id);
+        $invoice = Invoice::whereRegistrationId($dt->registration_id)        
+        ->whereIsNotaRawatJalan(1)
+        ->first();
+        if($invoice) {
+            $medicalRecord = DB::table('medical_records')
+            ->whereRegistrationDetailId($id)
+            ->first();
+
+            $reduksi = $medicalRecord->reduksi ?? 0;
+            $invoice = Invoice::find($invoice->id);
+            $invoice->reduksi = $reduksi;
+            $invoice->save();
+        }
+    }
 }
