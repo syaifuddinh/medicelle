@@ -1180,8 +1180,11 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
 
 
   $scope.submitObgynFamilyDiseaseHistory = function() {
-      $scope.obgyn_family_disease_history.is_obgyn_family_disease_history = 1
-      $scope.storeDetail($scope.obgyn_family_disease_history)
+      if($scope.obgyn_family_disease_history.disease_name) {
+          $scope.obgyn_family_disease_history.is_obgyn_family_disease_history = 1
+          $scope.storeDetail($scope.obgyn_family_disease_history)
+          $scope.obgyn_family_disease_history = {}
+      }
   }
 
 
