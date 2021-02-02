@@ -1117,9 +1117,11 @@ function strip_tags(str) {
   }
 
   $scope.submitObgynDiseaseHistory = function() {
-      $scope.obgyn_disease_history.is_obgyn_disease_history = 1
-      $scope.storeDetail($scope.obgyn_disease_history)
-      $scope.obgyn_disease_history = {}
+      if($scope.obgyn_disease_history.disease_name) {
+          $scope.obgyn_disease_history.is_obgyn_disease_history = 1
+          $scope.storeDetail($scope.obgyn_disease_history)
+          $scope.obgyn_disease_history = {}
+      }
   }
 
   $scope.changeDrugPiece = function() {
