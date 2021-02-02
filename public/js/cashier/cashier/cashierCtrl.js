@@ -93,8 +93,11 @@ app.controller('cashier', ['$scope', '$compile', '$http', '$filter', function($s
     if(is_date.test($scope.formData.date_start) || is_date.test($scope.formData.date_end)) {
       
     }
-  oTable.ajax.reload()
+    oTable.ajax.reload()
   }
+  $timeout(function(){
+      $scope.filter()
+  }, 500)
 
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda ingin menon-aktifkan data ini ?');

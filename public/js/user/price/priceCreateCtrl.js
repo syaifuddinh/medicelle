@@ -7,6 +7,7 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$ti
     var pathhead = path.replace('/create', '')
     pathhead = pathhead.replace('price/', '')
     pathhead = pathhead.replace('/', '')
+    $scope.originpath = pathhead
     if(pathhead == 'administration') {
         pathhead = 'registration'
     }
@@ -196,7 +197,7 @@ app.controller('priceCreate', ['$scope', '$http', '$rootScope', '$compile', '$ti
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
         setTimeout(function () {
-          window.location = baseUrl + '/price/' + $scope.pathhead          
+          window.location = baseUrl + '/price/' + $scope.originpath          
         }, 1000)
       }, function(error) {
         $rootScope.disBtn=false;

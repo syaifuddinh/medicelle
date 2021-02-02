@@ -19,6 +19,7 @@ use PhpOffice\PhpWord\PhpWord;
 use Image;
 use Exception;
 use View;
+use Illuminate\Support\Facades\Schema;
 
 class MedicalRecordController extends Controller
 {
@@ -1086,13 +1087,7 @@ class MedicalRecordController extends Controller
             $medicalRecord = MedicalRecord::findOrFail($id);
             $input = $request->all();
 
-            $exist = DB::table('medical_record_details')
-            ->whereMedicalRecordId($id);
 
-            foreach ($input as $i => $v) {
-                $exist = $exist->where($i, $v);
-            }
-            if($exist->count('id') == 0) {
                 if($request->is_treatment == 1) {
                     $input = $request->all();
                     $input['is_treatment'] = 1;
@@ -1158,7 +1153,6 @@ class MedicalRecordController extends Controller
                     $input['is_obgyn_disease_history'] = 1;
                     $medicalRecord->obgyn_disease_history()->create($input);
                 } 
-            }
             DB::commit();
         } catch(Exception $e) {
             return Response::json(['message' => $e->getMessage()], 422);
