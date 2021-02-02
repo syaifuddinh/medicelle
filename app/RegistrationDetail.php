@@ -9,6 +9,7 @@ use App\Contact;
 use App\Invoice;
 use App\InvoiceDetail;
 use App\PivotMedicalRecord;
+use App\MedicalRecord;
 use Carbon\Carbon;
 use DB;
 use Exception;
@@ -146,19 +147,40 @@ class RegistrationDetail extends Model
     }
 
     public static function amademenConsultationInvoice($id) {
-        $dt = self::whereId($registration_detail_id);
-        $invoice = Invoice::whereRegistrationId($dt->registration_id)        
-        ->whereIsNotaRawatJalan(1)
-        ->first();
-        if($invoice) {
-            $medicalRecord = DB::table('medical_records')
-            ->whereRegistrationDetailId($id)
+        $dt = self::whereId($id)->first();
+        if($dt) {
+            $invoice = Invoice::whereRegistrationId($dt->registration_id)        
+            ->whereIsNotaRawatJalan(1)
             ->first();
+            if($invoice) {
+                $medicalRecord = DB::table('medical_records')
+                ->whereRegistrationDetailId($id)
+                ->first();
 
-            $reduksi = $medicalRecord->reduksi ?? 0;
-            $invoice = Invoice::find($invoice->id);
-            $invoice->reduksi = $reduksi;
-            $invoice->save();
+                $reduksi = $medicalRecord->reduksi ?? 0;
+
+                $invoice = Invoice::find($invoice->id);
+                $invoiceDetail = $invoice->detail;
+                foreach ($invoiceDetail as $detail) {
+                    $item = DB::table('prices')
+                    ->whereItemId($detail->item_id)
+                    ->first();
+                    $percentage = $item->percentage ?? 0;
+                    $reduksi_charge = MedicalRecord::countReduksi($reduksi, $percentage, $detail->grandtotal);
+                    $reduksiDetail = new InvoiceDetail();
+                    $reduksiDetail->invoice_id = $detail->invoice_id;
+                    $reduksiDetail->qty = 1;
+                    $reduksiDetail->credit = $reduksi_charge;
+                    $reduksiDetail->is_reduksi = 1;
+                    $reduksiDetail->invoice_detail_id = $detail->id;
+                    $reduksiDetail->save();
+                }
+
+
+
+                $invoice->status = 4;
+                $invoice->save();
+            }
         }
     }
 }

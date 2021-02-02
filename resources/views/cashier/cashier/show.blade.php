@@ -137,14 +137,14 @@
                                             <th></th>
                                             <th></th>
                                             <th  colspan='2' class='text-right'>Total tagihan</th>
-                                            <th class='text-right' title='Total tagihan yang harus dibayar'><% grandtotal | number%></th>
+                                            <th class='text-right' title='Total tagihan yang harus dibayar'><% formData.netto | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
                                             <th  colspan='2' class='text-right'>Sisa</th>
                                             <th class='text-right' title='Sisa'>
-                                                <%  (grandtotal - formData.paid) | number%>
+                                                <%  (formData.netto - formData.paid) | number%>
                                             </th>
                                         </tr>
                                         <tr>

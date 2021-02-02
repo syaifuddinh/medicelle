@@ -267,6 +267,7 @@ class RegistrationController extends Controller
             $registration->status = 1;
             $registration->save();
             $this->storeFormula($registration_detail_id);
+            RegistrationDetail::amademenConsultationInvoice($registration_detail_id);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

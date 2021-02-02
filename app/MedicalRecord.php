@@ -347,4 +347,13 @@ class MedicalRecord extends Model
     public function imunisasi_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsImunisasiHistory(1);
     }
+
+    public static function countReduksi($reduksi = 0, $percentage = 100, $item_price = 0) {
+        //$doctor_allocation = $total_debet * $percentage / 100;
+        $doctor_allocation = $item_price * $percentage / 100;
+        $reduksi_value = $doctor_allocation * $reduksi / 100;
+        $reduksi_charge = $reduksi_value;
+
+        return $reduksi_charge;        
+    }
 }
