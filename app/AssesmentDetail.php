@@ -42,7 +42,7 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail = new MedicalRecordDetail();
                     $medicalRecordDetail->medical_record_id = $r->medical_record_id;
                     $medicalRecordDetail->is_disease_history = 1;
-                    $medicalRecordDetail->disease_name = $disease_name;
+                    $medicalRecordDetail->disease_name = $assesmentDetail->imunisasi;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
                     $medicalRecordDetail->description = $assesmentDetail->side_effect; //pake side_effect utk menyimpan textbased terakhir kontrol
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
@@ -51,7 +51,7 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail = new MedicalRecordDetail();
                     $medicalRecordDetail->medical_record_id = $r->medical_record_id;
                     $medicalRecordDetail->is_obgyn_disease_history = 1;
-                    $medicalRecordDetail->disease_name = $disease_name;
+                    $medicalRecordDetail->disease_name = $assesmentDetail->imunisasi;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
                     $medicalRecordDetail->description = $assesmentDetail->side_effect; //pake side_effect utk menyimpan textbased terakhir kontrol
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
@@ -60,7 +60,7 @@ class AssesmentDetail extends Model
                 if($assesmentDetail->is_family_disease_history == 1) {
                     $medicalRecordDetail = new MedicalRecordDetail();
                     $medicalRecordDetail->medical_record_id = $r->medical_record_id;
-                    $medicalRecordDetail->disease_name = $disease_name;
+                    $medicalRecordDetail->disease_name = $assesmentDetail->imunisasi;
                     $medicalRecordDetail->is_family_disease_history = 1;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;//cure disini adalah keluarga yg menderita penyakit
                     $medicalRecordDetail->description = $assesmentDetail->side_effect;//side effect disini adalah status dari isian tsb
@@ -71,7 +71,7 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail = new MedicalRecordDetail();
                     $medicalRecordDetail->medical_record_id = $r->medical_record_id;
                     $medicalRecordDetail->is_obgyn_family_disease_history = 1;
-                    $medicalRecordDetail->disease_name = $disease_name;
+                    $medicalRecordDetail->disease_name = $assesmentDetail->imunisasi;
                     $medicalRecordDetail->cure = $assesmentDetail->cure;
                     $medicalRecordDetail->description = $assesmentDetail->side_effect;//side effect disini adalah status dari isian tsb
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;

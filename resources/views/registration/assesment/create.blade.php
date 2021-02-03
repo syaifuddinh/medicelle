@@ -41,9 +41,7 @@
                                 <div class="form-group col-md-3">
                                     
                                     <label>Penyakit</label>
-                                    <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.category.name for c in data.disease" ng-model="disease_history.disease_id">
-                                        <option value=""></option>
-                                    </select>
+                                    <input type="text" class='form-control' ng-model="disease_history.imunisasi">
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
                                     
@@ -56,7 +54,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='disease_history.side_effect'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.disease_id'><i class="fa fa-check"></i></button>
+                                            <button type='button' class='btn btn-success' ng-click='submitDiseaseHistory()' ng-disabled='!disease_history.imunisasi'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 
@@ -88,9 +86,7 @@
                                 <div class="form-group col-md-3">
                                     
                                     <label>Penyakit</label>
-                                    <select class="form-control col-md-12" data-placeholder-text-single="'Pilih Penyakit'"  chosen allow-single-deselect="false" ng-options="c.id as c.name group by c.category.name for c in data.disease" ng-model="family_disease_history.disease_id">
-                                        <option value=""></option>
-                                    </select>
+                                    <input type="text" class='form-control' ng-model="family_disease_history.imunisasi">
                                 </div>
                                 <div class="form-group col-md-4 mg-r2">
                                     
@@ -103,7 +99,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model='family_disease_history.side_effect'>
                                         <div class="input-group-btn">
-                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.disease_id'><i class="fa fa-check"></i></button>
+                                            <button type='button' class='btn btn-success' ng-click='submitFamilyDiseaseHistory()' ng-disabled='!family_disease_history.imunisasi'><i class="fa fa-check"></i></button>
                                         </div>
                                     </div>
 

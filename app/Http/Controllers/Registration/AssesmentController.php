@@ -53,8 +53,8 @@ class AssesmentController extends Controller
     {
         $x = Assesment::with(
             'patient:id,name', 
-            'disease_history:assesment_id,disease_id,cure,side_effect', 
-            'family_disease_history:assesment_id,disease_id,cure,side_effect', 
+            'disease_history:assesment_id,imunisasi,cure,side_effect', 
+            'family_disease_history:assesment_id,imunisasi,cure,side_effect', 
             'pain_history:assesment_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'allergy_history:assesment_id,cure,side_effect', 
             'pain_history:assesment_id,pain_location,is_other_pain_type,pain_type,pain_duration', 

@@ -439,13 +439,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   disease_history_datatable = $('#disease_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
-    {
-      data : null,
-      render : function(resp) {
-        var disease = $scope.data.disease.find(x => x.id == resp.disease_id);
-        return disease ? disease.name : '-'
-      }
-    },
+    {data : 'imunisasi'},
     {data : 'cure'},
     {data : 'side_effect'},
     {
@@ -462,13 +456,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   family_disease_history_datatable = $('#family_disease_history_datatable').DataTable({
     dom: 'rt',
     'columns' : [
-    {
-      data : null,
-      render : function(resp) {
-        var disease = $scope.data.disease.find(x => x.id == resp.disease_id);
-        return disease ? disease.name : '-'
-      }
-    },
+    {data : 'imunisasi'},
     {data : 'cure'},
     {data : 'side_effect'},
 
