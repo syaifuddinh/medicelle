@@ -9,7 +9,11 @@ trix-editor {
   margin: 0;
   padding: 0.4em 0.6em;
   min-height: 5em;
-  outline: none; }
+  outline: none; 
+  overflow-y: auto;
+  height: 150px !important;
+  max-height: 250px !important
+  }
 trix-toolbar * {
   box-sizing: border-box; }
 trix-toolbar .trix-button-row {
@@ -299,7 +303,9 @@ trix-editor .attachment__metadata {
     white-space: nowrap; }
 @charset "UTF-8";
 .trix-content {
-  line-height: 1.5; }
+  line-height: 1.5; 
+  overflow-y: auto;
+  }
   .trix-content * {
     box-sizing: border-box;
     margin: 0;

@@ -65,7 +65,7 @@
                                             <label class="control-label col-md-4 col-xs-12">Pemeriksaan fisik
                                             </label>
                                             <div class="col-md-8 col-xs-12">
-                                                <trix-editor angular-trix class="form-control" ng-model='formData.physique'  ng-change='submitOne("physique")'></trix-editor>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.physique' ng-change='submitOne("physique")'></trix-editor>
                                             </div>
                                         </div>
 
