@@ -67,7 +67,7 @@ class Assesment extends Model
                     'is_tidy' => $assesment->is_tidy,
                     'hpht' => $assesment->hpht,
                     'haid_complaint' => $assesment->haid_complaint,
-                    'obgyn_current_disease' => $assesment->additional->riwayat_penyakit_sekarang
+                    'obgyn_current_disease' => $assesment->additional->riwayat_penyakit_sekarang ?? ''
                 ];
                 if(!$unit->medical_record->current_disease) {
                     $params['current_disease'] = $assesment->additional->riwayat_penyakit_sekarang ?? '';
