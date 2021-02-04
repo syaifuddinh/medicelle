@@ -1739,8 +1739,16 @@ function strip_tags(str) {
               className : 'text-center',
               render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectBHP($event.currentTarget)'>Pilih</button>"
             },
-            {data : 'name'},
-			{data : 'amount'},
+			{
+              data:'name', 
+              name:'items.name',
+			  searchable:true,
+			},
+			{
+              data:'amount', 
+              name:'stock_transactions.amount',
+			  searchable:false,
+			},
             {
               data:null, 
               name:null,
@@ -1748,7 +1756,10 @@ function strip_tags(str) {
               orderable:false,
               render : resp => "<input type='text' class='form-control' ng-model='qty' id='qty' maxlength='3' jnumber2 only-num>"
             },
-            {data : 'piece.name'},
+            {
+              data:'piecename', 
+              name:'pieces.name',
+			},
             ],
             createdRow: function(row, data, dataIndex) {
               $compile(angular.element(row).contents())($scope);
