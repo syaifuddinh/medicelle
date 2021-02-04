@@ -27,15 +27,50 @@
                 </div>
             </div>
 
+            <div class="col-md-12" style='padding-left:5.5mm'>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:5mm'>RESUME MEDIS</p>
+                <div>
+                    <div>
+                        <div style="display:inline-block;width:45mm">
+                            <b>No Rekam Medis</b>
+                        </div>
+                        <div style="display:inline-block;">
+                            : {!! $medicalRecord->code !!}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div style="display:inline-block;width:45mm">
+                            <b>Nama</b>
+                        </div>
+                        <div style="display:inline-block;width:150mm">
+                            : {!! $medicalRecord->registration->patient->patient_type !!} {!! $medicalRecord->registration->patient->name !!}
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:inline-block;width:45mm">
+                            <b>Tanggal lahir</b>
+                        </div>
+                        <div style="display:inline-block;width:150mm">
+                            : {!! Mod::fullDate($medicalRecord->registration->patient->birth_date) !!}
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:inline-block;width:45mm">
+                            <b>Alamat</b>
+                        </div>
+                        <div style="display:inline-block;width:150mm">
+                            : {!! $medicalRecord->registration->patient->address !!}
+                        </div>
+                    </div>
+                </div>
+
 {!! $content !!}
+
                 <div style='position:relative;margin-top:45mm'>   
                         @include('pdf/letter_footer')    
                 </div>
-
-
             </div>
         </div>
-
         @if(($medicalRecord->additional->general_visual ?? false) OR ($medicalRecord->additional->head_visual ?? false) OR ($medicalRecord->additional->breast_visual ?? false) OR ($medicalRecord->additional->rectum_visual ?? false))
 
             <div class="page-break"></div>
