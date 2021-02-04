@@ -430,6 +430,9 @@ class MedicalRecordController extends Controller
         $dt = str_replace("\n", '', $dt);
         $dt = str_replace("\"", '"', $dt);
         $dt = str_replace("\"", "'", $dt);
+		$dt = str_replace("<!--block-->","",$dt);
+		$dt = str_replace("<div>","",$dt);
+		$dt = str_replace("</div>","",$dt);
         $data['data'] = $dt;
         return response()->json($data);
     }

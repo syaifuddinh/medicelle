@@ -347,6 +347,7 @@ class MasterApiController extends Controller
 	public function bhplokasi(Request $request) {
         $stock_transactions = DB::table('stock_transactions')
         ->select('item_id', DB::raw('SUM(in_qty - out_qty) AS amount'))
+		->whereRaw('(in_qty - out_qty) > 0')
         ->groupBy('stock_transactions.item_id');
 		if($request->lokasi_id) {
            $stock_transactions = $stock_transactions->where('stock_transactions.lokasi_id',$request->lokasi_id);
@@ -361,6 +362,7 @@ class MasterApiController extends Controller
             $join->on('pieces.id', 'items.piece_id');
         });
 		$x = $x->select('items.id', DB::raw('COALESCE( stock_transactions.amount, 0) amount'),'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id','pieces.name as piecename');
+		$x = $x->whereRaw('stock_transactions.amount > 0');
         $x->orderBy('items.name', 'ASC');        
 
         return Datatables::eloquent($x)->make(true);

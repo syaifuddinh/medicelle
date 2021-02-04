@@ -116,7 +116,7 @@
                     <button type='button' class='btn btn-sm btn-primary' ng-click='tarikTemplate()'>Tarik Template</button>
                     <button type='button' class='btn btn-sm btn-success' ng-click='cetakTemplate()'>Cetak</button>
                 </div>
-                <trix-editor angular-trix ng-model='medical_resume.content' ng-change='storeMedicalResumeContent()'></trix-editor>
+                <trix-editor angular-trix  class='trix-content' ng-model='medical_resume.content' ng-change='storeMedicalResumeContent()'></trix-editor>
             </div>
         </div>
     </div>

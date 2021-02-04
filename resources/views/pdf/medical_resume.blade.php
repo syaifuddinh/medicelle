@@ -27,8 +27,6 @@
                     <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
-
-<<<<<<< HEAD
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:5mm'>RESUME MEDIS</p>
                 <div>
@@ -85,8 +83,8 @@
                 <p>Pemeriksaan fisik : {!! $medicalRecord->physique !!}</p>
                 <br>
                 <div style='margin-bottom:2mm'>
-                    <p>Pemeriksaan tambahan :</p>
-                    <?php if($medicalRecord->diagnostic) { ?>
+				<?php if($medicalRecord->diagnostic) { ?>
+                    <p>Pemeriksaan tambahan :</p>                    
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->diagnostic as $unit4)
                             <li>{!! $unit4->item->name ?? '' !!} 
@@ -111,8 +109,8 @@
                      @endforeach
                     </ol>
                     <br>
-                    <p>Terapi (Obat) :</p>
-                    <?php if($medicalRecord->drug) { ?>
+					<?php if($medicalRecord->drug) { ?>
+                    <p>Terapi (Obat) :</p>                    
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->drug as $unit)
                             <li>{!! $unit->item->name ?? ($unit->stock->item->name ?? '') !!} sebanyak {!! $unit->qty . ' ' . ($unit->item->piece->name ?? '') !!}, dosis : {!! ($unit->s1->name ?? '') .', '. ($unit->s2->name ?? '') !!}</li>
@@ -130,9 +128,9 @@
                     </ol><br>
                     <?php } else { ?>
                     <p>(tidak ada BHP yang diberikan)</p>
-                    <?php } ?> -->
-                    <p>Terapi (Tindakan) :</p>
+                    <?php } ?> -->                    
                     <?php if($medicalRecord->treatment) { ?>
+					<p>Terapi (Tindakan) :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->treatment as $unit3)
                             <li>{!! $unit3->item->name ?? '' !!}</li>
@@ -140,9 +138,9 @@
                     </ol><br>
                     <?php } else { ?>
                     <p>(tidak ada tindakan yang dilakukan)</p>
-                    <?php } ?>
-                    <p>Terapi (Paket Tindakan) :</p>
+                    <?php } ?>                    
                     <?php if($medicalRecord->treatment_group) { ?>
+					<p>Terapi (Paket Tindakan) :</p>
                     <ol style='margin-top:3mm;margin-left:6mm'>
                       @foreach($medicalRecord->treatment_group as $unit5)
                             <li>{!! $unit5->item->name ?? '' !!}</li>
@@ -173,22 +171,58 @@
                 <p >SPESIALIS {!! strtoupper($medicalRecord->registration_detail->doctor->specialization->name ?? '') !!}</p>
                 </div>
                 <br><br>
-
-                <div style='position:relative;margin-top:45mm'>   
-                        @include('pdf/letter_footer')    
-                </div>
-
-
             </div>
-=======
->>>>>>> 37d4f44d291d8f3d4abc299d6158ce25dcf35fce
-        </div>
-
-        <div>
-            @include('pdf/medical_resume_body')
-        </div>
-        
+        </div>       
         <div style='position:relative;margin-top:45mm'>   
                 @include('pdf/letter_footer')    
         </div>
+ </div>
+         @if(($medicalRecord->additional->general_visual ?? false) OR ($medicalRecord->additional->head_visual ?? false) OR ($medicalRecord->additional->breast_visual ?? false) OR ($medicalRecord->additional->rectum_visual ?? false))
+
+            <div class="page-break"></div>
+
+            <div style='border-bottom:1px solid black;margin-bottom:6mm;width:auto'>
+                <div style='display:inline-block'>
+                    <img src="{!! $company->logo2 !!}" style='width:auto;height:20mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:120mm'>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
+                </div>
+            </div>
+
+            @if($medicalRecord->additional->general_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Umum :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{!! $medicalRecord->additional->general_visual ?? ''!!}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->head_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Kepala & Leher :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{!! $medicalRecord->additional->head_visual ?? ''!!}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->breast_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Payudara :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{!! $medicalRecord->additional->breast_visual ?? ''!!}"></img>
+                    </div>
+                </div>
+            @endif
+            @if($medicalRecord->additional->rectum_visual ?? null)
+                <div style='margin-top:1mm;width:50%;'>
+                    <p>Pemeriksaan Rectum & Anal Canal :</p>
+                    <div style='margin-top:5mm'>
+                        <img style='width:auto;height:80mm;' src="{!! $medicalRecord->additional->rectum_visual ?? ''!!}"></img>
+                    </div>
+                </div>
+            @endif
+        @endif
  </div>
