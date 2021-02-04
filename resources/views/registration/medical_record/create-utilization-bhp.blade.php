@@ -57,6 +57,7 @@
                                                     <td>Tanggal</td>
                                                     <td>Lokasi</td>
                                                     <td>BHP</td>
+													<td>Stock</td>
                                                     <td>Qty</td>
                                                     <td>Satuan</td>
                                                     <td></td>
@@ -94,6 +95,7 @@
                         <tr>
                             <th></th>
                             <th>BHP</th>
+							<th>Amount</th>
                             <th>Qty</th>
                             <th>Satuan</th>
                         </tr>

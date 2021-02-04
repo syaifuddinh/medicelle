@@ -341,6 +341,24 @@ class MasterApiController extends Controller
 
         return Datatables::eloquent($x)->make(true);
     }
+	
+	public function bhplokasi(Request $request, $lokasi_id = '') {
+        $x = Item::bhp()
+        ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')        
+		->leftJoin('stock_transactions', function($join){
+            $join->on('stock_transactions.item_id', 'items.id');
+        })
+		->leftJoin('pieces', function($join){
+            $join->on('pieces.id', 'items.piece_id');
+        })
+		//if($lokasi_id) {
+            ->where('stock_transactions.lokasi_id',$lokasi_id)
+        //}
+		->select('items.id', 'stock_transactions.amount','items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id','pieces.name as piecename');
+        $x->orderBy('items.name', 'ASC');        
+
+        return Datatables::eloquent($x)->make(true);
+    }
 
     public function sewa_alkes(Request $request, $flag = '') {
         $x = Item::with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')

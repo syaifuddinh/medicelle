@@ -28,6 +28,7 @@ Route::prefix('master')->group(function(){
     Route::get('item', 'MasterApiController@item');
     Route::get('obat', 'MasterApiController@obat');
     Route::get('bhp/{flag?}', 'MasterApiController@bhp');
+	Route::get('bhp/activedlokasi/{lokasi_id}', 'MasterApiController@bhplokasi');
     Route::get('sewa_alkes/{flag?}', 'MasterApiController@sewa_alkes');
     Route::get('sewa_instrumen/{flag?}', 'MasterApiController@sewa_instrumen');
     Route::get('sewa_ruangan/{flag?}', 'MasterApiController@sewa_ruangan');

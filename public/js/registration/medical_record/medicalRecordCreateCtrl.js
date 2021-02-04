@@ -1726,8 +1726,9 @@ function strip_tags(str) {
           browse_bhp_datatable = $('#browse_bhp_datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: {
-              url : baseUrl+'/datatable/master/bhp/actived',
+            ajax: {				
+              //url : baseUrl+'/datatable/master/bhp/actived',
+			url : baseUrl+'/datatable/master/bhp/activedlokasi/'+ $scope.lokasi_id ?? '' ,
             },
             'columns' : [
             {
@@ -1739,6 +1740,7 @@ function strip_tags(str) {
               render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectBHP($event.currentTarget)'>Pilih</button>"
             },
             {data : 'name'},
+			{data : 'amount'},
             {
               data:null, 
               name:null,
