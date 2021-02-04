@@ -18,6 +18,8 @@ use DB;
 
 class MasterApiController extends Controller
 {
+    public function __construct() {
+    }
     public function specialization(Request $request) {
         $x = Specialization::select('id', 'name', 'is_active', 'code');
         if($request->draw == 1)
@@ -342,19 +344,23 @@ class MasterApiController extends Controller
         return Datatables::eloquent($x)->make(true);
     }
 	
-	public function bhplokasi(Request $request, $lokasi_id = '') {
+	public function bhplokasi(Request $request) {
+        $stock_transactions = DB::table('stock_transactions')
+        ->select('item_id', DB::raw('SUM(in_qty - out_qty) AS amount'))
+        ->groupBy('stock_transactions.item_id');
+		if($request->lokasi_id) {
+           $stock_transactions = $stock_transactions->where('stock_transactions.lokasi_id',$request->lokasi_id);
+        }
+
         $x = Item::bhp()
         ->with('group:id,code,name', 'price:item_id,grup_nota_id', 'price.grup_nota:id,slug', 'piece:id,name')        
-		->leftJoin('stock_transactions', function($join){
+		->leftJoinSub($stock_transactions, 'stock_transactions', function($join){
             $join->on('stock_transactions.item_id', 'items.id');
         })
 		->leftJoin('pieces', function($join){
             $join->on('pieces.id', 'items.piece_id');
-        })
-		//if($lokasi_id) {
-            ->where('stock_transactions.lokasi_id',$lokasi_id)
-        //}
-		->select('items.id', 'stock_transactions.amount','items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id','pieces.name as piecename');
+        });
+		$x = $x->select('items.id', DB::raw('COALESCE( stock_transactions.amount, 0) amount'),'items.code', 'items.name', 'items.description', 'items.is_active', 'items.category_id', 'items.piece_id','pieces.name as piecename');
         $x->orderBy('items.name', 'ASC');        
 
         return Datatables::eloquent($x)->make(true);

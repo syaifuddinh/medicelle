@@ -1720,15 +1720,15 @@ function strip_tags(str) {
       }    
   }
   $scope.sewa_ruangan_datatable()
-
+  $scope.bhp = {}
   $scope.browse_bhp = function() {
       if( path.indexOf('bhp') > -1 ) {
           browse_bhp_datatable = $('#browse_bhp_datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {				
-              //url : baseUrl+'/datatable/master/bhp/actived',
-			url : baseUrl+'/datatable/master/bhp/activedlokasi/'+ $scope.lokasi_id ?? '' ,
+    			url : baseUrl+'/datatable/master/bhp/activedlokasi',
+                data : e => Object.assign(e, {lokasi_id : $scope.bhp.lokasi_id})
             },
             'columns' : [
             {
