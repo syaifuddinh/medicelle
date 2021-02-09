@@ -235,7 +235,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         var row = detail
         row.name = '<div style="padding-left:8mm">' + row.item.name + '</div>'
         row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
-        row.debet_binding = $filter('number')(row.debet)
+        row.debet_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].debet_binding | number %>";
         row.discount = $scope.formData.invoice_detail[grup_nota][ index ].disc_percent
         console.log(row)
         invoice_detail_datatable.row.add(row).draw()
@@ -243,7 +243,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
 
     
 $scope.countTotal = function() {
-    var gross, disc_value, netto, unit, grosstotal;
+    var gross, disc_value, netto, unit, grosstotal, dbt;
     var grandtotal = 0, discount_total = 0, qty_total = 0, grosstotal = 0
     var detail = $scope.formData.invoice_detail
     var increase_rate
@@ -259,6 +259,8 @@ $scope.countTotal = function() {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
             gross = unit.qty * unit.debet;
+            dbt = unit.debet * 1
+            dbt += (dbt * (increase_rate/100))
             gross += (gross * (increase_rate/100))
             disc_value = gross * ((unit.disc_percent || 0) / 100) 
             grosstotal += gross
@@ -266,7 +268,7 @@ $scope.countTotal = function() {
             $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
             grandtotal += parseInt(netto)
             discount_total += parseInt(disc_value)
-            $scope.formData.invoice_detail[grup_nota][index].subtotal = gross
+            $scope.formData.invoice_detail[grup_nota][index].debet_binding = dbt
         }
     }
     $scope.grosstotal = grosstotal
