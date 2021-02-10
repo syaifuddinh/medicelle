@@ -83,8 +83,8 @@
                     <?php } else { ?>
                     <p>(tidak ada paket tindakan yang dilakukan)</p>
                     <?php } ?>
-
-                    <p>{!! $medicalRecord->usg ?? '' !!}</p>
+                    <p>Bacaan EKG : {!! $medicalRecord->ekg ?? '' !!}</p>
+                    <p>Hasil pemeriksaan penunjang : {!! $medicalRecord->usg ?? '' !!}</p>
                     <br>
                     <p style='margin-top:3mm'>Jadwal kontrol selanjutnya pada hari {!! $medicalRecord->next_schedule->date ? Mod::day($medicalRecord->next_schedule->date) : $shortDot !!}, tanggal {!! $medicalRecord->next_schedule->date ? Mod::fullDate($medicalRecord->next_schedule->date) : $shortDot !!}</p>
                     <br>
