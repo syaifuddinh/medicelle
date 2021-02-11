@@ -11,7 +11,7 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text"  ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12" ng-change="submitOne('menarche_age')" only-num>
+                                            <input type="text" ng-model='formData.menarche_age' class="form-control col-md-7 col-xs-12" ng-change="submitOne('menarche_age')" only-num>
                                             <div class="input-group-addon">
                                                 Tahun
                                             </div>
@@ -22,14 +22,14 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Siklus haid
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text"  ng-model='formData.siklus_haid' class="form-control col-md-7 col-xs-12" ng-change="submitOne('siklus_haid')">
+                                        <input type="text" ng-model='formData.siklus_haid' class="form-control col-md-7 col-xs-12" ng-change="submitOne('siklus_haid')">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Jumlah pemakaian pembalut/hr
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text"  only-num ng-model='formData.jumlah_pemakaian_pembalut' class="form-control col-md-7 col-xs-12"  ng-change="submitOne('jumlah_pemakaian_pembalut')">
+                                        <input type="text" ng-model='formData.jumlah_pemakaian_pembalut' class="form-control col-md-7 col-xs-12"  ng-change="submitOne('jumlah_pemakaian_pembalut')">
                                     </div>
                                 </div>
                                 <div class="form-group">

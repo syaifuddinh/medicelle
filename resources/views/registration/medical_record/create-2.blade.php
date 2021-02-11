@@ -80,7 +80,7 @@
                                         <label class="control-label col-md-4 col-sm-4 col-xs-12">Jumlah pemakaian pembalut/hr
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <input type="text"  only-num ng-model='formData.jumlah_pemakaian_pembalut' ng-change='submitOne("jumlah_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12">
+                                            <input type="text" ng-model='formData.jumlah_pemakaian_pembalut' ng-change='submitOne("jumlah_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -88,7 +88,7 @@
                                         </label>
                                         <div class="col-md-8 col-sm-8 col-xs-12">
                                             <div class="input-group">
-                                                <input type="text" ng-model='formData.lama_pemakaian_pembalut' ng-change='submitOne("lama_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12" only-num maxlength='3'>
+                                                <input type="text" ng-model='formData.lama_pemakaian_pembalut' ng-change='submitOne("lama_pemakaian_pembalut")' class="form-control col-md-7 col-xs-12" maxlength='3'>
                                                 <div class="input-group-addon">
                                                     Hari
                                                 </div>
