@@ -370,6 +370,20 @@
                             </div>
                             
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id='allergy_history_datatable'>
+                                    <thead>
+                                        <tr>
+                                            <td>Obat</td>
+                                            <td>Reaksi</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
 
 
                             <div class="ln_solid"></div>
