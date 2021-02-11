@@ -813,6 +813,7 @@ function strip_tags(str) {
               kb_history_datatable.rows.add(data.data.kb_history).draw()
               komplikasi_kb_history_datatable.rows.add(data.data.komplikasi_kb_history).draw()
               kid_history_datatable.rows.add(data.data.kid_history).draw()
+              allergy_history_datatable.rows.add(data.data.allergy_history).draw()
             } 
         }
 
@@ -2933,6 +2934,7 @@ drug_datatable = $('#drug_datatable').DataTable({
           ginekologi_history_datatable.clear().draw();
           obgyn_disease_history_datatable.clear().draw();
           obgyn_family_disease_history_datatable.clear().draw();
+          allergy_history_datatable.clear().draw();
       } else if(step == 3) {
           kid_history_datatable.clear().draw();
       }
