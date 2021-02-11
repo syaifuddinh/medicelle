@@ -90,10 +90,10 @@ class AssesmentController extends Controller
             $assesment = Assesment::findOrFail($id);
             $assesment->fill($request->all());
             $assesment->save();
-
+            /*
             DB::table('medical_record_details')
             ->whereRaw("assesment_detail_id IN (SELECT id FROM assesment_details WHERE assesment_id = $id)")
-            ->delete();
+            ->delete();*/
 
             DB::commit();
         } catch (Exception $e) {
