@@ -173,6 +173,31 @@ function strip_tags(str) {
       }
     }
 
+    $scope.checkStockByLokasiBHP = function(item_id, lokasi_id) {
+      if(item_id && lokasi_id) {
+          var param = {
+              'item_id' : item_id,
+              'lokasi_id' : lokasi_id,
+            }
+
+          $http.get(baseUrl + '/controller/pharmacy/stock_transaction/lokasi/checkBHP?' + $.param(param)).then(function(data) {
+                $rootScope.disBtn=false;
+                $scope.stock = data.data.qty
+          }, function(error) {
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+          });
+      }
+    }
+
     $scope.medicalRecordHistory = function() {
 
         if(path.indexOf('resume') > -1) {
@@ -3221,7 +3246,7 @@ drug_datatable = $('#drug_datatable').DataTable({
         $scope.bhp.name = bhp.name
         $scope.bhp.qty = tr.find('#qty').val()
         $scope.bhp.piece = bhp.piece
-        $scope.checkStockByLokasi(bhp.id, $scope.bhp.lokasi_id) 
+        $scope.checkStockByLokasiBHP(bhp.id, $scope.bhp.lokasi_id) 
         $('#BHPModal').modal('hide')
     }
 

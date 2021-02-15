@@ -50,6 +50,28 @@ class StockTransactionController extends Controller
         ]);
 
     }
+
+    // Mencari BHP berdasarkan item id dan lokasi
+    public function check_by_lokasiBHP(Request $request) {
+        if(!$request->filled('item_id')) {
+            return Response::json(['message' => 'Barang tidak boleh kosong'], 500);
+        }
+
+      
+        $stock = StockTransaction::whereItemId($request->item_id)
+        ->selectRaw('SUM(in_qty - out_qty) AS qty');
+        if($request->filled('lokasi_id')) {
+            $stock = $stock->where('lokasi_id', $request->lokasi_id);
+        }
+        $stock = $stock->first();
+
+        return Response::json([
+            'qty' => $stock->qty ?? 0,
+            'expired_date' => $stock->expired_date ?? null
+        ]);
+
+    }
+
     // Mencari barang berdasarkan item id
     public function check_by_item(Request $request) {
         if(!$request->filled('item_id')) {

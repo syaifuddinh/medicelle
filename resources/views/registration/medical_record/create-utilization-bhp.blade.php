@@ -17,7 +17,7 @@
 
                                         <div class="form-group col-md-3">
                                             <label>Lokasi</label>
-                                            <select class="form-control" data-placeholder-text-single="'Pilih lokasi'" chosen allow-single-deselect="false" ng-model="bhp.lokasi_id" ng-change='checkStockByLokasi(bhp.item_id, bhp.lokasi_id)' ng-options="c.id as c.name for c in data.lokasi">
+                                            <select class="form-control" data-placeholder-text-single="'Pilih lokasi'" chosen allow-single-deselect="false" ng-model="bhp.lokasi_id" ng-change='checkStockByLokasiBHP(bhp.item_id, bhp.lokasi_id)' ng-options="c.id as c.name for c in data.lokasi">
                                                 <option value=""></option>
                                             </select>
                                         </div>

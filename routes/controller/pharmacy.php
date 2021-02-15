@@ -32,6 +32,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         ->name('stock_transaction.check');
 
         Route::get('stock_transaction/lokasi/check', 'StockTransactionController@check_by_lokasi');
+        Route::get('stock_transaction/lokasi/checkBHP', 'StockTransactionController@check_by_lokasiBHP');
 
         Route::get('stock_transaction/item/check', 'StockTransactionController@check_by_item');
 
