@@ -273,7 +273,7 @@
                             </span>
                             <span style='display:inline-block'>:</span>
                             <span style='display:inline-block;width:30mm;text-align:right'>
-                                <b>{!! number_format($data['invoice']->gross - $data['invoice']->reduksi) !!}</b>
+                                <b>{!! number_format($data['invoice']->gross - $data['invoice']->reduksi + $data['invoice']->asuransi_value) !!}</b>
                             </span>
                         </div>
                         <div style='padding-bottom:2mm;padding-top:1mm;border-bottom:1px solid black'>
