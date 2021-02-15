@@ -389,6 +389,9 @@ class RegistrationController extends Controller
                                 }
                             }
                         }
+                        else {
+                            $debet += $value->item->price;
+                        }
                         InvoiceDetail::create([
                             'invoice_id' => $invoice->id,
                             'item_id' => $value->item_id,
