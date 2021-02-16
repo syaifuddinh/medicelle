@@ -15,7 +15,7 @@ class ChangeWeightBirthweightIntoReal extends Migration
     {
         Schema::table('assesment_details', function (Blueprint $table) {
             //
-		$table->double_precision('weight')->change();
+		$table->decimal('weight')->change();
         });
         Schema::table('assesments', function (Blueprint $table) {
             //
@@ -23,14 +23,14 @@ class ChangeWeightBirthweightIntoReal extends Migration
         });
         Schema::table('medical_record_details', function (Blueprint $table) {
             //
-		$table->double_precision('weight')->change();
+		$table->decimal('weight')->change();
         });
         Schema::table('medical_records', function (Blueprint $table) {
             //
-		$table->double_precision('weight')->change();
-		$table->double_precision('birth_weight')->change();
-		$table->double_precision('prebirth_weight')->change();
-		$table->double_precision('postbirth_weight')->change();
+		$table->decimal('weight')->change();
+		$table->decimal('birth_weight')->change();
+		$table->decimal('prebirth_weight')->change();
+		$table->decimal('postbirth_weight')->change();
 		$table->text('jumlah_pemakaian_pembalut')->change();
         });
     }
