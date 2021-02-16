@@ -56,6 +56,25 @@ class AssesmentDetail extends Model
                     $medicalRecordDetail->description = $assesmentDetail->side_effect; //pake side_effect utk menyimpan textbased terakhir kontrol
                     $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
                     $medicalRecordDetail->save();
+                } 
+                if($assesmentDetail->is_kid_history == 1) {
+                    $medicalRecordDetail = new MedicalRecordDetail();
+                    $medicalRecordDetail->medical_record_id = $r->medical_record_id;
+                    $medicalRecordDetail->is_kid_history = 1;
+                    $medicalRecordDetail->kid_order = $assesmentDetail->kid_order;
+                    $medicalRecordDetail->partus_year = $assesmentDetail->partus_year;
+                    $medicalRecordDetail->partus_location = $assesmentDetail->partus_location;
+                    $medicalRecordDetail->pregnant_month_age = $assesmentDetail->pregnant_month_age;
+                    $medicalRecordDetail->pregnant_week_age = $assesmentDetail->pregnant_week_age;
+                    $medicalRecordDetail->birth_type = $assesmentDetail->birth_type;
+                    $medicalRecordDetail->birth_helper = $assesmentDetail->birth_helper;
+                    $medicalRecordDetail->birth_obstacle = $assesmentDetail->birth_obstacle;
+                    $medicalRecordDetail->baby_gender = $assesmentDetail->baby_gender;
+                    $medicalRecordDetail->weight = $assesmentDetail->weight;
+                    $medicalRecordDetail->long = $assesmentDetail->long;
+                    $medicalRecordDetail->komplikasi_nifas = $assesmentDetail->komplikasi_nifas;
+                    $medicalRecordDetail->assesment_detail_id = $assesmentDetail->id;
+                    $medicalRecordDetail->save();
                 }    
                 if($assesmentDetail->is_family_disease_history == 1) {
                     $medicalRecordDetail = new MedicalRecordDetail();

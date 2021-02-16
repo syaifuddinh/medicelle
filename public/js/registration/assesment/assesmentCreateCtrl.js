@@ -280,7 +280,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
 
 
   $scope.submitKidHistory = function() {
-      $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? '1' : '0';
+      $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? $scope.kid_history.is_pregnant_week_age : '0';
       kid_history_datatable.row.add($scope.kid_history).draw()
       $scope.kid_history = {}
       var params = {

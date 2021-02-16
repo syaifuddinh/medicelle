@@ -115,7 +115,9 @@ class AssesmentController extends Controller
         DB::beginTransaction();
         try {
             $assesment_detail = new AssesmentDetail();
+
             if(isset($request->kid_history)) {
+                $this->deleteMedicalRecordDetail($id, 'is_kid_history');
                 $assesment_detail->kid_history()->whereAssesmentId($id)->delete();
                 $kid_history = collect($request->kid_history);
                 $kid_history = $kid_history->each(function($val) use($id){
