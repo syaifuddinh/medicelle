@@ -75,7 +75,8 @@
                                                     <tr>
                                                         <td>Tanggal pemeriksaan</td>
                                                         <td>Jenis pemeriksaan</td>
-                                                        <td>Keterangan</td>
+                                                        <td>Item pemeriksaan</td>
+                                                        <td>Detail</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>

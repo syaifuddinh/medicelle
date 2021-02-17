@@ -37,6 +37,7 @@ class MedicalRecordController extends Controller
     public function pivot($pivot_medical_record_id)
     {
         $pivot = PivotMedicalRecord::with(
+            'medical_record:id,date',
             'medical_record_detail:id,item_id',
             'medical_record_detail.item:id',
             'parent:id,additional',
@@ -144,6 +145,8 @@ class MedicalRecordController extends Controller
         return Response::json($medicalRecord, 200);
     }
 
+//old showInternalLaboratory
+/*
     public function showInternalLaboratory($id)
     {
         $medicalRecord = DB::table('medical_records')
@@ -156,7 +159,7 @@ class MedicalRecordController extends Controller
         ->leftJoin('medical_record_details', 'pivot_medical_records.medical_record_detail_id', 'medical_record_details.id')
         ->leftJoin('items', 'medical_record_details.item_id', 'items.id')
         ->orderBy('medical_records.created_at', 'DESC')
-        ->select(DB::raw('pivot_medical_records.additional'), 'items.name', 'medical_records.date')
+        ->select(DB::raw('pivot_medical_records.additional, pivot_medical_records.id as idpivot'), 'items.name', 'medical_records.date')
         ->get();
 
         $medicalRecord = $medicalRecord->map(function($m){
@@ -167,12 +170,45 @@ class MedicalRecordController extends Controller
                     $params[] = $val;
                 }
             }
-            $resp = $m->only('name', 'date');
+            $resp = $m->only('idpivot', 'name', 'date');
             $resp['details'] = $params;
             return $resp;
         });
 
         return Response::json($medicalRecord, 200);
+    }*/
+
+//new showInternalLaboratory
+    public function showInternalLaboratory($id) {
+        $medicalRecord = DB::table('medical_records')
+        ->whereId($id)
+        ->first();
+        $medicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)
+        ->join('pivot_medical_records', 'pivot_medical_records.medical_record_id', 'medical_records.id')
+        ->join( 'pivot_medical_records as b', DB::raw( 'b.parent_id' ), '=', DB::raw( 'pivot_medical_records.id' ) )
+        ->where('pivot_medical_records.is_laboratory', 1)
+        ->where('pivot_medical_records.is_laboratory_treatment', 0)
+        ->leftJoin('medical_record_details', 'pivot_medical_records.medical_record_detail_id', 'medical_record_details.id')
+        ->leftJoin('items', 'medical_record_details.item_id', 'items.id')
+        ->orderBy('medical_records.created_at', 'DESC')
+        ->select(DB::raw('pivot_medical_records.additional, b.id as idpivot'), 'items.name', 'medical_records.date')
+        ->get();
+
+        $medicalRecord = $medicalRecord->map(function($m){
+            $details = $m->additional->treatment[0]->detail;
+            $params = [];
+            foreach ($details as $d => $val) {
+                if(($val->is_active ?? 0) == 1) {
+                    $params[] = $val;
+                }
+            }
+            $resp = $m->only('idpivot', 'name', 'date');
+            $resp['details'] = $params;
+            return $resp;
+        });
+
+        return Response::json($medicalRecord, 200);
+
     }
 
     public function update_laboratory_form(Request $request, $pivot_medical_record_id)

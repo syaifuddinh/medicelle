@@ -94,37 +94,37 @@
 
                         <p style='margin-bottom:1mm'>
                             <span style='display:inline-block;width:30mm'>
-                                STATUS
+                                TANGGAL PERIKSA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->marriage_status !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:30mm'>{!! Mod::fullDate($medicalRecord->date) !!}</span>
                         </p>
                     </div>
 
-                    <div style='display:inline-block;width:55%;padding-bottom:2mm;margin-top:2mm'>
+                    <div style='display:inline-block;width:55%;padding-bottom:2mm;margin-top:2mm;'>
                         <p style='margin-bottom:3mm'>
                             DOKTER YANG MEMINTA :
                         </p>
-                        <p style='margin-bottom:1mm'>
-                            <span style='display:inline-block;width:40mm'>
+                        <p style='margin-bottom:1mm;width:300mm'>
+                            <span style='display:inline-block;width:30mm'>
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
                         </p>
-                        <p style='margin-bottom:1mm'>
-                            <span style='display:inline-block;width:40mm'>
+                        <p style='margin-bottom:1mm;width:300mm'>
+                            <span style='display:inline-block;width:30mm'>
                                 POLI / RUANGAN
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                         </p>
-                        <p style='margin-bottom:1mm'>
-                            <span style='display:inline-block;width:40mm'>
+                        <p style='margin-bottom:1mm;width:300mm'>
+                            <span style='display:inline-block;width:30mm'>
                                 NO. TELP
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->registration_detail->doctor->phone !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->phone !!}</span>
                         </p>
                     </div>
                 

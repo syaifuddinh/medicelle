@@ -22,7 +22,7 @@ class PivotMedicalRecord extends Model
     }
 
     public function medical_record() {
-        return $this->belongsTo('App\MedicalRecord');
+        return $this->belongsTo('App\MedicalRecord','medical_record_id', 'id');
     }
 
     public function medical_record_detail() {

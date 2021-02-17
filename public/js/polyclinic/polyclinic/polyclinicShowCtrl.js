@@ -344,10 +344,24 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
     $('#assesmentButton').attr('href', assesment_url)
     $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
       $scope.data.polyclinic = data.data
+    $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
+    $scope.formData.pivot = data.data
 
       $http.get(baseUrl + '/controller/master/doctor').then(function(data) {
         $scope.data.doctor = data.data
 
+    }, function(error) {
+        $rootScope.disBtn=false;
+        if (error.status==422) {
+          var det="";
+          angular.forEach(error.data.errors,function(val,i) {
+            det+="- "+val+"<br>";
+        });
+          toastr.warning(det,error.data.message);
+      } else {
+          toastr.error(error.data.message,"Error Has Found !");
+      }
+    });
     }, function(error) {
         $rootScope.disBtn=false;
         if (error.status==422) {

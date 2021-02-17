@@ -28,7 +28,12 @@ app.controller('medicalRecordCreate', ['$scope', '$http', '$rootScope', '$filter
     }, 800)
 
 function strip_tags(str) {
-    str = str.toString();
+    if(str){
+    	str = str.toString();
+    }
+    else{
+    	str = "";
+    }
     return str.replace(/<\/?[^>]+>/gi, '');
 }
 
@@ -2659,6 +2664,7 @@ drug_datatable = $('#drug_datatable').DataTable({
 
   $scope.showInternalLaboratory = function() {
       if(path.indexOf('/laboratory') > -1) {
+          //$http.get(baseUrl + '/datatable/registration/laboratory_registered').then(function(data) {
           $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_laboratory').then(function(data) {
               var detail = data.data
               internal_laboratory_datatable = $('#internal_laboratory_datatable').DataTable({
@@ -2683,56 +2689,22 @@ drug_datatable = $('#drug_datatable').DataTable({
                             unit = resp.details[r]
 
                             tr = $('<tr />')
-                            td = $('<th />')
-                            td.text('Nama')
-                            tr.append(td)
                             td = $('<td />')
                             td.text(unit.name)
-                            tr.append(td)
-                            table.append(tr)
-
-                            tr = $('<tr />')
-                            td = $('<th />')
-                            td.text('Hasil')
-                            tr.append(td)
-                            td = $('<td />')
-                            td.text(unit.hasil)
-                            tr.append(td)
-                            table.append(tr)
-                            
-                            tr = $('<tr />')
-                            td = $('<th />')
-                            td.text('Satuan')
-                            tr.append(td)
-                            td = $('<td />')
-                            td.text(unit.satuan)
-                            tr.append(td)
-                            table.append(tr)
-                            
-                            tr = $('<tr />')
-                            td = $('<th />')
-                            td.text('Nilai normal')
-                            tr.append(td)
-                            td = $('<td />')
-                            td.text(unit.nilai_normal)
-                            tr.append(td)
-                            table.append(tr)
-                            
-                            tr = $('<tr />')
-                            td = $('<th />')
-                            td.text('Keterangan')
-                            tr.append(td)
-                            td = $('<td />')
-                            td.text(unit.keterangan)
-                            tr.append(td)
-                            tr.css('borderBottom', '1.1mm solid #337ab7')
-
+                            tr.append(td)                            
                             table.append(tr)
                         }
 
                         return table.prop('outerHTML')
                     }
                 },
+      {
+        data: null,
+        width:'14%', 
+        orderable : false,
+        searchable : false,
+        className : 'text-center',
+        render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/laboratory/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
 
                 ],
                 createdRow: function(row, data, dataIndex) {

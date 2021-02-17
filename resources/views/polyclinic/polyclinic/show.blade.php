@@ -55,10 +55,10 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal
+                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal Periksa
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.date | fullDate %>
+                                        <% formData.pivot.medical_record.date | fullDate %>
                                 </div>
                             </div>
 
@@ -70,17 +70,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Status pembayaran
-                                </label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.invoice.status_name %>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12" for="first-name">Tanggal registrasi
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% formData.date | fullDate %>
+                                        <% formData.pivot.medical_record.date | fullDate %>
                                 </div>
                             </div>
 
