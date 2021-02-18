@@ -65,6 +65,7 @@
                                 </div>
                                      </div>    
                                   </div>
+<!--
                                   <div id="internal" class="tab-pane fade">
                                         <div style='padding-top:10mm'>
                                             <table class="table table-bordered" id='internal_radiology_datatable'>
@@ -78,6 +79,21 @@
                                                         <td>Saran</td>
                                                         <td>Keterangan</td>
                                                         <td style='width:5px!important'>Reduksi</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                  </div>
+-->
+                                  <div id="internal" class="tab-pane fade">
+                                        <div style='padding-top:10mm'>
+                                            <table class="table table-bordered" id='internal_radiology_datatable'>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Tanggal pemeriksaan</td>
+                                                        <td>Jenis pemeriksaan</td>
+                                                        <td style='width:5px!important'>Reduksi</td>
+                                                        <td>Detail Pemeriksaan</td>
                                                     </tr>
                                                 </thead>
                                             </table>

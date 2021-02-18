@@ -5,6 +5,7 @@
      * {
         margin:0;
         padding:0;
+        font-size:14pt;
      }
      .container {
         padding:7mm;
@@ -14,7 +15,7 @@
      }
 
      p, span, li {
-        font-size:10px;
+        font-size:14pt;
      }
 
      .indent {
@@ -30,7 +31,7 @@
         display:inline-block
      }
  </style>
- <div class="container">
+ <div class="container" style='position: relative'>
      
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
@@ -48,30 +49,30 @@
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>UNIT RADIOLOGI</p>
 
                 <div style='margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
-                    <p style='margin-bottom:1.2mm'>
-                        <span class="ib" style='width:30mm'>no rekam medis</span>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>No RM</span>
                         <span class="ib"> : </span>
-                        <span class="ib">{!! $medicalRecord->code !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->code !!}</span>
                     </p>
-                    <p style='margin-bottom:1.2mm'>
-                        <span class="ib" style='width:30mm'>nama lengkap</span>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Nama Lengkap</span>
                         <span class="ib"> : </span>
-                        <span class="ib">{!! $medicalRecord->patient->name !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->name !!}</span>
                     </p>
-                    <p style='margin-bottom:1.2mm'>
-                        <span class="ib" style='width:30mm'>umur</span>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Umur</span>
                         <span class="ib"> : </span>
-                        <span class="ib">{!! $medicalRecord->patient->age !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->age !!}</span>
                     </p>
-                    <p style='margin-bottom:1.2mm'>
-                        <span class="ib" style='width:30mm'>Tanggal Periksa</span>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Tanggal Periksa</span>
                         <span class="ib"> : </span>
-                        <span class="ib">{!! $medicalRecord->date !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->date !!}</span>
                     </p>
-                    <p style='margin-bottom:1.2mm'>
-                        <span class="ib" style='width:30mm'>Klinis</span>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Klinis</span>
                         <span class="ib"> : </span>
-                        <span class="ib">{!! $pivotMedicalRecord->additional->klinis ?? '' !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $pivotMedicalRecord->additional->klinis ?? '' !!}</span>
                     </p>
                 </div>
             </div>
@@ -95,18 +96,18 @@
                         <b style='margin-bottom:1.4mm'>Keterangan :</b> <br> {!! $pivotMedicalRecord->additional->radiology_description ?? ''!!}
                     </p>
                 </div>
-
-                <div style='position:absolute;bottom:28mm'>
-                    <div style='width:100%;display:inline-block;position:relative'>
-                        <span style='display:inline-block;position:absolute;right:-190mm;bottom:10mm'>
-                            
-                            <p style='text-align:center;margin-bottom:25mm;width:210%'>{!! Mod::company()->city !!}, {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!}</p>
-                            <p style='text-align:center;width:210%'>( {!!$contact_name!!} )</p>
-                        </span>
-                    </div>
-                </div>
-                
-                @include('pdf/letter_footer')   
             </div>
+
+                <div style='margin-top:1mm;padding-left:5.5mm'>
+                <p style='margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!}</p>
+
+                <p style='font-weight:bold;'>
+                    <span>
+                        ( {!!$contact_name!!} )
+                    </span>
+                </p>
+                </div>
+
         </div>
  </div>
+

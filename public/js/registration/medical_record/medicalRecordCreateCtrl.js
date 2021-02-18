@@ -2616,11 +2616,6 @@ drug_datatable = $('#drug_datatable').DataTable({
                   }
                 },
                 {data : 'name'},
-                {data : 'hasil_pemeriksaan'},
-                {data : 'klinis'},
-                {data : 'kesimpulan'},
-                {data : 'saran'},
-                {data : 'description'},
                 {
                     data : null,
                     width:'6px',
@@ -2628,9 +2623,16 @@ drug_datatable = $('#drug_datatable').DataTable({
                         var r = '<input type="number" ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
                         return r
                     }
-                }
+                },
+      {
+        data: null,
+        width:'14%', 
+        orderable : false,
+        searchable : false,
+        className : 'text-center',
+        render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/radiology/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
 
-                ],
+               ],
                 createdRow: function(row, data, dataIndex) {
                   $compile(angular.element(row).contents())($scope);
                 }

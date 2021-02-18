@@ -244,8 +244,7 @@
                                     <label class="col-xs-12">Hasil Pemeriksaan
                                     </label>
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" ng-model='pivotData.hasil_pemeriksaan' ng-change='updatePivot()' rows='7'></textarea>
-                                        
+                                        <trix-editor angular-trix class="form-control" ng-model='pivotData.hasil_pemeriksaan' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +254,7 @@
                                     <label class="col-xs-12">Klinis
                                     </label>
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" ng-model='pivotData.klinis' ng-change='updatePivot()' rows='7'></textarea>
+                                        <textarea class="form-control" ng-model='pivotData.klinis' ng-change='updatePivot()' rows='2'></textarea>
                                         
                                     </div>
                                 </div>
@@ -266,8 +265,7 @@
                                     <label class="col-xs-12">Kesimpulan
                                     </label>
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" ng-model='pivotData.kesimpulan' ng-change='updatePivot()' rows='7'></textarea>
-                                        
+                                        <trix-editor angular-trix class="form-control" ng-model='pivotData.kesimpulan' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -276,8 +274,7 @@
                                     <label class="col-xs-12">Saran
                                     </label>
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" ng-model='pivotData.saran' ng-change='updatePivot()' rows='7'></textarea>
-                                        
+                                        <trix-editor angular-trix class="form-control" ng-model='pivotData.saran' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -286,8 +283,7 @@
                                     <label class="col-xs-12">Keterangan
                                     </label>
                                     <div class="col-xs-12">
-                                        <textarea class="form-control" ng-model='pivotData.radiology_description' ng-change='updatePivot()' rows='7'></textarea>
-                                        
+                                        <trix-editor angular-trix class="form-control" ng-model='pivotData.radiology_description' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
                             </div>

@@ -114,7 +114,8 @@ class MedicalRecordController extends Controller
         });
         return Response::json($data, 200);
     }
-
+//old showInternalRadiology
+/*
     public function showInternalRadiology($id)
     {
         $medicalRecord = DB::table('medical_records')
@@ -143,40 +144,39 @@ class MedicalRecordController extends Controller
         ->get();
 
         return Response::json($medicalRecord, 200);
-    }
+    }*/
 
-//old showInternalLaboratory
-/*
-    public function showInternalLaboratory($id)
+//new showInternalRadiology
+    public function showInternalRadiology($id)
     {
         $medicalRecord = DB::table('medical_records')
         ->whereId($id)
         ->first();
         $medicalRecord = MedicalRecord::wherePatientId($medicalRecord->patient_id)
         ->join('pivot_medical_records', 'pivot_medical_records.medical_record_id', 'medical_records.id')
-        ->where('pivot_medical_records.is_laboratory', 1)
-        ->where('pivot_medical_records.is_laboratory_treatment', 0)
+        ->where('pivot_medical_records.is_radiology', 1)
         ->leftJoin('medical_record_details', 'pivot_medical_records.medical_record_detail_id', 'medical_record_details.id')
-        ->leftJoin('items', 'medical_record_details.item_id', 'items.id')
+        ->leftJoin('prices', 'medical_record_details.item_id', 'prices.item_id')
+        ->leftJoin('radiology_types', 'radiology_types.id', 'prices.radiology_group')
         ->orderBy('medical_records.created_at', 'DESC')
-        ->select(DB::raw('pivot_medical_records.additional, pivot_medical_records.id as idpivot'), 'items.name', 'medical_records.date')
+        ->select(
+            'medical_record_details.id',
+            'medical_record_details.reduksi',
+            DB::raw('pivot_medical_records.id AS idpivot'), 
+            DB::raw('pivot_medical_records.additional ->> \'radiology_description\' AS description'), 
+            DB::raw('pivot_medical_records.additional ->> \'hasil_pemeriksaan\' AS hasil_pemeriksaan'), 
+            DB::raw('pivot_medical_records.additional ->> \'klinis\' AS klinis'), 
+            DB::raw('pivot_medical_records.additional ->> \'kanan\' AS kanan'), 
+            DB::raw('pivot_medical_records.additional ->> \'kiri\' AS kiri'), 
+            DB::raw('pivot_medical_records.additional ->> \'saran\' AS saran'), 
+            DB::raw('pivot_medical_records.additional ->> \'kesimpulan\' AS kesimpulan'), 
+            'radiology_types.name', 
+            'medical_records.date'
+        )
         ->get();
 
-        $medicalRecord = $medicalRecord->map(function($m){
-            $details = $m->additional->treatment[0]->detail;
-            $params = [];
-            foreach ($details as $d => $val) {
-                if(($val->is_active ?? 0) == 1) {
-                    $params[] = $val;
-                }
-            }
-            $resp = $m->only('idpivot', 'name', 'date');
-            $resp['details'] = $params;
-            return $resp;
-        });
-
         return Response::json($medicalRecord, 200);
-    }*/
+    }
 
 //new showInternalLaboratory
     public function showInternalLaboratory($id) {
