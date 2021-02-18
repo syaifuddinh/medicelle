@@ -755,20 +755,25 @@ class MedicalRecordController extends Controller
         return $pdf->stream('fnab.pdf');
     }
 
-    public function laboratory_form_pdf(Request $request, $pivot_medical_record_id, $contact_id)
+    public function laboratory_form_pdf(Request $request, $id, $contact_id)
     {   
         $contact_name = DB::table('contacts')
             ->whereId($contact_id)
             ->select('name')
             ->first()
             ->name ?? '';
-        $pivot = PivotMedicalRecord::findOrFail($pivot_medical_record_id);
-        $medicalRecordDetail = MedicalRecordDetail::find($pivot->medical_record_detail_id);
-        $medicalRecord = $this->fetch($medicalRecordDetail->medical_record_id);
+        $medicalRecord = $this->fetch($id);
+        $medicalRecordDetail = MedicalRecordDetail::whereMedicalRecordId($id)->get();
+        $pivot = DB::table('pivot_medical_records')->where([
+                ['medical_record_id', $id],
+                ['is_laboratory', 1]
+            ])
+            ->get();
+
         $params = [
             'contact_name' => $contact_name,
-            'medicalRecord' => $medicalRecord, 
-            'treatments' => $pivot->parent->additional->treatment, 
+            'medicalRecord' => $medicalRecord,
+            'treatments' => $pivot, 
             'dot' => '.............................................................................................................', 
             'shortDot' => '..........'
         ];

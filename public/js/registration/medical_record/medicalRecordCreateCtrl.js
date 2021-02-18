@@ -2664,7 +2664,6 @@ drug_datatable = $('#drug_datatable').DataTable({
 
   $scope.showInternalLaboratory = function() {
       if(path.indexOf('/laboratory') > -1) {
-          //$http.get(baseUrl + '/datatable/registration/laboratory_registered').then(function(data) {
           $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_laboratory').then(function(data) {
               var detail = data.data
               internal_laboratory_datatable = $('#internal_laboratory_datatable').DataTable({

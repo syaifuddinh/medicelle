@@ -17,7 +17,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::put('medical_record/pivot/{pivot_medical_record_id}/ruang_tindakan/description', 'MedicalRecordController@update_ruang_tindakan_description');
 
         Route::put('medical_record/pivot/{pivot_medical_record_id}/laboratory_form', 'MedicalRecordController@update_laboratory_form');
-        Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory_form/pdf/{contact_id}', 'MedicalRecordController@laboratory_form_pdf');
+        Route::get('medical_record/pivot/{id}/laboratory_form/pdf/{contact_id}', 'MedicalRecordController@laboratory_form_pdf');
 
         Route::get('medical_record/{id}/children_growth', 'MedicalRecordController@showChildrenGrowth');
         Route::get('medical_record/{id}/internal_radiology', 'MedicalRecordController@showInternalRadiology');

@@ -1,5 +1,6 @@
 <?php 
-    $company = Mod::company()
+    $company = Mod::company();
+    //$treatments = json_decode($treatments);
  ?>
  <style>
      * {
@@ -141,8 +142,10 @@
                         </thead>
                         <tbody>
                             @foreach($treatments as $treatment)
-                                @foreach($treatment->detail as $detail)
-                                    @if(($detail->is_active ?? 0) == 1)
+					<? $additional = json_decode($treatment->additional);?>
+					 @foreach($additional->treatment as $adtreatment)
+                                        @foreach($adtreatment->detail as $detail)
+                                        @if(($detail->is_active ?? 0) == 1)
                                         <tr>
                                             <td>{!! $detail->name !!}</td>
                                             <td>{!! $detail->hasil ?? '' !!}</td>
@@ -150,10 +153,11 @@
                                             <td>{!! $detail->nilai_normal ?? '' !!}</td>
                                             <td>{!! $detail->keterangan ?? '' !!}</td>
                                         </tr>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                        @endforeach
+					@endforeach
                             @endforeach
-                        </tbody>
+                         </tbody>
                     </table>
                 </div>
     

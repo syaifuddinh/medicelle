@@ -217,7 +217,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
                 url = baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory/pdf'
             } else if($scope.pivot.is_laboratory_treatment == 1) {
 
-                url = baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/laboratory_form/pdf'
+                url = baseUrl + '/controller/registration/medical_record/pivot/' + $scope.pivot.medical_record.id + '/laboratory_form/pdf'
             }
       }
 
