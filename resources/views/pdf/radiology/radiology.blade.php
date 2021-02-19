@@ -84,12 +84,6 @@
                         <b style='margin-bottom:1.4mm'>Hasil pemeriksaan :</b> <br> {!! $pivotMedicalRecord->additional->hasil_pemeriksaan ?? ''!!}
                     </p>
                     <p class='mt-2'>
-                        <b style='margin-bottom:1.4mm'>Klinis :</b> <br> {!! $pivotMedicalRecord->additional->klinis ?? ''!!}
-                    </p>
-                    <p class='mt-2'>
-                        <b style='margin-bottom:1.4mm'>Kesimpulan :</b> <br> {!! $pivotMedicalRecord->additional->kesimpulan ?? ''!!}
-                    </p>
-                    <p class='mt-2'>
                         <b style='margin-bottom:1.4mm'>Saran :</b> <br> {!! $pivotMedicalRecord->additional->saran ?? ''!!}
                     </p>
                     <p class='mt-2'>

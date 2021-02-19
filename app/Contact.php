@@ -126,7 +126,7 @@ class Contact extends Model
     }
 
     public function specialization() {
-        return $this->belongsTo('App\Specialization');
+        return $this->belongsTo('App\Specialization','specialization_id','id');
     }
 
     public function polyclinic() {
