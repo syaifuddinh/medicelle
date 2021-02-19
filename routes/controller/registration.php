@@ -30,7 +30,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/laboratory/pdf', 'MedicalRecordController@laboratory_pdf');
 
         Route::get('medical_record/pivot/{pivot_medical_record_id}/files', 'PivotMedicalRecordController@showFiles');
-        Route::get('medical_record/pivot/{pivot_medical_record_id}/content/pdf', 'PivotMedicalRecordController@printContent');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/content/pdf/{flag?}', 'PivotMedicalRecordController@printContent');
         Route::put('medical_record/pivot/{pivot_medical_record_id}/content', 'PivotMedicalRecordController@storeContent');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/content', 'PivotMedicalRecordController@showContent');
         Route::delete('medical_record/pivot/{pivot_medical_record_id}/files/{id}', 'PivotMedicalRecordController@destroyFiles');

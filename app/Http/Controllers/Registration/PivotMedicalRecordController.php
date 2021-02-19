@@ -163,7 +163,7 @@ class PivotMedicalRecordController extends Controller
         return response()->json(['message' => 'Data berhasil disimpan', 'data' => $dt->content]);
     }
 
-    public function printContent($id) {
+    public function printContent($id, $flag = 'preview') {
         $dt = DB::table('pivot_medical_records')
         ->whereId($id)
         ->first();
@@ -178,7 +178,11 @@ class PivotMedicalRecordController extends Controller
 		$params['medicalRecord'] = $medicalRecord;
 
         $pdf = PDF::loadview('pdf/medical_resume_template',$params);
-        return $pdf->stream('resume-medis.pdf');
+        if($flag == 'preview') {
+            return $pdf->stream('resume-medis.pdf');
+        } else {
+            return $pdf->download('resume-medis.pdf');            
+        }
 
     }
 

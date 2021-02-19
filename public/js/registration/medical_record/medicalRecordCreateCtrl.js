@@ -642,14 +642,16 @@ function strip_tags(str) {
     $scope.previewResume = function(e) {
         var tr = $(e).parents('tr')
         var data = medical_record_history.row(tr).data()
-        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf'
+        //var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf'
+        var source = baseUrl + '/controller/registration/medical_record/pivot/' + data.id + '/content/pdf'
         window.open(source)
     }
 
     $scope.downloadResume = function(e) {
         var tr = $(e).parents('tr')
         var data = medical_record_history.row(tr).data()
-        var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf/download'
+        //var source = baseUrl + '/controller/registration/medical_record/' + data.id + '/pdf/download'
+        var source = baseUrl + '/controller/registration/medical_record/pivot/' + data.id + '/content/pdf/download'
         window.open(source)
     }
 
