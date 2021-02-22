@@ -821,6 +821,7 @@ function strip_tags(str) {
         $scope.formData = data.data
         $scope.patient = data.data.patient
         $scope.code = data.data.code
+
         setTimeout(function () {    
               $('[ng-model="formData.hpht"]').val( $filter('fullDate')($scope.formData.hpht))
               $('[ng-model="formData.additional.papsmear_date"]').val( $filter('fullDate')($scope.formData.additional.papsmear_date))
@@ -2635,6 +2636,10 @@ drug_datatable = $('#drug_datatable').DataTable({
 
   $scope.showInternalRadiology = function() {
       if(path.indexOf('/radiology') > -1) {
+          var boleheditreduksi = ""
+          if($scope.allowreduksiradiologi == '0'){
+		boleheditreduksi = "readonly disabled";
+          }
           $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_radiology').then(function(data) {
               var detail = data.data
               internal_radiology_datatable = $('#internal_radiology_datatable').DataTable({
@@ -2653,7 +2658,7 @@ drug_datatable = $('#drug_datatable').DataTable({
                     data : null,
                     width:'6px',
                     render: function(resp) {
-                        var r = '<input type="number" ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
+                        var r = '<input type="number" ' + boleheditreduksi +' ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
                         return r
                     }
                 },
