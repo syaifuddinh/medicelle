@@ -100,6 +100,29 @@
                         </div>
 
                     </form>
+    <div class="modal fade" id="picLaboratoryModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+        <div class="modal-dialog" style='width:80%'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">Pilih Penanggung Jawab</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-striped" id='pj_lab_datatable' style='width:100%'>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
                     <div class="modal fade" id="newResearchModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
     <div class="modal-dialog" style='width:50%'>
         <div class="modal-content">

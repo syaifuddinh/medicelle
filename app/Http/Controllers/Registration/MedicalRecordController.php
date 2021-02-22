@@ -6,6 +6,7 @@ use App\MedicalRecord;
 use App\MedicalRecordDetail;
 use App\LaboratoryType;
 use App\PivotMedicalRecord;
+use App\RegistrationDetail;
 use App\SideEffect;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -191,7 +192,7 @@ class MedicalRecordController extends Controller
         ->leftJoin('medical_record_details', 'pivot_medical_records.medical_record_detail_id', 'medical_record_details.id')
         ->leftJoin('items', 'medical_record_details.item_id', 'items.id')
         ->orderBy('medical_records.created_at', 'DESC')
-        ->select(DB::raw('pivot_medical_records.additional, b.id as idpivot'), 'items.name', 'medical_records.date')
+        ->select(DB::raw('pivot_medical_records.additional, b.id as idpivot, b.medical_record_id as mrid'), 'items.name', 'medical_records.date')
         ->get();
 
         $medicalRecord = $medicalRecord->map(function($m){
@@ -202,7 +203,7 @@ class MedicalRecordController extends Controller
                     $params[] = $val;
                 }
             }
-            $resp = $m->only('idpivot', 'name', 'date');
+            $resp = $m->only('idpivot', 'mrid','name', 'date');
             $resp['details'] = $params;
             return $resp;
         });
@@ -681,13 +682,8 @@ class MedicalRecordController extends Controller
         return $pdf->stream('mammografi.pdf');
     }
 
-    public function radiology_pdf(Request $request, $id, $contact_id)
+    public function radiology_pdf(Request $request, $id, $contact_id, $flag = 'default')
     {
-        $contact_name = DB::table('contacts')
-            ->whereId($contact_id)
-            ->select('name')
-            ->first()
-            ->name ?? '';
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $price = DB::table('prices')
@@ -696,6 +692,18 @@ class MedicalRecordController extends Controller
         $radiologyType = DB::table('radiology_types')
         ->whereId($price->radiology_group)
         ->first();
+
+        if($flag<>'default'){
+		$registrationDetail = RegistrationDetail::find($medicalRecord->registration_id);
+		$contact_id = $registrationDetail->doctor_id;		
+        }
+
+        $contact_name = DB::table('contacts')
+            ->whereId($contact_id)
+            ->select('name')
+            ->first()
+            ->name ?? '';
+
         $params = [
             'contact_name' => $contact_name,
             'pivotMedicalRecord' => $pivotMedicalRecord, 

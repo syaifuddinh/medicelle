@@ -45,7 +45,7 @@
             
                 
                     <div style='display:inline-block;width:45%'>
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 NAMA
                             </span>
@@ -53,15 +53,15 @@
                             <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->name !!}</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 ALAMAT
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->address !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:200mm'>{!! $medicalRecord->patient->address !!}</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 UMUR
                             </span>
@@ -69,7 +69,7 @@
                             <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 KELAMIN
                             </span>
@@ -77,7 +77,7 @@
                             <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->gender !!}</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 NOMOR RM
                             </span>
@@ -85,7 +85,7 @@
                             <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->code !!}</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 NO. TLP
                             </span>
@@ -93,7 +93,7 @@
                             <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->phone !!}</span>
                         </p>
 
-                        <p style='margin-bottom:1mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 TANGGAL PERIKSA
                             </span>
@@ -106,21 +106,21 @@
                         <p style='margin-bottom:3mm'>
                             DOKTER YANG MEMINTA :
                         </p>
-                        <p style='margin-bottom:1mm;width:300mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 NAMA
                             </span>
                             <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
+                            <span style='display:inline-block;margin-left:2mm;width:200mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
                         </p>
-                        <p style='margin-bottom:1mm;width:300mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 POLI / RUANGAN
                             </span>
                             <span style='display:inline-block;'>:</span>
                             <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                         </p>
-                        <p style='margin-bottom:1mm;width:300mm'>
+                        <p style='margin-bottom:1mm;width:500mm'>
                             <span style='display:inline-block;width:30mm'>
                                 NO. TELP
                             </span>

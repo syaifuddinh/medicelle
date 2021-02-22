@@ -244,7 +244,7 @@
                                     <label class="col-xs-12">Hasil Pemeriksaan
                                     </label>
                                     <div class="col-xs-12">
-                                        <trix-editor angular-trix class="form-control" ng-model='pivotData.hasil_pemeriksaan' ng-change="updatePivot()"></trix-editor>
+                                        <trix-editor angular-trix class="form-control" style="height:300px;" ng-model='pivotData.hasil_pemeriksaan' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <!--
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-xs-12">Kesimpulan
@@ -268,7 +268,7 @@
                                         <trix-editor angular-trix class="form-control" ng-model='pivotData.kesimpulan' ng-change="updatePivot()"></trix-editor>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-xs-12">Saran

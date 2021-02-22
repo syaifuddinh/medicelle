@@ -2602,6 +2602,37 @@ drug_datatable = $('#drug_datatable').DataTable({
     }
   });
 
+    pj_radiology_datatable = $('#pj_radiology_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        dom: 'frtip',
+        ajax: {
+          url : baseUrl+'/datatable/master/medical',
+          data : function(d) {
+            d.is_display_all = 1
+            d.is_active = 1
+            d.slug = 'radiology'
+            return d
+          }
+        },
+        columns:[
+            {data:"name", name:"name"},
+            {
+                data:null, 
+                searchable:false,
+                orderable:false,
+                className : 'text-right',
+                render:function(r){
+                    input = "<button type='button' ng-click='openPDFRadiology($event.currentTarget)' class='btn btn-sm btn-primary'>Pilih</button"
+                    return input
+                } 
+            },
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
   $scope.showInternalRadiology = function() {
       if(path.indexOf('/radiology') > -1) {
           $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_radiology').then(function(data) {
@@ -2632,7 +2663,8 @@ drug_datatable = $('#drug_datatable').DataTable({
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/radiology/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
+        //render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/radiology/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
+        render : resp => "<button class='btn btn-primary btn-sm' ng-click='openPicRadiology($event.currentTarget)' type='button' title='Detail'><i class='fa fa-file-text-o'></i></button>"      },
 
                ],
                 createdRow: function(row, data, dataIndex) {
@@ -2645,6 +2677,36 @@ drug_datatable = $('#drug_datatable').DataTable({
       }
   }
   $scope.showInternalRadiology()
+
+    $scope.openPicRadiology = function(e) {
+        var tr = $(e).parents('tr')
+        var data = internal_radiology_datatable.row(tr).data()
+        $scope.idpivot = data.idpivot
+        pj_radiology_datatable.ajax.reload()
+        $('#picRadiologyModal').modal()
+    }
+
+    $scope.openPDFRadiology = function(e) {
+      var url = ''
+      if(path.indexOf('ruang_tindakan') > -1) {
+          url = baseUrl + '/controller/registration/medical_record/pivot/' + id + '/ruang_tindakan/pdf'
+      } else if(path.indexOf('radiology') > -1) {
+          url = baseUrl + '/controller/registration/medical_record/pivot/' + $scope.idpivot + '/radiology/pdf'
+      } else if(path.indexOf('chemoterapy') > -1) {
+          url = baseUrl + '/controller/registration/medical_record/pivot/' + id + '/chemoterapy/pdf'
+      } else if(path.indexOf('laboratory') > -1) {
+          url = baseUrl + '/controller/registration/medical_record/pivot/' + $scope.mrid + '/laboratory_form/pdf'
+      }
+
+      if(e) {
+          var tr = $(e).parents('tr')
+          var data = pj_radiology_datatable.row(tr).data()
+          url += '/' + data.id
+      }
+      window.open(url, '_blank')
+      $('#picRadiologyModal').modal('hide')
+      $('#picLaboratoryModal').modal('hide')
+    }
 
   $scope.changeReduksiRadiology = function(medical_record_detail_id, e) {
         console.log(e)
@@ -2707,7 +2769,8 @@ drug_datatable = $('#drug_datatable').DataTable({
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/laboratory/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
+        //render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/laboratory/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
+        render : resp => "<button class='btn btn-primary btn-sm' ng-click='openPicLaboratory($event.currentTarget)' type='button' title='Detail'><i class='fa fa-file-text-o'></i></button>"      },
 
                 ],
                 createdRow: function(row, data, dataIndex) {
@@ -2720,6 +2783,60 @@ drug_datatable = $('#drug_datatable').DataTable({
       }
   }
   $scope.showInternalLaboratory()
+
+    pj_lab_datatable = $('#pj_lab_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        dom: 'frtip',
+        ajax: {
+          url : baseUrl+'/datatable/master/medical',
+          data : function(d) {
+            d.is_display_all = 1
+            d.is_active = 1
+            d.slug = 'laboratory'
+            return d
+          }
+        },
+        columns:[
+            {data:"name", name:"name"},
+            {
+                data:null, 
+                searchable:false,
+                orderable:false,
+                className : 'text-right',
+                render:function(r){
+                    input = "<button type='button' ng-click='openPDFLab($event.currentTarget)' class='btn btn-sm btn-primary'>Pilih</button"
+                    return input
+                } 
+            },
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
+
+    $scope.openPicLaboratory = function(e) {
+        var tr = $(e).parents('tr')
+        var data = internal_laboratory_datatable.row(tr).data()
+        $scope.mrid = data.mrid
+        pj_lab_datatable.ajax.reload()
+        $('#picLaboratoryModal').modal()
+    }
+
+    $scope.openPDFLab = function(e) {
+      var url = ''
+      if(path.indexOf('laboratory') > -1) {
+          url = baseUrl + '/controller/registration/medical_record/pivot/' + $scope.mrid + '/laboratory_form/pdf'
+      }
+
+      if(e) {
+          var tr = $(e).parents('tr')
+          var data = pj_lab_datatable.row(tr).data()
+          url += '/' + data.id
+      }
+      window.open(url, '_blank')
+      $('#picLaboratoryModal').modal('hide')
+    }
 
   $scope.showLaboratoryChecklistModal = function(obj) {
       var tr = $(obj).parents('tr')

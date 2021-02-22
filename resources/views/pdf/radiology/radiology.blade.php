@@ -62,12 +62,12 @@
                     <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>Umur</span>
                         <span class="ib"> : </span>
-                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->age !!}</span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
                     </p>
                     <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>Tanggal Periksa</span>
                         <span class="ib"> : </span>
-                        <span class="ib" style='width:100mm'>{!! $medicalRecord->date !!}</span>
+                        <span class="ib" style='width:100mm'>{!! Mod::fullDate($medicalRecord->date) !!}</span>
                     </p>
                     <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>Klinis</span>

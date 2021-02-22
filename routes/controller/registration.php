@@ -41,7 +41,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_mammae/pdf', 'MedicalRecordController@usg_mammae_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_thyroid/pdf', 'MedicalRecordController@usg_thyroid_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/mammografi/pdf', 'MedicalRecordController@mammografi_pdf');
-        Route::get('medical_record/pivot/{pivot_medical_record_id}/radiology/pdf/{contact_id}', 'MedicalRecordController@radiology_pdf');
+        Route::get('medical_record/pivot/{pivot_medical_record_id}/radiology/pdf/{contact_id}/{flag?}', 'MedicalRecordController@radiology_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/chemoterapy/pdf/{contact_id}', 'MedicalRecordController@chemoterapy_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/xray/pdf', 'MedicalRecordController@xray_pdf');
         Route::get('medical_record/pivot/{pivot_medical_record_id}/usg_abdomen_upper_lower_pria/pdf', 'MedicalRecordController@usg_abdomen_upper_lower_pria_pdf');
