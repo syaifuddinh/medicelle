@@ -122,13 +122,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12">Reduksi
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="number" name="reduksi" ng-change='updateReduksi()' ng-keyup="changeReduksiRadiology($event.currentTarget)" ng-model='pivot.medical_record_detail.reduksi' class="form-control">
+                                </div>
+                            </div>
+
+
 
                             <div class="form-group" ng-show='pivot.is_ruang_tindakan == 1'>
                                 <label class="col-md-3 col-sm-3 col-xs-12">Keterangan
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <textarea class="form-control" ng-model='pivotData.ruang_tindakan_description' ng-change='updateRuangTindakanDescription()'></textarea>
-                                    
+                                    <textarea class="form-control" ng-model='pivotData.ruang_tindakan_description' ng-change='updateRuangTindakanDescription()'></textarea>                                    
                                 </div>
                             </div>
                         </div>

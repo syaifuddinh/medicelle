@@ -2655,13 +2655,20 @@ drug_datatable = $('#drug_datatable').DataTable({
                 },
                 {data : 'name'},
                 {
-                    data : null,
-                    width:'6px',
-                    render: function(resp) {
-                        var r = '<input type="number" ' + boleheditreduksi +' ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
-                        return r
-                    }
+                  data : null,
+                  render : function(resp) {
+
+                    return (resp.reduksi);
+                  }
                 },
+                //{
+                //    data : null,
+                //    width:'6px',
+                //    render: function(resp) {
+                //        var r = '<input type="number" ' + boleheditreduksi +' ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
+                //        return r
+                //    }
+                //},
       {
         data: null,
         width:'14%', 

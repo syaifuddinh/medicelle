@@ -60,6 +60,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
         Route::get('medical_record/{id}/docx', 'MedicalRecordController@docx');
         Route::post('medical_record/submit_research/{id}/{flag?}', 'MedicalRecordController@submit_research');
         Route::post('medical_record/update_research/{medical_record_detail_id}/', 'MedicalRecordController@update_research');
+        Route::put('medical_record/update_reduksi/{medical_record_detail_id}/', 'MedicalRecordController@update_reduksi');
         Route::post('medical_record/submit_schedule/{id}', 'MedicalRecordController@submit_schedule');
         Route::put('medical_record/{destination_id}/origin/{origin_id}', 'MedicalRecordController@clone');
         Route::delete('medical_record/{id}/detail/{detail_id}', 'MedicalRecordController@destroy_detail');

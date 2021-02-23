@@ -39,7 +39,7 @@ class MedicalRecordController extends Controller
     {
         $pivot = PivotMedicalRecord::with(
             'medical_record:id,date',
-            'medical_record_detail:id,item_id',
+            'medical_record_detail:id,item_id,reduksi',
             'medical_record_detail.item:id',
             'parent:id,additional',
             'medical_record_detail.item.price:id,item_id,laboratory_group,radiology_group'
@@ -1114,6 +1114,14 @@ class MedicalRecordController extends Controller
         $medicalRecordDetail->fill($request->all());
         $medicalRecordDetail->save();
         
+        DB::commit();
+    }
+
+    public function update_reduksi(Request $request, $medical_record_detail_id) {
+        DB::beginTransaction();
+        $medicalRecordDetail = MedicalRecordDetail::find($medical_record_detail_id);
+        $medicalRecordDetail->fill($request->all());
+        $medicalRecordDetail->save();
         DB::commit();
     }
 

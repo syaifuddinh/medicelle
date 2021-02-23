@@ -336,12 +336,26 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
       toastr.error(error.data.message,"Error Has Found !");
     }
     });
+    }
+
+    $scope.updateReduksi = function() {
+    $http.put(baseUrl + '/controller/registration/medical_record/update_reduksi/' + $scope.pivot.medical_record_detail.id, $scope.pivot.medical_record_detail).then(function(data) {
+    }, function(error) {
+    if (error.status==422) {
+      var det="";
+      angular.forEach(error.data.errors,function(val,i) {
+        det+="- "+val+"<br>";
+    });
+      toastr.warning(det,error.data.message);
+    } else {
+      toastr.error(error.data.message,"Error Has Found !");
+    }
+    });
+    console.log($scope.formData.pivot.medical_record_detail.reduksi);
     } 
 
     $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
     $scope.formData = data.data
-    var assesment_url = $('#assesmentButton').attr('href') + '/' + data.data.assesment.id
-    $('#assesmentButton').attr('href', assesment_url)
     $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
       $scope.data.polyclinic = data.data
     $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
