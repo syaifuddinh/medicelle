@@ -122,6 +122,7 @@
                                 </div>
                             </div>
 
+                            @if($flag == 'radiology')
                             <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Reduksi
                                 </label>
@@ -129,7 +130,7 @@
                                     <input type="number" name="reduksi" ng-change='updateReduksi()' ng-keyup="changeReduksiRadiology($event.currentTarget)" ng-model='pivot.medical_record_detail.reduksi' class="form-control">
                                 </div>
                             </div>
-
+                            @endif
 
 
                             <div class="form-group" ng-show='pivot.is_ruang_tindakan == 1'>
@@ -223,6 +224,8 @@
                                 </div>
                             </span>
                         </div>
+
+                        @if($flag == 'radiology')
                         <span ng-show='pivot.is_radiology == 1 && pivot.is_referenced == 1'>
                             <hr>
                             <!-- 
@@ -312,6 +315,7 @@
                             </table>
                             </div>
                         </span>
+                        @endif
                     </div>
                     
                     @include('polyclinic/polyclinic/laboratory/laboratory_treatment_description')
@@ -323,13 +327,14 @@
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
-
+                        @if($flag == 'radiology' || $flag == 'laboratory')
                             <div class="btn-group pull-right" ng-show='pivot.is_referenced == 1'>
 
                                 <button class="btn btn-primary btn-sm" ng-click="openPicModal()" type="button" title='Buka dokumen PDF'>
                                     <i class="fa fa-file-pdf-o"></i>
                                 </button>
                             </div>
+                        @endif
                             <div class="btn-group pull-right" ng-hide='pivot.is_referenced == 1'>
                              @if(Auth::user()->allow_update_assesment())
                                 <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => ""]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
