@@ -245,8 +245,10 @@ function strip_tags(str) {
                 {
                   data:null, 
                   render:function(resp) {
+					  var textresp=resp.medadd.replace(/&quot;/g, '"');
+					  var obj = JSON.parse(textresp);
                       //var summary = "Tensi : " + resp.medical_record.blood_pressure + " mmHg, Nadi : " + resp.medical_record.pulse + " x/menit, Suhu badan : " + resp.medical_record.temperature + " <sup>o</sup>C, Nafas : " + resp.medical_record.breath_frequency + " x/menit"
-                      var summary = "Keluhan : " + (strip_tags(resp.medical_record.main_complaint) || '-') + " , Penyakit Sekarang : " + (strip_tags(resp.medical_record.current_disease) || '-') + " , Diagnosa : " + (resp.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
+                      var summary = "Keluhan : " + (strip_tags(resp.medical_record.main_complaint) || '-') + " , Penyakit Sekarang : " + (strip_tags(resp.medical_record.current_disease) || '-') + " , Diagnosa : " + (obj.diagnose_name || '-') + " (ket : " + (resp.description || '-') + ")"
                       return summary
                   }
                 },
