@@ -25,6 +25,14 @@
                                             <label>Qty</label>
                                             <div style='display:flex'>
                                                 <input type="text" class='form-control' ng-model="treatment_group.qty" maxlength="4" jnumber2 only-num>
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label>Reduksi</label>
+                                            <div style='display:flex'>
+                                                <input type="text" class='form-control' ng-model="treatment_group.reduksi" maxlength="4" jnumber2 only-num>
                                                 <div style="margin-left:1mm">
                                                     <button type='button' class='btn btn-success' ng-click='storeDetail(treatment_group)' ng-disabled='!treatment_group.item_id || disBtn'><i class="fa fa-check"></i></button>
                                                 </div>
@@ -44,6 +52,7 @@
                                                     <td>Tanggal</td>
                                                     <td>Paket Tindakan</td>
                                                     <td>Qty</td>
+                                                    <td>Reduksi</td>
                                                     <td></td>
                                                 </tr>
                                             </thead>

@@ -2356,6 +2356,7 @@ drug_datatable = $('#drug_datatable').DataTable({
         render : resp => $scope.data.treatment_group.find(x => x.id == resp.item_id).name
       },
       {data : 'qty', className : 'text-right', width:'10%', orderable:false},
+      {data : 'reduksi', className : 'text-right', width:'10%', orderable:false},
       
       {
         data : null,

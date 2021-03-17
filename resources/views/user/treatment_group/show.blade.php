@@ -73,14 +73,22 @@
                                   </div>
                               </div>
                              
+                              <div class="form-group">
+                                  <label class="col-md-3 col-xs-12" for="last-name">Nominal Jasa Dokter
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <% formData.service_price | number %>
+                                  </div>
+                              </div>
 
-                              <div class="form-group hidden">
+                              <div class="form-group">
                                   <label class="col-md-3 col-xs-12" for="last-name">Persentase dokter
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                       <% formData.percentage %>%
                                   </div>
                               </div>
+
                           </div>
                                               
 

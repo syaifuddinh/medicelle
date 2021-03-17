@@ -322,6 +322,7 @@ class RegistrationController extends Controller
                         'is_item' => 1,
                         'is_profit_sharing' => 1,
                         'debet' => $value->item->price,
+                        'service_price' => $value->item->treatment_group->price,
                         'reduksi' => $value->reduksi
                     ]);
                 }
@@ -443,7 +444,6 @@ class RegistrationController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-
             return Response::json(['message' => $e->getMessage()], 421);
         }
 
@@ -525,7 +525,8 @@ class RegistrationController extends Controller
                         'is_item' => 1,
                         'is_profit_sharing' => 1,
                         'debet' => $value->item->price,
-                        'reduksi' => $value->reduksi
+                        'reduksi' => $value->reduksi,
+                        'service_price' => $value->item->treatment_group->service_price
                     ]);
                 }
                 foreach($diagnostics as $value) {

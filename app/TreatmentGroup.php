@@ -7,7 +7,7 @@ use Exception;
 
 class TreatmentGroup extends Model
 {
-    protected $fillable = ['item_id', 'grup_nota_id', 'percentage'];
+    protected $fillable = ['item_id', 'grup_nota_id', 'percentage', 'service_price', 'reduksi'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function detail() {

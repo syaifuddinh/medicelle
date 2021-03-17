@@ -331,4 +331,10 @@ class Item extends Model
     public function price() {
         return $this->hasOne('App\Price', 'item_id', 'id');
     }
+
+    public function treatment_group() {
+        return $this->hasOne('App\TreatmentGroup', 'item_id', 'id')->withDefault([
+            'service_price' => 0
+        ]);;
+    }
 }

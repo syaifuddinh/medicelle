@@ -27,12 +27,23 @@ class InvoiceDetail extends Model
             $invoice = Invoice::find($invoiceDetail->invoice_id);
             if($invoiceDetail->is_item == 1) {
                 $item = DB::table('items')
-                ->join('prices', 'prices.item_id', 'items.id')
+                ->leftJoin('prices', 'prices.item_id', 'items.id')
                 ->where('items.id', $invoiceDetail->item_id)
-                ->select('service_price', 'prices.percentage')
+                ->select('service_price', 'prices.percentage', 'is_treatment_group')
                 ->first();
                 $invoiceDetail->percentage_doctor = $item->percentage ?? 0;
                 $invoiceDetail->service_price = $item->service_price ?? 0;
+                // if($item->is_treatment_group == 0) {
+                // } else {
+                //     $treatment_group = DB::table('treatment_groups')
+                //     ->whereItemId($id)
+                //     ->first();
+                //     if($treatment_group) {
+                //         $invoiceDetail->percentage_doctor = $treatment_group->percentage ?? 0;
+                //         $invoiceDetail->service_price = $treatment_group->service_price ?? 0;
+
+                //     }
+                // }
             }
             if($invoiceDetail->is_discount == 1) {
                 $invoice->increment('discount', -$grandtotal);                
@@ -80,11 +91,13 @@ class InvoiceDetail extends Model
                 } else {
                     if($current_item->is_treatment_group == 1) {
                         $price = DB::table('treatment_groups')->whereItemId($invoiceDetail->item_id)->first();
+                        if($price) {
+                            $current_item->service_price = $price->service_price;
+                        }
                     } else {
                         $price = DB::table('prices')->whereItemId($invoiceDetail->item_id)->first();
                     }
                 }
-
                 $percentage = $price->percentage ?? 0;
                 //$doctor_allocation = $total_debet * $percentage / 100;
                 $doctor_allocation = $current_item->service_price * $percentage / 100;
