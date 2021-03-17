@@ -59,7 +59,7 @@
                           <th>Kode</th>
                           <th>Nama</th>
                           <th>Kelompok</th>
-                          <th>Grup nota</th>
+                          <th>Harga Jual</th>
                           <th>Status</th>
                           <th></th>
                         </tr>

@@ -1,4 +1,4 @@
-app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile, $http) {
+app.controller('cure', ['$scope', '$compile', '$http', '$filter', function($scope, $compile, $http, $filter) {
   $scope.formData = {}
   oTable = $('#listview').DataTable({
     processing: true,
@@ -33,7 +33,13 @@ app.controller('cure', ['$scope', '$compile', '$http', function($scope, $compile
         render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
       {data:"group.name", name:"group.name"},
-      {data:"price.grup_nota.slug", name:"price.grup_nota.slug"},
+      {
+        data:null, 
+        searchable : false,
+        name:'rate',
+        className:'text-right',
+        render:resp => $filter('number')(resp.rate)
+      },
       {
         data: null, 
         orderable : false,
