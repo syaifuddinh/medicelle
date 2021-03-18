@@ -391,7 +391,7 @@ $scope.showInvoiceDetail = function() {
         $scope.showGrupNota(grup_nota)
         item = detail[grup_nota]
         for(index in item) {
-            item[index].debet -= item[index].reduksi_reference.total_credit
+            item[index].debet -= item[index].reduksi_reference.credit
             $scope.formData.invoice_detail[grup_nota][index].subtotal = item[index].qty * item[index].debet
             unit = item[index]
             $scope.showItemDetail(unit, grup_nota, index)

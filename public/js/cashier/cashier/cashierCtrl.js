@@ -1,15 +1,15 @@
 app.controller('cashier', ['$scope', '$compile', '$http', '$filter', '$timeout', function($scope, $compile, $http, $filter, $timeout) {
-  var currentDate = new Date()
-  var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
-  var date2 = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + (currentDate.getDate() + 2).toString().padStart(2, 0)
-  $scope.formData = {
+    var currentDate = new Date()
+    var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)
+    var date2 = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + (currentDate.getDate() + 2).toString().padStart(2, 0)
+    $scope.formData = {
       'date_start' : date,
-	  'date_end' : date2
-  }
-  setTimeout(function () {    
+      'date_end' : date2
+    }
+    setTimeout(function () {    
         $('[ng-model="formData.date_start"]').val( $filter('fullDate')($scope.formData.date_start))
-		$('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
-  }, 300)
+    	$('[ng-model="formData.date_end"]').val( $filter('fullDate')($scope.formData.date_end))
+    }, 300)
   
   oTable = $('#listview').DataTable({
     processing: true,
