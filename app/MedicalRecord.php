@@ -12,7 +12,7 @@ class MedicalRecord extends Model
 {
     protected $appends = ['additional'];
     protected $hidden = ['created_at', 'updated_at'];
-    protected $fillable = ['date','code', 'patient_id', 'current_disease','obgyn_current_disease','psiko_sosial','operasi','obgyn_operasi', 'step', 'main_complaint', 'obgyn_main_complaint', 'is_disturb', 'pain_score', 'fallen', 'fallen_description', 'secondary_diagnose', 'secondary_diagnose_description', 'helper', 'helper_description', 'infus', 'infus_description', 'walking', 'walking_description', 'mental', 'mental_description', 'menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan', 'general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia', 'ekg', 'usg', 'head_description','rectum_description','breast_description', 'physique', 'reduksi', 'registration_id', 'additional'];
+    protected $fillable = ['date','code', 'patient_id', 'current_disease','obgyn_current_disease','allergy_history','obgyn_allergy_history','family_disease_history','obgyn_family_disease_history','cure_history','psiko_sosial','operasi','obgyn_operasi', 'step', 'main_complaint', 'obgyn_main_complaint', 'is_disturb', 'pain_score', 'fallen', 'fallen_description', 'secondary_diagnose', 'secondary_diagnose_description', 'helper', 'helper_description', 'infus', 'infus_description', 'walking', 'walking_description', 'mental', 'mental_description', 'menarche_age','siklus_haid','jumlah_pemakaian_pembalut','lama_pemakaian_pembalut','is_tidy','hpht','haid_complaint','marriage_status','marriage_duration','is_pernah_kb','kb_item','kb_start_time','kb_complaint','gravida','partus','abortus','imunisasi_tt','pada_usia_kehamilan','pemakaian_obat_saat_kehamilan','keluhan_saat_kehamilan', 'general_condition','gigi_tumbuh_pertama','long','weight','blood_pressure','pulse','temperature','breath_frequency','prebirth_weight','postbirth_weight','birth_long','birth_weight','head_size','arm_size','berguling_usia','duduk_usia','merangkak_usia','berdiri_usia','berjalan_usia','bicara_usia', 'ekg', 'usg', 'head_description','rectum_description','breast_description', 'physique', 'reduksi', 'registration_id', 'additional'];
 
 
     public static function boot() {
@@ -255,6 +255,7 @@ class MedicalRecord extends Model
         return $this->hasMany('App\MedicalRecordDetail')->whereIsObgynDiseaseHistory(1);
     }
 
+    /*
     public function family_disease_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsFamilyDiseaseHistory(1);
     }
@@ -262,7 +263,8 @@ class MedicalRecord extends Model
     public function obgyn_family_disease_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsObgynFamilyDiseaseHistory(1);
     }
-
+    */
+    
     public function ginekologi_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsGinekologiHistory(1);
     }
@@ -336,9 +338,9 @@ class MedicalRecord extends Model
         return $this->hasMany('App\MedicalRecordDetail')->whereIsPainCureHistory(1);
     }
 
-    public function allergy_history() {
+    /*public function allergy_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsAllergyHistory(1);
-    }
+    }*/
 
     public function kid_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsKidHistory(1);

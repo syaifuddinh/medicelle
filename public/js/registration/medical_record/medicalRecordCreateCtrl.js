@@ -3433,15 +3433,15 @@ drug_datatable = $('#drug_datatable').DataTable({
               $scope.formData.pain_history = pain_history_datatable.data().toArray()
               $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
               $scope.formData.disease_history = disease_history_datatable.data().toArray()
-              $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
-              $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
+              //$scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+              //$scope.formData.allergy_history = allergy_history_datatable.data().toArray()
           } else if(step == 2) {
               $scope.formData.kid_history = kid_history_datatable.data().toArray()
               $scope.formData.kb_history = kb_history_datatable.data().toArray()
               $scope.formData.komplikasi_kb_history = komplikasi_kb_history_datatable.data().toArray()
               $scope.formData.ginekologi_history = ginekologi_history_datatable.data().toArray()
               $scope.formData.obgyn_disease_history = obgyn_disease_history_datatable.data().toArray()
-              $scope.formData.obgyn_family_disease_history = obgyn_family_disease_history_datatable.data().toArray()
+              //$scope.formData.obgyn_family_disease_history = obgyn_family_disease_history_datatable.data().toArray()
           } 
       }
 

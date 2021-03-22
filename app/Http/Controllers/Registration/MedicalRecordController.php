@@ -386,8 +386,8 @@ class MedicalRecordController extends Controller
             'disease_history:id,medical_record_id,disease_name,cure,description',
             'obgyn_disease_history:id,medical_record_id,disease_name,cure,description',
 
-            'family_disease_history:id,medical_record_id,disease_name,cure,description', 
-            'obgyn_family_disease_history:id,medical_record_id,disease_name,cure,description', 
+            /*'family_disease_history:id,medical_record_id,disease_name,cure,description', 
+            'obgyn_family_disease_history:id,medical_record_id,disease_name,cure,description', */
 
             'kb_history:id,medical_record_id,name,duration', 
             'komplikasi_kb_history:id,medical_record_id,name', 
@@ -406,7 +406,7 @@ class MedicalRecordController extends Controller
 
             'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             
-            'allergy_history:id,medical_record_id,cure,side_effect', 
+            /*'allergy_history:id,medical_record_id,cure,side_effect', */
             'pain_history:id,medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
@@ -1003,6 +1003,7 @@ class MedicalRecordController extends Controller
             });
         }
 
+        /*
         if(isset($request->family_disease_history)) {
             $medical_record_detail->family_disease_history()->whereMedicalRecordId($medical_record->id)->delete();
             $family_disease_history = collect($request->family_disease_history);
@@ -1030,6 +1031,11 @@ class MedicalRecordController extends Controller
         if(isset($request->allergy_history)) {
             $medical_record_detail->allergy_history()->whereMedicalRecordId($medical_record->id)->delete();
             $allergy_history = collect($request->allergy_history);
+            $medical_record_detail = new MedicalRecordDetail();
+            $medical_record_detail->fill($allergy_history);
+            $medical_record_detail->is_allergy_history = 1;
+            $medical_record_detail->save();
+            
             $allergy_history = $allergy_history->each(function($val) use($medical_record){
                 $medical_record_detail = new MedicalRecordDetail();
                 $val['medical_record_id'] = $medical_record->id;
@@ -1037,7 +1043,7 @@ class MedicalRecordController extends Controller
                 $medical_record_detail->is_allergy_history = 1;
                 $medical_record_detail->save();
             });
-        }
+        }*/
         DB::commit();
 
         return Response::json(['message' => 'Transaksi berhasil diupdate'], 200);

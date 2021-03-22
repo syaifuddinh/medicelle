@@ -64,7 +64,21 @@
 
                                     </div>
 
+                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></trix-editor>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
+                                <!--
                                 <div class="ln_solid"></div>
                                 <h2>Riwayat penyakit dahulu</h2>
                                 <div class="row">
@@ -108,9 +122,10 @@
                                             <tbody></tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div>-->
 
-                                <div class="ln_solid"></div>
+                        <!--
+                        <div class="ln_solid"></div>
                         <h2>Alergi obat & reaksi efek samping</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
@@ -141,13 +156,12 @@
                             </div>
                             
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-bordered" id='allergy_history_datatable'>
                                     <thead>
                                         <tr>
-                                            <td>Obat / Makanan</td>
+                                            <td>Obat</td>
                                             <td>Reaksi</td>
                                             <td></td>
                                         </tr>
@@ -155,7 +169,22 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>-->
+
+                            <div class="ln_solid"></div>
+                            <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Alergi obat/makanan & reaksi efek samping
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.allergy_history'  ng-change="submitOne('allergy_history')"></trix-editor>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
 
                                 <div class="ln_solid"></div>
                                 <div class="row">
@@ -172,6 +201,38 @@
                                         </div>
                                     </div>
 
+                                <div class="ln_solid"></div>
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                        
+                                                <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit keluarga
+                                                </label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.family_disease_history'  ng-change="submitOne('family_disease_history')"></trix-editor>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                        
+                                                <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat pengobatan
+                                                </label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.cure_history'  ng-change="submitOne('cure_history')"></trix-editor>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                <!--
                                 <div class="ln_solid"></div>
                                 <h2>Riwayat penyakit keluarga</h2>
                                 <div class="row">
@@ -216,7 +277,7 @@
                                             <tbody></tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div>-->
 
 
                                 <div class="ln_solid hidden"></div>
@@ -292,7 +353,7 @@
                                 </div>
 
 
-
+                                <!--
                                 <div class="ln_solid"></div>
                                 <h2>Riwayat pengobatan</h2>
                                 <div class="row">
@@ -331,23 +392,9 @@
                                             <tbody></tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="ln_solid"></div>
                                     
-                                    
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                                    
-                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
-                                            </label>
-                                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <trix-editor angular-trix class="form-control" ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></trix-editor>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
                                 
                                 <div class="form-group hidden">
                                     <label class="col-md-3 col-sm-3 col-xs-12">Apakah nyeri menganggu aktivitas<span class="required">*</span>

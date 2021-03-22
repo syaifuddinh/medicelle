@@ -295,6 +295,7 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div class="ln_solid"></div>
                             <h2>Riwayat penyakit dahulu</h2>
                             <div class="row disease" allow_update_medical_record>
@@ -338,8 +339,10 @@
                                         <tbody></tbody>
                                     </table>
                                 </div>
-                            </div>
-                                <div class="ln_solid"></div>
+                            </div>-->
+
+                        <!--
+                        <div class="ln_solid"></div>
                         <h2>Alergi obat & reaksi efek samping</h2>
                         <div class="row">
                             <div class="col-md-12" style='display:flex'>
@@ -383,7 +386,22 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>-->
+
+                            <div class="ln_solid"></div>
+                            <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Alergi obat/makanan & reaksi efek samping
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.obgyn_allergy_history'  ng-change="submitOne('obgyn_allergy_history')"></trix-editor>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
 
 
                             <div class="ln_solid"></div>
@@ -401,6 +419,23 @@
                                     </div>
                                 </div>
 
+                            <div class="ln_solid"></div>
+                            <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                    
+                                            <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit keluarga
+                                            </label>
+                                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.obgyn_family_disease_history'  ng-change="submitOne('obgyn_family_disease_history')"></trix-editor>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            <!--
                             <div class="ln_solid"></div>
                             <h2>Riwayat penyakit keluarga</h2>
                             <div class="row disease" allow_update_medical_record>
@@ -445,7 +480,7 @@
                                         <tbody></tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="ln_solid"></div>
                             <h2>Riwayat ginekologi</h2>

@@ -2,15 +2,7 @@
             <p style='margin-top:3mm'>Datang dengan keluhan utama : {!! $medicalRecord->main_complaint !!}<br> Riwayat penyakit sekarang : {!! $medicalRecord->current_disease !!}.
             <?php if($medicalRecord->obgyn_main_complaint) { ?><br>
             Keluhan (obgyn) : {!! $medicalRecord->obgyn_main_complaint !!}<?php }?><br>
-            Penyakit dahulu : <br>
-            <ol style='margin-top:3mm;margin-left:6mm'>
-               @foreach($medicalRecord->disease_history as $unit)
-                    @if($unit->disease_name)
-                        <li>{!! $unit->disease_name !!}</li>
-                    @endif
-               @endforeach
-            </ol>
-            <br>
+            Penyakit dahulu : {!! $medicalRecord->additional->riwayat_penyakit_dahulu !!}<br>
             <p>Hasil pemeriksaan didapatkan :</p>
             <p style='margin-left:5mm'>TB : {!! $medicalRecord->long !!} cm, Tensi : {!! $medicalRecord->blood_pressure !!} mmHg, Suhu badan : {!! $medicalRecord->temperature !!} <sup>o</sup>C</p>
             <p style='margin-left:5mm'>BB : {!! $medicalRecord->weight !!} kg, Nadi : {!! $medicalRecord->pulse !!} x/menit, Nafas : {!! $medicalRecord->breath_frequency!!} x/menit</p><br>

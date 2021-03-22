@@ -356,6 +356,8 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
 
     $http.get(baseUrl + '/controller/registration/registration/' + id).then(function(data) {
     $scope.formData = data.data
+    var assesment_url = $('#assesmentButton').attr('href') + '/' + data.data.assesment.id
+    $('#assesmentButton').attr('href', assesment_url)
     $http.get(baseUrl + '/controller/master/polyclinic').then(function(data) {
       $scope.data.polyclinic = data.data
     $http.get(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id).then(function(data) {
