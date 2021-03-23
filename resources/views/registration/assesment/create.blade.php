@@ -31,9 +31,28 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                            
+                                    <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit keluarga
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <textarea class="form-control" ng-model='formData.family_disease_history' ng-change='submitOne("family_disease_history")'></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                            
+                                    <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Alergi obat/makanan & reaksi efek samping
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <textarea class="form-control" ng-model='formData.allergy_history' ng-change='submitOne("allergy_history)'></textarea>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
+
+                        <!--
                         <div class="ln_solid"></div>
                         <h2>Riwayat penyakit dahulu</h2>
                         <div class="row">
@@ -122,7 +141,7 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>-->
 
 
                         <div class="ln_solid"></div>

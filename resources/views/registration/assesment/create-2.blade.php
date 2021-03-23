@@ -1,5 +1,6 @@
 @include('registration/assesment/create-header')
                       </nav>
+                        <!--
                         <div class="ln_solid"></div>
                         <h2>Alergi obat & reaksi efek samping</h2>
                         <div class="row">
@@ -45,7 +46,7 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="ln_solid"></div>
                         <div class="row">

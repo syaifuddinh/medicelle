@@ -278,10 +278,10 @@ app.controller('assesmentShow', ['$scope', '$http', '$rootScope', '$filter', '$c
         pain_score : 0
       }
       $scope.disease_history = {}
-      $scope.family_disease_history = {}
+      //$scope.family_disease_history = {}
       $scope.pain_history = {}
       $scope.pain_cure_history = {}
-      $scope.allergy_history = {}
+      //$scope.allergy_history = {}
       $scope.kid_history = {}
       $scope.imunisasi_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'

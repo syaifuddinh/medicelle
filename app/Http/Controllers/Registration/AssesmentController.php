@@ -54,9 +54,9 @@ class AssesmentController extends Controller
         $x = Assesment::with(
             'patient:id,name', 
             'disease_history:assesment_id,imunisasi,cure,side_effect', 
-            'family_disease_history:assesment_id,imunisasi,cure,side_effect', 
+            //'family_disease_history:assesment_id,imunisasi,cure,side_effect', 
             'pain_history:assesment_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
-            'allergy_history:assesment_id,cure,side_effect', 
+            //'allergy_history:assesment_id,cure,side_effect', 
             'pain_history:assesment_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:assesment_id,cure,emergence_time',
             'kid_history:assesment_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
@@ -181,6 +181,7 @@ class AssesmentController extends Controller
                 });
             }
 
+            /*
             if(isset($request->family_disease_history)) {
                 $this->deleteMedicalRecordDetail($id, 'is_family_disease_history');
                 $assesment_detail->family_disease_history()->whereAssesmentId($id)->delete();
@@ -205,7 +206,7 @@ class AssesmentController extends Controller
                     $assesment_detail->is_allergy_history = 1;
                     $assesment_detail->save();
                 });
-            }
+            }*/
             
             DB::commit();
         } catch (Exception $e) {

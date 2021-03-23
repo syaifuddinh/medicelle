@@ -478,10 +478,10 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
         pain_score : 0
       }
       $scope.disease_history = {}
-      $scope.family_disease_history = {}
+      //$scope.family_disease_history = {}
       $scope.pain_history = {}
       $scope.pain_cure_history = {}
-      $scope.allergy_history = {}
+      //$scope.allergy_history = {}
       $scope.kid_history = {}
       $scope.imunisasi_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'
@@ -572,9 +572,9 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
           $scope.formData.pain_history = pain_history_datatable.data().toArray()
           $scope.formData.pain_cure_history = pain_cure_history_datatable.data().toArray()
           $scope.formData.disease_history = disease_history_datatable.data().toArray()
-          $scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
+          //$scope.formData.family_disease_history = family_disease_history_datatable.data().toArray()
       } else if(step == 2) {
-          $scope.formData.allergy_history = allergy_history_datatable.data().toArray()
+          //$scope.formData.allergy_history = allergy_history_datatable.data().toArray()
       } else if(step == 3) {
           $scope.formData.kid_history = kid_history_datatable.data().toArray()
       } else if(step == 4) {
