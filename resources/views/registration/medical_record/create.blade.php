@@ -52,6 +52,7 @@
                                     </div>
 
 
+                                    <!--
                                     <div class="col-md-12">
                                         <div class="form-group">
                                                     
@@ -63,6 +64,7 @@
                                         </div>
 
                                     </div>
+                                    -->
 
                                     
                                     <div class="col-md-12">
@@ -186,6 +188,7 @@
                                     </div>
                                 </div>
 
+                                <!--                                    
                                 <div class="ln_solid"></div>
                                 <div class="row">
                                         <div class="col-md-12">
@@ -200,7 +203,8 @@
 
                                         </div>
                                     </div>
-
+                                -->
+                                
                                 <div class="ln_solid"></div>
                                 <div class="row">
                                         <div class="col-md-12">
