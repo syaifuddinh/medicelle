@@ -42,12 +42,23 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Pasien<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12" {!! Auth::user()->contact_id != null ? (Auth::user()->contact->is_doctor == 1 ? 'ng-init="is_new_patient = 1"' : '') : '' !!}>
-                                        <div class="input-group">
+                                        <div class="col-md-3 col-sm-3 col-xs-12">                                        
+                                        <select ng-model='formData.patient.patient_type' class='form-control input-sm col-md-3'>
+                                                <option value=""></option>
+                                                <option value="ANAK">Anak</option>
+                                                <option value="NYONYA">Nyonya</option>
+                                                <option value="NONA">Nona</option>
+                                                <option value="TUAN">Tuan</option>
+                                        </select>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+					<div class="input-group"> 
                                             <input type="text" id="first-name" ng-model='formData.patient.name' required="required" class="form-control col-md-7 col-xs-12" ng-click='showPatients()' ng-readonly='!is_new_patient' ng-change="changeFamilyName()">
                                             <div class="input-group-addon" ng-click='fillPatient()'>
                                                 <i class="fa fa-pencil" ng-show='!is_new_patient'></i>
                                                 <i class="fa fa-close" ng-show='is_new_patient'></i>
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -217,18 +228,7 @@
                                         <label class="col-md-12 col-xs-12" for="first-name">Pekerjaan
                                         </label>
                                         <div class="col-md-10 col-xs-12">
-                                            <select class="form-control" data-placeholder-text-single="'Pilih Pekerjaan'" required='required' chosen allow-single-deselect="false" ng-model="formData.patient.family.job" 
-                                            >
-                                            <option value=""></option>
-                                            <option value="PNS">PNS</option>
-                                            <option value="SWASTA">Swasta</option>
-                                            <option value="WIRASWASTA">Wiraswasta</option>
-                                            <option value="TNI/POLRI">TNI/Polri</option>
-                                            <option value="PETANI">Petani</option>
-                                            <option value="NELAYAN">Nelayan</option>
-                                            <option value="PTT">PTT</option>
-                                            <option value="IBU RTGA">Ibu RTGA</option>
-                                        </select>
+                                            <input type="text" class="form-control" ng-model="formData.patient.family.job" required='required'>
                                     </div>
                                 </div>
                             </span>

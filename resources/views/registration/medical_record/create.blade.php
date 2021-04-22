@@ -21,7 +21,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Keluhan utama<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <trix-editor angular-trix class="form-control" ng-model='formData.main_complaint' ng-change="submitOne('main_complaint')"></trix-editor>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.main_complaint' ng-blur="submitOne('main_complaint')"></trix-editor>
                                             </div>
                                         </div>
 
@@ -33,7 +33,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit sekarang<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <trix-editor angular-trix class="form-control" ng-model='formData.current_disease'  ng-change="submitOne('current_disease')"></trix-editor>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.current_disease'  ng-blur="submitOne('current_disease')"></trix-editor>
                                             </div>
                                         </div>
 
@@ -45,7 +45,7 @@
                                             <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit dahulu<span class="required">*</span>
                                             </label>
                                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-change='submitOne("additional.riwayat_penyakit_dahulu")'></trix-editor>
+                                                <trix-editor angular-trix class="form-control" ng-model='formData.additional.riwayat_penyakit_dahulu' ng-blur='submitOne("additional.riwayat_penyakit_dahulu")'></trix-editor>
                                             </div>
                                         </div>
 
@@ -57,7 +57,7 @@
                                                 <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat pengobatan/operasi
                                                 </label>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <trix-editor angular-trix class="form-control" ng-model='formData.cure_history'  ng-change="submitOne('cure_history')"></trix-editor>
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.cure_history'  ng-blur="submitOne('cure_history')"></trix-editor>
                                                 </div>
                                             </div>
 
@@ -71,7 +71,7 @@
                                                 <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat alergi/reaksi efek samping
                                                 </label>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <trix-editor angular-trix class="form-control" ng-model='formData.allergy_history'  ng-change="submitOne('allergy_history')"></trix-editor>
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.allergy_history'  ng-blur="submitOne('allergy_history')"></trix-editor>
                                                 </div>
                                             </div>
 
@@ -86,7 +86,7 @@
                                                 <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat penyakit keluarga
                                                 </label>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <trix-editor angular-trix class="form-control" ng-model='formData.family_disease_history'  ng-change="submitOne('family_disease_history')"></trix-editor>
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.family_disease_history'  ng-blur="submitOne('family_disease_history')"></trix-editor>
                                                 </div>
                                             </div>
 
@@ -100,7 +100,7 @@
                                                 <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Riwayat psiko sosial
                                                 </label>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <trix-editor angular-trix class="form-control" ng-model='formData.psiko_sosial'  ng-change="submitOne('psiko_sosial')"></trix-editor>
+                                                    <trix-editor angular-trix class="form-control" ng-model='formData.psiko_sosial'  ng-blur="submitOne('psiko_sosial')"></trix-editor>
                                                 </div>
                                             </div>
 
