@@ -127,7 +127,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
   });
 
   $scope.changeFamilyName = function() {
-    if($scope.formData.family_type == 'DIRI SENDIRI' && $scope.is_new_patient) {
+    if($scope.formData.family_type == 'DIRI SENDIRI') {
 
         $scope.formData.patient.family.name = $scope.formData.patient.name
         $scope.formData.patient.family.address = $scope.formData.patient.address
@@ -258,6 +258,11 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     var data = patient_datatable.row(tr).data();
     $scope.formData.patient = data;
     $scope.formData.patient.city_id = parseInt(data.city_id)
+    $scope.formData.patient.family = {}
+    if($scope.formData.family_type == 'DIRI SENDIRI') {
+        $scope.formData.patient.family.name = $scope.formData.patient.name
+        $scope.formData.patient.family.address = $scope.formData.patient.address
+    }
     setTimeout(function () {    
         $('[ng-model="formData.patient.birth_date"]').val( $filter('fullDate')($scope.formData.patient.birth_date))
   }, 300)
