@@ -85,7 +85,7 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table class="table table-bordered" id='equipment_detail_datatable'>
+                                    <table class="table table-bordered" id='purchase_request_detail_datatable'>
                                         <thead>
                                             <tr>
                                                 <th>Barang</th>
@@ -128,7 +128,7 @@
                     <div class="dashboard_graph">
                         <p>
                             Jika pdf tidak tampil, silahkan klik
-                            <a id='embedUrl' href="{{ route('controller.pharmacy.equipment.pdf', ['id' => $id]) }}" target="_blank">disini</a>
+                            <a id='embedUrl' href="{{ route('controller.pharmacy.purchase_request.pdf', ['id' => $id]) }}" target="_blank">disini</a>
                         </p>
                         <embed id='pdfDocument' style='width:100%;height:28cm' type='application/pdf'>
                     </div>
