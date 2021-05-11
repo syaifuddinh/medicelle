@@ -45,7 +45,7 @@
                                     <label class="col-md-2 col-sm-2 col-xs-12" for="first-name">Alergi obat/makanan & reaksi efek samping
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <textarea class="form-control" ng-model='formData.allergy_history' ng-change='submitOne("allergy_history")'></textarea>
+                                        <textarea class="form-control" ng-model='formData.allergy_history' ng-change='submitOne("allergy_history)'></textarea>
                                     </div>
                                 </div>
                             </div>
