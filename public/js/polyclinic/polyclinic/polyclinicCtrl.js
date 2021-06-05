@@ -105,6 +105,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         className : path.indexOf('polyclinic') > -1 ? '' : 'hidden'
       },
       {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
+      {data:"registration_detail.time", name:"registration_detail.time"},
       {
         data:null, 
         orderable:false,

@@ -30,6 +30,11 @@ app.controller('cure', ['$scope', '$compile', '$http', '$filter', function($scop
       {
         data:null, 
         name:"name",
+        render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.id + "</a>"
+      },
+      {
+        data:null, 
+        name:"name",
         render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
       {data:"group.name", name:"group.name"},

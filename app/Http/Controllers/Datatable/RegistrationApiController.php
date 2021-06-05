@@ -32,8 +32,8 @@ class RegistrationApiController extends Controller
     public function polyclinic_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
         $x = PivotMedicalRecord::with(
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -74,7 +74,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -87,8 +87,8 @@ class RegistrationApiController extends Controller
         ->join('radiology_types', 'prices.radiology_group', 'radiology_types.id')
         ->select('medical_record_details.id AS medical_record_detail_id', 'radiology_types.name AS radiology_type_name');
         $x = PivotMedicalRecord::with(
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -132,7 +132,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -142,8 +142,8 @@ class RegistrationApiController extends Controller
         DB::enableQueryLog();
         $x = PivotMedicalRecord::with(
             'parent:id,additional',
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -184,7 +184,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -192,8 +192,8 @@ class RegistrationApiController extends Controller
     public function chemoterapy_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
         $x = PivotMedicalRecord::with(
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -228,7 +228,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -236,8 +236,8 @@ class RegistrationApiController extends Controller
     public function ruang_tindakan_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
         $x = PivotMedicalRecord::with(
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -272,7 +272,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -280,8 +280,8 @@ class RegistrationApiController extends Controller
     public function medical_checkup_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
         $x = PivotMedicalRecord::with(
-            'registration_detail:id,registration_id,doctor_id,polyclinic_id',
-            'registration_detail.registration:id,code,patient_id,date',
+            'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
+            'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
             'registration_detail.registration.patient:id,name,phone,gender',
             'registration_detail.polyclinic:id,name',
@@ -313,7 +313,7 @@ class RegistrationApiController extends Controller
         }
 
         if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC');
+            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }

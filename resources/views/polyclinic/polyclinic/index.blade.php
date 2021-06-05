@@ -59,6 +59,7 @@
                           <th>Jenis kelamin</th>
                           <th>Poliklinik</th>
                           <th>Dokter</th>
+                          <th>Jam</th>
                           <th>Jenis</th>
                           <th ng-show="$scope.flag != 'polyclinic'">Pemeriksaan</th>
                           <th ng-show="$scope.flag == 'laboratory' && $scope.flag == 'radiology'">Status Pemeriksaan</th>

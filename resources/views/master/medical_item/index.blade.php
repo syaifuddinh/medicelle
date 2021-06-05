@@ -57,6 +57,7 @@
                       <thead>
                         <tr>
                           <th>Kode</th>
+                          <th>ID</th>
                           <th>Nama</th>
                           <th>Kelompok</th>
                           <th>Harga Jual</th>
