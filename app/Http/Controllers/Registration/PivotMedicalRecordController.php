@@ -58,9 +58,6 @@ class PivotMedicalRecordController extends Controller
             'disease_history:id,medical_record_id,disease_name,cure,description',
             'obgyn_disease_history:id,medical_record_id,disease_name,cure,description',
 
-            'family_disease_history:id,medical_record_id,disease_name,cure,description', 
-            'obgyn_family_disease_history:id,medical_record_id,disease_name,cure,description', 
-
             'kb_history:id,medical_record_id,name,duration', 
             'komplikasi_kb_history:id,medical_record_id,name', 
 
@@ -76,9 +73,8 @@ class PivotMedicalRecordController extends Controller
             'drug.s2:id,name',
             'drug.item.piece:id,name',
 
-            'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
-            
-            'allergy_history:id,medical_record_id,cure,side_effect', 
+            'pain_history:medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration',             
+
             'pain_history:id,medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
             'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',

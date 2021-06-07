@@ -262,8 +262,8 @@ class MedicalRecord extends Model
 
     public function obgyn_family_disease_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsObgynFamilyDiseaseHistory(1);
-    }
-    */
+    }*/
+    
     
     public function ginekologi_history() {
         return $this->hasMany('App\MedicalRecordDetail')->whereIsGinekologiHistory(1);
