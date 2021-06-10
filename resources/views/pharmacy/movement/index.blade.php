@@ -35,7 +35,7 @@
                   <div class="col-md-6">
                       <div class="btn-group pull-right export_button">
                           <button type='button' ng-click='isFilter = !isFilter' class='btn btn-primary btn-sm'>Filter</button>
-                          @if(Auth::user()->allow_access('movement.create'))
+                          @if(Auth::user()->allow_access('pharmacy.movement.create'))
                               <a href="{{ route('pharmacy.movement.create') }}" class='btn btn-success btn-sm'>Tambah</a>
                           @endif
                       </div>                    
