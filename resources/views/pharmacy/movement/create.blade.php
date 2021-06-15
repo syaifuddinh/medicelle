@@ -92,8 +92,8 @@
             </div>
             <div class="modal-body">
 
-                <table class="table table-bordered" id='item_datatable' style='width:100%'>
-                    <thead>
+                <table class="table table-bordered" id='item_datatable' style='width:100%';height:100%'>
+                    <thead style='width:100%;'>
                         <tr>
                             <th></th>
                             <th>Kode</th>
@@ -115,12 +115,11 @@
                 <h4 class="modal-title" id=""><% lokasiModalTitle %></h4>
             </div>
             <div class="modal-body">
-
-                <table class="table table-bordered" id='lokasi_datatable' style='width:100%'>
-                    <thead>
+                <table class="table table-bordered" id='lokasi_datatable' style='width:100%;height:100%'>
+                    <thead style='width:100%;'>
                         <tr>
-                            <th></th>
-                            <th>Nama</th>
+                            <th style='width:30%;'></th>
+                            <th style='width:70%;'>Nama</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

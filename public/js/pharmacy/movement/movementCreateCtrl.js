@@ -120,12 +120,12 @@ app.controller('movementCreate', ['$scope', '$http', '$rootScope', '$filter', '$
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
-
         return d
       }
     },
@@ -149,23 +149,26 @@ app.controller('movementCreate', ['$scope', '$http', '$rootScope', '$filter', '$
   lokasi_datatable = $('#lokasi_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    sScrollInner: 1000,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/lokasi',
       data : function(d) {
-        d.length = 6
-
         return d
       }
     },
     columns:[
     {
       data:null, 
+      name:null,
+      width:"30%",
       searchable:false,
       orderable:false,
       className : 'text-center',
       render : resp => "<button type='button' class='btn btn-xs btn-primary' ng-click='selectLokasi($event.currentTarget)'>Pilih</button>"
     },
-    {data:"name", name:"name"},
+    {data:"name", name:"name", width:"70%"},
     ],
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
@@ -199,6 +202,7 @@ app.controller('movementCreate', ['$scope', '$http', '$rootScope', '$filter', '$
         }
         $scope.currentIndex = index
         $scope.lokasiType = lokasiType
+        lokasi_datatable.ajax.reload()
         $('#lokasiModal').modal()
     }
 
