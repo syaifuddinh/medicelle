@@ -90,13 +90,6 @@ class LokasiController extends Controller
         return Response::json(Permission::gudang_farmasi());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\lokasi  $lokasi
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -107,7 +100,10 @@ class LokasiController extends Controller
 
         DB::beginTransaction();
         $lokasi = Permission::find($id);
-        $lokasi->fill($request->all());
+        $params["is_gudang_farmasi"] = $request->is_gudang_farmasi;
+        $params["name"] = $request->name;
+        $params["description"] = $request->description;
+        $lokasi->fill($params);
         $lokasi->save();
         DB::commit();
 

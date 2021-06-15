@@ -58,7 +58,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Pasien
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
-                                            <% registration.patient.name %>
+                                            <% registration.patient.name %> / <% formData.total %>
                                     </div>
                                 </div>
 
@@ -139,9 +139,16 @@
                                         <td style='width:10mm'>Stok</td>
                                         <td style='width:17mm'>Satuan</td>
                                         <td style='width:40mm'>Harga Jual</td>
+                                        <td style='width:40mm'>Total Harga</td>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
+			        <tfoot>
+			            <tr>
+			                <th colspan="7" style="text-align:right">Total:</th>
+			                <th><% formData.total | number %></th>
+			            </tr>
+			        </tfoot>
                             </table>
                         </div>
                     </div>

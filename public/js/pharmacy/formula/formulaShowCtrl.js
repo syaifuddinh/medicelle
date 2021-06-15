@@ -2,6 +2,7 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
     $scope.title = 'Detail Resep Obat';
     $scope.data = {}
     $scope.registration = {}
+    $compile(angular.element($('tfoot')).contents())($scope);
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
@@ -75,11 +76,21 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
                 return "<% formData.detail[" + index + "].price | number %>"
             }
           },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% (formData.detail[" + index + "].price * formData.detail[" + index + "].qty)  | number %>"
+            },
+          },
           
         ],
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
-        }
+        },
     });
 
     $scope.print = function() {
@@ -179,6 +190,7 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
   $scope.show = function() {
       $http.get(baseUrl + '/controller/pharmacy/formula/' + id).then(function(data) {
         $scope.formData = data.data
+        $scope.formData.total = 0
         var detail = data.data.detail
           var unit
           formula_detail_datatable.clear().draw()
@@ -190,9 +202,9 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
               detail[x].lokasi_name = unit.lokasi.name
               detail[x].used_qty = unit.stock.qty
               detail[x].expired_date = unit.stock.expired_date
+              $scope.formData.total = $scope.formData.total + (unit.qty * unit.item.price)
               $scope.insertItem(unit)
           }
-
           $scope.formData.detail = detail
           $scope.showRegistration()
           $timeout(function () {

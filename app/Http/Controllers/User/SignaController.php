@@ -89,7 +89,9 @@ class SignaController extends Controller
     {
         DB::beginTransaction();
         $permission = $permission->findOrFail($id);
-        $permission->fill($request->all());
+        $params["name"] = $request->name;
+        $params["description"] = $request->description;
+        $permission->fill($params);
         $permission->save();
         DB::commit();
 
