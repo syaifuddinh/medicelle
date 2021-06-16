@@ -61,6 +61,8 @@ app.controller('equipmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
 
     equipment_detail_datatable = $('#equipment_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -120,10 +122,11 @@ app.controller('equipmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
         d.is_exists = 1
 
@@ -150,10 +153,11 @@ app.controller('equipmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
   supplier_datatable = $('#supplier_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/supplier',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
         d.supplier_category = 'supplier'
 

@@ -45,6 +45,8 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
 
     adjustment_stock_detail_datatable = $('#adjustment_stock_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -122,12 +124,12 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
-
         return d
       }
     },
@@ -151,11 +153,12 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
   lokasi_datatable = $('#lokasi_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/lokasi',
       data : function(d) {
-        d.length = 6
-
+        d.is_active=1
         return d
       }
     },
@@ -199,6 +202,7 @@ app.controller('adjustmentStockCreate', ['$scope', '$http', '$rootScope', '$filt
         if(lokasiType == 2) {
             $scope.lokasiModalTitle = 'Daftar Lokasi Akhir'          
         }
+        lokasi_datatable.ajax.reload()
         $scope.currentIndex = index
         $scope.lokasiType = lokasiType
         $('#lokasiModal').modal()

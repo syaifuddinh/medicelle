@@ -79,7 +79,7 @@ app.controller('discountOff', ['$scope', '$rootScope', '$compile', '$http', '$fi
   oTable.buttons().container().appendTo( '.export_button' );
 
   $scope.principal = function() {
-        $http.get(baseUrl + '/controller/master/supplier/principal').then(function(data) {
+        $http.get(baseUrl + '/controller/master/supplier').then(function(data) {
             $scope.data.principal = data.data
         }, function(error) {
           $rootScope.disBtn=false;

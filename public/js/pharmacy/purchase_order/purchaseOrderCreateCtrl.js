@@ -43,6 +43,8 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
 
     purchase_order_detail_datatable = $('#purchase_order_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -120,12 +122,12 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
-
         return d
       }
     },
@@ -149,12 +151,12 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
   supplier_datatable = $('#supplier_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/supplier',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
-
         return d
       }
     },
@@ -195,6 +197,7 @@ app.controller('purchaseOrderCreate', ['$scope', '$http', '$rootScope', '$filter
 
 
     $scope.showSupplierModal = function(index) {
+        supplier_datatable.ajax.reload()
         $scope.currentIndex = index
         $('#supplierModal').modal()
     }

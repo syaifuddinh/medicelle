@@ -7,6 +7,8 @@ app.controller('receiptShow', ['$scope', '$http', '$rootScope', '$filter', '$com
 
     receipt_detail_datatable = $('#receipt_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 

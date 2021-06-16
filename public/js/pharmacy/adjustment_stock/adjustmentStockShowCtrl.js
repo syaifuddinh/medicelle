@@ -7,6 +7,8 @@ app.controller('adjustmentStockShow', ['$scope', '$http', '$rootScope', '$filter
 
     adjustment_stock_detail_datatable = $('#adjustment_stock_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 

@@ -67,6 +67,8 @@ app.controller('receipt', ['$scope', '$rootScope', '$compile', '$http', '$filter
   purchase_order_datatable = $('#purchase_order_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl + '/datatable/pharmacy/purchase_order',
       data : function(d) {

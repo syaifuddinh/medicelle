@@ -48,6 +48,8 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
 
     discount_off_payment_detail_datatable = $('#discount_off_payment_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -89,7 +91,7 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
     });
 
     $scope.principal = function() {
-        $http.get(baseUrl + '/controller/master/supplier/principal').then(function(data) {
+        $http.get(baseUrl + '/controller/master/supplier').then(function(data) {
             $scope.data.principal = data.data
         }, function(error) {
           $rootScope.disBtn=false;
@@ -111,10 +113,11 @@ app.controller('discountOffPaymentCreate', ['$scope', '$http', '$rootScope', '$f
   discount_off_datatable = $('#discount_off_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/pharmacy/discount_off',
       data : function(d) {
-        d.length = 6
         d.is_paid = 0
         d.contact_id = $scope.formData.contact_id
 

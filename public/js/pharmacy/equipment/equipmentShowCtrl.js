@@ -8,6 +8,8 @@ app.controller('equipmentShow', ['$scope', '$http', '$rootScope', '$filter', '$c
           
     equipment_detail_datatable = $('#equipment_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 

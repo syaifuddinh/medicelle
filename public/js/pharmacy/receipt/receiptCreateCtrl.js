@@ -13,6 +13,8 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
 
     receipt_detail_datatable = $('#receipt_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -164,6 +166,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
 
 
     $scope.showSupplierModal = function(index) {
+        supplier_datatable.ajax.reload()
         $scope.currentIndex = index
         $('#supplierModal').modal()
     }

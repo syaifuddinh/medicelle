@@ -9,6 +9,8 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
 
     purchase_order_detail_datatable = $('#purchase_order_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 

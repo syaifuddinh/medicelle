@@ -132,12 +132,12 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
-
         return d
       }
     },
@@ -161,10 +161,11 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
   supplier_datatable = $('#supplier_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/supplier',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
         d.supplier_category = 'supplier'
 
