@@ -88,7 +88,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-1">
-                            <div class="btn-group">
+                            <div class="btn-group" id="buttonBar">
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
                                 <button type="button" ng-click='repeat = 1;submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan dan lanjutkan</button>

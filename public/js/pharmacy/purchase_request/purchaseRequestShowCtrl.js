@@ -4,6 +4,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
+    $compile($('#buttonBar'))($scope);
 
           
     purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
@@ -93,7 +94,6 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
         createdRow: function(row, data, dataIndex) {
           $compile(angular.element(row).contents())($scope);
           $compile($('tfoot'))($scope);
-          $compile($('[ng-click="backward()"]'))($scope);
           $(row).find('input').focus()
         }
     });

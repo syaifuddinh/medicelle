@@ -112,8 +112,7 @@
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                    <div class="btn-group pull-left">
-
+                                    <div class="btn-group pull-left" id="buttonBar">
                                         <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                                     </div>
                                 </div>

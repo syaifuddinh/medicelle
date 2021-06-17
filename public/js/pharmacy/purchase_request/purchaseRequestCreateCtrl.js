@@ -7,6 +7,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
     $scope.priceSlider = 209
     path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
+    $compile($('#buttonBar'))($scope);
 
     $scope.show = function() {
 
