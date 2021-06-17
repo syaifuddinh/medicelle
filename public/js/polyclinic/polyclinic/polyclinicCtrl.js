@@ -85,7 +85,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
         name:"registration_detail.registration.patient.name",
         render : function(resp) {
             if(roles[edit_role]) {
-                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + "</a>"
+                return "<a class='btn' href='" + baseUrl + "/medical_record/step/1/edit/" + resp.medical_record_id + "'>" + resp.registration_detail.registration.patient.name + resp.registration_detail.id + "</a>"
             } else  {
                 return resp.registration_detail.registration.patient.name
             }

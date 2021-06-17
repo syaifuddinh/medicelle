@@ -107,7 +107,7 @@
             var l = document.getElementById('main-loading-layer')
             var dataImage = localStorage.getItem('imgLogo');
             bannerImg = document.getElementById('loading-logo');
-            bannerImg.src = '"' + dataImage + '"';
+            bannerImg.src = '../../images/medicelle.png';
             setTimeout(function(){
                 l.remove()
             }, 1400)

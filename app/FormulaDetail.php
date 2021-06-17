@@ -9,7 +9,7 @@ use App\StockTransaction;
 
 class FormulaDetail extends Model
 {
-    protected $fillable = ['item_id', 'lokasi_id', 'qty'];
+    protected $fillable = ['item_id', 'lokasi_id', 'stock_id','qty'];
     protected $hidden = ['created_at', 'updated_at'];
 
 
@@ -17,25 +17,39 @@ class FormulaDetail extends Model
         parent::boot(); 
 
         static::creating(function(FormulaDetail $formulaDetail) {
-            $stock = DB::table('stocks')
-            ->whereItemId($formulaDetail->item_id)
-            ->whereLokasiId($formulaDetail->lokasi_id)
-            ->first();
+	//throw new Exception('Stok ID nya' . $formulaDetail->stock_id);
+            if(is_null($formulaDetail->stock_id)){
+            	$stock = DB::table('stocks')
+            	->whereItemId($formulaDetail->item_id)
+            	->whereLokasiId($formulaDetail->lokasi_id)
+            	->first();           	
+            }
+            
+            else{
+            	$jum = DB::table('stocks')
+            	->whereItemId($formulaDetail->item_id)
+            	->sum('qty');
 
-            $item = DB::table('items')
-            ->whereId($formulaDetail->item_id)
-            ->select('name')
-            ->first();
+            	$stock = DB::table('stocks')
+            	->whereId($formulaDetail->stock_id)
+            	->first();
 
-            if($stock == null) {
-                throw new Exception('Stok ' . $item->name . ' tidak ada');
+            	$item = DB::table('items')
+            	->whereId($formulaDetail->item_id)
+            	->select('name')
+            	->first();
+
+            	if($jum == null) {
+                	throw new Exception('Stok ' . $item->name . ' tidak ada');
+            	}
+
+            	if($formulaDetail->qty > $jum) {
+                	throw new Exception('Stok ' . $item->name . ' tidak mencukupi');
+            	}
             }
 
-            if($formulaDetail->qty > $stock->qty) {
-                throw new Exception('Stok ' . $item->name . ' tidak mencukupi');
-            }
-
-            $formulaDetail->stock_id = $stock->id;
+            $formulaDetail->stock_id = $stock->id; 
+            
         });
     }
 

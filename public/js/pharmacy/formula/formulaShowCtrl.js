@@ -3,11 +3,14 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
     $scope.data = {}
     $scope.registration = {}
     $compile(angular.element($('tfoot')).contents())($scope);
+    $compile($('#buttonBar'))($scope);
     var path = window.location.pathname;
     id = path.replace(/.+\/(\d+)/, '$1');
 
     formula_detail_datatable = $('#formula_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -89,7 +92,7 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
           
         ],
         createdRow: function(row, data, dataIndex) {
-          $compile(angular.element(row).contents())($scope);
+          $compile(angular.element(row).contents())($scope);          
         },
     });
 

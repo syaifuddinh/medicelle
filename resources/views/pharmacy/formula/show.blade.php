@@ -156,7 +156,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <div class="btn-group">
+                            <div class="btn-group" id="buttonBar">
 
                                 <button class="btn btn-primary btn-sm" ng-click="print()" type="button">Cetak</button> 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> 

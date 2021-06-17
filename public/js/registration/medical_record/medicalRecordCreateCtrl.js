@@ -871,7 +871,6 @@ function strip_tags(str) {
 
         if(path.indexOf('therapy/drug') > -1) {
               drug_datatable.rows.add(data.data.drug).draw()
-              allergy_history_datatable_drug.rows.add(data.data.allergy_history).draw()
         }
 
         if(path.indexOf('therapy/treatment_group') > -1) {

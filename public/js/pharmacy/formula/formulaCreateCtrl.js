@@ -97,6 +97,8 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
 
     formula_detail_datatable = $('#formula_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 
@@ -184,10 +186,11 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
   item_datatable = $('#item_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/item',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
 
         return d
@@ -213,10 +216,11 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
   lokasi_datatable = $('#lokasi_datatable').DataTable({
     processing: true,
     serverSide: true,
+    sScrollY: 300,
+    pageLength: 10,
     ajax: {
       url : baseUrl+'/datatable/master/lokasi',
       data : function(d) {
-        d.length = 6
         d.is_active = 1
 
         return d
