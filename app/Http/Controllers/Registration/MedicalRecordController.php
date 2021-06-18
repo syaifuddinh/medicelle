@@ -380,7 +380,7 @@ class MedicalRecordController extends Controller
             'diagnose_history:id,medical_record_id,disease_id,item_id,type,description,additional',
             'diagnose_history.disease:id,name',
             
-            'children_diagnose_history:id,medical_record_id,disease_id,item_id,type,description',
+            'children_diagnose_history:id,medical_record_id,disease_id,item_id,type,description,additional',
             'children_diagnose_history.disease:id,name',
 
             'disease_history:id,medical_record_id,disease_name,cure,description',
@@ -873,6 +873,20 @@ class MedicalRecordController extends Controller
                 $medical_record_detail->save();
             });
         }
+
+        $medical_record_detail = new MedicalRecordDetail();
+        if(isset($request->children_diagnose_history)) {
+            $medical_record_detail->children_diagnose_history()->whereMedicalRecordId($medical_record->id)->delete();
+            $children_diagnose_history = collect($request->children_diagnose_history);
+            $children_diagnose_history = $children_diagnose_history->each(function($val) use($medical_record){
+                $medical_record_detail = new MedicalRecordDetail();
+                $val['medical_record_id'] = $medical_record->id;
+                $medical_record_detail->fill($val);
+                $medical_record_detail->is_children_diagnose_history = 1;
+                $medical_record_detail->save();
+            });
+        }
+
 
         $medical_record_detail = new MedicalRecordDetail();
         if(isset($request->kid_history)) {

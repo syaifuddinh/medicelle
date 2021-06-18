@@ -20,6 +20,7 @@ $('#asuransi_flag').hide()
 
 invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
     ordering:false,
+    paging:false,
     dom : 'rt',
     'columns' : [
     {data : 'name', orderable:false},

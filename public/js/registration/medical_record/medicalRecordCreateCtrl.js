@@ -1118,10 +1118,13 @@ function strip_tags(str) {
 
   $scope.submitChildrenDiagnoseHistory = function() {
       $scope.children_diagnose_history.is_other = !$scope.children_diagnose_history.is_other ? 0 : 1 
-      if($scope.children_diagnose_history.disease_id || $scope.children_diagnose_history.item_id) {
+      if($scope.children_diagnose_history.additional.diagnose_name || $scope.children_diagnose_history.item_id) {
 
           children_diagnose_history_datatable.row.add($scope.children_diagnose_history).draw()
-          $scope.children_diagnose_history = {is_other : 1}
+          $scope.children_diagnose_history = {
+            additional : {},
+            is_other : 1
+          }
       }
   }
 
@@ -2464,25 +2467,10 @@ drug_datatable = $('#drug_datatable').DataTable({
     dom: 'rt',
     pageLength: 200,
     'columns' : [
-    { 
+    {
         data : null,
         render : function(resp) {
-            var disease
-            var is_int = /^([0-9]+)$/
-            if(is_int.test(resp.disease_id)) {
-                disease = $scope.data.disease.find(x => x.id == resp.disease_id)
-                if(disease) {
-                    return disease.name
-                } else {
-                    if(resp.disease) {
-                        return resp.disease.name
-                    } else {
-                        return '' 
-                    }
-                }
-            } else {
-               return resp.disease_id
-            }
+           return resp.additional.diagnose_name
         }
     },
     { 
@@ -3032,6 +3020,7 @@ drug_datatable = $('#drug_datatable').DataTable({
         is_diagnose_history : 1 
       }
       $scope.children_diagnose_history = { 
+        additional : {},
         is_other : 1,
         is_children_diagnose_history : 1 
       }
