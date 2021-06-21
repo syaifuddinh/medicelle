@@ -223,15 +223,15 @@ class InvoiceDetail extends Model
     }
 
     public function discount_reference() {
-        return $this->belongsTo('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsDiscount(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
+        return $this->belongsTo('App\InvoiceDetail', 'id', 'invoice_detail_id')->whereIsDiscount(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
     }
     
     public function reduksi_reference() {
-        return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsReduksi(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
+        return $this->hasOne('App\InvoiceDetail', 'id', 'invoice_detail_id')->whereIsReduksi(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
     }
     
     public function asuransi_reference() {
-        return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsAsuransi(1)->withDefault(['total_debet' => 0, 'debet' => 0]);
+        return $this->hasOne('App\InvoiceDetail', 'id', 'invoice_detail_id')->whereIsAsuransi(1)->withDefault(['total_debet' => 0, 'debet' => 0]);
     }
     
     public function price_reference() {

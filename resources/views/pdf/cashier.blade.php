@@ -95,7 +95,7 @@
                                         <td>{!! $detail->item->name !!}</td>
                                         <td style='text-align: right'>{!! $detail->qty !!}</td>
                                         <td>{!! $detail->item->piece->name ?? '-' !!}</td>
-                                        <td style='text-align: right'>{!! number_format($detail->debet - $detail->reduksi_reference->credit - $detail->discount_reference->credit + ($detail->asuransi_reference->total_debet / $detail->qty)) !!}</td>
+                                        <td style='text-align: right'>{!! number_format($detail->debet + ($detail->asuransi_reference->total_debet / $detail->qty)) !!}</td>
                                         <td style='text-align: right'>{!! number_format($detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet) !!}</td>
                                     </tr>
                                 @endforeach
@@ -239,7 +239,7 @@
                                         <td>{!! $detail->item->name !!}</td>
                                         <td style='text-align: right'>{!! $detail->qty !!}</td>
                                         <td>{!! $detail->item->piece->name ?? '-' !!}</td>
-                                        <td style='text-align: right'>{!! number_format($detail->debet - $detail->reduksi_reference->credit - $detail->discount_reference->credit + ($detail->asuransi_reference->total_debet / $detail->qty)) !!}</td>
+                                        <td style='text-align: right'>number_format($detail->debet - $detail->reduksi_reference->credit - $detail->discount_reference->credit + ($detail->asuransi_reference->total_debet / $detail->qty))</td>
                                         <td style='text-align: right'>{!! number_format($detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet) !!}</td>
                                     </tr>
                                 @endforeach

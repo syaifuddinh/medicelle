@@ -24,7 +24,7 @@
                             <div class="col-md-6">
                                 <div class="btn-group pull-right">
                                     @if(Auth::user()->allow_access('pharmacy.equipment.update'))
-                                        <a ng-if='formData.status < 2' href='{{ route("pharmacy.equipment.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
+                                        <a ng-if='formData.status < 2' href='{{ route("pharmacy.purchase_request.edit", ["id" => $id]) }}' class="btn btn-warning btn-sm" >Edit</a>
                                     @endif
 
                                     @if(Auth::user()->allow_access('pharmacy.equipment.destroy'))

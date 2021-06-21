@@ -21,22 +21,15 @@ class PurchaseRequest extends Model
         parent::boot(); 
 
         static::creating(function(PurchaseRequest $purchaseRequest) {   
-
-
-            $purchaseRequest->created_by = Auth::user()->id;
-
             $current_month = date('m');
             $current_year = date('Y');
-            /*
-            $id = PurchaseRequest::whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
-            ->count('id') + 1;*/
             $id = PurchaseRequest::whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
             ->max('code');
-            $id_in = intval(str_replace(0,"",substr($id, -5))) + 1;
+            $id_in = intval(substr($id, -5)) + 1;
             $id = $id == null ? 1 : $id_in;
             $id = str_pad($id, 5, '0', STR_PAD_LEFT);
             $code = 'PP-' . date('ym') . '-' .  $id;
-
+            $purchaseRequest->created_by = Auth::user()->id;
             $purchaseRequest->code = $code;
         });
 

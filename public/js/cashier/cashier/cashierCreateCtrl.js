@@ -416,7 +416,7 @@ $scope.showItemDetail = function(detail, grup_nota, index) {
     row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
     row.qty_binding = "<input type='text' class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].qty' only-num>";
     row.debet_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].debet_binding | number %>";
-    row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='3' only-num></input>"
+    row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='5' ng-max='100' only-num></input>"
     invoice_detail_datatable.row.add(row).draw()
 } 
 
@@ -435,17 +435,22 @@ $scope.countTotal = function() {
         for(index in detail[grup_nota]) {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
-            gross = unit.qty * unit.debet;
-            gross += (gross * (increase_rate/100))
-            dbt = unit.debet
-            dbt += (dbt * (increase_rate/100))
-            disc_value = gross * ((unit.disc_percent || 0) / 100) 
-            grosstotal += gross - disc_value
-            netto = gross - disc_value
-            $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
-            grandtotal += parseInt(netto)
-            discount_total += parseInt(disc_value)
-            $scope.formData.invoice_detail[grup_nota][index].debet_binding = dbt
+            if(unit.disc_percent>100) {
+            	toastr.error(error.data.message,"Nilai diskon lebih dari 100% !");
+            }
+            else {
+            	gross = unit.qty * unit.debet;
+            	gross += (gross * (increase_rate/100))
+            	dbt = unit.debet
+            	dbt += (dbt * (increase_rate/100))
+            	disc_value = gross * ((unit.disc_percent || 0) / 100) 
+            	grosstotal += gross - disc_value
+            	netto = gross - disc_value
+            	$scope.formData.invoice_detail[grup_nota][index].subtotal = netto
+            	grandtotal += parseInt(netto)
+            	discount_total += parseInt(disc_value)
+            	$scope.formData.invoice_detail[grup_nota][index].debet_binding = dbt
+            }
         }
     }
 

@@ -91,8 +91,8 @@
                             <div class="btn-group" id="buttonBar">
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Batal</button> <button class="btn btn-warning btn-sm" type="button" ng-click='reset()'>Reset</button>
-                                <button type="button" ng-click='repeat = 1;submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan dan lanjutkan</button>
-                                <button type="button" ng-click='repeat = 0;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan dan keluar</button>
+                                <button type="submit" ng-click='repeat = 1;' ng-disabled='disBtn' class="btn btn-primary btn-sm">Simpan dan lanjutkan</button>
+                                <button type="submit" ng-click='repeat = 0;' ng-disabled='disBtn' class="btn btn-success btn-sm">Simpan dan keluar</button>
                             </div>
                         </div>
                     </div>

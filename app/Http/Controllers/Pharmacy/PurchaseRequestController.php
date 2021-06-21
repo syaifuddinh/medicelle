@@ -57,7 +57,13 @@ class PurchaseRequestController extends Controller
         DB::beginTransaction();
         try {
             $purchaseRequest = new PurchaseRequest();
-            $purchaseRequest->fill($request->all());
+            //$purchaseRequest->fill($request->all());
+            $params["detail"] = $request->detail;
+            $params["description"] = $request->description;
+            $params["date"] = $request->date;
+            $params["date_start"] = $request->date_start;
+            $params["date_end"] = $request->date_end;
+            $purchaseRequest->fill($params);
             $purchaseRequest->status = 1;
             $purchaseRequest->save();
 
