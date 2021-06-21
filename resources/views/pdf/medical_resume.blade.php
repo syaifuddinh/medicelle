@@ -69,7 +69,7 @@
                 <p>Keluhan (obgyn) : {!! $medicalRecord->obgyn_main_complaint !!}<?php }?></p>
                 <p>Penyakit dahulu : {!! $medicalRecord->additional->riwayat_penyakit_dahulu !!}</p>
                 <p>Hasil pemeriksaan didapatkan :</p>
-                <?php if($medicalRecord->additional->children_temperature) {?>
+                <?php if(array_key_exists("children_temperature",$medicalRecord->additional)) {?>
                 <p style='margin-left:5mm'>TB : {!! $medicalRecord->additional->children_long !!} cm, Tensi : {!! $medicalRecord->additional->children_blood_pressure !!} mmHg, Suhu badan : {!! $medicalRecord->additional->children_temperature !!} <sup>o</sup>C</p>
                 <p style='margin-left:5mm'>BB : {!! $medicalRecord->additional->children_weight !!} kg, Nadi : {!! $medicalRecord->additional->children_pulse !!} x/menit, Nafas : {!! $medicalRecord->additional->children_breath_frequency!!} x/menit</p><br>
                 <?php } else {?>
@@ -78,7 +78,7 @@
                 <?php }?>
                 <?php if($medicalRecord->physique) {?>
                 <p>Pemeriksaan fisik : {!! $medicalRecord->physique !!}</p>
-                <?php } if($medicalRecord->additional->children_physique) {?>
+                <?php } if(array_key_exists("children_physique",$medicalRecord->additional)) {?>
                 <p>Pemeriksaan fisik (anak) : {!! $medicalRecord->additional->children_physique !!}</p>
                 <?php }?>
                 <br>
@@ -115,7 +115,7 @@
 
                     <br>
                     <?php if(count($medicalRecord->drug)>0) { ?>
-                    <p>Terapi (Obat) : {!! $medicalRecord->drug !!}</p>                    
+                    <p>Terapi (Obat) : </p>                    
                     <ol style='margin-top:3mm;margin-left:6mm'>
                     @foreach($medicalRecord->drug as $unit)
                             <li>{!! $unit->item->name ?? ($unit->stock->item->name ?? '') !!} sebanyak {!! $unit->qty . ' ' . ($unit->item->piece->name ?? '') !!}, dosis : {!! ($unit->s1->name ?? '') .', '. ($unit->s2->name ?? '') !!}</li>
