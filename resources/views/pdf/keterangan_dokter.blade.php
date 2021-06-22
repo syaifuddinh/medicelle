@@ -35,10 +35,10 @@
 
                 <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Umur</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->age !!} Tahun</span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Alamat</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->address !!} </span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Alamat</span> <span style='display:inline-block;;width:150mm'>: {!! $letter->medical_record->patient->address !!} </span></p>
 
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Tempat, tanggal lahir</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->city->name . ', ' . Mod::fullDate($letter->medical_record->patient->birth_date) !!} </span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Tempat / tanggal lahir</span> <span style='display:inline-block;'>: {!! @$letter->medical_record->patient->city->name . ' / ' . Mod::fullDate($letter->medical_record->patient->birth_date) !!} </span></p>
 
 
                 <p style='padding-left:8mm'><span style='display:inline-block;width:40mm'>Pekerjaan</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->job !!} </span></p><br>

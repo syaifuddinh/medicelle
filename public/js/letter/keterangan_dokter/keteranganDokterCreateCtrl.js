@@ -40,8 +40,10 @@ app.controller('keteranganDokterCreate', ['$scope', '$http', '$rootScope', '$fil
             });
         } else {
             var currentDate = new Date()
-            var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ) + '-' + currentDate.getDate()
+            //var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ) + '-' + currentDate.getDate()
+            var date = currentDate.getFullYear() + '-' + ( currentDate.getMonth() + 1 ).toString().padStart(2, 0) + '-' + currentDate.getDate().toString().padStart(2, 0)            
             $scope.formData.date = date
+            $scope.formData.start_date = date
             setTimeout(function () {    
                   $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
             }, 300)
@@ -58,12 +60,13 @@ app.controller('keteranganDokterCreate', ['$scope', '$http', '$rootScope', '$fil
         var start_date, month, duration, date, end_date = ''
         if($scope.formData.start_date) {
             start_date = new Date($scope.formData.start_date)
-            age = parseInt($scope.formData.age) || 0
-            start_date.setDate( parseInt(start_date.getDate()) + age )
+            age = parseInt($scope.formData.age) || 1
+            start_date.setDate( parseInt(start_date.getDate()) + age - 1 )
             end_date = start_date.getFullYear() + '-' + ( start_date.getMonth() + 1 ).toString().padStart(2, 0) + '-' + start_date.getDate().toString().padStart(2, 0)
         }
         $scope.formData.end_date = end_date
         setTimeout(function () {    
+              $('[ng-model="formData.start_date"]').val( $filter('fullDate')($scope.formData.start_date))
               $('[ng-model="formData.end_date"]').val( $filter('fullDate')($scope.formData.end_date))
         }, 300)
     }

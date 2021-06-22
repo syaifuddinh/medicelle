@@ -65,12 +65,14 @@ class PersetujuanTindakanMedisController extends Controller
     public function show($id)
     {
         $letter = Letter::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
+	$letter->medical_record->patient->age=intval(date('Y', time() - strtotime($letter->medical_record->patient->birth_date))) - 1970;
         return Response::json($letter, 200);
     }
 
     public function pdf($id)
     {
         $letter = Letter::with('medical_record:id,code,patient_id', 'medical_record.patient','medical_record.patient.city:id,name', 'doctor:id,name,specialization_id', 'doctor.specialization:id,name')->findOrFail($id);
+	$letter->medical_record->patient->age=intval(date('Y', time() - strtotime($letter->medical_record->patient->birth_date))) - 1970;
         $pdf = PDF::loadview('pdf/persetujuan_tindakan_medis',['letter'=>$letter]);
         return $pdf->stream('persetujuan_tindakan_medis.pdf');
     }

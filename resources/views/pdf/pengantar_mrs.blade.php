@@ -62,15 +62,15 @@
 
                  <p style=''><span style='display:inline-block;width:100mm'>Tindakan operasi :</span></p><br>
 
-                 <p style='padding-left:8mm'>{!! $letter->additional->operation_treatment !!}</span></p><br>
+                 <p style='padding-left:8mm'>{!! @$letter->additional->operation_treatment !!}</span></p><br>
 
                  <p style=''><span style='display:inline-block;width:100mm'>Jenis operasi :</span></p><br>
 
-                 <p style='padding-left:8mm'>{!! $letter->additional->operation_type !!}</span></p><br>
+                 <p style='padding-left:8mm'>{!! @$letter->additional->operation_type !!}</span></p><br>
 
                  <p style=''><span style='display:inline-block;width:100mm'>Keterangan :</span></p><br>
 
-                 <p style='padding-left:8mm'>{!! $letter->description !!}</span></p><br><br><br><br>
+                 <p style='padding-left:8mm'>{!! @$letter->description !!}</span></p><br><br><br><br>
 
                     <span style='float:right;text-align:center;display:inline-block;display:inline-block'>
                         {!! $company->city . ', '. Mod::fullDate(date('Y-m-d'))  !!}<br>

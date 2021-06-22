@@ -68,7 +68,7 @@
                                     <label class="col-md-3 col-sm-3 col-xs-12">Umur
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <% medical_record.age %> Tahun
+                                        <% medical_record.patient.age %> Tahun
                                     </div>
                                 </div>
 
