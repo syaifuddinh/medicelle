@@ -10,6 +10,9 @@ use DB;
 use Carbon\Carbon;
 use Exception;
 use Auth;
+use App\MedicalRecord;
+
+
 
 class Formula extends Model
 {
@@ -123,4 +126,5 @@ class Formula extends Model
     public function detail() {
         return $this->hasMany('App\FormulaDetail');
     }
+
 }

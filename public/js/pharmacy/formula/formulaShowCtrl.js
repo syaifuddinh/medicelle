@@ -66,6 +66,17 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                var s1s2 = $scope.formData.detail[index].signa1_name + " " + $scope.formData.detail[index].signa2_name
+                return s1s2
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].piece_name %>"
             }
           },
@@ -203,6 +214,8 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
               detail[x].piece_name = unit.item.piece.name
               detail[x].price = unit.item.price
               detail[x].lokasi_name = unit.lokasi.name
+              detail[x].signa1_name = unit.s1 ? unit.s1.name : '-'
+              detail[x].signa2_name = unit.s2 ? unit.s2.name : '-'
               detail[x].used_qty = unit.stock.qty
               detail[x].expired_date = unit.stock.expired_date
               $scope.formData.total = $scope.formData.total + (unit.qty * unit.item.price)

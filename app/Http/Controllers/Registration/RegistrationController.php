@@ -692,6 +692,8 @@ class RegistrationController extends Controller
                             $formula->detail()->create([
                                 'item_id' => $value->item_id,
                                 'qty' => $value->qty,
+                                'signa1' => $value->signa1,
+                                'signa2' => $value->signa2,
                                 'lokasi_id' => $stock->lokasi_id,
                                 'stock_id' => $stock->id,
                             ]);
@@ -707,6 +709,8 @@ class RegistrationController extends Controller
                             $formula->detail()->create([
                                 'item_id' => $value->item_id,
                                 'qty' => $stock->qty,
+                                'signa1' => $value->signa1,
+                                'signa2' => $value->signa2,
                                 'lokasi_id' => $stock->lokasi_id,
                                 'stock_id' => $stock->id,
                             ]);
@@ -721,6 +725,8 @@ class RegistrationController extends Controller
                             	$formula->detail()->create([
                                 	'item_id' => $value->item_id,
                                 	'qty' => $sisa,
+                                	'signa1' => $value->signa1,
+                                	'signa2' => $value->signa2,
                                 	'lokasi_id' => $stock2->lokasi_id,
                                 	'stock_id' => $stock2->id,
                             	]);
@@ -729,6 +735,8 @@ class RegistrationController extends Controller
                             	$formula->detail()->create([
                                 	'item_id' => $value->item_id,
                                 	'qty' => $stock2->qty,
+                                	'signa1' => $value->signa1,
+                                	'signa2' => $value->signa2,
                                 	'lokasi_id' => $stock2->lokasi_id,
                                 	'stock_id' => $stock2->id,
                             	]);
@@ -742,6 +750,8 @@ class RegistrationController extends Controller
                             		$formula->detail()->create([
                                 		'item_id' => $value->item_id,
                                 		'qty' => $sisa,
+                                		'signa1' => $value->signa1,
+                                		'signa2' => $value->signa2,
                                 		'lokasi_id' => $stock3->lokasi_id,
                                 		'stock_id' => $stock3->id,
                             		]);
@@ -750,6 +760,8 @@ class RegistrationController extends Controller
                             		$formula->detail()->create([
                                 		'item_id' => $value->item_id,
                                 		'qty' => $stock3->qty,
+                                		'signa1' => $value->signa1,
+                                		'signa2' => $value->signa2,
                                 		'lokasi_id' => $stock3->lokasi_id,
                                 		'stock_id' => $stock3->id,
                             		]);
@@ -762,6 +774,8 @@ class RegistrationController extends Controller
                             		$formula->detail()->create([
                                 		'item_id' => $value->item_id,
                                 		'qty' => $sisa,
+                                		'signa1' => $value->signa1,
+                                		'signa2' => $value->signa2,
                                 		'lokasi_id' => $stock4->lokasi_id,
                                 		'stock_id' => $stock4->id,
                             		]);
@@ -773,6 +787,8 @@ class RegistrationController extends Controller
                             $formula->detail()->create([
                                 'item_id' => $value->item_id,
                                 'qty' => $value->qty,
+                                'signa1' => $value->signa1,
+                                'signa2' => $value->signa2,
                                 'lokasi_id' => $stock->lokasi_id,
                             ]);
                         }

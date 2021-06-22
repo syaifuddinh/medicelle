@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Exception;
 use DB;
 use App\StockTransaction;
+use App\MedicalRecord;
+
 
 class FormulaDetail extends Model
 {
-    protected $fillable = ['item_id', 'lokasi_id', 'stock_id','qty'];
+    protected $fillable = ['item_id', 'lokasi_id', 'stock_id','qty','signa1','signa2'];
     protected $hidden = ['created_at', 'updated_at'];
 
 
@@ -51,6 +53,14 @@ class FormulaDetail extends Model
             $formulaDetail->stock_id = $stock->id; 
             
         });
+    }
+
+    public function s1() {
+        return $this->belongsTo('App\Permission','signa1','id');
+    }
+
+    public function s2() {
+        return $this->belongsTo('App\Permission','signa2','id');
     }
 
 

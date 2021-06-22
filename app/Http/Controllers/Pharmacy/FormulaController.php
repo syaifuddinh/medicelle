@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Formula;
+use App\FormulaDetail;
+use App\MedicalRecord;
+use App\MedicalRecordDetail;
+use App\Permission;
+use App\Item;
 use DB;
 use PDF;
 use Response;
@@ -83,13 +88,13 @@ class FormulaController extends Controller
      */
     public function show($id)
     {
-        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code', 'contributor:id,name', 'invoice:id,code')->findOrFail($id);
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id', 'medical_record:id,code', 'detail.s1:id,name','detail.s2:id,name','contributor:id,name', 'invoice:id,code')->findOrFail($id);
         return Response::json($formula, 200);
     }
 
     public function pdf($id)
     {
-        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name', 'detail.lokasi:id,name', 'detail.stock:id,qty,expired_date', 'registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'medical_record:id,code,patient_id','medical_record.patient:id,name')->findOrFail($id);
+        $formula = Formula::with('detail', 'detail.item:id,name,price,piece_id', 'detail.item.piece:id,name','registration_detail:id,registration_id,doctor_id', 'registration_detail.doctor:id,name', 'medical_record:id,code,patient_id','medical_record.patient:id,name')->findOrFail($id);
         $pdf = PDF::loadview('pdf/resep_obat',['formula'=>$formula]);
         return $pdf
         ->setPaper('A4')
