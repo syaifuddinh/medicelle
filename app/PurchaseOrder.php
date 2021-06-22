@@ -22,7 +22,8 @@ class PurchaseOrder extends Model
             $current_month = date('m');
             $current_year = date('Y');
             $id = PurchaseOrder::whereRaw("TO_CHAR(date::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
-            ->count('id') + 1;
+            ->max('code');
+            $id_in = intval(substr($id, -5)) + 1;
             $id = $id == null ? 1 : $id;
             $id = str_pad($id, 5, '0', STR_PAD_LEFT);
             $code = 'PO-' . date('ym') . '-' .  $id;

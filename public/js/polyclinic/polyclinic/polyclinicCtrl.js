@@ -189,6 +189,7 @@ app.controller('polyclinic', ['$scope', '$compile', '$http', '$filter', function
     }
   });
   oTable.buttons().container().appendTo( '.export_button' );
+  oTable.ajax.reload()
 
   $scope.filter = function() {
     is_date = /\d+-\d+-\d+/
