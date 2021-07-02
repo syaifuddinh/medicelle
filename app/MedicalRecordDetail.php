@@ -58,6 +58,7 @@ class MedicalRecordDetail extends Model
                         'in_qty' => 0,
                         'out_qty' => $medicalRecordDetail->qty,
                         'lokasi_id' => $medicalRecordDetail->lokasi_id,
+                        'expired_date' => $medicalRecordDetail->expired_date,
                     ]);
 
                 }
@@ -93,6 +94,17 @@ class MedicalRecordDetail extends Model
                             'medical_record_detail_id' => $medicalRecordDetail->id
                         ]);
                     }
+                    else if($price->radiology_group != null) {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_radiology' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                    }
+
                 }
 
                 $price = DB::table('prices')
@@ -208,6 +220,7 @@ class MedicalRecordDetail extends Model
                             'out_qty' => 0,
                             'in_qty' => $medicalRecordDetail->qty,
                             'lokasi_id' => $medicalRecordDetail->lokasi_id,
+                            'expired_date' => $medicalRecordDetail->expired_date,
                         ]);
                 }
         });

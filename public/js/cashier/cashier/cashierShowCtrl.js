@@ -247,6 +247,7 @@ $scope.countTotal = function() {
     var gross, disc_value, netto, unit, grosstotal, dbt;
     var grandtotal = 0, discount_total = 0, qty_total = 0, grosstotal = 0
     var detail = $scope.formData.invoice_detail
+		console.log(detail)
     var increase_rate
 
     if($scope.formData.payment_type == 'ASURANSI SWASTA') {
@@ -260,6 +261,7 @@ $scope.countTotal = function() {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
             gross = unit.qty * unit.debet;
+
             dbt = unit.debet * 1
             dbt += (dbt * (increase_rate/100))
             gross += (gross * (increase_rate/100))
@@ -269,7 +271,7 @@ $scope.countTotal = function() {
             $scope.formData.invoice_detail[grup_nota][index].subtotal = netto
             grandtotal += parseInt(netto)
             discount_total += parseInt(disc_value)
-            $scope.formData.invoice_detail[grup_nota][index].debet_binding = dbt
+            $scope.formData.invoice_detail[grup_nota][index].debet_binding = unit.total_debet
         }
     }
     $scope.grosstotal = grosstotal

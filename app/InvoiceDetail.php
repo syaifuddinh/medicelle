@@ -227,7 +227,7 @@ class InvoiceDetail extends Model
     }
     
     public function reduksi_reference() {
-        return $this->hasOne('App\InvoiceDetail', 'id', 'invoice_detail_id')->whereIsReduksi(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
+        return $this->hasOne('App\InvoiceDetail', 'invoice_detail_id', 'id')->whereIsReduksi(1)->withDefault(['total_credit' => 0, 'credit' => 0]);
     }
     
     public function asuransi_reference() {

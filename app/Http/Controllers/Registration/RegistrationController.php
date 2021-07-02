@@ -303,6 +303,7 @@ class RegistrationController extends Controller
                 $sewa_alkes = $medicalRecord->sewa_alkes;
                 $sewa_instrumen = $medicalRecord->sewa_instrumen;
                 $drug = $medicalRecord->drug;
+		//throw new exception ($medicalRecord->treatment);
                 foreach($treatments as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,

@@ -26,6 +26,7 @@ invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
     {data : 'name', orderable:false},
     {data : 'qty_binding', className : 'text-right', width:'15mm', orderable:false},
     {data : 'debet_binding', className : 'text-right', orderable:false},
+    {data : 'reduksi_binding', className : 'text-right', orderable:false},
     {data : 'discount', className : 'text-right', orderable:false},
     {
         data : 'total_binding', 
@@ -396,10 +397,8 @@ $scope.showInvoiceDetail = function() {
             $scope.formData.invoice_detail[grup_nota][index].subtotal = item[index].qty * item[index].debet
             unit = item[index]
             $scope.showItemDetail(unit, grup_nota, index)
-
         }
     }
-
     $scope.countTotal()
 }
 
@@ -414,6 +413,7 @@ $scope.showItemDetail = function(detail, grup_nota, index) {
     var row = detail
     row.name = '<div><button class="btn btn-sm btn-danger" style="margin-right:2mm" ng-click="delete(' + row.id + ', $event.currentTarget)"><i class="fa fa-trash"></i></button><a style="cursor:context-menu" ng-click="edit(' + row.id + ', $event.currentTarget)">' + row.item.name + '</a></div>'
     row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
+    row.reduksi_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].jumreduksi | number %>";
     row.qty_binding = "<input type='text' class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].qty' only-num>";
     row.debet_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].debet_binding | number %>";
     row.discount = "<input class='form-control' ng-change='countTotal()' ng-model='formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].disc_percent' style='width:20mm' maxlength='5' ng-max='100' only-num></input>"
@@ -435,6 +435,7 @@ $scope.countTotal = function() {
         for(index in detail[grup_nota]) {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
+    		console.log(unit)
             if(unit.disc_percent>100) {
             	toastr.error(error.data.message,"Nilai diskon lebih dari 100% !");
             }
@@ -445,11 +446,17 @@ $scope.countTotal = function() {
             	dbt += (dbt * (increase_rate/100))
             	disc_value = gross * ((unit.disc_percent || 0) / 100) 
             	grosstotal += gross - disc_value
+		//if(unit.is_reduksi==1){
+		//gross += unit.grandtotal
+		//}
+		//else{
             	netto = gross - disc_value
+		//}
             	$scope.formData.invoice_detail[grup_nota][index].subtotal = netto
+            	$scope.formData.invoice_detail[grup_nota][index].jumreduksi = unit.reduksi_reference.total_credit
             	grandtotal += parseInt(netto)
             	discount_total += parseInt(disc_value)
-            	$scope.formData.invoice_detail[grup_nota][index].debet_binding = dbt
+            	$scope.formData.invoice_detail[grup_nota][index].debet_binding = unit.total_debet
             }
         }
     }

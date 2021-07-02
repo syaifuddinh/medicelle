@@ -47,6 +47,8 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
 
     purchase_request_detail_datatable = $('#purchase_request_detail_datatable').DataTable({
        dom: 'rt',
+       paging:false,
+       ordering:false,
         columns:[
           {
             data: null, 

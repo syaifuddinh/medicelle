@@ -205,11 +205,12 @@ class RegistrationApiController extends Controller
         })
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereDestination('KEMOTERAPI');
-        })
-        ->orWhere('is_chemoterapy', 1)
-        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status);
         })
+        ->orWhere('is_chemoterapy', 1)
+        //->whereHas('registration_detail', function(Builder $query) use($request, $status){
+        //    $query->whereStatus($status);
+        //})
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id', 

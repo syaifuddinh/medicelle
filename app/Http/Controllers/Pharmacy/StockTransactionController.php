@@ -57,6 +57,7 @@ class StockTransactionController extends Controller
             return Response::json(['message' => 'Barang tidak boleh kosong'], 500);
         }
 
+/* old method buggy
       
         $stock = StockTransaction::whereItemId($request->item_id)
         ->selectRaw('SUM(in_qty - out_qty) AS qty');
@@ -69,6 +70,18 @@ class StockTransactionController extends Controller
             'qty' => $stock->qty ?? 0,
             'expired_date' => $stock->expired_date ?? null
         ]);
+*/
+        $stock = DB::table('stocks')
+        ->whereItemId($request->item_id)
+        ->whereLokasiId($request->lokasi_id)
+        ->select('qty', 'expired_date')
+        ->first();
+
+        return Response::json([
+            'qty' => $stock->qty ?? 0,
+            'expired_date' => $stock->expired_date ?? null
+        ]);
+
 
     }
 

@@ -3146,6 +3146,7 @@ drug_datatable = $('#drug_datatable').DataTable({
     var tr = $(e).parents('tr');
     var data = bhp_datatable.row(tr).data()
     $scope.destroyDetail(data.id)
+    bhp_datatable.row(tr).remove().draw()
   }
 
   $scope.deleteSewaInstrumen = function(e) {

@@ -80,6 +80,7 @@
                                             <th>Item</th>
                                             <th style='width:10px'>Qty</th>
                                             <th style='width:15%'>Harga</th>
+                                            <th style='width:15%'>Reduksi</th>
                                             <th style='width:20mm'>Diskon(%)</th>
                                             <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i> {{ Mod::finance()->asuransi_rate_percentage ?? 0 }}%</button></th>
                                         </tr>
@@ -89,13 +90,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Total</th>
+                                            <th colspan='3' class='text-right'>Total</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% grosstotal | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Diskon(%)</th>
+                                            <th colspan='3' class='text-right'>Diskon(%)</th>
                                             <th class='text-right' title='Diskon untuk seluruh item'>
                                                 <input type="text" class='form-control' ng-model='formData.massive_discount' ng-change='countTotal()' maxlength='3' only-num>
                                             </th>
@@ -103,13 +104,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Total diskon</th>
+                                            <th  colspan='3' class='text-right'>Total diskon</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% discount_total | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>
+                                            <th  colspan='3' class='text-right' style='padding-top:4mm'>
                                                 <span>Promo</span>
                                                 <span ng-show='formData.discount_id'><br><% promo_name %></span>
                                             </th>
@@ -126,13 +127,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Total tagihan</th>
+                                            <th  colspan='3' class='text-right'>Total tagihan</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% grandtotal | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Sisa</th>
+                                            <th  colspan='3' class='text-right'>Sisa</th>
                                             <th class='text-right' title='Sisa'>
                                                 <%  (grandtotal - formData.paid) | number%>
                                             </th>
@@ -140,7 +141,7 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th class='text-right' colspan='3'>
+                                            <th class='text-right' colspan='4'>
                                                 <label>
                                                     <i class="fa fa-users"></i><span style='font-weight:100'> Penjamin dari pasien ini adalah</span> <% registration.patient_type == 'UMUM' ? registration.patient.family.name : registration.pic.name %>
                                                 </label >
@@ -212,7 +213,7 @@
 
                                     <a class="btn btn-default btn-sm" href='{{ route("cashier.index") }}'>Batal</a>
                                     <button type="button" id='draftButton' ng-click='submitForm()' ng-disabled='disBtn' class="btn btn-primary btn-sm">Draft</button>
-                                    <button type="button"  id='payButton' ng-disabled='grandtotal > formData.paid' ng-click='pay = 1;submitForm()' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
+                                    <button type="button"  id='payButton' ng-disabled='grandtotal > formData.paid' ng-click='pay = 1;' ng-disabled='disBtn' class="btn btn-success btn-sm">Bayar</button>
                                 </div>
                             </div>
                         </div>
