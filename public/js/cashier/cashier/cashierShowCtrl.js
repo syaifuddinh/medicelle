@@ -28,6 +28,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
           {data : 'name', orderable:false},
           {data : 'qty', className : 'text-right', width:'10%', orderable:false},
           {data : 'debet_binding', className : 'text-right', orderable:false},
+          {data : 'reduksi_binding', className : 'text-right', orderable:false},
           {data : 'discount', className : 'text-right', orderable:false},
           {data : 'total_binding', className : 'text-right', orderable:false},
       ],
@@ -213,6 +214,7 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
             $scope.showGrupNota(grup_nota)
             item = detail[grup_nota]
             for(index in item) {
+                item[index].debet -= item[index].reduksi_reference.credit
                 $scope.formData.invoice_detail[grup_nota][index].subtotal = item[index].qty * item[index].debet
                 unit = item[index]
                 $scope.showItemDetail(unit, grup_nota, index)
@@ -236,11 +238,20 @@ app.controller('cashierShow', ['$scope', '$http', '$rootScope','$compile','$filt
         var row = detail
         row.name = '<div style="padding-left:8mm">' + row.item.name + '</div>'
         row.total_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].subtotal | number %>";
+        row.reduksi_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].jumreduksi | number %>";
         row.debet_binding = "<% formData.invoice_detail[\"" + grup_nota + "\"][" + index + "].debet_binding | number %>";
         row.discount = $scope.formData.invoice_detail[grup_nota][ index ].disc_percent
         console.log(row)
         invoice_detail_datatable.row.add(row).draw()
     } 
+
+$scope.countPromo = function(resp) {
+    var grosstotal = $scope.grosstotal - $scope.discount_subtotal;
+    var disc_value = parseInt($scope.promo_detail.disc_value)
+    var percent_disc_value = grosstotal * (parseInt($scope.promo_detail.disc_percent) / 100)
+    console.log({grosstotal, disc_value, percent_disc_value})
+    $scope.promo = disc_value + percent_disc_value
+}
 
     
 $scope.countTotal = function() {
@@ -261,7 +272,6 @@ $scope.countTotal = function() {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
             gross = unit.qty * unit.debet;
-
             dbt = unit.debet * 1
             dbt += (dbt * (increase_rate/100))
             gross += (gross * (increase_rate/100))
@@ -272,11 +282,14 @@ $scope.countTotal = function() {
             grandtotal += parseInt(netto)
             discount_total += parseInt(disc_value)
             $scope.formData.invoice_detail[grup_nota][index].debet_binding = unit.total_debet
+            $scope.formData.invoice_detail[grup_nota][index].jumreduksi = unit.reduksi_reference.total_credit
         }
     }
+    discount_total_value = (parseInt($scope.formData.massive_discount) || 0) / 100 * grandtotal
     $scope.grosstotal = grosstotal
-    $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0) - (parseInt($scope.formData.massive_discount) || 0) 
-    $scope.discount_total = parseInt(discount_total) + (parseInt($scope.formData.massive_discount) || 0)
+    $scope.discount_subtotal = parseInt(discount_total)
+    $scope.grandtotal = grandtotal - (parseInt($scope.promo) || 0) - (parseInt(discount_total_value) || 0) 
+    $scope.discount_total = parseInt(discount_total) + (parseInt(discount_total_value) || 0)
 }
 
     $scope.registration = function() {

@@ -445,7 +445,7 @@ $scope.countTotal = function() {
             	dbt = unit.debet
             	dbt += (dbt * (increase_rate/100))
             	disc_value = gross * ((unit.disc_percent || 0) / 100) 
-            	grosstotal += gross - disc_value
+            	grosstotal += gross
 		//if(unit.is_reduksi==1){
 		//gross += unit.grandtotal
 		//}

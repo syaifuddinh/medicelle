@@ -96,7 +96,8 @@
                                             <th>Item</th>
                                             <th style='width:10%'>Qty</th>
                                             <th style='width:15%'>Harga</th>
-                                            <th style='width:10%'>Diskon(%)</th>
+                                            <th style='width:15%'>Reduksi</th>
+                                            <th style='width:20mm'>Diskon(%)</th>
                                             <th  style='width:20%'>Subtotal <button type='button' id='asuransi_flag' style='margin-left:2mm' class='btn btn-xs btn-primary' ng-show='formData.payment_type == "ASURANSI SWASTA"'><i class='fa fa-arrow-up'></i></button></th>
                                         </tr>
                                     </thead>
@@ -105,13 +106,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Total</th>
+                                            <th colspan='3' class='text-right'>Total</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% grosstotal | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th colspan='2' class='text-right'>Diskon(%)</th>
+                                            <th colspan='3' class='text-right'>Diskon(%)</th>
                                             <th class='text-right' title='Diskon untuk seluruh item'>
                                                 <% formData.massive_discount | number%>
                                             </th>
@@ -119,13 +120,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Total diskon</th>
+                                            <th  colspan='3' class='text-right'>Total diskon</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% discount_total | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right' style='padding-top:4mm'>
+                                            <th  colspan='3' class='text-right' style='padding-top:4mm'>
                                                 <span>Promo</span>
                                                 <span ng-show='formData.discount_id'><br><% promo_name %></span>
                                             </th>
@@ -136,13 +137,13 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Total tagihan</th>
+                                            <th  colspan='3' class='text-right'>Total tagihan</th>
                                             <th class='text-right' title='Total tagihan yang harus dibayar'><% formData.netto | number%></th>
                                         </tr>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th  colspan='2' class='text-right'>Sisa</th>
+                                            <th  colspan='3' class='text-right'>Sisa</th>
                                             <th class='text-right' title='Sisa'>
                                                 <%  (formData.netto - formData.paid) | number%>
                                             </th>
@@ -150,7 +151,7 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th class='text-right' colspan='3'>
+                                            <th class='text-right' colspan='4'>
                                                 <label>
                                                     <i class="fa fa-users"></i><span style='font-weight:100'> Penjamin dari pasien ini adalah</span> <% registration.patient_type == 'UMUM' ? registration.patient.family.name : registration.pic.name %>
                                                 </label >

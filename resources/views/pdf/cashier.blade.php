@@ -77,6 +77,8 @@
                             <th>Qty</th>
                             <th>Satuan</th>
                             <th>Harga</th>
+                            <th>Reduksi</th>
+                            <th>Diskon</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -84,7 +86,7 @@
                         @foreach($data['invoice_detail'] as $grup_nota => $payment)
                                 <?php $subtotal = 0; ?>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="8">
                                         <b>{!! $grup_nota !!}</b>
                                     </td>
                                 </tr>
@@ -96,11 +98,13 @@
                                         <td style='text-align: right'>{!! $detail->qty !!}</td>
                                         <td>{!! $detail->item->piece->name ?? '-' !!}</td>
                                         <td style='text-align: right'>{!! number_format($detail->debet + ($detail->asuransi_reference->total_debet / $detail->qty)) !!}</td>
+                                        <td style='text-align: right'>{!! number_format($detail->reduksi_reference->total_credit) !!}</td>
+                                        <td style='text-align: right'>{!! number_format($detail->discount_reference->total_credit) !!}</td>
                                         <td style='text-align: right'>{!! number_format($detail->total_debet - $detail->reduksi_reference->total_credit - $detail->discount_reference->total_credit + $detail->asuransi_reference->total_debet) !!}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td colspan="6" style='text-align: right'>
+                                    <td colspan="8" style='text-align: right'>
                                         <?php echo number_format($subtotal); ?>
                                     </td>
                                 </tr>

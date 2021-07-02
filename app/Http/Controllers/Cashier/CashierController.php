@@ -213,14 +213,21 @@ class CashierController extends Controller
         $invoice->fill($request->all());
         $invoice->discount_total_percentage = $request->massive_discount ?? 0;
         $invoice->status = 2;
+	//throw new exception($request);
+	if($request->reduksi<1){
         $invoice->gross = 0;
-        $invoice->netto = 0;
-        $invoice->balance = 0;
-        $invoice->asuransi_value = 0;
-        $invoice->qty = 0;
         $invoice->discount = 0;
-        $invoice->discount_total_value = 0;
+	} else {
+        $invoice->gross = $request->gross;
+	}
+        //$invoice->netto = 0;
+        //$invoice->balance = 0;
+        //$invoice->asuransi_value = 0;
+        //$invoice->qty = 0;
+        $invoice->discount = $request->discount;
+        //$invoice->discount_total_value = 0;
         $invoice->save();
+	if($request->reduksi<1){
         InvoiceDetail::whereInvoiceId($invoice->id)->delete();
         collect($request->invoice_detail)->each(function($val) use($invoice){
             collect($val)->each(function($item) use ($invoice){
@@ -234,6 +241,7 @@ class CashierController extends Controller
                 $invoiceDetail->save();
             });
         });
+	}
         $this->storePayment($request->payment, $id);
         DB::commit();
 
