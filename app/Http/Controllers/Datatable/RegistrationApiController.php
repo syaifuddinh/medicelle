@@ -398,7 +398,7 @@ class RegistrationApiController extends Controller
             'registration_detail:id,registration_id,doctor_id,destination',
             'registration_detail.doctor:id,name,registration_id', 
             'medical_record',
-            'registration_detail.registration:id,code',
+            'registration_detail.registration:id,code,date',
             'registration_detail.registration.invoice:id,registration_id,status'
         )
         ->whereHas('medical_record', function(Builder $query) use($request, $patient_id){

@@ -306,7 +306,7 @@ function strip_tags(str) {
                   orderable:false,
                   searchable:false,
                   width : '30mm',
-                  render:resp => $filter('fullDate')(resp.medical_record.date)
+                  render:resp => $filter('fullDate')(resp.registration_detail.registration.date)
                 },
                 {
                   data:null, 

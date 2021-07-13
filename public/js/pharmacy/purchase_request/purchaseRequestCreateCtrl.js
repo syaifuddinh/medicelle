@@ -170,7 +170,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
       url : baseUrl+'/datatable/master/supplier',
       data : function(d) {
         d.is_active = 1
-        d.supplier_category = 'supplier'
+        //d.supplier_category = 'supplier'
 
         return d
       }

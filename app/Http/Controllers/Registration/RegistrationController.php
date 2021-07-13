@@ -707,15 +707,20 @@ class RegistrationController extends Controller
                         ->first();
 
                         if($stock->qty < $value->qty) {
-                            $formula->detail()->create([
+                            if($stock->qty>0){
+                            	$formula->detail()->create([
                                 'item_id' => $value->item_id,
                                 'qty' => $stock->qty,
                                 'signa1' => $value->signa1,
                                 'signa2' => $value->signa2,
                                 'lokasi_id' => $stock->lokasi_id,
                                 'stock_id' => $stock->id,
-                            ]);
-                            $sisa=$value->qty - $stock->qty;
+                            	]);
+                           	 $sisa=$value->qty - $stock->qty;
+                            }
+                            else{
+                            	$sisa=$value->qty;
+                            }
                             $stock2 = DB::table('stocks')
                             ->whereItemId($value->item_id)
                             ->whereRaw('NOW() < expired_date and id <> '.$stock->id)
@@ -733,63 +738,66 @@ class RegistrationController extends Controller
                             	]);
                             }
                             else{
-                            	$formula->detail()->create([
+				if($stock2->qty > 0){
+                            		$formula->detail()->create([
                                 	'item_id' => $value->item_id,
                                 	'qty' => $stock2->qty,
                                 	'signa1' => $value->signa1,
                                 	'signa2' => $value->signa2,
                                 	'lokasi_id' => $stock2->lokasi_id,
                                 	'stock_id' => $stock2->id,
-                            	]);
-                            	$sisa=$sisa - $stock2->qty;
-                            	$stock3 = DB::table('stocks')
-                            	->whereItemId($value->item_id)
-                            	->whereRaw('NOW() < expired_date and id <> '.$stock->id.' and id <> '.$stock2->id)
-                            	->orderByRaw('expired_date asc')
-                            	->first();
-                            	if(($stock3->qty >= $sisa) && $sisa>0) {
-                            		$formula->detail()->create([
-                                		'item_id' => $value->item_id,
-                                		'qty' => $sisa,
-                                		'signa1' => $value->signa1,
-                                		'signa2' => $value->signa2,
-                                		'lokasi_id' => $stock3->lokasi_id,
-                                		'stock_id' => $stock3->id,
+                            		]);
+                            		$sisa=$sisa - $stock2->qty;
+				}
+				$stock3 = DB::table('stocks')
+				->whereItemId($value->item_id)
+				->whereRaw('NOW() < expired_date and id <> '.$stock->id.' and id <> '.$stock2->id)
+				->orderByRaw('expired_date asc')
+				->first();				
+				if(($stock3->qty >= $sisa) && $sisa>0) {
+                        		$formula->detail()->create([
+                                	'item_id' => $value->item_id,
+                                	'qty' => $sisa,
+                                	'signa1' => $value->signa1,
+                                	'signa2' => $value->signa2,
+                                	'lokasi_id' => $stock3->lokasi_id,
+                                	'stock_id' => $stock3->id,
                             		]);
 				}
-                            	else {
-                            		$formula->detail()->create([
+				else {
+					if($stock3->qty > 0){
+                            			$formula->detail()->create([
                                 		'item_id' => $value->item_id,
                                 		'qty' => $stock3->qty,
                                 		'signa1' => $value->signa1,
                                 		'signa2' => $value->signa2,
                                 		'lokasi_id' => $stock3->lokasi_id,
                                 		'stock_id' => $stock3->id,
-                            		]);
-                            		$sisa=$sisa - $stock3->qty;
+                            			]);
+						$sisa=$sisa - $stock3->qty;
+					}
                             		$stock4 = DB::table('stocks')
                             		->whereItemId($value->item_id)
                             		->whereRaw('NOW() < expired_date and id <> '.$stock->id.' and id <> '.$stock2->id.' and id <> '. $stock3->id)
                             		->orderByRaw('expired_date asc')
                             		->first();
                             		$formula->detail()->create([
-                                		'item_id' => $value->item_id,
-                                		'qty' => $sisa,
-                                		'signa1' => $value->signa1,
-                                		'signa2' => $value->signa2,
-                                		'lokasi_id' => $stock4->lokasi_id,
-                                		'stock_id' => $stock4->id,
+                                	'item_id' => $value->item_id,
+                                	'qty' => $sisa,
+                                	'signa1' => $value->signa1,
+                                	'signa2' => $value->signa2,
+                                	'lokasi_id' => $stock4->lokasi_id,
+                                	'stock_id' => $stock4->id,
                             		]);
-				}                          	
-                            	
+				}
                             }
-
                         } else {
                             $formula->detail()->create([
                                 'item_id' => $value->item_id,
                                 'qty' => $value->qty,
                                 'signa1' => $value->signa1,
                                 'signa2' => $value->signa2,
+				'stock_id' => $stock->id,
                                 'lokasi_id' => $stock->lokasi_id,
                             ]);
                         }

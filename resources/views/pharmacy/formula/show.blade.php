@@ -146,7 +146,7 @@
                                 <tbody></tbody>
 			        <tfoot>
 			            <tr>
-			                <th colspan="7" style="text-align:right">Total:</th>
+			                <th colspan="8" style="text-align:right">Total:</th>
 			                <th><% formData.total | number %></th>
 			            </tr>
 			        </tfoot>
