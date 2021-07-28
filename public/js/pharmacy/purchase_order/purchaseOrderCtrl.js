@@ -55,7 +55,7 @@ app.controller('purchaseOrder', ['$scope', '$rootScope', '$compile', '$http', '$
         orderable : false,
         searchable : false,
         className : 'text-center',
-        render : resp => resp.is_used == 0  && resp.is_receipt_completed == 0 ? '<label class="label label-warning">Draft</label>' : (resp.is_used == 1 && resp.is_receipt_completed == 0 ? '<label class="label label-success">Open</label>' : '<label class="label label-success">Closed</label>' )
+        render : resp => resp.is_used == 0  && resp.is_receipt_completed == 0 ? '<label class="label label-warning">Open</label>' : (resp.is_used == 1 && resp.is_receipt_completed == 0 ? '<label class="label label-success">Closed</label>' : '<label class="label label-success">Undefined</label>' )
       },
       {
         data: null, 

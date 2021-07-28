@@ -27,7 +27,7 @@
                                 </div>
 
 
-                                <a href='<% receipt_url %>' class="btn btn-primary btn-sm pull-right" ng-show='formData.is_receipt_completed == 0'>
+                                <a href='<% receipt_url %>' class="btn btn-primary btn-sm pull-right" ng-show='formData.is_used == 0'>
                                   Buat penerimaan
                               </a>
 
