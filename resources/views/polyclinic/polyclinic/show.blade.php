@@ -132,7 +132,7 @@
                             </div>
                             @endif
 
-
+                            <!--
                             <div class="form-group" ng-show='pivot.is_ruang_tindakan == 1'>
                                 <label class="col-md-3 col-sm-3 col-xs-12">Keterangan
                                 </label>
@@ -140,6 +140,7 @@
                                     <textarea class="form-control" ng-model='pivotData.ruang_tindakan_description' ng-change='updateRuangTindakanDescription()'></textarea>                                    
                                 </div>
                             </div>
+                            -->
                         </div>
 
                         <div class="col-md-6">
@@ -224,7 +225,19 @@
                                 </div>
                             </span>
                         </div>
-
+                        @if($flag == 'ruang_tindakan')
+                        <span>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-xs-12">Keterangan
+                                    </label>
+                                    <div class="col-xs-12">
+                                        <trix-editor angular-trix class="form-control" style="height:300px;" ng-model='pivotData.ruang_tindakan_description' ng-change='updateRuangTindakanDescription()'></trix-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                        @endif
                         @if($flag == 'radiology')
                         <span ng-show='pivot.is_radiology == 1 && pivot.is_referenced == 1'>
                             <hr>
@@ -327,7 +340,7 @@
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
-                        @if($flag == 'radiology' || $flag == 'laboratory')
+                        @if($flag == 'radiology' || $flag == 'laboratory' || $flag == 'ruang_tindakan')
                             <div class="btn-group pull-right" ng-show='pivot.is_referenced == 1'>
 
                                 <button class="btn btn-primary btn-sm" ng-click="openPicModal()" type="button" title='Buka dokumen PDF'>

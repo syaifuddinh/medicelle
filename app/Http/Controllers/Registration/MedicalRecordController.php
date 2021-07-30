@@ -597,7 +597,6 @@ class MedicalRecordController extends Controller
 
     public function ruang_tindakan_pdf(Request $request, $id)
     {
-   
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
         $params = [
@@ -637,6 +636,7 @@ class MedicalRecordController extends Controller
                 'medicalRecord' => $medicalRecord, 
                 'dot' => '.............................................................................................................', 
                 'shortDot' => '..........'];
+	$pdf = PDF::setOptions(['defaultPaperSize'=> 'a4']);
         $pdf = PDF::loadview('pdf/laboratory/laboratory', $params);
 
         return $pdf->stream('laboratory.pdf');
