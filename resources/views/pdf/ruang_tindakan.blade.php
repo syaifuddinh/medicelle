@@ -5,11 +5,11 @@
      * {
         margin:0;
         padding:0;
-        font-size:14pt;
      }
      .container {
         padding:7mm;
         zoom:1.21;
+        font-size:14pt;
      }
      li {
         padding-left:10mm
@@ -31,8 +31,12 @@
      .ib{
         display:inline-block
      }
+     table {
+        width:100%
+     }
+
  </style>
- <div class="container" style='position: relative'>     
+ <div class="container">     
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
@@ -112,6 +116,9 @@
                         <p style='text-align:center;'>(....................................)</p>
                     </div>
                 </div>
+
+
+		@include('pdf/letter_footer')
             </div>
         </div>
  </div>

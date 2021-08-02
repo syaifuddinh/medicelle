@@ -2,6 +2,7 @@
     $company = Mod::company();
     //$treatments = json_decode($treatments);
  ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
  <style>
      * {
         margin:0;
@@ -9,6 +10,8 @@
      }
      .container {
         padding:7mm;
+        zoom:1.21;
+        font-size:14pt;
      }
      li {
         padding-left:10mm
@@ -18,12 +21,25 @@
         padding:1.5mm;
      }
 
-     p, span, li, th, td {
-        font-size:10px;
+     p, span, li {
+        font-size:14pt;
      }
 
+     .indent {
+        text-indent:8mm
+     }
+     .mt-5 {
+        margin-top:5mm;
+     }
+     .mt-2 {
+        margin-top:2mm;
+     }
+     .ib{
+        display:inline-block
+     }
      table {
-        width:100%
+        width:100%;
+        font-size:14pt;
      }
  </style>
  <div class="container">
@@ -39,96 +55,59 @@
                     <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
-
-            <div class="col-md-12" style='padding-left:5.5mm'>
-                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:15mm'>LABORATORIUM KLINIK</p>
-            
-                
-                    <div style='display:inline-block;width:45%'>
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                NAMA
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->name !!}</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                ALAMAT
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:200mm'>{!! $medicalRecord->patient->address !!}</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                UMUR
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                KELAMIN
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->gender !!}</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                NOMOR RM
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->code !!}</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                NO. TLP
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm'>{!! $medicalRecord->patient->phone !!}</span>
-                        </p>
-
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                TANGGAL PERIKSA
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:30mm'>{!! Mod::fullDate($medicalRecord->date) !!}</span>
-                        </p>
-                    </div>
-
-                    <div style='display:inline-block;width:55%;padding-bottom:2mm;margin-top:2mm;'>
-                        <p style='margin-bottom:3mm'>
-                            DOKTER YANG MEMINTA :
-                        </p>
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                NAMA
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:200mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
-                        </p>
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                POLI / RUANGAN
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
-                        </p>
-                        <p style='margin-bottom:1mm;width:500mm'>
-                            <span style='display:inline-block;width:30mm'>
-                                NO. TELP
-                            </span>
-                            <span style='display:inline-block;'>:</span>
-                            <span style='display:inline-block;margin-left:2mm;width:100mm'>{!! $medicalRecord->registration_detail->doctor->phone !!}</span>
-                        </p>
-                    </div>
-                
+            <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm'>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>LABORATORIUM KLINIK</p>
+                <div style='margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>No RM</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->code !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:400mm'>
+                        <span class="ib" style='width:60mm'>Nama</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:300mm'>{!! $medicalRecord->patient->name !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:400mm'>
+                        <span class="ib" style='width:60mm'>Alamat</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:300mm'>{!! $medicalRecord->patient->address !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Jenis Kelamin</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->gender !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Umur</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Tanggal Periksa</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! Mod::fullDate($medicalRecord->date) !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>No Telp</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->phone !!}</span>
+                    </p>
+                </div>
+                <div style='border-bottom:1px solid black;margin-bottom:10mm;text-transform:uppercase;font-weight:bold'>
+                    <p style='margin-bottom:7mm'>DOKTER YANG MEMINTA :</p>
+                    <p style='margin-bottom:1.2mm;width:400mm'>
+                        <span class="ib" style='width:60mm'>Nama Lengkap</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:300mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
+                    </p>
+                    <p style='margin-bottom:5mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Poli/Ruangan</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
+                    </p>
+                </div>
+              
                 <div>
                     <table border='1' cellspacing='0'>
                         <thead>
@@ -161,11 +140,11 @@
                     </table>
                 </div>
     
-                <div style='margin-top:10mm'>
-                    <div style='width:80%;display:inline-block'> </div>
-                    <div style='width:185%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::today() !!}</p>
-                        <p style='text-align:center;'>( {!! $contact_name !!} )</p>
+                <div style='margin-top:50mm;width:100%'>
+                    <div style='width:60%;display:inline-block'></div>
+                    <div style='width:170%;display:inline-block'>
+                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($medicalRecord->date) !!}</p>
+                        <p style='text-align:center;'>(....................................)</p>
                     </div>
                 </div>
 

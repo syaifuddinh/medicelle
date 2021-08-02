@@ -1,5 +1,5 @@
-<p style='position: absolute;bottom:10mm;width:100%;'>
-    <span style="display:inline-block;margin-right:8mm">
+<p style='position: absolute;bottom:10mm;width:auto;'>
+    <span style="display:inline-block;margin-right:8mm;width:250px">
         <img src="{!! asset('images/telephone.png') !!}" style='height:2.5mm;width:auto'>
          {!! $company->phone_number ?? '' !!}
      </span>
