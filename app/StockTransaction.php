@@ -31,9 +31,13 @@ class StockTransaction extends Model
             if($stockTransaction->expired_date == null) {
 
                 $stock_count = Stock::whereItemId($stockTransaction->item_id)
-                ->whereLokasiId($stockTransaction->lokasi_id)
-                ->whereNull('expired_date')
-                ->count('id');
+                ->whereLokasiId($stockTransaction->lokasi_id);
+
+                if(!$item->is_bhp) {
+                    $stock_count = $stock_count->whereNull('expired_date');
+                } 
+
+                $stock_count = $stock_count->count('id');
             } else {
                 if($stockTransaction->is_adjustment == 1) {
                     $stock_count = Stock::whereItemId($stockTransaction->item_id)
@@ -61,32 +65,41 @@ class StockTransaction extends Model
                 ->whereLokasiId($stockTransaction->lokasi_id);
 
                 if($stockTransaction->is_adjustment == 0) {
-                    if($stockTransaction->expired_date == null) {
-                        $stock = $stock->whereNull('expired_date');                    
-                    } else {
-                        $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                    if(!$item->is_bhp) {
+                        if($stockTransaction->expired_date == null) {
+                            $stock = $stock->whereNull('expired_date');                    
+                        } else {
+                            $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                        }
                     }
                 }
                 
+                $stock = $stock->where('qty', '>=', -$qty);
                 $stock = $stock->first();
                 $stock_id = $stock->id;
                 $cur_stock = $stock->qty;
                 $sisa_stock = $cur_stock + $qty;
-                //if($sisa_stock < 0) {
-                if($stock->item_id == 976) {
+                if($sisa_stock < 0) {
+                // if($stock->item_id == 976) {
                     //throw new Exception("Stok tidak boleh minus, detail : $stockTransaction->item_id,$stockTransaction->lokasi_id,$stockTransaction->expired_date,$stock->qty,$qty,$stock->id,$stock_count");
-                    throw new Exception("Stok tidak boleh minus, detail : $stock, $sisa_stock");
+                    throw new Exception("Stok tidak boleh minus, sisa : $sisa_stock");
                 }
 
                 $stock = Stock::whereItemId($stockTransaction->item_id)
                 ->whereLokasiId($stockTransaction->lokasi_id);
                 if($stockTransaction->is_adjustment == 0) {
-                    if($stockTransaction->expired_date == null) {
-                        $stock = $stock->whereNull('expired_date');                    
-                    } else {
-                        $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                    if(!$item->is_bhp) {
+
+                        if($stockTransaction->expired_date == null) {
+                            $stock = $stock->whereNull('expired_date');                    
+                        } else {
+                            $stock = $stock->whereExpiredDate($stockTransaction->expired_date);
+                        }
                     }
                 }
+                $stock = $stock->where('qty', '>=', -$qty)->first();
+                $stock_id = $stock->id;
+                $stock = DB::table('stocks')->whereId($stock_id);
                 $stock->increment('qty', $qty);
                 if($stockTransaction->is_adjustment == 1) {
                     $stock->update([
@@ -152,11 +165,16 @@ class StockTransaction extends Model
             $latest_stock_id = $latest_stock_id->max('id');
 
             if(null != ($latest_stock_id ?? null)) {
-                $latestStock = StockTransaction::find($latest_stock_id);
-                $last_stock = $latestStock->amount;
+                // $latestStock = StockTransaction::find($latest_stock_id);
+                // $last_stock = $latestStock->amount;
             }
 
-            $last_stock += $qty;
+            // $last_stock += $qty;
+            $stock = DB::table('stocks')->whereId($stockTransaction->stock_id)->first();
+            $last_stock = 0;
+            if($stock) {
+                $last_stock = $stock->qty;
+            }
             $stockTransaction->amount = $last_stock;
 
             $item = DB::table('items') 
