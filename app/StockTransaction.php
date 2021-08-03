@@ -70,8 +70,12 @@ class StockTransaction extends Model
                 
                 $stock = $stock->first();
                 $stock_id = $stock->id;
-                if($stock->qty + $qty < 0) {
-                    throw new Exception("Stok tidak boleh minus");
+                $cur_stock = $stock->qty;
+                $sisa_stock = $cur_stock + $qty;
+                //if($sisa_stock < 0) {
+                if($stock->item_id == 976) {
+                    //throw new Exception("Stok tidak boleh minus, detail : $stockTransaction->item_id,$stockTransaction->lokasi_id,$stockTransaction->expired_date,$stock->qty,$qty,$stock->id,$stock_count");
+                    throw new Exception("Stok tidak boleh minus, detail : $stock, $sisa_stock");
                 }
 
                 $stock = Stock::whereItemId($stockTransaction->item_id)

@@ -74,6 +74,7 @@ class StockTransactionController extends Controller
         $stock = DB::table('stocks')
         ->whereItemId($request->item_id)
         ->whereLokasiId($request->lokasi_id)
+        ->whereRaw('0 < qty')
         ->select('qty', 'expired_date')
         ->first();
 

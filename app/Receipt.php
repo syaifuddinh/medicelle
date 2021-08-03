@@ -21,7 +21,7 @@ class Receipt extends Model
 
             $current_month = date('m');
             $current_year = date('Y');
-            $id = Receipt::whereRaw("TO_CHAR(created_at::DATE, 'mm') = '$current_month' AND TO_CHAR(date::DATE, 'YYYY') = '$current_year'")
+            $id = Receipt::whereRaw("TO_CHAR(created_at::DATE, 'mm') = '$current_month' AND TO_CHAR(created_at::DATE, 'YYYY') = '$current_year'")
             ->max('code');
             $id = intval(substr($id, -5)) + 1;
             $id = $id == null ? 1 : $id;

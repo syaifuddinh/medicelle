@@ -36,6 +36,7 @@ class MovementDetail extends Model
             $stock = DB::table('stocks')
             ->whereItemId($movementDetail->item_id)
             ->whereLokasiId($movementDetail->lokasi_awal_id)
+            ->whereRaw('0 < qty')
             ->select('id', 'qty', 'expired_date')
             ->first();
 
