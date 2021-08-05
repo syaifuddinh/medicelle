@@ -346,10 +346,10 @@ class MasterApiController extends Controller
 	
 	public function bhplokasi(Request $request) {
         $stock_transactions = DB::table('stock_transactions')
-        ->select('item_id', DB::raw('SUM(in_qty - out_qty) AS amount'))
-		->whereRaw('(in_qty - out_qty) > 0')
-        ->groupBy('stock_transactions.item_id');
-		if($request->lokasi_id) {
+        ->select('item_id','lokasi_id', DB::raw('SUM(in_qty - out_qty) AS amount'))
+	//->whereRaw('(in_qty - out_qty) > 0')
+        ->groupBy('stock_transactions.item_id','stock_transactions.lokasi_id');
+	if($request->lokasi_id!='') {
            $stock_transactions = $stock_transactions->where('stock_transactions.lokasi_id',$request->lokasi_id);
         }
 

@@ -75,12 +75,14 @@ class StockTransactionController extends Controller
         ->whereItemId($request->item_id)
         ->whereLokasiId($request->lokasi_id)
         ->whereRaw('0 < qty')
-        ->select('qty', 'expired_date')
-        ->first();
+        //->selectRaw('SUM(qty) AS qty,expired_date')
+        //->select('expired_date')
+        ->sum('qty');
+        //->first();
 
         return Response::json([
-            'qty' => $stock->qty ?? 0,
-            'expired_date' => $stock->expired_date ?? null
+            'qty' => $stock ?? 0,
+            'expired_date' => null
         ]);
 
 
