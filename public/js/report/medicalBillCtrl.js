@@ -77,7 +77,9 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
         }
       });
     oTable.buttons().container().appendTo( '.export_button' );
+    oTable.ajax.reload();
   }
+
 
  $scope.grup_nota = function() {
       $http.get(baseUrl + '/controller/user/grup_nota').then(function(data) {
@@ -108,7 +110,10 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
   $scope.grup_nota()
 
   $scope.filter = function() {
-    oTable.ajax.reload();
+    is_date = /\d+-\d+-\d+/
+    if((is_date.test($scope.formData.date_start) && is_date.test($scope.formData.date_end)) || !$scope.formData.date_end || !$scope.formData.date_start) {
+        oTable.ajax.reload()
+    }
   }
 
 

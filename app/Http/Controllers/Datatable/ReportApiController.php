@@ -46,9 +46,9 @@ class ReportApiController extends Controller
     }
 
     public function medical_bill(Request $request) {
-        $x = $this->fetch_medical_bill()->get();
-        // $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
-        return Datatables::of($x)->make(true);
+        $x = $this->fetch_medical_bill();
+        $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
+        return Datatables::query($x)->make(true);
     }    
 
     public function fetch_medical_payment() {
@@ -69,7 +69,6 @@ class ReportApiController extends Controller
     public function medical_payment(Request $request) {
         $x = $this->fetch_medical_payment();
         $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
-
         return Datatables::query($x)->make(true);
     }
 
