@@ -166,7 +166,7 @@
 										<label class="control-label col-md-2 col-sm-2 col-xs-12">Lama menikah
 										</label>
 										<div class="col-md-8 col-sm-8 col-xs-12">
-											<trix-editor angular-trix ng-change="submitOne('marriage_status')" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12"></trix-editor>
+											<trix-editor angular-trix ng-change="submitOne('marriage_duration')" ng-model='formData.marriage_duration' class="form-control col-md-7 col-xs-12"></trix-editor>
 										</div>
 									</div>
 								</div>
@@ -284,7 +284,7 @@
                                                 <td>Penolong persalinan</td>
                                                 <td>Penyulit</td>
                                                 <td>Jenis kelamin</td>
-                                                <td>BB(cm)</td>
+                                                <td>BB(kg)</td>
                                                 <td>PB(cm)</td>
                                                 <td>Komplikasi nifas</td>
                                                 <td></td>

@@ -32,7 +32,7 @@ class FormulaDetail extends Model
             	->whereItemId($formulaDetail->item_id)
             	->sum('qty');
 
-            	$stock2 = DB::table('stocks')
+            	$stock = DB::table('stocks')
             	->whereId($formulaDetail->stock_id)
             	->first();
 
@@ -50,7 +50,7 @@ class FormulaDetail extends Model
             	}
             }
 
-            $formulaDetail->stock_id = $stock2->id; 
+            $formulaDetail->stock_id = $stock->id; 
             
         });
     }

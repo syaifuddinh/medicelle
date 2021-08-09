@@ -847,6 +847,7 @@ function strip_tags(str) {
               ginekologi_history_datatable.rows.add(data.data.ginekologi_history).draw()
               kb_history_datatable.rows.add(data.data.kb_history).draw()
               komplikasi_kb_history_datatable.rows.add(data.data.komplikasi_kb_history).draw()
+              kid_history_datatable.clear().draw()
               kid_history_datatable.rows.add(data.data.kid_history).draw()
               allergy_history_datatable.rows.add(data.data.allergy_history).draw()
             } 
@@ -1255,8 +1256,9 @@ function strip_tags(str) {
 
 
   $scope.submitKidHistory = function() {
+      $scope.kid_history.is_kid_history = 1
       $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? '1' : '0';
-      kid_history_datatable.row.add($scope.kid_history).draw()
+      $scope.storeDetail($scope.kid_history)
       $scope.kid_history = {}
   }
 
@@ -3038,7 +3040,9 @@ drug_datatable = $('#drug_datatable').DataTable({
       $scope.allergy_history = {
          'is_allergy_history' : 1
       }
-      $scope.kid_history = {}
+      $scope.kid_history = {
+         'is_kid_history' : 1
+      }
       $scope.imunisasi_history = {}
       $scope.pain_status = 'Tidak ada rasa nyeri'
 
@@ -3127,7 +3131,8 @@ drug_datatable = $('#drug_datatable').DataTable({
     
   $scope.deleteKidHistory = function(e) {
     var tr = $(e).parents('tr');
-    kid_history_datatable.row(tr).remove().draw()
+    var data = kid_history_datatable.row(tr).data()
+    $scope.destroyDetail(data.id)
   }
     
   $scope.deletePainCureHistory = function(e) {

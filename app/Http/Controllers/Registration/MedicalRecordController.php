@@ -409,7 +409,7 @@ class MedicalRecordController extends Controller
             /*'allergy_history:id,medical_record_id,cure,side_effect', */
             'pain_history:id,medical_record_id,pain_location,is_other_pain_type,pain_type,pain_duration', 
             'pain_cure_history:medical_record_id,cure,emergence_time',
-            'kid_history:medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
+            'kid_history:id,medical_record_id,is_pregnant_week_age,kid_order,partus_year,partus_location,pregnant_month_age,pregnant_week_age,birth_type,birth_helper,birth_obstacle,weight,long,komplikasi_nifas,baby_gender',
             'imunisasi_history:medical_record_id,is_other_imunisasi,imunisasi_year_age,imunisasi_month_age,is_imunisasi_month_age,imunisasi,reaksi_imunisasi'
         )->findOrFail($id);
 
@@ -1168,7 +1168,6 @@ class MedicalRecordController extends Controller
             $medicalRecord = MedicalRecord::findOrFail($id);
             $input = $request->all();
 
-
                 if($request->is_treatment == 1) {
                     $input = $request->all();
                     $input['is_treatment'] = 1;
@@ -1189,6 +1188,10 @@ class MedicalRecordController extends Controller
                     $input = $request->all();
                     $input['is_sewa_instrumen'] = 1;
                     $medicalRecord->sewa_instrumen()->create($input);
+                } else if($request->is_kid_history == 1) {
+                    $input = $request->all();
+                    $input['is_kid_history'] = 1;
+                    $medicalRecord->kid_history()->create($input);
                 } else if($request->is_sewa_ruangan == 1) {
                     $input = $request->all();
                     $input['is_sewa_ruangan'] = 1;
@@ -1255,7 +1258,11 @@ class MedicalRecordController extends Controller
             return Response::json(['message' => $e->getMessage()], 422);
         }
 
+        //if($request->is_kid_history == 1){
+        //throw new exception ($request->kid_history);
+        //} else {
         return Response::json(['message' => 'Detail berhasil disimpan']);
+        //}
     }
 
     /**
