@@ -29,7 +29,7 @@ class Invoice extends Model
                     $invoice->paid_at = date('Y-m-d H:i:s');
                     $invoice->paid_by = Auth::user()->id;
                 }
-                if(($invoice->balance - 50) <= 0) {
+                if((($invoice->balance - 50) <= 0)&&(($invoice->balance - 50) >= -50)) {
                     $invoice->status = 3;
                 } else {
                     if($invoice->balance < 0) {
