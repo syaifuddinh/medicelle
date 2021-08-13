@@ -190,6 +190,7 @@
                             <th></th>
                             <th>No Rekam Medis</th>
                             <th>Pasien</th>
+                            <th>Tanggal</th>
                             <th>Dokter</th>
                             <th>Spesialis</th>
                         </tr>

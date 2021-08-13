@@ -65,10 +65,11 @@ app.controller('layakTerbangCreate', ['$scope', '$http', '$rootScope', '$filter'
         browse_medical_record_datatable = $('#browse_medical_record_datatable').DataTable({
           processing: true,
           serverSide: true,
+          pageLength: 10,
           ajax: {
             url : baseUrl+'/datatable/registration/medical_record',
             data : function(d) {
-              d.length = 6
+              d.is_active = 1
 
               return d
             }
@@ -84,6 +85,7 @@ app.controller('layakTerbangCreate', ['$scope', '$http', '$rootScope', '$filter'
           },
           {data:"code", name:"code"},
           {data:"patient.name", name:"patient.name"},
+          {data:"registration_detail.registration.date", name:"registration_detail.registration.date"},
           {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
           {data:"registration_detail.doctor.specialization.name", name:"registration_detail.doctor.specialization.name"},
           ],

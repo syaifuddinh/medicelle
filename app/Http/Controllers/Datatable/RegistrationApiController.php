@@ -327,6 +327,9 @@ class RegistrationApiController extends Controller
             'patient:id,name,age,birth_date,gender,city_id,phone,address',
             'patient.city:id,name', 'registration_detail.registration:id,code,date'
         )
+        ->whereHas('registration_detail', function(Builder $query) use($request){
+            $query->whereNotNull('registration_details.doctor_id');
+        })
         ->select('medical_records.code','medical_records.patient_id','medical_records.id', 'registration_detail_id');
         //->groupBy('medical_records.code');
 
