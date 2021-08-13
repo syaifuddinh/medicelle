@@ -36,6 +36,7 @@ class PriceController extends Controller
         ->whereIsActive(1)
         ->whereIsAdministration(1)
         ->whereHas('price', function(Builder $query) {
+            $query->whereIsActive(1);
             $query->whereIsTreatment(1);
 
             if(Auth::user()->is_admin != 1) {
@@ -60,6 +61,7 @@ class PriceController extends Controller
         ->whereIsActive(1)
         ->whereIsAdministration(1)
         ->whereHas('price', function(Builder $query) {
+            $query->whereIsActive(1);
             $query->whereIsDiagnostic(1);
 
             if(Auth::user()->is_admin != 1) {

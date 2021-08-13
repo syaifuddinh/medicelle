@@ -34,7 +34,7 @@ class Mod {
     }
 
     public static function day($time) {
-        $N = (int) self::calc('N', $time) - 1;
+        $N = (int) self::calc('N', $time);
         $readableDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'];
         return $readableDays[$N];
     }
