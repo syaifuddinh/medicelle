@@ -97,6 +97,7 @@ class PriceController extends Controller
         //->groupBy('item_id');
         $nonApproved = DB::table('formula_details')
         ->select('item_id', DB::raw('SUM(qty) AS qty'))
+        ->whereRaw('stock_transaction_id is not null')
         ->join('formulas', 'formulas.id', 'formula_details.formula_id')
         ->whereIsApprove(0)
         ->groupBy('item_id');

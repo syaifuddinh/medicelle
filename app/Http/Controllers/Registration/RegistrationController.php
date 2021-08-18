@@ -703,6 +703,7 @@ class RegistrationController extends Controller
                         $stock = DB::table('stocks')
                         ->whereItemId($value->item_id)
                         ->whereRaw('NOW() < expired_date')
+                        ->whereRaw('qty > 0')
                         ->orderByRaw('expired_date asc')
                         ->first();
 

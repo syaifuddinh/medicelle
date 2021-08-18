@@ -58,7 +58,7 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Pasien
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12" style='padding-top:2mm'>
-                                            <% registration.patient.name %> / <% formData.total %>
+                                            <% registration.patient.name %>
                                     </div>
                                 </div>
 

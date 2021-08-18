@@ -108,6 +108,9 @@
                         <a href='#' class="btn btn-primary pull-right btn-xs">
                             <i class="fa fa-user"></i> <% patient.name %>
                         </a>
+                        <a href='#' class="btn btn-primary pull-right btn-xs">
+                            <i class="fa fa-user"></i> <% patient.age %> Thn
+                        </a>
                         <a href='#' class="btn btn-dark pull-right btn-xs mg-r2">
                             <i class="fa fa-list-alt"></i> <% code %>
                         </a>
