@@ -150,16 +150,21 @@ class RegistrationApiController extends Controller
             'registration_detail.doctor:id,name'
         )
         ->whereHas('registration_detail.registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end])
-            ->whereStatus(2);
+            if($request->date_start){
+            	$query->whereBetween('date', [$request->date_start, $request->date_end])
+            	->whereStatus(2);
+            }
+            else{
+            	$query->whereStatus(2);
+            }
         })
+        //->whereHas('registration_detail', function(Builder $query) use($request, $status){
+        //    $query->whereDestination('LABORATORIUM');
+        //})
+        ->orWhere('is_laboratory_treatment', 1)
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
-        })
-        ->orWhere('is_laboratory_treatment', 1)
-        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
-            $query->whereStatus($status);
         })
         ->select(
             'pivot_medical_records.id',
@@ -200,11 +205,21 @@ class RegistrationApiController extends Controller
             'registration_detail.doctor:id,name'
         )
         ->whereHas('registration_detail.registration', function(Builder $query) use($request, $status){
-            $query->whereBetween('date', [$request->date_start, $request->date_end]);
-            if($status == 0) {
-                $query->whereStatus(2);
-            } else if($status == 1) {
-                $query->whereRaw('status in (2,4)');
+            if($request->date_start){
+            	if($status == 0) {
+            		$query->whereBetween('date', [$request->date_start, $request->date_end])
+                	->whereStatus(2);
+            	} else if($status == 1) {
+            		$query->whereBetween('date', [$request->date_start, $request->date_end])
+                	->whereRaw('status in (2,4)');
+            	}
+            }
+            else{
+            	if($status == 0) {
+                	$query->whereStatus(2);
+            	} else if($status == 1) {
+                	$query->whereRaw('status in (2,4)');
+            	}
             }
         })
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
