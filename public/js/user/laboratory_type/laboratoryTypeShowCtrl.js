@@ -5,6 +5,7 @@ app.controller('laboratoryTypeShow', ['$scope', '$http', '$rootScope', '$filter'
     id = path.replace(/.+\/(\d+)/, '$1');
     detail_datatable = $('#detail_datatable').DataTable({
         dom: 'rt',
+    	pageLength: 200,
         columns:[
             {
                 data: 'name',
