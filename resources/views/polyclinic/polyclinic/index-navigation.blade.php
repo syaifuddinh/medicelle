@@ -4,7 +4,7 @@
         <li class="{{ strpos(url()->current(), 'history') == null ? 'active' : '' }}">
           <a href="{{ route( $flag . '.index') }}">Daftar Pasien</a>
         </li>
-        <li class="{{ strpos(url()->current(), 'history') != null ? 'active' : '' }}">
+        <li ng-show="$scope.flag == 'polyclinic'" class="{{ strpos(url()->current(), 'history') != null ? 'active' : '' }}">
           <a href="{{ route( $flag . '.history') }}">Riwayat Pasien</a>
         </li>
       </ul> 
