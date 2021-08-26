@@ -333,9 +333,9 @@ class RegistrationController extends Controller
                         $service_price = 0;
                         $item_id = null;
                         if(($value->laboratory_pivot->additional ?? null)) {
-                            foreach($value->laboratory_pivot->additional->treatment as $treatment) {                        
+                            foreach($value->laboratory_pivot->additional->treatment as $treatment) {               
                                 foreach($treatment->detail as $detail) {
-					if(array_key_exists("is_active",$detail)) {
+					if(($detail->is_active ?? null)) {
                                     $laboratoryTypeDetail = DB::table('laboratory_type_details')
                                     ->whereId($detail->id)
                                     ->first();
@@ -507,7 +507,7 @@ class RegistrationController extends Controller
                 $sewa_instrumen = $medicalRecord->sewa_instrumen;
                 $drug = $medicalRecord->drug;
                 DB::beginTransaction();
-                foreach($treatments as $value) {
+                foreach($treatment1s as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,
