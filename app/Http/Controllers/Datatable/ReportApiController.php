@@ -109,17 +109,29 @@ class ReportApiController extends Controller
     }
 
     public function fetch_outgoing_stock() {
+	/* old query
         $dt = DB::table('stock_transactions')
         ->where('stock_transactions.out_qty' , '>', 0)
         ->join('items', 'items.id', 'stock_transactions.item_id')
-        ->select('stock_transactions.id', 'items.name AS item_name', 'out_qty', 'stock_transactions.description', 'stock_transactions.date');
-
+        ->select('stock_transactions.id', 'items.name AS item_name', 'out_qty', 'stock_transactions.description', 'stock_transactions.date');*/
+	$dt = DB::table('invoices')
+        ->join('invoice_details', 'invoices.id', 'invoice_details.invoice_id')
+        ->join('registrations', 'registrations.id', 'invoices.registration_id')
+        ->join('medical_records', 'medical_records.id', 'registrations.medical_record_id')
+        ->join('contacts', 'contacts.id', 'registrations.patient_id')
+        ->join('items', 'items.id', 'invoice_details.item_id')
+        ->where('invoices.status' , '=', 3)
+        ->whereRaw('(items.is_pharmacy<>0 or items.is_bhp=1) and items.is_subclassification=0 and items.is_classification=0 and items.is_category=0')
+        ->orderBy('registrations.date', 'ASC')
+        ->orderBy('contacts.name', 'ASC')
+        ->select('contacts.name as patient_name', 'medical_records.code AS rm_code', 'registrations.code as reg_code', 'registrations.date', 'items.name as item_name','invoice_details.qty as out_qty');
         return $dt;
     }
 
     public function outgoing_stock(Request $request) {
         $x = $this->fetch_outgoing_stock();
-        $x->whereBetween('stock_transactions.date', [$request->date_start, $request->date_end]);
+        //$x->whereBetween('stock_transactions.date', [$request->date_start, $request->date_end]);
+        $x->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
 
         return Datatables::query($x)->make(true);
     }

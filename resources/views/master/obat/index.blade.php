@@ -58,6 +58,7 @@
                         <tr>
                           <th>Kode</th>
                           <th>Nama</th>
+                          <th>ID</th>
                           <th>Kategori</th>
                           <th>Grup nota</th>
                           <th>Lokasi</th>
