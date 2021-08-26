@@ -33,7 +33,7 @@
  </style>
  <div class="container" style='position: relative'>
      
-        <div class="row" style='margin-top:4mm;'>
+        <div class="row" style='margin-top:4mm;'><!--
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
                     <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
@@ -43,9 +43,9 @@
                     <p>{!! $company->address !!}</p>
                     <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
-            </div>
+            </div>-->
 
-            <div class="col-md-12" style='padding-left:5.5mm;border-bottom:1px solid black;margin-bottom:7mm'>
+            <div class="col-md-12" style='margin-top:25mm;padding-left:5.5mm;border-bottom:1px solid black;margin-bottom:7mm'>
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>UNIT RADIOLOGI</p>
 
                 <div style='margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>

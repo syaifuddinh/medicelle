@@ -271,7 +271,8 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
                     col.append(formgroup)
                     formgroup = $('<div class="form-group"><label>Nilai Normal</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'nilai_normal\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].nilai_normal"></textarea></div>')
                     col.append(formgroup)
-                    formgroup = $('<div class="form-group"><label>Keterangan</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'keterangan\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].keterangan"></textarea></div>')
+                    formgroup = $('<div class="form-group"><label>Ket</label><trix-editor angular-trix class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'keterangan\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].keterangan"></trix-editor></div>')
+                    //formgroup = $('<div class="form-group"><label>Ket</label><textarea class="form-control" ng-change="submitLaboratoryForm(' + x +', ' + y + ', \'keterangan\')" ng-model="laboratoryData[' + x + '].detail[' + y + '].keterangan"></textarea></div>')
                     col.append(formgroup)
                     laboratory_treatment_form.append(col)
                 }

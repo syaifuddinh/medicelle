@@ -44,7 +44,7 @@
  </style>
  <div class="container">
      
-        <div class="row" style='margin-top:4mm;'>
+        <div class="row" style='margin-top:4mm;'><!--
             <div style='border-bottom:1px solid black;margin-bottom:6mm'>
                 <div style='display:inline-block'>
                     <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
@@ -54,10 +54,10 @@
                     <p>{!! $company->address !!}</p>
                     <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
-            </div>
-            <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm'>
+            </div>-->
+            <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm;margin-top:25mm;'>
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>LABORATORIUM KLINIK</p>
-                <div style='margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
+                <div style='border-bottom:1px solid black;margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
                     <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>No RM</span>
                         <span class="ib"> : </span>
@@ -107,7 +107,14 @@
                         <span class="ib" style='width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                     </p>
                 </div>
-              
+                <div style='border-bottom:1px solid black;margin-bottom:10mm;text-transform:uppercase;font-weight:bold'>
+                    <p style='margin-bottom:1.2mm'>DOKTER PENANGGUNG JAWAB :</p>
+                    <p style='margin-bottom:5mm;width:400mm'>
+                        <span class="ib" style='width:60mm'>Nama Lengkap</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:300mm'>{!!$contact_name!!}</span>
+                    </p>
+                </div>              
                 <div>
                     <table border='1' cellspacing='0'>
                         <thead>
@@ -148,7 +155,6 @@
                     </div>
                 </div>
 
-                @include('pdf/letter_footer')   
             </div>
         </div>
  </div>
