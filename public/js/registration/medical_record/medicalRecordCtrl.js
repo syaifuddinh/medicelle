@@ -1,4 +1,4 @@
-app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$filter', function($scope, $rootScope, $compile, $http, $filter) {
+app.controller('medicalRecord', ['$scope', '$http', '$rootScope', '$filter', '$compile', function($scope, $http, $rootScope, $filter, $compile) {
   $scope.formData = {}
   var path = window.location.pathname;
   patient_id = path.replace(/.+\/(\d+)\/patient.*/, '$1');
@@ -17,6 +17,22 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
   } else if( path.indexOf('medical_checkup') > -1) {
       medical_record_url = medical_record_head + 'medical_checkup_medical_record/'
   }
+
+function strip_tags(str) {
+    if(str){
+	str = str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    	str = str.toString();
+    }
+    else{
+    	str = "";
+    }
+    return str.replace(/<\/?[^>]+>/gi, '');
+}
+
+function unEntity(str){
+   return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+
 
   oTable = $('#listview').DataTable({
     processing: true,
@@ -53,8 +69,12 @@ app.controller('medicalRecord', ['$scope', '$rootScope', '$compile', '$http', '$
         render:resp => $filter('fullDate')(resp.medical_record.date)
       },
       {
-        data:'medical_record.main_complaint', 
-        name:'medical_record.main_complaint' 
+        data:null, 
+                  render:function(resp) {
+                      var summary = strip_tags(resp.medical_record.main_complaint)
+			//console.log(strip_tags(resp.medical_record.main_complaint))
+                      return summary
+                  }      	  
       },
       {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name"},
       {
