@@ -5,6 +5,7 @@
      * {
         margin:0;
         padding:0;
+        font-size:14pt;
      }
      .container {
         padding:7mm;
@@ -14,7 +15,7 @@
      }
 
      p, span, li, td {
-        font-size:10px;
+        font-size:14pt;
      }
      td {
         padding:1mm;
@@ -39,26 +40,26 @@
 
             <div class="col-md-12" style='padding-left:5.5mm'>
                 <div>
-                    <span style='width:50%;display:inline-block'>
+                    <span style='width:300mm;display:inline-block'>
                         <div>
-                            <span style='width:20mm;display:inline-block'>Nama</span>
+                            <span style='width:40mm;display:inline-block'>Nama</span>
                             <span style='display:inline-block;width:2mm'>:</span>
-                            <span style='display:inline-block;'>{!! $medicalRecord->patient->name !!}</span>
+                            <span style='display:inline-block;width:100mm'>{!! $medicalRecord->patient->name !!}</span>
                         </div>
                         <div>
-                            <span style='width:20mm;display:inline-block'>Tanggal lahir</span>
+                            <span style='width:40mm;display:inline-block'>Tanggal lahir</span>
                             <span style='display:inline-block;width:2mm'>:</span>
-                            <span style='display:inline-block;'>{!! Mod::fullDate($medicalRecord->patient->birth_date) !!}</span>
+                            <span style='display:inline-block;width:100mm'>{!! Mod::fullDate($medicalRecord->patient->birth_date) !!}</span>
                         </div>
                     </span>
-                    <span style='width:50%;display:inline-block'>
+                    <span style='width:300mm;display:inline-block'>
                         <div>
-                            <span style='width:20mm;display:inline-block'>Alamat</span>
+                            <span style='width:40mm;display:inline-block'>Alamat</span>
                             <span style='display:inline-block;width:2mm'>:</span>
-                            <span style='display:inline-block;'>{!! $medicalRecord->patient->address !!}</span>
+                            <span style='display:inline-block;width:100mm'>{!! $medicalRecord->patient->address !!}</span>
                         </div>
                         <div>
-                            <span style='width:20mm;display:inline-block'>Regimen</span>
+                            <span style='width:40mm;display:inline-block'>Regimen</span>
                             <span style='display:inline-block;width:2mm'>:</span>
                             <span style='display:inline-block;'>{!! $shortDot !!}</span>
                         </div>
@@ -96,6 +97,15 @@
                             <td class='text-center'>Jam : {!! $shortDot !!}<br>Durante II</td>
                             <td class='text-center'>Jam : {!! $shortDot !!}<br>Post</td>
                         </tr>
+			<?php if(count($keadaanUmum)==0) { ?>
+                            <tr>    
+                                <td colspan='2'>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+			<?php } else { ?>
                         @foreach($keadaanUmum AS $unit)
                             <tr>    
                                 <td colspan='2'>{!! $unit->name !!}</td>
@@ -105,11 +115,18 @@
                                 <td></td>
                             </tr>
                         @endforeach
+			<?php } ?>
                         <tr>
                             <td colspan='6' style='text-align:center'>
                                 <b>EFEK SAMPING</b>
                             </td>
                         </tr>
+			<?php if(count($sideEffects)==0) { ?>
+                                <tr>    
+                                    <td colspan='7'>&nbsp;</td>
+                                </tr>
+
+			<?php } else { ?>
                         @foreach($sideEffects AS $sideEffect)
                             @foreach($sideEffect->detail AS $key => $detail)
                                 <tr>    
@@ -126,6 +143,7 @@
                                 </tr>
                             @endforeach                        
                         @endforeach
+			<?php } ?>
                         <tr>
                             <td style='height: 15mm' colspan="2" class='text-center'>
                                 <b>TANDA TANGAN PENERIMA</b>

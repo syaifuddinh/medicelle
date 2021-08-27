@@ -340,14 +340,14 @@
 
                                 <button class="btn btn-default btn-sm" ng-click="backward()" type="button">Kembali</button>
                             </div>
-                        @if($flag == 'radiology' || $flag == 'laboratory' || $flag == 'ruang_tindakan')
-                            <div class="btn-group pull-right" ng-show='pivot.is_referenced == 1'>
+                        @if($flag == 'radiology' || $flag == 'laboratory' || $flag == 'ruang_tindakan' || $flag == 'chemoterapy')
+                            <div class="btn-group pull-right">
 
                                 <button class="btn btn-primary btn-sm" ng-click="openPicModal()" type="button" title='Buka dokumen PDF'>
                                     <i class="fa fa-file-pdf-o"></i>
                                 </button>
                             </div>
-                        @endif
+                        @elseif($flag == 'polyclinic')
                             <div class="btn-group pull-right" ng-hide='pivot.is_referenced == 1'>
                              @if(Auth::user()->allow_update_assesment())
                                 <a id='assesmentButton' ng-show='formData.invoice.status > 2' href='{{ route("assesment.edit", ["id" => ""]) }}' class="btn btn-info btn-sm" >Isi assesment</a>                                
@@ -359,6 +359,7 @@
                             <a id='medicalRecordButton' ng-show='formData.invoice.status < 3' disabled href='#' class="btn btn-success btn-sm" >Isi rekam medis</a>     
                             @endif
                             </div>
+                        @endif
                         </div>
                     </div>
 
