@@ -9,10 +9,12 @@ use Carbon\Carbon;
 use DB;
 use DataTables;
 use Response;
+use App\LaboratoryTypeDetail;
 
 class ReportApiController extends Controller
 {
     public function fetch_medical_bill() {
+        LaboratoryTypeDetail::generateLaboratoryItem();
         $grup_nota = DB::table('permissions')
         ->whereIsActive(1)
         ->whereIsGrupNota(1)

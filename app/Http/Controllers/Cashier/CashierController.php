@@ -78,7 +78,7 @@ class CashierController extends Controller
         )->find($id);
 
         $invoice_detail = InvoiceDetail::with(
-            'item:id,name,piece_id,code,category_id', 
+            'item:id,name,piece_id,code,category_id,is_laboratory_type_detail', 
             'item.piece:id,name', 
             'grup_nota:permissions.id,name,slug',
             'asuransi_reference:id,invoice_detail_id,total_debet,debet',
@@ -88,6 +88,25 @@ class CashierController extends Controller
         ->whereInvoiceId($id)
         ->whereIsItem(1)
         ->get();
+
+        $invoice_detail = $invoice_detail->map(function ($v){
+            if($v->item->is_laboratory_type_detail == 1) {
+                $lab = DB::table('laboratory_type_details')
+                ->join("laboratory_types", "laboratory_types.id", "laboratory_type_details.laboratory_type_id")
+                ->join("prices", "laboratory_types.price_id", "prices.id")
+                ->join("permissions", "prices.grup_nota_id", "permissions.id")
+                ->where('laboratory_type_details.item_id', $v->item_id)
+                ->select('permissions.id', 'permissions.slug', 'permissions.name')
+                ->first();
+
+                if($lab) {
+                    $v->grup_nota = $lab;
+                }
+            }
+
+            return $v;
+        });
+
         if(count($invoice_detail) > 0) {
             $invoice_detail = $invoice_detail->groupBy('grup_nota.name');
         } else {
