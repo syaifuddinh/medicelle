@@ -725,9 +725,9 @@ class MedicalRecordController extends Controller
         ->name ?? '';
         $pivotMedicalRecord = PivotMedicalRecord::findOrFail($id);
         $medicalRecord = MedicalRecord::find($pivotMedicalRecord->medical_record_id);
-        $price = DB::table('prices')
-        ->whereItemId($pivotMedicalRecord->medical_record_detail->item_id)
-        ->first();
+        //$price = DB::table('prices')
+        //->whereItemId($pivotMedicalRecord->medical_record_detail->item_id)
+        //->first();
         $keadaanUmum = DB::table('permissions')
         ->whereIsKeadaanUmum(1)
         ->select('name')
@@ -746,7 +746,7 @@ class MedicalRecordController extends Controller
             'shortDot' => '..........'
         ];
         $pdf = PDF::loadview('pdf/chemoterapy/chemoterapy', $params);
-        return $pdf->stream('radiology.pdf');
+        return $pdf->stream('chemoterapy.pdf');
     }
 
     public function xray_pdf(Request $request, $id)

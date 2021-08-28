@@ -12,16 +12,24 @@ app.controller('outgoingStock', ['$scope', '$rootScope', '$compile', '$http', '$
             render : x => $filter('fullDate')(x.date)
           },
           {
+            data:'patient_name', 
+            name:'contacts.name' 
+          },
+          {
+            data:'rm_code', 
+            name:'medical_records.code' 
+          },
+          {
+            data:'reg_code', 
+            name:'registrations.code' 
+          },
+          {
             data:'item_name', 
             name:'items.name' 
           },
           {
             data:'out_qty', 
-            name:'out_qty' 
-          },
-          {
-            data:'description', 
-            name:'description'
+            name:'invoice_details.qty' 
           }
     ]
 
@@ -34,6 +42,7 @@ app.controller('outgoingStock', ['$scope', '$rootScope', '$compile', '$http', '$
       url : baseUrl + '/datatable/report/outgoing_stock',
       data : d => Object.assign(d, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',

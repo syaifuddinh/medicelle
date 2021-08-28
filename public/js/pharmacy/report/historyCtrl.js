@@ -10,6 +10,7 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
       url : baseUrl + '/datatable/pharmacy/history',
       data : d => Object.assign(d, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',

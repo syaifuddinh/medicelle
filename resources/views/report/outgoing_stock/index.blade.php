@@ -44,9 +44,11 @@
                       <thead>
                         <tr>
                           <th>Tanggal</th>
+                          <th>Nama Pasien</th>
+                          <th>No RM</th>
+                          <th>No Regis</th>
                           <th>Barang</th>
                           <th>Qty Keluar</th>
-                          <th>Keterangan</th>
                         </tr>
                       </thead>
                       <tbody>

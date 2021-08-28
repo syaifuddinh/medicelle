@@ -150,21 +150,20 @@ class RegistrationApiController extends Controller
             'registration_detail.doctor:id,name'
         )
         ->whereHas('registration_detail.registration', function(Builder $query) use($request){
-            if($request->date_start){
-            	$query->whereBetween('date', [$request->date_start, $request->date_end])
-            	->whereStatus(2);
-            }
-            else{
-            	$query->whereStatus(2);
-            }
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            //->whereStatus(2);
         })
-        //->whereHas('registration_detail', function(Builder $query) use($request, $status){
-        //    $query->whereDestination('LABORATORIUM');
-        //})
-        ->orWhere('is_laboratory_treatment', 1)
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
             $query->whereStatus($status)
             ->whereDestination('LABORATORIUM');
+        })
+        ->orWhere('is_laboratory_treatment', 1)
+        //->whereHas('registration_detail', function(Builder $query) use($request, $status){
+        //    $query->whereStatus($status);
+        //})
+        ->whereHas('registration_detail.registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            //->whereStatus(2);
         })
         ->select(
             'pivot_medical_records.id',
@@ -196,7 +195,9 @@ class RegistrationApiController extends Controller
 
     public function chemoterapy_registered(Request $request, $flag = null) {
         $status = $flag == 'finish' ? 1 : 0;
+        //DB::enableQueryLog();
         $x = PivotMedicalRecord::with(
+            'parent:id,additional',
             'registration_detail:id,registration_id,doctor_id,polyclinic_id,time',
             'registration_detail.registration:id,code,patient_id,date,queue',
             'medical_record:id,code,registration_id,registration_detail_id', 
@@ -204,40 +205,29 @@ class RegistrationApiController extends Controller
             'registration_detail.polyclinic:id,name',
             'registration_detail.doctor:id,name'
         )
-        ->whereHas('registration_detail.registration', function(Builder $query) use($request, $status){
-            if($request->date_start){
-            	if($status == 0) {
-            		$query->whereBetween('date', [$request->date_start, $request->date_end])
-                	->whereStatus(2);
-            	} else if($status == 1) {
-            		$query->whereBetween('date', [$request->date_start, $request->date_end])
-                	->whereRaw('status in (2,4)');
-            	}
-            }
-            else{
-            	if($status == 0) {
-                	$query->whereStatus(2);
-            	} else if($status == 1) {
-                	$query->whereRaw('status in (2,4)');
-            	}
-            }
+        ->whereHas('registration_detail.registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            //->whereStatus(2);
         })
         ->whereHas('registration_detail', function(Builder $query) use($request, $status){
-            if($status == 0) {
-                $query->whereStatus($status);
-            } else if($status == 1) {
-                $query->whereRaw('status in (0,1) or status is null');
-                //$query->whereRaw('status in (0,1)');
-            }
-            $query->whereDestination('KEMOTERAPI');
+            $query->whereStatus($status)
+            ->whereDestination('KEMOTERAPI');
         })
-        //->orWhere('is_chemoterapy', 1)
+        ->orWhere('is_chemoterapy', 1)
         //->whereHas('registration_detail', function(Builder $query) use($request, $status){
         //    $query->whereStatus($status);
         //})
+        ->whereHas('registration_detail.registration', function(Builder $query) use($request){
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            //->whereStatus(2);
+        })
         ->select(
             'pivot_medical_records.id',
-            'pivot_medical_records.registration_detail_id', 
+            'pivot_medical_records.parent_id',
+            'pivot_medical_records.registration_detail_id',
+            'pivot_medical_records.is_referenced',
+            'pivot_medical_records.is_laboratory_treatment',
+            'pivot_medical_records.is_radiology',
             'pivot_medical_records.medical_record_id'
         );
 

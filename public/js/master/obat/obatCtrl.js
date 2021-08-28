@@ -40,6 +40,11 @@ app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scop
         name:"name",
         render:resp => "<a href='" + baseUrl + "/obat/" + resp.id +  "' title='Detail'>" + resp.name + "</a>"
       },
+      {
+        data:null, 
+        name:"name",
+        render:resp => "<a href='" + baseUrl + "/medical_item/" + resp.id +  "' title='Detail'>" + resp.id + "</a>"
+      },
       {data:"group.name", name:"group.name"},
       {data:"price.grup_nota.name"},
       {
