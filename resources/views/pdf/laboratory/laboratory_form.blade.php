@@ -55,7 +55,7 @@
                     <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>-->
-            <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm;margin-top:25mm;'>
+            <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm;margin-top:30mm;'>
                 <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>LABORATORIUM KLINIK</p>
                 <div style='border-bottom:1px solid black;margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
                     <p style='margin-bottom:1.2mm;width:300mm'>

@@ -50,7 +50,7 @@
             </div>
 
             <div class="col-md-12" style='padding-left:5.5mm;margin-bottom:7mm'>
-                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>PEMERIKSAAN RUANG TINDAKAN</p>
+                <p style='text-align:center;font-weight:bold;font-size:101%;margin-bottom:10mm'>LAPORAN TINDAKAN</p>
                 <div style='margin-bottom:7mm;text-transform:uppercase;font-weight:bold'>
                     <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>No RM</span>
@@ -103,10 +103,15 @@
                 </div>
                
                 <div style='margin-bottom:2mm'>
-                    <p>Pada tanggal {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!} telah dilakukan tindakan {!! $pivotMedicalRecord->medical_record_detail->item->name !!}. </p>
+                    <p style='text-align:justify;line-height:1cm'>Pada tanggal {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!} telah dilakukan tindakan {!! $pivotMedicalRecord->medical_record_detail->item->name !!}. Diagnosa :
+                     @foreach($medicalRecord->diagnose_history as $unit)
+                        {!! $unit->disease->name ?? $unit->additional->diagnose_name !!}                       
+                     @endforeach
+                    </p>
+
                 </div>
                 <div style='margin-bottom:2mm'>
-                    <p class='mt-5'>Keterangan : {!! $pivotMedicalRecord->additional->ruang_tindakan_description ?? '' !!} </p>
+                    <p class='mt-5' style='line-height:1cm'>Keterangan : {!! $pivotMedicalRecord->additional->ruang_tindakan_description ?? '' !!} </p>
                 </div>
                 
                 <div style='margin-top:50mm;width:100%'>
