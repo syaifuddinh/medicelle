@@ -25,6 +25,10 @@
      .mt-5 {
         margin-top:5mm;
      }
+     .mt-5 > div{
+        line-height:1.2cm;
+     }
+
      .mt-2 {
         margin-top:2mm;
      }
@@ -111,7 +115,7 @@
 
                 </div>
                 <div style='margin-bottom:2mm'>
-                    <p class='mt-5' style='line-height:1cm'>Keterangan : {!! $pivotMedicalRecord->additional->ruang_tindakan_description ?? '' !!} </p>
+                    <span class='mt-5' style='line-height:1cm'>Keterangan : {!! $pivotMedicalRecord->additional->ruang_tindakan_description ?? '' !!} </span>
                 </div>
                 
                 <div style='margin-top:50mm;width:100%'>
