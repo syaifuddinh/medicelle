@@ -311,6 +311,7 @@ app.controller('polyclinicShow', ['$scope', '$http', '$rootScope', '$compile', '
 
     $scope.updateRuangTindakanDescription = function() {
     //var str = $scope.pivotData.ruang_tindakan_description.replace("<div>", "<div style='line-height:1.2cm'>")
+    //var str = $scope.pivotData.ruang_tindakan_description.replace("<ol>", "<ol class='oul'>")
     //$scope.pivotData.ruang_tindakan_description = str
     //console.log($scope.pivotData.ruang_tindakan_description)
     $http.put(baseUrl + '/controller/registration/medical_record/pivot/' + pivot_medical_record_id + '/ruang_tindakan/description', $scope.pivotData).then(function(data) {

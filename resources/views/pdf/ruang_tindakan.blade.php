@@ -11,22 +11,23 @@
         zoom:1.21;
         font-size:14pt;
      }
-     li {
-        padding-left:10mm
-     }
 
-     p, span, li {
+     p, span {
         font-size:14pt;
      }
 
      .indent {
-        text-indent:8mm
+        text-indent:8mm;
      }
      .mt-5 {
         margin-top:5mm;
      }
      .mt-5 > div{
         line-height:1.2cm;
+     }
+
+     ol{
+        padding-left:20mm;
      }
 
      .mt-2 {
