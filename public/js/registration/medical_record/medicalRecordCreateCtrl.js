@@ -37,6 +37,22 @@ function strip_tags(str) {
     return str.replace(/<\/?[^>]+>/gi, '');
 }
 
+function strip_tags_table(str) {
+    if(str){
+	str = str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    	str = str.toString();
+    }
+    else{
+    	str = "";
+    }
+    return str.replace(/<\/?[^>]+>/gi, '');
+}
+
+function unEntity(str){
+   return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+
+
     $('#printButton').click(function(){
        if(path.indexOf('fnab') > -1) {
           window.open( baseUrl + '/controller/registration/medical_record/' + id + '/fnab/pdf'  )
@@ -711,7 +727,16 @@ function strip_tags(str) {
               width : '45mm',
               render:resp => $filter('fullDate')(resp.medical_record.date)
             },
-            {data:"medical_record.main_complaint", name:"medical_record.main_complaint", orderable:false, searchable:false},
+            {
+              data:null, 
+              orderable:false,
+              searchable:false,
+                  render:function(resp) {
+                      var summary = strip_tags_table(resp.medical_record.main_complaint)
+			//console.log(strip_tags(resp.medical_record.main_complaint))
+                      return summary
+                  } 
+            },
             {data:"registration_detail.doctor.name", name:"registration_detail.doctor.name", orderable:false, searchable:false},
           ],
           createdRow: function(row, data, dataIndex) {
