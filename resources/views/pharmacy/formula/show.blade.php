@@ -79,6 +79,16 @@
                                             <% registration.patient_type.toLowerCase()  %>
                                     </div>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12">Nama Dokter
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12 capitalize" style='padding-top:2mm'>
+                                            <% formData.registration_detail.doctor.name  %>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="col-md-6">
