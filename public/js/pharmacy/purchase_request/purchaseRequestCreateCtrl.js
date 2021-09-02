@@ -91,6 +91,16 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
             data: null, 
             orderable : false,
             searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].stock_qty %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
                 return "<input type='text' style='width:40mm' class='form-control' ng-model='formData.detail[" + index + "].purchase_price' only-num jnumber2>"
@@ -245,6 +255,7 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
       $http.get(baseUrl + '/controller/pharmacy/stock_transaction/check?' + $.param(param)).then(function(data) {
             $rootScope.disBtn=false;
             $scope.formData.detail[index].used_qty = data.data.qty
+            $scope.formData.detail[index].stock_qty = data.data.stock_qty
       }, function(error) {
             $rootScope.disBtn=false;
             if (error.status==422) {

@@ -21,13 +21,18 @@ class StockTransactionController extends Controller
 
         $stock_transaction = StockTransaction::whereBetween('date', [$request->date_start, $request->date_end])
         ->whereItemId($request->item_id)
-        ->selectRaw('SUM(in_qty - out_qty) AS amount');
+        ->selectRaw('SUM(out_qty) as used, SUM(in_qty - out_qty) AS amount');
         if($request->filled('lokasi_id')) {
             $stock_transaction = $stock_transaction->where('lokasi_id', $request->lokasi_id);
         }
         $stock_transaction = $stock_transaction->first();
 
-        return Response::json(['qty' => $stock_transaction->amount ?? 0]);
+        //return Response::json(['qty' => $stock_transaction->amount ?? 0]);
+        return Response::json([
+            'qty' => $stock_transaction->used ?? 0,
+            'stock_qty' => $stock_transaction->amount ?? 0
+        ]);
+
 
     }
 

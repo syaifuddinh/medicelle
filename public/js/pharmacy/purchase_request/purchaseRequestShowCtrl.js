@@ -57,6 +57,16 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
             className : 'text-right',  
             render : function(resp) {
                 var index = $scope.formData.detail.length - 1
+                return "<% formData.detail[" + index + "].stock_qty %>"
+            }
+          },
+          {
+            data: null, 
+            orderable : false,
+            searchable : false,
+            className : 'text-right',  
+            render : function(resp) {
+                var index = $scope.formData.detail.length - 1
                 return "<% formData.detail[" + index + "].purchase_price | number %>"
             }
           },
@@ -196,6 +206,7 @@ app.controller('purchaseRequestShow', ['$scope', '$http', '$rootScope', '$filter
             $('#itemModal').modal('hide')
             $rootScope.disBtn=false;
             $scope.formData.detail[index].used_qty = data.data.qty
+            $scope.formData.detail[index].stock_qty = data.data.stock_qty
       }, function(error) {
             $rootScope.disBtn=false;
             if (error.status==422) {

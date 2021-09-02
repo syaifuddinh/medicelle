@@ -92,6 +92,7 @@
                                                 <th>Supplier</th>
                                                 <th style='width:12mm'>Jumlah Permintaan</th>
                                                 <th style='width:10mm'>Jumlah Terpakai</th>
+                                                <th style='width:10mm'>Jumlah Stock</th>
                                                 <th style='width:40mm'>Harga Beli</th>
                                                 <th style='width:10mm'>Diskon</th>
                                                 <th style='width:10mm'>Diskon Off</th>
