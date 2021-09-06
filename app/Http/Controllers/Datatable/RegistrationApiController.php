@@ -97,18 +97,19 @@ class RegistrationApiController extends Controller
         ->leftJoinSub($radiologies, 'radiologies', function($query) {   
             $query->on('radiologies.medical_record_detail_id', 'pivot_medical_records.medical_record_detail_id');
         })
+        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
+            $query->whereStatus($status)
+            ->whereDestination('RADIOLOGI');
+        })
+        ->orWhere('is_radiology', 1)
         ->whereHas('registration_detail.registration', function(Builder $query) use($request){
-            $query->whereBetween('date', [$request->date_start, $request->date_end])
-            ->whereStatus(2);
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+            //->whereStatus(2);
         })
-        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
-            $query->whereDestination('RADIOLOGI');
-        })
-        ->orWhere('is_radiology', 1)
-        ->whereHas('registration_detail', function(Builder $query) use($request, $status){
-            $query->whereStatus($status);
-        })
-        ->orWhere('is_radiology', 1)
+        //->whereHas('registration_detail', function(Builder $query) use($request, $status){
+        //    $query->whereStatus($status);
+        //})
+        //->orWhere('is_radiology', 1)
         ->select(
             'pivot_medical_records.id',
             DB::raw("COALESCE(radiology_type_name, '') AS radiology_type_name"),
