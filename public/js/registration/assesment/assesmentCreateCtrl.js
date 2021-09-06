@@ -102,7 +102,8 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
 
   $scope.submitOne = function(key) {
         $scope.silent = 1
-        $scope.submitForm(0, key)
+	if(($scope.formData[key]!=null)&&($scope.formData[key]!='')){
+        $scope.submitForm(0, key)}
     }
 
   $scope.showAssesment = function() {
@@ -281,6 +282,7 @@ app.controller('assesmentCreate', ['$scope', '$http', '$rootScope', '$filter', '
 
   $scope.submitKidHistory = function() {
       $scope.kid_history.is_pregnant_week_age = $scope.kid_history.is_pregnant_week_age ? $scope.kid_history.is_pregnant_week_age : '0';
+      $scope.kid_history.pregnant_week_age = $scope.kid_history.pregnant_week_age ? $scope.kid_history.pregnant_week_age : '0';
       kid_history_datatable.row.add($scope.kid_history).draw()
       $scope.kid_history = {}
       var params = {

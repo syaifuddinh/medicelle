@@ -165,7 +165,7 @@
                                     <label class="control-label col-md-2 col-xs-12">G
                                     </label>
                                     <div class="col-md-4 col-sm-4 col-xs-12">
-                                        <input type="text" class='form-control' ng-model='formData.gravida' only-num>
+                                        <input type="text" class='form-control' ng-model='formData.gravida' ng-change="submitOne('gravida')" only-num>
                                     </div>
                                 </div>
 
@@ -173,7 +173,7 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">P
                                     </label>
                                     <div class="col-md-4 col-sm-4 col-xs-12">
-                                        <input type="text" class='form-control' ng-model='formData.partus' only-num>
+                                        <input type="text" class='form-control' ng-model='formData.partus' ng-change="submitOne('partus')" only-num>
                                     </div>
                                 </div>
 
@@ -181,7 +181,7 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">A
                                     </label>
                                     <div class="col-md-4 col-sm-4 col-xs-12">
-                                        <input type="text"  class='form-control' ng-model='formData.abortus' only-num>
+                                        <input type="text"  class='form-control' ng-model='formData.abortus' ng-change="submitOne('abortus')" only-num>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                                     <label class="col-md-12 col-xs-12">Riwayat imunisasi TT
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <input type="text"  ng-model='formData.imunisasi_tt' class="form-control col-md-7 col-xs-12">
+                                        <input type="text"  ng-model='formData.imunisasi_tt' class="form-control col-md-7 col-xs-12" ng-change="submitOne('imunisasi_tt')">
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +204,7 @@
                                     </label>
                                     <div class="col-md-12 col-xs-12">
                                         <div class="input-group">
-                                            <input type="text"  ng-model='formData.pada_usia_kehamilan' class="form-control col-md-7 col-xs-12" only-num>
+                                            <input type="text"  ng-model='formData.pada_usia_kehamilan' class="form-control col-md-7 col-xs-12" ng-change="submitOne('pada_usia_kehamilan')" only-num>
                                             <div class="input-group-addon">
                                                 Bulan
                                             </div>
@@ -218,7 +218,7 @@
                                     <label class="col-md-12 col-xs-12">Riwayat pemakaian obat saat kehamilan
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <textarea  ng-model='formData.pemakaian_obat_saat_kehamilan' class="form-control col-md-7 col-xs-12">
+                                        <textarea  ng-model='formData.pemakaian_obat_saat_kehamilan' class="form-control col-md-7 col-xs-12" ng-change="submitOne('pemakaian_obat_saat_kehamilan')">
                                         </textarea>
                                     </div>
                                 </div>
@@ -229,7 +229,7 @@
                                     <label class="col-md-12 col-xs-12">Keluhan saat kehamilan
                                     </label>
                                     <div class="col-md-12 col-xs-12">
-                                        <textarea  ng-model='formData.keluhan_saat_kehamilan' class="form-control col-md-7 col-xs-12">
+                                        <textarea  ng-model='formData.keluhan_saat_kehamilan' class="form-control col-md-7 col-xs-12" ng-change="submitOne('keluhan_saat_kehamilan')">
                                         </textarea>
                                     </div>
                                 </div>
@@ -347,7 +347,7 @@
                                             <td>Penolong persalinan</td>
                                             <td>Penyulit</td>
                                             <td>Jenis kelamin</td>
-                                            <td>BB(cm)</td>
+                                            <td>BB(kg)</td>
                                             <td>PB(cm)</td>
                                             <td>Komplikasi nifas</td>
                                             <td></td>
