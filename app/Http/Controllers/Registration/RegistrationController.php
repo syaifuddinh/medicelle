@@ -724,7 +724,7 @@ class RegistrationController extends Controller
                             }
                             $stock2 = DB::table('stocks')
                             ->whereItemId($value->item_id)
-                            ->whereRaw('NOW() < expired_date and id <> '.$stock->id)
+                            ->whereRaw('NOW() < expired_date and qty > 0 and id <> '.$stock->id)
                             ->orderByRaw('expired_date asc')
                             ->first();
                             if(($stock2->qty >= $sisa) && $sisa>0) {
@@ -752,7 +752,7 @@ class RegistrationController extends Controller
 				}
 				$stock3 = DB::table('stocks')
 				->whereItemId($value->item_id)
-				->whereRaw('NOW() < expired_date and id <> '.$stock->id.' and id <> '.$stock2->id)
+				->whereRaw('NOW() < expired_date and qty > 0 and id <> '.$stock->id.' and id <> '.$stock2->id)
 				->orderByRaw('expired_date asc')
 				->first();				
 				if(($stock3->qty >= $sisa) && $sisa>0) {
@@ -779,7 +779,7 @@ class RegistrationController extends Controller
 					}
                             		$stock4 = DB::table('stocks')
                             		->whereItemId($value->item_id)
-                            		->whereRaw('NOW() < expired_date and id <> '.$stock->id.' and id <> '.$stock2->id.' and id <> '. $stock3->id)
+                            		->whereRaw('NOW() < expired_date and qty > 0 and id <> '.$stock->id.' and id <> '.$stock2->id.' and id <> '. $stock3->id)
                             		->orderByRaw('expired_date asc')
                             		->first();
                             		$formula->detail()->create([
