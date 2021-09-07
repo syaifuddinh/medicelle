@@ -3636,6 +3636,9 @@ drug_datatable = $('#drug_datatable').DataTable({
       $http[method](url, data).then(function(resp) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");
+      	if(data.is_drug == 1) {
+        	location.reload();
+      	}
         $scope.show()
       }, function(error) {
         $scope.input_history.pop()
