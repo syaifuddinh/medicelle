@@ -90,6 +90,7 @@ class ReportApiController extends Controller
             $query->on('promo.invoice_id', 'invoices.id');
         })
         ->where('invoice_details.is_item', 1)
+        ->where('invoice_details.is_profit_sharing', 1)
         ->where('items.is_administration', 0)
         ->select(
             'contacts.name AS patient_name', 

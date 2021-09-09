@@ -507,7 +507,7 @@ class RegistrationController extends Controller
                 $sewa_instrumen = $medicalRecord->sewa_instrumen;
                 $drug = $medicalRecord->drug;
                 DB::beginTransaction();
-                foreach($treatment1s as $value) {
+                foreach($treatments as $value) {
                     InvoiceDetail::create([
                         'invoice_id' => $invoice->id,
                         'item_id' => $value->item_id,
