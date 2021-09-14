@@ -122,7 +122,7 @@
                 <div style='margin-top:50mm;width:100%'>
                     <div style='width:60%;display:inline-block'></div>
                     <div style='width:170%;display:inline-block'>
-                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!}</p>
+                        <p style='text-align:center;margin-bottom:25mm'>{!! Mod::company()->city !!}, {!! Mod::fullDate($medicalRecord->date) !!}</p>
                         <p style='text-align:center;'>(....................................)</p>
                     </div>
                 </div>

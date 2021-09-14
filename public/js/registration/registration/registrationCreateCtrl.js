@@ -15,6 +15,11 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     $scope.title = 'Edit Registrasi';
   } 
 
+  function unApos(str){
+  	return str.replace(/&#039;/g, "'");
+  }
+
+
   $scope.city = function() {
       $http.get(baseUrl + '/controller/master/city').then(function(data) {
         $scope.data.city = data.data
@@ -257,6 +262,7 @@ app.controller('registrationCreate', ['$scope', '$http', '$rootScope', '$compile
     var tr = $(e).parents('tr');
     var data = patient_datatable.row(tr).data();
     $scope.formData.patient = data;
+    $scope.formData.patient.name = unApos($scope.formData.patient.name);
     $scope.formData.patient.city_id = parseInt(data.city_id)
     $scope.formData.patient.family = {}
     if($scope.formData.family_type == 'DIRI SENDIRI') {

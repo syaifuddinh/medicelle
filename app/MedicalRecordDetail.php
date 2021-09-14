@@ -110,6 +110,18 @@ class MedicalRecordDetail extends Model
                 $price = DB::table('prices')
                 ->whereItemId($medicalRecordDetail->item_id)
                 ->first();
+
+                if($medicalRecordDetail->is_treatment_group == 1) {
+                        DB::table('pivot_medical_records')
+                        ->insert([
+                            'medical_record_id' => $medicalRecordDetail->medical_record_id,
+                            'registration_detail_id' => $registration_detail_id,
+                            'is_referenced' => 1,
+                            'is_ruang_tindakan' => 1,
+                            'medical_record_detail_id' => $medicalRecordDetail->id
+                        ]);
+                }
+
                 if($medicalRecordDetail->is_diagnostic == 1) {
                     if($price->radiology_group != null) {
                         DB::table('pivot_medical_records')
