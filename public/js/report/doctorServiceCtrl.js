@@ -13,7 +13,11 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
           },
           {
             data:'patient_name', 
-            name:'contacts.name' 
+            name:'c1.name' 
+          },
+          {
+            data:'doctor_name', 
+            name:'c2.name' 
           },
           {
             data:'code', 
@@ -22,6 +26,20 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
           {
             data:'item_name', 
             name:'items.name' 
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => $filter('number')(x.real_price)
+          },
+          {
+            data:null, 
+            className : 'text-right',
+            orderable : false,
+            searchable:false,
+            render : x => $filter('number')(x.disc_price)
           },
           {
             data:null, 
@@ -50,13 +68,6 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
             orderable : false,
             searchable:false,
             render : x => $filter('number')(x.promo_price)
-          },
-          {
-            data:null, 
-            className : 'text-right',
-            orderable : false,
-            searchable:false,
-            render : x => ''
           }
     ]
     

@@ -81,27 +81,42 @@ class ReportApiController extends Controller
         ->whereIsPromo(1)
         ->select('invoice_details.invoice_id', DB::raw('invoice_details.grandtotal * -1 AS grandtotal'));
 
+        $disc = DB::table('invoice_details')
+        ->join('invoices', 'invoices.id', 'invoice_details.invoice_id')
+        ->whereIsDiscount(1)
+        ->select('invoice_details.invoice_id', DB::raw('invoice_details.grandtotal * -1 AS discount'));
+
+
         $dt = DB::table('invoice_details')
         ->join('invoices', 'invoices.id', 'invoice_details.invoice_id')
         ->join('registrations', 'registrations.id', 'invoices.registration_id')
-        ->join('contacts', 'registrations.patient_id', 'contacts.id')
+        ->join('registration_details', 'registrations.id', 'registration_details.registration_id')
+        ->join('contacts as c1', 'registrations.patient_id', 'c1.id')
+        ->join('contacts as c2', 'registration_details.doctor_id', 'c2.id')
         ->leftJoin('items', 'items.id', 'invoice_details.item_id')
         ->leftJoinSub($promo, 'promo', function($query){
             $query->on('promo.invoice_id', 'invoices.id');
         })
+        ->leftJoinSub($disc, 'disc', function($query){
+            $query->on('disc.invoice_id', 'invoices.id');
+        })
+
         ->where('invoice_details.is_item', 1)
         ->whereRaw('invoice_details.percentage_doctor <> 0')
         ->whereRaw('invoice_details.service_price <> 0')
         ->where('items.is_administration', 1)
         ->orderBy('invoices.date', 'DESC')
         ->select(
-            'contacts.name AS patient_name', 
+            'c1.name AS patient_name', 
+            'c2.name AS doctor_name',
             'invoices.date',
             'invoices.code', 
-            'items.name AS item_name', 
-            'invoice_details.service_price', 
-            DB::raw('(invoice_details.service_price * invoice_details.percentage_doctor / 100) AS doctor_fee'),
-            DB::raw('(invoice_details.service_price * (100 - invoice_details.percentage_doctor) / 100) AS clinic_fee'),
+            'items.name AS item_name',
+            'invoice_details.service_price as real_price', 
+            DB::raw('invoice_details.service_price - COALESCE(disc.discount, 0) as service_price'), 
+            DB::raw('((invoice_details.service_price - COALESCE(disc.discount, 0)) * invoice_details.percentage_doctor / 100) AS doctor_fee'),
+            DB::raw('((invoice_details.service_price - COALESCE(disc.discount, 0)) * (100 - invoice_details.percentage_doctor) / 100) AS clinic_fee'),
+            DB::raw('COALESCE(disc.discount, 0) AS disc_price'),
             DB::raw('COALESCE(promo.grandtotal, 0) AS promo_price')
         );
         return $dt;

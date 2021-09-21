@@ -45,13 +45,15 @@
                         <tr>
                           <th>Tanggal</th>
                           <th>Nama Pasien</th>
+                          <th>Nama Dokter</th>
                           <th>No Invoice</th>
                           <th>Keterangan</th>
-                          <th>Jasa Dokter</th>
+                          <th>Tarif Asli</th>
+                          <th>Disc</th>
+                          <th>Total</th>
                           <th>Dokter</th>
                           <th>Klinik</th>
                           <th>Promo</th>
-                          <th>Keterangan</th>
                         </tr>
                       </thead>
                       <tbody>
