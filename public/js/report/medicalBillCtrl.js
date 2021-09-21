@@ -59,6 +59,7 @@ app.controller('medicalBill', ['$scope', '$rootScope', '$compile', '$http', '$fi
       url : baseUrl + '/datatable/report/medical_bill',
       data : d => Object.assign(d, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',
