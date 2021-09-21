@@ -45,6 +45,7 @@
                         <tr>
                           <th>Tanggal</th>
                           <th>Nama Pasien</th>
+                          <th>No Invoice</th>
                           <th>Keterangan</th>
                           <th>Jasa Dokter</th>
                           <th>Dokter</th>

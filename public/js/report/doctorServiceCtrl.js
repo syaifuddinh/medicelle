@@ -16,6 +16,10 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
             name:'contacts.name' 
           },
           {
+            data:'code', 
+            name:'invoices.code' 
+          },
+          {
             data:'item_name', 
             name:'items.name' 
           },
@@ -65,6 +69,7 @@ app.controller('doctorService', ['$scope', '$rootScope', '$compile', '$http', '$
       url : baseUrl + '/datatable/report/doctor_service',
       data : d => Object.assign(d, $scope.formData)
     },
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {
         'extend' : 'excel',

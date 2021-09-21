@@ -90,11 +90,14 @@ class ReportApiController extends Controller
             $query->on('promo.invoice_id', 'invoices.id');
         })
         ->where('invoice_details.is_item', 1)
-        ->where('invoice_details.is_profit_sharing', 1)
-        ->where('items.is_administration', 0)
+        ->whereRaw('invoice_details.percentage_doctor <> 0')
+        ->whereRaw('invoice_details.service_price <> 0')
+        ->where('items.is_administration', 1)
+        ->orderBy('invoices.date', 'DESC')
         ->select(
             'contacts.name AS patient_name', 
-            'invoices.date', 
+            'invoices.date',
+            'invoices.code', 
             'items.name AS item_name', 
             'invoice_details.service_price', 
             DB::raw('(invoice_details.service_price * invoice_details.percentage_doctor / 100) AS doctor_fee'),
