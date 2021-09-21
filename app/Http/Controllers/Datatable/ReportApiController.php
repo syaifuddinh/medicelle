@@ -123,9 +123,10 @@ class ReportApiController extends Controller
         ->join('medical_records', 'medical_records.id', 'registrations.medical_record_id')
         ->join('contacts', 'contacts.id', 'registrations.patient_id')
         ->join('items', 'items.id', 'invoice_details.item_id')
-        ->where('invoices.status' , '=', 3)
+        //->where('invoices.status' , '=', 3)
+        ->whereRaw('invoices.status in (3,4)')
         ->whereRaw('(items.is_pharmacy<>0 or items.is_bhp=1) and items.is_subclassification=0 and items.is_classification=0 and items.is_category=0')
-        ->orderBy('registrations.date', 'ASC')
+        ->orderBy('registrations.date', 'DESC')
         ->orderBy('contacts.name', 'ASC')
         ->select('contacts.name as patient_name', 'medical_records.code AS rm_code', 'registrations.code as reg_code', 'registrations.date', 'items.name as item_name','invoice_details.qty as out_qty');
         return $dt;
@@ -134,7 +135,7 @@ class ReportApiController extends Controller
     public function outgoing_stock(Request $request) {
         $x = $this->fetch_outgoing_stock();
         //$x->whereBetween('stock_transactions.date', [$request->date_start, $request->date_end]);
-        $x->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
+        $x->whereBetween('invoices.date', [$request->date_start, $request->date_end]);
 
         return Datatables::query($x)->make(true);
     }

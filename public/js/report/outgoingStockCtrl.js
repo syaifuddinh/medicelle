@@ -8,6 +8,7 @@ app.controller('outgoingStock', ['$scope', '$rootScope', '$compile', '$http', '$
           {
             data:null, 
             searchable : false,
+            orderable: false,
             name:'date',
             render : x => $filter('fullDate')(x.date)
           },
@@ -35,13 +36,13 @@ app.controller('outgoingStock', ['$scope', '$rootScope', '$compile', '$http', '$
 
     oTable = $('#listview').DataTable({
     processing: true,
-    order:[[0, 'desc']],
     serverSide: true,
     dom: 'Blfrtip',
     ajax: {
       url : baseUrl + '/datatable/report/outgoing_stock',
       data : d => Object.assign(d, $scope.formData)
     },
+    "order": [[0, "asc"]],
     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
       {

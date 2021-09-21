@@ -1203,7 +1203,7 @@ class MedicalRecordController extends Controller
                 } else if($request->is_bhp == 1) {
                     $input = $request->all();
                     $input['is_bhp'] = 1;
-                    $medicalRecord->sewa_instrumen()->create($input);
+                    $medicalRecord->bhp()->create($input);
                 } else if($request->is_diagnostic == 1) {
                     $input = $request->all();
                     $input['is_diagnostic'] = 1;
