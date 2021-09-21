@@ -63,7 +63,8 @@ class ReportApiController extends Controller
         ->join('registrations', 'registrations.id', 'invoices.registration_id')
         ->join('contacts', 'contacts.id', 'registrations.patient_id')
         ->leftJoin($payments, 'payments.invoice_id', 'invoices.id')
-        ->select('contacts.name AS patient_name', 'invoices.date', 'invoices.code', 'invoices.netto', 'invoices.paid', DB::raw("CASE WHEN invoices.balance = 0 AND invoices.netto > 0 THEN 'Lunas' ELSE 'Belum Lunas' END AS status"))
+        ->whereRaw('invoices.netto <> 0')
+        ->select('contacts.name AS patient_name', 'invoices.date', 'invoices.code', 'invoices.netto', 'invoices.paid', DB::raw("CASE WHEN (invoices.balance > -500 or invoices.balance < 500) AND invoices.netto > 0 THEN 'Lunas' ELSE 'Belum Lunas' END AS status"))
         ->addSelect(DB::raw('COALESCE(debit, 0) AS debit'), DB::raw('COALESCE(kredit, 0) AS kredit'), DB::raw('COALESCE(tt, 0) AS tt'), DB::raw('COALESCE(visa, 0) AS visa'), DB::raw('COALESCE(master, 0) AS master'), DB::raw('COALESCE(tunai, 0) AS tunai'));
         return $dt;
     }

@@ -77,5 +77,5 @@
     <!-- ============================================================== -->
     
     @include('footer')
-    <script src="{{ asset('') }}js/report/outgoingStockCtrl.js"></script>
+    <script src="{{ asset('') }}js/report/medicalPaymentCtrl.js"></script>
 
