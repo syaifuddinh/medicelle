@@ -96,27 +96,33 @@ class PurchaseRequest extends Model
     } 
 
     public static function createPurchaseOrder($purchaseRequest) {
-        $details = PurchaseRequestDetail::wherePurchaseRequestId($purchaseRequest->id)
-                    ->get();
-        foreach ($details as $detail) {
+        $suppliers = PurchaseRequestDetail::wherePurchaseRequestId($purchaseRequest->id)
+                    ->select('supplier_id')->groupBy('supplier_id')->get();
+
+	foreach($suppliers as $supplier){
                 $purchaseOrder = new PurchaseOrder();
                 $purchaseOrder->purchase_request_id = $purchaseRequest->id;
                 $purchaseOrder->description = $purchaseRequest->description;
                 $purchaseOrder->date = date('Y-m-d');
                 $purchaseOrder->date_start = $purchaseRequest->date_start;
                 $purchaseOrder->date_end = $purchaseRequest->date_end;
-                $purchaseOrder->supplier_id = $detail->supplier_id;
+                $purchaseOrder->supplier_id = $supplier->supplier_id;
                 $purchaseOrder->save();
 
-                $purchaseOrder->detail()->create([
-                    'item_id' => $detail->item_id,
-                    'qty' => $detail->qty,
-                    'leftover_qty' => $detail->qty,
-                    'purchase_price' => $detail->purchase_price,
-                    'discount' => $detail->discount,
-                    'discount_off' => $detail->discount_off
-                ]);
-        }
+		$details = DB::table('purchase_request_details')->whereSupplierId($supplier->supplier_id)->wherePurchaseRequestId($purchaseRequest->id)
+                ->get();
+
+        	foreach ($details as $detail) {
+                	$purchaseOrder->detail()->create([
+                    	'item_id' => $detail->item_id,
+                    	'qty' => $detail->qty,
+                    	'leftover_qty' => $detail->qty,
+                    	'purchase_price' => $detail->purchase_price,
+                    	'discount' => $detail->discount,
+                    	'discount_off' => $detail->discount_off
+                	]);
+       		}
+	}
     }
 
     public function detail() {
