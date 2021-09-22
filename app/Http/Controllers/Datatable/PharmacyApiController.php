@@ -144,7 +144,7 @@ class PharmacyApiController extends Controller
             'permissions.name AS lokasi_name', 
             'stocks.expired_date', 
             DB::raw("COALESCE((SELECT amount FROM stock_transactions WHERE id = (SELECT MAX(id) FROM stock_transactions WHERE stock_id = stocks.id AND (date BETWEEN '$request->date_start' AND '$request->date_end') )), 0) AS latest_stock"),
-            DB::raw("COALESCE((SELECT gross FROM periodical_stocks WHERE stock_id = stocks.id AND year = $year AND month = $month ), 0) AS early_stock")
+            DB::raw("COALESCE((SELECT gross FROM periodical_stocks WHERE stock_id = stocks.id AND year = $year AND month = $month limit 1), 0) AS early_stock")
         );
         if($request->draw == 1)
             $x->orderBy('stocks.id', 'DESC');

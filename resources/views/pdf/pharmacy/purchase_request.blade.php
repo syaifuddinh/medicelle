@@ -22,6 +22,7 @@
      }
      table {
         border-bottom:1px double black;
+        font-size:12px;
      }
 
      .text-right {
@@ -38,8 +39,12 @@
         <div class="row" style='margin-top:4mm;'>
             <div style='margin-bottom:6mm'>
                 <div style='display:inline-block'>
-                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{!! $company->address !!}</p>
+                    <img src="{!! $company->logo2 !!}" style='width:auto;height:20mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:120mm'>
+                    <b style='font-size:106%;text-transform:uppercase'>{!! $company->name !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -50,29 +55,29 @@
                     </div>
                     <div style='display:inline-block;width:80%;'>
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>No. Purchase Request</span>
+                            <span style='display:inline-block;width:55mm'>No. Purchase Request</span>
                             <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $purchaseRequest->code !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>Tanggal</span>
-                            <span style='display:inline-block'>: {!! Mod::fullDate($purchaseRequest->date) !!}</span>
+                            <span style='display:inline-block;width:55mm'>Tanggal</span>
+                            <span style='display:inline-block;width:75mm'>: {!! Mod::fullDate($purchaseRequest->date) !!}</span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>Periode</span>
-                            <span style='display:inline-block'>: {!!  Mod::fullDate($purchaseRequest->date_start) !!} s/d  {!! Mod::fullDate($purchaseRequest->date_end) !!} </span>
+                            <span style='display:inline-block;width:55mm'>Periode</span>
+                            <span style='display:inline-block;width:115mm'>: {!!  Mod::fullDate($purchaseRequest->date_start) !!} s/d  {!! Mod::fullDate($purchaseRequest->date_end) !!} </span>
                         </div>
 
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:45mm'>Keterangan</span>
+                            <span style='display:inline-block;width:55mm'>Keterangan</span>
                             <span style='display:inline-block'>: {!! $purchaseRequest->description !!}</span>
                         </div>
                     </div>
                    
                 </div>
                 <br>
-                <table style='width:100%' cellpadding='2' cellspacing='0'>
+                <table style='width:100%;' cellpadding='2' cellspacing='0'>
                     <thead>
                         <tr>        
                             <th>Barang</th>
@@ -84,9 +89,9 @@
                             <th style='width:10mm'>Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style='margin-top:0.6mm;page-break-inside: avoid;'>
                         @foreach($purchaseRequest->detail as $i => $detail)
-                            <tr>
+                            <tr style='page-break-inside: avoid;'>
                                 <td>
                                     {!! $detail->item->name ?? '' !!}
                                 </td>
@@ -111,7 +116,7 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
+                    <tfoot style='margin-top:0.6mm;page-break-inside: avoid;'>
                         <tr>
                             <th colspan="6" style='text-align:left'>
                                 Grandtotal
@@ -123,37 +128,28 @@
                     </tfoot>
                 </table>
 
-                <div style='position:absolute;bottom:28mm'>
+                <div style='margin-top:40mm;position:relative;bottom:28mm;border:0px solid black;'>
                     <div style='display:inline-block;position:relative'>
                         <span style='display:inline-block;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>Petugas</p>
                             <p style='text-align:center;width:210%'>( {!!$purchaseRequest->draft->user->name ?? $dot!!} )</p>
                         </span>
-                    </div>
-                </div>
-        
-                <div style='position:absolute;bottom:28mm;left:90mm'>
-                    <div style='display:inline-block;position:relative'>
-                        <span style='display:inline-block;'>
+                        <span style='display:inline-block;margin-left:20mm;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>APJ</p>
                             <p style='text-align:center;width:210%'>( {!!$purchaseRequest->apj->user->name ?? $dot!!} )</p>
                         </span>
-                    </div>
-                </div>
-        
-                <div style='position:absolute;bottom:28mm;left:180mm'>
-                    <div style='display:inline-block;position:relative'>
-                        <span style='display:inline-block;'>
+
+                        <span style='display:inline-block;margin-left:25mm;'>
                             
                             <p style='text-align:center;margin-bottom:25mm;width:210%'>Disetujui Oleh</p>
                             <p style='text-align:center;width:210%'>( {!!$purchaseRequest->direktur->user->name ?? $dot!!} )</p>
                         </span>
+
                     </div>
                 </div>
-        
-                @include('pdf/letter_footer')        
+    
             </div>
         </div>
  </div>

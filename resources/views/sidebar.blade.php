@@ -208,7 +208,7 @@
 
                                     <li><a href="{{ route('pharmacy.formula.index') }}">Resep Obat</a></li>
                                     
-                                    <li><a href="{{ route('pharmacy.equipment.index') }}">Penggunaan Barang</a></li>
+                                    <!--<li><a href="{{ route('pharmacy.equipment.index') }}">Penggunaan Barang</a></li>-->
 
                                     <li><a href="{{ route('pharmacy.adjustment_stock.index') }}">Stok Opname</a></li>
                                     <li><a href="{{ route('pharmacy.report.history') }}">Kartu Stok</a></li>
