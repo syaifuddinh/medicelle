@@ -72,6 +72,13 @@ app.controller('obat', ['$scope', '$compile', '$http', '$filter', function($scop
       {
         data:null, 
         searchable : false,
+        name:'qty',
+        className:'text-right',
+        render:resp => $filter('number')(resp.rate)
+      },
+      {
+        data:null, 
+        searchable : false,
         name:'expired_date',
         className:'text-right',
         render:resp => $filter('fullDate')(resp.expired_date)

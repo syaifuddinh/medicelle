@@ -293,7 +293,7 @@ class MasterApiController extends Controller
         ->leftJoinSub($stocks, 'stocks', function($join){
             $join->on('stocks.item_id', 'cures.id');
         })
-        ->select('cures.id', 'cures.code', 'cures.name', 'cures.description', 'cures.is_active', 'cures.category_id', 'cures.classification_id', 'cures.subclassification_id', 'cures.generic_id', 'cures.is_cure', 'stocks.expired_date','stocks.qty');
+        ->select('cures.id', 'cures.code', 'cures.name', 'cures.price','cures.description', 'cures.is_active', 'cures.category_id', 'cures.classification_id', 'cures.subclassification_id', 'cures.generic_id', 'cures.is_cure', 'stocks.expired_date','stocks.qty');
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
         if($request->draw == 1)
             $x->orderBy('id', 'DESC');

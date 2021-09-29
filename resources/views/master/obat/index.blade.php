@@ -63,6 +63,7 @@
                           <th>Grup nota</th>
                           <th>Lokasi</th>
                           <th>Stok</th>
+                          <th>Harga</th>
                           <th>Exp Date</th>
                           <th>Status</th>
                           <th></th>
