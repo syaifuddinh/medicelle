@@ -102,7 +102,7 @@
                                         <tbody></tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="7" style='text-align:left'>Grandtotal</th>
+                                                <th colspan="8" style='text-align:left'>Grandtotal</th>
                                                 <th><% formData.grandtotal | number %></th>
                                             </tr>
                                         </tfoot>

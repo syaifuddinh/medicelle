@@ -121,6 +121,69 @@ app.directive('datepick', function() {
   };
 });
 
+app.directive('dateonlypick', function() {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, el, attr, ngModel) {
+
+      var pick = $(el).pickadate({
+        'selectYears' : false,
+        'selectMonths' : true,
+        'format': 'dd mmmm',
+        'onStart': hideYear,
+        'onRender': hideYear,
+        'onOpen': hideYear,
+        'onClose': hideYear,
+        'onSet': hideYear,
+        'onStop': hideYear
+      });
+      var p = pick.pickadate('picker')
+      var model = attr.ngModel
+      var second = model.replace(/.+\.([a-z_]+)$/, '$1')
+      var first = model.replace(/(.+)\.([a-z_]+)$/, '$1') || null  
+      if(second == first) {
+        var datepick = scope[second]
+      } else {
+        if(scope[first]) {
+            var datepick = scope[first][second]
+        }
+      }
+      if(datepick) {        
+          if(/(\d{4})-(\d{2})-(\d{2})/.test(datepick)) {
+              var d = datepick.split('-')
+              p.set('select', new Date(d[0], parseInt(d[1]) - 1, d[2]))
+              var actualValue = $(el).val()
+              if(second == first) {
+                scope[second] = datepick
+              } else {
+                scope[first][second] = datepick
+              }
+
+              setTimeout(function(){
+                  $(el).val(actualValue)
+              }, 200)
+          }
+      }
+      
+       ngModel.$parsers.push(function(value) {
+        return p.get('select', 'dd-mm');
+      });
+      console.log(ngModel);
+      // $(el).datepicker('update', ngModel.$modelValue);
+      // ngModel.$formatters.push(function(modelValue) {
+      //   console.log(modelValue);
+      //   $(el).datepicker('update', modelValue);
+      // });
+    }
+  };
+});
+
+function hideYear() {
+    var yearLabel = $( '.picker__year' )
+    yearLabel.hide()
+}
+
 app.directive('clockpick', function() {
   return {
     restrict: 'A',

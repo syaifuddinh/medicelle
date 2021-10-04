@@ -30,8 +30,18 @@
                                     </h5>
                                 </label>
                             </div>
-
-
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Tanggal lahir
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                              <div class="input-daterange input-group" style="width:100%;">
+                                <input type="text" class="input-sm form-control" ng-model="formData.birth_date" ng-change='filter()' dateonlypick/>
+                              </div>
+                              <div class="form-group">
+                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
+                              </div>
+                            </div>
                         </div>
                     </form>
                 </div>

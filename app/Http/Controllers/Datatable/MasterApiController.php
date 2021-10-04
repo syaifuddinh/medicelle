@@ -193,13 +193,30 @@ class MasterApiController extends Controller
     }
 
     public function patient(Request $request) {
-        if($request->filled('is_display_all')) {
-            if($request->is_display_all == 1) {
-                $x = Contact::patient()->with('city:id,name', 'family:id,name,address,job','medical_record:patient_id,code');
-            }
+        $tgllahir=explode('-',$request->birth_date);
+	if($request->filled('birth_date')) {
+		if($request->filled('is_display_all')) {
+            		if($request->is_display_all == 1) {
+                		$x = Contact::patient()->with('city:id,name', 'family:id,name,address,job','medical_record:patient_id,code')
+                		->whereDay('birth_date', '=', $tgllahir[0])
+                		->whereMonth('birth_date', '=', $tgllahir[1])
+				->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
+            		}
+        	} else {
+            		$x = Contact::patient()
+                		->whereDay('birth_date', '=', $tgllahir[0])
+                		->whereMonth('birth_date', '=', $tgllahir[1])
+				->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
+        	}
         } else {
-            $x = Contact::patient()->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
-        }
+		if($request->filled('is_display_all')) {
+            		if($request->is_display_all == 1) {
+                		$x = Contact::patient()->with('city:id,name', 'family:id,name,address,job','medical_record:patient_id,code');
+            		}
+        	} else {
+            		$x = Contact::patient()->select('id', 'civil_code', 'phone', 'name', 'age', 'gender', 'is_active', 'birth_date');
+        	}        
+	}
 
         // die($request->is_active);
         $x = $request->filled('is_active') ? $x->whereIsActive($request->is_active) : $x;
