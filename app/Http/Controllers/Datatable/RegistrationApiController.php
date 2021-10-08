@@ -40,7 +40,9 @@ class RegistrationApiController extends Controller
             'registration_detail.doctor:id,name'
         )
         ->whereHas('registration_detail.registration', function(Builder $query) use($request, $status){
+	if($request->filled('date_start')) {
             $query->whereBetween('date', [$request->date_start, $request->date_end]);
+	}
             if($status == 0) {
                 $query->whereStatus(2);
             } else if($status == 1) {
@@ -73,8 +75,8 @@ class RegistrationApiController extends Controller
             }
         }
 
-        if($request->draw == 1)
-            $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
+        //if($request->draw == 1)
+        //    $x->orderBy('pivot_medical_records.registration_detail_id', 'DESC')->orderBy('registration_detail.queue', 'ASC');
 
         return Datatables::eloquent($x)->make(true);
     }
@@ -426,9 +428,8 @@ class RegistrationApiController extends Controller
             $query->whereBetween('date', [$request->date_start, $request->date_end]);
         })
         ->leftJoin('medical_record_details','pivot_medical_records.medical_record_id','medical_record_details.medical_record_id' )
-        ->where('pivot_medical_records.is_referenced', 0)
-        ->where('medical_record_details.is_diagnose_history', 1)
-        ->orWhere('medical_record_details.is_children_diagnose_history', 1)
+        ->whereRaw('pivot_medical_records.is_referenced=0 and (medical_record_details.is_diagnose_history=1 or medical_record_details.is_children_diagnose_history=1)')
+        //->where('pivot_medical_records.is_referenced', 0)
         ->select(
             'pivot_medical_records.id',
             'pivot_medical_records.registration_detail_id',
