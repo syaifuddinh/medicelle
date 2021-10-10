@@ -136,6 +136,7 @@ class ReportApiController extends Controller
         ->where('stock_transactions.out_qty' , '>', 0)
         ->join('items', 'items.id', 'stock_transactions.item_id')
         ->select('stock_transactions.id', 'items.name AS item_name', 'out_qty', 'stock_transactions.description', 'stock_transactions.date');*/
+
 	$dt = DB::table('invoices')
         ->join('invoice_details', 'invoices.id', 'invoice_details.invoice_id')
         ->join('registrations', 'registrations.id', 'invoices.registration_id')
@@ -158,4 +159,37 @@ class ReportApiController extends Controller
 
         return Datatables::query($x)->make(true);
     }
+
+    public function fetch_poly_report() {
+        $dt = DB::table('medical_record_details')
+        ->join('medical_records', 'medical_records.id', 'medical_record_details.medical_record_id')
+        ->join('registrations', 'registrations.id', 'medical_records.registration_id')
+        ->join('registration_details', 'registration_details.id', 'medical_records.registration_detail_id')
+        ->join('contacts as patient', 'medical_records.patient_id', 'patient.id')
+        ->join('contacts as doctor', 'registration_details.doctor_id', 'doctor.id')
+        ->join('specializations', 'specializations.id', 'doctor.specialization_id')
+        ->join(DB::raw('json_each_text(medical_record_details.additional::json) as d'),'medical_record_details.id','medical_record_details.id')
+        ->where('d.key','=','diagnose_name')
+        ->orderBy('registrations.date', 'ASC')
+        ->select(
+            'registrations.date',
+            'registration_details.time',
+            'medical_records.code',
+            'patient.name AS patient_name', 
+            'doctor.name AS doctor_name',
+            'patient.gender AS gender',
+            'specializations.name AS spec_name',
+            'd.value as diagnosa',
+            'medical_record_details.description as description' 
+        );
+        return $dt;
+    }
+
+    public function poly_report(Request $request) {
+        $x = $this->fetch_poly_report();
+        $x->whereBetween('registrations.date', [$request->date_start, $request->date_end]);
+
+        return Datatables::query($x)->make(true);
+    }
+
 }

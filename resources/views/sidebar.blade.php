@@ -225,6 +225,8 @@
                               <li><a href="{{ route('report.medical_bill') }}">Tagihan Pemeriksaan</a></li>
                               <li><a href="{{ route('report.medical_payment') }}">Pembayaran</a></li>
                               <li><a href="{{ route('report.outgoing_stock') }}">Pengeluaran Barang</a></li>
+                              <li><a href="{{ route('report.poly_report') }}">Lap Poli</a></li>
+                          </ul>
                   </li>
                  
                 </ul>

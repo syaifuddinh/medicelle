@@ -14,4 +14,8 @@ Route::name('report.')->prefix('report')
     Route::get('/outgoing_stock', function (){
             return view('report/outgoing_stock/index');
     })->name('outgoing_stock');
+    Route::get('/poly_report', function (){
+            return view('report/poly_report/index');
+    })->name('poly_report');
+
 });
