@@ -419,8 +419,8 @@ class MedicalRecordController extends Controller
     public function showReviewHistory($id, $flag) {
         $medicalRecord = MedicalRecord::findOrFail($id);
         $resp = MedicalRecordDetail::join('medical_records', 'medical_records.id', 'medical_record_details.medical_record_id')
-        ->where('medical_records.patient_id', $medicalRecord->patient_id)
-        ->where('medical_record_details.medical_record_id', '!=', $id);
+        ->where('medical_records.patient_id','=', $medicalRecord->patient_id);
+        //->where('medical_record_details.medical_record_id', '!=', $id);
         if($flag == 'radiology') {
             $resp->whereIsRadiology(1);
         } else if($flag == 'laboratory') {
@@ -431,7 +431,7 @@ class MedicalRecordController extends Controller
             return Response::json(['message' => 'Halaman tidak ditemukan'], 404);
         }
 
-        $resp = $resp->select('medical_record_details.id', 'medical_record_details.date', 'medical_record_details.result_date', 'medical_record_details.description', 'is_radiology', 'is_laboratory', 'is_pathology', 'medical_record_details.additional')
+        $resp = $resp->select('medical_record_details.id', 'medical_record_details.date', 'medical_record_details.result_date', 'medical_record_details.description', 'medical_record_details.kanan','medical_record_details.kiri','medical_record_details.kesimpulan','medical_record_details.saran','is_radiology', 'is_laboratory', 'is_pathology', 'medical_record_details.additional')
         ->get();
 
         return Response::json($resp);

@@ -904,6 +904,7 @@ function unEntity(str){
         }
 
         if(path.indexOf('radiology') > -1) {
+              $scope.showRadiologyHistory()
               radiology_datatable.rows.add(data.data.radiology).draw()
         }
 
@@ -2092,7 +2093,7 @@ function unEntity(str){
     }
   });
       
-  radiology_datatable = $('#radiology_datatable').DataTable({
+  /*radiology_datatable = $('#radiology_datatable').DataTable({
     dom: 'rt',
     pageLength: 200,
     'columns' : [
@@ -2126,7 +2127,44 @@ function unEntity(str){
     createdRow: function(row, data, dataIndex) {
       $compile(angular.element(row).contents())($scope);
     }
+  });*/
+
+  radiology_datatable = $('#radiology_datatable').DataTable({
+    dom: 'rt',
+    pageLength: 200,
+    'columns' : [
+      {
+          data : null,
+          width : '18%',
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'medical_record_details.name'},
+      {
+          data : null,
+          width : '15%',
+          render : resp => $filter('fullDate')(resp.result_date)
+      },
+      {data:'resp.kanan'},
+      {data:'resp.kiri'},
+      {data:'resp.kesimpulan'},
+      {data:'resp.saran'},
+      {
+          data : null,
+          render : resp => '<a href="http:\/\/medic.elle\/archive\/' + resp.description + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
+      },
+
+      {
+        data : null,
+        className : 'text-center',
+          width : '12%',
+        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-default" ng-click="showNewResearch(' + resp.id + ')" title="Isi form radiologi"><i class="fa fa-newspaper-o"></i></button><button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteRadiology($event.currentTarget)"><i class="fa fa-trash-o"></i></button></div>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
   });
+
 
   $scope.showRadiologyHistory = function() {
         if(path.indexOf('/radiology') > -1) {
