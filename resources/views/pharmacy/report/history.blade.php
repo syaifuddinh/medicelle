@@ -21,8 +21,19 @@
                                 <span class="input-group-addon">s/d</span>
                                 <input type="text" class="input-sm form-control" ng-model="formData.date_end" ng-change='filter()' datepick />
                               </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Lokasi
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <div class="input-group" style="width:50%;">
+                                <select class="form-control" data-placeholder-text-single="'Pilih lokasi'" chosen allow-single-deselect="false" ng-model="formData.lokasi_id" ng-change='filter()' ng-options="c.id as c.name for c in formData.lokasi">
+                                  <option value=""></option>
+                                </select>
+                              </div>
                               <div class="form-group">
-                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter()'>Reset</button>
+                                  <button type='button' class='btn btn-warning btn-sm' ng-click='formData={};filter();lokasi()'>Reset</button>
                               </div>
                             </div>
                         </div>

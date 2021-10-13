@@ -81,6 +81,26 @@ app.controller('history', ['$scope', '$rootScope', '$compile', '$http', '$filter
   });
   oTable.buttons().container().appendTo( '.export_button' );
 
+  $scope.lokasi = function() {
+          $http.get(baseUrl + '/controller/master/lokasi').then(function(data) {
+            $scope.formData.lokasi = data.data
+          }, function(error) {
+            $rootScope.disBtn=false;
+            $scope.lokasi()
+            if (error.status==422) {
+              var det="";
+              angular.forEach(error.data.errors,function(val,i) {
+                det+="- "+val+"<br>";
+              });
+              toastr.warning(det,error.data.message);
+            } else {
+              toastr.error(error.data.message,"Error Has Found !");
+            }
+          });
+  }
+  $scope.lokasi()
+
+
   $scope.delete = function(id) {
     is_delete = confirm('Apakah anda yakin transaksi ini akan dihapus ?');
     if(is_delete)
