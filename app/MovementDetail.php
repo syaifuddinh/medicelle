@@ -54,7 +54,7 @@ class MovementDetail extends Model
                 'date' => Carbon::now()->format('Y-m-d'),
                 'description' => 'Perpindahan Barang dari Lokasi Awal',
                 'item_id' => $movementDetail->item_id,
-                'in_qty' => $movementDetail->qty,
+                'out_qty' => $movementDetail->qty,
                 'lokasi_id' => $movementDetail->lokasi_awal_id,
                 'expired_date' => $stock->expired_date
             ]);

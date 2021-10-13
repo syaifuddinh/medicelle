@@ -73,8 +73,14 @@ class StockTransaction extends Model
                         }
                     }
                 }
-                
-                $stock = $stock->where('qty', '>=', -$qty);
+		if($qty<=0){
+			$qtyrev=$qty;
+
+		}
+		else{
+                	$qtyrev=(-1)*$qty;
+		}
+                $stock = $stock->where('qty', '>=', $qtyrev);
                 $stock = $stock->first();
                 $stock_id = $stock->id;
                 $cur_stock = $stock->qty;
@@ -97,10 +103,16 @@ class StockTransaction extends Model
                         }
                     }
                 }
-                $stock = $stock->where('qty', '>=', -$qty)->first();
+                $stock = $stock->where('qty', '>=', $qtyrev)->first();
                 $stock_id = $stock->id;
                 $stock = DB::table('stocks')->whereId($stock_id);
-                $stock->increment('qty', $qty);
+		if($qty<=0){
+			$qtyrev=(-1)*$qty;
+			$stock->decrement('qty', $qtyrev);
+		}
+		else{
+                	$stock->increment('qty', $qty);
+		}
                 if($stockTransaction->is_adjustment == 1) {
                     $stock->update([
                         'expired_date' => $stockTransaction->expired_date
@@ -150,8 +162,15 @@ class StockTransaction extends Model
                     $periodical_stock = $periodical_stock->whereExpiredDate($stockTransaction->expired_date);
                 }
 
-                $periodical_stock->increment('gross', $stockTransaction->in_qty);
-                $periodical_stock->increment('netto', $qty);
+		if($qty<=0){
+                	$qty=(-1)*$qty;
+                	$periodical_stock->decrement('gross', $stockTransaction->out_qty);
+                	$periodical_stock->decrement('netto', $qty);			                	
+		}
+		else{
+                	$periodical_stock->increment('gross', $stockTransaction->in_qty);
+                	$periodical_stock->increment('netto', $qty);
+		}
             }
             $last_stock = 0;
             $latest_stock_id = StockTransaction::whereItemId($stockTransaction->item_id)
@@ -179,7 +198,13 @@ class StockTransaction extends Model
 
             $item = DB::table('items') 
             ->whereId($stockTransaction->item_id);
-            $item->increment('current_stock', $qty);
+            if($qty<=0){
+		 $item->decrement('current_stock', $qty);
+
+            }
+            else{
+                 $item->increment('current_stock', $qty);
+            }
             $item->update([
                 'has_stock' => 1
             ]);
@@ -276,7 +301,7 @@ class StockTransaction extends Model
                 $last_stock = $latestStock->amount;
             }
 
-            $last_stock += $qty;
+            $last_stock += $qty;            
             $stockTransaction->amount = $last_stock;
 
             $item = DB::table('items') 
