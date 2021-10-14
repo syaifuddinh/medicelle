@@ -74,11 +74,10 @@ class StockTransaction extends Model
                     }
                 }
 		if($qty<=0){
-			$qtyrev=$qty;
-
+			$qtyrev=(-1)*$qty;
 		}
 		else{
-                	$qtyrev=(-1)*$qty;
+                	$qtyrev=$qty;
 		}
                 $stock = $stock->where('qty', '>=', $qtyrev);
                 $stock = $stock->first();
@@ -163,7 +162,7 @@ class StockTransaction extends Model
                 }
 
 		if($qty<=0){
-                	$qty=(-1)*$qty;
+                	$qtyrev=(-1)*$qty;
                 	$periodical_stock->decrement('gross', $stockTransaction->out_qty);
                 	$periodical_stock->decrement('netto', $qty);			                	
 		}
@@ -199,7 +198,7 @@ class StockTransaction extends Model
             $item = DB::table('items') 
             ->whereId($stockTransaction->item_id);
             if($qty<=0){
-		 $item->decrement('current_stock', $qty);
+		 $item->decrement('current_stock', $qtyrev);
 
             }
             else{
