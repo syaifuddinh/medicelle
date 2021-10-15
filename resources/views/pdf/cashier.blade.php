@@ -37,11 +37,11 @@
                 <div class="header">
                     <div style='text-align:center;display:inline-block;width:40%'></div>
                     <div style='text-align:center;display:inline-block;width:20%;margin-bottom:10mmd'>
-                        <h3 style='font-weight:bold;'><span>NOTA <br>RAWAT JALAN</span></h3>
+                        <h3 style='font-weight:bold;'><span>KUITANSI <br>RAWAT JALAN</span></h3>
                     </div>
                     <div style='display:inline-block;width:40%;'>
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:17mm'>No. Nota</span>
+                            <span style='display:inline-block;width:17mm'>No. Kuitansi</span>
                             <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $data['invoice']->code !!}</span>
                         </div>
 
