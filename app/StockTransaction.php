@@ -17,6 +17,9 @@ class StockTransaction extends Model
         parent::boot(); 
 
         static::creating(function(StockTransaction $stockTransaction) {
+            //throw new Exception("Detail : $stockTransaction->item_id,$stockTransaction->lokasi_id,$stockTransaction->expired_date,$stockTransaction->supplier_id,$stockTransaction->receipt_detail_id");
+
+
             $item = DB::table('items')
             ->whereId($stockTransaction->item_id)
             ->first();
