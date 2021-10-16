@@ -101,7 +101,7 @@ class Invoice extends Model
         return $this->belongsTo('App\Discount', 'discount_id', 'id');
     }
     public function teller() {
-        return $this->belongsTo('App\User', 'paid_by', 'id')->withDefault(['name' => '-']);
+        return $this->belongsTo('App\User', 'created_by', 'id')->withDefault(['name' => '-']);
     }
     public function detail() {
         return $this->hasMany('App\InvoiceDetail')->whereIsItem(1);

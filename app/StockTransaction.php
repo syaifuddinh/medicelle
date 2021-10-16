@@ -82,22 +82,24 @@ class StockTransaction extends Model
 		else{
                 	$qtyrev=$qty;
 		}
-                $stock = $stock->where('qty', '>=', $qtyrev);
-                $stock = $stock->first();
-                $stock_id = $stock->id;
-                $cur_stock = $stock->qty;
-                $sisa_stock = $cur_stock + $qty;
-                if($sisa_stock < 0) {
-                // if($stock->item_id == 976) {
-                    //throw new Exception("Stok tidak boleh minus, detail : $stockTransaction->item_id,$stockTransaction->lokasi_id,$stockTransaction->expired_date,$stock->qty,$qty,$stock->id,$stock_count");
-                    throw new Exception("Stok tidak boleh minus, sisa : $sisa_stock");
+                
+                if($stockTransaction->out_qty > 0){
+                	$stock = $stock->where('qty', '>=', $qtyrev);
+                	$stock = $stock->first();
+                	//$stock_id = $stock->id;
+                	$cur_stock = $stock->qty;
+                	$sisa_stock = $cur_stock + $qty;
+                	if($sisa_stock < 0) {
+                		// if($stock->item_id == 976) {
+                    		//throw new Exception("Stok tidak boleh minus, detail : $stockTransaction->item_id,$stockTransaction->lokasi_id,$stockTransaction->expired_date,$stock->qty,$qty,$stock->id,$stock_count");
+                    		throw new Exception("Stok tidak boleh minus, sisa : $sisa_stock");
+                	}
                 }
 
                 $stock = Stock::whereItemId($stockTransaction->item_id)
                 ->whereLokasiId($stockTransaction->lokasi_id);
                 if($stockTransaction->is_adjustment == 0) {
                     if(!$item->is_bhp) {
-
                         if($stockTransaction->expired_date == null) {
                             $stock = $stock->whereNull('expired_date');                    
                         } else {
@@ -105,7 +107,12 @@ class StockTransaction extends Model
                         }
                     }
                 }
-                $stock = $stock->where('qty', '>=', $qtyrev)->first();
+                if($stockTransaction->out_qty > 0){
+                	$stock = $stock->where('qty', '>=', $qtyrev)->first();
+                }
+                else{
+                	$stock = $stock->first();
+                }
                 $stock_id = $stock->id;
                 $stock = DB::table('stocks')->whereId($stock_id);
 		if($qty<=0){

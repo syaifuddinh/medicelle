@@ -26,10 +26,14 @@
  <div class="container">
      
         <div class="row" style='margin-top:4mm;'>
-            <div style='margin-bottom:6mm'>
+            <div style='margin-bottom:6mm;'>
                 <div style='display:inline-block'>
-                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{!! $company->address !!}</p>
+                    <img src="{!! $company->logo !!}" style='width:auto;height:15mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:500px;font-size:14px;'>
+                    <b style='font-size:110%;text-transform:uppercase'>{!! $company->name ?? '' !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
@@ -37,11 +41,11 @@
                 <div class="header">
                     <div style='text-align:center;display:inline-block;width:40%'></div>
                     <div style='text-align:center;display:inline-block;width:20%;margin-bottom:10mmd'>
-                        <h3 style='font-weight:bold;'><span>KUITANSI <br>RAWAT JALAN</span></h3>
+                        <h3 style='font-weight:bold;'><span>KWITANSI <br>RAWAT JALAN</span></h3>
                     </div>
                     <div style='display:inline-block;width:40%;'>
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:17mm'>No. Kuitansi</span>
+                            <span style='display:inline-block;width:17mm'>No. Kwitansi</span>
                             <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $data['invoice']->code !!}</span>
                         </div>
 
@@ -185,11 +189,11 @@
                 <div class="header">
                     <div style='text-align:center;display:inline-block;width:40%'></div>
                     <div style='text-align:center;display:inline-block;width:20%;margin-bottom:10mmd'>
-                        <h3 style='font-weight:bold;'><span>NOTA <br>RAWAT JALAN</span></h3>
+                        <h3 style='font-weight:bold;'><span>KWITANSI <br>RAWAT JALAN</span></h3>
                     </div>
                     <div style='display:inline-block;width:40%;'>
                         <div style='margin-bottom:0.6mm'>
-                            <span style='display:inline-block;width:17mm'>No. Nota</span>
+                            <span style='display:inline-block;width:17mm'>No. Kwitansi</span>
                             <span style='display:inline-block;font-weight:bold;font-size:110%'>: {!! $data['invoice']->code !!}</span>
                         </div>
 
@@ -320,6 +324,5 @@
                 </div>
                 <p style='margin-top:1mm'>Tanggal : {!! Mod::now() !!}</p>
             </div><?php }?>
-                @include('pdf/letter_footer')
         </div>
  </div>
