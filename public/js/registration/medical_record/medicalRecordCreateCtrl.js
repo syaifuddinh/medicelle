@@ -905,7 +905,9 @@ function unEntity(str){
 
         if(path.indexOf('radiology') > -1) {
               $scope.showRadiologyHistory()
+			  $scope.showRadmergeHistory()
               radiology_datatable.rows.add(data.data.radiology).draw()
+			  radmerge_datatable.rows.add(data.data.radiology).draw()
         }
 
         if(path.indexOf('laboratory') > -1) {
@@ -2164,12 +2166,69 @@ function unEntity(str){
       $compile(angular.element(row).contents())($scope);
     }
   });
+  
+  radmerge_datatable = $('#radmerge_datatable').DataTable({
+    dom: 'rt',
+    pageLength: 200,
+    'columns' : [
+      {
+          data : null,
+          width : '18%',
+          render : resp => $filter('fullDate')(resp.date)
+      },
+      {data : 'medical_record_details.name'},
+      {
+          data : null,
+          width : '15%',
+          render : resp => $filter('fullDate')(resp.result_date)
+      },
+      {data:'resp.kanan'},
+      {data:'resp.kiri'},
+      {data:'resp.kesimpulan'},
+      {data:'resp.saran'},
+      {
+          data : null,
+          render : resp => '<a href="http:\/\/medic.elle\/archive\/' + resp.description + '" target="_blank"><i class="fa fa-file-archive-o"></i> Lampiran</a>'
+      },
+
+      {
+        data : null,
+        className : 'text-center',
+          width : '12%',
+        render : resp => '<div class="btn-group"><button type="button" class="btn btn-sm btn-default" ng-click="showNewResearch(' + resp.id + ')" title="Isi form radiologi"><i class="fa fa-newspaper-o"></i></button><button type="button" class="btn btn-sm btn-danger" ng-disabled="disBtn" title="Hapus" ng-click="deleteRadiology($event.currentTarget)"><i class="fa fa-trash-o"></i></button></div>'
+      }
+    ],
+    createdRow: function(row, data, dataIndex) {
+      $compile(angular.element(row).contents())($scope);
+    }
+  });
 
 
   $scope.showRadiologyHistory = function() {
         if(path.indexOf('/radiology') > -1) {
             $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/radiology/history').then(function(data) {
                 radiology_datatable.rows.add(data.data).draw()
+            }, function(error) {
+                console.log(error)
+                $rootScope.disBtn=false;
+                if (error.status==422) {
+                  var det="";
+                  angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                  });
+                  toastr.warning(det,error.data.message);
+                } else {
+                  toastr.error(error.data.message,"Error Has Found !");
+                }
+           });
+        }
+  }
+  $scope.showRadiologyHistory()
+  
+  $scope.showRadmergeHistory = function() {
+        if(path.indexOf('/radiology') > -1) {
+            $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/radiology/history').then(function(data) {
+                radmerge_datatable.rows.add(data.data).draw()
             }, function(error) {
                 console.log(error)
                 $rootScope.disBtn=false;
@@ -2744,6 +2803,64 @@ drug_datatable = $('#drug_datatable').DataTable({
       }
   }
   $scope.showInternalRadiology()
+
+  $scope.showIntmergeRadiology = function() {
+      if(path.indexOf('/radiology') > -1) {
+          var boleheditreduksi = ""
+          if($scope.allowreduksiradiologi == '0'){
+		boleheditreduksi = "readonly disabled";
+          }
+          $http.get(baseUrl + '/controller/registration/medical_record/' + id + '/internal_radiology').then(function(data) {
+              var detail = data.data
+              intmerge_radiology_datatable = $('#intmerge_radiology_datatable').DataTable({
+                'data' : detail,
+                dom: 'rt',
+                'columns' : [
+                {
+                  data : null,
+                  render : function(resp) {
+
+                    return $filter('fullDate')(resp.date);
+                  }
+                },
+                {data : 'name'},
+                {
+                  data : null,
+                  render : function(resp) {
+
+                    return (resp.reduksi);
+                  }
+                },
+                //{
+                //    data : null,
+                //    width:'6px',
+                //    render: function(resp) {
+                //        var r = '<input type="number" ' + boleheditreduksi +' ng-keyup="changeReduksiRadiology(' + resp.id + ', $event.currentTarget)"  value="' + resp.reduksi + '" class="form-control">'
+                //        return r
+                //    }
+                //},
+      {
+        data: null,
+        width:'14%', 
+        orderable : false,
+        searchable : false,
+        className : 'text-center',
+        //render : resp => "<div class='btn-group'><a target='_blank' class='btn btn-xs btn-default' href='" + baseUrl + "/radiology/patient/" + id +  "/" + resp.idpivot + "' title='Detail'><i class='fa fa-file-text-o'></i></a></div>"      },
+        render : resp => "<button class='btn btn-primary btn-sm' ng-click='openPicRadiology($event.currentTarget)' type='button' title='Detail'><i class='fa fa-file-text-o'></i></button>"      },
+
+               ],
+                createdRow: function(row, data, dataIndex) {
+                  $compile(angular.element(row).contents())($scope);
+                }
+              });
+          }, function(error) {
+              console.log(error)
+          });
+      }
+  }
+  $scope.showIntmergeRadiology()
+
+
 
     $scope.openPicRadiology = function(e) {
         var tr = $(e).parents('tr')
