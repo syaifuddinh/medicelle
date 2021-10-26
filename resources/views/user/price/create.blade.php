@@ -90,6 +90,7 @@
                                         <option value="RADIOLOGI">Radiologi</option>
                                         <option value="KEMOTERAPI">Kemoterapi</option>
                                         <option value="RUANG TINDAKAN">Ruang tindakan</option>
+                                        <option value="PATOLOGI ANATOMI">Patologi Anatomi</option>
                                     </select>
                                   </div>
                               </div>

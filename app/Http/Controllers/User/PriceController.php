@@ -80,7 +80,7 @@ class PriceController extends Controller
     }
 
     public function destination() {
-        $destination = ['POLIKLINIK', 'MEDICAL CHECK-UP', 'LABORATORIUM', 'RADIOLOGI', 'KEMOTERAPI', 'RUANG TINDAKAN'];
+        $destination = ['POLIKLINIK', 'MEDICAL CHECK-UP', 'LABORATORIUM', 'RADIOLOGI', 'KEMOTERAPI', 'RUANG TINDAKAN', 'PATOLOGI ANATOMI'];
 
         return Response::json($destination);
     }
