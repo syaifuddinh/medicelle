@@ -16,14 +16,18 @@
  <div class="container">
      
         <div class="row" style='margin-top:4mm;'>
-            <div style='margin-bottom:6mm'>
+            <div style='margin-bottom:6mm;'>
                 <div style='display:inline-block'>
-                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{!! $company->address !!}</p>
+                    <img src="{!! $company->logo2 !!}" style='width:auto;height:15mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:500px;font-size:14px;'>
+                    <b style='font-size:110%;text-transform:uppercase'>{!! $company->name ?? '' !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
-            <div class="col-md-12" style='padding-left:5.5mm'>
+            <div class="col-md-12" style='padding-left:5.5mm;line-height:0.7cm'>
                 <div class="header" style='text-align:center'>
                     <h3 style='font-weight:bold;'><span style='border-bottom:1px solid black'>SURAT RUJUKAN PASIEN</span></h3>
                     <h4 style='font-weight:bold;'>{!! $letter->code !!}</h4>
@@ -46,21 +50,23 @@
                     <span style='display:inline-block;width:20mm'>Untuk</span> 
                     <span style='display:inline-block;'>:</span>
                 </p>
-                <ol>
+                <ol style='padding-left:20mm'>
                     <li>Pengambilalihan kasus ini untuk tindakan selanjutnya.</li>
                     <li>Tindakan masalah medis untuk saat ini.</li>
                     <li>Atas permintaan pasien / keluarganya.</li>
                 </ol>
                 <br>
 
-                <p>Keterangan klinis :</p><br>   
-                <p>
-                    <span style='display:inline-block;'>TD : {!!$letter->additional->td ?? ''!!}
-                    </span>
-                </p>
+                <p>Data klinis :</p><br>   
+                <p style='padding-left:8mm'>
+                    <span style="display:inline-block;width:30mm">TD : {!! $letter->additional->td !!}</span>
+                    <span style="display:inline-block;width:30mm">N : {!! $letter->additional->n !!}</span>
+                    <span style="display:inline-block;width:30mm">RR : {!! $letter->additional->rr !!}</span>
+                    <span style="display:inline-block;width:30mm">GCS : {!! $letter->additional->gcs !!}</span>
+                </p><br>
                 <p>Diagnosa kerja : {!! $letter->additional->diagnose !!}</p>
-                <p>Terapi yang diberikan : {!! $letter->additional->therapy !!}</p><br>
-                <p>{!! $letter->description !!}</p><br>
+                <p>Terapi yang diberikan : {!! $letter->additional->therapy !!}</p>
+                <p>Keterangan : {!! $letter->description !!}</p><br>
 
                 <p>Terima kasih atas bantuan dan kerjasama yang diberikan.</p>
                 <br><br>

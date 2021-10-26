@@ -131,21 +131,21 @@
                                             
                                             <div class="input-group">
                                                 <div class="input-group-addon">N</div>
-                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.n'>
+                                                <input type="text" class="form-control" jnumber2 ng-model='formData.additional.n'>
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             
                                             <div class="input-group">
                                                 <div class="input-group-addon">RR</div>
-                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.rr'>
+                                                <input type="text" class="form-control" jnumber2 ng-model='formData.additional.rr'>
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             
                                             <div class="input-group">
                                                 <div class="input-group-addon">GCS</div>
-                                                <input type="text" class="form-control" jnumber2 only-num ng-model='formData.additional.gcs'>
+                                                <input type="text" class="form-control" jnumber2 ng-model='formData.additional.gcs'>
                                             </div>
                                         </div>
                                     </div>

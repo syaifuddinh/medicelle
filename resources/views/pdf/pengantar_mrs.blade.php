@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12" style='padding-left:5.5mm'>
+            <div class="col-md-12" style='padding-left:5.5mm;line-height:0.7cm'>
                 <div class="header" style='text-align:center'>
                     <h3 style='font-weight:bold;'><span style='border-bottom:1px solid black'>SURAT PENGANTAR MRS</span></h3>
                     <h4 style='font-weight:bold;'>{!! $letter->code !!}</h4>
@@ -42,7 +42,7 @@
                     <tr>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td>{!! $letter->additional->hospital ?? '' !!}</td>
+                    <td height=40>{!! $letter->additional->hospital ?? '' !!}</td>
                     </tr>
                     <tr>
                     <td>Perihal</td>

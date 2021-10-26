@@ -115,6 +115,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12">Tgl lahir
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <% formData.patient.birth_date %>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-3 col-sm-3 col-xs-12">Umur
                                 </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">

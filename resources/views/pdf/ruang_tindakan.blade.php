@@ -78,6 +78,11 @@
                         <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->gender !!}</span>
                     </p>
                     <p style='margin-bottom:1.2mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Tgl Lahir</span>
+                        <span class="ib"> : </span>
+                        <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->birth_date !!}</span>
+                    </p>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>Umur</span>
                         <span class="ib"> : </span>
                         <span class="ib" style='width:100mm'>{!! $medicalRecord->patient->age !!} Tahun</span>
@@ -100,18 +105,22 @@
                         <span class="ib"> : </span>
                         <span class="ib" style='width:300mm'>{!! $medicalRecord->registration_detail->doctor->name !!}</span>
                     </p>
-                    <p style='margin-bottom:5mm;width:300mm'>
+                    <p style='margin-bottom:1.2mm;width:300mm'>
                         <span class="ib" style='width:60mm'>Poli/Ruangan</span>
                         <span class="ib"> : </span>
                         <span class="ib" style='width:100mm'>{!! $medicalRecord->registration_detail->doctor->polyclinic->name !!}</span>
                     </p>
+                    <p style='margin-bottom:5mm;width:300mm'>
+                        <span class="ib" style='width:60mm'>Diagnosa</span>
+                        <span class="ib"> : </span>
+                     @foreach($medicalRecord->diagnose_history as $unit)
+                        <span class="ib" style='width:100mm'>{!! $unit->disease->name ?? $unit->additional->diagnose_name !!}</span>                       
+                     @endforeach                        
+                    </p>
                 </div>
                
                 <div style='margin-bottom:2mm'>
-                    <p style='text-align:justify;line-height:1cm'>Pada tanggal {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!} telah dilakukan tindakan {!! $pivotMedicalRecord->medical_record_detail->item->name !!}. Diagnosa :
-                     @foreach($medicalRecord->diagnose_history as $unit)
-                        {!! $unit->disease->name ?? $unit->additional->diagnose_name !!}                       
-                     @endforeach
+                    <p style='text-align:justify;line-height:1cm'>Pada tanggal {!! Mod::fullDate($pivotMedicalRecord->medical_record_detail->date) !!} jam {!! $medicalRecord->registration_detail->time !!} telah dilakukan tindakan {!! $pivotMedicalRecord->medical_record_detail->item->name !!}.
                     </p>
 
                 </div>
