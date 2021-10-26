@@ -52,6 +52,8 @@ app.controller('movementCreate', ['$scope', '$http', '$rootScope', '$filter', '$
    
 
     movement_detail_datatable = $('#movement_detail_datatable').DataTable({
+       sScrollY: 300,
+       pageLength: 10,
        dom: 'rt',
         columns:[
           {

@@ -6,6 +6,8 @@ app.controller('movementShow', ['$scope', '$http', '$rootScope', '$filter', '$co
 
 
     movement_detail_datatable = $('#movement_detail_datatable').DataTable({
+       sScrollY: 300,
+       pageLength: 10,
        dom: 'rt',
         columns:[
           {

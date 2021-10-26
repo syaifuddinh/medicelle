@@ -1686,6 +1686,8 @@ function unEntity(str){
   $scope.bhp_datatable = function() {
       if( path.indexOf('bhp') > -1 ) {
           bhp_datatable = $('#bhp_datatable').DataTable({
+            sScrollY: 300,
+            pageLength: 10,
             dom: 'rt',
             'columns' : [
             {
@@ -2419,6 +2421,8 @@ function unEntity(str){
   });
     
 drug_datatable = $('#drug_datatable').DataTable({
+    sScrollY: 300,
+    pageLength: 10,
     dom: 'rt',
     pageLength: 200,
     'columns' : [
