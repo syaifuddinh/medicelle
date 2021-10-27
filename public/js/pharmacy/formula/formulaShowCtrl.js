@@ -8,7 +8,7 @@ app.controller('formulaShow', ['$scope', '$http', '$rootScope', '$filter', '$com
     id = path.replace(/.+\/(\d+)/, '$1');
 
     formula_detail_datatable = $('#formula_detail_datatable').DataTable({
-       dom: 'rt',
+       dom: 'rtp',
        paging:false,
        ordering:false,
         columns:[

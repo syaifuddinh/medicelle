@@ -12,9 +12,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
 
 
     receipt_detail_datatable = $('#receipt_detail_datatable').DataTable({
-       sScrollY: 300,
-       pageLength: 10,
-       dom: 'rt',
+       dom: 'rtp',
        paging:false,
        ordering:false,
         columns:[
