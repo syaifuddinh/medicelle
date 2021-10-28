@@ -8,7 +8,7 @@ use DB;
 
 class PurchaseRequestDetail extends Model
 {
-    protected $fillable = ['item_id', 'supplier_id', 'qty', 'discount', 'discount_off', 'purchase_price'];
+    protected $fillable = ['item_id', 'supplier_id', 'qty', 'used_qty','stock_qty','discount', 'discount_off', 'purchase_price'];
     protected $appends = ['subtotal'];
     protected $hidden = ['created_at', 'updated_at'];
 

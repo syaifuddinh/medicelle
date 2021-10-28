@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pharmacy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use App\PurchaseRequest;
 use DB;
 use PDF;
@@ -88,9 +89,19 @@ class PurchaseRequestController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
+    public function checkStock($url, $data = null)
+    {
+        try {
+            $response = Http::get($this->base_url . $url, $data);
+        } catch (\Exception $e) {
+            info($e->getMessage());
+            abort(503);
+        }
+        return $response->json();
+    }
+
     public function fetch($id) {
         $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name', 'draft', 'draft.user:id,name', 'apj', 'apj.user:id,name', 'direktur', 'direktur.user:id,name')->findOrFail($id);
-
         return $purchaseRequest;
     }
 

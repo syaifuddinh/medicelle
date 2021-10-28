@@ -116,7 +116,9 @@ class PurchaseRequest extends Model
                 	$purchaseOrder->detail()->create([
                     	'item_id' => $detail->item_id,
                     	'qty' => $detail->qty,
-                    	'leftover_qty' => $detail->qty,
+                    	'used_qty' => $detail->used_qty,
+                    	'stock_qty' => $detail->stock_qty,
+                    	//'leftover_qty' => $detail->qty,
                     	'purchase_price' => $detail->purchase_price,
                     	'discount' => $detail->discount,
                     	'discount_off' => $detail->discount_off

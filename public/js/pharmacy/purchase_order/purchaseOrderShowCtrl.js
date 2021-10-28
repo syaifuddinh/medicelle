@@ -8,9 +8,7 @@ app.controller('purchaseOrderShow', ['$scope', '$http', '$rootScope', '$filter',
     $('#pdfDocument').attr('src', embedUrl)
 
     purchase_order_detail_datatable = $('#purchase_order_detail_datatable').DataTable({
-       sScrollY: 300,
-       pageLength: 10,
-       dom: 'rt',
+       dom: 'rtp',
        paging:false,
        ordering:false,
         columns:[

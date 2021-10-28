@@ -84,6 +84,7 @@
                             <th>Supplier</th>
                             <th class='text-center' style='width:12mm'>Jumlah Permintaan</th>
                             <th class='text-center' style='width:10mm'>Jumlah Terpakai</th>
+                            <th class='text-center' style='width:10mm'>Jumlah Stok</th>
                             <th style='width:40mm'>Harga Beli</th>
                             <th style='width:10mm'>Diskon</th>
                             <th style='width:10mm'>Subtotal</th>
@@ -105,6 +106,9 @@
                                     {!! number_format($detail->used_qty ?? 0) !!}
                                 </td>
                                 <td class="text-right">
+                                    {!! number_format($detail->stock_qty ?? 0) !!}
+                                </td>
+                                <td class="text-right">
                                     {!! number_format($detail->purchase_price ?? 0) !!}
                                 </td>
                                 <td class="text-right">
@@ -118,7 +122,7 @@
                     </tbody>
                     <tfoot style='margin-top:0.6mm;page-break-inside: avoid;'>
                         <tr>
-                            <th colspan="6" style='text-align:left'>
+                            <th colspan="7" style='text-align:left'>
                                 Grandtotal
                             </th>
                             <th class="text-right">

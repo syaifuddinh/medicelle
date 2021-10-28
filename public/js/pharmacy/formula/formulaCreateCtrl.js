@@ -96,7 +96,7 @@ app.controller('formulaCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
     }
 
     formula_detail_datatable = $('#formula_detail_datatable').DataTable({
-       dom: 'rt',
+       dom: 'rtp',
        paging:false,
        ordering:false,
         columns:[
