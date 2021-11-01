@@ -102,10 +102,18 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Ruang tindakan</td>
+                        <td>Ruang Tindakan</td>
                         <td class="text-right">
                             <label for="" class="radio-inline">
                                 <input type='checkbox' ng-model='formData.grup_nota_roles[5]' ng-true-value="'RUANG TINDAKAN'">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Patologi Anatomi</td>
+                        <td class="text-right">
+                            <label for="" class="radio-inline">
+                                <input type='checkbox' ng-model='formData.grup_nota_roles[6]' ng-true-value="'PATOLOGI ANATOMI'">
                             </label>
                         </td>
                     </tr>
