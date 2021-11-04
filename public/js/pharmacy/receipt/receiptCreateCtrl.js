@@ -176,10 +176,7 @@ app.controller('receiptCreate', ['$scope', '$http', '$rootScope', '$filter', '$c
         var tr = $(obj).parents('tr')
         var data = item_datatable.row(tr).data()
         $scope.formData.detail[$scope.currentIndex].item_name= data.name
-        $scope.formData.detail[$scope.currentIndex].item_id= data.id
-        
-
-      
+        $scope.formData.detail[$scope.currentIndex].item_id= data.id      
     }
 
 

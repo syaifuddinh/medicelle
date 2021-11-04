@@ -89,17 +89,6 @@ class PurchaseRequestController extends Controller
         return Response::json(['message' => 'Transaksi berhasil di-input'], 200);
     }
 
-    public function checkStock($url, $data = null)
-    {
-        try {
-            $response = Http::get($this->base_url . $url, $data);
-        } catch (\Exception $e) {
-            info($e->getMessage());
-            abort(503);
-        }
-        return $response->json();
-    }
-
     public function fetch($id) {
         $purchaseRequest = PurchaseRequest::with('detail', 'detail.item:id,name', 'detail.supplier:id,name', 'draft', 'draft.user:id,name', 'apj', 'apj.user:id,name', 'direktur', 'direktur.user:id,name')->findOrFail($id);
         return $purchaseRequest;
@@ -161,7 +150,13 @@ class PurchaseRequestController extends Controller
         DB::beginTransaction();
         try {
             $purchaseRequest = PurchaseRequest::findOrFail($id);
-            $purchaseRequest->fill($request->all());
+            //$params["detail"] = $request->detail;
+            $params["description"] = $request->description;
+            $params["date"] = $request->date;
+            $params["date_start"] = $request->date_start;
+            $params["date_end"] = $request->date_end;
+            $purchaseRequest->fill($params);
+            //$purchaseRequest->fill($request->all());
             $purchaseRequest->save();
             $purchaseRequest->detail()->delete();
             foreach($request->detail as $detail) {
