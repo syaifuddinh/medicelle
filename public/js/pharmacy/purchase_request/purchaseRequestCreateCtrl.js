@@ -332,17 +332,17 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
         toastr.success("Data Berhasil Disimpan !");
         if($scope.repeat == 1) {
             if(path.indexOf('edit') > -1) {          
-                //setTimeout(function () {
-                //  window.location = baseUrl + '/pharmacy/purchase_request/create'          
-                //}, 1000)
+                setTimeout(function () {
+                 window.location = baseUrl + '/pharmacy/purchase_request/create'          
+                }, 1000)
             } else {
               
               $scope.reset()
             }
         } else {
-            //setTimeout(function () {
-            //  window.location = baseUrl + '/pharmacy/purchase_request'          
-            //}, 1000)
+            setTimeout(function () {
+             window.location = baseUrl + '/pharmacy/purchase_request'          
+            }, 1000)
         }
       }, function(error) {
         $rootScope.disBtn=false;
