@@ -12,35 +12,45 @@
      li {
         padding-left:10mm
      }
+     .footerclass {
+        font-size:10pt;
+        margin:0;
+        padding:0;
+     }
+
  </style>
  <div class="container">
      
         <div class="row" style='margin-top:4mm;'>
-            <div style='margin-bottom:6mm'>
+            <div style='margin-bottom:6mm;'>
                 <div style='display:inline-block'>
-                    <img src="{!! $company->logo !!}" style='width:auto;height:20mm;' alt="">
-                    <p style='font-size:85%'>{!! $company->address !!}</p>
+                    <img src="{!! $company->logo2 !!}" style='width:auto;height:15mm;' alt="">
+                </div>
+                <div style='display:inline-block;padding-bottom:3mm;padding-left:2mm;width:500px;font-size:14px;'>
+                    <b style='font-size:110%;text-transform:uppercase'>{!! $company->name ?? '' !!}</b>
+                    <p>{!! $company->address !!}</p>
+                    <p>Telp : {!! $company->phone_number !!} Fax : {!! $company->fax !!}</p>
                 </div>
             </div>
 
-            <div class="col-md-12" style='padding-left:5.5mm'>
+            <div class="col-md-12" style='padding-left:5.5mm;padding-right:8mm;line-height:1cm'>
                 <div class="header" style='text-align:center'>
                     <h3 style='font-weight:bold;'><span style='border-bottom:1px solid black'>SURAT LAYAK TERBANG</span></h3>
                     <h4 style='font-weight:bold;'>{!! $letter->code !!}</h4>
                 </div>
                 <br>
                 <p>Yang bertanda tangan dibawah ini menerangkan bahwa : </p><br>
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Nama</span> <span style='display:inline-block;font-weight:bold'>: {!! $letter->medical_record->patient->name !!}</span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:50mm'>Nama</span> <span style='display:inline-block;font-weight:bold'>: {!! $letter->medical_record->patient->name !!}</span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Umur</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->age !!} Tahun</span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:50mm'>Umur</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->age !!} Tahun</span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Alamat</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->address !!} </span></p>
+                <p style='padding-left:8mm'><span style='display:inline-block;width:50mm'>Alamat</span> <span style='display:inline-block;'>: {!! $letter->medical_record->patient->address !!} </span></p>
 
-                <p style='padding-left:8mm'><span style='display:inline-block;width:20mm'>Umur kehamilan</span> <span style='display:inline-block;'>: {!! $letter->age . 
+                <p style='padding-left:8mm'><span style='display:inline-block;width:50mm'>Umur kehamilan</span> <span style='display:inline-block;'>: {!! $letter->age . 
                 ' ' . $letter->age_type !!} </span></p>
                 <p style='padding-left:8mm;text-decoration:italic'>(Untuk ibu hamil)</p><br>
 
-                <p style="text-indent:8mm">Telah diperiksa dan dinyatakan dalam kondisi sehat (khusus untuk ibu hamil : ibu dan janin dalam kondisi sehat) dan dinyatakan <b>{!! $letter->option !!}</b> dari {!! $company->city !!} menuju {!! $letter->additional->destination !!}. {!! ucfirst($letter->description) !!}.</p>
+                <p>Telah diperiksa dan dinyatakan dalam kondisi sehat (khusus untuk ibu hamil : ibu dan janin dalam kondisi sehat) dan dinyatakan <b>{!! $letter->option !!}</b> dari {!! $company->city !!} menuju {!! $letter->additional->destination !!}. {!! ucfirst($letter->description) !!}.</p>
                 <br><br>
                 <p>
                     <span style='float:right;text-align:center;display:inline-block;display:inline-block'>
@@ -51,7 +61,7 @@
                         </span>
                     </span> 
                 </p>
-                @include('pdf/letter_footer') 
             </div>
+                @include('pdf/letter_footer') 
         </div>
  </div>
