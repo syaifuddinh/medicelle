@@ -173,7 +173,7 @@ class PurchaseRequestController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            dd($e);
+            return Response::json(['message' => $e->getMessage()], 421);
         }
         
 
