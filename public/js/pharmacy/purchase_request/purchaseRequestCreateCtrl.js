@@ -333,7 +333,11 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
         if($scope.repeat == 1) {
             if(path.indexOf('edit') > -1) {          
                 setTimeout(function () {
+<<<<<<< HEAD
                   window.location = baseUrl + '/pharmacy/purchase_request/create'          
+=======
+                 window.location = baseUrl + '/pharmacy/purchase_request/create'          
+>>>>>>> 186aee377d5a5d5adb90b1a1864db42d870f5cae
                 }, 1000)
             } else {
               
@@ -341,7 +345,11 @@ app.controller('purchaseRequestCreate', ['$scope', '$http', '$rootScope', '$filt
             }
         } else {
             setTimeout(function () {
+<<<<<<< HEAD
               window.location = baseUrl + '/pharmacy/purchase_request'          
+=======
+             window.location = baseUrl + '/pharmacy/purchase_request'          
+>>>>>>> 186aee377d5a5d5adb90b1a1864db42d870f5cae
             }, 1000)
         }
       }, function(error) {

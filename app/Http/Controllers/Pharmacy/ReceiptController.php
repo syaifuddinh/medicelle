@@ -59,6 +59,9 @@ class ReceiptController extends Controller
             foreach($request->detail as $detail) {
                 if(null != ($detail['item_id'] ?? null)) {
                     ++$entries;
+                    $detail['discount'] = $detail['discount'] ?? 0;
+                    $detail['post_discount'] = $detail['post_discount'] ?? 0;
+                    $detail['hna'] = $detail['hna'] ?? 0;
                     $receipt->detail()->create($detail);
                 }
             }
