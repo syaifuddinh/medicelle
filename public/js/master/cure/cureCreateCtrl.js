@@ -245,10 +245,10 @@ app.controller('cureCreate', ['$scope', '$http', '$rootScope','$filter', functio
 
     $scope.submitForm=function() {
       $rootScope.disBtn=true;
-      var url = baseUrl + '/controller/master/medical_item';
+      var url = baseUrl + '/controller/master/bhp';
       var method = 'post';
       if($scope.formData.id) {
-          var url = baseUrl + '/controller/master/medical_item/' + id;
+          var url = baseUrl + '/controller/master/bhp/' + id;
           var method = 'put';
       } 
       $http[method](url, $scope.formData).then(function(data) {
