@@ -41,7 +41,6 @@ class CashierController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -52,6 +51,21 @@ class CashierController extends Controller
      */
     public function store(Request $request, Invoice $invoice)
     {
+        $id = null;
+        DB::beginTransaction();
+        try {
+            $invoice->fill($request->all());
+            $invoice->save();
+            $id = $invoice->id;
+            DB::commit();   
+        } catch (\Exception $e) {        
+            return Response::json(['message' => $e->getMessage()], 421);
+        }
+        
+        return Response::json([
+            'message' => 'Transaksi berhasil diinput', 
+            'invoice_id' => $id
+        ], 200);
     }
 
     /**

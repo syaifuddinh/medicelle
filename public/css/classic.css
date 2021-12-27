@@ -4,6 +4,18 @@
 /**
  * Note: the root picker element should *NOT* be styled more than what’s here.
  */
+ .d-flex {
+    display: flex!important;
+ }
+ .d-inline-block {
+    display: inline-block!important;
+ }
+ .justify-content-around {
+    justify-content: space-around;
+ }
+ .justify-content-between {
+    justify-content: space-between;
+ }
  .grab {
     cursor:grab;
  }

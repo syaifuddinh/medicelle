@@ -1,74 +1,76 @@
 app.controller('cashierCreate', ['$scope', '$http', '$rootScope','$compile','$filter', function($scope, $http, $rootScope, $compile, $filter) {
-// $scope.title = 'Tambah1 Kasir';
-$scope.formData = {
-    payment_method : 'KREDIT',
-    invoice_detail : new Object()
-}
-$scope.promo_detail = {}
-$scope.registration = {}
-$scope.grandtotal = 0
-$scope.grosstotal = 0
-$scope.discount_total = 0
-$scope.qty_total = 0
-$scope.promo = 0
-$compile(angular.element($('tfoot')).contents())($scope);
-var path = window.location.pathname;
-
-$scope.title = 'Pembayaran';
-id = path.replace(/.+\/(\d+)(\/.+)*/, '$1');
-$('#asuransi_flag').hide()
-
-invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
-    ordering:false,
-    paging:false,
-    dom : 'rt',
-    'columns' : [
-    {data : 'name', orderable:false},
-    {data : 'qty_binding', className : 'text-right', width:'15mm', orderable:false},
-    {data : 'debet_binding', className : 'text-right', orderable:false},
-    {data : 'reduksi_binding', className : 'text-right', orderable:false},
-    {data : 'discount', className : 'text-right', orderable:false},
-    {
-        data : 'total_binding', 
-        className : 'text-right', 
-        orderable:false,
-    },
-    ],
-    createdRow: function(row, data, dataIndex) {
-        $compile(angular.element(row).contents())($scope);
-        $compile(angular.element($('#formFooter')).contents())($scope);
-    },
-})
-
-price_datatable = $('#price_datatable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url : baseUrl+'/datatable/user/price',
-    },
-    columns:[
-      {
-        data:null, 
-        name:"service.name",
-        render:resp => "<a ng-click='updateItem($event.currentTarget)' style='cursor:context-menu'>" + resp.service.name + "</a>"
-      },
-      {
-        data:null, 
-        name:"grup_nota.name",
-        render:resp => "<b>" + resp.grup_nota.name + "</b>"
-      },
-      {
-        data:null, 
-        name:'service.price',
-        searchable : false,
-        className: 'text-right',
-        render : resp => $filter('number')(resp.service.price)
-      },
-    ],
-    createdRow: function(row, data, dataIndex) {
-      $compile(angular.element(row).contents())($scope);
+    // $scope.title = 'Tambah1 Kasir';
+    $scope.formData = {
+        payment_method : 'KREDIT',
+        invoice_detail : new Object()
     }
-  });
+    $scope.promo_detail = {}
+    $scope.registration = {}
+    $scope.grandtotal = 0
+    $scope.grosstotal = 0
+    $scope.discount_total = 0
+    $scope.qty_total = 0
+    $scope.promo = 0
+    $compile(angular.element($('tfoot')).contents())($scope);
+    var path = window.location.pathname;
+
+    $scope.title = 'Pembayaran';
+    id = path.replace(/.+\/(\d+)(\/.+)*/, '$1');
+    $('#asuransi_flag').hide()
+
+    invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
+        ordering:false,
+        paging:false,
+        dom : 'rt',
+        'columns' : [
+        {data : 'name', orderable:false},
+        {data : 'qty_binding', className : 'text-right', width:'15mm', orderable:false},
+        {data : 'debet_binding', className : 'text-right', orderable:false},
+        {data : 'reduksi_binding', className : 'text-right', orderable:false},
+        {data : 'discount', className : 'text-right', orderable:false},
+        {
+            data : 'total_binding', 
+            className : 'text-right', 
+            orderable:false,
+        },
+        ],
+        createdRow: function(row, data, dataIndex) {
+            $compile(angular.element(row).contents())($scope);
+            $compile(angular.element($('#formFooter')).contents())($scope);
+        },
+    })
+
+    invoice_datatable = $('#invoice_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url : baseUrl+'/datatable/cashier/cashier',
+        },
+        columns:[
+            {
+                data:null, 
+                orderable: false,
+                searchable: false,
+                className: "text-center",
+                render:resp => "<button type='button' class='btn btn-sm btn-primary' ng-click='appendAnotherInvoice(" + resp.id + ")'>Pilih</button>"
+            },
+            {
+                data:"code", 
+                name:"code"
+            },
+            {data:"registration.code", name:"registration.code"},
+            {data:"registration.medical_record.code", name:"registration.medical_record.code"},
+            {
+                data:null, 
+                orderable:false,
+                searchable:false,
+                render: resp => $filter('fullDate')(resp.date)
+            }
+        ],
+        createdRow: function(row, data, dataIndex) {
+          $compile(angular.element(row).contents())($scope);
+        }
+    });
 
 cashier_payment_datatable = $('#cashier_payment_datatable').DataTable({
     dom : 'rt',
@@ -205,51 +207,59 @@ discount_datatable = $('#discount_datatable').DataTable({
     }
 })
 
-$scope.show = function() {
-    $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
-        $scope.formData = data.data.invoice
-        $scope.formData.invoice_detail = data.data.invoice_detail 
-        $scope.formData.payment = data.data.invoice.payment.map(function(p){
-            p.index = p.id
-            return p
-        })
-        if($scope.formData.promo != null) {
-            $scope.promo = $scope.formData.promo.total_credit 
-        }
-        if($scope.formData.promo_info != null) {
-            var promo_info = $scope.formData.promo_info
-            $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
-            $scope.promo_detail = $scope.formData.promo_info
-        }
-
-        $scope.formData.massive_discount = $scope.formData.discount_total_percentage
-        $scope.registration()
-        $scope.showInvoiceDetail()
-        setTimeout(function () {    
-            $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
-        }, 300)
-        if($scope.formData.payment.length == 0) {
-            $scope.insertPayment()
-        } else {
-            cashier_payment_datatable.rows.add($scope.formData.payment).draw()
-        }
-        $compile(angular.element($('#formFooter')).contents())($scope);
-        $compile(angular.element($('#button-container')).contents())($scope);
-    }, function(error) {
-        $rootScope.disBtn=false;
-        if (error.status==422) {
-            var det="";
-            angular.forEach(error.data.errors,function(val,i) {
-                det+="- "+val+"<br>";
-            });
-            toastr.warning(det,error.data.message);
-        } else {
-            $scope.show()
-            toastr.error(error.data.message,"Error Has Found !");
-        }
-    });
+$scope.appendAnotherInvoice = async function(id) {
+    $scope.show(id);
+    $('#invoiceModal').modal("hide");
 }
-$scope.show()
+
+$scope.show = function(id) {
+    var is_integer = /^([0-9]+)$/;
+    if(is_integer.test(id)) {
+        $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
+            $scope.formData = data.data.invoice
+            $scope.formData.invoice_detail = data.data.invoice_detail 
+            $scope.formData.payment = data.data.invoice.payment.map(function(p){
+                p.index = p.id
+                return p
+            })
+            if($scope.formData.promo != null) {
+                $scope.promo = $scope.formData.promo.total_credit 
+            }
+            if($scope.formData.promo_info != null) {
+                var promo_info = $scope.formData.promo_info
+                $scope.promo_name = promo_info.code + ' - ' + promo_info.name 
+                $scope.promo_detail = $scope.formData.promo_info
+            }
+
+            $scope.formData.massive_discount = $scope.formData.discount_total_percentage
+            $scope.getRegistration()
+            $scope.showInvoiceDetail()
+            setTimeout(function () {    
+                $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
+            }, 300)
+            if($scope.formData.payment.length == 0) {
+                $scope.insertPayment()
+            } else {
+                cashier_payment_datatable.rows.add($scope.formData.payment).draw()
+            }
+            $compile(angular.element($('#formFooter')).contents())($scope);
+            $compile(angular.element($('#button-container')).contents())($scope);
+        }, function(error) {
+            $rootScope.disBtn=false;
+            if (error.status==422) {
+                var det="";
+                angular.forEach(error.data.errors,function(val,i) {
+                    det+="- "+val+"<br>";
+                });
+                toastr.warning(det,error.data.message);
+            } else {
+                $scope.show(id)
+                toastr.error(error.data.message,"Error Has Found !");
+            }
+        });
+    }
+}
+$scope.show(id)
 
 $scope.showDiscount = function() {
     discount_datatable.ajax.reload()
@@ -303,6 +313,10 @@ $scope.edit = function(id, el) {
 $scope.insert = function() {
     $scope.is_edit = false
     $('#priceModal').modal()
+}
+
+$scope.insertFromOtherInvoice = function() {
+    $('#invoiceModal').modal()
 }
 
 $scope.updateItem = function(el) {
@@ -469,7 +483,7 @@ $scope.countTotal = function() {
     $scope.discount_total = parseInt(discount_total) + (parseInt(discount_total_value) || 0)
 }
 
-$scope.registration = function() {
+$scope.getRegistration = function() {
     $http.get(baseUrl + '/controller/registration/registration/' + $scope.formData.registration_id).then(function(data) {
         $scope.registration = data.data
     }, function(error) {
@@ -481,7 +495,7 @@ $scope.registration = function() {
             });
             toastr.warning(det,error.data.message);
         } else {
-            $scope.registration()
+            $scope.getRegistration()
             toastr.error(error.data.message,"Error Has Found !");
         }
     });
@@ -498,12 +512,16 @@ $('#draftButton').click(function(){
 $scope.submitForm=function() {
     $rootScope.disBtn=true;
     var url = $scope.pay == 1 ? baseUrl + '/controller/cashier/cashier/pay/' + id : baseUrl + '/controller/cashier/cashier/' + id;
-    $scope.formData.pay = $scope.pay || '0' 
+    var method = 'put';
+    if(id === "/cashier/create") {
+        url = $scope.pay == 1 ? baseUrl + '/controller/cashier/cashier/pay' : baseUrl + '/controller/cashier/cashier';
+        method = 'post';
+    }
+    $scope.formData.pay = $scope.pay || '0'; 
     var is_amandemen = /amandemen/.test(path)
     if(is_amandemen) {
         url = baseUrl + '/controller/cashier/cashier/' + id + '/amandemen'
     }
-    var method = 'put';
     $http[method](url, $scope.formData).then(function(data) {
         $rootScope.disBtn = false
         toastr.success("Data Berhasil Disimpan !");

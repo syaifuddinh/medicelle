@@ -5,6 +5,7 @@ Route::prefix('controller')->name('controller.')->group(function(){
     ->name('cashier.')
     ->namespace('Cashier')
     ->group(function(){
+        Route::post('cashier/pay', 'CashierController@store');
         Route::put('cashier/pay/{id}', 'CashierController@pay');
         Route::get('cashier/{id}/pdf', 'CashierController@pdf')
         ->name('pdf');
