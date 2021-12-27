@@ -73,6 +73,7 @@ class BhpController extends Controller
         DB::beginTransaction();
         $item->fill($request->all());
         $item->is_bhp = 1;
+        $item->is_medical_item = 1;
         $item->is_pharmacy = $request->grup_nota_id ?? 0;
         $item->save();
         DB::commit();
@@ -122,6 +123,7 @@ class BhpController extends Controller
         $item->fill($request->all());
         $item->price = $request->price ?? 0;
         $item->is_bhp = 1;
+        $item->is_medical_item = 1;
         $item->is_pharmacy = $request->grup_nota_id ?? 0;
         $item->save();
         DB::commit();
