@@ -57,6 +57,47 @@ class CashierController extends Controller
             $invoice->fill($request->all());
             $invoice->save();
             $id = $invoice->id;
+            $grup_nota = DB::table('permissions')
+            ->whereIsActive(1)
+            ->whereIsGrupNota(1)
+            ->pluck("name");
+            if($request->invoice_detail) {
+                $details = [];
+                foreach($grup_nota as $nota) {
+                    if(!($request->invoice_detail[$nota] ?? null)) {
+                        continue;
+                    }
+                    $details = $request->invoice_detail[$nota];
+                    // eval('$details = $request->invoice_detail->' . $nota . ';');
+                    foreach($details as $value) {
+                        $param = [];
+                        $price = 0;
+                        if(($value['item_id'] ?? null)) {
+                            $item = DB::table('items')
+                            ->whereId($value['item_id'])
+                            ->first();
+                            if($item) {
+                                $price = $item->price;
+                            }
+                        } else {
+                            continue;
+                        }
+                        $param = [
+                            'invoice_id' => $id,
+                            'item_id' => $value['item_id'],
+                            'qty' => $value['qty'],
+                            'is_item' => 1,
+                            'debet' => $price,
+                            'reduksi' => $value['reduksi'],
+                        ];
+                        if(($value['item']['treatment_group'] ?? null)) {
+                            $param['service_price'] = $value['item']['treatment_group']['service_price'];
+                        }
+                        InvoiceDetail::create($param);
+                    }
+                }
+            }
+            $this->storePayment($request->payment, $id);
             DB::commit();   
         } catch (\Exception $e) {        
             return Response::json(['message' => $e->getMessage()], 421);

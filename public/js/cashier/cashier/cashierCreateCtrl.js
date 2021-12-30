@@ -11,11 +11,15 @@ app.controller('cashierCreate', ['$scope', '$http', '$rootScope','$compile','$fi
     $scope.discount_total = 0
     $scope.qty_total = 0
     $scope.promo = 0
+    $scope.createMode = false;
     $compile(angular.element($('tfoot')).contents())($scope);
     var path = window.location.pathname;
 
     $scope.title = 'Pembayaran';
     id = path.replace(/.+\/(\d+)(\/.+)*/, '$1');
+    if(id === "/cashier/create") {
+        $scope.createMode = true;
+    }
     $('#asuransi_flag').hide()
 
     invoice_detail_datatable = $('#invoice_detail_datatable').DataTable({
@@ -216,8 +220,33 @@ $scope.show = function(id) {
     var is_integer = /^([0-9]+)$/;
     if(is_integer.test(id)) {
         $http.get(baseUrl + '/controller/cashier/cashier/' + id).then(function(data) {
+            var details = $scope.formData.invoice_detail;
+            var date = $scope.formData.date;
+            var description = $scope.formData.description;
             $scope.formData = data.data.invoice
-            $scope.formData.invoice_detail = data.data.invoice_detail 
+            if($scope.createMode === true) {
+                $scope.formData.invoice_detail = details;
+                $scope.formData.date = date;
+                $scope.formData.description = description;
+                var grup_nota;
+                for(grup_nota in data.data.invoice_detail) {
+                    if(!$scope.formData.invoice_detail[grup_nota]) {
+                        $scope.formData.invoice_detail[grup_nota] = data.data.invoice_detail[grup_nota];
+                    } else {
+                        data.data.invoice_detail[grup_nota].forEach(function(param){
+                            var idx = 0;
+                            for(idx in $scope.formData.invoice_detail[grup_nota]) {
+                                if($scope.formData.invoice_detail[grup_nota][idx].item_id != param.item_id) {
+                                    $scope.formData.invoice_detail[grup_nota].push(param);
+                                }
+                            }
+                        })
+                    }
+                }
+            } else {
+                $scope.formData.invoice_detail = data.data.invoice_detail; 
+            }
+
             $scope.formData.payment = data.data.invoice.payment.map(function(p){
                 p.index = p.id
                 return p
@@ -237,10 +266,12 @@ $scope.show = function(id) {
             setTimeout(function () {    
                 $('[ng-model="formData.date"]').val( $filter('fullDate')($scope.formData.date))
             }, 300)
-            if($scope.formData.payment.length == 0) {
-                $scope.insertPayment()
-            } else {
-                cashier_payment_datatable.rows.add($scope.formData.payment).draw()
+            if($scope.createMode === false) {
+                if($scope.formData.payment.length == 0) {
+                    $scope.insertPayment()
+                } else {
+                    cashier_payment_datatable.rows.add($scope.formData.payment).draw()
+                }
             }
             $compile(angular.element($('#formFooter')).contents())($scope);
             $compile(angular.element($('#button-container')).contents())($scope);
@@ -280,6 +311,11 @@ $scope.selectDiscount = function(e) {
     $('#discountModal').modal('hide')
 }
 
+$scope.recoverInvoiceDetailDatatable = function() {
+    invoice_detail_datatable.clear();
+    $scope.showInvoiceDetail();
+}
+
 $scope.delete = function(id, el) {
     var details = $scope.formData.invoice_detail
     var grup_nota, target, tr;
@@ -300,6 +336,7 @@ $scope.delete = function(id, el) {
             break
         }
     }
+    $scope.recoverInvoiceDetailDatatable();
 }
 
 $scope.edit = function(id, el) {
@@ -384,7 +421,6 @@ $scope.countPromo = function(resp) {
     var grosstotal = $scope.grosstotal - $scope.discount_subtotal;
     var disc_value = parseInt($scope.promo_detail.disc_value)
     var percent_disc_value = grosstotal * (parseInt($scope.promo_detail.disc_percent) / 100)
-    console.log({grosstotal, disc_value, percent_disc_value})
     $scope.promo = disc_value + percent_disc_value
 }
 
@@ -404,12 +440,33 @@ $scope.showInvoiceDetail = function() {
     var qty_total = 0, grosstotal = 0
     var grup_nota
     for(grup_nota in detail) {
-        $scope.showGrupNota(grup_nota)
+        if($scope.createMode === true) {
+            var grupNotaPattern = new RegExp(".*" + grup_nota + ".*");
+            var existingGrupNota = invoice_detail_datatable.data().toArray();
+            var existingGrupNotaIndex;
+            existingGrupNota = existingGrupNota.filter(param => !param.id);
+            existingGrupNotaFound = existingGrupNota.findIndex(param => grupNotaPattern.test(param.name));
+            if(existingGrupNotaFound === -1) {
+                $scope.showGrupNota(grup_nota)
+            }
+        } else{
+            $scope.showGrupNota(grup_nota)
+        }
         item = detail[grup_nota]
         for(index in item) {
-            item[index].debet -= item[index].reduksi_reference.credit
-            $scope.formData.invoice_detail[grup_nota][index].subtotal = item[index].qty * item[index].debet
             unit = item[index]
+            if($scope.createMode === true) {
+                var existingData = invoice_detail_datatable.data().toArray();
+                var existingDataIndex;
+                existingData = existingData.filter(param => param.id);
+                existingDataIndex = existingData.findIndex(param => param.item_id == unit.item_id);
+                if(existingDataIndex > -1) {
+                    continue;
+                }
+            }
+            unit.debet -= unit.reduksi_reference.credit
+            unit.id = Math.round(Math.random() * 9999999999);
+            $scope.formData.invoice_detail[grup_nota][index].subtotal = unit.qty * unit.debet
             $scope.showItemDetail(unit, grup_nota, index)
         }
     }
@@ -449,7 +506,6 @@ $scope.countTotal = function() {
         for(index in detail[grup_nota]) {
             increase_rate = $scope.formData.payment_type == 'ASURANSI SWASTA' ? asuransi_rate_percentage : 0 
             unit = detail[grup_nota][index]
-    		console.log(unit)
             if(unit.disc_percent>100) {
             	toastr.error(error.data.message,"Nilai diskon lebih dari 100% !");
             }
